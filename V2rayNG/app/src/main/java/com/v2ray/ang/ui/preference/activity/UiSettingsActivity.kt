@@ -81,6 +81,8 @@ class UiSettingsActivity : BaseActivity() {
                         MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
                         broadcastHomeBannerChanged()
                         requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     val err = UCrop.getError(result.data!!)
@@ -99,6 +101,8 @@ class UiSettingsActivity : BaseActivity() {
                         MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, savedUri.toString())
                         broadcastProfileChanged()
                         requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     val err = UCrop.getError(result.data!!)
