@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 
 class RandomText(context: Context, attrs: AttributeSet?) : AppCompatTextView(context, attrs), Runnable {
@@ -20,12 +21,7 @@ class RandomText(context: Context, attrs: AttributeSet?) : AppCompatTextView(con
         marqueeRepeatLimit = -1
         setHorizontallyScrolling(true)
         isSelected = true
-
-        if (isRunnable) {
-            run()
-        } else {
-            setRandomText()
-        }
+        
     }
 
     override fun run() {
@@ -46,5 +42,25 @@ class RandomText(context: Context, attrs: AttributeSet?) : AppCompatTextView(con
         text = texts.random()
         
         isSelected = true
+    }
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        
+        if (visibility == View.VISIBLE) {
+            setRandomText()
+            
+            if (isRunnable) {
+                updateHandler.removeCallbacks(this) 
+                updateHandler.postDelayed(this, 3000)
+            }
+        } else {
+            updateHandler.removeCallbacks(this)
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        updateHandler.removeCallbacks(this)
     }
 }

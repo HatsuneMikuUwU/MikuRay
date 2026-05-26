@@ -48,7 +48,9 @@ class ProfileBannerImageView @JvmOverloads constructor(
 
     init {
         scaleType = ScaleType.CENTER_CROP
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        setLayerType(View.LAYER_TYPE_NONE, null)
+        elevation = 0f
+        outlineProvider = null
     }
 
     override fun onAttachedToWindow() {
@@ -116,8 +118,7 @@ class ProfileBannerImageView @JvmOverloads constructor(
                     Glide.with(this)
                         .asBitmap()
                         .load(savedUri)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .skipMemoryCache(false)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .dontAnimate()
                         .error(R.drawable.uwu_banner_profile)
                         .into(this)

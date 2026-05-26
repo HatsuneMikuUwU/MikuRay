@@ -18,17 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/header_image"
+            <FrameLayout
+                android:id="@+id/banner_home"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/uwu_banner_image_about" />
+                android:layout_height="170dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:background="@drawable/uwu_bg_banner_fade" />
+                <ImageView
+                    android:id="@+id/header_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/uwu_banner_image_about" />
+
+                <View
+                    android:id="@+id/header_image_fade"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:background="@drawable/uwu_bg_banner_fade" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/header_content"
@@ -37,6 +45,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/header_top_row"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
@@ -118,7 +127,10 @@
                         android:id="@+id/iv_profile"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:elevation="0dp"
                         app:elevation="0dp"
+                        android:outlineProvider="none"
+                        android:background="@android:color/transparent"
                         app:siBorderColor="?colorPrimary"
                         app:siBorderWidth="3dp" />
                 </LinearLayout>

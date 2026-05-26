@@ -44,6 +44,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private var currentUseCustomColor: Boolean = false
     private var currentCustomColor: Int = 0
     private var currentDpi: Int = 0
+    private var currentShowBannerHome: Boolean = true
+    private var currentBannerUri: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         currentThemeKey = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "8"
@@ -52,6 +54,8 @@ abstract class BaseActivity : AppCompatActivity() {
         currentUseCustomColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         currentCustomColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
         currentDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
+        currentShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+        currentBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
 
         ThemeManager.applyTheme(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -79,13 +83,17 @@ abstract class BaseActivity : AppCompatActivity() {
         val newUseCustomColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         val newCustomColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
         val newDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
+        val newShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+        val newBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
 
         if (currentThemeKey != newThemeKey ||
             currentDynamicColor != newDynamicColor ||
             currentTrueBlack != newTrueBlack ||
             currentUseCustomColor != newUseCustomColor ||
             currentCustomColor != newCustomColor ||
-            currentDpi != newDpi
+            currentDpi != newDpi ||
+            currentShowBannerHome != newShowBannerHome ||
+            currentBannerUri != newBannerUri
         ) {
             currentThemeKey = newThemeKey
             currentDynamicColor = newDynamicColor
@@ -93,6 +101,8 @@ abstract class BaseActivity : AppCompatActivity() {
             currentUseCustomColor = newUseCustomColor
             currentCustomColor = newCustomColor
             currentDpi = newDpi
+            currentShowBannerHome = newShowBannerHome
+            currentBannerUri = newBannerUri
 
             recreate()
         }

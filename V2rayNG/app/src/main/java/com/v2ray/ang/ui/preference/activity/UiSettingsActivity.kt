@@ -17,7 +17,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
-import com.v2ray.ang.extension.toast
+import com.v2ray.ang.extension.alertSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
@@ -65,6 +65,31 @@ class UiSettingsActivity : BaseActivity() {
                 if (uri != null) startCropProfileActivity(uri)
             }
 
+        private val pickHomeBannerImage =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) startCropHomeBannerActivity(uri)
+            }
+
+        private val cropHomeBannerImage =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
+                    try {
+                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+                        deleteOldFile(oldUri)
+                        val savedUri = saveToCache(cacheUri, "home_banner_")
+                        MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
+                        broadcastHomeBannerChanged()
+                        requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                    } catch (e: Exception) {
+                        requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                    }
+                } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                    val err = UCrop.getError(result.data!!)
+                    err?.printStackTrace()
+                }
+            }
+
         private val cropProfileImage =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -75,9 +100,9 @@ class UiSettingsActivity : BaseActivity() {
                         val savedUri = saveToCache(cacheUri, "profile_banner_")
                         MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, savedUri.toString())
                         broadcastProfileChanged()
-                        requireContext().toast(R.string.custom_banner_profile_set)
+                        requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
                     } catch (e: Exception) {
-                        requireContext().toast(R.string.custom_banner_profile_set) // fallback
+                        requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     val err = UCrop.getError(result.data!!)
@@ -151,6 +176,7 @@ class UiSettingsActivity : BaseActivity() {
             }
 
             setupProfilePreferences()
+            setupHomeBannerPreferences()
         }
 
         private fun setupProfilePreferences() {
@@ -199,15 +225,81 @@ class UiSettingsActivity : BaseActivity() {
                             deleteOldFile(savedUri)
                             MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, "")
                             broadcastProfileChanged()
-                            requireContext().toast(R.string.custom_banner_profile_set)
+                            requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
                 } else {
-                    requireContext().toast(R.string.delete_custom_banner_profile_summary)
+                    requireContext().alertSuccess(getString(R.string.delete_custom_banner_profile_summary), title = getString(R.string.title_alerter_success))
                 }
                 true
             }
+        }
+
+        private fun setupHomeBannerPreferences() {
+            findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_HOME_BANNER)?.apply {
+                isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+                setOnPreferenceChangeListener { _, newValue ->
+                    MmkvManager.encodeSettings(AppConfig.PREF_SHOW_HOME_BANNER, newValue as Boolean)
+                    broadcastHomeBannerChanged()
+                    true
+                }
+            }
+
+            findPreference<Preference>(AppConfig.PREF_ACTION_CHANGE_HOME_BANNER)?.setOnPreferenceClickListener {
+                pickHomeBannerImage.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+                true
+            }
+
+            findPreference<Preference>(AppConfig.PREF_ACTION_DELETE_HOME_BANNER)?.setOnPreferenceClickListener {
+                val savedUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+                if (!savedUri.isNullOrEmpty()) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.home_banner_delete_title)
+                        .setMessage(R.string.home_banner_delete_summary)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            deleteOldFile(savedUri)
+                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
+                            broadcastHomeBannerChanged()
+                            requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .showBlur()
+                } else {
+                    requireContext().alertSuccess(getString(R.string.home_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                }
+                true
+            }
+        }
+
+        private fun startCropHomeBannerActivity(sourceUri: Uri) {
+            val destFile = File(requireContext().cacheDir, "cropped_home_banner_temp.jpg")
+            val destUri = Uri.fromFile(destFile)
+
+            val uCrop = UCrop.of(sourceUri, destUri)
+                .withAspectRatio(16f, 9f)
+                .withMaxResultSize(1920, 1080)
+
+            try {
+                val options = UCrop.Options().apply {
+                    setDimmedLayerColor(Color.parseColor("#CC000000"))
+                    setCircleDimmedLayer(false)
+                    setShowCropGrid(true)
+                    setFreeStyleCropEnabled(false)
+                }
+                uCrop.withOptions(options)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            cropHomeBannerImage.launch(uCrop.getIntent(requireContext()))
+        }
+
+        private fun broadcastHomeBannerChanged() {
+            requireContext().sendBroadcast(
+                android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
+            )
         }
 
         private fun startCropProfileActivity(sourceUri: Uri) {

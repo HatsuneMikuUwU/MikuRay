@@ -573,6 +573,16 @@
    <string name="delete_custom_banner_profile">删除自定义横幅</string>
    <string name="delete_custom_banner_profile_summary">恢复为默认横幅</string>
    <string name="custom_banner_profile_set">个人资料横幅更新成功。</string>
+   
+   <!-- Home banner settings -->
+    <string name="home_banner_category">主页横幅</string>
+    <string name="home_banner_show_title">显示主页横幅</string>
+    <string name="home_banner_show_summary">在主屏幕顶部显示横幅图片</string>
+    <string name="home_banner_custom_title">更改主页横幅</string>
+    <string name="home_banner_custom_summary">为主页头部选择自定义图片</string>
+    <string name="home_banner_delete_title">删除自定义主页横幅</string>
+    <string name="home_banner_delete_summary">恢复为默认主页横幅</string>
+    <string name="home_banner_updated">主页横幅更新成功。</string>
 
     <!-- Alerter notification titles -->
     <string name="title_alerter_info">提示</string>

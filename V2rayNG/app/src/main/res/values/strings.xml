@@ -598,6 +598,16 @@ you need."</string>
     <string name="delete_custom_banner_profile">Delete custom profile banner</string>
     <string name="delete_custom_banner_profile_summary">Revert to default profile banner</string>
     <string name="custom_banner_profile_set">Profile banner updated successfully.</string>
+    
+    <!-- Home banner settings -->
+    <string name="home_banner_category">Home Banner</string>
+    <string name="home_banner_show_title">Show home banner</string>
+    <string name="home_banner_show_summary">Display the banner image at the top of the home screen</string>
+    <string name="home_banner_custom_title">Change home banner</string>
+    <string name="home_banner_custom_summary">Choose a custom image for the home header</string>
+    <string name="home_banner_delete_title">Delete custom home banner</string>
+    <string name="home_banner_delete_summary">Revert to default home banner</string>
+    <string name="home_banner_updated">Home banner updated successfully.</string>
 
     <!-- Alerter notification titles -->
     <string name="title_alerter_info">Info</string>

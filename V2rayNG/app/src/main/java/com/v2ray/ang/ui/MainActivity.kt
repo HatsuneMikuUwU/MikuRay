@@ -49,6 +49,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.v2ray.ang.ui.preference.activity.SettingsActivity
+import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class MainActivity : HelperBaseActivity(),
     MainMenuBottomSheet.OnOptionClickListener,
@@ -63,6 +67,7 @@ class MainActivity : HelperBaseActivity(),
     val mainViewModel: MainViewModel by viewModels()
     private lateinit var groupPagerAdapter: GroupPagerAdapter
     private var tabMediator: TabLayoutMediator? = null
+    private val TAG_HOME_BANNER_DEFAULT = "DEFAULT_HOME_BANNER"
 
     private val requestVpnPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -91,6 +96,7 @@ class MainActivity : HelperBaseActivity(),
         setupInlineSearchView()
         setupGroupTab()
         setupViewModel()
+        setupBannerHome()
 
         SubscriptionUpdater.sync()
         mainViewModel.reloadServerList()
@@ -121,6 +127,68 @@ class MainActivity : HelperBaseActivity(),
             headerContent?.updatePadding(top = systemBars.top)
             
             insets
+        }
+    }
+
+    private fun setupBannerHome() {
+        val bannerHome = binding.bannerHome
+        val headerImage = binding.headerImage
+        val headerTopRow = binding.headerTopRow
+
+        headerImage.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
+        val paddingTopWithBanner = (16 * resources.displayMetrics.density).toInt()
+        val paddingTopNoBanner = 0
+
+        fun applyBannerVisibility(show: Boolean) {
+            bannerHome.visibility = if (show) View.VISIBLE else View.GONE
+            val topPad = if (show) paddingTopWithBanner else paddingTopNoBanner
+            headerTopRow.setPadding(
+                headerTopRow.paddingLeft,
+                topPad,
+                headerTopRow.paddingRight,
+                headerTopRow.paddingBottom
+            )
+        }
+
+        fun loadBannerImage() {
+            val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+            val targetTag = if (uriString.isNullOrBlank()) TAG_HOME_BANNER_DEFAULT else uriString
+            if (headerImage.tag == targetTag) return
+            if (!uriString.isNullOrBlank()) {
+                Glide.with(this)
+                    .load(Uri.parse(uriString))
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .error(R.drawable.uwu_banner_image_about)
+                    .into(headerImage)
+            } else {
+                Glide.with(this).clear(headerImage)
+                headerImage.setImageResource(R.drawable.uwu_banner_image_about)
+            }
+            headerImage.tag = targetTag
+        }
+
+        val show = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+        applyBannerVisibility(show)
+        loadBannerImage()
+
+        val receiver = object : android.content.BroadcastReceiver() {
+            override fun onReceive(context: android.content.Context?, intent: android.content.Intent?) {
+                when (intent?.action) {
+                    AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED -> {
+                        val showNow = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+                        applyBannerVisibility(showNow)
+                        loadBannerImage()
+                    }
+                }
+            }
+        }
+        val filter = android.content.IntentFilter(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(receiver, filter, android.content.Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("UnspecifiedRegisterReceiverFlag")
+            registerReceiver(receiver, filter)
         }
     }
 

@@ -132,6 +132,35 @@
     </PreferenceCategory>
 
 
+    <PreferenceCategory android:title="@string/home_banner_category">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_baseline_home_24"
+            app:layout="@layout/uwu_top_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="true"
+            android:key="pref_show_home_banner"
+            android:title="@string/home_banner_show_title"
+            android:summary="@string/home_banner_show_summary" />
+
+        <Preference
+            android:icon="@drawable/ic_image_24dp"
+            app:layout="@layout/uwu_mid"
+            android:key="action_change_home_banner_image"
+            app:dependency="pref_show_home_banner"
+            android:title="@string/home_banner_custom_title"
+            android:summary="@string/home_banner_custom_summary" />
+
+        <Preference
+            android:icon="@drawable/ic_delete_24dp"
+            app:layout="@layout/uwu_bot"
+            android:key="action_delete_home_banner_image"
+            app:dependency="pref_show_home_banner"
+            android:title="@string/home_banner_delete_title"
+            android:summary="@string/home_banner_delete_summary" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/banner_profile_category">
 
         <EditTextPreference

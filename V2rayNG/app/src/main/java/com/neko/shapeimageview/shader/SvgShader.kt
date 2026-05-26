@@ -108,7 +108,9 @@ class SvgShader @JvmOverloads constructor(
 
     override fun draw(canvas: Canvas, imagePaint: Paint, borderPaint: Paint) {
         imagePaint.isAntiAlias = true
-        imagePaint.isFilterBitmap = true         
+        imagePaint.isFilterBitmap = true        
+        imagePaint.clearShadowLayer() 
+        borderPaint.clearShadowLayer()
         borderPaint.isAntiAlias = true
         canvas.save()
         canvas.drawPath(borderPath, borderPaint)
