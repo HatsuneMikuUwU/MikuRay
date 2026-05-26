@@ -17,7 +17,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
-import com.v2ray.ang.extension.alertSuccess
+import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
@@ -80,9 +80,9 @@ class UiSettingsActivity : BaseActivity() {
                         val savedUri = saveToCache(cacheUri, "home_banner_")
                         MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
                         broadcastHomeBannerChanged()
-                        requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                        requireContext().toastSuccess(getString(R.string.home_banner_updated))
                     } catch (e: Exception) {
-                        requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                        requireContext().toastSuccess(getString(R.string.home_banner_updated))
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     val err = UCrop.getError(result.data!!)
@@ -100,9 +100,9 @@ class UiSettingsActivity : BaseActivity() {
                         val savedUri = saveToCache(cacheUri, "profile_banner_")
                         MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, savedUri.toString())
                         broadcastProfileChanged()
-                        requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
+                        requireContext().toastSuccess(getString(R.string.custom_banner_profile_set))
                     } catch (e: Exception) {
-                        requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
+                        requireContext().toastSuccess(getString(R.string.custom_banner_profile_set))
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     val err = UCrop.getError(result.data!!)
@@ -225,12 +225,12 @@ class UiSettingsActivity : BaseActivity() {
                             deleteOldFile(savedUri)
                             MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, "")
                             broadcastProfileChanged()
-                            requireContext().alertSuccess(getString(R.string.custom_banner_profile_set), title = getString(R.string.title_alerter_success))
+                            requireContext().toastSuccess(getString(R.string.custom_banner_profile_set))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
                 } else {
-                    requireContext().alertSuccess(getString(R.string.delete_custom_banner_profile_summary), title = getString(R.string.title_alerter_success))
+                    requireContext().toastSuccess(getString(R.string.delete_custom_banner_profile_summary))
                 }
                 true
             }
@@ -263,12 +263,12 @@ class UiSettingsActivity : BaseActivity() {
                             deleteOldFile(savedUri)
                             MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
                             broadcastHomeBannerChanged()
-                            requireContext().alertSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                            requireContext().toastSuccess(getString(R.string.home_banner_updated))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
                 } else {
-                    requireContext().alertSuccess(getString(R.string.home_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                    requireContext().toastSuccess(getString(R.string.home_banner_delete_summary))
                 }
                 true
             }
