@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.R
 import com.v2ray.ang.AppConfig
@@ -66,6 +67,19 @@ abstract class BaseActivity : AppCompatActivity() {
             },
             true
         )
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        val fontName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
+        if (!fontName.isNullOrEmpty() && fontName != "default") {
+            val typeface = getCustomTypeface(fontName)
+            findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)?.apply {
+                setExpandedTitleTypeface(typeface)
+                setCollapsedTitleTypeface(typeface)
+            }
+        }
     }
 
     override fun onResume() {
