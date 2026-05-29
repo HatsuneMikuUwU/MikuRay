@@ -408,9 +408,12 @@ class UiSettingsActivity : BaseActivity() {
             val savedRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
             blurIntensity?.updateSummary(savedRadius, savedRounds)
 
-            val savedBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-            val savedBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
-            blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomRounds)
+            val savedBottomCorner     = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_CORNER,            AppConfig.DEFAULT_BLUR_BOTTOM_CORNER)
+            val savedBottomRefrHeight = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT)
+            val savedBottomRefrOffset = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET)
+            val savedBottomBlurRadius = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS)
+            val savedBottomDispersion = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION)
+            blurBottomIntensity?.updateSummary(savedBottomCorner, savedBottomRefrHeight, savedBottomRefrOffset, savedBottomBlurRadius, savedBottomDispersion)
         }
 
         private fun updateTrueBlackState(isNight: Boolean) {

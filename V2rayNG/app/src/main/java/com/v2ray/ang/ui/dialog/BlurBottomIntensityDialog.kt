@@ -29,15 +29,25 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
     }
 
     override fun onClick() {
-        val originalRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-        val originalRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        val origCorner     = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_CORNER,            AppConfig.DEFAULT_BLUR_BOTTOM_CORNER)
+        val origRefrHeight = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT)
+        val origRefrOffset = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET)
+        val origBlurRadius = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS)
+        val origDispersion = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION)
 
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_blur_intensity, null)
-        val sliderRadius = dialogView.findViewById<Slider>(R.id.slider_blur_radius)
-        val sliderRounds = dialogView.findViewById<Slider>(R.id.slider_blur_rounds)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_liquid_glass_intensity, null)
 
-        sliderRadius.value = originalRadius.toFloat().coerceIn(2f, 100f)
-        sliderRounds.value = originalRounds.toFloat().coerceIn(1f, 15f)
+        val sliderCorner     = dialogView.findViewById<Slider>(R.id.slider_lg_corner)
+        val sliderRefrHeight = dialogView.findViewById<Slider>(R.id.slider_lg_refraction_height)
+        val sliderRefrOffset = dialogView.findViewById<Slider>(R.id.slider_lg_refraction_offset)
+        val sliderBlurRadius = dialogView.findViewById<Slider>(R.id.slider_lg_blur_radius)
+        val sliderDispersion = dialogView.findViewById<Slider>(R.id.slider_lg_dispersion)
+
+        sliderCorner.value     = origCorner.coerceIn(0f, 99f)
+        sliderRefrHeight.value = origRefrHeight.coerceIn(12f, 50f)
+        sliderRefrOffset.value = origRefrOffset.coerceIn(20f, 120f)
+        sliderBlurRadius.value = origBlurRadius.coerceIn(0f, 50f)
+        sliderDispersion.value = origDispersion.coerceIn(0f, 1f)
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_blur_bottom_intensity)
@@ -51,28 +61,43 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val radius = sliderRadius.value.toInt()
-            val rounds = sliderRounds.value.toInt()
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, radius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, rounds)
-            updateSummary(radius, rounds)
+            val corner     = sliderCorner.value
+            val refrHeight = sliderRefrHeight.value
+            val refrOffset = sliderRefrOffset.value
+            val blurRadius = sliderBlurRadius.value
+            val dispersion = sliderDispersion.value
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_CORNER,            corner)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, refrHeight)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, refrOffset)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       blurRadius)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        dispersion)
+            updateSummary(corner, refrHeight, refrOffset, blurRadius, dispersion)
             dialog.dismiss()
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, originalRadius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, originalRounds)
-            updateSummary(originalRadius, originalRounds)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_CORNER,            origCorner)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, origRefrHeight)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, origRefrOffset)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       origBlurRadius)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        origDispersion)
+            updateSummary(origCorner, origRefrHeight, origRefrOffset, origBlurRadius, origDispersion)
             dialog.dismiss()
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            sliderRadius.value = AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS.toFloat()
-            sliderRounds.value = AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS.toFloat()
+            sliderCorner.value     = AppConfig.DEFAULT_BLUR_BOTTOM_CORNER
+            sliderRefrHeight.value = AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT
+            sliderRefrOffset.value = AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET
+            sliderBlurRadius.value = AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS
+            sliderDispersion.value = AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION
         }
     }
 
-    fun updateSummary(radius: Int, rounds: Int) {
-        summary = context.getString(R.string.summary_blur_intensity_value, radius, rounds)
+    fun updateSummary(corner: Float, refrHeight: Float, refrOffset: Float, blurRadius: Float, dispersion: Float) {
+        summary = context.getString(
+            R.string.summary_lg_intensity_value,
+            corner.toInt(), refrHeight.toInt(), refrOffset.toInt(), blurRadius.toInt(), dispersion
+        )
     }
 }

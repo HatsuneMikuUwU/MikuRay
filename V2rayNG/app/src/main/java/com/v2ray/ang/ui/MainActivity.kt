@@ -201,7 +201,6 @@ class MainActivity : HelperBaseActivity(),
 
     private fun setupListeners() {
         binding.fab.setOnClickListener { handleFabAction() }
-        binding.fabNoBlur.setOnClickListener { handleFabAction() }
         
         binding.cardBottomStatus.setOnClickListener { handleLayoutTestClick() }
         
@@ -391,22 +390,17 @@ class MainActivity : HelperBaseActivity(),
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
         if (isLoading) {
             binding.fab.setImageResource(R.drawable.ic_fab_check)
-            binding.fabNoBlur.setImageResource(R.drawable.ic_fab_check)
             return
         }
 
         if (isRunning) {
             binding.fab.setImageResource(R.drawable.ic_stop_24dp)
             binding.fab.contentDescription = getString(R.string.action_stop_service)
-            binding.fabNoBlur.setImageResource(R.drawable.ic_stop_24dp)
-            binding.fabNoBlur.contentDescription = getString(R.string.action_stop_service)
             setTestState(getString(R.string.connection_connected))
             binding.cardBottomStatus.isFocusable = true
         } else {
             binding.fab.setImageResource(R.drawable.ic_play_24dp)
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
-            binding.fabNoBlur.setImageResource(R.drawable.ic_play_24dp)
-            binding.fabNoBlur.contentDescription = getString(R.string.tasker_start_service)
             setTestState(getString(R.string.connection_not_connected))
             binding.tvIpState.text = getString(R.string.ip_unknown)
             binding.cardBottomStatus.isFocusable = false

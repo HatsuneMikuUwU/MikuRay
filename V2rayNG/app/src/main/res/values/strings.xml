@@ -632,4 +632,10 @@ you need."</string>
     <string name="title_blur_settings">Blur Settings</string>
     <string name="title_blur_warning">High iterations (10+) may cause FPS drops. Recommended: 2-5 iterations with radius 25-40</string>
 
+    <string name="lg_corner_label">Corner Radius (0–99 dp)</string>
+    <string name="lg_refraction_height_label">Refraction Height (12–50 dp)</string>
+    <string name="lg_refraction_offset_label">Refraction Offset (20–120 dp)</string>
+    <string name="lg_blur_radius_label">Blur Radius (0–50)</string>
+    <string name="lg_dispersion_label">Dispersion (0.0–1.0)</string>
+    <string name="summary_lg_intensity_value">Corner: %1$d · RefrH: %2$d · RefrO: %3$d · Blur: %4$d · Disp: %5$.2f</string>
 </resources>

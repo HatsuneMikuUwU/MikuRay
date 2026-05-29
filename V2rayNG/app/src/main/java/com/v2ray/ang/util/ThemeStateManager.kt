@@ -15,8 +15,11 @@ class ThemeStateManager(private val activity: Activity) {
     private var currentShowBannerHome: Boolean = true
     private var currentBannerHomeUri: String = ""
     private var currentBlurBottomStatus: Boolean = false
-    private var currentBlurBottomRadius: Int = 20
-    private var currentBlurBottomRounds: Int = 3
+    private var currentBlurBottomCorner: Float = AppConfig.DEFAULT_BLUR_BOTTOM_CORNER
+    private var currentBlurBottomRefrHeight: Float = AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT
+    private var currentBlurBottomRefrOffset: Float = AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET
+    private var currentBlurBottomBlurRadius: Float = AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS
+    private var currentBlurBottomDispersion: Float = AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION
 
     init {
         loadState()
@@ -32,8 +35,11 @@ class ThemeStateManager(private val activity: Activity) {
         currentShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         currentBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
         currentBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
-        currentBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-        currentBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        currentBlurBottomCorner     = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_CORNER,            AppConfig.DEFAULT_BLUR_BOTTOM_CORNER)
+        currentBlurBottomRefrHeight = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT)
+        currentBlurBottomRefrOffset = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET)
+        currentBlurBottomBlurRadius = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS)
+        currentBlurBottomDispersion = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION)
     }
 
     fun checkThemeChangedAndRecreate() {
@@ -46,8 +52,11 @@ class ThemeStateManager(private val activity: Activity) {
         val newShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         val newBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
         val newBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
-        val newBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-        val newBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        val newBlurBottomCorner     = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_CORNER,            AppConfig.DEFAULT_BLUR_BOTTOM_CORNER)
+        val newBlurBottomRefrHeight = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_HEIGHT, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_HEIGHT)
+        val newBlurBottomRefrOffset = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_REFRACTION_OFFSET, AppConfig.DEFAULT_BLUR_BOTTOM_REFRACTION_OFFSET)
+        val newBlurBottomBlurRadius = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_BLUR_RADIUS,       AppConfig.DEFAULT_BLUR_BOTTOM_BLUR_RADIUS)
+        val newBlurBottomDispersion = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_DISPERSION,        AppConfig.DEFAULT_BLUR_BOTTOM_DISPERSION)
 
         if (currentThemeKey != newThemeKey ||
             currentDynamicColor != newDynamicColor ||
@@ -58,8 +67,11 @@ class ThemeStateManager(private val activity: Activity) {
             currentShowBannerHome != newShowBannerHome ||
             currentBannerHomeUri != newBannerHomeUri ||
             currentBlurBottomStatus != newBlurBottomStatus ||
-            currentBlurBottomRadius != newBlurBottomRadius ||
-            currentBlurBottomRounds != newBlurBottomRounds
+            currentBlurBottomCorner != newBlurBottomCorner ||
+            currentBlurBottomRefrHeight != newBlurBottomRefrHeight ||
+            currentBlurBottomRefrOffset != newBlurBottomRefrOffset ||
+            currentBlurBottomBlurRadius != newBlurBottomBlurRadius ||
+            currentBlurBottomDispersion != newBlurBottomDispersion
         ) {
             loadState()
             activity.recreate()

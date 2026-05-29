@@ -287,7 +287,7 @@
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
             	
-            <com.qmdeve.blurview.widget.BlurView
+            <com.qmdeve.liquidglass.widget.LiquidGlassView
                 android:id="@+id/blur_bottom_status"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -332,7 +332,6 @@
                         android:textSize="17sp" />
                 </LinearLayout>
 
-                <!-- FAB when blur is enabled -->
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
@@ -346,20 +345,6 @@
                     app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary"
                     style="?floatingActionButtonStyle" />
 
-                <!-- FAB when blur is disabled -->
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_no_blur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:elevation="0dp"
-                    app:elevation="0dp"
-                    android:outlineProvider="none"
-                    android:src="@drawable/ic_play_24dp"
-                    android:visibility="gone"
-                    app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.PrimaryContainer"
-                    style="?floatingActionButtonStyle" />
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>

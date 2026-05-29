@@ -21,6 +21,7 @@ swiperefreshlayout = "1.2.0"
 toasty = "1.5.2"
 alerter = "7.2.4"
 blurview = "1.1.4"
+liquidglass = "1.0.0"
 lottie = "6.7.1"
 editorkit = "2.9.0"
 core = "3.5.4"
@@ -57,6 +58,7 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 toasty = { module = "com.github.GrenderG:Toasty", version.ref = "toasty" }
 alerter = { module = "com.github.tapadoo:alerter", version.ref = "alerter" }
 qmdeve-blurview = { module = "com.qmdeve.blurview:core", version.ref = "blurview" }
+qmdeve-liquidglass = { module = "com.qmdeve.liquidglass:core", version.ref = "liquidglass" }
 com-airbnb-android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 editorkit = { module = "com.blacksquircle.ui:editorkit", version.ref = "editorkit" }
 language-base = { module = "com.blacksquircle.ui:language-base", version.ref = "editorkit" }
