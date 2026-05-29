@@ -522,6 +522,7 @@
     <string name="title_pref_sound_on_connect">Bunyi Koneksi</string>
     <string name="summary_pref_sound_on_connect">Bunyi pas nyambung atau putus koneksi</string>
     <string name="ip_unknown">IP: Nggak ke-detect</string>
+    <string name="title_pref_app_font">Gaya Font</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu

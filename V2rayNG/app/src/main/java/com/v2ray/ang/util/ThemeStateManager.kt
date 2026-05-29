@@ -17,6 +17,7 @@ class ThemeStateManager(private val activity: Activity) {
     private var currentBlurBottomStatus: Boolean = false
     private var currentBlurBottomRadius: Int = 20
     private var currentBlurBottomRounds: Int = 3
+    private var currentFont: String = "" 
 
     init {
         loadState()
@@ -34,6 +35,7 @@ class ThemeStateManager(private val activity: Activity) {
         currentBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
         currentBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
         currentBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        currentFont = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT) ?: "" 
     }
 
     fun checkThemeChangedAndRecreate() {
@@ -48,6 +50,7 @@ class ThemeStateManager(private val activity: Activity) {
         val newBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
         val newBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
         val newBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        val newFont = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT) ?: "" 
 
         if (currentThemeKey != newThemeKey ||
             currentDynamicColor != newDynamicColor ||
@@ -59,7 +62,8 @@ class ThemeStateManager(private val activity: Activity) {
             currentBannerHomeUri != newBannerHomeUri ||
             currentBlurBottomStatus != newBlurBottomStatus ||
             currentBlurBottomRadius != newBlurBottomRadius ||
-            currentBlurBottomRounds != newBlurBottomRounds
+            currentBlurBottomRounds != newBlurBottomRounds ||
+            currentFont != newFont
         ) {
             loadState()
             activity.recreate()

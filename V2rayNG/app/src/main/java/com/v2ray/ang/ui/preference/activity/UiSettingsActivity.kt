@@ -64,6 +64,7 @@ class UiSettingsActivity : BaseActivity() {
         private val blurBottomIntensity by lazy { findPreference<BlurBottomIntensityDialog>(AppConfig.PREF_BLUR_BOTTOM_INTENSITY) }
         private val indicatorStyle by lazy { findPreference<Preference>(AppConfig.PREF_INDICATOR_STYLE) }
         private val navigateCheckUpdate by lazy { findPreference<CustomBannerPreference>(AppConfig.PREF_NAVIGATE_CHECK_UPDATE) }
+        private val appFont by lazy { findPreference<ListPreference>(AppConfig.PREF_APP_FONT) }
 
         private val pickProfileImage =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -182,6 +183,12 @@ class UiSettingsActivity : BaseActivity() {
                         putExtra(AppConfig.PREF_ICON_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ICON_SHAPE_DEFAULT })
                     }
                 )
+                true
+            }
+            
+            appFont?.setOnPreferenceChangeListener { _, newValue ->
+                MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT, newValue as String)
+                activity?.recreate()
                 true
             }
 

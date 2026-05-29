@@ -112,6 +112,16 @@
             app:layout="@layout/uwu_mid"
             app:key="pref_custom_dpi"
             app:title="@string/pref_custom_dpi" />
+            
+        <ListPreference
+            android:icon="@drawable/ic_format_font"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="default"
+            android:entries="@array/app_font_entries"
+            android:entryValues="@array/app_font_values"
+            android:key="pref_app_font"
+            android:summary="%s"
+            android:title="@string/title_pref_app_font" />
 
         <Preference
             android:icon="@drawable/ic_cards_variant"

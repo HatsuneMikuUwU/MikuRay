@@ -545,6 +545,7 @@
     <string name="summary_pref_sound_on_connect">Play a sound when connected or disconnected</string>
     <string name="ip_unknown">IP: unknown</string>
     <string name="ip_connected">IP: %1$s</string>
+    <string name="title_pref_app_font">Font Style</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings

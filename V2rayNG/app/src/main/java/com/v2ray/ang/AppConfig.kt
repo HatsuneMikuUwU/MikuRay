@@ -51,6 +51,7 @@ object AppConfig {
     const val PREF_APP_THEME = "pref_app_theme"
     const val PREF_DYNAMIC_COLOR = "pref_dynamic_color"
     const val PREF_TRUE_BLACK = "pref_true_black"
+    const val PREF_APP_FONT = "pref_app_font"
     const val PREF_CUSTOM_COLOR = "pref_custom_color"
     const val PREF_USE_CUSTOM_COLOR = "pref_use_custom_color"
     const val PREF_ENABLE_BLUR = "pref_enable_blur"

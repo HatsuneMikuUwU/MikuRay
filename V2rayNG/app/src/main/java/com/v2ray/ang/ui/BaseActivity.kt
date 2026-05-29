@@ -3,6 +3,7 @@ package com.v2ray.ang.ui
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -33,17 +35,23 @@ import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.WindowBlurUtils
 import com.v2ray.ang.util.ThemeStateManager
-import com.qmdeve.blurview.widget.BlurView 
+import com.qmdeve.blurview.widget.BlurView
 
 abstract class BaseActivity : AppCompatActivity() {
     private var loadingOverlay: FrameLayout? = null
-    
+
     private lateinit var themeStateManager: ThemeStateManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         themeStateManager = ThemeStateManager(this)
 
         ThemeManager.applyTheme(this)
+
+        val fontOverlayId = getFontStyleResId(MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT))
+        if (fontOverlayId != 0) {
+            theme.applyStyle(fontOverlayId, true)
+        }
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -102,13 +110,63 @@ abstract class BaseActivity : AppCompatActivity() {
             val uiMode = overrideConfiguration.uiMode
             overrideConfiguration.setTo(baseContext.resources.configuration)
             overrideConfiguration.uiMode = uiMode
-            
+
             val dpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
             if (dpi > 0) {
                 overrideConfiguration.densityDpi = dpi
             }
         }
         super.applyOverrideConfiguration(overrideConfiguration)
+    }
+
+    private fun getFontStyleResId(fontName: String?): Int {
+        return when (fontName) {
+            "montserrat"   -> R.style.StyleFontMontserrat
+            "google"       -> R.style.StyleFontGoogle
+            "roboto"       -> R.style.StyleFontRoboto
+            "poppins"      -> R.style.StyleFontPoppins
+            "chococooky"   -> R.style.StyleFontChocoCooky
+            "simpleday"    -> R.style.StyleFontSimpleDay
+            "fucek"        -> R.style.StyleFontFucek
+            "sfprodisplay" -> R.style.StyleFontSFProDisplay
+            "dancingscript"-> R.style.StyleFontDancingScript
+            "cream"        -> R.style.StyleFontCream
+            "oneui"        -> R.style.StyleFontOneUI
+            "inconsolata"  -> R.style.StyleFontInconsolata
+            "emilyscandy"  -> R.style.StyleFontEmilysCandy
+            "summerdream"  -> R.style.StyleFontSummerDream
+            "rine"         -> R.style.StyleFontRine
+            "evolve"         -> R.style.StyleFontEvolve
+            else           -> 0
+        }
+    }
+
+    fun getCustomTypeface(fontName: String? = null): Typeface {
+        val name = fontName ?: MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
+        val fontResId = when (name) {
+            "montserrat"    -> R.font.montserrat_thin
+            "google"        -> R.font.googlesansregular
+            "roboto"        -> R.font.robotoregular
+            "poppins"       -> R.font.poppinsregular
+            "chococooky"    -> R.font.chococookyregular
+            "simpleday"     -> R.font.simpleday
+            "fucek"         -> R.font.fucek
+            "sfprodisplay"  -> R.font.sfprodisplay
+            "dancingscript" -> R.font.dancingscript
+            "cream"         -> R.font.cream
+            "oneui"         -> R.font.oneui
+            "inconsolata"   -> R.font.incosolata
+            "emilyscandy"   -> R.font.emilyscandy
+            "summerdream"   -> R.font.summerdream
+            "rine"          -> R.font.rine
+            "evolve"         -> R.font.evolvesans
+            else            -> return Typeface.DEFAULT
+        }
+        return try {
+            ResourcesCompat.getFont(this, fontResId) ?: Typeface.DEFAULT
+        } catch (e: Exception) {
+            Typeface.DEFAULT
+        }
     }
 
     protected fun addCustomDividerToRecyclerView(recyclerView: RecyclerView, context: Context?, drawableResId: Int, orientation: Int = DividerItemDecoration.VERTICAL) {
@@ -184,7 +242,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
             val customLoadingView = LayoutInflater.from(this@BaseActivity)
                 .inflate(R.layout.layout_custom_loading, this, false)
-            
+
             val params = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -192,7 +250,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 gravity = Gravity.CENTER
             }
             addView(customLoadingView, params)
-            
+
             visibility = View.GONE
         }
 

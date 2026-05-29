@@ -520,6 +520,7 @@
     <string name="title_pref_sound_on_connect">连接提示音</string>
     <string name="summary_pref_sound_on_connect">连接或断开时播放声音</string>
     <string name="ip_unknown">IP: 未知</string>
+    <string name="title_pref_app_font">字体样式</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
