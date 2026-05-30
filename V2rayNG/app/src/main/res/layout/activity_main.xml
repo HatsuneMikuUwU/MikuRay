@@ -308,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/fab"
+                    android:layout_toStartOf="@+id/fab_container"
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="8dp">
 
@@ -337,34 +337,37 @@
                         android:textSize="17sp" />
                 </LinearLayout>
 
-                <!-- FAB when blur is enabled -->
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab"
+                <FrameLayout
+                    android:id="@+id/fab_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:elevation="0dp"
-                    app:elevation="0dp"
-                    android:outlineProvider="none"
-                    android:src="@drawable/ic_play_24dp"
-                    app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary"
-                    style="?floatingActionButtonStyle" />
+                    android:layout_alignParentEnd="true">
 
-                <!-- FAB when blur is disabled -->
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_no_blur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:elevation="0dp"
-                    app:elevation="0dp"
-                    android:outlineProvider="none"
-                    android:src="@drawable/ic_play_24dp"
-                    android:visibility="gone"
-                    app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.PrimaryContainer"
-                    style="?floatingActionButtonStyle" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        app:elevation="0dp"
+                        android:outlineProvider="none"
+                        android:src="@drawable/ic_play_24dp"
+                        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary"
+                        style="?floatingActionButtonStyle" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_no_blur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        app:elevation="0dp"
+                        android:outlineProvider="none"
+                        android:src="@drawable/ic_play_24dp"
+                        android:visibility="gone"
+                        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.PrimaryContainer"
+                        style="?floatingActionButtonStyle" />
+
+                </FrameLayout>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
