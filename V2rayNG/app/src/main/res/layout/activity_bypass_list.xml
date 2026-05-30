@@ -66,6 +66,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_per_app_proxy"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_bypass_apps"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

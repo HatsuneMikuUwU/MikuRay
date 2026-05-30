@@ -141,6 +141,7 @@
         <item>auto</item>
         <item>English</item>
         <item>中文简体</item>
+        <item>Русский</item>
         <item>Bahasa Indonesia</item>
     </string-array>
 
@@ -148,6 +149,7 @@
         <item>auto</item>
         <item>en</item>
         <item>zh-rCN</item>
+        <item>ru</item>
         <item>id</item>
     </string-array>
 
