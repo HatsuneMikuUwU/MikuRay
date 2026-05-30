@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:background="@drawable/uwu_background_bottom_sheet"
     android:paddingTop="0.0dip"
-    android:paddingBottom="?dialogPreferredPadding"
+    android:paddingBottom="8.0dip"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -470,7 +470,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8.0dip"
-                    android:layout_marginBottom="16.0dip"
+                    android:layout_marginBottom="8.0dip"
                     android:paddingStart="16.0dip"
                     android:paddingEnd="16.0dip">
                     <com.google.android.material.card.MaterialCardView
@@ -541,7 +541,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/title_logcat" />
+                                    android:text="@string/title_logcat"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -624,7 +625,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/title_configuration_backup_restore" />
+                                    android:text="@string/title_configuration_backup_restore"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -706,7 +708,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/title_about" />
+                                    android:text="@string/title_about"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"

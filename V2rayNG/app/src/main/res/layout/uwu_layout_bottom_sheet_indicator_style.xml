@@ -5,7 +5,7 @@
     android:background="@drawable/uwu_background_bottom_sheet"
     android:orientation="vertical"
     android:paddingTop="0dp"
-    android:paddingBottom="?dialogPreferredPadding">
+    android:paddingBottom="12dp">
 
     <TextView
         android:layout_width="match_parent"

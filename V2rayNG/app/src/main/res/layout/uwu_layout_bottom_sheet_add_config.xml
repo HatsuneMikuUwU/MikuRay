@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:background="@drawable/uwu_background_bottom_sheet"
     android:paddingTop="0.0dip"
-    android:paddingBottom="?dialogPreferredPadding"
+    android:paddingBottom="8.0dip"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -294,7 +294,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8.0dip"
-                    android:layout_marginBottom="16.0dip"
+                    android:layout_marginBottom="8.0dip"
                     android:paddingStart="16.0dip"
                     android:paddingEnd="16.0dip">
                     <com.google.android.material.card.MaterialCardView
@@ -364,7 +364,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_vmess" />
+                                    android:text="@string/protocol_vmess"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -446,7 +447,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_vless" />
+                                    android:text="@string/protocol_vless"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -528,7 +530,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_trojan" />
+                                    android:text="@string/protocol_trojan"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -610,7 +613,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_shadowsocks" />
+                                    android:text="@string/protocol_shadowsocks"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -692,7 +696,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_socks" />
+                                    android:text="@string/protocol_socks"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -774,7 +779,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_http" />
+                                    android:text="@string/protocol_http"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -856,7 +862,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_hysteria2" />
+                                    android:text="@string/protocol_hysteria2"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -938,7 +945,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_wireguard" />
+                                    android:text="@string/protocol_wireguard"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -1020,7 +1028,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_policy_group" />
+                                    android:text="@string/protocol_policy_group"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
@@ -1101,7 +1110,8 @@
                                     android:textColor="?colorOnSurface"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/protocol_proxy_chain" />
+                                    android:text="@string/protocol_proxy_chain"
+                                    android:maxLines="2" />
                                 <com.neko.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
