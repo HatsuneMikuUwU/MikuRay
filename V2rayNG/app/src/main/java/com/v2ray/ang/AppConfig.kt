@@ -77,6 +77,7 @@ object AppConfig {
     const val PREF_NAVIGATE_MUX_SETTINGS = "pref_navigate_mux_settings"
     const val PREF_NAVIGATE_FRAGMENT_SETTINGS = "pref_navigate_fragment_settings"
     const val PREF_NAVIGATE_ADVANCED_SETTINGS = "pref_navigate_advanced_settings"
+    const val PREF_NAVIGATE_PER_APP_PROXY_SETTINGS = "pref_navigate_per_app_proxy_settings"
     const val PREF_LANGUAGE = "pref_language"
     const val PREF_UI_MODE_NIGHT = "pref_ui_mode_night"
     const val PREF_CUSTOM_DPI = "pref_custom_dpi"
@@ -108,6 +109,7 @@ object AppConfig {
     const val PREF_AUTO_SORT_AFTER_TEST = "pref_auto_sort_after_test"
     const val PREF_REAL_PING_CONCURRENCY = "pref_real_ping_concurrency"
     const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"    
+    const val PREF_SERVER_ORDER = "pref_server_order"
 
     // Profile banner, home banner & username
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"

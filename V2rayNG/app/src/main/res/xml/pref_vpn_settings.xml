@@ -100,10 +100,17 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
-            app:layout="@layout/uwu_bot"
+            app:layout="@layout/uwu_mid"
             android:key="pref_hev_tunnel_rw_timeout_v2"
             android:summary="300,60"
             android:title="@string/title_pref_hev_tunnel_rw_timeout" />
+
+        <Preference
+            android:icon="@drawable/ic_per_apps_24dp"
+            app:layout="@layout/uwu_bot"
+            android:key="pref_navigate_per_app_proxy_settings"
+            android:summary="@string/summary_navigate_per_app_proxy_settings"
+            android:title="@string/per_app_proxy_settings" />
 
     </PreferenceCategory>
 

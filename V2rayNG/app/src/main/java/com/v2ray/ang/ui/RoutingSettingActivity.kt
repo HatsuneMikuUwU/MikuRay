@@ -21,6 +21,7 @@ import com.v2ray.ang.extension.alertSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
+import com.v2ray.ang.ui.UserAssetActivity
 import com.v2ray.ang.ui.bottomsheet.RoutingMenuBottomSheet
 import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.LogUtil
@@ -82,6 +83,7 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
             R.id.import_rulesets_from_clipboard -> importFromClipboard()
             R.id.import_rulesets_from_qrcode -> importQRcode()
             R.id.export_rulesets_to_clipboard -> export2Clipboard()
+            R.id.menu_user_asset_setting -> startActivity(Intent(this, UserAssetActivity::class.java))
         }
     }
 

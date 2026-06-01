@@ -13,6 +13,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.PerAppProxyActivity
 
 class VpnSettingsActivity : BaseActivity() {
 
@@ -42,6 +43,7 @@ class VpnSettingsActivity : BaseActivity() {
         private val useHevTun by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_USE_HEV_TUNNEL) }
         private val hevTunLogLevel by lazy { findPreference<ListPreference>(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL) }
         private val hevTunRwTimeout by lazy { findPreference<EditTextPreference>(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT) }
+        private val navigatePerAppProxy by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_PER_APP_PROXY_SETTINGS) }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
@@ -55,6 +57,11 @@ class VpnSettingsActivity : BaseActivity() {
 
             useHevTun?.setOnPreferenceChangeListener { _, newValue ->
                 updateHevTunSettings(newValue as Boolean)
+                true
+            }
+
+            navigatePerAppProxy?.setOnPreferenceClickListener {
+                startActivity(android.content.Intent(requireContext(), PerAppProxyActivity::class.java))
                 true
             }
         }

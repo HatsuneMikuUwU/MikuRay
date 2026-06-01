@@ -508,6 +508,7 @@
     <string name="summary_navigate_mux_settings">Multiplexing dan konkurensi XUDP</string>
     <string name="summary_navigate_fragment_settings">Panjang dan interval fragmentasi paket</string>
     <string name="summary_navigate_advanced_settings">Boot, test, ping, mode, dan URL API</string>
+    <string name="summary_navigate_per_app_proxy_settings">Pilih aplikasi mana aja yang mau pakai proxy</string>
     <string name="title_ui_general">Umum</string>
     <string name="title_ui_theme">Tema</string>
     <string name="title_ui_appearance">Tampilan</string>
@@ -523,6 +524,11 @@
     <string name="summary_pref_sound_on_connect">Bunyi pas nyambung atau putus koneksi</string>
     <string name="ip_unknown">IP: Nggak ke-detect</string>
     <string name="title_pref_app_font">Gaya Font</string>
+    <string name="group_order">Urutan</string>
+    <string name="group_order_origin">Urutan Asli</string>
+    <string name="group_order_by_name">Sesuai Nama</string>
+    <string name="group_order_by_delay">Sesuai Delay</string>
+    <string name="title_more_menu">Menu Lainnya</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu

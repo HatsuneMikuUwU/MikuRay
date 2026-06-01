@@ -75,6 +75,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * Reloads the server list based on current subscription filter.
      */
     fun reloadServerList() {
+        // If ORDER_ORIGIN is selected and a pre-sort snapshot exists, restore it first (per active group)
+        val subId = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
+        val order = MmkvManager.decodeSettingsInt("${AppConfig.PREF_SERVER_ORDER}_$subId", 0)
+        if (order == 0) {
+            if (subscriptionId.isEmpty()) {
+                MmkvManager.decodeSubsList().forEach { MmkvManager.restoreOriginServerList(it) }
+            } else {
+                MmkvManager.restoreOriginServerList(subscriptionId)
+            }
+        }
+
         serverList = if (subscriptionId.isEmpty()) {
             MmkvManager.decodeAllServerList()
         } else {
@@ -124,7 +135,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val searchRegex = try {
             if (kw.isNotEmpty()) Regex(kw, setOf(RegexOption.IGNORE_CASE)) else null
         } catch (e: PatternSyntaxException) {
-            null // Fallback to literal search if regex is invalid
+            null
         }
         for (guid in serverList) {
             val profile = MmkvManager.decodeServerConfig(guid) ?: continue
@@ -144,6 +155,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             ) {
                 serversCache.add(ServersCache(guid, profile))
             }
+        }
+
+        // Apply server order (per subscription group)
+        val subId = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
+        val order = MmkvManager.decodeSettingsInt("${AppConfig.PREF_SERVER_ORDER}_$subId", 0)
+        when (order) {
+            1 -> serversCache.sortWith(compareBy { it.profile.remarks.lowercase() }) // ORDER_BY_NAME
+            2 -> serversCache.sortWith(compareBy { // ORDER_BY_DELAY
+                val delay = MmkvManager.decodeServerAffiliationInfo(it.guid)?.testDelayMillis ?: 0L
+                if (delay <= 0L) Long.MAX_VALUE else delay
+            })
+            // 0 = ORDER_ORIGIN: no sort, keep storage order
         }
     }
 
@@ -444,6 +467,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST)) {
+                if (subscriptionId.isEmpty()) {
+                    MmkvManager.decodeSubsList().forEach { subId ->
+                        MmkvManager.saveOriginServerList(subId)
+                        MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_$subId", 2)
+                    }
+                    MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_${AppConfig.DEFAULT_SUBSCRIPTION_ID}", 2)
+                } else {
+                    MmkvManager.saveOriginServerList(subscriptionId)
+                    val subIdToSave = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
+                    MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_$subIdToSave", 2)
+                }
                 sortByTestResults()
             }
 

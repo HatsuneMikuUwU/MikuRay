@@ -21,8 +21,6 @@
         <item name="elevation">0.0dip</item>
         <item name="preferenceTheme">@style/AppThemePreference</item>
         <item name="android:homeAsUpIndicator">@drawable/uwu_back_arrow</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
     </style>
     
 </resources>

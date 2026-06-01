@@ -17,18 +17,32 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:textAppearance="?textAppearanceTitleMedium"
-                android:textStyle="bold"
-                android:textColor="?colorPrimary"
-                android:paddingLeft="24.0dip"
-                android:paddingTop="20.0dip"
-                android:paddingRight="24.0dip"
-                android:paddingBottom="8.0dip"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/import_configuration"
-                android:paddingHorizontal="24.0dip" />
+                android:orientation="horizontal"
+                android:paddingLeft="24.0dip"
+                android:paddingTop="16.0dip"
+                android:paddingRight="24.0dip"
+                android:paddingBottom="5.0dip"
+                android:paddingHorizontal="24.0dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/uwu_icon_miku"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:textAppearance="?textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="?colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_configuration" />
+
+            </LinearLayout>
             <LinearLayout
                 android:gravity="center_vertical"
                 android:id="@+id/import_qrcode"
@@ -38,7 +52,7 @@
                 android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8.0dip"
+                android:layout_marginTop="5.0dip"
                 android:layout_marginBottom="4.0dip"
                 android:baselineAligned="false"
                 android:minHeight="?android:listPreferredItemHeightSmall"
@@ -201,7 +215,7 @@
                 android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8.0dip"
+                android:layout_marginBottom="5.0dip"
                 android:baselineAligned="false"
                 android:minHeight="?android:listPreferredItemHeightSmall"
                 android:layout_marginStart="16.0dip"
@@ -273,18 +287,32 @@
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:textAppearance="?textAppearanceTitleMedium"
-                android:textStyle="bold"
-                android:textColor="?colorPrimary"
-                android:paddingLeft="24.0dip"
-                android:paddingTop="8.0dip"
-                android:paddingRight="24.0dip"
-                android:paddingBottom="8.0dip"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_server_manually"
-                android:paddingHorizontal="24.0dip" />
+                android:orientation="horizontal"
+                android:paddingLeft="24.0dip"
+                android:paddingTop="5.0dip"
+                android:paddingRight="24.0dip"
+                android:paddingBottom="5.0dip"
+                android:paddingHorizontal="24.0dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/uwu_icon_miku"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:textAppearance="?textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="?colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_server_manually" />
+
+            </LinearLayout>
             <HorizontalScrollView
                 android:scrollbars="none"
                 android:layout_width="match_parent"
@@ -293,7 +321,7 @@
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8.0dip"
+                    android:layout_marginTop="5.0dip"
                     android:layout_marginBottom="8.0dip"
                     android:paddingStart="16.0dip"
                     android:paddingEnd="16.0dip">

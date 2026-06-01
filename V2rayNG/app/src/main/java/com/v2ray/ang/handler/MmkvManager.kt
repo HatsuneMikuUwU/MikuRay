@@ -86,6 +86,29 @@ object MmkvManager {
         mainStorage.encode(key, JsonUtil.toJson(serverList))
     }
 
+    fun saveOriginServerList(subscriptionId: String) {
+        val subId = getSubscriptionId(subscriptionId)
+        val current = decodeServerList(subId)
+        if (current.isNotEmpty()) {
+            mainStorage.encode("${KEY_SUB_SERVER_PREFIX}ORIGIN_$subId", JsonUtil.toJson(current))
+        }
+    }
+
+    fun restoreOriginServerList(subscriptionId: String): Boolean {
+        val subId = getSubscriptionId(subscriptionId)
+        val key = "${KEY_SUB_SERVER_PREFIX}ORIGIN_$subId"
+        val json = mainStorage.decodeString(key) ?: return false
+        val origin = JsonUtil.fromJsonSafe(json, Array<String>::class.java)?.toMutableList() ?: return false
+        encodeServerList(origin, subId)
+        mainStorage.remove(key)
+        return true
+    }
+
+    fun hasOriginServerList(subscriptionId: String): Boolean {
+        val subId = getSubscriptionId(subscriptionId)
+        return mainStorage.containsKey("${KEY_SUB_SERVER_PREFIX}ORIGIN_$subId")
+    }
+
 
     /**
      * Decodes the server list for a given subscription.

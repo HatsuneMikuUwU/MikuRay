@@ -45,7 +45,8 @@ class RoutingMenuBottomSheet : BaseBottomSheetFragment() {
             R.id.import_predefined_rulesets,
             R.id.import_rulesets_from_clipboard,
             R.id.import_rulesets_from_qrcode,
-            R.id.export_rulesets_to_clipboard
+            R.id.export_rulesets_to_clipboard,
+            R.id.menu_user_asset_setting
         )
 
         actionIds.forEach { id ->

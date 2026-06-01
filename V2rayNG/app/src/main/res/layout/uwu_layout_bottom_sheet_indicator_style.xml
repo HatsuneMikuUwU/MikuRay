@@ -7,16 +7,32 @@
     android:paddingTop="0dp"
     android:paddingBottom="12dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="24dp"
+        android:paddingTop="16dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="6dp"
         android:paddingHorizontal="24dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="12dp"
-        android:text="@string/indicator_style_title"
-        android:textAppearance="?textAppearanceTitleMedium"
-        android:textColor="?colorPrimary"
-        android:textStyle="bold" />
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/uwu_icon_miku"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/indicator_style_title"
+            android:textAppearance="?textAppearanceTitleMedium"
+            android:textColor="?colorPrimary"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerStyle"

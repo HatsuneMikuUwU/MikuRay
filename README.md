@@ -4,7 +4,7 @@ A V2Ray client for Android, support Xray core and v2fly core.
 *一款支援 Xray core 與 v2fly core 的 Android V2Ray 客戶端*
 
 [![Platform](https://img.shields.io/badge/android-platform?style=flat&label=platform&labelColor=21262d&color=6e7681)](https://www.android.com) [![API](https://img.shields.io/badge/API-24%2B-yellow.svg?style=flat)](https://developer.android.com/about/versions/lollipop) [![Releases](https://img.shields.io/github/v/release/HatsuneMikuUwU/MikuRay)](https://github.com/HatsuneMikuUwU/MikuRay/releases)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.3.0-blue.svg)](https://kotlinlang.org) [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-orange.svg)](https://www.gnu.org/licenses/gpl-3.0) 
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.3.21-blue.svg)](https://kotlinlang.org) [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-orange.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 
 ---
 

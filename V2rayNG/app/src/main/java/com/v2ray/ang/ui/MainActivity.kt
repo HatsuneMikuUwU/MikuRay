@@ -214,7 +214,7 @@ class MainActivity : HelperBaseActivity(),
         }
         
         binding.btnMoreMenu.setOnClickListener {
-            MoreMenuBottomSheet().show(supportFragmentManager, MoreMenuBottomSheet.TAG)
+            MoreMenuBottomSheet.newInstance(mainViewModel.subscriptionId).show(supportFragmentManager, MoreMenuBottomSheet.TAG)
         }
         
         binding.btnAddSub.setOnClickListener {
@@ -241,9 +241,7 @@ class MainActivity : HelperBaseActivity(),
     override fun onOptionClicked(viewId: Int) {
         when (viewId) {
             R.id.menu_sub_setting -> requestActivityLauncher.launch(Intent(this, SubSettingActivity::class.java))
-            R.id.menu_per_app_proxy_settings -> requestActivityLauncher.launch(Intent(this, PerAppProxyActivity::class.java))
             R.id.menu_routing_setting -> requestActivityLauncher.launch(Intent(this, RoutingSettingActivity::class.java))
-            R.id.menu_user_asset_setting -> requestActivityLauncher.launch(Intent(this, UserAssetActivity::class.java))
             R.id.menu_settings -> requestActivityLauncher.launch(Intent(this, SettingsActivity::class.java))
             R.id.menu_logcat -> startActivity(Intent(this, LogcatActivity::class.java))
             R.id.menu_backup_restore -> requestActivityLauncher.launch(Intent(this, BackupActivity::class.java))
@@ -284,9 +282,15 @@ class MainActivity : HelperBaseActivity(),
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
             R.id.del_invalid_config -> delInvalidConfig()
-            R.id.sort_by_test_results -> sortByTestResults()
             R.id.sub_update -> importConfigViaSub()
             R.id.locate_selected_config -> locateSelectedServer()
+            // Order actions: order is already saved in MoreMenuBottomSheet before dismiss,
+            // just reload the list to reflect new sort.
+            R.id.action_order_origin,
+            R.id.action_order_by_name,
+            R.id.action_order_by_delay -> {
+                mainViewModel.reloadServerList()
+            }
         }
     }
 
@@ -574,17 +578,6 @@ class MainActivity : HelperBaseActivity(),
                     alertSuccess(getString(R.string.title_del_config_count, ret), title = getString(R.string.title_alerter_success))
                     hideLoading()
                 }
-            }
-        }
-    }
-
-    private fun sortByTestResults() {
-        showLoading()
-        lifecycleScope.launch(Dispatchers.IO) {
-            mainViewModel.sortByTestResults()
-            withContext(Dispatchers.Main) {
-                mainViewModel.reloadServerList()
-                hideLoading()
             }
         }
     }

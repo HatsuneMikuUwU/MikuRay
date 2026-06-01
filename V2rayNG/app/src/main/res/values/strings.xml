@@ -530,6 +530,7 @@
     <string name="summary_navigate_mux_settings">Multiplexing and XUDP concurrency</string>
     <string name="summary_navigate_fragment_settings">Packet fragmentation length and interval</string>
     <string name="summary_navigate_advanced_settings">Boot, test, ping, mode, and API URL</string>
+    <string name="summary_navigate_per_app_proxy_settings">Choose which apps go through the proxy</string>
     <string name="title_ui_general">General</string>
     <string name="title_ui_theme">Theme</string>
     <string name="title_ui_appearance">Appearance</string>
@@ -546,6 +547,11 @@
     <string name="ip_unknown">IP: unknown</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Font Style</string>
+    <string name="group_order">Order</string>
+    <string name="group_order_origin">Origin</string>
+    <string name="group_order_by_name">By Name</string>
+    <string name="group_order_by_delay">By Delay</string>
+    <string name="title_more_menu">More Menu</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings

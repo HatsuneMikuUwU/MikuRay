@@ -526,6 +526,7 @@
     <string name="summary_navigate_mux_settings">Мультиплексирование и параллельность XUDP</string>
     <string name="summary_navigate_fragment_settings">Длина и интервал фрагментации пакетов</string>
     <string name="summary_navigate_advanced_settings">Загрузка, тест, пинг, режим и API URL</string>
+    <string name="summary_navigate_per_app_proxy_settings">Выберите, какие приложения будут использовать прокси</string>
     <string name="title_ui_general">Общие</string>
     <string name="title_ui_theme">Тема</string>
     <string name="title_ui_appearance">Внешний вид</string>
@@ -542,6 +543,11 @@
     <string name="ip_unknown">IP: неизвестен</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Стиль шрифта</string>
+    <string name="group_order">Порядок</string>
+    <string name="group_order_origin">Исходный</string>
+    <string name="group_order_by_name">По имени</string>
+    <string name="group_order_by_delay">По задержке</string>
+    <string name="title_more_menu">Дополнительное меню</string>
     
     <string name="uwu_banner_settings_title">Привет...</string>
     <string name="uwu_banner_settings_summary">"Добро пожаловать в

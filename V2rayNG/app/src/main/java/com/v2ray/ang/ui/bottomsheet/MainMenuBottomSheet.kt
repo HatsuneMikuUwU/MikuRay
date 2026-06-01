@@ -43,9 +43,7 @@ class MainMenuBottomSheet : BaseBottomSheetFragment() {
 
         val actionIds = listOf(
             R.id.menu_sub_setting,
-            R.id.menu_per_app_proxy_settings,
             R.id.menu_routing_setting,
-            R.id.menu_user_asset_setting,
             R.id.menu_settings,
             R.id.menu_logcat,
             R.id.menu_backup_restore,
