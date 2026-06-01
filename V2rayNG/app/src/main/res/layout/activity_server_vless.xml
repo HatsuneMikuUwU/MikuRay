@@ -67,8 +67,8 @@
                 android:paddingBottom="5dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/uwu_icon_miku"
                     android:layout_marginEnd="8dp" />
 
@@ -160,8 +160,8 @@
                 android:paddingBottom="5dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/uwu_icon_miku"
                     android:layout_marginEnd="8dp" />
 
@@ -209,8 +209,8 @@
                 android:paddingBottom="5dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/uwu_icon_miku"
                     android:layout_marginEnd="8dp" />
 
