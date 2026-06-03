@@ -51,4 +51,34 @@
         <attr name="shapeBackgroundColor" format="color|reference" />
     </declare-styleable>
     
+    <declare-styleable name="ParticlesView">
+        <attr
+            name="minDotRadius"
+            format="dimension" />
+        <attr
+            name="maxDotRadius"
+            format="dimension" />
+        <attr
+            name="lineThickness"
+            format="dimension" />
+        <attr
+            name="lineDistance"
+            format="dimension" />
+        <attr
+            name="numDots"
+            format="integer" />
+        <attr
+            name="dotColor"
+            format="color" />
+        <attr
+            name="lineColor"
+            format="color" />
+        <attr
+            name="frameDelayMillis"
+            format="integer" />
+        <attr
+            name="stepMultiplier"
+            format="float" />
+    </declare-styleable>
+    
 </resources>
