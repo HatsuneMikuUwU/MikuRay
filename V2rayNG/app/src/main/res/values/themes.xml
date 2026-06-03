@@ -50,7 +50,7 @@
 
     <!-- Bottom Sheet -->
     <style name="AppThemeBottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:colorBackground">@drawable/uwu_background_bottom_sheet</item>
+        <item name="android:colorBackground">?attr/colorBg</item>
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowAnimationStyle">@style/Animation.Material3.BottomSheetDialog</item>
