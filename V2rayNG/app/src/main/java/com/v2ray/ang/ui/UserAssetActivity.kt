@@ -5,6 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import android.provider.OpenableColumns
 import android.view.Menu
 import android.view.MenuItem
@@ -44,6 +47,18 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+        
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            view.updatePadding(
+                top    = maxOf(systemBars.top,    displayCutout.top),
+                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
+                left   = maxOf(systemBars.left,   displayCutout.left),
+                right  = maxOf(systemBars.right,  displayCutout.right)
+            )
+            insets
+        }
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting))

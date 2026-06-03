@@ -75,7 +75,7 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rootContainer = view as? ViewGroup ?: return
+        val rootContainer = view.findViewById<ViewGroup>(R.id.menu_container_parent) ?: view as ViewGroup
 
         val particlesView = view.findViewById<View>(R.id.ParticlesView)
         if (particlesView != null) {

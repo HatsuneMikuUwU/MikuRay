@@ -3,6 +3,9 @@ package com.v2ray.ang.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -47,6 +50,18 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+        
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            view.updatePadding(
+                top    = maxOf(systemBars.top,    displayCutout.top),
+                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
+                left   = maxOf(systemBars.left,   displayCutout.left),
+                right  = maxOf(systemBars.right,  displayCutout.right)
+            )
+            insets
+        }
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
