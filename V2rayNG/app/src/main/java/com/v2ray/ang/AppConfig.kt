@@ -110,7 +110,7 @@ object AppConfig {
     const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"    
     const val PREF_SERVER_ORDER = "pref_server_order"
 
-    // Profile banner, home banner & username
+    // Profile banner, sheet banner, home banner & username
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"
     const val PREF_PROFILE_BANNER_URI = "profile_banner_uri"
     const val PREF_PROFILE_BANNER_SHAPE = "profile_banner_shape"
@@ -121,6 +121,9 @@ object AppConfig {
     const val PREF_CUSTOM_HOME_BANNER_URI = "custom_home_banner_uri"
     const val PREF_ACTION_CHANGE_HOME_BANNER = "action_change_home_banner_image"
     const val PREF_ACTION_DELETE_HOME_BANNER = "action_delete_home_banner_image"
+    const val PREF_CUSTOM_SHEET_BANNER_URI = "custom_sheet_banner_uri"
+    const val PREF_ACTION_CHANGE_SHEET_BANNER = "action_change_sheet_banner_image"
+    const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
 
     /** Cache keys. */
     const val CACHE_SUBSCRIPTION_ID = "cache_subscription_id"

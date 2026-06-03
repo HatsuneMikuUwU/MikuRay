@@ -196,6 +196,24 @@
             android:summary="@string/home_banner_delete_summary" />
 
     </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/sheet_banner_category">
+
+        <Preference
+            android:icon="@drawable/ic_image_24dp"
+            app:layout="@layout/uwu_top"
+            android:key="action_change_sheet_banner_image"
+            android:title="@string/sheet_banner_custom_title"
+            android:summary="@string/sheet_banner_custom_summary" />
+
+        <Preference
+            android:icon="@drawable/ic_delete_24dp"
+            app:layout="@layout/uwu_bot"
+            android:key="action_delete_sheet_banner_image"
+            android:title="@string/sheet_banner_delete_title"
+            android:summary="@string/sheet_banner_delete_summary" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/banner_profile_category">
 

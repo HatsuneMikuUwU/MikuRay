@@ -523,6 +523,10 @@
     <string name="group_order_by_name">按名称</string>
     <string name="group_order_by_delay">按延迟</string>
     <string name="title_more_menu">更多菜单</string>
+    <string name="title_import_menu">导入菜单</string>
+    <string name="routing_settings_import_predefined_rulesets_title">预设</string>
+    <string name="routing_settings_import_rulesets_from_clipboard_title">剪贴板</string>
+    <string name="routing_settings_import_rulesets_from_qrcode_title">QRcode</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
@@ -591,6 +595,14 @@
     <string name="home_banner_delete_title">删除自定义主页横幅</string>
     <string name="home_banner_delete_summary">恢复为默认主页横幅</string>
     <string name="home_banner_updated">主页横幅更新成功。</string>
+    
+    <!-- Sheet banner settings -->   	
+    <string name="sheet_banner_category">底部面板横幅</string>
+    <string name="sheet_banner_custom_title">更改底部横幅</string>
+    <string name="sheet_banner_custom_summary">为底部面板选择自定义图片</string>
+    <string name="sheet_banner_delete_title">删除自定义底部横幅</string>
+    <string name="sheet_banner_delete_summary">恢复为默认底部横幅</string>
+    <string name="sheet_banner_updated">底部横幅更新成功。</string>
 
     <!-- Alerter notification titles -->
     <string name="title_alerter_info">提示</string>

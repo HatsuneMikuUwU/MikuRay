@@ -18,13 +18,133 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+            	
+            <com.google.android.material.card.MaterialCardView
+                android:clipToPadding="false"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginStart="16.0dip"
+                android:layout_marginEnd="16.0dip"
+                app:cardBackgroundColor="?colorCard"
+                app:cardCornerRadius="28.0dip"
+                app:cardElevation="0.0dip"
+                app:strokeWidth="0.0dip">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="fill_parent"
+                        android:layout_height="150.0dip"
+                        android:layout_marginTop="12.0dip"
+                        android:layout_marginBottom="12.0dip"
+                        android:layout_marginStart="12.0dip"
+                        android:layout_marginEnd="12.0dip"
+                        app:cardBackgroundColor="#00000000"
+                        app:cardCornerRadius="19.0dip"
+                        app:cardElevation="0.0dip"
+                        app:strokeWidth="0.0dip">
+                        <ImageView
+                            android:id="@+id/img_banner_sheet"
+                            android:layout_width="fill_parent"
+                            android:layout_height="150.0dip"
+                            android:src="@drawable/uwu_banner_image_about"
+                            android:scaleType="centerCrop"
+                            android:elevation="0.0dip" />
+                        <View
+                            android:background="@android:color/black"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:alpha="0.2" />
+                        <com.neko.particlesdrawable.ParticlesView
+                            android:id="@+id/ParticlesView"
+                            android:background="#00000000"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_centerInParent="true"
+                            app:dotColor="?colorPrimary"
+                            app:frameDelayMillis="10"
+                            app:lineColor="?colorPrimary"
+                            app:lineDistance="86.0dip"
+                            app:lineThickness="1.0dip"
+                            app:maxDotRadius="4.0dip"
+                            app:minDotRadius="1.0dip"
+                            app:numDots="60"
+                            app:stepMultiplier="1.0" />
+                        <LinearLayout
+                            android:gravity="bottom"
+                            android:layout_gravity="bottom"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16.0dip"
+                                    android:layout_marginBottom="16.0dip"
+                                    android:layout_marginStart="16.0dip"
+                                    android:layout_marginEnd="5.0dip">
+                                    <com.neko.widget.ProfileBannerImageView
+                                        android:layout_width="60.0dip"
+                                        android:layout_height="60.0dip"
+                                        android:src="@drawable/uwu_banner_profile"
+                                        app:siBorderColor="@android:color/white"
+                                        app:siBorderWidth="3.0dip" />
+                                </LinearLayout>
+                                <RelativeLayout
+                                    android:paddingTop="16.0dip"
+                                    android:paddingBottom="16.0dip"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.0"
+                                    android:layout_marginStart="5.0dip"
+                                    android:layout_marginEnd="5.0dip">
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content">
+                                        <com.neko.marquee.text.UserNameTextView
+                                            android:textAppearance="?textAppearanceTitleMedium"
+                                            android:textStyle="bold"
+                                            android:textSize="17.0sp"
+                                            android:textColor="@android:color/white"
+                                            android:ellipsize="marquee"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:singleLine="true"
+                                            android:marqueeRepeatLimit="marquee_forever" />
+                                        <com.neko.marquee.text.RandomText
+                                            android:textAppearance="?textAppearanceTitleSmall"
+                                            android:textStyle="bold"
+                                            android:textSize="14.0sp"
+                                            android:textColor="@android:color/white"
+                                            android:ellipsize="marquee"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:singleLine="true"
+                                            android:marqueeRepeatLimit="marquee_forever"
+                                            uwu_runnable="false" />
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="24.0dip"
-                android:paddingTop="10.0dip"
+                android:paddingTop="5.0dip"
                 android:paddingRight="24.0dip"
                 android:paddingBottom="5.0dip"
                 android:paddingHorizontal="24.0dip"

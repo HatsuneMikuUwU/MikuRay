@@ -548,6 +548,10 @@
     <string name="group_order_by_name">By Name</string>
     <string name="group_order_by_delay">By Delay</string>
     <string name="title_more_menu">More Menu</string>
+    <string name="title_import_menu">Import Menu</string>
+    <string name="routing_settings_import_predefined_rulesets_title">Predefined</string>
+    <string name="routing_settings_import_rulesets_from_clipboard_title">Clipboard</string>
+    <string name="routing_settings_import_rulesets_from_qrcode_title">QRcode</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings
@@ -617,6 +621,14 @@ you need."</string>
     <string name="home_banner_delete_title">Delete custom home banner</string>
     <string name="home_banner_delete_summary">Revert to default home banner</string>
     <string name="home_banner_updated">Home banner updated successfully.</string>
+    
+    <!-- Sheet banner settings -->   	
+    <string name="sheet_banner_category">Bottomsheet Banner</string>
+    <string name="sheet_banner_custom_title">Change sheet banner</string>
+    <string name="sheet_banner_custom_summary">Choose a custom image for the bottomsheet</string>
+    <string name="sheet_banner_delete_title">Delete custom sheet banner</string>
+    <string name="sheet_banner_delete_summary">Revert to default sheet banner</string>
+    <string name="sheet_banner_updated">Sheet banner updated successfully.</string>
 
     <!-- Alerter notification titles -->
     <string name="title_alerter_info">Info</string>

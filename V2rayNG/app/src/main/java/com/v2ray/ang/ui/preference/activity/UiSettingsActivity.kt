@@ -76,6 +76,11 @@ class UiSettingsActivity : BaseActivity() {
                 if (uri != null) startCropHomeBannerActivity(uri)
             }
 
+        private val pickSheetBannerImage =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) startCropSheetBannerActivity(uri)
+            }
+
         private val cropHomeBannerImage =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -91,8 +96,7 @@ class UiSettingsActivity : BaseActivity() {
                         e.printStackTrace()
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
-                    val err = UCrop.getError(result.data!!)
-                    err?.printStackTrace()
+                    UCrop.getError(result.data!!)?.printStackTrace()
                 }
             }
 
@@ -111,8 +115,25 @@ class UiSettingsActivity : BaseActivity() {
                         e.printStackTrace()
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
-                    val err = UCrop.getError(result.data!!)
-                    err?.printStackTrace()
+                    UCrop.getError(result.data!!)?.printStackTrace()
+                }
+            }
+
+        private val cropSheetBannerImage =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
+                    try {
+                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
+                        deleteOldFile(oldUri)
+                        val savedUri = saveToCache(cacheUri, "sheet_banner_")
+                        MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, savedUri.toString())
+                        requireContext().toastSuccess(getString(R.string.sheet_banner_updated))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                    UCrop.getError(result.data!!)?.printStackTrace()
                 }
             }
 
@@ -185,7 +206,7 @@ class UiSettingsActivity : BaseActivity() {
                 )
                 true
             }
-            
+
             appFont?.setOnPreferenceChangeListener { _, newValue ->
                 MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT, newValue as String)
                 activity?.recreate()
@@ -194,6 +215,33 @@ class UiSettingsActivity : BaseActivity() {
 
             setupProfilePreferences()
             setupHomeBannerPreferences()
+            setupSheetBannerPreferences()
+        }
+
+        private fun setupSheetBannerPreferences() {
+            findPreference<Preference>(AppConfig.PREF_ACTION_CHANGE_SHEET_BANNER)?.setOnPreferenceClickListener {
+                pickSheetBannerImage.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+                true
+            }
+
+            findPreference<Preference>(AppConfig.PREF_ACTION_DELETE_SHEET_BANNER)?.setOnPreferenceClickListener {
+                val savedUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
+                if (!savedUri.isNullOrEmpty()) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.sheet_banner_delete_title)
+                        .setMessage(R.string.sheet_banner_delete_summary)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            deleteOldFile(savedUri)
+                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, "")
+                            requireContext().toastSuccess(getString(R.string.sheet_banner_delete_summary))
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .showBlur()
+                }
+                true
+            }
         }
 
         private fun setupProfilePreferences() {
@@ -287,53 +335,64 @@ class UiSettingsActivity : BaseActivity() {
             }
         }
 
-        private fun startCropHomeBannerActivity(sourceUri: Uri) {
-            val destFile = File(requireContext().cacheDir, "cropped_home_banner_temp.jpg")
+        private fun startCropSheetBannerActivity(sourceUri: Uri) {
+            val destFile = File(requireContext().cacheDir, "cropped_sheet_banner_temp.jpg")
             val destUri = Uri.fromFile(destFile)
 
-            val uCrop = UCrop.of(sourceUri, destUri)
-                .withAspectRatio(16f, 9f)
-                .withMaxResultSize(1920, 1080)
+            val displayMetrics = resources.displayMetrics
+            val screenWidthPx = displayMetrics.widthPixels.toFloat()
+            val targetHeightPx = displayMetrics.density * 150
 
+            val uCrop = UCrop.of(sourceUri, destUri)
+                .withAspectRatio(screenWidthPx, targetHeightPx)
+                .withMaxResultSize(1920, 1080)
             try {
-                val options = UCrop.Options().apply {
+                uCrop.withOptions(UCrop.Options().apply {
                     setDimmedLayerColor(Color.parseColor("#CC000000"))
                     setCircleDimmedLayer(false)
                     setShowCropGrid(true)
                     setFreeStyleCropEnabled(false)
-                }
-                uCrop.withOptions(options)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            cropHomeBannerImage.launch(uCrop.getIntent(requireContext()))
+                })
+            } catch (e: Exception) { e.printStackTrace() }
+            cropSheetBannerImage.launch(uCrop.getIntent(requireContext()))
         }
 
-        private fun broadcastHomeBannerChanged() {
-            requireContext().sendBroadcast(
-                android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
-            )
+        private fun startCropHomeBannerActivity(sourceUri: Uri) {
+            val destFile = File(requireContext().cacheDir, "cropped_home_banner_temp.jpg")
+            val destUri = Uri.fromFile(destFile)
+            
+            val displayMetrics = resources.displayMetrics
+            val screenWidthPx = displayMetrics.widthPixels.toFloat()
+            val targetHeightPx = displayMetrics.density * 170
+            
+            val uCrop = UCrop.of(sourceUri, destUri)
+                .withAspectRatio(screenWidthPx, targetHeightPx)
+                .withMaxResultSize(1920, 1080)
+            try {
+                uCrop.withOptions(UCrop.Options().apply {
+                    setDimmedLayerColor(Color.parseColor("#CC000000"))
+                    setCircleDimmedLayer(false)
+                    setShowCropGrid(true)
+                    setFreeStyleCropEnabled(false)
+                })
+            } catch (e: Exception) { e.printStackTrace() }
+            cropHomeBannerImage.launch(uCrop.getIntent(requireContext()))
         }
 
         private fun startCropProfileActivity(sourceUri: Uri) {
             val destFile = File(requireContext().cacheDir, "cropped_profile_banner_temp.jpg")
             val destUri = Uri.fromFile(destFile)
-
             val uCrop = UCrop.of(sourceUri, destUri)
                 .withAspectRatio(1f, 1f)
                 .withMaxResultSize(512, 512)
-
             try {
-                val options = UCrop.Options().apply {
+                uCrop.withOptions(UCrop.Options().apply {
                     setDimmedLayerColor(Color.parseColor("#CC000000"))
                     setCircleDimmedLayer(true)
                     setShowCropGrid(true)
                     setFreeStyleCropEnabled(false)
-                }
-                uCrop.withOptions(options)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                })
+            } catch (e: Exception) { e.printStackTrace() }
             cropProfileImage.launch(uCrop.getIntent(requireContext()))
         }
 
@@ -341,11 +400,9 @@ class UiSettingsActivity : BaseActivity() {
         private fun saveToCache(sourceCacheUri: Uri, fileNamePrefix: String): Uri {
             val ctx = requireContext()
             val destFile = File(ctx.cacheDir, "${fileNamePrefix}${System.currentTimeMillis()}.jpg")
-
             ctx.contentResolver.openInputStream(sourceCacheUri)?.use { input ->
                 destFile.outputStream().use { output -> input.copyTo(output) }
             }
-
             try {
                 if (sourceCacheUri.scheme == "file") {
                     val tempFile = File(sourceCacheUri.path!!)
@@ -354,7 +411,6 @@ class UiSettingsActivity : BaseActivity() {
                     }
                 }
             } catch (_: Exception) {}
-
             return Uri.fromFile(destFile)
         }
 
@@ -373,6 +429,12 @@ class UiSettingsActivity : BaseActivity() {
         private fun broadcastProfileChanged() {
             requireContext().sendBroadcast(
                 android.content.Intent(AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED)
+            )
+        }
+
+        private fun broadcastHomeBannerChanged() {
+            requireContext().sendBroadcast(
+                android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
             )
         }
 

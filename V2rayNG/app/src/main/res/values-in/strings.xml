@@ -525,6 +525,10 @@
     <string name="group_order_by_name">Sesuai Nama</string>
     <string name="group_order_by_delay">Sesuai Delay</string>
     <string name="title_more_menu">Menu Lainnya</string>
+    <string name="title_import_menu">Menu Impor</string>
+    <string name="routing_settings_import_predefined_rulesets_title">Preset</string>
+    <string name="routing_settings_import_rulesets_from_clipboard_title">Clipboard</string>
+    <string name="routing_settings_import_rulesets_from_qrcode_title">QR Code</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu
@@ -593,6 +597,14 @@ yang kamu butuhin."</string>
     <string name="home_banner_delete_title">Hapus banner beranda kustom</string>
     <string name="home_banner_delete_summary">Balikin ke banner bawaan</string>
     <string name="home_banner_updated">Sip, banner beranda berhasil di-update!</string>
+    
+    <!-- Sheet banner settings -->   	
+    <string name="sheet_banner_category">Banner Bottomsheet</string>
+    <string name="sheet_banner_custom_title">Ganti banner bottomsheet</string>
+    <string name="sheet_banner_custom_summary">Pilih gambar sendiri buat bottomsheet</string>
+    <string name="sheet_banner_delete_title">Hapus banner bottomsheet kustom</string>
+    <string name="sheet_banner_delete_summary">Balikin ke banner bawaan</string>
+    <string name="sheet_banner_updated">Sip, banner bottomsheet berhasil di-update!</string>
 
     <!-- Alerter notification titles -->
     <string name="title_alerter_info">Info</string>
