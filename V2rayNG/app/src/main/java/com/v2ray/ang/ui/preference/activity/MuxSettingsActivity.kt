@@ -25,13 +25,13 @@ class MuxSettingsActivity : BaseActivity() {
 
         val rootView = findViewById<View>(R.id.main_content)
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
-            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.updatePadding(
-                left = systemBars.left,
-                top = systemBars.top,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                top    = maxOf(systemBars.top,    displayCutout.top),
+                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
+                left   = maxOf(systemBars.left,   displayCutout.left),
+                right  = maxOf(systemBars.right,  displayCutout.right)
             )
             insets
         }
