@@ -35,7 +35,7 @@ class WelcomeActivity : BaseActivity() {
 
         setContentView(R.layout.uwu_activity_welcome)
 
-        val rootLayout = findViewById<View>(R.id.root_layout)
+        val rootLayout = findViewById<View>(R.id.main_content)
         ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updatePadding(
