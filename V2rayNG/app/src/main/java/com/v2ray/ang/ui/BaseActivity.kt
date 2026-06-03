@@ -100,7 +100,7 @@ abstract class BaseActivity : AppCompatActivity() {
             val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.updatePadding(
                 top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom, displayCutout.bottom),
+                bottom = 0,
                 left   = maxOf(systemBars.left,   displayCutout.left),
                 right  = maxOf(systemBars.right,  displayCutout.right)
             )
