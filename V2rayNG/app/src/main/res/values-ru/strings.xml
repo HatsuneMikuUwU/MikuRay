@@ -656,4 +656,16 @@
     <string name="title_blur_warning">Высокое число итераций (10+) может снизить FPS. Рекомендуется: 2–5 итераций с радиусом 25–40</string>
     <string name="toast_allow_insecure_deprecated">ПРЕДУПРЕЖДЕНИЕ: Пропуск проверки сертификата «allowInsecure» будет отключён в августе 2026 г. Пожалуйста, как можно скорее перейдите на отпечаток сертификата. После истечения срока функция будет недоступна.</string>
 
+    <!-- WelcomeActivity -->
+    <string name="uwu_skip">Пропустить</string>
+    <string name="uwu_next">Далее</string>
+    <string name="uwu_start">Начать</string>
+    <string name="uwu_welcome_title">Добро пожаловать в</string>
+    <string name="uwu_welcome_summary_1">MikuRay,</string>
+    <string name="uwu_welcome_summary_2">Клиент V2Ray/Xray для Android в стиле Miku UI.</string>
+    <string name="uwu_welcome_summary_3">Создано с любовью, на Kotlin, Java и не только.</string>
+    <string name="uwu_welcome_page1_desc">Бесплатный клиент V2Ray/Xray с открытым исходным кодом.</string>
+    <string name="uwu_welcome_page2_desc">Поддерживает VLESS, VMess, Trojan, Shadowsocks и другие.</string>
+    <string name="uwu_welcome_page3_desc">Создано с любовью, на Kotlin, Java и не только.</string>
+
 </resources>

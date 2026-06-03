@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="?colorSurface"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Background decorative shapes -->
+    <ImageView
+        android:background="@drawable/uwu_shape_clover"
+        android:padding="80.0dip"
+        android:layout_width="300.0dip"
+        android:layout_height="300.0dip"
+        android:layout_marginStart="-100.0dip"
+        android:contentDescription="@null"
+        android:backgroundTint="?colorPrimaryContainer" />
+    <ImageView
+        android:background="@drawable/uwu_shape_octagon"
+        android:layout_width="300.0dip"
+        android:layout_height="300.0dip"
+        android:layout_marginBottom="-100.0dip"
+        android:layout_alignParentBottom="true"
+        android:rotation="20.0"
+        android:layout_marginStart="-50.0dip"
+        android:contentDescription="@null"
+        android:backgroundTint="?colorPrimaryContainer" />
+    <ImageView
+        android:background="@drawable/uwu_shape_rounded_square"
+        android:layout_width="250.0dip"
+        android:layout_height="250.0dip"
+        android:layout_centerVertical="true"
+        android:rotation="20.0"
+        android:layout_marginEnd="-100.0dip"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@null"
+        android:backgroundTint="?colorPrimaryContainer" />
+
+    <!-- Page 1 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/page1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="180.0dip"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="?colorOnPrimaryContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uwu_welcome_title"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="32.0sp"
+                android:textColor="?colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uwu_welcome_summary_1"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="14.0sp"
+                android:textColor="?colorOnSurface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.0dip"
+                android:text="@string/uwu_welcome_page1_desc"
+                android:fontFamily="@font/googlesansregular" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20.0dip"
+            android:layout_marginEnd="20.0dip"
+            android:progress="33"
+            android:max="100"
+            android:indeterminate="false"
+            app:trackCornerRadius="50.0dip"
+            app:trackThickness="8.0dip" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20.0dip">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/page_1button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/uwu_next"
+                style="@style/Widget.Material3.Button" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/page_1textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12.0dip"
+                android:text="@string/uwu_skip"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Page 2 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/page2"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="180.0dip"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="?colorOnPrimaryContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="32.0sp"
+                android:textColor="?colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uwu_welcome_summary_2"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="14.0sp"
+                android:textColor="?colorOnSurface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.0dip"
+                android:text="@string/uwu_welcome_page2_desc"
+                android:fontFamily="@font/googlesansregular" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20.0dip"
+            android:layout_marginEnd="20.0dip"
+            android:progress="66"
+            android:max="100"
+            android:indeterminate="false"
+            app:trackCornerRadius="50.0dip"
+            app:trackThickness="8.0dip" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20.0dip">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/page_2button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/uwu_next"
+                style="@style/Widget.Material3.Button" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/page_2textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12.0dip"
+                android:text="@string/uwu_skip"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Page 3 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/page3"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="180.0dip"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="?colorOnPrimaryContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="32.0sp"
+                android:textColor="?colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uwu_welcome_summary_3"
+                android:fontFamily="@font/googlesansregular" />
+            <TextView
+                android:textSize="14.0sp"
+                android:textColor="?colorOnSurface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.0dip"
+                android:text="@string/uwu_welcome_page3_desc"
+                android:fontFamily="@font/googlesansregular" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20.0dip"
+            android:layout_marginEnd="20.0dip"
+            android:progress="100"
+            android:max="100"
+            android:indeterminate="false"
+            app:trackCornerRadius="50.0dip"
+            app:trackThickness="8.0dip" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20.0dip">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/page_3button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uwu_start"
+                style="@style/Widget.Material3.Button" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -635,4 +635,16 @@
     <string name="title_blur_warning">较高的迭代次数 (10+) 可能会导致掉帧。建议：迭代 2-5 次，半径为 25-40。</string>
     <string name="toast_allow_insecure_deprecated">警告：将在 2026.8.1 禁用跳过证书验证 "allowInsecure" ，请尽快改用证书指纹。到期后无法使用。 </string>
 
+    <!-- WelcomeActivity -->
+    <string name="uwu_skip">跳过</string>
+    <string name="uwu_next">继续</string>
+    <string name="uwu_start">开始</string>
+    <string name="uwu_welcome_title">欢迎来到</string>
+    <string name="uwu_welcome_summary_1">MikuRay,</string>
+    <string name="uwu_welcome_summary_2">Android 上的 V2Ray/Xray 客户端，采用 Miku UI 风格。</string>
+    <string name="uwu_welcome_summary_3">用爱、Kotlin、Java 代码等精心打造。</string>
+    <string name="uwu_welcome_page1_desc">免费开源的 Android V2Ray/Xray 客户端。</string>
+    <string name="uwu_welcome_page2_desc">支持 VLESS、VMess、Trojan、Shadowsocks 等协议。</string>
+    <string name="uwu_welcome_page3_desc">用爱、Kotlin、Java 代码等精心打造。</string>
+
 </resources>

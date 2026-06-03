@@ -124,6 +124,18 @@
     <string name="server_lab_browser_dialer_tip">Only supports xhttp (packet-up) and ws outbound; TLS-related settings may be ignored or conflict</string>
     <string name="toast_allow_insecure_deprecated">WARNING: Skipping certificate verification "allowInsecure" will be disabled in August 2026. Please use certificate fingerprints as soon as possible. This feature will not be available after its expiration.</string>
 
+    <!-- WelcomeActivity -->
+    <string name="uwu_skip">Skip</string>
+    <string name="uwu_next">Next</string>
+    <string name="uwu_start">Start</string>
+    <string name="uwu_welcome_title">Welcome to</string>
+    <string name="uwu_welcome_summary_1">MikuRay,</string>
+    <string name="uwu_welcome_summary_2">V2Ray/Xray client for Android with a Miku UI style.</string>
+    <string name="uwu_welcome_summary_3">Made with Heart, Kotlin, Java code and more.</string>
+    <string name="uwu_welcome_page1_desc">Free and open source V2Ray/Xray client for Android.</string>
+    <string name="uwu_welcome_page2_desc">Supports VLESS, VMess, Trojan, Shadowsocks, and more.</string>
+    <string name="uwu_welcome_page3_desc">Made with Heart, Kotlin, Java code and more.</string>
+
     <!-- UserAssetActivity -->
     <string name="toast_asset_copy_failed">File copy failed, please use File Manager</string>
     <string name="menu_item_add_asset">Add asset</string>

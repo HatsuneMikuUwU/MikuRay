@@ -637,4 +637,16 @@ yang kamu butuhin."</string>
     <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja dengan radius 25-40.</string>
     <string name="toast_allow_insecure_deprecated">PERINGATAN: Lewati verifikasi sertifikat "allowInsecure" akan dinonaktifkan pada Agustus 2026. Segera gunakan certificate fingerprint. Fitur ini tidak akan tersedia setelah kedaluwarsa.</string>
 
+    <!-- WelcomeActivity -->
+    <string name="uwu_skip">Lewatin</string>
+    <string name="uwu_next">Lanjut</string>
+    <string name="uwu_start">Mulai</string>
+    <string name="uwu_welcome_title">Met dateng di</string>
+    <string name="uwu_welcome_summary_1">MikuRay,</string>
+    <string name="uwu_welcome_summary_2">Klien V2Ray/Xray buat Android dengan gaya UI Miku.</string>
+    <string name="uwu_welcome_summary_3">Dibuat dengan Cinta, Kotlin, kode Java, dan lainnya.</string>
+    <string name="uwu_welcome_page1_desc">Klien V2Ray/Xray Android gratis dan open source.</string>
+    <string name="uwu_welcome_page2_desc">Mendukung VLESS, VMess, Trojan, Shadowsocks, dan lainnya.</string>
+    <string name="uwu_welcome_page3_desc">Dibuat dengan Cinta, Kotlin, kode Java, dan lainnya.</string>
+
 </resources>
