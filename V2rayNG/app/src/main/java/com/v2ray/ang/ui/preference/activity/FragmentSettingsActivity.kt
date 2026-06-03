@@ -25,8 +25,14 @@ class FragmentSettingsActivity : BaseActivity() {
 
         val rootView = findViewById<View>(R.id.main_content)
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            view.updatePadding(bottom = navigationBars.bottom)
+            view.updatePadding(
+                left = systemBars.left,
+                top = systemBars.top,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
             insets
         }
 

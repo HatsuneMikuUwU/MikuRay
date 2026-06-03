@@ -529,6 +529,8 @@
     <string name="routing_settings_import_rulesets_from_clipboard_title">剪贴板</string>
     <string name="routing_settings_import_rulesets_from_qrcode_title">QRcode</string>
     <string name="title_pref_category_style">类别标题样式</string>
+    <string name="scan_code">扫描二维码</string>
+    <string name="select_photo">选择照片</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
