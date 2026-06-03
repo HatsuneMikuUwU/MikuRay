@@ -66,8 +66,8 @@ class IndicatorStyleBottomSheet(
                 val statusBarInset = systemBars.top
                 val navBarInset = systemBars.bottom
 
-                val screenHeight = v.resources.displayMetrics.heightPixels
-                val margin = (8 * v.resources.displayMetrics.density).toInt()
+                val screenHeight = view.resources.displayMetrics.heightPixels
+                val margin = (8 * view.resources.displayMetrics.density).toInt()
 
                 dialog.behavior.maxHeight = screenHeight - statusBarInset - margin
 
