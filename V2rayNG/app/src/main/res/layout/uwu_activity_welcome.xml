@@ -1,318 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:id="@+id/main_content"
-    android:background="?colorBg"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:background="?colorSurface"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <ImageView
-        android:background="@drawable/uwu_shape_clover"
-        android:padding="80dp"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="-100dp"
-        android:contentDescription="@null"
-        android:backgroundTint="?colorCard" />
+    <com.neko.shapeimageview.CloverImageView
+        android:padding="80.0dip"
+        android:layout_width="300.0dip"
+        android:layout_height="300.0dip"
+        android:layout_marginStart="-100.0dip"
+        android:src="@drawable/uwu_banner_author"
+        app:siBorderColor="?colorSecondaryContainer"
+        app:siBorderWidth="3dp"/>
     <ImageView
         android:background="@drawable/uwu_shape_octagon"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="-100dp"
+        android:layout_width="300.0dip"
+        android:layout_height="300.0dip"
+        android:layout_marginBottom="-100.0dip"
         android:layout_alignParentBottom="true"
-        android:rotation="20.0"
-        android:layout_marginStart="-50dp"
         android:contentDescription="@null"
-        android:backgroundTint="?colorCard" />
+        android:rotation="20.0"
+        android:layout_marginStart="-50.0dip"
+        android:backgroundTint="?colorSecondaryContainer" />
     <ImageView
         android:background="@drawable/uwu_shape_rounded_square"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="250.0dip"
+        android:layout_height="250.0dip"
         android:layout_centerVertical="true"
-        android:rotation="20.0"
-        android:layout_marginEnd="-100dp"
-        android:layout_alignParentEnd="true"
         android:contentDescription="@null"
-        android:backgroundTint="?colorCard" />
-
+        android:rotation="20.0"
+        android:layout_marginEnd="-100.0dip"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="?colorSecondaryContainer" />
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/page1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:gravity="bottom"
-            android:paddingBottom="32dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
-
+            android:orientation="vertical"
+            android:paddingBottom="32.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
             <TextView
-                android:textSize="20sp"
+                android:textSize="20.0sp"
                 android:textColor="?colorOnSurface"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_title"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="32sp"
+                android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_1"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="14sp"
+                android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page1_desc"
                 android:fontFamily="@font/googlesansregular" />
         </LinearLayout>
-
         <LinearLayout
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8.0dip">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
+                android:layout_marginEnd="6.0dip"
                 app:tint="?colorPrimary" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                android:layout_marginEnd="6.0dip"
+                app:tint="?colorOnSurfaceVariant" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                app:tint="?colorOnSurfaceVariant" />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_margin="20.0dip">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/page_1button"
-                android:layout_width="0dp"
+                android:padding="16.0dip"
+                android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="16dp"
-                android:textAllCaps="true"
                 android:text="@string/uwu_next"
+                android:layout_weight="1.0"
+                android:textAllCaps="true"
                 style="@style/Widget.Material3Expressive.Button" />
             <com.google.android.material.button.MaterialButton
+                android:textColor="?colorPrimary"
                 android:id="@+id/page_1_skip"
+                android:padding="16.0dip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:layout_marginStart="12dp"
                 android:text="@string/uwu_skip"
-                android:textColor="?colorPrimary"
+                android:layout_marginStart="12.0dip"
                 app:icon="@drawable/uwu_icon_skip"
                 app:iconGravity="end"
-                app:iconPadding="16dp"
+                app:iconPadding="16.0dip"
                 app:iconTint="?colorPrimary"
                 app:rippleColor="?colorOnPrimaryContainer"
                 app:strokeColor="?colorPrimary"
-                app:strokeWidth="2dp"
+                app:strokeWidth="2.0dip"
                 style="@style/Widget.Material3Expressive.Button.OutlinedButton" />
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/page2"
         android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:gravity="bottom"
-            android:paddingBottom="32dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
-
+            android:orientation="vertical"
+            android:paddingBottom="32.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
             <TextView
-                android:textSize="20sp"
+                android:textSize="20.0sp"
                 android:textColor="?colorOnSurface"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="32sp"
+                android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_2"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="14sp"
+                android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page2_desc"
                 android:fontFamily="@font/googlesansregular" />
         </LinearLayout>
-
         <LinearLayout
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8.0dip">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                android:layout_marginEnd="6.0dip"
+                app:tint="?colorOnSurfaceVariant" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
+                android:layout_marginEnd="6.0dip"
                 app:tint="?colorPrimary" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                app:tint="?colorOnSurfaceVariant" />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_margin="20.0dip">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/page_2button"
-                android:layout_width="0dp"
+                android:padding="16.0dip"
+                android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="16dp"
-                android:textAllCaps="true"
                 android:text="@string/uwu_next"
+                android:layout_weight="1.0"
+                android:textAllCaps="true"
                 style="@style/Widget.Material3Expressive.Button" />
             <com.google.android.material.button.MaterialButton
+                android:textColor="?colorPrimary"
                 android:id="@+id/page_2_skip"
+                android:padding="16.0dip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:layout_marginStart="12dp"
                 android:text="@string/uwu_skip"
-                android:textColor="?colorPrimary"
+                android:layout_marginStart="12.0dip"
                 app:icon="@drawable/uwu_icon_skip"
                 app:iconGravity="end"
-                app:iconPadding="16dp"
+                app:iconPadding="16.0dip"
                 app:iconTint="?colorPrimary"
                 app:rippleColor="?colorOnPrimaryContainer"
                 app:strokeColor="?colorPrimary"
-                app:strokeWidth="2dp"
+                app:strokeWidth="2.0dip"
                 style="@style/Widget.Material3Expressive.Button.OutlinedButton" />
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/page3"
         android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:gravity="bottom"
-            android:paddingBottom="32dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
-
+            android:orientation="vertical"
+            android:paddingBottom="32.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:paddingStart="20.0dip"
+            android:paddingEnd="20.0dip">
             <TextView
-                android:textSize="20sp"
+                android:textSize="20.0sp"
                 android:textColor="?colorOnSurface"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="32sp"
+                android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_3"
                 android:fontFamily="@font/googlesansregular" />
             <TextView
-                android:textSize="14sp"
+                android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page3_desc"
                 android:fontFamily="@font/googlesansregular" />
         </LinearLayout>
-
         <LinearLayout
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8.0dip">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                android:layout_marginEnd="6.0dip"
+                app:tint="?colorOnSurfaceVariant" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
-                app:tint="?colorOnSurface" />
+                android:layout_marginEnd="6.0dip"
+                app:tint="?colorOnSurfaceVariant" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="16.0dip"
+                android:layout_height="16.0dip"
                 android:src="@drawable/uwu_dot"
                 app:tint="?colorPrimary" />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_margin="20.0dip">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/page_3button"
-                android:layout_width="match_parent"
+                android:padding="16.0dip"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textAllCaps="true"
                 android:text="@string/uwu_start"
+                android:textAllCaps="true"
                 style="@style/Widget.Material3Expressive.Button" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
