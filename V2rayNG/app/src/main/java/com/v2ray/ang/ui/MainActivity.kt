@@ -357,8 +357,8 @@ class MainActivity : HelperBaseActivity(),
 
         val (paddingLeftDp, paddingRightDp) = when {
             tabCount <= 1 -> if (selected) Pair(16f, 16f) else Pair(12f, 12f)
-            position == 0 -> if (selected) Pair(16f, 16f) else Pair(16f, 8f)
-            position == tabCount - 1 -> if (selected) Pair(16f, 16f) else Pair(8f, 16f)
+            position == 0 -> if (selected) Pair(16f, 16f) else Pair(16f, 12f)
+            position == tabCount - 1 -> if (selected) Pair(16f, 16f) else Pair(12f, 16f)
             else -> if (selected) Pair(16f, 16f) else Pair(12f, 12f)
         }
 
