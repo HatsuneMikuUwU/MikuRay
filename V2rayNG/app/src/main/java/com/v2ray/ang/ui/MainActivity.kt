@@ -7,6 +7,7 @@ import android.net.VpnService
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.widget.TextView
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -307,6 +308,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun setupViewModel() {
+        mainViewModel.updateListAction.observe(this) { refreshTabBadges() }
         mainViewModel.updateTestResultAction.observe(this) { setTestState(it) }
         mainViewModel.updateIpResultAction.observe(this) { ip ->
             binding.tvIpState.text = if (ip.isNullOrEmpty()) {
@@ -337,9 +339,19 @@ class MainActivity : HelperBaseActivity(),
 
         tabMediator?.detach()
         tabMediator = TabLayoutMediator(binding.tabGroup, binding.viewPager) { tab, position ->
-            groupPagerAdapter.groups.getOrNull(position)?.let {
-                tab.text = it.remarks
-                tab.tag = it.id
+            groupPagerAdapter.groups.getOrNull(position)?.let { group ->
+                tab.tag = group.id
+                val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_group, null)
+                val tabLabel = tabView.findViewById<TextView>(R.id.tab_label)
+                val tabBadge = tabView.findViewById<TextView>(R.id.tab_badge)
+                tabLabel.text = group.remarks
+                if (group.serverCount > 0) {
+                    tabBadge.text = if (group.serverCount > 999) "999+" else group.serverCount.toString()
+                    tabBadge.visibility = View.VISIBLE
+                } else {
+                    tabBadge.visibility = View.GONE
+                }
+                tab.customView = tabView
             }
         }.also { it.attach() }
 
@@ -355,6 +367,21 @@ class MainActivity : HelperBaseActivity(),
         binding.layoutTabWrapper.isVisible = hasAnyGroup
         binding.tabGroup.isVisible = hasAnyGroup
         (binding.tabGroup.parent as? View)?.isVisible = hasAnyGroup 
+    }
+
+    private fun refreshTabBadges() {
+        val groups = mainViewModel.getSubscriptions(this)
+        for (i in groups.indices) {
+            val tab = binding.tabGroup.getTabAt(i) ?: continue
+            val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
+            val count = groups.getOrNull(i)?.serverCount ?: 0
+            if (count > 0) {
+                tabBadge.text = if (count > 999) "999+" else count.toString()
+                tabBadge.visibility = View.VISIBLE
+            } else {
+                tabBadge.visibility = View.GONE
+            }
+        }
     }
 
     private fun handleFabAction() {

@@ -291,7 +291,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             groups.add(
                 GroupMapItem(
                     id = "",
-                    remarks = context.getString(R.string.filter_config_all)
+                    remarks = context.getString(R.string.filter_config_all),
+                    serverCount = MmkvManager.decodeAllServerList().size
                 )
             )
         }
@@ -299,7 +300,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             groups.add(
                 GroupMapItem(
                     id = sub.guid,
-                    remarks = sub.subscription.remarks
+                    remarks = sub.subscription.remarks,
+                    serverCount = MmkvManager.decodeServerList(sub.guid).size
                 )
             )
         }
