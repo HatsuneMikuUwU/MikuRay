@@ -212,7 +212,7 @@
                                             android:singleLine="false"
                                             android:text="@string/uwu_about_version_title"
                                             android:textAppearance="?textAppearanceTitleMedium"
-                                            android:textColor="?android:textColorPrimaryInverse"
+                                            android:textColor="?colorOnPrimary"
                                             android:textSize="17sp" />
 
                                         <TextView
@@ -222,7 +222,8 @@
                                             android:singleLine="false"
                                             android:text="@string/uwu_about_version_summary"
                                             android:textAppearance="?textAppearanceTitleSmall"
-                                            android:textColor="?android:textColorPrimaryInverse"
+                                            android:textColor="?colorOnPrimary"
+                                            android:alpha="0.8"
                                             android:textSize="14sp" />
 
                                     </LinearLayout>

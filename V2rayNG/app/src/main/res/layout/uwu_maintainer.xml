@@ -9,6 +9,7 @@
     android:layout_marginBottom="12.0dip"
     android:layout_marginHorizontal="4.0dip"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    
     <LinearLayout
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -19,16 +20,18 @@
         android:minHeight="?android:listPreferredItemHeightSmall"
         android:paddingHorizontal="20.0dip"
         android:paddingVertical="25.0dip">
+        
         <LinearLayout
             android:gravity="start|center"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+            
             <TextView
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textSize="17.0sp"
-                android:textColor="?android:textColorPrimaryInverse"
+                android:textColor="?attr/colorOnPrimary"
                 android:ellipsize="marquee"
                 android:gravity="start"
                 android:layout_gravity="start"
@@ -36,10 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2" />
+                
             <TextView
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textSize="14.0sp"
-                android:textColor="?android:textColorPrimaryInverse"
+                android:textColor="?attr/colorOnPrimary"
+                android:alpha="0.8"
                 android:id="@android:id/summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,14 +52,18 @@
                 android:maxLines="10"
                 android:layout_below="@android:id/title"
                 android:layout_alignStart="@android:id/title" />
+                
         </LinearLayout>
+        
         <ImageView
             android:layout_gravity="end|center"
             android:id="@android:id/icon"
             android:padding="6.0dip"
             android:layout_width="35.0dip"
             android:layout_height="35.0dip"
-            android:tint="?android:textColorPrimaryInverse"
+            android:tint="?attr/colorOnPrimary"
             android:layout_marginStart="8.0dip" />
+            
     </LinearLayout>
+    
 </FrameLayout>
