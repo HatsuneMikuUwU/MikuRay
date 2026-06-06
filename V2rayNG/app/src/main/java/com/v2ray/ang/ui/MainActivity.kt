@@ -344,6 +344,20 @@ class MainActivity : HelperBaseActivity(),
         mainViewModel.initAssets(assets)
     }
 
+
+    private fun setBadgeVisibility(badge: TextView, label: TextView, count: Int) {
+        if (count > 0) {
+            badge.text = if (count > 99) "99+" else count.toString()
+            badge.visibility = View.VISIBLE
+            (badge.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.marginStart =
+                (6 * resources.displayMetrics.density).toInt()
+        } else {
+            badge.visibility = View.GONE
+            (badge.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.marginStart = 0
+        }
+        badge.requestLayout()
+    }
+
     private fun applyTabSelectedStyle(
         tab: com.google.android.material.tabs.TabLayout.Tab?,
         selected: Boolean,
@@ -355,11 +369,10 @@ class MainActivity : HelperBaseActivity(),
         val badge = view.findViewById<TextView>(R.id.tab_badge) ?: return
         val px = resources.displayMetrics.density
 
-        val (paddingLeftDp, paddingRightDp) = when {
-            tabCount <= 1 -> if (selected) Pair(16f, 16f) else Pair(12f, 12f)
-            position == 0 -> if (selected) Pair(16f, 16f) else Pair(16f, 12f)
-            position == tabCount - 1 -> if (selected) Pair(16f, 16f) else Pair(12f, 16f)
-            else -> if (selected) Pair(16f, 16f) else Pair(12f, 12f)
+        val (paddingLeftDp, paddingRightDp) = if (selected) {
+            Pair(16f, 16f) 
+        } else {
+            if (tabCount <= 1) Pair(16f, 16f) else Pair(12f, 12f) 
         }
 
         if (selected) {
@@ -391,12 +404,7 @@ class MainActivity : HelperBaseActivity(),
                 val tabLabel = tabView.findViewById<TextView>(R.id.tab_label)
                 val tabBadge = tabView.findViewById<TextView>(R.id.tab_badge)
                 tabLabel.text = group.remarks
-                if (group.serverCount > 0) {
-                    tabBadge.text = if (group.serverCount > 99) "99+" else group.serverCount.toString()
-                    tabBadge.visibility = View.VISIBLE
-                } else {
-                    tabBadge.visibility = View.GONE
-                }
+                setBadgeVisibility(tabBadge, tabLabel, group.serverCount)
                 tab.customView = tabView
             }
         }.also { it.attach() }
@@ -433,12 +441,8 @@ class MainActivity : HelperBaseActivity(),
             val tab = binding.tabGroup.getTabAt(i) ?: continue
             val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
             val count = groups.getOrNull(i)?.serverCount ?: 0
-            if (count > 0) {
-                tabBadge.text = if (count > 99) "99+" else count.toString()
-                tabBadge.visibility = View.VISIBLE
-            } else {
-                tabBadge.visibility = View.GONE
-            }
+            val tabLabel = tab.customView?.findViewById<TextView>(R.id.tab_label) ?: continue
+            setBadgeVisibility(tabBadge, tabLabel, count)
         }
     }
 
