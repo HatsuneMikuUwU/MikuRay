@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp">
 
     <TextView
         android:id="@+id/tab_label"

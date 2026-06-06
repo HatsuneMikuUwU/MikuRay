@@ -77,10 +77,10 @@ class MainActivity : HelperBaseActivity(),
     private var tabMediator: TabLayoutMediator? = null
     private val tabSelectedListener = object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab) {
-            applyTabSelectedStyle(tab, true)
+            applyTabSelectedStyle(tab, true, tab.position, binding.tabGroup.tabCount)
         }
         override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab) {
-            applyTabSelectedStyle(tab, false)
+            applyTabSelectedStyle(tab, false, tab.position, binding.tabGroup.tabCount)
         }
         override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab) {}
     }
@@ -344,10 +344,24 @@ class MainActivity : HelperBaseActivity(),
         mainViewModel.initAssets(assets)
     }
 
-    private fun applyTabSelectedStyle(tab: com.google.android.material.tabs.TabLayout.Tab?, selected: Boolean) {
+    private fun applyTabSelectedStyle(
+        tab: com.google.android.material.tabs.TabLayout.Tab?,
+        selected: Boolean,
+        position: Int = tab?.position ?: 0,
+        tabCount: Int = binding.tabGroup.tabCount
+    ) {
         val view = tab?.customView ?: return
         val label = view.findViewById<TextView>(R.id.tab_label) ?: return
         val badge = view.findViewById<TextView>(R.id.tab_badge) ?: return
+        val px = resources.displayMetrics.density
+
+        val (paddingLeftDp, paddingRightDp) = when {
+            tabCount <= 1 -> if (selected) Pair(20f, 20f) else Pair(12f, 12f)
+            position == 0 -> if (selected) Pair(24f, 16f) else Pair(16f, 8f)
+            position == tabCount - 1 -> if (selected) Pair(16f, 24f) else Pair(8f, 16f)
+            else -> if (selected) Pair(20f, 20f) else Pair(12f, 12f)
+        }
+
         if (selected) {
             label.setTextColor(getColorAttr("colorOnPrimary"))
             badge.setTextColor(getColorAttr("colorPrimary"))
@@ -361,6 +375,8 @@ class MainActivity : HelperBaseActivity(),
                 getColorAttr("colorPrimary")
             )
         }
+
+        view.setPadding((paddingLeftDp * px).toInt(), 0, (paddingRightDp * px).toInt(), 0)
     }
 
     private fun setupGroupTab() {
@@ -376,7 +392,7 @@ class MainActivity : HelperBaseActivity(),
                 val tabBadge = tabView.findViewById<TextView>(R.id.tab_badge)
                 tabLabel.text = group.remarks
                 if (group.serverCount > 0) {
-                    tabBadge.text = if (group.serverCount > 999) "999+" else group.serverCount.toString()
+                    tabBadge.text = if (group.serverCount > 99) "99+" else group.serverCount.toString()
                     tabBadge.visibility = View.VISIBLE
                 } else {
                     tabBadge.visibility = View.GONE
@@ -389,7 +405,7 @@ class MainActivity : HelperBaseActivity(),
         binding.tabGroup.post {
             for (i in 0 until binding.tabGroup.tabCount) {
                 val tab = binding.tabGroup.getTabAt(i)
-                applyTabSelectedStyle(tab, i == binding.tabGroup.selectedTabPosition)
+                applyTabSelectedStyle(tab, i == binding.tabGroup.selectedTabPosition, i, binding.tabGroup.tabCount)
             }
         }
 
@@ -418,7 +434,7 @@ class MainActivity : HelperBaseActivity(),
             val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
             val count = groups.getOrNull(i)?.serverCount ?: 0
             if (count > 0) {
-                tabBadge.text = if (count > 999) "999+" else count.toString()
+                tabBadge.text = if (count > 99) "99+" else count.toString()
                 tabBadge.visibility = View.VISIBLE
             } else {
                 tabBadge.visibility = View.GONE
