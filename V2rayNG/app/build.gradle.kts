@@ -46,27 +46,14 @@ android {
         }
     }
 
-    signingConfigs {
-        create("release") {
-            storeFile = file("release.keystore") 
-            storePassword = "HatsuneMiku" 
-            keyAlias = "HatsuneMiku" 
-            keyPassword = "HatsuneMiku"     
-            enableV1Signing = true
-            enableV2Signing = true
-            enableV3Signing = true
-        }
-    }
-
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release") 
         }
     }
 
