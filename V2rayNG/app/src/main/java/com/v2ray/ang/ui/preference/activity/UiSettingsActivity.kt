@@ -1,6 +1,7 @@
 package com.v2ray.ang.ui.preference.activity
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
@@ -38,8 +39,8 @@ import com.v2ray.ang.ui.preference.CategoryStyleHelper
 import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.showBlur
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.Dispatchers
 import androidx.palette.graphics.Palette
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -310,20 +311,23 @@ class UiSettingsActivity : BaseActivity() {
 
                     if (bitmap != null) {
                         val palette = Palette.from(bitmap)
-                            .maximumColorCount(24)
+                            .maximumColorCount(32)
                             .generate()
-
-                        val color = palette.getVibrantColor(0)
-                            .takeIf { it != 0 }
-                            ?: palette.getDominantColor(0)
-                                .takeIf { it != 0 }
-                            ?: palette.getMutedColor(0)
-                                .takeIf { it != 0 }
-                            ?: palette.getLightVibrantColor(0)
-                                .takeIf { it != 0 }
-                            ?: palette.getDarkVibrantColor(0)
 
                         bitmap.recycle()
+
+                        val bestSwatch = palette.swatches
+                            .filter { swatch ->
+                                val hsl = swatch.hsl
+                                hsl[1] >= 0.2f
+                                    && hsl[2] in 0.15f..0.85f
+                            }
+                            .maxByOrNull { it.population }
+
+                        val color = bestSwatch?.rgb
+                            ?: palette.getDominantColor(0)
+                                .takeIf { it != 0 }
+                            ?: palette.getVibrantColor(0)
 
                         if (color != 0) {
                             MmkvManager.encodeSettings(AppConfig.PREF_BANNER_COLOR, color)
