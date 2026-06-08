@@ -207,6 +207,13 @@
             android:title="@string/home_banner_show_title"
             android:summary="@string/home_banner_show_summary" />
 
+        <com.v2ray.ang.ui.dialog.BannerHeightSliderDialog
+            android:icon="@drawable/ic_cellphone_screenshot"
+            app:layout="@layout/uwu_mid"
+            app:key="pref_home_banner_height"
+            app:title="@string/pref_home_banner_height_title"
+            app:dependency="pref_show_home_banner" />
+
         <Preference
             android:icon="@drawable/ic_image_edit_24dp"
             app:layout="@layout/uwu_mid"

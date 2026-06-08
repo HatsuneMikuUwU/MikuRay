@@ -16,6 +16,7 @@ class ThemeStateManager(private val activity: Activity) {
     private var currentDpi: Int = 0
     private var currentShowBannerHome: Boolean = true
     private var currentBannerHomeUri: String = ""
+    private var currentBannerHeight: Int = 0
     private var currentBlurBottomStatus: Boolean = false
     private var currentBlurBottomRadius: Int = 20
     private var currentBlurBottomRounds: Int = 3
@@ -36,6 +37,7 @@ class ThemeStateManager(private val activity: Activity) {
         currentDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)      
         currentShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         currentBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
+        currentBannerHeight = MmkvManager.decodeSettingsInt(AppConfig.PREF_HOME_BANNER_HEIGHT, AppConfig.HOME_BANNER_HEIGHT_DEFAULT)
         currentBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
         currentBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
         currentBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
@@ -53,6 +55,7 @@ class ThemeStateManager(private val activity: Activity) {
         val newDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
         val newShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         val newBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
+        val newBannerHeight = MmkvManager.decodeSettingsInt(AppConfig.PREF_HOME_BANNER_HEIGHT, AppConfig.HOME_BANNER_HEIGHT_DEFAULT)
         val newBlurBottomStatus = MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
         val newBlurBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
         val newBlurBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
@@ -68,6 +71,7 @@ class ThemeStateManager(private val activity: Activity) {
             currentDpi != newDpi ||
             currentShowBannerHome != newShowBannerHome ||
             currentBannerHomeUri != newBannerHomeUri ||
+            currentBannerHeight != newBannerHeight ||
             currentBlurBottomStatus != newBlurBottomStatus ||
             currentBlurBottomRadius != newBlurBottomRadius ||
             currentBlurBottomRounds != newBlurBottomRounds ||

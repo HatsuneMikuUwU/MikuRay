@@ -163,6 +163,18 @@ class MainActivity : HelperBaseActivity(),
         val paddingTopWithBanner = (16 * resources.displayMetrics.density).toInt()
         val paddingTopNoBanner = 0
 
+        fun applyBannerHeight() {
+            val heightDp = MmkvManager.decodeSettingsInt(
+                AppConfig.PREF_HOME_BANNER_HEIGHT,
+                AppConfig.HOME_BANNER_HEIGHT_DEFAULT
+            )
+            val heightPx = (heightDp * resources.displayMetrics.density).toInt()
+            val lp = bannerHome.layoutParams
+            lp.height = heightPx
+            bannerHome.layoutParams = lp
+            headerImage.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+        }
+
         fun applyBannerVisibility(show: Boolean) {
             bannerHome.visibility = if (show) View.VISIBLE else View.GONE
             val topPad = if (show) paddingTopWithBanner else paddingTopNoBanner
@@ -193,6 +205,7 @@ class MainActivity : HelperBaseActivity(),
 
         val show = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         applyBannerVisibility(show)
+        applyBannerHeight()
         loadBannerImage()
 
         val receiver = object : android.content.BroadcastReceiver() {
@@ -201,6 +214,7 @@ class MainActivity : HelperBaseActivity(),
                     AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED -> {
                         val showNow = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
                         applyBannerVisibility(showNow)
+                        applyBannerHeight()
                         loadBannerImage()
                     }
                 }

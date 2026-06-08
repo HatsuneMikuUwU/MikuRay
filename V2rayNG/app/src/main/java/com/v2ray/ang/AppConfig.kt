@@ -132,6 +132,10 @@ object AppConfig {
     const val PREF_CUSTOM_SHEET_BANNER_URI = "custom_sheet_banner_uri"
     const val PREF_ACTION_CHANGE_SHEET_BANNER = "action_change_sheet_banner_image"
     const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
+    const val PREF_HOME_BANNER_HEIGHT = "pref_home_banner_height"
+    const val HOME_BANNER_HEIGHT_DEFAULT = 170
+    const val HOME_BANNER_HEIGHT_MIN = 150
+    const val HOME_BANNER_HEIGHT_MAX = 250
 
     /** Cache keys. */
     const val CACHE_SUBSCRIPTION_ID = "cache_subscription_id"

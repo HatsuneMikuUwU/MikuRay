@@ -283,7 +283,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:blurRadius="20dp"
-            app:cornerRadius="20dp"
+            app:cornerRadius="28dp"
             app:overlayColor="@color/uwu_tint_blur" />
 
         <RelativeLayout
