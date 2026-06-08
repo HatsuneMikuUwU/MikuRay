@@ -135,7 +135,7 @@ object AppConfig {
     const val PREF_HOME_BANNER_HEIGHT = "pref_home_banner_height"
     const val HOME_BANNER_HEIGHT_DEFAULT = 170
     const val HOME_BANNER_HEIGHT_MIN = 150
-    const val HOME_BANNER_HEIGHT_MAX = 250
+    const val HOME_BANNER_HEIGHT_MAX = 300
 
     /** Cache keys. */
     const val CACHE_SUBSCRIPTION_ID = "cache_subscription_id"

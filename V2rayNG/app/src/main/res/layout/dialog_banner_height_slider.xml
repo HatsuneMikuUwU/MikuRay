@@ -11,9 +11,9 @@
         android:id="@+id/slider_banner_height"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stepSize="1.0"
+        android:stepSize="5.0"
         android:valueFrom="150"
-        android:valueTo="250"
+        android:valueTo="300"
         app:labelBehavior="floating"
         app:tickVisibilityMode="hidden" />
 

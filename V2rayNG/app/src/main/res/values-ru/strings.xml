@@ -633,6 +633,7 @@
     <string name="home_banner_delete_title">Удалить пользовательский баннер главного экрана</string>
     <string name="home_banner_delete_summary">Вернуть баннер главного экрана по умолчанию</string>
     <string name="home_banner_updated">Баннер главного экрана успешно обновлён.</string>
+    <string name="pref_home_banner_height_title">Высота баннера</string>
     
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">Баннер нижней панели</string>

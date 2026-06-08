@@ -614,6 +614,7 @@ yang kamu butuhin."</string>
     <string name="home_banner_delete_title">Hapus banner beranda kustom</string>
     <string name="home_banner_delete_summary">Balikin ke banner bawaan</string>
     <string name="home_banner_updated">Sip, banner beranda berhasil di-update!</string>
+    <string name="pref_home_banner_height_title">Tinggi banner</string>
     
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">Banner Bottomsheet</string>

@@ -612,6 +612,7 @@
     <string name="home_banner_delete_title">删除自定义主页横幅</string>
     <string name="home_banner_delete_summary">恢复为默认主页横幅</string>
     <string name="home_banner_updated">主页横幅更新成功。</string>
+    <string name="pref_home_banner_height_title">横幅高度</string>
     
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">底部面板横幅</string>
