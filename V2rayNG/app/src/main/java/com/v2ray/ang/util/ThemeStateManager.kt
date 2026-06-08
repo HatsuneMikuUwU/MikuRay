@@ -12,7 +12,6 @@ class ThemeStateManager(private val activity: Activity) {
     private var currentTrueBlack: Boolean = false
     private var currentUseCustomColor: Boolean = false
     private var currentCustomColor: Int = 0
-    private var currentBannerColor: Int = 0
     private var currentDpi: Int = 0
     private var currentShowBannerHome: Boolean = true
     private var currentBannerHomeUri: String = ""
@@ -32,7 +31,6 @@ class ThemeStateManager(private val activity: Activity) {
         currentTrueBlack = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
         currentUseCustomColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         currentCustomColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
-        currentBannerColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_BANNER_COLOR, 0)
         currentDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)      
         currentShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         currentBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
@@ -49,7 +47,6 @@ class ThemeStateManager(private val activity: Activity) {
         val newTrueBlack = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
         val newUseCustomColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         val newCustomColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
-        val newBannerColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_BANNER_COLOR, 0)
         val newDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
         val newShowBannerHome = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
         val newBannerHomeUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI) ?: ""
@@ -64,7 +61,6 @@ class ThemeStateManager(private val activity: Activity) {
             currentTrueBlack != newTrueBlack ||
             currentUseCustomColor != newUseCustomColor ||
             currentCustomColor != newCustomColor ||
-            currentBannerColor != newBannerColor ||
             currentDpi != newDpi ||
             currentShowBannerHome != newShowBannerHome ||
             currentBannerHomeUri != newBannerHomeUri ||

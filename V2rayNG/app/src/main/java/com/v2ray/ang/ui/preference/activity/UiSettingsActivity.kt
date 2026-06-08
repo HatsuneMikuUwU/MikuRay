@@ -412,6 +412,9 @@ class UiSettingsActivity : BaseActivity() {
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             deleteOldFile(savedUri)
                             MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
+                            
+                            ThemeManager.clearBannerCache()
+                            
                             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
                                 activity?.recreate()
                             }

@@ -3,6 +3,7 @@ package com.v2ray.ang.util
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
@@ -21,13 +22,21 @@ import com.v2ray.ang.handler.MmkvManager
 
 object ThemeManager {
 
+    private var cachedBannerUri: String? = null
+    private var cachedBannerBitmap: Bitmap? = null
+
+    fun clearBannerCache() {
+        cachedBannerUri = null
+        cachedBannerBitmap?.recycle()
+        cachedBannerBitmap = null
+    }
+
     fun applyTheme(activity: Activity) {
 
         val isDynamic   = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
         val useCustom   = MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         val customColor = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
         val isTrueBlack = isDarkMode(activity) && MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
-
         val isDynamicBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
         val bannerUriStr = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
 
@@ -35,14 +44,32 @@ object ThemeManager {
 
         if (isDynamicBanner && !bannerUriStr.isNullOrEmpty()) {
             try {
-                val uri = Uri.parse(bannerUriStr)
-                val inputStream = activity.contentResolver.openInputStream(uri)
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                inputStream?.close()
+                val bitmapToUse: Bitmap? = if (bannerUriStr == cachedBannerUri && cachedBannerBitmap != null) {
+                    cachedBannerBitmap
+                } else {
+                    cachedBannerBitmap?.recycle() 
+                    
+                    val uri = Uri.parse(bannerUriStr)
+                    val inputStream = activity.contentResolver.openInputStream(uri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    inputStream?.close()
 
-                if (bitmap != null) {
+                    cachedBannerUri = bannerUriStr
+                    cachedBannerBitmap = bitmap
+                    bitmap
+                }
+
+                if (bitmapToUse != null) {
                     val builder = DynamicColorsOptions.Builder()
-                        .setContentBasedSource(bitmap)
+                    
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        builder.setContentBasedSource(bitmapToUse)
+                    } else {
+                        val scaled = Bitmap.createScaledBitmap(bitmapToUse, 1, 1, true)
+                        val dominantColor = scaled.getPixel(0, 0)
+                        scaled.recycle()
+                        builder.setContentBasedSource(dominantColor)
+                    }
                     
                     if (isTrueBlack) {
                         builder.setThemeOverlay(R.style.ThemeOverlay_App_TrueBlack)
@@ -54,6 +81,8 @@ object ThemeManager {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        } else {
+            clearBannerCache()
         }
 
         if (!themeApplied) {
