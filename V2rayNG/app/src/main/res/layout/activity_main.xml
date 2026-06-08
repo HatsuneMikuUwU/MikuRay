@@ -64,10 +64,10 @@
                         android:minWidth="55dp"
                         android:minHeight="55dp"
                         app:backgroundTint="?colorCard"
-                        app:icon="@drawable/ic_navigation_menu"
+                        app:icon="@drawable/ic_btn_home_color"
                         app:iconGravity="textStart"
                         app:iconPadding="0dp"
-                        app:iconTint="?colorOnSurfaceVariant"
+                        app:iconTint="@null"
                         style="@style/Widget.Material3Expressive.Button.IconButton.Filled" />
 
                     <com.google.android.material.button.MaterialButton
@@ -77,10 +77,10 @@
                         android:minWidth="55dp"
                         android:minHeight="55dp"
                         app:backgroundTint="?colorCard"
-                        app:icon="@drawable/ic_more_vert_24dp"
+                        app:icon="@drawable/ic_btn_more_menu_color"
                         app:iconGravity="textStart"
                         app:iconPadding="0dp"
-                        app:iconTint="?colorOnSurfaceVariant"
+                        app:iconTint="@null"
                         style="@style/Widget.Material3Expressive.Button.IconButton.Filled" />
                 </LinearLayout>
 
@@ -148,10 +148,10 @@
                     android:minHeight="55dp"
                     android:layout_marginEnd="4dp"
                     app:backgroundTint="?colorCard"
-                    app:icon="@drawable/ic_action_note_add"
+                    app:icon="@drawable/ic_btn_add_config_color"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconTint="?colorOnSurfaceVariant"
+                    app:iconTint="@null"
                     style="@style/Widget.Material3Expressive.Button.IconButton.Filled" />
 
                 <com.google.android.material.card.MaterialCardView

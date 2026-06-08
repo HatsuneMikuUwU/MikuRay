@@ -75,6 +75,10 @@ class MainActivity : HelperBaseActivity(),
     val mainViewModel: MainViewModel by viewModels()
     private lateinit var groupPagerAdapter: GroupPagerAdapter
     private var tabMediator: TabLayoutMediator? = null
+    
+    // [DIPERBAIKI]: Menyimpan instance receiver di level class agar bisa di-unregister
+    private var bannerReceiver: android.content.BroadcastReceiver? = null 
+
     private val tabSelectedListener = object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab) {
             applyTabSelectedStyle(tab, true, tab.position, binding.tabGroup.tabCount)
@@ -187,17 +191,19 @@ class MainActivity : HelperBaseActivity(),
         }
 
         fun loadBannerImage() {
+            if (isDestroyed || isFinishing) return
+
             val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
             val targetTag = if (uriString.isNullOrBlank()) TAG_HOME_BANNER_DEFAULT else uriString
             if (headerImage.tag == targetTag) return
             if (!uriString.isNullOrBlank()) {
-                Glide.with(this)
+                Glide.with(this@MainActivity)
                     .load(Uri.parse(uriString))
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .error(R.drawable.uwu_banner_image_about)
                     .into(headerImage)
             } else {
-                Glide.with(this).clear(headerImage)
+                Glide.with(this@MainActivity).clear(headerImage)
                 headerImage.setImageResource(R.drawable.uwu_banner_image_about)
             }
             headerImage.tag = targetTag
@@ -208,7 +214,7 @@ class MainActivity : HelperBaseActivity(),
         applyBannerHeight()
         loadBannerImage()
 
-        val receiver = object : android.content.BroadcastReceiver() {
+        bannerReceiver = object : android.content.BroadcastReceiver() {
             override fun onReceive(context: android.content.Context?, intent: android.content.Intent?) {
                 when (intent?.action) {
                     AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED -> {
@@ -220,12 +226,13 @@ class MainActivity : HelperBaseActivity(),
                 }
             }
         }
+        
         val filter = android.content.IntentFilter(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(receiver, filter, android.content.Context.RECEIVER_NOT_EXPORTED)
+            registerReceiver(bannerReceiver, filter, android.content.Context.RECEIVER_NOT_EXPORTED)
         } else {
             @Suppress("UnspecifiedRegisterReceiverFlag")
-            registerReceiver(receiver, filter)
+            registerReceiver(bannerReceiver, filter)
         }
     }
 
@@ -838,6 +845,13 @@ class MainActivity : HelperBaseActivity(),
 
     override fun onDestroy() {
         tabMediator?.detach()
+        
+        try {
+            bannerReceiver?.let { unregisterReceiver(it) }
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to unregister bannerReceiver", e)
+        }
+        
         super.onDestroy()
     }
 }
