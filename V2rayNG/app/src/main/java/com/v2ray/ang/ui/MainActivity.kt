@@ -51,7 +51,6 @@ import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.QRCodeDecoder
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.util.showBlur
-import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import com.v2ray.ang.viewmodel.MainViewModel
 import io.github.g00fy2.quickie.QRResult
@@ -181,11 +180,21 @@ class MainActivity : HelperBaseActivity(),
 
         fun applyBannerVisibility(show: Boolean) {
             bannerHome.visibility = if (show) View.VISIBLE else View.GONE
-            // paddingTop on headerTopRow is now controlled by applyHeaderTopRowPadding()
+            val topPad = if (show) paddingTopWithBanner else paddingTopNoBanner
+            headerTopRow.setPadding(
+                headerTopRow.paddingLeft,
+                topPad,
+                headerTopRow.paddingRight,
+                headerTopRow.paddingBottom
+            )
         }
 
         fun applyHeaderTopRowPadding() {
-            val paddingDp = ThemeManager.uiState.headerTopRowPaddingDp
+            val showBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+            val paddingDp = if (showBanner) MmkvManager.decodeSettingsInt(
+                AppConfig.PREF_HEADER_TOP_ROW_PADDING,
+                AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT
+            ) else 0
             val paddingPx = (paddingDp * resources.displayMetrics.density).toInt()
             headerTopRow.setPadding(
                 headerTopRow.paddingLeft,
@@ -214,8 +223,8 @@ class MainActivity : HelperBaseActivity(),
             headerImage.tag = targetTag
         }
 
-        val state = ThemeManager.refreshUiState()
-        applyBannerVisibility(state.showHomeBanner)
+        val show = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+        applyBannerVisibility(show)
         applyBannerHeight()
         applyHeaderTopRowPadding()
         loadBannerImage()
@@ -224,14 +233,13 @@ class MainActivity : HelperBaseActivity(),
             override fun onReceive(context: android.content.Context?, intent: android.content.Intent?) {
                 when (intent?.action) {
                     AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED -> {
-                        val state = ThemeManager.refreshUiState()
-                        applyBannerVisibility(state.showHomeBanner)
+                        val showNow = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+                        applyBannerVisibility(showNow)
                         applyBannerHeight()
                         applyHeaderTopRowPadding()
                         loadBannerImage()
                     }
                     AppConfig.BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED -> {
-                        ThemeManager.refreshUiState()
                         applyHeaderTopRowPadding()
                     }
                 }
