@@ -10,10 +10,9 @@ import android.util.TypedValue
 import android.widget.ImageView.ScaleType
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import com.google.android.material.R as MatR
-import androidx.appcompat.R as AppCompatR
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
+import com.v2ray.ang.util.getColorAttr
 import com.v2ray.ang.handler.MmkvManager
 
 class UwuHeaderIconView @JvmOverloads constructor(
@@ -76,7 +75,9 @@ class UwuHeaderIconView @JvmOverloads constructor(
                 ?.also { it.setBounds(0, 0, iconSizePx, iconSizePx) }
             scaleType = ScaleType.CENTER
             setImageDrawable(iconDrawable)
-            imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE)
+            imageTintList = android.content.res.ColorStateList.valueOf(
+                context.getColorAttr("colorOnPrimary")
+            )
         } else {
             setPadding(0, 0, 0, 0)
             background = null
@@ -87,9 +88,9 @@ class UwuHeaderIconView @JvmOverloads constructor(
 
     private fun buildGradientBackground(): GradientDrawable {
         val tv = TypedValue()
-        context.theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, tv, true)
+        context.getColorAttr("colorPrimary", tv, true)
         val colorStart = tv.data
-        context.theme.resolveAttribute(MatR.attr.colorTertiary, tv, true)
+        context.getColorAttr("colorTertiary", tv, true)
         val colorEnd = tv.data
         return GradientDrawable(
             GradientDrawable.Orientation.TL_BR,

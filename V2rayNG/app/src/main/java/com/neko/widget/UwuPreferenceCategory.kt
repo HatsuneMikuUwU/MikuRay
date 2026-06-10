@@ -7,8 +7,7 @@ import android.util.TypedValue
 import android.widget.ImageView
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
-import com.google.android.material.R as MatR
-import androidx.appcompat.R as AppCompatR
+import com.v2ray.ang.util.getColorAttr
 import com.v2ray.ang.R
 
 class UwuPreferenceCategory @JvmOverloads constructor(
@@ -34,9 +33,9 @@ class UwuPreferenceCategory @JvmOverloads constructor(
         val frame = iconView.parent as? android.view.ViewGroup ?: return
         val tv = TypedValue()
         val theme = context.theme
-        theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, tv, true)
+        context.getColorAttr("colorPrimary", tv, true)
         val colorStart = tv.data
-        theme.resolveAttribute(MatR.attr.colorTertiary, tv, true)
+        context.getColorAttr("colorTertiary", tv, true)
         val colorEnd = tv.data
         frame.background = GradientDrawable(
             GradientDrawable.Orientation.TL_BR,
