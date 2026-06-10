@@ -233,6 +233,9 @@
         <item>Rounded Square</item>
         <item>Squircle</item>
         <item>Heart</item>
+        <item>Hive</item>
+        <item>Pill</item>
+        <item>Scallop</item>
     </string-array>
 
     <string-array name="icon_shape_values" translatable="false">
@@ -246,6 +249,9 @@
         <item>uwu_shape_rounded_square</item>
         <item>uwu_shape_squircle</item>
         <item>uwu_shape_heart</item>
+        <item>uwu_shape_hive</item>
+        <item>uwu_shape_pill</item>
+        <item>uwu_shape_scallop</item>
     </string-array>
     
     <string-array name="uwu_random_text">
