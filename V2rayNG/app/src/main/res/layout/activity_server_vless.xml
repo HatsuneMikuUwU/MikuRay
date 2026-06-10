@@ -105,8 +105,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         app:shapeAppearance="?shapeAppearanceCornerMedium"
-                        app:boxStrokeWidth="2.0dip"
-                        app:boxStrokeWidthFocused="2.0dip"
+                        app:boxStrokeWidth="1.5dip"
+                        app:boxStrokeWidthFocused="1.5dip"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -122,8 +122,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         app:shapeAppearance="?shapeAppearanceCornerMedium"
-                        app:boxStrokeWidth="2.0dip"
-                        app:boxStrokeWidthFocused="2.0dip"
+                        app:boxStrokeWidth="1.5dip"
+                        app:boxStrokeWidthFocused="1.5dip"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -140,8 +140,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         app:shapeAppearance="?shapeAppearanceCornerMedium"
-                        app:boxStrokeWidth="2.0dip"
-                        app:boxStrokeWidthFocused="2.0dip"
+                        app:boxStrokeWidth="1.5dip"
+                        app:boxStrokeWidthFocused="1.5dip"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

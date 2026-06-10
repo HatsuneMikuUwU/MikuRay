@@ -8,8 +8,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_network"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,8 +29,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_header_type"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,8 +50,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_request_host"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,8 +71,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_path"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -101,8 +101,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             app:shapeAppearance="?shapeAppearanceCornerMedium"
-            app:boxStrokeWidth="2.0dip"
-            app:boxStrokeWidthFocused="2.0dip"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,8 +117,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             app:shapeAppearance="?shapeAppearanceCornerMedium"
-            app:boxStrokeWidth="2.0dip"
-            app:boxStrokeWidthFocused="2.0dip"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,8 +136,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_extra"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -160,8 +160,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_fm"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -184,8 +184,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_browser_dialer"
         app:shapeAppearance="?shapeAppearanceCornerMedium"
-        app:boxStrokeWidth="2.0dip"
-        app:boxStrokeWidthFocused="2.0dip"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
