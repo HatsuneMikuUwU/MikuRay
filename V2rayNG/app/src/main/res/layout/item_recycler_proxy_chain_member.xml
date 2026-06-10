@@ -14,7 +14,7 @@
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="?colorCard"
-        app:cardCornerRadius="14dp"
+        app:cardCornerRadius="28dp"
         app:cardElevation="0dp"
         app:strokeColor="?colorOutlineVariant"
         app:strokeWidth="0dp">
@@ -45,6 +45,9 @@
                     tools:text="1" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

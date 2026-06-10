@@ -60,7 +60,7 @@
             android:layout_marginStart="16.0dip"
             android:layout_marginEnd="16.0dip"
             app:cardBackgroundColor="?colorCard"
-            app:cardCornerRadius="14.0dip"
+            app:cardCornerRadius="28.0dip"
             app:cardElevation="0.0dip"
             app:strokeWidth="0.0dip">
 
@@ -71,6 +71,9 @@
                 android:padding="@dimen/padding_spacing_dp16">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,47 +85,14 @@
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16.0dip"
-                    android:paddingBottom="8.0dip">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/routing_settings_locked"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        app:thumbIcon="@drawable/mtrl_ic_check"
-                        android:id="@+id/chk_locked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8.0dip"
-                    android:layout_marginBottom="16.0dip" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16.0dip"
-                    android:text="@string/routing_settings_rule_title"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textColor="?attr/colorPrimary"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_domain"
                     app:helperText="@string/routing_settings_tips">
                     <com.google.android.material.textfield.TextInputEditText
@@ -134,6 +104,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,6 +123,9 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_process"
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -168,6 +144,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -181,6 +160,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,6 +177,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,6 +194,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,6 +210,34 @@
                         android:imeOptions="actionDone"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
+                
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_spacing_dp16"
+                    android:layout_marginBottom="8.0dip" />
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="8.0dip"
+                    android:paddingBottom="8.0dip">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/routing_settings_locked"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        app:thumbIcon="@drawable/mtrl_ic_check"
+                        android:id="@+id/chk_locked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

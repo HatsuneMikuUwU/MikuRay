@@ -7,6 +7,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_remarks"
+        app:shapeAppearance="?shapeAppearanceCornerMedium"
+        app:boxStrokeWidth="2.0dip"
+        app:boxStrokeWidthFocused="2.0dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,6 +27,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_address"
+        app:shapeAppearance="?shapeAppearanceCornerMedium"
+        app:boxStrokeWidth="2.0dip"
+        app:boxStrokeWidthFocused="2.0dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -42,6 +48,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_port"
+        app:shapeAppearance="?shapeAppearanceCornerMedium"
+        app:boxStrokeWidth="2.0dip"
+        app:boxStrokeWidthFocused="2.0dip"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

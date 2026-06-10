@@ -6,6 +6,7 @@
     android:layout_marginTop="48.0dip"
     android:layout_marginBottom="48.0dip"
     android:overScrollMode="ifContentScrolls"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:orientation="vertical"
@@ -27,6 +28,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="2.0dip"
+            app:boxStrokeWidthFocused="2.0dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:textColor="?android:textColorPrimary"

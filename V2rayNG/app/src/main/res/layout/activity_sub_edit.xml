@@ -60,7 +60,7 @@
             android:layout_marginStart="16.0dip"
             android:layout_marginEnd="16.0dip"
             app:cardBackgroundColor="?colorCard"
-            app:cardCornerRadius="14.0dip"
+            app:cardCornerRadius="28.0dip"
             app:cardElevation="0.0dip"
             app:strokeWidth="0.0dip">
 
@@ -71,6 +71,9 @@
                 android:padding="@dimen/padding_spacing_dp16">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,6 +86,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,6 +107,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,6 +123,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,6 +139,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,6 +156,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -155,6 +173,9 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="2.0dip"
+                    app:boxStrokeWidthFocused="2.0dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
