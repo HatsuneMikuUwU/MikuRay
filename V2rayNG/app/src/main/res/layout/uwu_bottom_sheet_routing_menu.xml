@@ -137,7 +137,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             
-            <!-- HEADER: RULESET MANAGEMENT -->
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -164,13 +163,12 @@
                     android:text="@string/ruleset_management" />
             </LinearLayout>
 
-            <!-- GROUP RULESET: MENU 1 (TOP) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/menu_user_asset_setting"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5.0dip"
-                android:layout_marginBottom="2.0dip"
+                android:layout_marginBottom="4.0dip"
                 android:layout_marginStart="16.0dip"
                 android:layout_marginEnd="16.0dip"
                 android:focusable="true"
@@ -362,7 +360,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- HEADER: TITLE IMPORT MENU -->
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -390,7 +387,6 @@
 
             </LinearLayout>
 
-            <!-- HORIZONTAL SCROLL IMPORT (Tetap menggunakan cardCornerRadius bawaan) -->
             <HorizontalScrollView
                 android:scrollbars="none"
                 android:layout_width="fill_parent"
