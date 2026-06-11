@@ -93,6 +93,8 @@ class EditTextPreferenceBottomSheet @JvmOverloads constructor(
         btnSave.setOnClickListener {
             commitAndDismiss(editText.text?.toString().orEmpty(), dialog)
         }
+
+        btnClose.setOnClickListener {
             dialog.dismiss()
         }
 
