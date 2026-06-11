@@ -6,17 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import androidx.graphics.shapes.toPath
+import com.neko.shapeimageview.ShaderImageView
+import com.neko.shapeimageview.shader.ShaderHelper
+import com.neko.shapeimageview.shader.SvgShader
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
+import androidx.appcompat.R as AppCompatR
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.getColorAttr
 
@@ -24,18 +21,11 @@ class DynamicShapeImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+) : ShaderImageView(context, attrs, defStyleAttr) {
 
-    private var currentShapeKey: String? = null
+    private var currentShapeKey: String? = AppConfig.PREF_ICON_SHAPE_DEFAULT
+    
     private var customBgColor: Int? = null
-
-    private val shapePath = Path()
-    private val scaleMatrix = Matrix()
-
-    // --- PROPERTI UNTUK BORDER ---
-    private var borderWidth: Float = 0f
-    private var borderColor: Int = Color.TRANSPARENT
-    private var borderPaint: Paint? = null
 
     private val shapeChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
@@ -47,40 +37,27 @@ class DynamicShapeImageView @JvmOverloads constructor(
         }
     }
 
+    override fun createImageViewHelper(): ShaderHelper {
+        return SvgShader(resolveShapeId())
+    }
+
     init {
-        // 1. Baca Atribut Kustom dari XML
         if (attrs != null) {
             val typedArray = context.obtainStyledAttributes(
                 attrs, 
-                R.styleable.M3ShapeImageView, // Merujuk ke <declare-styleable name="M3ShapeImageView">
+                R.styleable.DynamicShapeImageView, 
                 defStyleAttr, 
                 0
             )
             
-            // Ambil warna background jika ada
-            if (typedArray.hasValue(R.styleable.M3ShapeImageView_shapeBackgroundColor)) {
+            if (typedArray.hasValue(R.styleable.DynamicShapeImageView_shapeBackgroundColor)) {
                 customBgColor = typedArray.getColor(
-                    R.styleable.M3ShapeImageView_shapeBackgroundColor, 
+                    R.styleable.DynamicShapeImageView_shapeBackgroundColor, 
                     0
                 )
             }
             
-            // Ambil warna dan ketebalan border
-            borderColor = typedArray.getColor(R.styleable.M3ShapeImageView_shapeBorderColor, Color.TRANSPARENT)
-            borderWidth = typedArray.getDimension(R.styleable.M3ShapeImageView_shapeBorderWidth, 0f)
-            
             typedArray.recycle()
-        }
-
-        // 2. Siapkan Paint untuk Border
-        if (borderWidth > 0f && borderColor != Color.TRANSPARENT) {
-            borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.STROKE
-                color = borderColor
-                strokeWidth = borderWidth
-                strokeJoin = Paint.Join.ROUND
-                strokeCap = Paint.Cap.ROUND
-            }
         }
 
         scaleType = ScaleType.CENTER_CROP
@@ -90,9 +67,11 @@ class DynamicShapeImageView @JvmOverloads constructor(
     private fun loadColorBitmap() {
         try {
             val color = customBgColor ?: context.getColorAttr(androidx.appcompat.R.attr.colorPrimary)
+            
             val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             canvas.drawColor(color)
+            
             setImageBitmap(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -123,6 +102,7 @@ class DynamicShapeImageView @JvmOverloads constructor(
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)
+        
         if (hasWindowFocus && !isInEditMode) {
             val savedKey = MmkvManager.decodeSettingsString(AppConfig.PREF_ICON_SHAPE)
                 ?: AppConfig.PREF_ICON_SHAPE_DEFAULT
@@ -133,61 +113,24 @@ class DynamicShapeImageView @JvmOverloads constructor(
     private fun applyShape(shapeKey: String) {
         if (currentShapeKey != shapeKey) {
             currentShapeKey = shapeKey
-            
-            val polygon = M3ShapeFactory.createM3Shape(shapeKey)
-            shapePath.rewind()
-            shapePath.set(polygon.toPath()) 
-            
-            updatePathScale()
+            reloadShape()
             invalidate()
         }
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        updatePathScale()
-    }
-
-    private fun updatePathScale() {
-        if (width == 0 || height == 0 || shapePath.isEmpty) return
-
-        val bounds = RectF()
-        shapePath.computeBounds(bounds, true)
-
-        scaleMatrix.reset()
-        
-        // --- TRIK KOMPENSASI BORDER ---
-        val targetWidth = width - borderWidth
-        val targetHeight = height - borderWidth
-        val halfStroke = borderWidth / 2f
-
-        val scaleX = targetWidth / bounds.width()
-        val scaleY = targetHeight / bounds.height()
-        
-        scaleMatrix.postScale(scaleX, scaleY)
-        scaleMatrix.postTranslate(
-            (-bounds.left * scaleX) + halfStroke, 
-            (-bounds.top * scaleY) + halfStroke
-        )
-        
-        shapePath.transform(scaleMatrix)
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        // 1. Potong kanvas
-        canvas.save()
-        if (!shapePath.isEmpty) {
-            canvas.clipPath(shapePath)
-        }
-        // 2. Render bitmap / warna background
-        super.onDraw(canvas)
-        canvas.restore()
-
-        // 3. Gambar garis tepi (Border) jika aktif
-        borderPaint?.let { paint ->
-            if (!shapePath.isEmpty) {
-                canvas.drawPath(shapePath, paint)
-            }
-        }
+    private fun resolveShapeId(): Int = when (currentShapeKey ?: AppConfig.PREF_ICON_SHAPE_DEFAULT) {
+        "uwu_shape_clover"         -> R.raw.uwu_shape_clover
+        "uwu_shape_circle"         -> R.raw.uwu_shape_circle
+        "uwu_shape_diamond"        -> R.raw.uwu_shape_diamond
+        "uwu_shape_pentagon"       -> R.raw.uwu_shape_pentagon
+        "uwu_shape_hexagon"        -> R.raw.uwu_shape_hexagon
+        "uwu_shape_octagon"        -> R.raw.uwu_shape_octagon
+        "uwu_shape_rounded_square" -> R.raw.uwu_shape_rounded_square
+        "uwu_shape_squircle"       -> R.raw.uwu_shape_squircle
+        "uwu_shape_heart"          -> R.raw.uwu_shape_heart
+        "uwu_shape_hive"       -> R.raw.uwu_shape_hive
+        "uwu_shape_pill"       -> R.raw.uwu_shape_pill
+        "uwu_shape_scallop"       -> R.raw.uwu_shape_scallop
+        else                       -> R.raw.uwu_shape_cookie
     }
 }

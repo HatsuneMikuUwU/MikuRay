@@ -4,20 +4,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import androidx.graphics.shapes.toPath
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
+import com.bumptech.glide.request.target.Target
+import com.neko.shapeimageview.ShaderImageView
+import com.neko.shapeimageview.shader.ShaderHelper
+import com.neko.shapeimageview.shader.SvgShader
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
@@ -26,18 +24,11 @@ class ProfileBannerImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+) : ShaderImageView(context, attrs, defStyleAttr) {
 
     private val TAG_PROFILE_DEFAULT = "DEFAULT_BANNER_PROFILE"
-    private var currentShapeKey: String? = null
 
-    private val shapePath = Path()
-    private val scaleMatrix = Matrix()
-
-    // --- PROPERTI UNTUK BORDER ---
-    private var borderWidth: Float = 0f
-    private var borderColor: Int = Color.TRANSPARENT
-    private var borderPaint: Paint? = null
+    private var currentShapeKey: String = AppConfig.PREF_PROFILE_BANNER_SHAPE_DEFAULT
 
     private val shapeChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
@@ -50,33 +41,12 @@ class ProfileBannerImageView @JvmOverloads constructor(
         }
     }
 
+    override fun createImageViewHelper(): ShaderHelper {
+        currentShapeKey = resolveShapeKey()
+        return SvgShader(resolveShapeId(currentShapeKey))
+    }
+
     init {
-        // 1. Baca Custom Attributes dari XML
-        if (attrs != null) {
-            val typedArray = context.obtainStyledAttributes(
-                attrs, 
-                R.styleable.M3ShapeImageView, // Sesuaikan dengan nama di attrs.xml
-                defStyleAttr, 
-                0
-            )
-            
-            borderColor = typedArray.getColor(R.styleable.M3ShapeImageView_shapeBorderColor, Color.TRANSPARENT)
-            borderWidth = typedArray.getDimension(R.styleable.M3ShapeImageView_shapeBorderWidth, 0f)
-            
-            typedArray.recycle()
-        }
-
-        // 2. Siapkan Paint untuk menggambar garis (Stroke)
-        if (borderWidth > 0f && borderColor != Color.TRANSPARENT) {
-            borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.STROKE
-                color = borderColor
-                strokeWidth = borderWidth
-                strokeJoin = Paint.Join.ROUND // Bikin sudut garisnya mulus
-                strokeCap = Paint.Cap.ROUND
-            }
-        }
-
         scaleType = ScaleType.CENTER_CROP
         setLayerType(View.LAYER_TYPE_NONE, null)
         elevation = 0f
@@ -115,67 +85,28 @@ class ProfileBannerImageView @JvmOverloads constructor(
         MmkvManager.decodeSettingsString(AppConfig.PREF_PROFILE_BANNER_SHAPE)
             ?: AppConfig.PREF_PROFILE_BANNER_SHAPE_DEFAULT
 
+    private fun resolveShapeId(key: String): Int = when (key) {
+        "uwu_shape_clover"         -> R.raw.uwu_shape_clover
+        "uwu_shape_circle"         -> R.raw.uwu_shape_circle
+        "uwu_shape_diamond"        -> R.raw.uwu_shape_diamond
+        "uwu_shape_pentagon"       -> R.raw.uwu_shape_pentagon
+        "uwu_shape_hexagon"        -> R.raw.uwu_shape_hexagon
+        "uwu_shape_octagon"        -> R.raw.uwu_shape_octagon
+        "uwu_shape_rounded_square" -> R.raw.uwu_shape_rounded_square
+        "uwu_shape_squircle"       -> R.raw.uwu_shape_squircle
+        "uwu_shape_heart"       -> R.raw.uwu_shape_heart
+        "uwu_shape_hive"       -> R.raw.uwu_shape_hive
+        "uwu_shape_pill"       -> R.raw.uwu_shape_pill
+        "uwu_shape_scallop"       -> R.raw.uwu_shape_scallop
+        else                       -> R.raw.uwu_shape_cookie
+    }
+
     private fun checkAndUpdateShape() {
         val newKey = resolveShapeKey()
         if (currentShapeKey != newKey) {
             currentShapeKey = newKey
-            val polygon = M3ShapeFactory.createM3Shape(newKey)
-            shapePath.rewind()
-            shapePath.set(polygon.toPath())
-            
-            updatePathScale()
+            reloadShape()
             invalidate()
-        }
-    }
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        updatePathScale()
-    }
-
-    private fun updatePathScale() {
-        if (width == 0 || height == 0 || shapePath.isEmpty) return
-
-        val bounds = RectF()
-        shapePath.computeBounds(bounds, true)
-
-        scaleMatrix.reset()
-        
-        // --- TRIK BORDER ---
-        // Kurangi area yang bisa dipakai sebesar tebal border agar tidak terpotong layar
-        val targetWidth = width - borderWidth
-        val targetHeight = height - borderWidth
-        val halfStroke = borderWidth / 2f
-
-        val scaleX = targetWidth / bounds.width()
-        val scaleY = targetHeight / bounds.height()
-        
-        scaleMatrix.postScale(scaleX, scaleY)
-        
-        // Geser (Translate) bentuknya ke tengah memperhitungkan setengah ketebalan border
-        scaleMatrix.postTranslate(
-            (-bounds.left * scaleX) + halfStroke, 
-            (-bounds.top * scaleY) + halfStroke
-        )
-        
-        shapePath.transform(scaleMatrix)
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        // 1. Potong kanvas untuk gambar utamanya
-        canvas.save()
-        if (!shapePath.isEmpty) {
-            canvas.clipPath(shapePath)
-        }
-        // 2. Gambar bitmap/glide-nya
-        super.onDraw(canvas)
-        canvas.restore()
-
-        // 3. Gambar garis tepi (Border) di atas gambar yang sudah dipotong
-        borderPaint?.let { paint ->
-            if (!shapePath.isEmpty) {
-                canvas.drawPath(shapePath, paint)
-            }
         }
     }
 

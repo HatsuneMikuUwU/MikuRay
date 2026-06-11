@@ -125,8 +125,7 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.fragment)
-    implementation(libs.palette)
-    implementation(libs.androidx.graphics.shapes)
+    implementation(libs.palette)    
 
     // UI Libraries
     implementation(libs.material)

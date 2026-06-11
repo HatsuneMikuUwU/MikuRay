@@ -7,7 +7,6 @@
         <item>none</item>
         <item>zero</item>
     </string-array>
-    
     <string-array name="ss_securitys" translatable="false">
         <item>aes-256-gcm</item>
         <item>aes-128-gcm</item>
@@ -50,13 +49,13 @@
     <string-array name="mode_type_grpc" translatable="false">
         <item>gun</item>
         <item>multi</item>
-        </string-array>
+        <!--Hide this option until core support it       <item>guna</item>-->
+    </string-array>
 
     <string-array name="streamsecuritys" translatable="false">
         <item />
         <item>tls</item>
     </string-array>
-    
     <string-array name="streamsecurityxs" translatable="false">
         <item />
         <item>tls</item>
@@ -224,79 +223,35 @@
     </string-array>
 
     <string-array name="icon_shape_entries" translatable="false">
+        <item>Cookie</item>
+        <item>Clover</item>
         <item>Circle</item>
-        <item>Square</item>
-        <item>Slanted</item>
-        <item>Arch</item>
-        <item>Semicircle</item>
-        <item>Oval</item>
-        <item>Pill</item>
-        <item>Triangle</item>
-        <item>Arrow</item>
-        <item>Fan</item>
         <item>Diamond</item>
-        <item>Clamshell</item>
         <item>Pentagon</item>
-        <item>Gem</item>
-        <item>4-Sided Cookie</item>
-        <item>6-Sided Cookie</item>
-        <item>7-Sided Cookie</item>
-        <item>9-Sided Cookie</item>
-        <item>12-Sided Cookie</item>
-        <item>Very Sunny</item>
-        <item>Sunny</item>
-        <item>Burst</item>
-        <item>Soft Burst</item>
-        <item>4-Leaf Clover</item>
-        <item>8-Leaf Clover</item>
-        <item>Flower</item>
-        <item>Boom</item>
-        <item>Soft Boom</item>
-        <item>Puffy</item>
-        <item>Puffy Diamond</item>
-        <item>Ghost-ish</item>
-        <item>Pixel Circle</item>
-        <item>Pixel Triangle</item>
-        <item>Bun</item>
+        <item>Hexagon</item>
+        <item>Octagon</item>
+        <item>Rounded Square</item>
+        <item>Squircle</item>
         <item>Heart</item>
+        <item>Hive</item>
+        <item>Pill</item>
+        <item>Scallop</item>
     </string-array>
 
     <string-array name="icon_shape_values" translatable="false">
-        <item>m3_circle</item>
-        <item>m3_square</item>
-        <item>m3_slanted</item>
-        <item>m3_arch</item>
-        <item>m3_semicircle</item>
-        <item>m3_oval</item>
-        <item>m3_pill</item>
-        <item>m3_triangle</item>
-        <item>m3_arrow</item>
-        <item>m3_fan</item>
-        <item>m3_diamond</item>
-        <item>m3_clamshell</item>
-        <item>m3_pentagon</item>
-        <item>m3_gem</item>
-        <item>m3_cookie_4</item>
-        <item>m3_cookie_6</item>
-        <item>m3_cookie_7</item>
-        <item>m3_cookie_9</item>
-        <item>m3_cookie_12</item>
-        <item>m3_very_sunny</item>
-        <item>m3_sunny</item>
-        <item>m3_burst</item>
-        <item>m3_soft_burst</item>
-        <item>m3_clover_4</item>
-        <item>m3_clover_8</item>
-        <item>m3_flower</item>
-        <item>m3_boom</item>
-        <item>m3_soft_boom</item>
-        <item>m3_puffy</item>
-        <item>m3_puffy_diamond</item>
-        <item>m3_ghost_ish</item>
-        <item>m3_pixel_circle</item>
-        <item>m3_pixel_triangle</item>
-        <item>m3_bun</item>
-        <item>m3_heart</item>
+        <item>uwu_shape_cookie</item>
+        <item>uwu_shape_clover</item>
+        <item>uwu_shape_circle</item>
+        <item>uwu_shape_diamond</item>
+        <item>uwu_shape_pentagon</item>
+        <item>uwu_shape_hexagon</item>
+        <item>uwu_shape_octagon</item>
+        <item>uwu_shape_rounded_square</item>
+        <item>uwu_shape_squircle</item>
+        <item>uwu_shape_heart</item>
+        <item>uwu_shape_hive</item>
+        <item>uwu_shape_pill</item>
+        <item>uwu_shape_scallop</item>
     </string-array>
     
     <string-array name="uwu_random_text">

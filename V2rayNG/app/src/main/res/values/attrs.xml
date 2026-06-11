@@ -47,6 +47,10 @@
         </attr>
     </declare-styleable>
     
+    <declare-styleable name="DynamicShapeImageView">
+        <attr name="shapeBackgroundColor" format="color|reference" />
+    </declare-styleable>
+    
     <declare-styleable name="UwuHeaderIconView">
         <attr name="sectionIcon" format="reference" />
     </declare-styleable>
@@ -79,12 +83,6 @@
         <attr
             name="stepMultiplier"
             format="float" />
-    </declare-styleable>
-    
-    <declare-styleable name="M3ShapeImageView">
-        <attr name="shapeBackgroundColor" format="color" />
-        <attr name="shapeBorderColor" format="color" />
-        <attr name="shapeBorderWidth" format="dimension" />
     </declare-styleable>
     
 </resources>
