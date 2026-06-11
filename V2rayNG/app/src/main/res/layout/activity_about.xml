@@ -282,480 +282,535 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/layout_soure_ccode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/uwu_bg_top"
-                            android:baselineAligned="false"
-                            android:clickable="true"
-                            android:clipToPadding="false"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="?android:listPreferredItemHeightSmall">
-
+                            android:clickable="true"
+                            app:cardBackgroundColor="?colorCard"
+                            app:cardElevation="0.0dip"
+                            app:strokeWidth="0.0dip"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Top"
+                            app:cardPreventCornerOverlap="false"
+                            app:contentPadding="0dp">
+                            
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:baselineAligned="false"
+                                android:minHeight="?android:listPreferredItemHeightSmall">
 
-                                <FrameLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp">
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
 
-                                    <com.neko.widget.DynamicShapeImageView
-                                        app:shapeBackgroundColor="?colorPrimary"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:scaleType="centerCrop" />
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp">
 
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_source_code_24dp"
-                                        android:tint="?colorOnPrimary" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                        <com.neko.widget.DynamicShapeImageView
+                                            app:shapeBackgroundColor="?colorPrimary"
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_weight="1.0"
-                                android:orientation="vertical">
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_source_code_24dp"
+                                            android:tint="?colorOnPrimary" />
+                                    </FrameLayout>
+                                </LinearLayout>
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="false"
-                                    android:text="@string/title_source_code"
-                                    android:textAppearance="?textAppearanceTitleMedium"
-                                    android:textColor="?colorOnSurface"
-                                    android:textSize="17sp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="1.0"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="marquee"
+                                        android:singleLine="false"
+                                        android:text="@string/title_source_code"
+                                        android:textAppearance="?textAppearanceTitleMedium"
+                                        android:textColor="?colorOnSurface"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                                        app:cardCornerRadius="99dp"
+                                        app:cardElevation="0dp"
+                                        app:strokeWidth="0dp">
+
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_marginTop="1dp"
+                                            android:src="@drawable/uwu_arrow"
+                                            app:tint="?colorOnSurfaceVariant" />
+                                    </com.google.android.material.card.MaterialCardView>
+                                </LinearLayout>
                             </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    app:cardBackgroundColor="?colorSurfaceContainerHighest"
-                                    app:cardCornerRadius="99dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_marginStart="2dp"
-                                        android:layout_marginTop="1dp"
-                                        android:src="@drawable/uwu_arrow"
-                                        app:tint="?colorOnSurfaceVariant" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/layout_oss_licenses"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="0dp"
-                            android:background="@drawable/uwu_bg_mid"
-                            android:baselineAligned="false"
-                            android:clickable="true"
-                            android:clipToPadding="false"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="?android:listPreferredItemHeightSmall">
-
+                            android:clickable="true"
+                            app:cardBackgroundColor="?colorCard"
+                            app:cardElevation="0.0dip"
+                            app:strokeWidth="0.0dip"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
+                            app:cardPreventCornerOverlap="false"
+                            app:contentPadding="0dp">
+                            
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:baselineAligned="false"
+                                android:minHeight="?android:listPreferredItemHeightSmall">
 
-                                <FrameLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp">
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
 
-                                    <com.neko.widget.DynamicShapeImageView
-                                        app:shapeBackgroundColor="?colorPrimary"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:scaleType="centerCrop" />
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp">
 
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/license_24px"
-                                        android:tint="?colorOnPrimary" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                        <com.neko.widget.DynamicShapeImageView
+                                            app:shapeBackgroundColor="?colorPrimary"
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_weight="1.0"
-                                android:orientation="vertical">
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/license_24px"
+                                            android:tint="?colorOnPrimary" />
+                                    </FrameLayout>
+                                </LinearLayout>
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="false"
-                                    android:text="@string/title_oss_license"
-                                    android:textAppearance="?textAppearanceTitleMedium"
-                                    android:textColor="?colorOnSurface"
-                                    android:textSize="17sp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="1.0"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="marquee"
+                                        android:singleLine="false"
+                                        android:text="@string/title_oss_license"
+                                        android:textAppearance="?textAppearanceTitleMedium"
+                                        android:textColor="?colorOnSurface"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                                        app:cardCornerRadius="99dp"
+                                        app:cardElevation="0dp"
+                                        app:strokeWidth="0dp">
+
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_marginTop="1dp"
+                                            android:src="@drawable/uwu_arrow"
+                                            app:tint="?colorOnSurfaceVariant" />
+                                    </com.google.android.material.card.MaterialCardView>
+                                </LinearLayout>
                             </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    app:cardBackgroundColor="?colorSurfaceContainerHighest"
-                                    app:cardCornerRadius="99dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_marginStart="2dp"
-                                        android:layout_marginTop="1dp"
-                                        android:src="@drawable/uwu_arrow"
-                                        app:tint="?colorOnSurfaceVariant" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/layout_feedback"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="0dp"
-                            android:background="@drawable/uwu_bg_mid"
-                            android:baselineAligned="false"
-                            android:clickable="true"
-                            android:clipToPadding="false"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="?android:listPreferredItemHeightSmall">
-
+                            android:clickable="true"
+                            app:cardBackgroundColor="?colorCard"
+                            app:cardElevation="0.0dip"
+                            app:strokeWidth="0.0dip"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
+                            app:cardPreventCornerOverlap="false"
+                            app:contentPadding="0dp">
+                            
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:baselineAligned="false"
+                                android:minHeight="?android:listPreferredItemHeightSmall">
 
-                                <FrameLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp">
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
 
-                                    <com.neko.widget.DynamicShapeImageView
-                                        app:shapeBackgroundColor="?colorPrimary"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:scaleType="centerCrop" />
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp">
 
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_feedback_24dp"
-                                        android:tint="?colorOnPrimary" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                        <com.neko.widget.DynamicShapeImageView
+                                            app:shapeBackgroundColor="?colorPrimary"
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_weight="1.0"
-                                android:orientation="vertical">
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_feedback_24dp"
+                                            android:tint="?colorOnPrimary" />
+                                    </FrameLayout>
+                                </LinearLayout>
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="false"
-                                    android:text="@string/title_pref_feedback"
-                                    android:textAppearance="?textAppearanceTitleMedium"
-                                    android:textColor="?colorOnSurface"
-                                    android:textSize="17sp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="1.0"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="marquee"
+                                        android:singleLine="false"
+                                        android:text="@string/title_pref_feedback"
+                                        android:textAppearance="?textAppearanceTitleMedium"
+                                        android:textColor="?colorOnSurface"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                                        app:cardCornerRadius="99dp"
+                                        app:cardElevation="0dp"
+                                        app:strokeWidth="0dp">
+
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_marginTop="1dp"
+                                            android:src="@drawable/uwu_arrow"
+                                            app:tint="?colorOnSurfaceVariant" />
+                                    </com.google.android.material.card.MaterialCardView>
+                                </LinearLayout>
                             </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    app:cardBackgroundColor="?colorSurfaceContainerHighest"
-                                    app:cardCornerRadius="99dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_marginStart="2dp"
-                                        android:layout_marginTop="1dp"
-                                        android:src="@drawable/uwu_arrow"
-                                        app:tint="?colorOnSurfaceVariant" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/layout_tg_channel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="0dp"
-                            android:background="@drawable/uwu_bg_mid"
-                            android:baselineAligned="false"
-                            android:clickable="true"
-                            android:clipToPadding="false"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="?android:listPreferredItemHeightSmall">
-
+                            android:clickable="true"
+                            app:cardBackgroundColor="?colorCard"
+                            app:cardElevation="0.0dip"
+                            app:strokeWidth="0.0dip"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
+                            app:cardPreventCornerOverlap="false"
+                            app:contentPadding="0dp">
+                            
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:baselineAligned="false"
+                                android:minHeight="?android:listPreferredItemHeightSmall">
 
-                                <FrameLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp">
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
 
-                                    <com.neko.widget.DynamicShapeImageView
-                                        app:shapeBackgroundColor="?colorPrimary"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:scaleType="centerCrop" />
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp">
 
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_telegram_24dp"
-                                        android:tint="?colorOnPrimary" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                        <com.neko.widget.DynamicShapeImageView
+                                            app:shapeBackgroundColor="?colorPrimary"
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_weight="1.0"
-                                android:orientation="vertical">
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_telegram_24dp"
+                                            android:tint="?colorOnPrimary" />
+                                    </FrameLayout>
+                                </LinearLayout>
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="false"
-                                    android:text="@string/title_tg_channel"
-                                    android:textAppearance="?textAppearanceTitleMedium"
-                                    android:textColor="?colorOnSurface"
-                                    android:textSize="17sp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="1.0"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="marquee"
+                                        android:singleLine="false"
+                                        android:text="@string/title_tg_channel"
+                                        android:textAppearance="?textAppearanceTitleMedium"
+                                        android:textColor="?colorOnSurface"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                                        app:cardCornerRadius="99dp"
+                                        app:cardElevation="0dp"
+                                        app:strokeWidth="0dp">
+
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_marginTop="1dp"
+                                            android:src="@drawable/uwu_arrow"
+                                            app:tint="?colorOnSurfaceVariant" />
+                                    </com.google.android.material.card.MaterialCardView>
+                                </LinearLayout>
                             </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    app:cardBackgroundColor="?colorSurfaceContainerHighest"
-                                    app:cardCornerRadius="99dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_marginStart="2dp"
-                                        android:layout_marginTop="1dp"
-                                        android:src="@drawable/uwu_arrow"
-                                        app:tint="?colorOnSurfaceVariant" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/layout_privacy_policy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="0dp"
-                            android:background="@drawable/uwu_bg_bot"
-                            android:baselineAligned="false"
-                            android:clickable="true"
-                            android:clipToPadding="false"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="?android:listPreferredItemHeightSmall">
-
+                            android:clickable="true"
+                            app:cardBackgroundColor="?colorCard"
+                            app:cardElevation="0.0dip"
+                            app:strokeWidth="0.0dip"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Bottom"
+                            app:cardPreventCornerOverlap="false"
+                            app:contentPadding="0dp">
+                            
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:clipToPadding="false"
+                                android:baselineAligned="false"
+                                android:minHeight="?android:listPreferredItemHeightSmall">
 
-                                <FrameLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp">
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
 
-                                    <com.neko.widget.DynamicShapeImageView
-                                        app:shapeBackgroundColor="?colorPrimary"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:scaleType="centerCrop" />
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp">
 
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_privacy_24dp"
-                                        android:tint="?colorOnPrimary" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                        <com.neko.widget.DynamicShapeImageView
+                                            app:shapeBackgroundColor="?colorPrimary"
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_weight="1.0"
-                                android:orientation="vertical">
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_privacy_24dp"
+                                            android:tint="?colorOnPrimary" />
+                                    </FrameLayout>
+                                </LinearLayout>
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="false"
-                                    android:text="@string/title_privacy_policy"
-                                    android:textAppearance="?textAppearanceTitleMedium"
-                                    android:textColor="?colorOnSurface"
-                                    android:textSize="17sp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="1.0"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="marquee"
+                                        android:singleLine="false"
+                                        android:text="@string/title_privacy_policy"
+                                        android:textAppearance="?textAppearanceTitleMedium"
+                                        android:textColor="?colorOnSurface"
+                                        android:textSize="17sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:gravity="center">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                                        app:cardCornerRadius="99dp"
+                                        app:cardElevation="0dp"
+                                        app:strokeWidth="0dp">
+
+                                        <ImageView
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_marginTop="1dp"
+                                            android:src="@drawable/uwu_arrow"
+                                            app:tint="?colorOnSurfaceVariant" />
+                                    </com.google.android.material.card.MaterialCardView>
+                                </LinearLayout>
                             </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="16dp"
-                                android:gravity="center">
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    app:cardBackgroundColor="?colorSurfaceContainerHighest"
-                                    app:cardCornerRadius="99dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_marginStart="2dp"
-                                        android:layout_marginTop="1dp"
-                                        android:src="@drawable/uwu_arrow"
-                                        app:tint="?colorOnSurfaceVariant" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
                 </com.neko.expandable.layout.ExpandableView>

@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:background="@drawable/uwu_bg_sin"
-    android:clipToPadding="false"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10.0dip"
     android:layout_marginBottom="10.0dip"
     android:layout_marginStart="16.0dip"
     android:layout_marginEnd="16.0dip"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:clipToPadding="false"
+    app:cardBackgroundColor="?colorCard"
+    app:cardElevation="0.0dip"
+    app:strokeWidth="0.0dip"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Single"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
+
     <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         layout="@layout/uwu_preference_material_switch" />
-</FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>
