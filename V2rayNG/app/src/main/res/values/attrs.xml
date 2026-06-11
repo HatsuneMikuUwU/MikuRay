@@ -47,10 +47,6 @@
         </attr>
     </declare-styleable>
     
-    <declare-styleable name="DynamicShapeImageView">
-        <attr name="shapeBackgroundColor" format="color|reference" />
-    </declare-styleable>
-    
     <declare-styleable name="UwuHeaderIconView">
         <attr name="sectionIcon" format="reference" />
     </declare-styleable>
