@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.preference.EditTextPreference
+import com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.appbar.MaterialToolbar
@@ -71,7 +71,7 @@ class AdvancedSettingsActivity : BaseActivity() {
                 for (i in 0 until group.preferenceCount) {
                     when (val p = group.getPreference(i)) {
                         is androidx.preference.PreferenceGroup -> traverse(p)
-                        is EditTextPreference -> {
+                        is EditTextPreferenceBottomSheet -> {
                             p.summary = p.text.orEmpty()
                             p.setOnPreferenceChangeListener { pref, newValue ->
                                 pref.summary = (newValue as? String).orEmpty()

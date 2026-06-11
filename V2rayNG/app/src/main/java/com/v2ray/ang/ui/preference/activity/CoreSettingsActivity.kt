@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.preference.EditTextPreference
+import com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
@@ -49,10 +49,10 @@ class CoreSettingsActivity : BaseActivity() {
     class CoreSettingsFragment : PreferenceFragmentCompat() {
 
         private val enableLocalProxy by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_ENABLE_LOCAL_PROXY) }
-        private val socksPort by lazy { findPreference<EditTextPreference>(AppConfig.PREF_SOCKS_PORT) }
+        private val socksPort by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_SOCKS_PORT) }
         private val dynamicSocksPort by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_DYNAMIC_SOCKS_PORT) }
-        private val socksUsername by lazy { findPreference<EditTextPreference>(AppConfig.PREF_SOCKS_USERNAME) }
-        private val socksPassword by lazy { findPreference<EditTextPreference>(AppConfig.PREF_SOCKS_PASSWORD) }
+        private val socksUsername by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_SOCKS_USERNAME) }
+        private val socksPassword by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_SOCKS_PASSWORD) }
         private val socksEnableUdp by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SOCKS_ENABLE_UDP) }
         private val proxySharing by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_PROXY_SHARING) }
         private val appendHttpProxy by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_APPEND_HTTP_PROXY) }
@@ -79,7 +79,7 @@ class CoreSettingsActivity : BaseActivity() {
                 for (i in 0 until group.preferenceCount) {
                     when (val p = group.getPreference(i)) {
                         is androidx.preference.PreferenceGroup -> traverse(p)
-                        is EditTextPreference -> {
+                        is EditTextPreferenceBottomSheet -> {
                             if (p.key == AppConfig.PREF_SOCKS_PASSWORD) {
                                 p.summary = if (p.text.isNullOrEmpty()) "" else "******"
                                 p.setOnPreferenceChangeListener { pref, newValue ->

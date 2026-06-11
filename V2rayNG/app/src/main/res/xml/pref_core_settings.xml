@@ -41,7 +41,7 @@
             android:summary="@string/summary_pref_proxy_sharing_enabled"
             android:title="@string/title_pref_proxy_sharing_enabled" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
@@ -58,14 +58,14 @@
             android:summary="@string/summary_pref_dynamic_socks_port"
             android:title="@string/title_pref_dynamic_socks_port" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_account_edit"
             app:layout="@layout/uwu_mid"
             android:key="pref_socks_username"
             android:summary="@string/summary_pref_socks_username"
             android:title="@string/title_pref_socks_username" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_account_edit"
             app:layout="@layout/uwu_mid"
             android:inputType="textPassword"
@@ -82,21 +82,21 @@
             android:summary="@string/summary_pref_socks_enable_udp"
             android:title="@string/title_pref_socks_enable_udp" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_remote_dns"
             android:summary="@string/summary_pref_remote_dns"
             android:title="@string/title_pref_remote_dns" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_domestic_dns"
             android:summary="@string/summary_pref_domestic_dns"
             android:title="@string/title_pref_domestic_dns" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_dns_hosts"

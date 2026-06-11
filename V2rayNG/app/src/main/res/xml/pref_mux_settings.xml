@@ -13,7 +13,7 @@
             android:summary="@string/summary_pref_mux_enabled"
             android:title="@string/title_pref_mux_enabled" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
@@ -21,7 +21,7 @@
             android:summary="8"
             android:title="@string/title_pref_mux_concurency" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"

@@ -31,14 +31,14 @@
             android:summary="@string/summary_pref_auto_sort_after_test"
             android:title="@string/title_pref_auto_sort_after_test" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
             android:key="pref_delay_test_url"
             android:summary="@string/summary_pref_delay_test_url"
             android:title="@string/title_pref_delay_test_url" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
@@ -46,7 +46,7 @@
             android:summary="16"
             android:title="@string/title_pref_real_ping_concurrency" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
             android:key="pref_ip_api_url"

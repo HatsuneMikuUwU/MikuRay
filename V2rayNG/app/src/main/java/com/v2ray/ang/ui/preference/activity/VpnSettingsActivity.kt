@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.preference.EditTextPreference
+import com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -54,13 +54,13 @@ class VpnSettingsActivity : BaseActivity() {
         private val localDns by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_LOCAL_DNS_ENABLED) }
         private val fakeDns by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_FAKE_DNS_ENABLED) }
         private val appendHttpProxy by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_APPEND_HTTP_PROXY) }
-        private val vpnDns by lazy { findPreference<EditTextPreference>(AppConfig.PREF_VPN_DNS) }
+        private val vpnDns by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_VPN_DNS) }
         private val vpnBypassLan by lazy { findPreference<ListPreference>(AppConfig.PREF_VPN_BYPASS_LAN) }
         private val vpnInterfaceAddress by lazy { findPreference<ListPreference>(AppConfig.PREF_VPN_INTERFACE_ADDRESS_CONFIG_INDEX) }
-        private val vpnMtu by lazy { findPreference<EditTextPreference>(AppConfig.PREF_VPN_MTU) }
+        private val vpnMtu by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_VPN_MTU) }
         private val useHevTun by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_USE_HEV_TUNNEL) }
         private val hevTunLogLevel by lazy { findPreference<ListPreference>(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL) }
-        private val hevTunRwTimeout by lazy { findPreference<EditTextPreference>(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT) }
+        private val hevTunRwTimeout by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT) }
         private val navigatePerAppProxy by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_PER_APP_PROXY_SETTINGS) }
         private val keepAwake by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_KEEP_AWAKE) }
 
@@ -91,7 +91,7 @@ class VpnSettingsActivity : BaseActivity() {
                 for (i in 0 until group.preferenceCount) {
                     when (val p = group.getPreference(i)) {
                         is androidx.preference.PreferenceGroup -> traverse(p)
-                        is EditTextPreference -> {
+                        is EditTextPreferenceBottomSheet -> {
                             p.summary = p.text.orEmpty()
                             p.setOnPreferenceChangeListener { pref, newValue ->
                                 pref.summary = (newValue as? String).orEmpty()

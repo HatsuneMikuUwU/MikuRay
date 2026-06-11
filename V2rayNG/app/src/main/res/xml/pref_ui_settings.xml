@@ -275,7 +275,7 @@
     <com.neko.widget.UwuPreferenceCategory android:title="@string/banner_profile_category"
         app:sectionIcon="@drawable/ic_account_heart">
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_edit_24dp"
             app:layout="@layout/uwu_top"
             android:key="custom_profile_name"

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.preference.EditTextPreference
+import com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
@@ -49,8 +49,8 @@ class MuxSettingsActivity : BaseActivity() {
     class MuxSettingsFragment : PreferenceFragmentCompat() {
 
         private val mux by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_MUX_ENABLED) }
-        private val muxConcurrency by lazy { findPreference<EditTextPreference>(AppConfig.PREF_MUX_CONCURRENCY) }
-        private val muxXudpConcurrency by lazy { findPreference<EditTextPreference>(AppConfig.PREF_MUX_XUDP_CONCURRENCY) }
+        private val muxConcurrency by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_MUX_CONCURRENCY) }
+        private val muxXudpConcurrency by lazy { findPreference<EditTextPreferenceBottomSheet>(AppConfig.PREF_MUX_XUDP_CONCURRENCY) }
         private val muxXudpQuic by lazy { findPreference<ListPreference>(AppConfig.PREF_MUX_XUDP_QUIC) }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
@@ -80,7 +80,7 @@ class MuxSettingsActivity : BaseActivity() {
                 for (i in 0 until group.preferenceCount) {
                     when (val p = group.getPreference(i)) {
                         is androidx.preference.PreferenceGroup -> traverse(p)
-                        is EditTextPreference -> {
+                        is EditTextPreferenceBottomSheet -> {
                             p.summary = p.text.orEmpty()
                             p.setOnPreferenceChangeListener { pref, newValue ->
                                 pref.summary = (newValue as? String).orEmpty()

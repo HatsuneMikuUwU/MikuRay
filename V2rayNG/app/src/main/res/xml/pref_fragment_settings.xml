@@ -12,14 +12,14 @@
             android:key="pref_fragment_enabled"
             android:title="@string/title_pref_fragment_enabled" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:key="pref_fragment_length"
             android:summary="50-100"
             android:title="@string/title_pref_fragment_length" />
 
-        <EditTextPreference
+        <com.v2ray.ang.ui.preference.EditTextPreferenceBottomSheet
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:key="pref_fragment_interval"
