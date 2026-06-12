@@ -31,23 +31,30 @@ object ZipUtil {
                 return false
             }
 
-            val filesToCompress = ArrayList<String>()
             val directory = File(folderPath)
-            if (directory.isDirectory) {
-                directory.listFiles()?.forEach {
-                    if (it.isFile) {
-                        filesToCompress.add(it.absolutePath)
+            if (!directory.isDirectory) return false
+
+            // Collect all files recursively, preserving relative paths for zip entries
+            val filesToCompress = ArrayList<Pair<String, File>>() // <entryName, file>
+            fun collectFiles(dir: File, prefix: String) {
+                dir.listFiles()?.forEach { f ->
+                    if (f.isFile) {
+                        filesToCompress.add(Pair(if (prefix.isEmpty()) f.name else "$prefix/${f.name}", f))
+                    } else if (f.isDirectory) {
+                        collectFiles(f, if (prefix.isEmpty()) f.name else "$prefix/${f.name}")
                     }
                 }
             }
+            collectFiles(directory, "")
+
             if (filesToCompress.isEmpty()) {
                 return false
             }
 
             val zos = ZipOutputStream(FileOutputStream(outputZipFilePath))
 
-            filesToCompress.forEach { file ->
-                val ze = ZipEntry(File(file).name)
+            filesToCompress.forEach { (entryName, file) ->
+                val ze = ZipEntry(entryName)
                 zos.putNextEntry(ze)
                 val inputStream = FileInputStream(file)
                 while (true) {
@@ -55,7 +62,6 @@ object ZipUtil {
                     if (len <= 0) break
                     zos.write(buffer, 0, len)
                 }
-
                 inputStream.close()
             }
 
@@ -113,6 +119,7 @@ object ZipUtil {
      */
     @Throws(IOException::class)
     private fun extractFile(inputStream: InputStream, destFilePath: String) {
+        File(destFilePath).parentFile?.mkdirs()
         val bos = BufferedOutputStream(FileOutputStream(destFilePath))
         val bytesIn = ByteArray(BUFFER_SIZE)
         var read: Int
