@@ -46,6 +46,7 @@ object AppConfig {
     const val SUBSCRIPTION_MIN_INTERVAL_MINUTES = 15L
     const val PREF_SPEED_ENABLED = "pref_speed_enabled"
     const val PREF_TRAFFIC_ENABLED = "pref_traffic_enabled"
+    const val PREF_NETWORK_SECURITY_ENABLED = "pref_network_security_enabled"
     const val PREF_CONFIRM_REMOVE = "pref_confirm_remove"
     const val PREF_START_SCAN_IMMEDIATE = "pref_start_scan_immediate"
     const val PREF_DOUBLE_COLUMN_DISPLAY = "pref_double_column_display"

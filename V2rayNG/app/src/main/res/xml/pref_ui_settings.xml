@@ -24,9 +24,19 @@
             android:icon="@drawable/ic_baseline_speed_24"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
             android:key="pref_traffic_enabled"
             android:summary="@string/pref_traffic_enabled_summary"
             android:title="@string/pref_traffic_enabled_title" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_about_24dp"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_network_security_enabled"
+            android:summary="@string/pref_network_security_enabled_summary"
+            android:title="@string/pref_network_security_enabled_title" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_delete_24dp"

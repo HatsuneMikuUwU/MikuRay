@@ -548,6 +548,8 @@
     <string name="confirm_reset_traffic_all">Reset penggunaan data buat semua grup? Nggak bisa dibatalin lho ya</string>
     <string name="pref_traffic_enabled_title">Tampilin Penggunaan Data</string>
     <string name="pref_traffic_enabled_summary">Tampilin jumlah upload dan download di tiap server</string>
+    <string name="pref_network_security_enabled_title">Tampilin Jaringan dan Keamanan</string>
+    <string name="pref_network_security_enabled_summary">Tampilin info transport dan keamanan di tiap server</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu

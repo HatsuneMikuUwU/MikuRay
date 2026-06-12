@@ -60,7 +60,11 @@ class MainRecyclerAdapter(
             //Name address
             holder.itemMainBinding.tvName.text = profile.remarks
             holder.itemMainBinding.tvStatistics.text = getAddress(profile)
-            holder.itemMainBinding.tvType.text = getProtocolDescription(profile)
+            holder.itemMainBinding.tvType.text = getProtocolName(profile)
+
+            // Network & security icon+text di bawah alamat
+            val isNetSecEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_NETWORK_SECURITY_ENABLED) == true
+            bindNetworkSecurity(holder, profile, isNetSecEnabled)
 
             //TestResult
             val aff = MmkvManager.decodeServerAffiliationInfo(guid)
@@ -144,29 +148,56 @@ class MainRecyclerAdapter(
         return subRemarks?.take(5) ?: ""
     }
 
-    private fun getProtocolDescription(profile: ProfileItem): String {
-        if (profile.configType.isComplexType()) {
-            return profile.configType.name
+    private fun getProtocolName(profile: ProfileItem): String {
+        return profile.configType.name
+    }
+
+    private fun bindNetworkSecurity(
+        holder: MainViewHolder,
+        profile: ProfileItem,
+        enabled: Boolean
+    ) {
+        val iconSize = (14 * context.resources.displayMetrics.density).toInt()
+
+        fun makeIcon(drawableRes: Int): android.graphics.drawable.Drawable? {
+            val d = androidx.core.content.ContextCompat.getDrawable(context, drawableRes) ?: return null
+            val wrapped = androidx.core.graphics.drawable.DrawableCompat.wrap(d.mutate())
+            androidx.core.graphics.drawable.DrawableCompat.setTint(
+                wrapped,
+                com.google.android.material.color.MaterialColors.getColor(
+                    holder.itemView,
+                    com.google.android.material.R.attr.colorOnSurfaceVariant
+                )
+            )
+            wrapped.setBounds(0, 0, iconSize, iconSize)
+            return wrapped
         }
 
-        val parts = mutableListOf<String>()
-        parts.add(profile.configType.name)
+        val isComplex = profile.configType.isComplexType()
+        val network = profile.network?.takeIf { it.isNotBlank() && !it.equals("tcp", ignoreCase = true) }
+        val security = profile.security?.takeIf { it.isNotBlank() }
 
-        // Transport: hide tcp or blank
-        profile.network?.let { net ->
-            if (net.isNotBlank() && !net.equals("tcp", ignoreCase = true)) {
-                parts.add(net)
-            }
+        val showAny = enabled && !isComplex && (network != null || security != null)
+        holder.itemMainBinding.layoutNetworkSecurity.visibility =
+            if (showAny) View.VISIBLE else View.GONE
+
+        // tv_network
+        if (enabled && !isComplex && network != null) {
+            holder.itemMainBinding.tvNetwork.text = network
+            holder.itemMainBinding.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_web_24dp), null, null, null)
+            holder.itemMainBinding.tvNetwork.visibility = View.VISIBLE
+        } else {
+            holder.itemMainBinding.tvNetwork.visibility = View.GONE
         }
 
-        // Security: hide blank or tls
-        profile.security?.let { sec ->
-            if (sec.isNotBlank() && !sec.equals("tls", ignoreCase = true)) {
-                parts.add(sec)
-            }
+        // tv_security
+        if (enabled && !isComplex && security != null) {
+            holder.itemMainBinding.tvSecurity.text = security
+            holder.itemMainBinding.tvSecurity.setCompoundDrawables(makeIcon(R.drawable.ic_lock_24dp), null, null, null)
+            holder.itemMainBinding.tvSecurity.visibility = View.VISIBLE
+        } else {
+            holder.itemMainBinding.tvSecurity.visibility = View.GONE
         }
-
-        return parts.joinToString(" / ")
     }
 
     fun removeServerSub(guid: String, position: Int) {

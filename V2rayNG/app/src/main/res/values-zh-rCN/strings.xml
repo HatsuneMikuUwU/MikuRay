@@ -546,6 +546,8 @@
     <string name="confirm_reset_traffic_all">重置所有分组的数据用量？此操作无法撤销哦</string>
     <string name="pref_traffic_enabled_title">显示数据用量</string>
     <string name="pref_traffic_enabled_summary">在每个服务器上显示上传和下载流量</string>
+    <string name="pref_network_security_enabled_title">显示网络和安全</string>
+    <string name="pref_network_security_enabled_summary">在每个服务器上显示传输和安全信息</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
