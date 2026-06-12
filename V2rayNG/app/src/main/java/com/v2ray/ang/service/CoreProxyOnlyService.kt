@@ -1,10 +1,6 @@
 package com.v2ray.ang.service
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.Service
-import android.os.Build
-import android.os.SystemClock
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
@@ -42,25 +38,6 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     /**
      * Destroys the service.
      */
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        super.onTaskRemoved(rootIntent)
-        if (CoreServiceManager.isRunning()) {
-            LogUtil.w(AppConfig.TAG, "StartCore-Proxy: Task removed while running, scheduling restart")
-            val restartIntent = Intent(applicationContext, CoreProxyOnlyService::class.java)
-            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-            else
-                PendingIntent.FLAG_ONE_SHOT
-            val pendingIntent = PendingIntent.getService(applicationContext, 2, restartIntent, flags)
-            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-            alarmManager.set(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 1000,
-                pendingIntent
-            )
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         CoreServiceManager.stopCoreLoop()

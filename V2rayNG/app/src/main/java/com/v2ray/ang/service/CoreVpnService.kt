@@ -14,7 +14,6 @@ import android.net.VpnService
 import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.os.PowerManager
-import android.app.PendingIntent
 import android.os.StrictMode
 import androidx.annotation.RequiresApi
 import com.v2ray.ang.AppConfig
@@ -83,25 +82,6 @@ class CoreVpnService : VpnService(), ServiceControl {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         CoreServiceManager.serviceControl = SoftReference(this)
-    }
-
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        super.onTaskRemoved(rootIntent)
-        if (isRunning) {
-            LogUtil.w(AppConfig.TAG, "StartCore-VPN: Task removed while running, scheduling restart")
-            val restartIntent = Intent(applicationContext, CoreVpnService::class.java)
-            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-            else
-                PendingIntent.FLAG_ONE_SHOT
-            val pendingIntent = PendingIntent.getService(applicationContext, 1, restartIntent, flags)
-            val alarmManager = getSystemService(ALARM_SERVICE) as android.app.AlarmManager
-            alarmManager.set(
-                android.app.AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                android.os.SystemClock.elapsedRealtime() + 1000,
-                pendingIntent
-            )
-        }
     }
 
     override fun onRevoke() {
