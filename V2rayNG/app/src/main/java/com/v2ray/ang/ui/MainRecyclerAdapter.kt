@@ -157,6 +157,8 @@ class MainRecyclerAdapter(
         profile: ProfileItem,
         enabled: Boolean
     ) {
+        val context = holder.itemView.context
+        
         val iconSize = (14 * context.resources.displayMetrics.density).toInt()
 
         fun makeIcon(drawableRes: Int): android.graphics.drawable.Drawable? {
