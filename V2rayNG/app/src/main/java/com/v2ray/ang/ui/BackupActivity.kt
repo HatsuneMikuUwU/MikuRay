@@ -22,6 +22,7 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.handler.WebDavManager
+import com.v2ray.ang.util.BannerColorExtractor
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.ZipUtil
 import kotlinx.coroutines.Dispatchers
@@ -173,6 +174,14 @@ class BackupActivity : HelperBaseActivity() {
 
         // Restore custom banner image files and fix their paths in MMKV
         restoreBannerImages(backupDir)
+
+        // Re-extract banner color from restored home banner image if present
+        val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+        if (!restoredHomeBannerUri.isNullOrBlank()) {
+            lifecycleScope.launch {
+                BannerColorExtractor.extractAndSave(this@BackupActivity, Uri.parse(restoredHomeBannerUri))
+            }
+        }
 
         SettingsManager.initApp(this)
         return count > 0
