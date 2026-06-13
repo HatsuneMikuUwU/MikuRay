@@ -14,6 +14,6 @@ class CookieImageView @JvmOverloads constructor(
 ) : ShaderImageView(context, attrs, defStyle) {
 
     override fun createImageViewHelper(): ShaderHelper {
-        return SvgShader(R.raw.material_shape_cookie)
+        return SvgShader(R.raw.uwu_shape_cookie_9)
     }
 }

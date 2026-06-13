@@ -14,6 +14,6 @@ class CloverImageView @JvmOverloads constructor(
 ) : ShaderImageView(context, attrs, defStyle) {
 
     override fun createImageViewHelper(): ShaderHelper {
-        return SvgShader(R.raw.material_shape_cookie_4)
+        return SvgShader(R.raw.uwu_shape_cookie_4)
     }
 }

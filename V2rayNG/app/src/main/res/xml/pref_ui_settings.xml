@@ -130,7 +130,7 @@
         <ListPreference
             android:icon="@drawable/ic_shape_outline"
             app:layout="@layout/uwu_top"
-            android:defaultValue="uwu_shape_cookie"
+            android:defaultValue="uwu_shape_cookie_9"
             android:entries="@array/icon_shape_entries"
             android:entryValues="@array/icon_shape_values"
             android:key="pref_icon_shape"
@@ -316,7 +316,7 @@
             android:title="@string/title_profile_banner_shape"
             android:entries="@array/icon_shape_entries"
             android:entryValues="@array/icon_shape_values"
-            android:defaultValue="uwu_shape_cookie"
+            android:defaultValue="uwu_shape_cookie_9"
             android:summary="%s" />
 
         <Preference

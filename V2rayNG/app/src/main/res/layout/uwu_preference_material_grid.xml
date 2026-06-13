@@ -6,23 +6,13 @@
     android:orientation="vertical"
     android:padding="16.0dp">
 
-    <FrameLayout
+    <com.neko.widget.DynamicShapeImageView
+        android:id="@android:id/icon"
         android:layout_width="45.0dp"
-        android:layout_height="45.0dp">
-        
-        <com.neko.widget.DynamicShapeImageView
-            app:shapeBackgroundColor="?colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-            
-        <androidx.preference.internal.PreferenceImageView
-            android:id="@android:id/icon"
-            android:layout_width="25.0dp"
-            android:layout_height="25.0dp"
-            android:layout_gravity="center"
-            android:tint="?colorOnPrimary" />
-    </FrameLayout>
+        android:layout_height="45.0dp"
+        app:shapeBackgroundColor="?colorPrimary"
+        app:iconTint="?colorOnPrimary"
+        app:iconSizeFraction="0.55" />
     
     <RelativeLayout
         android:layout_width="wrap_content"

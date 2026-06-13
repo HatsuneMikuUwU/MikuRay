@@ -91,22 +91,14 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp">
-                        <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
-                                    app:shapeBackgroundColor="?colorPrimary"
-                                    android:layout_width="45dp"
-                                    android:layout_height="45dp"
-                                    android:scaleType="centerCrop" />
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:src="@drawable/ic_source_code_24dp"
-                                    android:tint="?colorOnPrimary" />
-                            </FrameLayout>
+                        <com.neko.widget.DynamicShapeImageView
+                            android:layout_width="45.0dip"
+                            android:layout_height="45.0dip"
+                            android:layout_marginStart="8dp"
+                            app:shapeBackgroundColor="?colorPrimary"
+                            app:sectionIcon="@drawable/ic_source_code_24dp"
+                            app:iconTint="?colorOnPrimary"
+                            app:iconSizeFraction="0.55" />
                     </LinearLayout>
                     
                     <LinearLayout
@@ -181,22 +173,14 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp">
-                        <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
-                                    app:shapeBackgroundColor="?colorPrimary"
-                                    android:layout_width="45dp"
-                                    android:layout_height="45dp"
-                                    android:scaleType="centerCrop" />
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:src="@drawable/ic_check_update_24dp"
-                                    android:tint="?colorOnPrimary" />
-                            </FrameLayout>
+                        <com.neko.widget.DynamicShapeImageView
+                            android:layout_width="45.0dip"
+                            android:layout_height="45.0dip"
+                            android:layout_marginStart="8dp"
+                            app:shapeBackgroundColor="?colorPrimary"
+                            app:sectionIcon="@drawable/ic_check_update_24dp"
+                            app:iconTint="?colorOnPrimary"
+                            app:iconSizeFraction="0.55" />
                     </LinearLayout>
                     
                     <LinearLayout
