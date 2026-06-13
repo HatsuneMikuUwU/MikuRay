@@ -116,6 +116,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
     private fun removeServerSub(guid: String, position: Int) {
         mainViewModel.removeServer(guid)
         adapter.removeServerSub(guid, position)
+        ownerActivity.refreshGroupTabTitles()
     }
 
     private fun setSelectServer(guid: String) {
