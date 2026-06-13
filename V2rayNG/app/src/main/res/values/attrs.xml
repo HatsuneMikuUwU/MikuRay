@@ -49,9 +49,10 @@
     
     <declare-styleable name="DynamicShapeImageView">
         <attr name="shapeBackgroundColor" format="color|reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="UwuHeaderIconView">
         <attr name="sectionIcon" format="reference" />
-        <attr name="iconTint" format="color|reference" />
-        <attr name="iconSizeFraction" format="float" />
     </declare-styleable>
 
     <declare-styleable name="ParticlesView">

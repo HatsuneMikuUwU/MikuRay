@@ -24,8 +24,8 @@ class UwuHeaderIconView @JvmOverloads constructor(
     private var sectionIconRes: Int = 0
 
     init {
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.DynamicShapeImageView)
-        sectionIconRes = ta.getResourceId(R.styleable.DynamicShapeImageView_sectionIcon, 0)
+        val ta = context.obtainStyledAttributes(attrs, R.styleable.UwuHeaderIconView)
+        sectionIconRes = ta.getResourceId(R.styleable.UwuHeaderIconView_sectionIcon, 0)
         ta.recycle()
     }
 
