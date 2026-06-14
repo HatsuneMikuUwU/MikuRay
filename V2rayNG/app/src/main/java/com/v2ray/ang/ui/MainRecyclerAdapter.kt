@@ -184,7 +184,7 @@ class MainRecyclerAdapter(
             } else {
                 sec
             }
-        }
+        } ?: "none"
 
         val showAny = enabled && !isComplex && (network != null || security != null)
         holder.itemMainBinding.layoutNetworkSecurity.visibility =
@@ -202,7 +202,14 @@ class MainRecyclerAdapter(
         // tv_security
         if (enabled && !isComplex && security != null) {
             holder.itemMainBinding.tvSecurity.text = security
-            holder.itemMainBinding.tvSecurity.setCompoundDrawables(makeIcon(R.drawable.ic_lock_24dp), null, null, null)
+            
+            val iconRes = if (security == "none") {
+                R.drawable.ic_unlock_24dp
+            } else {
+                R.drawable.ic_lock_24dp
+            }
+            
+            holder.itemMainBinding.tvSecurity.setCompoundDrawables(makeIcon(iconRes), null, null, null)
             holder.itemMainBinding.tvSecurity.visibility = View.VISIBLE
         } else {
             holder.itemMainBinding.tvSecurity.visibility = View.GONE
