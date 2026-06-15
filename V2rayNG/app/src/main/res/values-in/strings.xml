@@ -252,6 +252,7 @@
 
     <string name="title_pref_group_all_display">Tampilin semua grup</string>
     <string name="summary_pref_group_all_display">Nambahin tab ekstra "Semua Tab"</string>
+    <string name="title_pref_group_all_tab_icon">Ikon tab "Semua"</string>
 
     <string name="title_pref_feedback">Kasih Masukan</string>
     <string name="summary_pref_feedback">Laporin bug atau ngasih ide ke GitHub kuy</string>

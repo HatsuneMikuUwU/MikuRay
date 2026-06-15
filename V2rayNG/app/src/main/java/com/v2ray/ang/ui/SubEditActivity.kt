@@ -44,38 +44,7 @@ class SubEditActivity : BaseActivity() {
 
     private var selectedIconDrawable: String? = null
 
-    private val tabIcons: List<String> = listOf(
-        "filter_all_solar",
-        "filter_airplane_solar",
-        "filter_book_solar",
-        "filter_bots_solar",
-        "filter_cat_solar",
-        "filter_channel_solar",
-        "filter_crown_solar",
-        "filter_custom_solar",
-        "filter_favorite_solar",
-        "filter_flower_solar",
-        "filter_game_solar",
-        "filter_groups_solar",
-        "filter_home_solar",
-        "filter_light_solar",
-        "filter_like_solar",
-        "filter_love_solar",
-        "filter_mask_solar",
-        "filter_money_solar",
-        "filter_note_solar",
-        "filter_palette_solar",
-        "filter_party_solar",
-        "filter_private_solar",
-        "filter_setup_solar",
-        "filter_sport_solar",
-        "filter_study_solar",
-        "filter_trade_solar",
-        "filter_travel_solar",
-        "filter_unmuted_solar",
-        "filter_unread_solar",
-        "filter_work_solar",
-    )
+    private val tabIcons: List<String> = TabIconPickerAdapter.DEFAULT_ICONS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,10 +125,7 @@ class SubEditActivity : BaseActivity() {
             )
         } else {
             val resId = resources.getIdentifier(iconName, "drawable", packageName)
-            val label = iconName
-                .removePrefix("filter_")
-                .removeSuffix("_solar")
-                .replaceFirstChar { it.uppercase() }
+            val label = TabIconPickerAdapter.labelFor(iconName)
             binding.etTabIcon.setText(label)
             if (resId != 0) {
                 binding.tilTabIcon.setStartIconDrawable(resId)

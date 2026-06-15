@@ -272,6 +272,7 @@
 
     <string name="title_pref_group_all_display">Enable show all groups</string>
     <string name="summary_pref_group_all_display">Add an extra "All Tabs" page</string>
+    <string name="title_pref_group_all_tab_icon">"All" tab icon</string>
 
     <!-- AboutActivity -->
     <string name="title_pref_feedback">Feedback</string>

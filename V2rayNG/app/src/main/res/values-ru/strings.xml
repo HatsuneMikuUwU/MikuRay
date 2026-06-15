@@ -256,6 +256,7 @@
 
     <string name="title_pref_group_all_display">Показывать все группы</string>
     <string name="summary_pref_group_all_display">Добавить дополнительную вкладку «Все»</string>
+    <string name="title_pref_group_all_tab_icon">Иконка вкладки «Все»</string>
 
     <!-- AboutActivity -->
     <string name="title_pref_feedback">Обратная связь</string>

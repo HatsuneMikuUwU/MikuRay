@@ -249,6 +249,7 @@
 
     <string name="title_pref_group_all_display">启用显示所有组</string>
     <string name="summary_pref_group_all_display">添加一个额外的“所有选项卡”页面</string>
+    <string name="title_pref_group_all_tab_icon">“全部”标签图标</string>
 
     <!-- AboutActivity -->
     <string name="title_pref_feedback">反馈</string>

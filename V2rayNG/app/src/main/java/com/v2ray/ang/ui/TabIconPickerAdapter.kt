@@ -11,21 +11,52 @@ import com.google.android.material.card.MaterialCardView
 import com.v2ray.ang.R
 import com.v2ray.ang.util.getColorAttr
 
-/**
- * Grid adapter untuk tab icon picker dialog.
- * Tiap item menampilkan satu vector drawable dari daftar [icons].
- * Item dengan nilai `null` merepresentasikan opsi "tanpa icon" — cell
- * ditampilkan kosong tanpa drawable.
- * Selected item mendapat background [colorPrimary] dan tint
- * [colorOnPrimary] (icon & check); unselected pakai [colorOnSurfaceVariant].
- */
 class TabIconPickerAdapter(
     private val context: Context,
-    /** List nama drawable resource tanpa ".xml" (e.g. "filter_cloud_solar"), atau null untuk opsi "tanpa icon". */
     val icons: List<String?>,
     private var selectedIcon: String?,
     private val onSelect: (String?) -> Unit,
 ) : RecyclerView.Adapter<TabIconPickerAdapter.VH>() {
+
+    companion object {
+        val DEFAULT_ICONS: List<String> = listOf(
+            "filter_all_solar",
+            "filter_airplane_solar",
+            "filter_book_solar",
+            "filter_bots_solar",
+            "filter_cat_solar",
+            "filter_channel_solar",
+            "filter_crown_solar",
+            "filter_custom_solar",
+            "filter_favorite_solar",
+            "filter_flower_solar",
+            "filter_game_solar",
+            "filter_groups_solar",
+            "filter_home_solar",
+            "filter_light_solar",
+            "filter_like_solar",
+            "filter_love_solar",
+            "filter_mask_solar",
+            "filter_money_solar",
+            "filter_note_solar",
+            "filter_palette_solar",
+            "filter_party_solar",
+            "filter_private_solar",
+            "filter_setup_solar",
+            "filter_sport_solar",
+            "filter_study_solar",
+            "filter_trade_solar",
+            "filter_travel_solar",
+            "filter_unmuted_solar",
+            "filter_unread_solar",
+            "filter_work_solar",
+        )
+
+        fun labelFor(iconName: String): String = iconName
+            .removePrefix("filter_")
+            .removeSuffix("_solar")
+            .replaceFirstChar { it.uppercase() }
+    }
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         val card: MaterialCardView = view.findViewById(R.id.icon_card)
@@ -46,14 +77,12 @@ class TabIconPickerAdapter(
         val resId    = if (name != null) context.resources.getIdentifier(name, "drawable", context.packageName) else 0
         val selected = name == selectedIcon
 
-        // Icon drawable — kosong jika item ini adalah opsi "tanpa icon" atau resource tidak ditemukan
         if (resId != 0) {
             holder.icon.setImageResource(resId)
         } else {
             holder.icon.setImageDrawable(null)
         }
 
-        // Tint & background
         val (bgColor, iconTint, checkTint) = if (selected) {
             Triple(
                 context.getColorAttr("colorPrimary"),
@@ -62,7 +91,7 @@ class TabIconPickerAdapter(
             )
         } else {
             Triple(
-                0, // transparent
+                0,
                 context.getColorAttr("colorOnSurfaceVariant"),
                 0,
             )
@@ -77,7 +106,6 @@ class TabIconPickerAdapter(
             val prev = selectedIcon
             selectedIcon = name
             onSelect(name)
-            // Refresh dua item: prev selected + yang baru
             val prevIdx = icons.indexOf(prev)
             if (prevIdx >= 0) notifyItemChanged(prevIdx)
             notifyItemChanged(position)

@@ -294,7 +294,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 GroupMapItem(
                     id = "",
                     remarks = context.getString(R.string.filter_config_all),
-                    serverCount = MmkvManager.decodeAllServerList().size
+                    serverCount = MmkvManager.decodeAllServerList().size,
+                    icon = MmkvManager.decodeSettingsString(AppConfig.PREF_GROUP_ALL_TAB_ICON),
                 )
             )
         }

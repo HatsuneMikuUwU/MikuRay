@@ -63,6 +63,13 @@
             android:summary="@string/summary_pref_group_all_display"
             android:title="@string/title_pref_group_all_display" />
 
+        <Preference
+            android:icon="@drawable/filter_all_solar"
+            app:layout="@layout/uwu_mid"
+            android:dependency="pref_group_all_display"
+            android:key="pref_group_all_tab_icon"
+            android:title="@string/title_pref_group_all_tab_icon" />
+
         <ListPreference
             android:icon="@drawable/ic_translate"
             app:layout="@layout/uwu_bot"
