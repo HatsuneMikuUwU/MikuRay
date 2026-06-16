@@ -2,7 +2,9 @@ package com.v2ray.ang.handler
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.provider.Settings
 import android.text.TextUtils
+import com.v2ray.ang.AngApplication
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreConfigManager
@@ -552,6 +554,12 @@ object AngConfigManager {
             val userAgent = it.subscription.userAgent
             val proxyUsername = SettingsManager.getSocksUsername()
             val proxyPassword = SettingsManager.getSocksPassword()
+            val hwid = if (SettingsManager.isSendHwidEnabled()) {
+                Settings.Secure.getString(
+                    AngApplication.application.contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+            } else null
 
             var configText = try {
                 val httpPort = SettingsManager.getHttpPort()
@@ -562,7 +570,8 @@ object AngConfigManager {
                         timeout = 15000,
                         httpPort = httpPort,
                         proxyUsername = proxyUsername,
-                        proxyPassword = proxyPassword
+                        proxyPassword = proxyPassword,
+                        hwid = hwid
                     )
                 )
             } catch (e: Exception) {
@@ -574,7 +583,8 @@ object AngConfigManager {
                     HttpUtil.getUrlContentWithUserAgent(
                         UrlContentRequest(
                             url = url,
-                            userAgent = userAgent
+                            userAgent = userAgent,
+                            hwid = hwid
                         )
                     )
                 } catch (e: Exception) {

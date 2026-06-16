@@ -552,6 +552,8 @@
     <string name="pref_traffic_enabled_summary">在每个服务器上显示上传和下载流量</string>
     <string name="pref_network_security_enabled_title">显示网络和安全</string>
     <string name="pref_network_security_enabled_summary">在每个服务器上显示传输和安全信息</string>
+    <string name="title_pref_send_hwid">发送 HWID</string>
+    <string name="summary_pref_send_hwid">更新订阅时发送设备 ID</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,

@@ -573,6 +573,8 @@
     <string name="pref_traffic_enabled_summary">Показывать объем загрузки и отдачи на каждом сервере</string>
     <string name="pref_network_security_enabled_title">Показывать сеть и безопасность</string>
     <string name="pref_network_security_enabled_summary">Показывать информацию о транспорте и безопасности на каждом сервере</string>
+    <string name="title_pref_send_hwid">Отправлять HWID</string>
+    <string name="summary_pref_send_hwid">Отправлять ID устройства при обновлении подписки</string>
     
     <string name="uwu_banner_settings_title">Привет...</string>
     <string name="uwu_banner_settings_summary">"Добро пожаловать в

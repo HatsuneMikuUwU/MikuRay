@@ -590,6 +590,8 @@
     <string name="pref_traffic_enabled_summary">Show upload and download traffic on each server</string>
     <string name="pref_network_security_enabled_title">Show Network and Security</string>
     <string name="pref_network_security_enabled_summary">Show transport and security info on each server</string>
+    <string name="title_pref_send_hwid">Send HWID</string>
+    <string name="summary_pref_send_hwid">Send device ID when updating subscription</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings

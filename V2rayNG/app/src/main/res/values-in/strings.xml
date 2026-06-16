@@ -554,6 +554,8 @@
     <string name="pref_traffic_enabled_summary">Tampilin jumlah upload dan download di tiap server</string>
     <string name="pref_network_security_enabled_title">Tampilin Jaringan dan Keamanan</string>
     <string name="pref_network_security_enabled_summary">Tampilin info transport dan keamanan di tiap server</string>
+    <string name="title_pref_send_hwid">Kirim HWID</string>
+    <string name="summary_pref_send_hwid">Kirim ID perangkat pas lagi update langganan</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu

@@ -65,13 +65,22 @@
 
         <ListPreference
             android:icon="@drawable/ic_key"
-            app:layout="@layout/uwu_bot"
+            app:layout="@layout/uwu_mid"
             android:defaultValue="VPN"
             android:entries="@array/mode_entries"
             android:entryValues="@array/mode_value"
             android:key="pref_mode"
             android:summary="%s"
             android:title="@string/title_mode" />
+            
+         <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_cellphone_screenshot"
+            app:layout="@layout/uwu_bot_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_send_hwid"
+            android:summary="@string/summary_pref_send_hwid"
+            android:title="@string/title_pref_send_hwid" />
 
     </com.neko.widget.UwuPreferenceCategory>
 

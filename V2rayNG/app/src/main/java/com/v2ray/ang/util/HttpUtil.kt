@@ -162,6 +162,10 @@ object HttpUtil {
                 .header("User-agent", finalUserAgent)
                 .header("Connection", "close")
 
+            if (!request.hwid.isNullOrBlank()) {
+                requestBuilder.header("X-HWID", request.hwid)
+            }
+
             applyEmbeddedBasicAuthHeader(currentUrl, requestBuilder)
 
             if (request.httpPort != 0 && !request.proxyUsername.isNullOrBlank() && !request.proxyPassword.isNullOrBlank()) {
