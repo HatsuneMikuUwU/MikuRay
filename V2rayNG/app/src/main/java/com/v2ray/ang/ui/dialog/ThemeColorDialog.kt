@@ -3,12 +3,13 @@ package com.v2ray.ang.ui.dialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.color.DynamicColors
@@ -26,26 +27,7 @@ class ThemeColorDialog : DialogFragment() {
     companion object {
         const val TAG = "ThemeColorDialog"
 
-        val THEME_COLORS = listOf(
-            ThemeColor("1",  R.color.palette_red),
-            ThemeColor("2",  R.color.palette_pink),
-            ThemeColor("3",  R.color.palette_purple),
-            ThemeColor("4",  R.color.palette_deep_purple),
-            ThemeColor("5",  R.color.palette_indigo),
-            ThemeColor("6",  R.color.palette_blue),
-            ThemeColor("7",  R.color.palette_light_blue),
-            ThemeColor("8",  R.color.palette_cyan),
-            ThemeColor("9",  R.color.palette_teal),
-            ThemeColor("10", R.color.palette_green),
-            ThemeColor("11", R.color.palette_light_green),
-            ThemeColor("12", R.color.palette_lime),
-            ThemeColor("13", R.color.palette_yellow),
-            ThemeColor("14", R.color.palette_amber),
-            ThemeColor("15", R.color.palette_orange),
-            ThemeColor("16", R.color.palette_deep_orange),
-            ThemeColor("17", R.color.palette_brown),
-            ThemeColor("18", R.color.palette_blue_grey)
-        )
+        val THEME_KEYS = (1..16).map { it.toString() }
 
         fun show(
             fragmentManager: androidx.fragment.app.FragmentManager,
@@ -56,8 +38,6 @@ class ThemeColorDialog : DialogFragment() {
             dialog.show(fragmentManager, TAG)
         }
     }
-
-    data class ThemeColor(val key: String, @ColorRes val colorRes: Int)
 
     var onAppliedCallback: () -> Unit = {}
 
@@ -76,30 +56,25 @@ class ThemeColorDialog : DialogFragment() {
         val savedColor  = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_COLOR, 0)
         val currentKey  = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "8"
 
-        THEME_COLORS.forEach { themeColor ->
+        THEME_KEYS.forEach { key ->
             val itemView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.item_theme_color, grid, false)
 
             val circle = itemView.findViewById<ImageView>(R.id.iv_color_circle)
             val check  = itemView.findViewById<ImageView>(R.id.iv_check)
 
-            val isSelected = !useCustom && themeColor.key == currentKey
+            val isSelected = !useCustom && key == currentKey
             
-            val rawSeedColor = ContextCompat.getColor(requireContext(), themeColor.colorRes)
-            
-            val options = DynamicColorsOptions.Builder()
-                .setContentBasedSource(rawSeedColor)
-                .build()
-            
-            val wrappedContext = DynamicColors.wrapContextIfAvailable(requireContext(), options)
-            val m3PrimaryColor = wrappedContext.getColorAttr(android.R.attr.colorPrimary)
+            val styleRes = ThemeManager.getThemeStyleRes(key)
+            val wrappedContext = ContextThemeWrapper(requireContext(), styleRes)
+            val m3PrimaryColor = wrappedContext.getColorAttr("colorPrimary")
 
             applyCircleDrawable(circle, m3PrimaryColor, isSelected)
             
             check.visibility = if (isSelected) View.VISIBLE else View.GONE
 
             itemView.setOnClickListener {
-                activity?.let { act -> ThemeManager.setAndSaveTheme(act, themeColor.key) }
+                activity?.let { act -> ThemeManager.setAndSaveTheme(act, key) }
                 onAppliedCallback()
                 dismiss()
             }
@@ -107,39 +82,41 @@ class ThemeColorDialog : DialogFragment() {
             grid.addView(itemView)
         }
 
-        val customItemView = LayoutInflater.from(requireContext())
-            .inflate(R.layout.item_theme_color, grid, false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val customItemView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_theme_color, grid, false)
 
-        val customCircle = customItemView.findViewById<ImageView>(R.id.iv_color_circle)
-        val customIcon   = customItemView.findViewById<ImageView>(R.id.iv_check)
+            val customCircle = customItemView.findViewById<ImageView>(R.id.iv_color_circle)
+            val customIcon   = customItemView.findViewById<ImageView>(R.id.iv_check)
 
-        val isCustomSelected = useCustom && savedColor != 0
-        val rawCustomColor   = if (savedColor != 0) savedColor else ContextCompat.getColor(requireContext(), R.color.palette_purple)
-        
-        val customOptions = DynamicColorsOptions.Builder()
-            .setContentBasedSource(rawCustomColor)
-            .build()
-        val wrappedCustomContext = DynamicColors.wrapContextIfAvailable(requireContext(), customOptions)
-        val m3CustomPrimary = wrappedCustomContext.getColorAttr(android.R.attr.colorPrimary)
+            val isCustomSelected = useCustom && savedColor != 0
+            val rawCustomColor   = if (savedColor != 0) savedColor else ContextCompat.getColor(requireContext(), R.color.teal_primary)
+            
+            val customOptions = DynamicColorsOptions.Builder()
+                .setContentBasedSource(rawCustomColor)
+                .build()
+            val wrappedCustomContext = DynamicColors.wrapContextIfAvailable(requireContext(), customOptions)
+            val m3CustomPrimary = wrappedCustomContext.getColorAttr("colorPrimary")
 
-        applyCircleDrawable(customCircle, m3CustomPrimary, isCustomSelected)
+            applyCircleDrawable(customCircle, m3CustomPrimary, isCustomSelected)
 
-        customIcon.setImageResource(R.drawable.ic_pencil)
-        customIcon.visibility = View.VISIBLE
-        
-        val lum = calculateLuminance(m3CustomPrimary)
-        customIcon.setColorFilter(if (lum > 0.4f) Color.BLACK else Color.WHITE)
+            customIcon.setImageResource(R.drawable.ic_pencil)
+            customIcon.visibility = View.VISIBLE
+            
+            val lum = calculateLuminance(m3CustomPrimary)
+            customIcon.setColorFilter(if (lum > 0.4f) Color.BLACK else Color.WHITE)
 
-        customItemView.setOnClickListener {
-            dismiss()
-            CustomColorPickerDialog.show(
-                parentFragmentManager,
-                currentColor = rawCustomColor,
-                onApplied   = onAppliedCallback,
-            )
+            customItemView.setOnClickListener {
+                dismiss()
+                CustomColorPickerDialog.show(
+                    parentFragmentManager,
+                    currentColor = rawCustomColor,
+                    onApplied   = onAppliedCallback,
+                )
+            }
+
+            grid.addView(customItemView)
         }
-
-        grid.addView(customItemView)
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_theme_color_title)

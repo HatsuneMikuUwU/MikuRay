@@ -6,7 +6,7 @@ import com.v2ray.ang.handler.MmkvManager
 
 class ThemeStateManager(private val activity: Activity) {
 
-    private var currentThemeKey: String = "9"
+    private var currentThemeKey: String = "8"
     private var currentDynamicColor: Boolean = false
     private var currentDynamicBanner: Boolean = false
     private var currentTrueBlack: Boolean = false
@@ -28,7 +28,7 @@ class ThemeStateManager(private val activity: Activity) {
     }
 
     private fun loadState() {
-        currentThemeKey = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "9"
+        currentThemeKey = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "8"
         currentDynamicColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
         currentDynamicBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
         currentTrueBlack = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
@@ -47,7 +47,7 @@ class ThemeStateManager(private val activity: Activity) {
     }
 
     fun checkThemeChangedAndRecreate() {
-        val newThemeKey = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "9"
+        val newThemeKey = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_THEME) ?: "8"
         val newDynamicColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
         val newDynamicBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
         val newTrueBlack = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
