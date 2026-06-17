@@ -13,7 +13,7 @@
     <!-- Notifications -->
     <string name="notification_action_stop_v2ray">停止</string>
     <string name="notification_connect_time">时长 : %s</string>
-    <string name="notification_data_usage">总计 : ↑ %s  ↓ %s</string>
+    <string name="notification_data_usage" formatted="false">总计 : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">无法取得权限</string>
     <string name="toast_permission_denied_notification">无法取得通知权限</string>
     <string name="notification_action_more">点击了解更多</string>

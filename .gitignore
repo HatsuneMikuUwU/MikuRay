@@ -64,3 +64,6 @@ V2rayNG/app/google-services.json
 # Ignore OS-specific files
 Thumbs.db
 .DS_Store
+
+!gradle/wrapper/gradle-wrapper.jar
+!V2rayNG/gradle/wrapper/gradle-wrapper.jar

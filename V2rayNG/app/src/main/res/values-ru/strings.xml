@@ -13,7 +13,7 @@
     <!-- Notifications -->
     <string name="notification_action_stop_v2ray">Стоп</string>
     <string name="notification_connect_time">таймер : %s</string>
-    <string name="notification_data_usage">всего : ↑ %s  ↓ %s</string>
+    <string name="notification_data_usage" formatted="false">всего : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">Не удалось получить разрешение</string>
     <string name="toast_permission_denied_notification">Не удалось получить разрешение на уведомления</string>
     <string name="notification_action_more">Нажмите для подробностей</string>

@@ -12,7 +12,7 @@
 
     <string name="notification_action_stop_v2ray">Stop</string>
     <string name="notification_connect_time">waktu : %s</string>
-    <string name="notification_data_usage">total : ↑ %s  ↓ %s</string>
+    <string name="notification_data_usage" formatted="false">total : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">Duh, ga dapet izin nih</string>
     <string name="toast_permission_denied_notification">Izin notifikasinya ditolak euy</string>
     <string name="notification_action_more">Klik buat liat lebih banyak</string>

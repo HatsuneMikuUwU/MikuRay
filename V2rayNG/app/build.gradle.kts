@@ -1,23 +1,32 @@
+import com.android.build.api.variant.FilterConfiguration
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("com.jaredsburrows.license")
+}
+
+val appVersionName = "2.2.4"
+val appVersionCode = 734
+
+base {
+    archivesName.set("MikuRay_$appVersionName")
 }
 
 android {
     namespace = "com.v2ray.ang"
     compileSdk = 37
+    
+    ndkVersion = "29.0.14206865"
 
     defaultConfig {
         applicationId = "com.miku.ray"
         minSdk = 24
         targetSdk = 37
-        versionCode = 734
-        versionName = "2.2.4"
+        versionCode = appVersionCode
+        versionName = appVersionName
         multiDexEnabled = true
         
-        resValue("string", "uwu_version_name", versionName.toString())
-        resValue("string", "uwu_version_code", versionCode.toString())
+        resValue("string", "uwu_version_name", appVersionName)
+        resValue("string", "uwu_version_code", appVersionCode.toString())
         resValue("string", "uwu_package_name", applicationId.toString())
         resValue("string", "uwu_build_date", rootProject.extra["BUILD_DATE"].toString())
 
@@ -75,32 +84,10 @@ android {
         }
     }
 
-    applicationVariants.all {
-        val variant = this
-        val versionCodes =
-            mapOf("armeabi-v7a" to 4, "arm64-v8a" to 4, "x86" to 4, "x86_64" to 4, "universal" to 4)
-
-        variant.outputs
-            .map { it as com.android.build.gradle.internal.api.ApkVariantOutputImpl }
-            .forEach { output ->
-                val abi = if (output.getFilter("ABI") != null)
-                    output.getFilter("ABI")
-                else
-                    "universal"
-
-                output.outputFileName = "MikuRay_${variant.versionName}_${abi}.apk"
-                if (versionCodes.containsKey(abi)) {
-                    output.versionCodeOverride =
-                        (1000000 * versionCodes[abi]!!).plus(variant.versionCode)
-                } else {
-                    return@forEach
-                }
-            }
-    }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        resValues = true
     }
 
     packaging {
@@ -108,7 +95,28 @@ android {
             useLegacyPackaging = true
         }
     }
+}
 
+androidComponents {
+    onVariants { variant ->
+        val versionCodes = mapOf(
+            "armeabi-v7a" to 4, 
+            "arm64-v8a" to 4, 
+            "x86" to 4, 
+            "x86_64" to 4, 
+            "universal" to 4
+        )
+
+        variant.outputs.forEach { output ->
+            val abiFilter = output.filters.find { it.filterType == FilterConfiguration.FilterType.ABI }
+            val abi = abiFilter?.identifier ?: "universal"
+
+            if (versionCodes.containsKey(abi)) {
+                val multiplier = versionCodes[abi]!!
+                output.versionCode.set((1000000 * multiplier) + appVersionCode)
+            }
+        }
+    }
 }
 
 dependencies {
@@ -166,8 +174,6 @@ dependencies {
     // Background Task Libraries
     implementation(libs.work.runtime.ktx)
     implementation(libs.work.multiprocess)
-
-    // Multidex Support
     implementation(libs.multidex)
 
     // Testing Libraries
