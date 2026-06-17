@@ -62,10 +62,10 @@
                 android:contentDescription="@string/menu_item_edit_config"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_edit_24dp"
+                app:srcCompat="@drawable/ic_edit_color"
                 android:background="?selectableItemBackgroundBorderless"
                 android:focusable="true"
-                app:tint="?attr/colorOnSurfaceVariant" />
+                app:tint="@null" />
 
             <TextView
                 android:id="@+id/domainIp"

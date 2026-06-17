@@ -70,8 +70,8 @@
                         android:contentDescription="@string/menu_item_edit_config"
                         android:background="?selectableItemBackgroundBorderless"
                         android:focusable="true"
-                        app:srcCompat="@drawable/ic_edit_24dp"
-                        app:tint="?attr/colorOnSurfaceVariant" />
+                        app:srcCompat="@drawable/ic_edit_color"
+                        app:tint="@null" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/layout_remove"
@@ -80,7 +80,7 @@
                         android:contentDescription="@string/menu_item_del_config"
                         android:background="?selectableItemBackgroundBorderless"
                         android:focusable="true"
-                        app:srcCompat="@drawable/ic_delete_24dp"
+                        app:srcCompat="@drawable/ic_delete_empty"
                         app:tint="?attr/colorError" />
 
                 </LinearLayout>
