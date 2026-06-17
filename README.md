@@ -8,6 +8,46 @@ A V2Ray client for Android, support Xray core and v2fly core.
 
 ---
 
+[![Banner](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_banner.png)]()
+
+## Screenshots / 截圖預覽
+
+A preview of MikuBox themes.  
+*MikuBox 主題預覽*
+
+<details>
+  <summary><b>Light Theme / 淺色主題 (Click to view / 点击查看)</b></summary>
+
+  <br>
+  
+![ScreenshotLight1](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_light_1.png)
+
+![ScreenshotLight2](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_light_2.png)
+
+![ScreenshotLight3](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_light_3.png)
+
+![ScreenshotLight4](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_light_4.png)
+
+
+</details>
+
+<details>
+  <summary><b>Night Theme / 深色主題 (Click to view / 点击查看)</b></summary>
+
+  <br>
+
+![ScreenshotNight1](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_night_1.png)
+
+![ScreenshotNight2](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_night_2.png)
+
+![ScreenshotNight3](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_night_3.png)
+
+![ScreenshotNight4](https://raw.githubusercontent.com/HatsuneMikuUwU/MikuRay/master/image/uwu_screenshot_night_4.png)
+
+</details>
+
+---
+
 ## Supported Cores / 支援的核心
 
 MikuRay supports multiple cores to power your proxy connections.  
