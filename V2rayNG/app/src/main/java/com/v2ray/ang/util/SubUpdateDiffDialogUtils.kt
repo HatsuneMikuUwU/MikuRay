@@ -30,7 +30,7 @@ fun showSubUpdateDiffDialog(context: Context, result: SubscriptionUpdateResult) 
     val multipleSubs = subNames.size > 1
 
     fun format(entries: List<ProfileDiffEntry>): String = entries.joinToString("\n") { entry ->
-        if (multipleSubs) "[${entry.subscriptionName}] ${entry.profileName}" else "• ${entry.profileName}"
+        if (multipleSubs) "• [${entry.subscriptionName}] ${entry.profileName}" else "• ${entry.profileName}"
     }
 
     val titleSubject = if (subNames.size == 1) subNames.first() else context.getString(R.string.title_sub_update)

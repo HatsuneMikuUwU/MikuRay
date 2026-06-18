@@ -609,10 +609,15 @@ object AngConfigManager {
 
                 val newProfileNames = snapshotProfileNames(it.guid)
                 val subName = it.subscription.remarks
-                val added = (newProfileNames - oldProfileNames)
+                
+                var added = (newProfileNames - oldProfileNames)
                     .map { name -> ProfileDiffEntry(subName, name) }
                 val deleted = (oldProfileNames - newProfileNames)
                     .map { name -> ProfileDiffEntry(subName, name) }
+
+                if (added.isEmpty() && deleted.isEmpty()) {
+                    added = newProfileNames.map { name -> ProfileDiffEntry(subName, name) }
+                }
 
                 return SubscriptionUpdateResult(
                     configCount = count,
