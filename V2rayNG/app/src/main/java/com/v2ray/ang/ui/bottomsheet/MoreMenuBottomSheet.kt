@@ -38,7 +38,6 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
 
     private var mListener: OnMoreOptionClickListener? = null
 
-    // Current server sort order; default = ORIGIN (0)
     private var currentOrder: Int = ORDER_ORIGIN
     private var subscriptionId: String = ""
 
@@ -84,19 +83,16 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
         }
         loadBanner(view)
 
-        // ── Expandable: Quick Actions ───────────────────────────────────────
         val qaHeader  = view.findViewById<View>(R.id.quick_actions_expand_header)
         val qaContent = view.findViewById<View>(R.id.quick_actions_expand_content)
         val qaArrow   = view.findViewById<ImageView>(R.id.quick_actions_expand_arrow)
         setupExpandable(rootContainer, qaHeader, qaContent, qaArrow)
 
-        // ── Expandable: Management ──────────────────────────────────────────
         val managementHeader  = view.findViewById<View>(R.id.management_expand_header)
         val managementContent = view.findViewById<View>(R.id.management_expand_content)
         val managementArrow   = view.findViewById<ImageView>(R.id.management_expand_arrow)
         setupExpandable(rootContainer, managementHeader, managementContent, managementArrow)
 
-        // ── CheckedTextView state (Order always visible) ───────────────────
         val checkOrigin = view.findViewById<CheckedTextView>(R.id.action_order_origin)
         val checkName   = view.findViewById<CheckedTextView>(R.id.action_order_by_name)
         val checkDelay  = view.findViewById<CheckedTextView>(R.id.action_order_by_delay)
@@ -108,17 +104,24 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
         }
         updateChecks(currentOrder)
 
-        // ── Hide/Show Reset Traffic ─────────────────────────────────────────
         val isTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRAFFIC_ENABLED) == true
         view.findViewById<View>(R.id.reset_traffic)?.visibility = if (isTrafficEnabled) View.VISIBLE else View.GONE
 
-        // ── Click listeners ─────────────────────────────────────────────────
+        view.findViewById<View>(R.id.card_order_origin)?.setOnClickListener {
+            view.findViewById<View>(R.id.action_order_origin)?.performClick()
+        }
+        view.findViewById<View>(R.id.card_order_by_name)?.setOnClickListener {
+            view.findViewById<View>(R.id.action_order_by_name)?.performClick()
+        }
+        view.findViewById<View>(R.id.card_order_by_delay)?.setOnClickListener {
+            view.findViewById<View>(R.id.action_order_by_delay)?.performClick()
+        }
+
         val clickListener = View.OnClickListener { v ->
             mListener?.onMoreOptionClicked(v.id)
             dismiss()
         }
 
-        // Order items update the check state and persist before dismiss
         val orderClickListener = View.OnClickListener { v ->
             val newOrder = when (v.id) {
                 R.id.action_order_origin   -> ORDER_ORIGIN

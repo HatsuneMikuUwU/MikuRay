@@ -1419,9 +1419,12 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_order_origin"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4.0dip"
+                        android:focusable="true"
+                        android:clickable="true"
                         app:cardBackgroundColor="?colorCard"
                         app:cardElevation="0.0dip"
                         app:strokeWidth="0.0dip"
@@ -1432,6 +1435,8 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16.0dip"
+                            android:layout_marginBottom="16.0dip"
                             android:orientation="horizontal">
 
                             <FrameLayout
@@ -1475,9 +1480,12 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_order_by_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4.0dip"
+                        android:focusable="true"
+                        android:clickable="true"
                         app:cardBackgroundColor="?colorCard"
                         app:cardElevation="0.0dip"
                         app:strokeWidth="0.0dip"
@@ -1488,6 +1496,8 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16.0dip"
+                            android:layout_marginBottom="16.0dip"
                             android:orientation="horizontal">
 
                             <FrameLayout
@@ -1531,8 +1541,11 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_order_by_delay"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:clickable="true"
                         app:cardBackgroundColor="?colorCard"
                         app:cardElevation="0.0dip"
                         app:strokeWidth="0.0dip"
@@ -1543,6 +1556,8 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16.0dip"
+                            android:layout_marginBottom="16.0dip"
                             android:orientation="horizontal">
 
                             <FrameLayout
