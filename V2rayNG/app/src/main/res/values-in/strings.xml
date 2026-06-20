@@ -307,7 +307,6 @@
     <string name="sub_setting_pre_profile_tip">Catatan konfignya ada dan cuma satu-satunya</string>
     <string name="toast_invalid_update_interval">Jeda updatenya ngaco. Paling dikit 15 menit ya.</string>
     <string name="title_sub_update">Update langganan</string>
-    <string name="title_ping_all_server">Tcping konfig</string>
     <string name="title_real_ping_all_server">Tes ping semua konfig</string>
     <string name="title_user_asset_setting">File Aset</string>
     <string name="title_sort_by_test_results">Urutin dari hasil tes</string>

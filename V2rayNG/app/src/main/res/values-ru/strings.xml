@@ -312,7 +312,6 @@
     <string name="sub_setting_pre_profile_tip">Примечания конфигурации существуют и уникальны</string>
     <string name="toast_invalid_update_interval">Неверный интервал обновления. Минимальное значение — 15 минут.</string>
     <string name="title_sub_update">Обновить подписку</string>
-    <string name="title_ping_all_server">Tcping конфигурации</string>
     <string name="title_real_ping_all_server">Реальная задержка конфигурации</string>
     <string name="title_user_asset_setting">Файлы ресурсов</string>
     <string name="title_sort_by_test_results">Сортировка по результатам теста</string>

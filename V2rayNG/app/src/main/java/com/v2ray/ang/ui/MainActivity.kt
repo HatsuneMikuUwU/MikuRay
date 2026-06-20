@@ -337,10 +337,6 @@ class MainActivity : HelperBaseActivity(),
     override fun onMoreOptionClicked(viewId: Int) {
         when (viewId) {
             R.id.export_all -> exportAll()
-            R.id.ping_all -> {
-                alert(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_ping_all_server))
-                mainViewModel.testAllTcping()
-            }
             R.id.real_ping_all -> {
                 alert(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_real_ping_all_server))
                 mainViewModel.testAllRealPing()
