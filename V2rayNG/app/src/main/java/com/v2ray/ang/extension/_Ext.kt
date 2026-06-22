@@ -11,6 +11,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -76,6 +78,21 @@ object ForegroundActivityTracker : Application.ActivityLifecycleCallbacks {
     override fun onActivityDestroyed(activity: Activity) {}
 }
 
+private fun Context.vibrateOnError() {
+    try {
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        if (vibrator?.hasVibrator() == true) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200L, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200L)
+            }
+        }
+    } catch (e: Exception) {
+    }
+}
+
 fun Context.toast(message: Int) {
     Toasty.normal(this, message).show()
 }
@@ -93,10 +110,12 @@ fun Context.toastSuccess(message: CharSequence) {
 }
 
 fun Context.toastError(message: Int) {
+    vibrateOnError()
     Toasty.error(this, message, Toast.LENGTH_SHORT, true).show()
 }
 
 fun Context.toastError(message: CharSequence) {
+    vibrateOnError()
     Toasty.error(this, message, Toast.LENGTH_SHORT, true).show()
 }
 
@@ -284,6 +303,7 @@ fun Context.snackbarSuccess(message: CharSequence, title: CharSequence = "") {
 }
 
 fun Context.snackbarError(message: Int, title: CharSequence = "") {
+    vibrateOnError()
     showSnackbar(
         this, title, getString(message), R.drawable.ic_warning,
         "colorError",
@@ -293,6 +313,7 @@ fun Context.snackbarError(message: Int, title: CharSequence = "") {
 }
 
 fun Context.snackbarError(message: CharSequence, title: CharSequence = "") {
+    vibrateOnError()
     showSnackbar(
         this, title, message, R.drawable.ic_warning,
         "colorError",
@@ -300,10 +321,6 @@ fun Context.snackbarError(message: CharSequence, title: CharSequence = "") {
         Snackbar.LENGTH_LONG
     )
 }
-
-// ============================================================================
-// UTILITIES
-// ============================================================================
 
 const val THRESHOLD = 1000L
 const val DIVISOR = 1024.0
