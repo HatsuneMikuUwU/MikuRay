@@ -4,8 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
+        description: 'Release Tag (Optional)'
         required: false
         type: string
+      build_type:
+        description: 'Build Type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
   push:
     branches:
       - master
@@ -17,9 +26,12 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      BUILD_TYPE: ${{ github.event.inputs.build_type == 'release' && 'release' || 'debug' }}
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v7
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         fetch-depth: '0'
@@ -90,18 +102,28 @@ jobs:
         fileName: "android_keystore.jks"
         encodedString: ${{ secrets.APP_KEYSTORE_BASE64 }}
 
-    - name: Build APK
+    - name: Build APK (${{ env.BUILD_TYPE }})
       run: |
         cd ${{ github.workspace }}/V2rayNG
         echo "sdk.dir=${ANDROID_HOME}" > local.properties
         chmod 755 gradlew
-        ./gradlew assembleRelease --console=plain -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} -Pandroid.injected.signing.store.password=${{ secrets.APP_KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.APP_KEYSTORE_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.APP_KEY_PASSWORD }}
-
+        
+        if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
+          echo "Starting DEBUG build process..."
+          ./gradlew assembleDebug --console=plain
+        else
+          echo "Starting RELEASE build process..."
+          ./gradlew assembleRelease --console=plain \
+            -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} \
+            -Pandroid.injected.signing.store.password=${{ secrets.APP_KEYSTORE_PASSWORD }} \
+            -Pandroid.injected.signing.key.alias=${{ secrets.APP_KEYSTORE_ALIAS }} \
+            -Pandroid.injected.signing.key.password=${{ secrets.APP_KEY_PASSWORD }}
+        fi
     - name: Sign APKs with v1, v2, and v3
       run: |
         BUILD_TOOLS_DIR="$ANDROID_HOME/build-tools/37.0.0"
         
-        for apk in ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/release/*.apk; do
+        for apk in ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk; do
           if [ -f "$apk" ]; then
             echo "Signing $apk with v1, v2, and v3 schemes..."
             $BUILD_TOOLS_DIR/apksigner sign \
@@ -123,29 +145,29 @@ jobs:
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
       with:
-        name: arm64-v8a
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/release/*arm64-v8a*.apk
+        name: arm64-v8a-${{ env.BUILD_TYPE }}
+        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*arm64-v8a*.apk
 
     - name: Upload armeabi-v7a APK
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
       with:
-        name: armeabi-v7a
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/release/*armeabi-v7a*.apk
+        name: armeabi-v7a-${{ env.BUILD_TYPE }}
+        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*armeabi-v7a*.apk
 
     - name: Upload x86 APK
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
       with:
-        name: x86-apk
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/release/*x86*.apk
+        name: x86-apk-${{ env.BUILD_TYPE }}
+        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*x86*.apk
 
     - name: Upload to release
       uses: svenstaro/upload-release-action@v2
       if: github.event.inputs.release_tag != ''
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/release/*.apk
+        file: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk
         tag: ${{ github.event.inputs.release_tag }}
         file_glob: true
         prerelease: true
