@@ -569,6 +569,8 @@
     <string name="pref_traffic_enabled_summary">在每个服务器上显示上传和下载流量</string>
     <string name="pref_network_security_enabled_title">显示网络和安全</string>
     <string name="pref_network_security_enabled_summary">在每个服务器上显示传输和安全信息</string>
+    <string name="pref_disable_sensor_text_title">显示完整地址</string>
+    <string name="pref_disable_sensor_text_summary">显示完整的服务器 IP/域名，不使用 *** 遮挡</string>
     <string name="title_pref_send_hwid">发送 HWID</string>
     <string name="summary_pref_send_hwid">更新订阅时发送设备 ID</string>
     

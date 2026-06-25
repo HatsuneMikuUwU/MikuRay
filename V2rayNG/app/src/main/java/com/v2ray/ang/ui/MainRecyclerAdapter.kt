@@ -15,8 +15,6 @@ import com.v2ray.ang.databinding.ItemRecyclerMainBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.extension.isComplexType
-import com.v2ray.ang.extension.nullIfBlank
-import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.ItemTouchHelperAdapter
 import com.v2ray.ang.helper.ItemTouchHelperViewHolder
@@ -24,6 +22,7 @@ import com.v2ray.ang.viewmodel.MainViewModel
 import java.util.Collections
 import com.v2ray.ang.util.IndicatorStyle
 import com.v2ray.ang.util.SelectedProfileBannerController
+import com.v2ray.ang.util.SensorTextController
 import com.v2ray.ang.AppConfig
 
 class MainRecyclerAdapter(
@@ -97,7 +96,7 @@ class MainRecyclerAdapter(
 
             //Name address
             holder.itemMainBinding.tvName.text = profile.remarks
-            holder.itemMainBinding.tvStatistics.text = getAddress(profile)
+            holder.itemMainBinding.tvStatistics.text = SensorTextController.getAddress(profile)
             holder.itemMainBinding.tvType.text = getProtocolName(profile)
 
             // Network & security icon+text (TCP Fix)
@@ -202,10 +201,6 @@ class MainRecyclerAdapter(
                 adapterListener?.onSelectServer(guid)
             }
         }
-    }
-
-    private fun getAddress(profile: ProfileItem): String {
-        return profile.description.nullIfBlank() ?: AngConfigManager.generateDescription(profile)
     }
 
     private fun getSubscriptionRemarks(profile: ProfileItem): String {

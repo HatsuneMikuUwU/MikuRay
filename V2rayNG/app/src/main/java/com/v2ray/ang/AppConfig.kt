@@ -166,6 +166,7 @@ object AppConfig {
     const val HEADER_TOP_ROW_PADDING_MAX = 100
 
     // Selected profile card banner style
+    const val PREF_DISABLE_SENSOR_TEXT = "pref_disable_sensor_text"
     const val PREF_SELECTED_BANNER_STYLE_ENABLED = "pref_selected_banner_style_enabled"
     const val PREF_SELECTED_BANNER_URI = "custom_selected_banner_uri"
     const val PREF_SELECTED_BANNER_DIM = "pref_selected_banner_dim"

@@ -410,7 +410,6 @@ object AngConfigManager {
                     for (srv in serverList.reversed()) {
                         val config = CustomFmt.parse(JsonUtil.toJson(srv)) ?: continue
                         config.subscriptionId = subid
-                        config.description = generateDescription(config)
                         val key = MmkvManager.encodeServerConfig("", config)
                         MmkvManager.encodeServerRaw(key, JsonUtil.toJsonPretty(srv) ?: "")
                         keyToProfile[key] = config
@@ -430,7 +429,6 @@ object AngConfigManager {
                 // For compatibility
                 val config = CustomFmt.parse(server) ?: return 0
                 config.subscriptionId = subid
-                config.description = generateDescription(config)
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
                 }
@@ -444,7 +442,6 @@ object AngConfigManager {
         } else if (server.startsWith("[Interface]") && server.contains("[Peer]")) {
             try {
                 val config = WireguardFmt.parseWireguardConfFile(server) ?: return R.string.toast_incorrect_protocol
-                config.description = generateDescription(config)
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
                 }
@@ -495,7 +492,6 @@ object AngConfigManager {
             }
 
             config.subscriptionId = subid
-            config.description = generateDescription(config)
 
             return config
         } catch (e: Exception) {
@@ -689,24 +685,12 @@ object AngConfigManager {
         return 1
     }
 
-    /** Generates a description for the profile.
-     *
-     * @param profile The profile item.
-     * @return The generated description.
-     */
+    /** Generates a raw description for the profile (Unmasked, masking is now dynamic in UI). */
     fun generateDescription(profile: ProfileItem): String {
-        // Hide xxx:xxx:***/xxx.xxx.xxx.***
         val server = profile.server
         val port = profile.serverPort
         if (server.isNullOrBlank() && port.isNullOrBlank()) return ""
 
-        val addrPart = server?.let {
-            if (it.contains(":"))
-                it.split(":").take(2).joinToString(":", postfix = ":***")
-            else
-                it.split('.').dropLast(1).joinToString(".", postfix = ".***")
-        } ?: ""
-
-        return "$addrPart : ${port ?: ""}"
+        return "$server : ${port ?: ""}"
     }
 }

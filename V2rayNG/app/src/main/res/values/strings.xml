@@ -606,6 +606,8 @@
     <string name="confirm_reset_traffic_all">Reset data usage for all groups? This cannot be undone</string>
     <string name="pref_traffic_enabled_title">Show Data Usage</string>
     <string name="pref_traffic_enabled_summary">Show upload and download traffic on each server</string>
+    <string name="pref_disable_sensor_text_title">Show Full Address</string>
+    <string name="pref_disable_sensor_text_summary">Show full server IP/domain without *** masking</string>
     <string name="pref_network_security_enabled_title">Show Network and Security</string>
     <string name="pref_network_security_enabled_summary">Show transport and security info on each server</string>
     <string name="title_pref_send_hwid">Send HWID</string>

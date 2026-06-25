@@ -34,6 +34,15 @@
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
+            android:key="pref_disable_sensor_text"
+            android:summary="@string/pref_disable_sensor_text_summary"
+            android:title="@string/pref_disable_sensor_text_title" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_about_24dp"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
             android:key="pref_network_security_enabled"
             android:summary="@string/pref_network_security_enabled_summary"
             android:title="@string/pref_network_security_enabled_title" />
