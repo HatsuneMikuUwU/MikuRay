@@ -142,21 +142,21 @@ jobs:
         done
 
     - name: Upload arm64-v8a APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: ${{ success() }}
       with:
         name: arm64-v8a-${{ env.BUILD_TYPE }}
         path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*arm64-v8a*.apk
 
     - name: Upload armeabi-v7a APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: ${{ success() }}
       with:
         name: armeabi-v7a-${{ env.BUILD_TYPE }}
         path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*armeabi-v7a*.apk
 
     - name: Upload x86 APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: ${{ success() }}
       with:
         name: x86-apk-${{ env.BUILD_TYPE }}
