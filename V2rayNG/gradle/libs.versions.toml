@@ -35,7 +35,7 @@ fragment = "1.8.9"
 glide = "5.0.7"
 ucrop = "2.2.11"
 palette = "1.0.0"
-playServicesLocation = "21.3.0"
+playServicesLocation = "21.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
