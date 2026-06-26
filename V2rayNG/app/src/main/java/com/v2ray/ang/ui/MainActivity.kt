@@ -367,11 +367,11 @@ class MainActivity : HelperBaseActivity(),
                 Glide.with(this@MainActivity)
                     .load(Uri.parse(uriString))
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .error(R.drawable.uwu_banner_image_about)
+                    .error(R.drawable.uwu_banner_home)
                     .into(headerImage)
             } else {
                 Glide.with(this@MainActivity).clear(headerImage)
-                headerImage.setImageResource(R.drawable.uwu_banner_image_about)
+                headerImage.setImageResource(R.drawable.uwu_banner_home)
             }
             headerImage.tag = targetTag
         }

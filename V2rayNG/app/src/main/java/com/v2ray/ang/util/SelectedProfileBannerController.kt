@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.v2ray.ang.AppConfig
+import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 
 class SelectedProfileBannerController(private val context: Context) {
@@ -24,13 +26,15 @@ class SelectedProfileBannerController(private val context: Context) {
     fun isEnabled(): Boolean =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED, false)
 
-    fun hasBanner(): Boolean =
+    fun hasCustomBanner(): Boolean =
         !MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI).isNullOrEmpty()
+
+    fun hasBanner(): Boolean = true // always has at least the default banner
 
     fun applyTo(target: View, cornerRadiusDp: Float = 16f) {
         val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI)
         if (uriString.isNullOrEmpty()) {
-            clear(target)
+            applyDefaultBanner(target, cornerRadiusDp)
             return
         }
 
@@ -77,6 +81,37 @@ class SelectedProfileBannerController(private val context: Context) {
         } catch (e: Exception) {
             e.printStackTrace()
             target.setTag(TAG_KEY, null)
+        }
+    }
+
+    private fun applyDefaultBanner(target: View, cornerRadiusDp: Float = 16f) {
+        val dimPercent = MmkvManager.decodeSettingsInt(
+            AppConfig.PREF_SELECTED_BANNER_DIM,
+            AppConfig.SELECTED_BANNER_DIM_DEFAULT
+        ).coerceIn(AppConfig.SELECTED_BANNER_DIM_MIN, AppConfig.SELECTED_BANNER_DIM_MAX)
+        val cornerRadiusPx = cornerRadiusDp * context.resources.displayMetrics.density
+        val tagKey = "selected_banner::default::dim=$dimPercent::r=$cornerRadiusPx"
+        if (target.getTag(TAG_KEY) == tagKey) return
+
+        val cacheKey = "selected_banner::default"
+        val cached = bitmapCache[cacheKey]
+        if (cached != null) {
+            target.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+            target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
+            target.setTag(TAG_KEY, tagKey)
+            return
+        }
+
+        try {
+            val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.uwu_banner_selected)
+            if (bitmap != null) {
+                bitmapCache[cacheKey] = bitmap
+                target.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+                target.background = CenterCropDimDrawable(bitmap, dimColorFor(dimPercent), cornerRadiusPx)
+                target.setTag(TAG_KEY, tagKey)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -191,7 +226,7 @@ class SelectedProfileBannerController(private val context: Context) {
         private val bitmapCache = mutableMapOf<String, Bitmap>()
 
         fun broadcastChanged(context: Context) {
-            bitmapCache.clear()
+            bitmapCache.clear() // clears custom + default banner cache
             context.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_SELECTED_BANNER_CHANGED))
         }
     }

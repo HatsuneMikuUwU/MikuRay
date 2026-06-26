@@ -676,10 +676,10 @@ you need."</string>
     <string name="profile_name_custom_title">Header name</string>
     <string name="profile_name_custom_dialog">Change display name</string>
     <string name="banner_profile_custom_title">Change profile banner</string>
-    <string name="banner_profile_custom_summary">Choose a custom image for the profile header</string>
+    <string name="banner_profile_custom_summary">Set a custom image for the profile header (optional)</string>
     <string name="title_profile_banner_shape">Profile image shape</string>
-    <string name="delete_custom_banner_profile">Delete custom profile banner</string>
-    <string name="delete_custom_banner_profile_summary">Revert to default profile banner</string>
+    <string name="delete_custom_banner_profile">Remove custom profile banner</string>
+    <string name="delete_custom_banner_profile_summary">Custom banner removed. Default profile banner will be used instead</string>
     <string name="custom_banner_profile_set">Profile banner updated successfully.</string>
     
     <!-- Home banner settings -->
@@ -687,9 +687,9 @@ you need."</string>
     <string name="home_banner_show_title">Show home banner</string>
     <string name="home_banner_show_summary">Display the banner image at the top of the home screen</string>
     <string name="home_banner_custom_title">Change home banner</string>
-    <string name="home_banner_custom_summary">Choose a custom image for the home header</string>
-    <string name="home_banner_delete_title">Delete custom home banner</string>
-    <string name="home_banner_delete_summary">Revert to default home banner</string>
+    <string name="home_banner_custom_summary">Set a custom image for the home header (optional)</string>
+    <string name="home_banner_delete_title">Remove custom home banner</string>
+    <string name="home_banner_delete_summary">Custom banner removed. Default home banner will be used instead</string>
     <string name="home_banner_updated">Home banner updated successfully.</string>
     <string name="pref_home_banner_height_title">Banner height</string>
     <string name="pref_home_banner_height_summary_value">%1$ddp</string>
@@ -699,25 +699,25 @@ you need."</string>
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">Bottomsheet Banner</string>
     <string name="sheet_banner_custom_title">Change sheet banner</string>
-    <string name="sheet_banner_custom_summary">Choose a custom image for the bottomsheet</string>
-    <string name="sheet_banner_delete_title">Delete custom sheet banner</string>
-    <string name="sheet_banner_delete_summary">Revert to default sheet banner</string>
+    <string name="sheet_banner_custom_summary">Set a custom image for the bottomsheet (optional)</string>
+    <string name="sheet_banner_delete_title">Remove custom sheet banner</string>
+    <string name="sheet_banner_delete_summary">Custom banner removed. Default sheet banner will be used instead</string>
     <string name="sheet_banner_updated">Sheet banner updated successfully.</string>
     <string name="particles_disable_title">Disable particles animation</string>
     <string name="particles_disable_summary">Hide the particles effect in bottomsheet</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Selected Profile Style</string>
-    <string name="selected_banner_enable_title">Use custom banner for selected profile</string>
-    <string name="selected_banner_enable_summary">Show a custom image behind the active server card instead of the indicator style</string>
+    <string name="selected_banner_enable_title">Banner style for selected profile</string>
+    <string name="selected_banner_enable_summary">Show a banner image behind the active server card. Uses the default banner unless a custom one is set</string>
     <string name="selected_banner_dim_title">Banner overlay strength</string>
     <string name="selected_banner_dim_summary_value">%1$d%%</string>
     <string name="selected_banner_custom_title">Change selected profile banner</string>
-    <string name="selected_banner_custom_summary">Choose a custom image for the selected server card</string>
-    <string name="selected_banner_delete_title">Delete custom selected profile banner</string>
-    <string name="selected_banner_delete_summary">Revert to the default indicator style</string>
+    <string name="selected_banner_custom_summary">Set a custom image for the selected server card (optional)</string>
+    <string name="selected_banner_delete_title">Remove custom selected profile banner</string>
+    <string name="selected_banner_delete_summary">Custom banner removed. Default banner will be used instead</string>
     <string name="selected_banner_updated">Selected profile banner updated successfully.</string>
-    <string name="pref_indicator_style_summary_disabled_by_banner">Disabled while the custom selected-profile banner is active</string>
+    <string name="pref_indicator_style_summary_disabled_by_banner">Disabled while the selected profile banner style is active</string>
 
     <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Info</string>

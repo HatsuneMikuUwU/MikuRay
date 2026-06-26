@@ -116,7 +116,7 @@
         <ListPreference
             android:icon="@drawable/ic_domain"
             app:layout="@layout/uwu_mid"
-            android:defaultValue="0"
+            android:defaultValue="1"
             android:entries="@array/outbound_domain_resolve_method"
             android:entryValues="@array/outbound_domain_resolve_method_value"
             android:key="pref_outbound_domain_resolve_method"

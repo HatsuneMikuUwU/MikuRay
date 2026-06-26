@@ -657,10 +657,10 @@
     <string name="profile_name_custom_title">Имя в заголовке</string>
     <string name="profile_name_custom_dialog">Изменить отображаемое имя</string>
     <string name="banner_profile_custom_title">Изменить баннер профиля</string>
-    <string name="banner_profile_custom_summary">Выберите пользовательское изображение для заголовка профиля</string>
+    <string name="banner_profile_custom_summary">Задайте своё изображение для заголовка профиля (необязательно)</string>
     <string name="title_profile_banner_shape">Форма изображения профиля</string>
-    <string name="delete_custom_banner_profile">Удалить пользовательский баннер профиля</string>
-    <string name="delete_custom_banner_profile_summary">Вернуть баннер профиля по умолчанию</string>
+    <string name="delete_custom_banner_profile">Удалить свой баннер профиля</string>
+    <string name="delete_custom_banner_profile_summary">Свой баннер удалён. Вместо него будет использоваться баннер профиля по умолчанию</string>
     <string name="custom_banner_profile_set">Баннер профиля успешно обновлён.</string>
     
     <!-- Home banner settings -->
@@ -668,9 +668,9 @@
     <string name="home_banner_show_title">Показывать баннер главного экрана</string>
     <string name="home_banner_show_summary">Отображать баннер вверху главного экрана</string>
     <string name="home_banner_custom_title">Изменить баннер главного экрана</string>
-    <string name="home_banner_custom_summary">Выберите пользовательское изображение для заголовка главного экрана</string>
-    <string name="home_banner_delete_title">Удалить пользовательский баннер главного экрана</string>
-    <string name="home_banner_delete_summary">Вернуть баннер главного экрана по умолчанию</string>
+    <string name="home_banner_custom_summary">Задайте своё изображение для заголовка главного экрана (необязательно)</string>
+    <string name="home_banner_delete_title">Удалить свой баннер главного экрана</string>
+    <string name="home_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер главного экрана по умолчанию</string>
     <string name="home_banner_updated">Баннер главного экрана успешно обновлён.</string>
     <string name="pref_home_banner_height_title">Высота баннера</string>
     <string name="pref_header_top_row_padding_title">Верхний отступ заголовка</string>
@@ -678,24 +678,24 @@
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">Баннер нижней панели</string>
     <string name="sheet_banner_custom_title">Изменить баннер панели</string>
-    <string name="sheet_banner_custom_summary">Выберите свое изображение для нижней панели</string>
-    <string name="sheet_banner_delete_title">Удалить свой баннер панели</string>
-    <string name="sheet_banner_delete_summary">Вернуть стандартный баннер</string>
+    <string name="sheet_banner_custom_summary">Задайте своё изображение для нижней панели (необязательно)</string>
+    <string name="sheet_banner_delete_title">Удалить свой баннер нижней панели</string>
+    <string name="sheet_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер по умолчанию</string>
     <string name="sheet_banner_updated">Баннер панели успешно обновлен.</string>
     <string name="particles_disable_title">Отключить анимацию частиц</string>
     <string name="particles_disable_summary">Скрыть эффект частиц на нижней панели</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Стиль выбранного профиля</string>
-    <string name="selected_banner_enable_title">Использовать свой баннер для выбранного профиля</string>
-    <string name="selected_banner_enable_summary">Показывать свою картинку позади карточки активного сервера вместо стиля индикатора</string>
+    <string name="selected_banner_enable_title">Стиль баннера для выбранного профиля</string>
+    <string name="selected_banner_enable_summary">Показывать баннер позади карточки активного сервера. Используется баннер по умолчанию, если не задан свой</string>
     <string name="selected_banner_dim_title">Интенсивность затемнения баннера</string>
     <string name="selected_banner_custom_title">Изменить баннер выбранного профиля</string>
-    <string name="selected_banner_custom_summary">Выбрать свою картинку для карточки выбранного сервера</string>
+    <string name="selected_banner_custom_summary">Задать свою картинку для карточки выбранного сервера (необязательно)</string>
     <string name="selected_banner_delete_title">Удалить свой баннер выбранного профиля</string>
-    <string name="selected_banner_delete_summary">Вернуться к стандартному стилю индикатора</string>
+    <string name="selected_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер по умолчанию</string>
     <string name="selected_banner_updated">Баннер выбранного профиля успешно обновлен.</string>
-    <string name="pref_indicator_style_summary_disabled_by_banner">Отключено, пока активен свой баннер для выбранного профиля</string>    
+    <string name="pref_indicator_style_summary_disabled_by_banner">Отключено, пока активен стиль баннера для выбранного профиля</string>    
 
     <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Информация</string>

@@ -78,11 +78,11 @@ class MainMenuBottomSheet : BaseBottomSheetFragment() {
                 Glide.with(this)
                     .load(Uri.parse(uriString))
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .error(R.drawable.uwu_banner_image_about)
+                    .error(R.drawable.uwu_banner_sheet)
                     .into(bannerImageView)
             } else {
                 Glide.with(this).clear(bannerImageView)
-                bannerImageView.setImageResource(R.drawable.uwu_banner_image_about)
+                bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)
             }
             bannerImageView.tag = targetTag
         }

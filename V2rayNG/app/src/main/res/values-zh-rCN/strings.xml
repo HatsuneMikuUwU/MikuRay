@@ -636,10 +636,10 @@
    <string name="profile_name_custom_title">头部名称</string>
    <string name="profile_name_custom_dialog">更改显示名称</string>
    <string name="banner_profile_custom_title">更改个人资料横幅</string>
-   <string name="banner_profile_custom_summary">为个人资料头部选择自定义图片</string>
+   <string name="banner_profile_custom_summary">为个人资料头部设置自定义图片（可选）</string>
    <string name="title_profile_banner_shape">头像形状</string>
-   <string name="delete_custom_banner_profile">删除自定义横幅</string>
-   <string name="delete_custom_banner_profile_summary">恢复为默认横幅</string>
+   <string name="delete_custom_banner_profile">删除自定义个人资料横幅</string>
+   <string name="delete_custom_banner_profile_summary">自定义横幅已移除，将改用默认个人资料横幅</string>
    <string name="custom_banner_profile_set">个人资料横幅更新成功。</string>
    
    <!-- Home banner settings -->
@@ -647,9 +647,9 @@
     <string name="home_banner_show_title">显示主页横幅</string>
     <string name="home_banner_show_summary">在主屏幕顶部显示横幅图片</string>
     <string name="home_banner_custom_title">更改主页横幅</string>
-    <string name="home_banner_custom_summary">为主页头部选择自定义图片</string>
-    <string name="home_banner_delete_title">删除自定义主页横幅</string>
-    <string name="home_banner_delete_summary">恢复为默认主页横幅</string>
+    <string name="home_banner_custom_summary">为主页头部设置自定义图片（可选）</string>
+    <string name="home_banner_delete_title">移除自定义主页横幅</string>
+    <string name="home_banner_delete_summary">自定义横幅已移除，将改用默认主页横幅</string>
     <string name="home_banner_updated">主页横幅更新成功。</string>
     <string name="pref_home_banner_height_title">横幅高度</string>
     <string name="pref_header_top_row_padding_title">头部顶部内边距</string>
@@ -657,24 +657,24 @@
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">底部面板横幅</string>
     <string name="sheet_banner_custom_title">更改底部横幅</string>
-    <string name="sheet_banner_custom_summary">为底部面板选择自定义图片</string>
-    <string name="sheet_banner_delete_title">删除自定义底部横幅</string>
-    <string name="sheet_banner_delete_summary">恢复为默认底部横幅</string>
+    <string name="sheet_banner_custom_summary">为底部面板设置自定义图片（可选）</string>
+    <string name="sheet_banner_delete_title">移除自定义底部横幅</string>
+    <string name="sheet_banner_delete_summary">自定义横幅已移除，将改用默认底部横幅</string>
     <string name="sheet_banner_updated">底部横幅更新成功。</string>
     <string name="particles_disable_title">禁用粒子动画</string>
     <string name="particles_disable_summary">隐藏底部面板中的粒子效果</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">选中配置的样式</string>
-    <string name="selected_banner_enable_title">为选中的配置使用自定义横幅</string>
-    <string name="selected_banner_enable_summary">在活动服务器卡片后面显示自定义图片，以代替指示器样式</string>
+    <string name="selected_banner_enable_title">选中配置的横幅样式</string>
+    <string name="selected_banner_enable_summary">在活动服务器卡片后面显示横幅图片。未设置自定义图片时使用默认横幅</string>
     <string name="selected_banner_dim_title">横幅遮罩强度</string>
     <string name="selected_banner_custom_title">更改选中配置的横幅</string>
-    <string name="selected_banner_custom_summary">为选中的服务器卡片选择一张自定义图片</string>
-    <string name="selected_banner_delete_title">删除选中的配置自定义横幅</string>
-    <string name="selected_banner_delete_summary">恢复为默认的指示器样式</string>
+    <string name="selected_banner_custom_summary">为选中的服务器卡片设置自定义图片（可选）</string>
+    <string name="selected_banner_delete_title">删除选中配置的自定义横幅</string>
+    <string name="selected_banner_delete_summary">自定义横幅已移除，将改用默认横幅</string>
     <string name="selected_banner_updated">已成功更新选中配置的横幅。</string>
-    <string name="pref_indicator_style_summary_disabled_by_banner">当自定义的选中配置横幅启用时此选项将被禁用</string>
+    <string name="pref_indicator_style_summary_disabled_by_banner">选中配置的横幅样式启用时此选项将被禁用</string>
 
     <!-- Snackbar notification titles -->
     <string name="title_alerter_info">提示</string>

@@ -638,45 +638,45 @@ yang kamu butuhin."</string>
     <string name="profile_name_custom_title">Nama header</string>
     <string name="profile_name_custom_dialog">Ganti nama tampilan</string>
     <string name="banner_profile_custom_title">Ganti banner profil</string>
-    <string name="banner_profile_custom_summary">Pilih gambar sendiri buat header profil</string>
-    <string name="title_profile_banner_shape">Bentuk foto profil</string>
+    <string name="banner_profile_custom_summary">Pasang gambar kustom buat header profil (opsional)</string>
+    <string name="title_profile_banner_shape">Bentuk gambar profil</string>
     <string name="delete_custom_banner_profile">Hapus banner profil kustom</string>
-    <string name="delete_custom_banner_profile_summary">Balikin ke banner bawaan</string>
-    <string name="custom_banner_profile_set">Sip, banner profil berhasil di-update!</string>
+    <string name="delete_custom_banner_profile_summary">Banner kustom dihapus. Bakal balik pakai banner profil bawaan</string>
+    <string name="custom_banner_profile_set">Banner profil berhasil diupdate.</string>
     
     <!-- Home banner settings -->
     <string name="home_banner_category">Banner Beranda</string>
     <string name="home_banner_show_title">Tampilin banner beranda</string>
-    <string name="home_banner_show_summary">Tampilin gambar banner di bagian atas layar beranda</string>
+    <string name="home_banner_show_summary">Tampilin gambar banner di bagian paling atas layar beranda</string>
     <string name="home_banner_custom_title">Ganti banner beranda</string>
-    <string name="home_banner_custom_summary">Pilih gambar sendiri buat header beranda</string>
+    <string name="home_banner_custom_summary">Pasang gambar kustom buat header beranda (opsional)</string>
     <string name="home_banner_delete_title">Hapus banner beranda kustom</string>
-    <string name="home_banner_delete_summary">Balikin ke banner bawaan</string>
-    <string name="home_banner_updated">Sip, banner beranda berhasil di-update!</string>
+    <string name="home_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner beranda bawaan</string>
+    <string name="home_banner_updated">Banner beranda berhasil diupdate.</string>
     <string name="pref_home_banner_height_title">Tinggi banner</string>
     <string name="pref_header_top_row_padding_title">Padding atas header</string>
     
     <!-- Sheet banner settings -->   	
     <string name="sheet_banner_category">Banner Bottomsheet</string>
-    <string name="sheet_banner_custom_title">Ganti banner bottomsheet</string>
-    <string name="sheet_banner_custom_summary">Pilih gambar sendiri buat bottomsheet</string>
-    <string name="sheet_banner_delete_title">Hapus banner bottomsheet kustom</string>
-    <string name="sheet_banner_delete_summary">Balikin ke banner bawaan</string>
-    <string name="sheet_banner_updated">Sip, banner bottomsheet berhasil di-update!</string>
+    <string name="sheet_banner_custom_title">Ganti banner sheet</string>
+    <string name="sheet_banner_custom_summary">Pasang gambar kustom buat bottomsheet (opsional)</string>
+    <string name="sheet_banner_delete_title">Hapus banner sheet kustom</string>
+    <string name="sheet_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner sheet bawaan</string>
+    <string name="sheet_banner_updated">Banner sheet berhasil diupdate.</string>
     <string name="particles_disable_title">Matiin animasi partikel</string>
     <string name="particles_disable_summary">Sembunyiin efek partikel di bottomsheet</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Style Profil yang Dipilih</string>
-    <string name="selected_banner_enable_title">Pakai banner kustom buat profil yang dipilih</string>
-    <string name="selected_banner_enable_summary">Tampilin gambar kustom di belakang kartu server yang aktif sebagai ganti style indikator</string>
+    <string name="selected_banner_enable_title">Style banner buat profil yang dipilih</string>
+    <string name="selected_banner_enable_summary">Tampilin gambar banner di belakang kartu server yang aktif. Bakal pakai banner bawaan kalau kamu nggak pasang yang kustom</string>
     <string name="selected_banner_dim_title">Intensitas overlay banner</string>
     <string name="selected_banner_custom_title">Ganti banner profil yang dipilih</string>
-    <string name="selected_banner_custom_summary">Pilih gambar kustom buat kartu server yang dipilih</string>
+    <string name="selected_banner_custom_summary">Pasang gambar kustom buat kartu server yang dipilih (opsional)</string>
     <string name="selected_banner_delete_title">Hapus banner kustom profil yang dipilih</string>
-    <string name="selected_banner_delete_summary">Balik lagi ke style indikator bawaan</string>
+    <string name="selected_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner bawaan</string>
     <string name="selected_banner_updated">Banner profil yang dipilih berhasil diupdate.</string>
-    <string name="pref_indicator_style_summary_disabled_by_banner">Dimatiin selama banner kustom profil yang dipilih lagi aktif</string>
+    <string name="pref_indicator_style_summary_disabled_by_banner">Dimatiin selama style banner profil yang dipilih lagi aktif</string>
 
     <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Info</string>

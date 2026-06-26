@@ -482,8 +482,6 @@ class UiSettingsActivity : BaseActivity() {
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             deleteOldFile(savedUri)
                             MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_URI, "")
-                            MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED, false)
-                            selectedBannerStyleEnabled?.isChecked = false
                             updateIndicatorStyleEnabledState()
                             broadcastSelectedBannerChanged()
                             requireContext().snackbarSuccess(getString(R.string.selected_banner_delete_summary), title = getString(R.string.title_alerter_success))
@@ -497,12 +495,10 @@ class UiSettingsActivity : BaseActivity() {
 
         private fun updateIndicatorStyleEnabledState() {
             val bannerEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED, false)
-            val hasBanner = !MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI).isNullOrEmpty()
-            val disabledByBanner = bannerEnabled && hasBanner
 
             indicatorStyle?.apply {
-                isEnabled = !disabledByBanner
-                summary = if (disabledByBanner) {
+                isEnabled = !bannerEnabled
+                summary = if (bannerEnabled) {
                     getString(R.string.pref_indicator_style_summary_disabled_by_banner)
                 } else {
                     getString(R.string.pref_indicator_style_summary)
