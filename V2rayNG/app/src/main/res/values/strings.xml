@@ -613,6 +613,8 @@
     <string name="pref_network_security_enabled_summary">Show transport and security info on each server</string>
     <string name="title_pref_send_hwid">Send HWID</string>
     <string name="summary_pref_send_hwid">Send device ID when updating subscription</string>
+    <string name="title_pref_hide_from_recent_apps">Hide from recent tasks</string>
+    <string name="summary_pref_hide_from_recent_apps">Hide the app from recent tasks when running in background</string>
     <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (seconds, 0 = disabled)</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>

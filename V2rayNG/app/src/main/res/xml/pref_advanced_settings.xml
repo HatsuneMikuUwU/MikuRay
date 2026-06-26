@@ -73,6 +73,15 @@
             android:summary="%s"
             android:title="@string/title_mode" />
             
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_eye_off"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="hide_from_recent_apps"
+            android:summary="@string/summary_pref_hide_from_recent_apps"
+            android:title="@string/title_pref_hide_from_recent_apps" />
+
          <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_cellphone_screenshot"
             app:layout="@layout/uwu_bot_switch"

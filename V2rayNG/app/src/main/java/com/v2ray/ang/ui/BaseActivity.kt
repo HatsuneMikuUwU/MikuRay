@@ -90,6 +90,19 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeStateManager.checkThemeChangedAndRecreate()
+        applyHideFromRecentApps(MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_FROM_RECENT_APPS, false))
+    }
+
+    private fun applyHideFromRecentApps(hide: Boolean) {
+        try {
+            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+            val tasks = activityManager.appTasks
+            if (tasks.isNotEmpty()) {
+                tasks[0].setExcludeFromRecents(hide)
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("BaseActivity", "Failed to set excludeFromRecents: ${e.message}")
+        }
     }
 
     override fun onContentChanged() {

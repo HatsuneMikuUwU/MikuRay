@@ -576,6 +576,8 @@
     <string name="pref_disable_sensor_text_summary">Tampilin IP/domain server secara lengkap tanpa disensor pakai ***</string>
     <string name="title_pref_send_hwid">Kirim HWID</string>
     <string name="summary_pref_send_hwid">Kirim ID perangkat pas lagi update langganan</string>
+    <string name="title_pref_hide_from_recent_apps">Sembunyikan dari recent apps</string>
+    <string name="summary_pref_hide_from_recent_apps">Sembunyikan app dari recent tasks pas lagi jalan di background</string>
     <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (detik, 0 = nonaktif)</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
