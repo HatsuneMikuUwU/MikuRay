@@ -192,6 +192,7 @@ object CoreConfigManager {
         applyObservability(v2rayConfig, balancerStrategies)
         applySpeedDisabled(v2rayConfig)
         resolveOutboundDomainsToHosts(v2rayConfig)
+        applyTcpKeepAlive(v2rayConfig)
 
         return v2rayConfig
     }
@@ -829,6 +830,22 @@ object CoreConfigManager {
         }
 
         dns.hosts = newHosts
+    }
+
+    /**
+     * Apply TCP keepalive to all proxy outbounds so idle connections (e.g. WS/TLS)
+     * are not silently dropped by NAT/firewall after ~15 minutes of inactivity.
+     * Default idle interval: 60 seconds.  User can override via PREF_TCP_KEEPALIVE_IDLE;
+     * setting 0 disables it.
+     */
+    private fun applyTcpKeepAlive(v2rayConfig: V2rayConfig) {
+        val idleSeconds = MmkvManager.decodeSettingsString(AppConfig.PREF_TCP_KEEPALIVE_IDLE, "30")
+            ?.toIntOrNull() ?: 60
+        if (idleSeconds <= 0) return
+
+        v2rayConfig.getAllProxyOutbound().forEach { outbound ->
+            outbound.ensureSockopt().tcpKeepAliveIdle = idleSeconds
+        }
     }
 
     /**

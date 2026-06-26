@@ -595,6 +595,7 @@
     <string name="pref_disable_sensor_text_summary">Показывать полный IP/домен сервера без маскировки символами ***</string>
     <string name="title_pref_send_hwid">Отправлять HWID</string>
     <string name="summary_pref_send_hwid">Отправлять ID устройства при обновлении подписки</string>
+    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (секунд, 0 = отключено)</string>
     
     <string name="uwu_banner_settings_title">Привет...</string>
     <string name="uwu_banner_settings_summary">"Добро пожаловать в

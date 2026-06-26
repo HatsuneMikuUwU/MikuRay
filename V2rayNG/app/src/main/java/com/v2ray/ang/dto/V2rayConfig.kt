@@ -201,7 +201,8 @@ data class V2rayConfig(
                 var headers: Map<String, String>? = null,
                 val maxEarlyData: Int? = null,
                 val useBrowserForwarding: Boolean? = null,
-                val acceptProxyProtocol: Boolean? = null
+                val acceptProxyProtocol: Boolean? = null,
+                var heartbeatPeriod: Int? = null
             )
 
             data class HttpupgradeSettingsBean(

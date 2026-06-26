@@ -115,6 +115,14 @@
             android:summary="300,60"
             android:title="@string/title_pref_hev_tunnel_rw_timeout" />
 
+        <EditTextPreference
+            android:icon="@drawable/ic_clock"
+            app:layout="@layout/uwu_mid"
+            android:inputType="number"
+            android:key="pref_tcp_keepalive_idle"
+            android:summary="30"
+            android:title="@string/title_pref_tcp_keepalive_idle" />
+
         <Preference
             android:icon="@drawable/ic_per_apps_24dp"
             app:layout="@layout/uwu_bot"

@@ -574,6 +574,7 @@
     <string name="pref_disable_sensor_text_summary">显示完整的服务器 IP/域名，不使用 *** 遮挡</string>
     <string name="title_pref_send_hwid">发送 HWID</string>
     <string name="summary_pref_send_hwid">更新订阅时发送设备 ID</string>
+    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (秒，0 = 禁用)</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,

@@ -416,6 +416,8 @@ object CoreOutboundBuilder {
                 wssetting.host = host.orEmpty()
                 sni = host
                 wssetting.path = path ?: "/"
+                // Send WS ping frame every 60s to prevent idle timeout/NAT drop
+                wssetting.heartbeatPeriod = 60
                 streamSettings.wsSettings = wssetting
             }
 
