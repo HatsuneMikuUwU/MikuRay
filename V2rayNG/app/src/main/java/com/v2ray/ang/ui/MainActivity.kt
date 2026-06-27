@@ -364,11 +364,21 @@ class MainActivity : HelperBaseActivity(),
             val targetTag = if (uriString.isNullOrBlank()) TAG_HOME_BANNER_DEFAULT else uriString
             if (headerImage.tag == targetTag) return
             if (!uriString.isNullOrBlank()) {
-                Glide.with(this@MainActivity)
-                    .load(Uri.parse(uriString))
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .error(R.drawable.uwu_banner_home)
-                    .into(headerImage)
+                val isGif = uriString.lowercase().endsWith(".gif")
+                if (isGif) {
+                    Glide.with(this@MainActivity)
+                        .asGif()
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_home)
+                        .into(headerImage)
+                } else {
+                    Glide.with(this@MainActivity)
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_home)
+                        .into(headerImage)
+                }
             } else {
                 Glide.with(this@MainActivity).clear(headerImage)
                 headerImage.setImageResource(R.drawable.uwu_banner_home)

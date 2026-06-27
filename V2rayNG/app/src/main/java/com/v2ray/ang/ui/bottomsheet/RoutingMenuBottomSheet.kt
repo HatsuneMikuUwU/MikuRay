@@ -74,11 +74,21 @@ class RoutingMenuBottomSheet : BaseBottomSheetFragment() {
         val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
         if (bannerImageView.tag != targetTag) {
             if (!uriString.isNullOrBlank()) {
-                Glide.with(this)
-                    .load(Uri.parse(uriString))
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .error(R.drawable.uwu_banner_sheet)
-                    .into(bannerImageView)
+                val isGif = uriString.lowercase().endsWith(".gif")
+                if (isGif) {
+                    Glide.with(this)
+                        .asGif()
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                } else {
+                    Glide.with(this)
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                }
             } else {
                 Glide.with(this).clear(bannerImageView)
                 bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)

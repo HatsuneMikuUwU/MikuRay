@@ -124,12 +124,30 @@ class UiSettingsActivity : BaseActivity() {
 
         private val pickHomeBannerImage =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                if (uri != null) startCropHomeBannerActivity(uri)
+                if (uri != null) {
+                    if (isGif(uri)) {
+                        saveGifBannerDirectly(uri, AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "home_banner_") {
+                            extractAndSaveBannerColor(it)
+                            broadcastHomeBannerChanged()
+                            requireContext().snackbarSuccess(getString(R.string.home_banner_updated), title = getString(R.string.title_alerter_success))
+                        }
+                    } else {
+                        startCropHomeBannerActivity(uri)
+                    }
+                }
             }
 
         private val pickSheetBannerImage =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                if (uri != null) startCropSheetBannerActivity(uri)
+                if (uri != null) {
+                    if (isGif(uri)) {
+                        saveGifBannerDirectly(uri, AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, "sheet_banner_") {
+                            requireContext().snackbarSuccess(getString(R.string.sheet_banner_updated), title = getString(R.string.title_alerter_success))
+                        }
+                    } else {
+                        startCropSheetBannerActivity(uri)
+                    }
+                }
             }
 
         private val pickSelectedBannerImage =
@@ -726,10 +744,35 @@ class UiSettingsActivity : BaseActivity() {
             cropProfileImage.launch(uCrop.getIntent(requireContext()))
         }
 
+        private fun isGif(uri: Uri): Boolean {
+            val mimeType = requireContext().contentResolver.getType(uri)
+            if (mimeType == "image/gif") return true
+            // fallback: cek extension dari path
+            val path = uri.path ?: return false
+            return path.lowercase().endsWith(".gif")
+        }
+
+        private fun saveGifBannerDirectly(
+            sourceUri: Uri,
+            prefKey: String,
+            fileNamePrefix: String,
+            onSuccess: (Uri) -> Unit
+        ) {
+            try {
+                val oldUri = MmkvManager.decodeSettingsString(prefKey)
+                deleteOldFile(oldUri)
+                val savedUri = saveToCache(sourceUri, fileNamePrefix, ext = "gif")
+                MmkvManager.encodeSettings(prefKey, savedUri.toString())
+                onSuccess(savedUri)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         @Throws(IOException::class)
-        private fun saveToCache(sourceCacheUri: Uri, fileNamePrefix: String): Uri {
+        private fun saveToCache(sourceCacheUri: Uri, fileNamePrefix: String, ext: String = "jpg"): Uri {
             val ctx = requireContext()
-            val destFile = File(ctx.cacheDir, "${fileNamePrefix}${System.currentTimeMillis()}.jpg")
+            val destFile = File(ctx.cacheDir, "${fileNamePrefix}${System.currentTimeMillis()}.$ext")
             ctx.contentResolver.openInputStream(sourceCacheUri)?.use { input ->
                 destFile.outputStream().use { output -> input.copyTo(output) }
             }
