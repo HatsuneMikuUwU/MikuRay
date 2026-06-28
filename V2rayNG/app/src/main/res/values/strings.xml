@@ -306,6 +306,7 @@
     <string name="title_pref_hev_tunnel_loglevel">Hev Tun Log Level</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Hev Tun read/write timeout (seconds) (tcp,udp default 300,60)</string>
 
+    <string name="title_category_root_mode">Root mode</string>
     <string name="title_pref_root_mode">Root mode (system-wide)</string>
     <string name="summary_pref_root_mode">Capture all traffic via iptables without VpnService. Requires root.</string>
     <string name="title_pref_root_lan_sharing">Root LAN / tethering sharing</string>
@@ -759,5 +760,12 @@ you need."</string>
     <string name="dialog_reset_settings_message">This will restore all settings to their default values.\n\nServer profiles and subscriptions will not be deleted.\n\nThis action cannot be undone.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
     <string name="reset_settings_success">Settings have been reset to default.</string>
+
+    <!-- SearchPreference (in-module fork) -->
+    <string name="searchpreference_search">Search…</string>
+    <string name="searchpreference_clear">Clear</string>
+    <string name="searchpreference_more">More</string>
+    <string name="searchpreference_clear_history">Clear history</string>
+    <string name="searchpreference_no_results">No results</string>
 
 </resources>

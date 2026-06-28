@@ -431,4 +431,6 @@ object AppConfig {
         TAG_DIRECT,
         TAG_BLOCKED,
     )
+
+    const val EXTRA_HIGHLIGHT_KEY = "extra_highlight_preference_key"
 }

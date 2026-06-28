@@ -15,6 +15,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.preference.SearchPreferenceHighlighter
 import com.v2ray.ang.ui.preference.CategoryStyleHelper
 
 class MuxSettingsActivity : BaseActivity() {
@@ -73,6 +74,11 @@ class MuxSettingsActivity : BaseActivity() {
                 updateMuxXudpConcurrency(newValue as String)
                 true
             }
+        }
+
+        override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            SearchPreferenceHighlighter.applyFromIntent(this)
         }
 
         private fun initPreferenceSummaries() {

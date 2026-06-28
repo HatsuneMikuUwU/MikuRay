@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_advanced"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_advanced"
+        android:title="@string/title_advanced"
         app:sectionIcon="@drawable/ic_flash_on">
 
         <androidx.preference.SwitchPreferenceCompat

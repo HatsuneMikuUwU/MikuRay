@@ -85,4 +85,12 @@
             format="float" />
     </declare-styleable>
     
+    <declare-styleable name="SearchPreference">
+        <attr name="textHint" format="string" />
+        <attr name="textNoResults" format="string" />
+        <attr name="textClearHistory" format="string" />
+        <attr name="textClearInput" format="string" />
+        <attr name="textMore" format="string" />
+    </declare-styleable>
+
 </resources>

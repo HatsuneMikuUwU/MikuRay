@@ -32,6 +32,7 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.preference.SearchPreferenceHighlighter
 import com.v2ray.ang.ui.CheckUpdateActivity
 import com.v2ray.ang.ui.TabIconPickerAdapter
 import com.v2ray.ang.ui.bottomsheet.IndicatorStyleBottomSheet
@@ -433,6 +434,11 @@ class UiSettingsActivity : BaseActivity() {
             setupSheetBannerPreferences()
             setupSelectedBannerPreferences()
             setupParticlesPreferences()
+        }
+
+        override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            SearchPreferenceHighlighter.applyFromIntent(this)
         }
 
         private fun extractAndSaveBannerColor(uri: Uri) {

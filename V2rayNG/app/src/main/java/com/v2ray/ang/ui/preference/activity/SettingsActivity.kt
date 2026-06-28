@@ -1,10 +1,12 @@
 package com.v2ray.ang.ui.preference.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -12,6 +14,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bytehamster.lib.preferencesearch.SearchPreference
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
@@ -19,9 +24,11 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.PerAppProxyActivity
 import com.v2ray.ang.util.showDeleteConfirmDialog
 
-class SettingsActivity : BaseActivity() {
+class SettingsActivity : BaseActivity(), SearchPreferenceResultListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -32,7 +39,7 @@ class SettingsActivity : BaseActivity() {
             val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.updatePadding(
                 top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
+                bottom = maxOf(systemBars.bottom, displayCutout.bottom),
                 left   = maxOf(systemBars.left,   displayCutout.left),
                 right  = maxOf(systemBars.right,  displayCutout.right)
             )
@@ -46,6 +53,47 @@ class SettingsActivity : BaseActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.settings_container, SettingsFragment())
                 .commit()
+        }
+
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val searchFragment = supportFragmentManager.fragments.find { 
+                    it.javaClass.name.contains("SearchPreferenceFragment") 
+                }
+
+                if (searchFragment != null && searchFragment.isVisible) {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
+                } else {
+                    finish()
+                }
+            }
+        })
+    }
+
+    override fun onSearchResultClicked(@NonNull result: SearchPreferenceResult) {
+        val searchFragment = supportFragmentManager.fragments.find { 
+            it.javaClass.name.contains("SearchPreferenceFragment") 
+        }
+        if (searchFragment != null) {
+            supportFragmentManager.beginTransaction().remove(searchFragment).commitNowAllowingStateLoss()
+        }
+
+        val targetActivity: Class<*>? = when (result.resourceFile) {
+            R.xml.pref_ui_settings       -> UiSettingsActivity::class.java
+            R.xml.pref_vpn_settings      -> VpnSettingsActivity::class.java
+            R.xml.pref_core_settings     -> CoreSettingsActivity::class.java
+            R.xml.pref_mux_settings      -> MuxSettingsActivity::class.java
+            R.xml.pref_fragment_settings -> FragmentSettingsActivity::class.java
+            R.xml.pref_advanced_settings -> AdvancedSettingsActivity::class.java
+            else                         -> null
+        }
+
+        if (targetActivity != null) {
+            startActivity(Intent(this, targetActivity).apply {
+                putExtra(AppConfig.EXTRA_HIGHLIGHT_KEY, result.key)
+            })
         }
     }
 
@@ -94,6 +142,21 @@ class SettingsActivity : BaseActivity() {
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_settings)
+
+            // Configure SearchPreference
+            findPreference<SearchPreference>("pref_search")?.apply {
+                getSearchConfiguration().apply {
+                    setActivity(requireActivity() as com.v2ray.ang.ui.BaseActivity)
+                    setBreadcrumbsEnabled(true)
+                    setHistoryEnabled(true)
+                    index(R.xml.pref_ui_settings).addBreadcrumb(R.string.title_ui_settings)
+                    index(R.xml.pref_vpn_settings).addBreadcrumb(R.string.title_vpn_settings)
+                    index(R.xml.pref_core_settings).addBreadcrumb(R.string.title_core_settings)
+                    index(R.xml.pref_mux_settings).addBreadcrumb(R.string.title_mux_settings)
+                    index(R.xml.pref_fragment_settings).addBreadcrumb(R.string.title_fragment_settings)
+                    index(R.xml.pref_advanced_settings).addBreadcrumb(R.string.title_advanced)
+                }
+            }
 
             navigateUiSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), UiSettingsActivity::class.java))

@@ -9,7 +9,9 @@
         android:summary="@string/uwu_update_summary"
         app:icon="@drawable/ic_check_update_24dp" />    
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_ui_general"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_ui_general"
+        android:title="@string/title_ui_general"
         app:sectionIcon="@drawable/ic_baseline_speed_24">
 
         <androidx.preference.SwitchPreferenceCompat
@@ -91,7 +93,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_ui_theme"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_ui_theme"
+        android:title="@string/title_ui_theme"
         app:sectionIcon="@drawable/ic_baseline_color_lens_24">
 
         <Preference
@@ -140,7 +144,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_ui_appearance"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_ui_appearance"
+        android:title="@string/title_ui_appearance"
         app:sectionIcon="@drawable/ic_palette_24">
 
         <ListPreference
@@ -190,7 +196,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_search_bar_chip"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_search_bar_chip"
+        android:title="@string/title_search_bar_chip"
         app:sectionIcon="@drawable/ic_search_icon">
 
          <androidx.preference.SwitchPreferenceCompat
@@ -241,7 +249,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_blur_settings"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_blur_settings"
+        android:title="@string/title_blur_settings"
         app:sectionIcon="@drawable/ic_baseline_blur_on_24">
 
          <androidx.preference.SwitchPreferenceCompat
@@ -278,7 +288,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/home_banner_category"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_home_banner"
+        android:title="@string/home_banner_category"
         app:sectionIcon="@drawable/ic_baseline_home_24">
 
         <androidx.preference.SwitchPreferenceCompat
@@ -322,7 +334,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
     
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/sheet_banner_category"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_sheet_banner"
+        android:title="@string/sheet_banner_category"
         app:sectionIcon="@drawable/ic_sparkles_24dp">
 
         <SwitchPreferenceCompat
@@ -350,7 +364,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/selected_banner_category"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_selected_banner"
+        android:title="@string/selected_banner_category"
         app:sectionIcon="@drawable/ic_cards_variant">
 
         <Preference
@@ -394,7 +410,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/banner_profile_category"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_banner_profile"
+        android:title="@string/banner_profile_category"
         app:sectionIcon="@drawable/ic_account_heart">
 
         <EditTextPreference
@@ -432,7 +450,9 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_vpn_sound_settings"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_vpn_sound_settings"
+        android:title="@string/title_vpn_sound_settings"
         app:sectionIcon="@drawable/ic_audio">
 
         <androidx.preference.SwitchPreferenceCompat

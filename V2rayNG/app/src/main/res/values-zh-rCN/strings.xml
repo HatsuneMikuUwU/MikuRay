@@ -283,6 +283,7 @@
     <string name="title_pref_hev_tunnel_loglevel">HevTun 日志级别</string>
     <string name="title_pref_hev_tunnel_rw_timeout">HevTun 读写超时(秒) (tcp,udp 默认 300,60)</string>
 
+    <string name="title_category_root_mode">Root 模式</string>
     <string name="title_pref_root_mode">Root 模式（全局代理）</string>
     <string name="summary_pref_root_mode">通过 iptables 捕获所有流量，无需 VpnService。需要 Root 权限。</string>
     <string name="title_pref_root_lan_sharing">Root 局域网 / 热点共享</string>
@@ -727,5 +728,12 @@
     <string name="dialog_reset_settings_message">这将把所有设置恢复为默认值。\n\n服务器配置和订阅不会被删除。\n\n此操作无法撤销。</string>
     <string name="dialog_reset_settings_confirm">重置</string>
     <string name="reset_settings_success">设置已重置为默认值。</string>    
+
+    <!-- SearchPreference (in-module fork) -->
+    <string name="searchpreference_search">搜索…</string>
+    <string name="searchpreference_clear">清除</string>
+    <string name="searchpreference_more">更多</string>
+    <string name="searchpreference_clear_history">清除历史记录</string>
+    <string name="searchpreference_no_results">没有结果</string>
 
 </resources>

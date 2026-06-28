@@ -13,6 +13,14 @@
         app:selectable="false"
         android:summary="@string/uwu_maintainer_summary" />
 
+    <com.bytehamster.lib.preferencesearch.SearchPreference
+        android:key="pref_search"
+        app:textHint="@string/searchpreference_search"
+        app:textNoResults="@string/searchpreference_no_results"
+        app:textClearHistory="@string/searchpreference_clear_history"
+        app:textClearInput="@string/searchpreference_clear"
+        app:textMore="@string/searchpreference_more" />
+
     <Preference
         android:icon="@drawable/ic_baseline_color_lens_24"
         android:key="pref_navigate_ui_settings"

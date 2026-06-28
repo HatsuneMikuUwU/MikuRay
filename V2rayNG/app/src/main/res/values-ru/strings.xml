@@ -290,6 +290,7 @@
     <string name="title_pref_hev_tunnel_loglevel">Уровень журнала Hev TUN</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Тайм-аут чтения/записи Hev TUN (секунды) (tcp,udp по умолчанию 300,60)</string>
 
+    <string name="title_category_root_mode">Root-режим</string>
     <string name="title_pref_root_mode">Root-режим (общесистемный)</string>
     <string name="summary_pref_root_mode">Перехват всего трафика через iptables без VpnService. Требуется root-доступ.</string>
     <string name="title_pref_root_lan_sharing">Root: общий доступ LAN / тезеринг</string>
@@ -748,5 +749,12 @@
     <string name="dialog_reset_settings_message">Это восстановит все настройки по умолчанию.\n\nПрофили серверов и подписки удалены не будут.\n\nЭто действие нельзя отменить.</string>
     <string name="dialog_reset_settings_confirm">Сбросить</string>
     <string name="reset_settings_success">Настройки сброшены до значений по умолчанию.</string>    
+
+    <!-- SearchPreference (in-module fork) -->
+    <string name="searchpreference_search">Поиск…</string>
+    <string name="searchpreference_clear">Очистить</string>
+    <string name="searchpreference_more">Ещё</string>
+    <string name="searchpreference_clear_history">Очистить историю</string>
+    <string name="searchpreference_no_results">Нет результатов</string>
 
 </resources>

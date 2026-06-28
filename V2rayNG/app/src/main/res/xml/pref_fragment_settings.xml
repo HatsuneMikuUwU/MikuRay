@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_fragment_settings"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_fragment_settings"
+        android:title="@string/title_fragment_settings"
         app:sectionIcon="@drawable/ic_description_24dp">
 
         <androidx.preference.SwitchPreferenceCompat

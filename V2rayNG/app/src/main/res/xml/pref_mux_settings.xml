@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_mux_settings"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_mux_settings"
+        android:title="@string/title_mux_settings"
         app:sectionIcon="@drawable/ic_account_cog_outline">
 
         <androidx.preference.SwitchPreferenceCompat

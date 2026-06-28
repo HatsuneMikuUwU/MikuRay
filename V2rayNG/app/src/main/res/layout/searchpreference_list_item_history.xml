@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingStart="20dp"
+              android:paddingEnd="20dp"
+              android:paddingTop="14dp"
+              android:paddingBottom="14dp"
+              android:gravity="center_vertical"
+              android:background="?attr/selectableItemBackground">
+
+    <ImageView
+            android:id="@+id/history"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="24dp"
+            android:importantForAccessibility="no"
+            app:tint="?colorOnSurfaceVariant"
+            app:srcCompat="@drawable/ic_history" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyLarge"
+            android:textColor="?colorOnSurface"
+            android:id="@+id/term"/>
+
+</LinearLayout>

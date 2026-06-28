@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory android:title="@string/title_vpn_settings"
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_vpn_settings"
+        android:title="@string/title_vpn_settings"
         app:sectionIcon="@drawable/ic_lan">
 
         <androidx.preference.SwitchPreferenceCompat
@@ -141,7 +143,8 @@
     </com.neko.widget.UwuPreferenceCategory>
 
     <com.neko.widget.UwuPreferenceCategory
-        app:title="Root Mode">
+        android:key="pref_category_root_mode"
+        android:title="@string/title_category_root_mode">
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_key"

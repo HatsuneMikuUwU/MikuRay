@@ -285,6 +285,7 @@
     <string name="title_pref_hev_tunnel_loglevel">Level Log Hev Tun</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu (timeout) baca/tulis Hev Tun (detik) (tcp,udp bawaan 300,60)</string>
 
+    <string name="title_category_root_mode">Mode Root</string>
     <string name="title_pref_root_mode">Mode Root (seluruh sistem)</string>
     <string name="summary_pref_root_mode">Tangkap semua lalu lintas via iptables tanpa VpnService. Membutuhkan akses root.</string>
     <string name="title_pref_root_lan_sharing">Berbagi LAN / tethering Root</string>
@@ -729,5 +730,12 @@ yang kamu butuhin."</string>
     <string name="dialog_reset_settings_message">Ini akan mengembalikan semua settingan ke nilai default.\n\nProfil server dan langganan tidak akan dihapus.\n\nTindakan ini tidak dapat dibatalkan.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
     <string name="reset_settings_success">Settingan telah direset ke default.</string>    
+
+    <!-- SearchPreference (in-module fork) -->
+    <string name="searchpreference_search">Cari…</string>
+    <string name="searchpreference_clear">Hapus</string>
+    <string name="searchpreference_more">Lainnya</string>
+    <string name="searchpreference_clear_history">Hapus riwayat</string>
+    <string name="searchpreference_no_results">Nggak ada hasil</string>
 
 </resources>
