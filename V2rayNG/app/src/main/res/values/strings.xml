@@ -751,4 +751,13 @@ you need."</string>
     <string name="sub_tab_icon_none">None</string>
 
     <string name="weather_loading">Loading…</string>
+
+    <!-- Reset all settings -->
+    <string name="title_pref_reset_all_settings">Reset All Settings</string>
+    <string name="summary_pref_reset_all_settings">Restore all settings to their default values. Server profiles and subscriptions will not be affected.</string>
+    <string name="dialog_reset_settings_title">Reset All Settings?</string>
+    <string name="dialog_reset_settings_message">This will restore all settings to their default values.\n\nServer profiles and subscriptions will not be deleted.\n\nThis action cannot be undone.</string>
+    <string name="dialog_reset_settings_confirm">Reset</string>
+    <string name="reset_settings_success">Settings have been reset to default.</string>
+
 </resources>

@@ -720,4 +720,12 @@
     <string name="sub_setting_tab_icon_hint">在标签栏的分组名称旁边显示</string>
     <string name="sub_tab_icon_none">无</string>
 
+    <!-- Reset all settings -->
+    <string name="title_pref_reset_all_settings">重置所有设置</string>
+    <string name="summary_pref_reset_all_settings">将所有设置恢复为默认值。服务器配置和订阅不会受到影响。</string>
+    <string name="dialog_reset_settings_title">重置所有设置？</string>
+    <string name="dialog_reset_settings_message">这将把所有设置恢复为默认值。\n\n服务器配置和订阅不会被删除。\n\n此操作无法撤销。</string>
+    <string name="dialog_reset_settings_confirm">重置</string>
+    <string name="reset_settings_success">设置已重置为默认值。</string>    
+
 </resources>

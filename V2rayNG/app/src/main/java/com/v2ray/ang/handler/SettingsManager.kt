@@ -538,7 +538,7 @@ object SettingsManager {
     /**
      * Ensure default settings are present in MMKV.
      */
-    private fun ensureDefaultSettings() {
+    internal fun ensureDefaultSettings() {
         // Write defaults in the exact order requested by the user
         ensureDefaultValue(AppConfig.PREF_MODE, VPN)
         ensureDefaultValue(AppConfig.PREF_VPN_DNS, AppConfig.DNS_VPN)
@@ -560,6 +560,23 @@ object SettingsManager {
         if (MmkvManager.decodeSettingsString(key).isNullOrEmpty()) {
             MmkvManager.encodeSettings(key, default)
         }
+    }
+
+    /**
+     * Resets all application settings to their default values.
+     *
+     * This clears every key in the settings storage, then re-applies the
+     * built-in defaults (ports, DNS, URLs, etc.) and restores the default
+     * routing rulesets from the bundled assets.
+     *
+     * Server profiles, subscriptions, and routing rule entries are NOT affected.
+     *
+     * @param context The application context (needed to reload routing presets).
+     */
+    fun resetAllSettings(context: Context) {
+        MmkvManager.clearAllSettings()
+        ensureDefaultSettings()
+        initRoutingRulesets(context)
     }
 
     private fun migrateHysteria2PinSHA256() {

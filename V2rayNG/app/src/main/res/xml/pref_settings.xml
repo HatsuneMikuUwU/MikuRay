@@ -55,4 +55,11 @@
         android:title="@string/title_advanced"
         app:layout="@layout/uwu_grid" />
 
+    <Preference
+        android:icon="@drawable/ic_restore_24dp"
+        android:key="pref_reset_all_settings"
+        android:summary="@string/summary_pref_reset_all_settings"
+        android:title="@string/title_pref_reset_all_settings"
+        app:layout="@layout/uwu_grid" />
+
 </PreferenceScreen>

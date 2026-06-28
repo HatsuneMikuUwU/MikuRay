@@ -781,6 +781,14 @@ object MmkvManager {
         return settingsStorage.decodeStringSet(key)
     }
 
+    /**
+     * Clears all entries in the settings storage.
+     * Use with caution — this removes every preference key/value pair.
+     * Call SettingsManager.resetAllSettings() instead to also re-apply defaults.
+     */
+    fun clearAllSettings() {
+        settingsStorage.clearAll()
+    }
 
     /**
      * Encodes the start on boot setting.

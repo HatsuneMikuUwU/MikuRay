@@ -92,6 +92,7 @@ object AppConfig {
     const val PREF_NAVIGATE_FRAGMENT_SETTINGS = "pref_navigate_fragment_settings"
     const val PREF_NAVIGATE_ADVANCED_SETTINGS = "pref_navigate_advanced_settings"
     const val PREF_NAVIGATE_PER_APP_PROXY_SETTINGS = "pref_navigate_per_app_proxy_settings"
+    const val PREF_RESET_ALL_SETTINGS = "pref_reset_all_settings"
     const val PREF_SERVER_ORDER = "pref_server_order"
     
     // UI

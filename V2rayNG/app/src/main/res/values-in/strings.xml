@@ -722,4 +722,12 @@ yang kamu butuhin."</string>
     <string name="sub_setting_tab_icon_hint">Ditampilin di sebelah nama grup di tab bar</string>
     <string name="sub_tab_icon_none">Nggak ada</string>
 
+    <!-- Reset all settings -->
+    <string name="title_pref_reset_all_settings">Reset Semua Settingan</string>
+    <string name="summary_pref_reset_all_settings">Kembalikan semua settingan ke nilai default. Profil server dan langganan tidak akan terpengaruh.</string>
+    <string name="dialog_reset_settings_title">Reset Semua Settingan?</string>
+    <string name="dialog_reset_settings_message">Ini akan mengembalikan semua settingan ke nilai default.\n\nProfil server dan langganan tidak akan dihapus.\n\nTindakan ini tidak dapat dibatalkan.</string>
+    <string name="dialog_reset_settings_confirm">Reset</string>
+    <string name="reset_settings_success">Settingan telah direset ke default.</string>    
+
 </resources>

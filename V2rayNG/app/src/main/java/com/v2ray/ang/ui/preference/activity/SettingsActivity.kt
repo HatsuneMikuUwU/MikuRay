@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
+import com.v2ray.ang.extension.toastSuccess
+import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.util.showDeleteConfirmDialog
 
 class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +57,7 @@ class SettingsActivity : BaseActivity() {
         private val navigateMuxSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_MUX_SETTINGS) }
         private val navigateFragmentSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_FRAGMENT_SETTINGS) }
         private val navigateAdvancedSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_ADVANCED_SETTINGS) }
+        private val resetAllSettings by lazy { findPreference<Preference>(AppConfig.PREF_RESET_ALL_SETTINGS) }
 
         override fun onCreateRecyclerView(
             inflater: LayoutInflater,
@@ -118,6 +122,21 @@ class SettingsActivity : BaseActivity() {
 
             navigateAdvancedSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), AdvancedSettingsActivity::class.java))
+                true
+            }
+
+            resetAllSettings?.setOnPreferenceClickListener {
+                showDeleteConfirmDialog(
+                    context = requireContext(),
+                    titleRes = R.string.dialog_reset_settings_title,
+                    messageRes = R.string.dialog_reset_settings_message,
+                    iconRes = R.drawable.ic_restore_24dp,
+                    positiveTextRes = R.string.dialog_reset_settings_confirm,
+                ) {
+                    SettingsManager.resetAllSettings(requireContext().applicationContext)
+                    requireContext().toastSuccess(R.string.reset_settings_success)
+                    activity?.recreate()
+                }
                 true
             }
         }
