@@ -290,6 +290,12 @@
     <string name="title_pref_hev_tunnel_loglevel">Уровень журнала Hev TUN</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Тайм-аут чтения/записи Hev TUN (секунды) (tcp,udp по умолчанию 300,60)</string>
 
+    <string name="title_pref_root_mode">Root-режим (общесистемный)</string>
+    <string name="summary_pref_root_mode">Перехват всего трафика через iptables без VpnService. Требуется root-доступ.</string>
+    <string name="title_pref_root_lan_sharing">Root: общий доступ LAN / тезеринг</string>
+    <string name="summary_pref_root_lan_sharing">Предоставить доступ к прокси клиентам по USB/Wi-Fi (тезеринг). Требуется root.</string>
+    <string name="toast_root_required">Для Root-режима необходим root-доступ, который недоступен на этом устройстве.</string>
+
     <string name="title_logcat">Logcat</string>
     <string name="logcat_share">Поделиться журналом</string>
     <string name="logcat_copy">Копировать</string>

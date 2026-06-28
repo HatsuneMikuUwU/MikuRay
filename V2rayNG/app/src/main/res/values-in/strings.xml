@@ -285,6 +285,12 @@
     <string name="title_pref_hev_tunnel_loglevel">Level Log Hev Tun</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu (timeout) baca/tulis Hev Tun (detik) (tcp,udp bawaan 300,60)</string>
 
+    <string name="title_pref_root_mode">Mode Root (seluruh sistem)</string>
+    <string name="summary_pref_root_mode">Tangkap semua lalu lintas via iptables tanpa VpnService. Membutuhkan akses root.</string>
+    <string name="title_pref_root_lan_sharing">Berbagi LAN / tethering Root</string>
+    <string name="summary_pref_root_lan_sharing">Bagikan proxy ke klien USB/Wi-Fi yang tethered. Membutuhkan akses root.</string>
+    <string name="toast_root_required">Akses root diperlukan untuk Mode Root, tetapi tidak tersedia di perangkat ini.</string>
+
     <string name="title_logcat">Logcat</string>
     <string name="logcat_share">Bagikan log</string>
     <string name="logcat_copy">Salin</string>

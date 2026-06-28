@@ -26,6 +26,7 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.NotificationManager
 import com.v2ray.ang.handler.TrafficController
 import com.v2ray.ang.handler.SettingsManager
+import com.v2ray.ang.root.RootLanSharing
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.SoundPlayer
@@ -360,10 +361,12 @@ class CoreVpnService : VpnService(), ServiceControl {
         }
 
         tun2SocksService?.startTun2Socks()
+        RootLanSharing.startClientSharing(this)
     }
 
     private fun stopAllService(isForced: Boolean = true) {
         isRunning = false
+        RootLanSharing.stopClientSharing(this)
         wakeLock?.let {
             if (it.isHeld) {
                 it.release()

@@ -283,6 +283,12 @@
     <string name="title_pref_hev_tunnel_loglevel">HevTun 日志级别</string>
     <string name="title_pref_hev_tunnel_rw_timeout">HevTun 读写超时(秒) (tcp,udp 默认 300,60)</string>
 
+    <string name="title_pref_root_mode">Root 模式（全局代理）</string>
+    <string name="summary_pref_root_mode">通过 iptables 捕获所有流量，无需 VpnService。需要 Root 权限。</string>
+    <string name="title_pref_root_lan_sharing">Root 局域网 / 热点共享</string>
+    <string name="summary_pref_root_lan_sharing">将代理共享给通过 USB/Wi-Fi 连接的设备。需要 Root 权限。</string>
+    <string name="toast_root_required">Root 模式需要 Root 权限，但此设备上不可用。</string>
+
     <string name="title_logcat">Logcat</string>
     <string name="logcat_copy">复制</string>
     <string name="logcat_clear">清除</string>

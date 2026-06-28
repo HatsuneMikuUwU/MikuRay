@@ -306,6 +306,12 @@
     <string name="title_pref_hev_tunnel_loglevel">Hev Tun Log Level</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Hev Tun read/write timeout (seconds) (tcp,udp default 300,60)</string>
 
+    <string name="title_pref_root_mode">Root mode (system-wide)</string>
+    <string name="summary_pref_root_mode">Capture all traffic via iptables without VpnService. Requires root.</string>
+    <string name="title_pref_root_lan_sharing">Root LAN / tethering sharing</string>
+    <string name="summary_pref_root_lan_sharing">Share the proxy with tethered USB/Wi-Fi clients. Requires root.</string>
+    <string name="toast_root_required">Root access is required for Root mode but is not available on this device.</string>
+
     <string name="title_logcat">Logcat</string>
     <string name="logcat_share">Share log</string>
     <string name="logcat_copy">Copy</string>
