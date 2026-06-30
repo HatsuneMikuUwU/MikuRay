@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.NonNull
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -91,11 +92,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
                 }
 
                 if (searchFragment != null && searchFragment.isVisible) {
-                    // Search results are showing: just collapse/clear the search,
-                    // don't rely on cancelSearch()'s return value here since the
-                    // search bar is always-expanded (iconifiedByDefault=false),
-                    // which makes isIconified() permanently false and would make
-                    // cancelSearch() always report true.
                     searchActionView.cancelSearch()
                 } else {
                     finish()
@@ -333,9 +329,17 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         }
 
         if (targetActivity != null) {
-            startActivity(Intent(this, targetActivity).apply {
+            val intent = Intent(this, targetActivity).apply {
                 putExtra(AppConfig.EXTRA_HIGHLIGHT_KEY, result.key)
-            })
+            }
+            
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.fade_in,
+                R.anim.fade_out
+            )
+            
+            startActivity(intent, options.toBundle())
         }
     }
 

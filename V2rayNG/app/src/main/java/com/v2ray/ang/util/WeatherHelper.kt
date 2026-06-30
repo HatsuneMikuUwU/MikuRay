@@ -28,6 +28,7 @@ import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
+import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.ProxySelector
 import java.net.SocketAddress
@@ -190,7 +191,6 @@ object WeatherHelper {
         return location
     }
 
-    /** Custom location if set and resolvable, otherwise falls back to the device's current location. */
     private suspend fun getEffectiveLocation(
         context: Context,
         force: Boolean = false
@@ -303,17 +303,15 @@ object WeatherHelper {
             )
             .proxySelector(object : ProxySelector() {
                 override fun select(uri: URI?): List<Proxy> {
-                    val httpPort = try {
-                        MmkvManager.decodeSettingsString(AppConfig.PREF_SOCKS_PORT, "10808")?.toInt() ?: 10808
-                    } catch (e: Exception) { 10808 }
-                    
                     return listOf(
-                        Proxy(Proxy.Type.HTTP, java.net.InetSocketAddress("127.0.0.1", httpPort)),
+                        Proxy(Proxy.Type.HTTP, InetSocketAddress("127.0.0.1", 10809)),
+                        Proxy(Proxy.Type.SOCKS, InetSocketAddress("127.0.0.1", 10808)),
                         Proxy.NO_PROXY
                     )
                 }
 
                 override fun connectFailed(uri: URI?, sa: SocketAddress?, ioe: IOException?) {
+                    LogUtil.w("WeatherHelper", "Local proxy connection failed: ${ioe?.message}")
                 }
             })
             .build()

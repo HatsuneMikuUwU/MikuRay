@@ -1,12 +1,13 @@
 package com.v2ray.ang.ui.preference
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.card.MaterialCardView
@@ -18,11 +19,12 @@ import com.v2ray.ang.util.getColorAttr
 object SearchPreferenceHighlighter {
 
     fun applyFromIntent(fragment: PreferenceFragmentCompat) {
-        val key = fragment.activity?.intent
-            ?.getStringExtra(AppConfig.EXTRA_HIGHLIGHT_KEY)
-            ?: return
+        val intent = fragment.activity?.intent ?: return
+        val key = intent.getStringExtra(AppConfig.EXTRA_HIGHLIGHT_KEY) ?: return
 
-        Handler(Looper.getMainLooper()).post {
+        intent.removeExtra(AppConfig.EXTRA_HIGHLIGHT_KEY)
+
+        fragment.view?.post {
             jumpAndHighlight(fragment, key)
         }
     }
@@ -36,22 +38,23 @@ object SearchPreferenceHighlighter {
         val pref = fragment.findPreference<androidx.preference.Preference>(key) ?: return
         val adapter = recyclerView.adapter ?: return
 
-        fragment.scrollToPreference(pref)
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (adapter is PreferenceGroup.PreferencePositionCallback) {
-                val position = adapter.getPreferenceAdapterPosition(pref)
-                if (position != RecyclerView.NO_POSITION) {
-                    
+        if (adapter is PreferenceGroup.PreferencePositionCallback) {
+            val position = adapter.getPreferenceAdapterPosition(pref)
+            if (position != RecyclerView.NO_POSITION) {
+                
+                val layoutManager = recyclerView.layoutManager
+                if (layoutManager is LinearLayoutManager) {
+                    layoutManager.scrollToPositionWithOffset(position, 0)
+                } else {
                     recyclerView.scrollToPosition(position)
-                    
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val holder = recyclerView.findViewHolderForAdapterPosition(position)
-                        if (holder != null) flashCard(holder.itemView)
-                    }, 50)
+                }
+                
+                recyclerView.post {
+                    val holder = recyclerView.findViewHolderForAdapterPosition(position)
+                    holder?.itemView?.let { flashCard(it) }
                 }
             }
-        }, 150)
+        }
     }
 
     private fun flashCard(itemView: View) {
@@ -77,15 +80,25 @@ object SearchPreferenceHighlighter {
             startDelay = 800
         }
         
-        fadeOut.addListener(object : android.animation.AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: android.animation.Animator) {
-                card.foreground = null
-            }
-        })
-        
-        AnimatorSet().apply {
+        val animatorSet = AnimatorSet().apply {
             playSequentially(fadeIn, fadeOut)
-            start()
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    card.foreground = null
+                }
+            })
         }
+
+        val attachListener = object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {}
+            override fun onViewDetachedFromWindow(v: View) {
+                animatorSet.cancel()
+                card.foreground = null
+                card.removeOnAttachStateChangeListener(this)
+            }
+        }
+        card.addOnAttachStateChangeListener(attachListener)
+        
+        animatorSet.start()
     }
 }

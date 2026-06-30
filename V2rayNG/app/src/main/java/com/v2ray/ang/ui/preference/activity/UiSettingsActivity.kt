@@ -3,7 +3,6 @@ package com.v2ray.ang.ui.preference.activity
 import android.app.Activity
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -50,7 +49,9 @@ import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.WeatherHelper
 import com.v2ray.ang.util.showBlur
 import com.yalantis.ucrop.UCrop
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 
@@ -161,17 +162,19 @@ class UiSettingsActivity : BaseActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
-                    try {
-                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
-                        deleteOldFile(oldUri)
-                        val savedUri = saveToCache(cacheUri, "home_banner_")
-                        MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
-                        
-                        extractAndSaveBannerColor(savedUri)
-                        broadcastHomeBannerChanged()
-                        requireContext().toastSuccess(getString(R.string.home_banner_updated))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    lifecycleScope.launch {
+                        try {
+                            val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+                            deleteOldFile(oldUri)
+                            val savedUri = saveToCache(cacheUri, "home_banner_")
+                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
+                            
+                            extractAndSaveBannerColor(savedUri)
+                            broadcastHomeBannerChanged()
+                            requireContext().toastSuccess(getString(R.string.home_banner_updated))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     UCrop.getError(result.data!!)?.printStackTrace()
@@ -182,15 +185,17 @@ class UiSettingsActivity : BaseActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
-                    try {
-                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_PROFILE_BANNER_URI)
-                        deleteOldFile(oldUri)
-                        val savedUri = saveToCache(cacheUri, "profile_banner_")
-                        MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, savedUri.toString())
-                        broadcastProfileChanged()
-                        requireContext().toastSuccess(getString(R.string.custom_banner_profile_set))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    lifecycleScope.launch {
+                        try {
+                            val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_PROFILE_BANNER_URI)
+                            deleteOldFile(oldUri)
+                            val savedUri = saveToCache(cacheUri, "profile_banner_")
+                            MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, savedUri.toString())
+                            broadcastProfileChanged()
+                            requireContext().toastSuccess(getString(R.string.custom_banner_profile_set))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     UCrop.getError(result.data!!)?.printStackTrace()
@@ -201,14 +206,16 @@ class UiSettingsActivity : BaseActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
-                    try {
-                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
-                        deleteOldFile(oldUri)
-                        val savedUri = saveToCache(cacheUri, "sheet_banner_")
-                        MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, savedUri.toString())
-                        requireContext().toastSuccess(getString(R.string.sheet_banner_updated))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    lifecycleScope.launch {
+                        try {
+                            val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
+                            deleteOldFile(oldUri)
+                            val savedUri = saveToCache(cacheUri, "sheet_banner_")
+                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, savedUri.toString())
+                            requireContext().toastSuccess(getString(R.string.sheet_banner_updated))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     UCrop.getError(result.data!!)?.printStackTrace()
@@ -219,16 +226,18 @@ class UiSettingsActivity : BaseActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
-                    try {
-                        val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI)
-                        deleteOldFile(oldUri)
-                        val savedUri = saveToCache(cacheUri, "selected_banner_")
-                        MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_URI, savedUri.toString())
-                        updateIndicatorStyleEnabledState()
-                        broadcastSelectedBannerChanged()
-                        requireContext().toastSuccess(getString(R.string.selected_banner_updated))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    lifecycleScope.launch {
+                        try {
+                            val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI)
+                            deleteOldFile(oldUri)
+                            val savedUri = saveToCache(cacheUri, "selected_banner_")
+                            MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_URI, savedUri.toString())
+                            updateIndicatorStyleEnabledState()
+                            broadcastSelectedBannerChanged()
+                            requireContext().toastSuccess(getString(R.string.selected_banner_updated))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 } else if (result.resultCode == UCrop.RESULT_ERROR) {
                     UCrop.getError(result.data!!)?.printStackTrace()
@@ -466,9 +475,11 @@ class UiSettingsActivity : BaseActivity() {
                         .setTitle(R.string.sheet_banner_delete_title)
                         .setMessage(R.string.sheet_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
-                            deleteOldFile(savedUri)
-                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, "")
-                            requireContext().snackbarSuccess(getString(R.string.sheet_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                            lifecycleScope.launch {
+                                deleteOldFile(savedUri)
+                                MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, "")
+                                requireContext().snackbarSuccess(getString(R.string.sheet_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                            }
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
@@ -505,11 +516,13 @@ class UiSettingsActivity : BaseActivity() {
                         .setTitle(R.string.selected_banner_delete_title)
                         .setMessage(R.string.selected_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
-                            deleteOldFile(savedUri)
-                            MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_URI, "")
-                            updateIndicatorStyleEnabledState()
-                            broadcastSelectedBannerChanged()
-                            requireContext().snackbarSuccess(getString(R.string.selected_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                            lifecycleScope.launch {
+                                deleteOldFile(savedUri)
+                                MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_URI, "")
+                                updateIndicatorStyleEnabledState()
+                                broadcastSelectedBannerChanged()
+                                requireContext().snackbarSuccess(getString(R.string.selected_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                            }
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
@@ -574,10 +587,12 @@ class UiSettingsActivity : BaseActivity() {
                         .setTitle(R.string.delete_custom_banner_profile)
                         .setMessage(R.string.delete_custom_banner_profile_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
-                            deleteOldFile(savedUri)
-                            MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, "")
-                            broadcastProfileChanged()
-                            requireContext().snackbarSuccess(getString(R.string.delete_custom_banner_profile_summary), title = getString(R.string.title_alerter_success))
+                            lifecycleScope.launch {
+                                deleteOldFile(savedUri)
+                                MmkvManager.encodeSettings(AppConfig.PREF_PROFILE_BANNER_URI, "")
+                                broadcastProfileChanged()
+                                requireContext().snackbarSuccess(getString(R.string.delete_custom_banner_profile_summary), title = getString(R.string.title_alerter_success))
+                            }
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
@@ -632,15 +647,17 @@ class UiSettingsActivity : BaseActivity() {
                         .setTitle(R.string.home_banner_delete_title)
                         .setMessage(R.string.home_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
-                            deleteOldFile(savedUri)
-                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
-                            MmkvManager.encodeSettings(AppConfig.PREF_BANNER_COLOR, 0)
-                            
-                            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
-                                activity?.recreate()
+                            lifecycleScope.launch {
+                                deleteOldFile(savedUri)
+                                MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
+                                MmkvManager.encodeSettings(AppConfig.PREF_BANNER_COLOR, 0)
+                                
+                                if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
+                                    activity?.recreate()
+                                }
+                                broadcastHomeBannerChanged()
+                                requireContext().snackbarSuccess(getString(R.string.home_banner_delete_summary), title = getString(R.string.title_alerter_success))
                             }
-                            broadcastHomeBannerChanged()
-                            requireContext().snackbarSuccess(getString(R.string.home_banner_delete_summary), title = getString(R.string.title_alerter_success))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .showBlur()
@@ -754,7 +771,6 @@ class UiSettingsActivity : BaseActivity() {
         private fun isGif(uri: Uri): Boolean {
             val mimeType = requireContext().contentResolver.getType(uri)
             if (mimeType == "image/gif") return true
-            // fallback: cek extension dari path
             val path = uri.path ?: return false
             return path.lowercase().endsWith(".gif")
         }
@@ -765,19 +781,21 @@ class UiSettingsActivity : BaseActivity() {
             fileNamePrefix: String,
             onSuccess: (Uri) -> Unit
         ) {
-            try {
-                val oldUri = MmkvManager.decodeSettingsString(prefKey)
-                deleteOldFile(oldUri)
-                val savedUri = saveToCache(sourceUri, fileNamePrefix, ext = "gif")
-                MmkvManager.encodeSettings(prefKey, savedUri.toString())
-                onSuccess(savedUri)
-            } catch (e: Exception) {
-                e.printStackTrace()
+            lifecycleScope.launch {
+                try {
+                    val oldUri = MmkvManager.decodeSettingsString(prefKey)
+                    deleteOldFile(oldUri)
+                    val savedUri = saveToCache(sourceUri, fileNamePrefix, ext = "gif")
+                    MmkvManager.encodeSettings(prefKey, savedUri.toString())
+                    onSuccess(savedUri)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
 
         @Throws(IOException::class)
-        private fun saveToCache(sourceCacheUri: Uri, fileNamePrefix: String, ext: String = "jpg"): Uri {
+        private suspend fun saveToCache(sourceCacheUri: Uri, fileNamePrefix: String, ext: String = "jpg"): Uri = withContext(Dispatchers.IO) {
             val ctx = requireContext()
             val destFile = File(ctx.cacheDir, "${fileNamePrefix}${System.currentTimeMillis()}.$ext")
             ctx.contentResolver.openInputStream(sourceCacheUri)?.use { input ->
@@ -791,11 +809,11 @@ class UiSettingsActivity : BaseActivity() {
                     }
                 }
             } catch (_: Exception) {}
-            return Uri.fromFile(destFile)
+            return@withContext Uri.fromFile(destFile)
         }
 
-        private fun deleteOldFile(uriString: String?) {
-            if (uriString.isNullOrEmpty()) return
+        private suspend fun deleteOldFile(uriString: String?) = withContext(Dispatchers.IO) {
+            if (uriString.isNullOrEmpty()) return@withContext
             try {
                 val uri = Uri.parse(uriString)
                 if (uri.scheme == "file") {
