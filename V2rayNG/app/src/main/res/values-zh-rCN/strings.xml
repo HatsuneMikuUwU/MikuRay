@@ -548,6 +548,17 @@
     <string name="summary_pref_sound_on_connect">连接或断开时播放声音</string>
     <string name="ip_unknown">IP: 未知</string>
     <string name="title_pref_app_font">字体样式</string>
+    <string name="title_category_app_font">字体</string>
+    <string name="title_pref_app_font_use_custom">使用自定义字体</string>
+    <string name="summary_pref_app_font_use_custom">使用从内部存储中选取的字体覆盖上方字体</string>
+    <string name="title_pref_app_font_custom_pick">选择自定义字体</string>
+    <string name="summary_pref_app_font_custom_pick_empty">未选择字体文件 — 点击以从内部存储选择 .ttf/.otf 文件</string>
+    <string name="title_pref_app_font_custom_delete">移除自定义字体</string>
+    <string name="summary_pref_app_font_custom_delete_empty">未设置自定义字体</string>
+    <string name="summary_pref_app_font_custom_delete_set">当前设置: %1$s</string>
+    <string name="custom_font_delete_confirm">是否移除自定义字体并恢复默认字体？</string>
+    <string name="custom_font_invalid">无法读取该文件（仅支持 .ttf/.otf/.ttc）</string>
+    <string name="custom_font_none_to_remove">未设置自定义字体</string>
     <string name="group_order">排序</string>
     <string name="group_order_origin">原始</string>
     <string name="group_order_by_name">按名称</string>

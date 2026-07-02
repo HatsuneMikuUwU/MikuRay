@@ -569,6 +569,17 @@
     <string name="ip_unknown">IP: неизвестен</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Стиль шрифта</string>
+    <string name="title_category_app_font">Шрифт</string>
+    <string name="title_pref_app_font_use_custom">Использовать свой шрифт</string>
+    <string name="summary_pref_app_font_use_custom">Использовать шрифт из внутренней памяти вместо стандартного</string>
+    <string name="title_pref_app_font_custom_pick">Выбрать свой шрифт</string>
+    <string name="summary_pref_app_font_custom_pick_empty">Шрифт не выбран — нажмите, чтобы выбрать файл .ttf/.otf из внутренней памяти</string>
+    <string name="title_pref_app_font_custom_delete">Удалить свой шрифт</string>
+    <string name="summary_pref_app_font_custom_delete_empty">Свой шрифт не установлен</string>
+    <string name="summary_pref_app_font_custom_delete_set">Сейчас установлен: %1$s</string>
+    <string name="custom_font_delete_confirm">Удалить свой шрифт и вернуться к стандартному?</string>
+    <string name="custom_font_invalid">Не удалось прочитать этот файл как шрифт (только .ttf/.otf/.ttc)</string>
+    <string name="custom_font_none_to_remove">Свой шрифт не установлен</string>
     <string name="group_order">Порядок</string>
     <string name="group_order_origin">Исходный</string>
     <string name="group_order_by_name">По имени</string>

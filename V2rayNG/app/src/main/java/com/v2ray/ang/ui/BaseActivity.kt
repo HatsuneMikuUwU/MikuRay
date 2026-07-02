@@ -3,7 +3,6 @@ package com.v2ray.ang.ui
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,6 +24,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import com.v2ray.ang.AngApplication
 import com.v2ray.ang.R
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.handler.MmkvManager
@@ -33,31 +32,16 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.CustomDividerItemDecoration
 import com.v2ray.ang.util.DPIController
 import com.v2ray.ang.util.MyContextWrapper
-import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.WindowBlurUtils
 import com.v2ray.ang.util.ThemeStateManager
 import com.qmdeve.blurview.widget.BlurView
 
 abstract class BaseActivity : AppCompatActivity() {
     private var loadingOverlay: FrameLayout? = null
-
     private lateinit var themeStateManager: ThemeStateManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         themeStateManager = ThemeStateManager(this)
-
-        ThemeManager.applyTheme(this)
-
-        val fontOverlayId = getFontStyleResId(MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT))
-        if (fontOverlayId != 0) {
-            theme.applyStyle(fontOverlayId, true)
-            
-            val isTrueBlack = ThemeManager.isDarkMode(this) && MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
-            if (isTrueBlack) {
-                theme.applyStyle(R.style.ThemeOverlay_App_TrueBlack_DialogFix, true)
-            }
-        }
-
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -76,10 +60,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-
         val fontName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
         if (!fontName.isNullOrEmpty() && fontName != "default") {
-            val typeface = getCustomTypeface(fontName)
+            val typeface = AngApplication.getCustomTypeface(this, fontName)
             findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)?.apply {
                 setExpandedTitleTypeface(typeface)
                 setCollapsedTitleTypeface(typeface)
@@ -90,19 +73,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeStateManager.checkThemeChangedAndRecreate()
-        applyHideFromRecentApps(MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_FROM_RECENT_APPS, false))
-    }
-
-    private fun applyHideFromRecentApps(hide: Boolean) {
-        try {
-            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
-            val tasks = activityManager.appTasks
-            if (tasks.isNotEmpty()) {
-                tasks[0].setExcludeFromRecents(hide)
-            }
-        } catch (e: Exception) {
-            android.util.Log.w("BaseActivity", "Failed to set excludeFromRecents: ${e.message}")
-        }
     }
 
     override fun onContentChanged() {
@@ -151,58 +121,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.applyOverrideConfiguration(overrideConfiguration)
     }
 
-    private fun getFontStyleResId(fontName: String?): Int {
-        return when (fontName) {
-            "google"       -> R.style.StyleFontGoogle
-            "roboto"       -> R.style.StyleFontRoboto
-            "poppins"      -> R.style.StyleFontPoppins
-            "chococooky"   -> R.style.StyleFontChocoCooky
-            "simpleday"    -> R.style.StyleFontSimpleDay
-            "fucek"        -> R.style.StyleFontFucek
-            "sfprodisplay" -> R.style.StyleFontSFProDisplay
-            "dancingscript"-> R.style.StyleFontDancingScript
-            "cream"        -> R.style.StyleFontCream
-            "oneui"        -> R.style.StyleFontOneUI
-            "inconsolata"  -> R.style.StyleFontInconsolata
-            "emilyscandy"  -> R.style.StyleFontEmilysCandy
-            "summerdream"  -> R.style.StyleFontSummerDream
-            "rine"         -> R.style.StyleFontRine
-            "evolve"         -> R.style.StyleFontEvolve
-            else           -> 0
-        }
-    }
-
-    fun getCustomTypeface(fontName: String? = null): Typeface {
-        val name = fontName ?: MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
-        val fontResId = when (name) {
-            "google"        -> R.font.googlesansregular
-            "roboto"        -> R.font.robotoregular
-            "poppins"       -> R.font.poppinsregular
-            "chococooky"    -> R.font.chococookyregular
-            "simpleday"     -> R.font.simpleday
-            "fucek"         -> R.font.fucek
-            "sfprodisplay"  -> R.font.sfprodisplay
-            "dancingscript" -> R.font.dancingscript
-            "cream"         -> R.font.cream
-            "oneui"         -> R.font.oneui
-            "inconsolata"   -> R.font.incosolata
-            "emilyscandy"   -> R.font.emilyscandy
-            "summerdream"   -> R.font.summerdream
-            "rine"          -> R.font.rine
-            "evolve"         -> R.font.evolvesans
-            else            -> return Typeface.DEFAULT
-        }
-        return try {
-            ResourcesCompat.getFont(this, fontResId) ?: Typeface.DEFAULT
-        } catch (e: Exception) {
-            Typeface.DEFAULT
-        }
-    }
-
     protected fun addCustomDividerToRecyclerView(recyclerView: RecyclerView, context: Context?, drawableResId: Int, orientation: Int = DividerItemDecoration.VERTICAL) {
         val drawable = ContextCompat.getDrawable(context!!, drawableResId)
         requireNotNull(drawable) { "Drawable resource not found" }
-
         val dividerItemDecoration = CustomDividerItemDecoration(drawable, orientation)
         recyclerView.addItemDecoration(dividerItemDecoration)
     }
@@ -280,7 +201,6 @@ abstract class BaseActivity : AppCompatActivity() {
                 gravity = Gravity.CENTER
             }
             addView(customLoadingView, params)
-
             visibility = View.GONE
         }
 

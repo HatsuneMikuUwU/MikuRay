@@ -120,6 +120,9 @@ class BackupActivity : HelperBaseActivity() {
         // Backup custom banner image files alongside MMKV data
         backupBannerImages(backupDir)
 
+        // Backup custom font file alongside MMKV data
+        backupCustomFont(backupDir)
+
         return if (ZipUtil.zipFromFolder(backupDir, outputZipFilePath)) {
             Pair(true, outputZipFilePath)
         } else {
@@ -162,6 +165,19 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
+    /**
+     * Copy the saved custom font file (if any) into the backup directory as "fonts/<filename>".
+     */
+    private fun backupCustomFont(backupDir: String) {
+        val srcFile = com.v2ray.ang.util.CustomFontManager.getFontFile(this) ?: return
+        try {
+            val fontsDir = java.io.File(backupDir, "fonts").also { it.mkdirs() }
+            srcFile.copyTo(java.io.File(fontsDir, srcFile.name), overwrite = true)
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to backup custom font", e)
+        }
+    }
+
     private fun restoreConfiguration(zipFile: File): Boolean {
         val backupDir = this.cacheDir.absolutePath + "/${System.currentTimeMillis()}"
 
@@ -177,6 +193,9 @@ class BackupActivity : HelperBaseActivity() {
         restoreBannerImages(backupDir)
         SettingsManager.preloadAllBanners(this)
 
+        // Restore custom font file, if one was included in the backup
+        restoreCustomFont(backupDir)
+
         // Re-extract banner color from restored home banner image if present
         val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
         if (!restoredHomeBannerUri.isNullOrBlank()) {
@@ -187,6 +206,32 @@ class BackupActivity : HelperBaseActivity() {
 
         SettingsManager.initApp(this)
         return count > 0
+    }
+
+    /**
+     * Copy the custom font file from the backup dir (if present) into internal storage.
+     * If the backed-up settings say "custom" font but no font file was included, fall back
+     * to the default font instead of pointing at a missing file.
+     */
+    private fun restoreCustomFont(backupDir: String) {
+        val fontsDir = java.io.File(backupDir, "fonts")
+        val srcFile = fontsDir.takeIf { it.exists() }?.listFiles()?.firstOrNull { it.isFile }
+
+        if (srcFile == null) {
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)) {
+                MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
+            }
+            return
+        }
+
+        val existingDisplayName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT_CUSTOM_NAME)
+        val restored = com.v2ray.ang.util.CustomFontManager.restoreFontFile(this, srcFile, existingDisplayName ?: srcFile.name)
+        if (restored == null) {
+            LogUtil.e(AppConfig.TAG, "Restored custom font file was invalid, falling back to default")
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)) {
+                MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
+            }
+        }
     }
 
     /**

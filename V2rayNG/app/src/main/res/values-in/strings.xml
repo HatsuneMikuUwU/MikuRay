@@ -550,6 +550,17 @@
     <string name="summary_pref_sound_on_connect">Bunyi pas nyambung atau putus koneksi</string>
     <string name="ip_unknown">IP: Nggak ke-detect</string>
     <string name="title_pref_app_font">Gaya Font</string>
+    <string name="title_category_app_font">Font</string>
+    <string name="title_pref_app_font_use_custom">Pake Font Kustom</string>
+    <string name="summary_pref_app_font_use_custom">Ganti font di atas pake font dari penyimpanan internal</string>
+    <string name="title_pref_app_font_custom_pick">Pilih Font Kustom</string>
+    <string name="summary_pref_app_font_custom_pick_empty">Belum ada file font — tap buat pilih .ttf/.otf dari penyimpanan internal</string>
+    <string name="title_pref_app_font_custom_delete">Hapus Font Kustom</string>
+    <string name="summary_pref_app_font_custom_delete_empty">Belum ada font kustom yang dipasang</string>
+    <string name="summary_pref_app_font_custom_delete_set">Lagi dipake: %1$s</string>
+    <string name="custom_font_delete_confirm">Hapus font kustom dan balik ke font bawaan?</string>
+    <string name="custom_font_invalid">Gagal baca file itu sebagai font (cuma .ttf/.otf/.ttc)</string>
+    <string name="custom_font_none_to_remove">Belum ada font kustom yang dipasang</string>
     <string name="group_order">Urutan</string>
     <string name="group_order_origin">Urutan Asli</string>
     <string name="group_order_by_name">Sesuai Nama</string>

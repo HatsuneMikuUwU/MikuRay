@@ -587,6 +587,17 @@
     <string name="ip_unknown">IP: unknown</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Font Style</string>
+    <string name="title_category_app_font">Font</string>
+    <string name="title_pref_app_font_use_custom">Use Custom Font</string>
+    <string name="summary_pref_app_font_use_custom">Override the font above with one picked from internal storage</string>
+    <string name="title_pref_app_font_custom_pick">Pick Custom Font</string>
+    <string name="summary_pref_app_font_custom_pick_empty">No font file selected — tap to choose a .ttf/.otf from internal storage</string>
+    <string name="title_pref_app_font_custom_delete">Remove Custom Font</string>
+    <string name="summary_pref_app_font_custom_delete_empty">No custom font is set</string>
+    <string name="summary_pref_app_font_custom_delete_set">Currently set: %1$s</string>
+    <string name="custom_font_delete_confirm">Remove the custom font and go back to the default font?</string>
+    <string name="custom_font_invalid">Couldn\'t read that file as a font (.ttf/.otf/.ttc only)</string>
+    <string name="custom_font_none_to_remove">No custom font is set</string>
     <string name="group_order">Order</string>
     <string name="group_order_origin">Origin</string>
     <string name="group_order_by_name">By Name</string>

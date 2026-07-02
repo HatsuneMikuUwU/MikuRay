@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorBg"
+    android:paddingBottom="12.0dip"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="24dp"
+        android:paddingTop="10.0dip"
+        android:paddingRight="24dp"
+        android:paddingBottom="6dp"
+        android:paddingHorizontal="24dp"
+        android:gravity="center_vertical">
+
+        <com.neko.widget.UwuHeaderIconView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:sectionIcon="@drawable/ic_format_font"
+            android:layout_marginEnd="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_pref_app_font"
+            android:textAppearance="?textAppearanceTitleMedium"
+            android:textColor="?colorPrimary"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFont"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

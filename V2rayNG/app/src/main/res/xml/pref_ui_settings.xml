@@ -164,16 +164,6 @@
             app:layout="@layout/uwu_mid"
             app:key="pref_custom_dpi"
             app:title="@string/pref_custom_dpi" />
-            
-        <ListPreference
-            android:icon="@drawable/ic_format_font"
-            app:layout="@layout/uwu_mid"
-            android:defaultValue="default"
-            android:entries="@array/app_font_entries"
-            android:entryValues="@array/app_font_values"
-            android:key="pref_app_font"
-            android:summary="%s"
-            android:title="@string/title_pref_app_font" />
 
         <ListPreference
             android:icon="@drawable/ic_cards_variant"
@@ -193,6 +183,42 @@
             android:key="pref_show_splash_screen"
             android:title="@string/pref_show_splash_title"
             android:summary="@string/pref_show_splash_summary" />
+
+    </com.neko.widget.UwuPreferenceCategory>
+
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_app_font"
+        android:title="@string/title_category_app_font"
+        app:sectionIcon="@drawable/ic_format_font">
+
+        <Preference
+            android:icon="@drawable/ic_format_font"
+            app:layout="@layout/uwu_top"
+            android:key="pref_app_font"
+            android:title="@string/title_pref_app_font" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_format_font"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_app_font_use_custom"
+            android:title="@string/title_pref_app_font_use_custom"
+            android:summary="@string/summary_pref_app_font_use_custom" />
+
+        <Preference
+            android:icon="@drawable/ic_file_24dp"
+            app:layout="@layout/uwu_mid"
+            android:key="action_pick_custom_font"
+            android:title="@string/title_pref_app_font_custom_pick"
+            android:summary="@string/summary_pref_app_font_custom_pick_empty" />
+
+        <Preference
+            android:icon="@drawable/ic_delete_24dp"
+            app:layout="@layout/uwu_bot"
+            android:key="action_delete_custom_font"
+            android:title="@string/title_pref_app_font_custom_delete"
+            android:summary="@string/summary_pref_app_font_custom_delete_empty" />
 
     </com.neko.widget.UwuPreferenceCategory>
 
