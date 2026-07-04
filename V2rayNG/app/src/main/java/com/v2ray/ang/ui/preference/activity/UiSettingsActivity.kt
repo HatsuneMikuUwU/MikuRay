@@ -50,7 +50,7 @@ import com.v2ray.ang.ui.preference.CategoryStyleHelper
 import com.v2ray.ang.util.BannerColorExtractor
 import com.v2ray.ang.util.CustomFontManager
 import com.v2ray.ang.util.ThemeManager
-import com.v2ray.ang.util.WeatherHelper
+import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.util.showBlur
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers

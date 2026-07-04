@@ -39,9 +39,9 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.HelperBaseActivity
 import com.v2ray.ang.ui.PerAppProxyActivity
-import com.v2ray.ang.ui.WeatherForecastActivity
+import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.SearchChipGradientController
-import com.v2ray.ang.util.WeatherHelper
+import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import kotlinx.coroutines.launch
 

@@ -211,7 +211,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".ui.WeatherForecastActivity"
+            android:name=".ui.weather.WeatherForecastActivity"
             android:exported="false" />
 
         <service

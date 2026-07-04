@@ -1,4 +1,4 @@
-package com.v2ray.ang.util
+package com.v2ray.ang.ui.weather
 
 import com.google.gson.annotations.SerializedName
 

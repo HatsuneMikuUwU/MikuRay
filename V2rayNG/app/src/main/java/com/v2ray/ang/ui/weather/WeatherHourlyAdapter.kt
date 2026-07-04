@@ -1,4 +1,4 @@
-package com.v2ray.ang.ui
+package com.v2ray.ang.ui.weather
 
 import android.content.Context
 import android.view.LayoutInflater
