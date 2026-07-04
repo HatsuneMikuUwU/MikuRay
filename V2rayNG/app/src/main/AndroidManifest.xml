@@ -210,6 +210,10 @@
             android:name=".ui.AboutActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.WeatherForecastActivity"
+            android:exported="false" />
+
         <service
             android:name=".service.CoreVpnService"
             android:enabled="true"

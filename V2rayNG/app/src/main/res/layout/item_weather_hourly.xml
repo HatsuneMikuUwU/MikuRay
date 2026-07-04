@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="64dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingHorizontal="4dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardHourlyTemp"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        app:cardBackgroundColor="?colorSurfaceContainerHighest"
+        app:cardCornerRadius="99dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <TextView
+            android:id="@+id/tvHourlyTemp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textAppearance="?textAppearanceLabelLarge"
+            android:textColor="?colorOnSurface"
+            tools:text="28°" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvHourlyPrecip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?textAppearanceLabelMedium"
+        android:textColor="?colorPrimary"
+        tools:text="40%" />
+
+    <ImageView
+        android:id="@+id/ivHourlyIcon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="6dp"
+        tools:src="@drawable/ic_weather_sunny" />
+
+    <TextView
+        android:id="@+id/tvHourlyTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceLabelMedium"
+        android:textColor="?colorOnSurfaceVariant"
+        tools:text="14.00" />
+
+    <TextView
+        android:id="@+id/tvHourlyDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.6"
+        android:textColor="?colorOnSurfaceVariant"
+        android:textSize="10sp"
+        tools:text="Sen" />
+
+</LinearLayout>

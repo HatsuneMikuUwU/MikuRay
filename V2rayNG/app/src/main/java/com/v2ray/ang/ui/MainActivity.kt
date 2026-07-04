@@ -450,7 +450,7 @@ class MainActivity : HelperBaseActivity(),
 
         binding.layoutWeatherChip.setOnClickListener {
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
-                forceRefreshWeatherChip()
+                startActivity(Intent(this, WeatherForecastActivity::class.java))
             }
         }
     }

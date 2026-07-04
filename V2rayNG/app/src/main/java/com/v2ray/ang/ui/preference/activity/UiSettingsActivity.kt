@@ -1073,12 +1073,11 @@ class UiSettingsActivity : BaseActivity() {
             pref.summary = if (raw.isNotBlank()) {
                 raw
             } else {
-                val lat = MmkvManager.decodeSettingsFloat(AppConfig.PREF_WEATHER_CACHE_LAT, 0f)
-                val lon = MmkvManager.decodeSettingsFloat(AppConfig.PREF_WEATHER_CACHE_LON, 0f)
-                if (lat != 0f || lon != 0f) {
+                val entry = WeatherHelper.getCachedWeatherEntry()
+                if (entry != null && (entry.latitude != 0.0 || entry.longitude != 0.0)) {
                     getString(
                         R.string.pref_weather_custom_location_summary_current_coords,
-                        lat, lon
+                        entry.latitude, entry.longitude
                     )
                 } else {
                     getString(R.string.pref_weather_custom_location_summary_auto)

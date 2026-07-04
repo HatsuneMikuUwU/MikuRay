@@ -50,21 +50,54 @@ object WeatherHelper {
             else "${Math.round(tempCelsius * 9.0 / 5.0 + 32)}°F"
     }
 
+    data class WeatherCacheEntry(
+        val latitude: Double,
+        val longitude: Double,
+        val fetchedAtEpochMs: Long,
+        val temperatureCelsius: Double,
+        val apparentTemperatureCelsius: Double,
+        val relativeHumidity: Int,
+        val dewPointCelsius: Double,
+        val weatherCode: Int,
+        val windSpeedKmh: Double,
+        val windDirectionDeg: Int,
+        val pressureMsl: Double,
+        val visibilityMeters: Double,
+        val cloudCoverPercent: Int,
+        val windGustsKmh: Double,
+        val isDay: Boolean,
+        val hourlyTimeIso: List<String> = emptyList(),
+        val hourlyTemperatureCelsius: List<Double> = emptyList(),
+        val hourlyWeatherCode: List<Int> = emptyList(),
+        val hourlyPrecipitationProbability: List<Int> = emptyList(),
+        val hourlyIsDay: List<Int> = emptyList(),
+        val dailyDateIso: List<String> = emptyList(),
+        val dailyWeatherCode: List<Int> = emptyList(),
+        val dailyTemperatureMaxCelsius: List<Double> = emptyList(),
+        val dailyTemperatureMinCelsius: List<Double> = emptyList(),
+        val dailyPrecipitationProbabilityMax: List<Int> = emptyList()
+    ) {
+        fun toWeatherResult(): WeatherResult = WeatherResult(
+            emoji = emojiForCode(weatherCode, isDay),
+            tempCelsius = Math.round(temperatureCelsius).toInt()
+        )
+    }
+
     private fun emojiForCode(code: Int, isDay: Boolean): String = when (code) {
-        0, 1    -> if (isDay) "\u2600" else moonPhaseEmoji()   // ☀ / moon
-        2       -> "\u26c5"                                      // ⛅
-        3       -> "\u2601"                                      // ☁
-        45, 48  -> "\ud83d\ude36\u200d\ud83c\udf2b"            // 😶‍🌫
+        0, 1    -> if (isDay) "\u2600" else moonPhaseEmoji()
+        2       -> if (isDay) "\u26c5" else "\ud83c\udf19"
+        3       -> "\u2601"
+        45, 48  -> "\ud83d\ude36\u200d\ud83c\udf2b"
         51, 53, 55,
         61, 63,
-        80, 81  -> "\ud83c\udf26"                               // 🌦
+        80, 81  -> "\ud83c\udf26"
         56, 57,
         65, 66, 67,
-        82      -> "\ud83c\udf27"                               // 🌧
+        82      -> "\ud83c\udf27"
         71, 73, 75, 77,
-        85, 86  -> "\ud83c\udf28"                               // 🌨
-        95      -> "\u26a1"                                      // ⚡
-        96, 99  -> "\u26c8"                                     // ⛈
+        85, 86  -> "\ud83c\udf28"
+        95      -> "\u26a1"
+        96, 99  -> "\u26c8"
         else    -> if (isDay) "\u2600" else moonPhaseEmoji()
     }
 
@@ -91,8 +124,10 @@ object WeatherHelper {
         return when (emoji) {
             "\u2600"                                            -> R.drawable.ic_weather_sunny
             "\u2601"                                            -> R.drawable.ic_cloud
-            "\u26c5", "\ud83c\udf24"                          -> R.drawable.ic_cloud
-            "\ud83c\udf26", "\ud83c\udf27"                    -> R.drawable.ic_weather_rain
+            "\u26c5"                                            -> R.drawable.ic_weather_partly_cloudy_day
+            "\ud83c\udf19"                                     -> R.drawable.ic_weather_partly_cloudy_night
+            "\ud83c\udf26"                                     -> R.drawable.ic_weather_drizzle
+            "\ud83c\udf27"                                     -> R.drawable.ic_weather_rain
             "\u26a1", "\u26c8"                                 -> R.drawable.ic_weather_storm
             "\u2744", "\ud83c\udf28"                          -> R.drawable.ic_weather_snow
             "\ud83d\ude36\u200d\ud83c\udf2b"                  -> R.drawable.ic_weather_fog
@@ -102,6 +137,26 @@ object WeatherHelper {
             "\ud83c\udf1c", "\ud83c\udf1d"                    -> R.drawable.ic_weather_night
             else                                               -> R.drawable.ic_weather_sunny
         }
+    }
+
+    fun iconResForCode(code: Int, isDay: Boolean): Int = iconResForEmoji(emojiForCode(code, isDay))
+
+    fun conditionLabelRes(code: Int): Int = when (code) {
+        0, 1 -> R.string.weather_condition_clear
+        2 -> R.string.weather_condition_partly_cloudy
+        3 -> R.string.weather_condition_cloudy
+        45, 48 -> R.string.weather_condition_fog
+        51, 53, 55,
+        61, 63,
+        80, 81 -> R.string.weather_condition_rain_light
+        56, 57,
+        65, 66, 67,
+        82 -> R.string.weather_condition_rain_heavy
+        71, 73, 75, 77,
+        85, 86 -> R.string.weather_condition_snow
+        95 -> R.string.weather_condition_thunder
+        96, 99 -> R.string.weather_condition_thunder_hail
+        else -> R.string.weather_condition_unknown
     }
 
     fun getCustomLocationRaw(): String =
@@ -138,17 +193,11 @@ object WeatherHelper {
             val encoded = java.net.URLEncoder.encode(raw, "UTF-8")
             val url = "https://geocoding-api.open-meteo.com/v1/search?name=$encoded&count=1&language=id&format=json"
             val body = getBody(url) ?: return null
-            val json = JsonUtil.parseString(body) ?: return null
-            val results = json.getAsJsonArray("results") ?: return null
-            if (results.size() == 0) return null
-            val first = results[0].asJsonObject
-            val lat = first.get("latitude")?.asDouble ?: return null
-            val lon = first.get("longitude")?.asDouble ?: return null
-            val nameParts = listOfNotNull(
-                first.get("name")?.asString,
-                first.get("admin1")?.asString,
-                first.get("country")?.asString
-            )
+            val response = JsonUtil.fromJsonSafe(body, OpenMeteoGeocodingResponse::class.java) ?: return null
+            val first = response.results?.firstOrNull() ?: return null
+            val lat = first.latitude ?: return null
+            val lon = first.longitude ?: return null
+            val nameParts = listOfNotNull(first.name, first.admin1, first.country)
             val name = nameParts.joinToString(", ")
             val location = android.location.Location("custom").apply {
                 latitude = lat
@@ -231,30 +280,25 @@ object WeatherHelper {
     }
 
     fun getCachedWeather(): WeatherResult? {
-        val ts = MmkvManager.decodeSettingsLong(AppConfig.PREF_WEATHER_CACHE_TIMESTAMP, 0L)
-        if (ts == 0L) return null
-        if (System.currentTimeMillis() - ts > AppConfig.WEATHER_CACHE_TTL_MS) return null
-        return readCacheEntry()
+        val entry = readCacheEntry() ?: return null
+        if (System.currentTimeMillis() - entry.fetchedAtEpochMs > AppConfig.WEATHER_CACHE_TTL_MS) return null
+        return entry.toWeatherResult()
     }
 
-    fun getCachedWeatherStale(): WeatherResult? {
-        val ts = MmkvManager.decodeSettingsLong(AppConfig.PREF_WEATHER_CACHE_TIMESTAMP, 0L)
-        if (ts == 0L) return null
-        return readCacheEntry()
-    }
+    fun getCachedWeatherStale(): WeatherResult? = readCacheEntry()?.toWeatherResult()
+
+    fun getCachedWeatherEntry(): WeatherCacheEntry? = readCacheEntry()
 
     fun getCacheAgeMs(): Long {
-        val ts = MmkvManager.decodeSettingsLong(AppConfig.PREF_WEATHER_CACHE_TIMESTAMP, 0L)
-        if (ts == 0L) return -1L
-        return System.currentTimeMillis() - ts
+        val entry = readCacheEntry() ?: return -1L
+        return System.currentTimeMillis() - entry.fetchedAtEpochMs
     }
 
     private fun isCacheValidForLocation(location: android.location.Location): Boolean {
-        val cachedLat = MmkvManager.decodeSettingsFloat(AppConfig.PREF_WEATHER_CACHE_LAT, 0f)
-        val cachedLon = MmkvManager.decodeSettingsFloat(AppConfig.PREF_WEATHER_CACHE_LON, 0f)
-        if (cachedLat == 0f && cachedLon == 0f) return false
+        val entry = readCacheEntry() ?: return false
+        if (entry.latitude == 0.0 && entry.longitude == 0.0) return false
         val results = FloatArray(1)
-        android.location.Location.distanceBetween(cachedLat.toDouble(), cachedLon.toDouble(),
+        android.location.Location.distanceBetween(entry.latitude, entry.longitude,
             location.latitude, location.longitude, results)
         val moved = results[0]
         if (moved > AppConfig.WEATHER_LOCATION_STALE_METERS) {
@@ -263,29 +307,18 @@ object WeatherHelper {
         return true
     }
 
-    private fun readCacheEntry(): WeatherResult? {
-        val temp = MmkvManager.decodeSettingsInt(AppConfig.PREF_WEATHER_CACHE_TEMP, Int.MIN_VALUE)
-        if (temp == Int.MIN_VALUE) return null
-        val emoji = MmkvManager.decodeSettingsString(AppConfig.PREF_WEATHER_CACHE_EMOJI, "") ?: ""
-        return WeatherResult(emoji = emoji, tempCelsius = temp)
+    private fun readCacheEntry(): WeatherCacheEntry? {
+        val json = MmkvManager.decodeSettingsString(AppConfig.PREF_WEATHER_CACHE_ENTRY, "")
+        if (json.isNullOrBlank()) return null
+        return JsonUtil.fromJsonSafe(json, WeatherCacheEntry::class.java)
     }
 
-    private fun saveCache(result: WeatherResult, location: android.location.Location? = null) {
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_TEMP, result.tempCelsius)
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_EMOJI, result.emoji)
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_TIMESTAMP, System.currentTimeMillis())
-        if (location != null) {
-            MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_LAT, location.latitude.toFloat())
-            MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_LON, location.longitude.toFloat())
-        }
+    private fun saveCache(entry: WeatherCacheEntry) {
+        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_ENTRY, JsonUtil.toJson(entry))
     }
 
     fun clearCache() {
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_TIMESTAMP, 0L)
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_TEMP, Int.MIN_VALUE)
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_EMOJI, "")
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_LAT, 0f)
-        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_LON, 0f)
+        MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_ENTRY, "")
     }
 
     private val client by lazy {
@@ -358,6 +391,12 @@ object WeatherHelper {
     }
 
     suspend fun fetchCurrentWeather(context: Context, force: Boolean = false): WeatherResult? =
+        fetchWeatherEntry(context, force)?.toWeatherResult()
+
+    suspend fun fetchForecast(context: Context, force: Boolean = false): WeatherCacheEntry? =
+        fetchWeatherEntry(context, force)
+
+    private suspend fun fetchWeatherEntry(context: Context, force: Boolean): WeatherCacheEntry? =
         withContext(Dispatchers.IO) {
             val forceRefresh = force || isFirstSessionLaunch
             if (isFirstSessionLaunch) {
@@ -365,35 +404,95 @@ object WeatherHelper {
             }
 
             val location = getEffectiveLocation(context, forceRefresh) ?: return@withContext null
-            
+
             if (!forceRefresh) {
-                val cached = getCachedWeather()
-                if (cached != null && isCacheValidForLocation(location)) {
-                    return@withContext cached
+                val cachedEntry = readCacheEntry()
+                val cachedFresh = cachedEntry != null &&
+                    System.currentTimeMillis() - cachedEntry.fetchedAtEpochMs <= AppConfig.WEATHER_CACHE_TTL_MS
+                if (cachedFresh && isCacheValidForLocation(location)) {
+                    return@withContext cachedEntry
                 }
             }
-            
+
             try {
-                fetchOpenMeteo(location)?.also { saveCache(it, location) }
+                fetchOpenMeteo(location)?.also { saveCache(it) }
             } catch (e: Exception) {
                 null
             }
         }
 
-    private fun fetchOpenMeteo(location: android.location.Location): WeatherResult? {
-        val url = "https://api.open-meteo.com/v1/forecast" +
-            "?latitude=${location.latitude}" +
-            "&longitude=${location.longitude}" +
-            "&current=temperature_2m,weather_code,is_day"
+    private fun fetchOpenMeteo(location: android.location.Location): WeatherCacheEntry? {
+        val url = buildString {
+            append("https://api.open-meteo.com/v1/forecast")
+            append("?latitude=").append(location.latitude)
+            append("&longitude=").append(location.longitude)
+            append("&timezone=auto")
+            append("&current=").append(
+                listOf(
+                    "temperature_2m",
+                    "apparent_temperature",
+                    "relative_humidity_2m",
+                    "dew_point_2m",
+                    "weather_code",
+                    "wind_speed_10m",
+                    "wind_direction_10m",
+                    "pressure_msl",
+                    "visibility",
+                    "cloud_cover",
+                    "wind_gusts_10m",
+                    "is_day"
+                ).joinToString(",")
+            )
+            append("&hourly=").append(
+                listOf(
+                    "temperature_2m",
+                    "weather_code",
+                    "precipitation_probability",
+                    "is_day"
+                ).joinToString(",")
+            )
+            append("&daily=").append(
+                listOf(
+                    "weather_code",
+                    "temperature_2m_max",
+                    "temperature_2m_min",
+                    "precipitation_probability_max"
+                ).joinToString(",")
+            )
+            append("&forecast_days=7")
+        }
         val body = getBody(url) ?: return null
-        val json = JsonUtil.parseString(body) ?: return null
-        val current = json.getAsJsonObject("current") ?: return null
-        val temp = current.get("temperature_2m")?.asDouble ?: return null
-        val code = current.get("weather_code")?.asInt ?: 0
-        val isDay = (current.get("is_day")?.asInt ?: 1) == 1
-        return WeatherResult(
-            emoji = emojiForCode(code, isDay),
-            tempCelsius = Math.round(temp).toInt()
+        val response = JsonUtil.fromJsonSafe(body, OpenMeteoForecastResponse::class.java) ?: return null
+        val current = response.current ?: return null
+        val temp = current.temperature ?: return null
+        val hourly = response.hourly
+        val daily = response.daily
+        return WeatherCacheEntry(
+            latitude = location.latitude,
+            longitude = location.longitude,
+            fetchedAtEpochMs = System.currentTimeMillis(),
+            temperatureCelsius = temp,
+            apparentTemperatureCelsius = current.apparentTemperature,
+            relativeHumidity = current.relativeHumidity,
+            dewPointCelsius = current.dewPoint,
+            weatherCode = current.weatherCode,
+            windSpeedKmh = current.windSpeed,
+            windDirectionDeg = current.windDirection,
+            pressureMsl = current.pressureMsl,
+            visibilityMeters = current.visibility,
+            cloudCoverPercent = current.cloudCover,
+            windGustsKmh = current.windGusts,
+            isDay = current.isDay == 1,
+            hourlyTimeIso = hourly?.time ?: emptyList(),
+            hourlyTemperatureCelsius = hourly?.temperature ?: emptyList(),
+            hourlyWeatherCode = hourly?.weatherCode ?: emptyList(),
+            hourlyPrecipitationProbability = hourly?.precipitationProbability ?: emptyList(),
+            hourlyIsDay = hourly?.isDay ?: emptyList(),
+            dailyDateIso = daily?.time ?: emptyList(),
+            dailyWeatherCode = daily?.weatherCode ?: emptyList(),
+            dailyTemperatureMaxCelsius = daily?.temperatureMax ?: emptyList(),
+            dailyTemperatureMinCelsius = daily?.temperatureMin ?: emptyList(),
+            dailyPrecipitationProbabilityMax = daily?.precipitationProbabilityMax ?: emptyList()
         )
     }
 

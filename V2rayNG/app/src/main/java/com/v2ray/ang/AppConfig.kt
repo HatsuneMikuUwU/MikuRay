@@ -132,11 +132,7 @@ object AppConfig {
     const val PREF_SHOW_SPLASH = "pref_show_splash_screen"
     const val PREF_KEEP_AWAKE = "pref_keep_awake"
     const val PREF_SHOW_WEATHER_CHIP = "pref_show_weather_chip"
-    const val PREF_WEATHER_CACHE_TEMP = "pref_weather_cache_temp"
-    const val PREF_WEATHER_CACHE_EMOJI = "pref_weather_cache_emoji"
-    const val PREF_WEATHER_CACHE_TIMESTAMP = "pref_weather_cache_timestamp"
-    const val PREF_WEATHER_CACHE_LAT = "pref_weather_cache_lat"
-    const val PREF_WEATHER_CACHE_LON = "pref_weather_cache_lon"
+    const val PREF_WEATHER_CACHE_ENTRY = "pref_weather_cache_entry"
     const val PREF_WEATHER_USE_CELSIUS = "pref_weather_use_celsius"
     const val PREF_WEATHER_CUSTOM_LOCATION = "pref_weather_custom_location"
     const val PREF_WEATHER_CUSTOM_LOCATION_RAW_CACHED = "pref_weather_custom_location_raw_cached"
@@ -243,7 +239,7 @@ object AppConfig {
     const val IP_API_URL = "https://api.ip.sb/geoip"
 
     /** DNS server addresses. */
-    const val DNS_PROXY = "1.1.1.1"
+    const val DNS_PROXY = "https://cloudflare-dns.com/dns-query"
     const val DNS_DIRECT = "223.5.5.5"
     const val DNS_VPN = "1.1.1.1"
     const val GEOSITE_PRIVATE = "geosite:private"
