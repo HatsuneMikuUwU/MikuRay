@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.R
 import com.v2ray.ang.ui.BaseActivity
@@ -17,8 +18,14 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.roundToInt
 
-/** One rendered cell in the hourly strip. */
+data class DetailItem(
+    @androidx.annotation.DrawableRes val iconRes: Int,
+    val label: String,
+    val value: String
+)
+
 data class HourlyForecastItem(
     val timeLabel: String,
     val dayLabel: String,
@@ -47,6 +54,8 @@ class WeatherForecastActivity : BaseActivity() {
     private lateinit var tvError: TextView
     private lateinit var tvSummary: TextView
     private lateinit var cardCurrent: android.view.View
+    private lateinit var cardDetails: android.view.View
+    private lateinit var recyclerDetails: RecyclerView
     private lateinit var cardSummary: android.view.View
     private lateinit var cardHourly: android.view.View
     private lateinit var cardDaily: android.view.View
@@ -68,12 +77,16 @@ class WeatherForecastActivity : BaseActivity() {
         tvError = findViewById(R.id.tvForecastError)
         tvSummary = findViewById(R.id.tvForecastSummary)
         cardCurrent = findViewById(R.id.cardForecastCurrent)
+        cardDetails = findViewById(R.id.cardForecastDetails)
+        recyclerDetails = findViewById(R.id.recyclerForecastDetails)
         cardSummary = findViewById(R.id.cardForecastSummary)
         cardHourly = findViewById(R.id.cardForecastHourly)
         cardDaily = findViewById(R.id.cardForecastDaily)
         recyclerHourly = findViewById(R.id.recyclerForecastHourly)
         recyclerDaily = findViewById(R.id.recyclerForecastDaily)
 
+        recyclerDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerDetails.isNestedScrollingEnabled = false
         recyclerHourly.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerDaily.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerHourly.isNestedScrollingEnabled = false
@@ -134,8 +147,8 @@ class WeatherForecastActivity : BaseActivity() {
             "${Math.round(entry.apparentTemperatureCelsius)}\u00b0"
         )
 
-        val todayMax = entry.dailyTemperatureMaxCelsius.getOrNull(0)
-        val todayMin = entry.dailyTemperatureMinCelsius.getOrNull(0)
+        val todayMax = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(0)
+        val todayMin = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(0)
         tvMaxMin.isVisible = todayMax != null && todayMin != null
         if (todayMax != null && todayMin != null) {
             tvMaxMin.text = getString(
@@ -144,6 +157,10 @@ class WeatherForecastActivity : BaseActivity() {
                 "${Math.round(todayMin)}\u00b0"
             )
         }
+
+        val detailItems = buildDetailItems(entry)
+        cardDetails.isVisible = detailItems.isNotEmpty()
+        recyclerDetails.adapter = WeatherDetailAdapter(this, detailItems)
 
         cardSummary.isVisible = true
         tvSummary.text = buildDaySummary(entry)
@@ -157,12 +174,11 @@ class WeatherForecastActivity : BaseActivity() {
         recyclerDaily.adapter = WeatherDailyAdapter(this, dailyItems)
     }
 
-    /** Rule-based one-paragraph human summary of today's forecast, built from cached data already on hand. */
     private fun buildDaySummary(entry: WeatherHelper.WeatherCacheEntry): String {
         val conditionLabel = getString(WeatherHelper.conditionLabelRes(entry.weatherCode)).lowercase(Locale.getDefault())
-        val hi = entry.dailyTemperatureMaxCelsius.getOrNull(0)
-        val lo = entry.dailyTemperatureMinCelsius.getOrNull(0)
-        val precip = entry.dailyPrecipitationProbabilityMax.getOrNull(0) ?: 0
+        val hi = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(0)
+        val lo = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(0)
+        val precip = (entry.dailyPrecipitationProbabilityMax as? List<Int>)?.getOrNull(0) ?: 0
         val wind = entry.windSpeedKmh
 
         val parts = mutableListOf<String>()
@@ -187,9 +203,111 @@ class WeatherForecastActivity : BaseActivity() {
         return parts.joinToString(" ")
     }
 
+    private fun buildDetailItems(entry: WeatherHelper.WeatherCacheEntry): List<DetailItem> {
+        val items = mutableListOf<DetailItem>()
+
+        items += DetailItem(
+            R.drawable.ic_weather_humidity,
+            getString(R.string.weather_detail_humidity),
+            "${entry.relativeHumidity}%"
+        )
+        items += DetailItem(
+            R.drawable.ic_weather_humidity,
+            getString(R.string.weather_detail_dew_point),
+            "${Math.round(entry.dewPointCelsius)}\u00b0"
+        )
+        items += DetailItem(
+            R.drawable.ic_weather_wind,
+            getString(R.string.weather_detail_wind),
+            getString(
+                R.string.weather_wind_format,
+                Math.round(entry.windSpeedKmh),
+                compassDirection(entry.windDirectionDeg)
+            )
+        )
+        items += DetailItem(
+            R.drawable.ic_weather_wind,
+            getString(R.string.weather_detail_wind_gusts),
+            getString(R.string.weather_speed_kmh_format, Math.round(entry.windGustsKmh))
+        )
+        items += DetailItem(
+            R.drawable.ic_weather_pressure,
+            getString(R.string.weather_detail_pressure),
+            getString(R.string.weather_pressure_format, Math.round(entry.pressureMsl))
+        )
+        items += DetailItem(
+            R.drawable.ic_weather_visibility,
+            getString(R.string.weather_detail_visibility),
+            formatVisibility(entry.visibilityMeters)
+        )
+        items += DetailItem(
+            R.drawable.ic_cloud,
+            getString(R.string.weather_detail_cloud_cover),
+            "${entry.cloudCoverPercent}%"
+        )
+
+        (entry.dailyUvIndexMax as? List<Double>)?.getOrNull(0)?.let { uv ->
+            items += DetailItem(
+                R.drawable.ic_weather_sunny,
+                getString(R.string.weather_detail_uv_index),
+                String.format(Locale.getDefault(), "%.1f", uv)
+            )
+        }
+        formatTimeOfDay((entry.dailySunriseIso as? List<String>)?.getOrNull(0))?.let { sunrise ->
+            items += DetailItem(R.drawable.ic_weather_sunrise, getString(R.string.weather_detail_sunrise), sunrise)
+        }
+        formatTimeOfDay((entry.dailySunsetIso as? List<String>)?.getOrNull(0))?.let { sunset ->
+            items += DetailItem(R.drawable.ic_weather_sunset, getString(R.string.weather_detail_sunset), sunset)
+        }
+        (entry.dailyPrecipitationSumMm as? List<Double>)?.getOrNull(0)?.let { mm ->
+            items += DetailItem(
+                R.drawable.ic_weather_rain,
+                getString(R.string.weather_detail_precipitation),
+                getString(R.string.weather_precipitation_format, mm)
+            )
+        }
+        entry.airQualityIndex?.let { aqi ->
+            items += DetailItem(
+                R.drawable.ic_weather_air_quality,
+                getString(R.string.weather_detail_air_quality),
+                "$aqi \u00b7 ${getString(WeatherHelper.airQualityLabelRes(aqi))}"
+            )
+        }
+
+        return items
+    }
+
+    private fun compassDirection(degrees: Int): String {
+        val directions = listOf(
+            R.string.weather_compass_n, R.string.weather_compass_ne,
+            R.string.weather_compass_e, R.string.weather_compass_se,
+            R.string.weather_compass_s, R.string.weather_compass_sw,
+            R.string.weather_compass_w, R.string.weather_compass_nw
+        )
+        val index = (((degrees % 360) + 360) % 360 / 45.0).roundToInt() % 8
+        return getString(directions[index])
+    }
+
+    private fun formatVisibility(meters: Double): String =
+        if (meters >= 1000) {
+            getString(R.string.weather_visibility_km_format, meters / 1000.0)
+        } else {
+            getString(R.string.weather_visibility_m_format, Math.round(meters))
+        }
+
+    private fun formatTimeOfDay(iso: String?): String? {
+        if (iso.isNullOrBlank()) return null
+        return try {
+            val parsed = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US).parse(iso)
+            parsed?.let { SimpleDateFormat("HH:mm", Locale.getDefault()).format(it) }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     private fun buildHourlyItems(entry: WeatherHelper.WeatherCacheEntry): List<HourlyForecastItem> {
-        val times = entry.hourlyTimeIso
-        if (times.isEmpty()) return emptyList()
+        val times = entry.hourlyTimeIso as? List<String>
+        if (times.isNullOrEmpty()) return emptyList()
 
         val nowIso = SimpleDateFormat("yyyy-MM-dd'T'HH:00", Locale.US).format(Date())
         val startIndex = times.indexOfFirst { it >= nowIso }.let { if (it < 0) 0 else it }
@@ -201,10 +319,10 @@ class WeatherForecastActivity : BaseActivity() {
 
         return (startIndex until endIndex).mapNotNull { i ->
             val iso = times.getOrNull(i) ?: return@mapNotNull null
-            val temp = entry.hourlyTemperatureCelsius.getOrNull(i) ?: return@mapNotNull null
-            val code = entry.hourlyWeatherCode.getOrNull(i) ?: 0
-            val precip = entry.hourlyPrecipitationProbability.getOrNull(i) ?: 0
-            val isDay = (entry.hourlyIsDay.getOrNull(i) ?: 1) == 1
+            val temp = (entry.hourlyTemperatureCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
+            val code = (entry.hourlyWeatherCode as? List<Int>)?.getOrNull(i) ?: 0
+            val precip = (entry.hourlyPrecipitationProbability as? List<Int>)?.getOrNull(i) ?: 0
+            val isDay = ((entry.hourlyIsDay as? List<Int>)?.getOrNull(i) ?: 1) == 1
             val date = try {
                 isoParser.parse(iso)
             } catch (e: Exception) {
@@ -227,18 +345,18 @@ class WeatherForecastActivity : BaseActivity() {
     }
 
     private fun buildDailyItems(entry: WeatherHelper.WeatherCacheEntry): List<DailyForecastItem> {
-        val dates = entry.dailyDateIso
-        if (dates.isEmpty()) return emptyList()
+        val dates = entry.dailyDateIso as? List<String>
+        if (dates.isNullOrEmpty()) return emptyList()
 
         val dateParser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val dayFmt = SimpleDateFormat("EEE", Locale.getDefault())
 
         return dates.indices.mapNotNull { i ->
             val dateStr = dates.getOrNull(i) ?: return@mapNotNull null
-            val max = entry.dailyTemperatureMaxCelsius.getOrNull(i) ?: return@mapNotNull null
-            val min = entry.dailyTemperatureMinCelsius.getOrNull(i) ?: return@mapNotNull null
-            val code = entry.dailyWeatherCode.getOrNull(i) ?: 0
-            val precip = entry.dailyPrecipitationProbabilityMax.getOrNull(i) ?: 0
+            val max = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
+            val min = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
+            val code = (entry.dailyWeatherCode as? List<Int>)?.getOrNull(i) ?: 0
+            val precip = (entry.dailyPrecipitationProbabilityMax as? List<Int>)?.getOrNull(i) ?: 0
 
             val weekdayLabel = if (i == 0) {
                 getString(R.string.weather_today)

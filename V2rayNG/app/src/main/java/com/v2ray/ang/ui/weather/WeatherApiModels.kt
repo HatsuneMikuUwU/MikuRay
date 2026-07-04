@@ -38,7 +38,15 @@ data class OpenMeteoDaily(
     @SerializedName("weather_code") val weatherCode: List<Int>? = null,
     @SerializedName("temperature_2m_max") val temperatureMax: List<Double>? = null,
     @SerializedName("temperature_2m_min") val temperatureMin: List<Double>? = null,
-    @SerializedName("precipitation_probability_max") val precipitationProbabilityMax: List<Int>? = null
+    @SerializedName("apparent_temperature_max") val apparentTemperatureMax: List<Double>? = null,
+    @SerializedName("apparent_temperature_min") val apparentTemperatureMin: List<Double>? = null,
+    @SerializedName("precipitation_probability_max") val precipitationProbabilityMax: List<Int>? = null,
+    @SerializedName("precipitation_sum") val precipitationSum: List<Double>? = null,
+    @SerializedName("uv_index_max") val uvIndexMax: List<Double>? = null,
+    @SerializedName("sunrise") val sunrise: List<String>? = null,
+    @SerializedName("sunset") val sunset: List<String>? = null,
+    @SerializedName("daylight_duration") val daylightDuration: List<Double>? = null,
+    @SerializedName("sunshine_duration") val sunshineDuration: List<Double>? = null
 )
 
 data class OpenMeteoGeocodingResponse(
@@ -51,4 +59,12 @@ data class OpenMeteoGeocodingResult(
     val longitude: Double? = null,
     val country: String? = null,
     val admin1: String? = null
+)
+
+data class OpenMeteoAirQualityResponse(
+    val current: OpenMeteoAirQualityCurrent? = null
+)
+
+data class OpenMeteoAirQualityCurrent(
+    @SerializedName("us_aqi") val usAqi: Int? = null
 )
