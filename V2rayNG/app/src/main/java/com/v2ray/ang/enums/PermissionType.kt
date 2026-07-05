@@ -19,6 +19,12 @@ enum class PermissionType {
         override fun getPermission(): String = Manifest.permission.POST_NOTIFICATIONS
     },
 
+    /** Local network access permission (Android 17+) */
+    ACCESS_LOCAL_NETWORK {
+        @RequiresApi(Build.VERSION_CODES.CINNAMON_BUN)
+        override fun getPermission(): String = Manifest.permission.ACCESS_LOCAL_NETWORK
+    },
+
     /**
      * Location permission (used for the weather chip on the search bar).
      * Requests both coarse and fine together: requesting coarse alone is
@@ -44,6 +50,7 @@ enum class PermissionType {
         return when (this) {
             CAMERA -> "Camera"
             POST_NOTIFICATIONS -> "Notification"
+            ACCESS_LOCAL_NETWORK -> "Local Network"
             LOCATION -> "Location"
         }
     }
