@@ -41,14 +41,13 @@
 
     <style name="ThemeOverlay.App.TrueBlack.AlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="shapeAppearance">@style/AppThemeAlertDialogShape</item>
-        <item name="backgroundTint">#ff131313</item>
-        <item name="colorSurface">#ff131313</item>
-        <item name="android:backgroundTint">#ff131313</item>
-        <item name="android:background">#ff131313</item>
         <item name="android:colorBackground">#ff131313</item>
-        <item name="android:colorBackgroundFloating">#ff131313</item>
-        <item name="colorBackgroundFloating">#ff131313</item>
-        <item name="android:dialogCornerRadius">28.0dip</item>
+        <item name="android:windowAnimationStyle">@style/MaterialAlertDialog.Material3.Animation</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="dialogCornerRadius">28dp</item>
+        <item name="android:listPreferredItemHeightSmall">60dp</item>
+        <item name="android:windowMinWidthMajor">91%</item>
+        <item name="android:windowMinWidthMinor">91%</item>
     </style>
     
 </resources>

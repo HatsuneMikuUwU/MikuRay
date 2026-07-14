@@ -869,15 +869,13 @@
     <!-- Alert Dialog -->
     <style name="AppThemeAlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="shapeAppearance">@style/AppThemeAlertDialogShape</item>
-        <item name="backgroundTint">?attr/colorSurfaceContainer</item>
-        <item name="colorSurface">?attr/colorSurfaceContainer</item>
-        <item name="android:backgroundTint">?attr/colorSurfaceContainer</item>
-        <item name="android:background">?attr/colorSurfaceContainer</item>
         <item name="android:colorBackground">?attr/colorSurfaceContainer</item>
-        <item name="android:colorBackgroundFloating">?attr/colorSurfaceContainer</item>
-        <item name="android:dialogCornerRadius">28.0dip</item>
-        <item name="colorBackgroundFloating">?attr/colorSurfaceContainer</item>
-        <item name="dialogCornerRadius">28.0dip</item>
+        <item name="android:windowAnimationStyle">@style/MaterialAlertDialog.Material3.Animation</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="dialogCornerRadius">28dp</item>
+        <item name="android:listPreferredItemHeightSmall">60dp</item>
+        <item name="android:windowMinWidthMajor">91%</item>
+        <item name="android:windowMinWidthMinor">91%</item>
     </style>
 
     <style name="AppThemeAlertDialogShape" parent="@style/ShapeAppearance.Material3.MediumComponent">
