@@ -870,12 +870,38 @@
     <style name="AppThemeAlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="shapeAppearance">@style/AppThemeAlertDialogShape</item>
         <item name="android:colorBackground">?attr/colorSurfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">?attr/colorSurfaceContainer</item>
+        <item name="buttonBarPositiveButtonStyle">@style/CustomDialogFilledButtonPrimary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomDialogFilledButtonSecondary</item>
+        <item name="buttonBarNeutralButtonStyle">@style/CustomDialogFilledButtonNeutral</item>
         <item name="android:windowAnimationStyle">@style/MaterialAlertDialog.Material3.Animation</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="dialogCornerRadius">28dp</item>
         <item name="android:listPreferredItemHeightSmall">60dp</item>
         <item name="android:windowMinWidthMajor">91%</item>
         <item name="android:windowMinWidthMinor">91%</item>
+    </style>
+    
+    <style name="CustomDialogFilledButtonPrimary" parent="Widget.Material3Expressive.Button">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:layout_marginStart">12dp</item>
+    </style>
+    
+    <style name="CustomDialogFilledButtonSecondary" parent="Widget.Material3Expressive.Button">
+        <item name="backgroundTint">?attr/colorSecondaryContainer</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+    </style>
+    
+    <style name="CustomDialogFilledButtonNeutral" parent="Widget.Material3Expressive.Button">
+        <item name="backgroundTint">?attr/colorTertiary</item>
+        <item name="android:textColor">?attr/colorOnTertiary</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
     </style>
 
     <style name="AppThemeAlertDialogShape" parent="@style/ShapeAppearance.Material3.MediumComponent">
