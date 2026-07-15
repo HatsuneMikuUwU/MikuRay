@@ -110,36 +110,19 @@ jobs:
         
         if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
           echo "Starting DEBUG build process..."
-          ./gradlew assembleDebug --console=plain
+          ./gradlew assembleDebug --console=plain \
+            -PKS_PATH="${{ steps.android_keystore.outputs.filePath }}" \
+            -PKS_PASS="${{ secrets.APP_KEYSTORE_PASSWORD }}" \
+            -PKS_ALIAS="${{ secrets.APP_KEYSTORE_ALIAS }}" \
+            -PKEY_PASS="${{ secrets.APP_KEY_PASSWORD }}"
         else
           echo "Starting RELEASE build process..."
           ./gradlew assembleRelease --console=plain \
-            -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} \
-            -Pandroid.injected.signing.store.password=${{ secrets.APP_KEYSTORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.APP_KEYSTORE_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.APP_KEY_PASSWORD }}
+            -PKS_PATH="${{ steps.android_keystore.outputs.filePath }}" \
+            -PKS_PASS="${{ secrets.APP_KEYSTORE_PASSWORD }}" \
+            -PKS_ALIAS="${{ secrets.APP_KEYSTORE_ALIAS }}" \
+            -PKEY_PASS="${{ secrets.APP_KEY_PASSWORD }}"
         fi
-    - name: Sign APKs with v1, v2, and v3
-      run: |
-        BUILD_TOOLS_DIR="$ANDROID_HOME/build-tools/37.0.0"
-        
-        for apk in ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk; do
-          if [ -f "$apk" ]; then
-            echo "Signing $apk with v1, v2, and v3 schemes..."
-            $BUILD_TOOLS_DIR/apksigner sign \
-              --ks ${{ steps.android_keystore.outputs.filePath }} \
-              --ks-pass pass:${{ secrets.APP_KEYSTORE_PASSWORD }} \
-              --ks-key-alias ${{ secrets.APP_KEYSTORE_ALIAS }} \
-              --key-pass pass:${{ secrets.APP_KEY_PASSWORD }} \
-              --v1-signing-enabled true \
-              --v2-signing-enabled true \
-              --v3-signing-enabled true \
-              "$apk"
-              
-            echo "Verifying signatures for $apk..."
-            $BUILD_TOOLS_DIR/apksigner verify -v "$apk"
-          fi
-        done
 
     - name: Upload arm64-v8a APK
       uses: actions/upload-artifact@v7

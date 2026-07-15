@@ -1,3 +1,6 @@
+import java.time.ZonedDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import com.android.build.api.variant.FilterConfiguration
 
 plugins {
@@ -6,6 +9,10 @@ plugins {
 
 val appVersionName = "2.2.7"
 val appVersionCode = 737
+
+val jakartaTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta"))
+val appBuildDate = jakartaTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+val apkBuildDate = jakartaTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 
 base {
     archivesName.set("MikuRay_$appVersionName")
@@ -27,9 +34,9 @@ android {
         resValue("string", "uwu_version_name", appVersionName.toString())
         resValue("string", "uwu_version_code", appVersionCode.toString())
         resValue("string", "uwu_package_name", applicationId.toString())
-        resValue("string", "uwu_build_date", rootProject.extra["BUILD_DATE"].toString())
+        resValue("string", "uwu_build_date", appBuildDate.toString())
 
-        val abiFilterList = (properties["ABI_FILTERS"] as? String)?.split(';')
+        val abiFilterList = (project.findProperty("ABI_FILTERS") as? String)?.split(';')
         splits {
             abi {
                 isEnable = true
@@ -54,8 +61,26 @@ android {
         }
     }
 
+    signingConfigs {
+        create("appSigning") {
+            val ksPath = project.findProperty("KS_PATH") as? String
+            if (!ksPath.isNullOrEmpty()) {
+                storeFile = file(ksPath)
+                storePassword = project.findProperty("KS_PASS") as? String
+                keyAlias = project.findProperty("KS_ALIAS") as? String
+                keyPassword = project.findProperty("KEY_PASS") as? String
+                enableV1Signing = true
+                enableV2Signing = true
+                enableV3Signing = true
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (project.hasProperty("KS_PATH")) {
+                signingConfig = signingConfigs.getByName("appSigning")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -65,16 +90,18 @@ android {
         }
         
         debug {
+            if (project.hasProperty("KS_PATH")) {
+                signingConfig = signingConfigs.getByName("appSigning")
+            }
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
-            multiDexEnabled = true
         }
     }
 
     sourceSets {
         getByName("main") {
-            jniLibs.srcDirs("libs")
+            jniLibs.directories.add("libs")
         }
     }
 
@@ -120,6 +147,11 @@ androidComponents {
             if (versionCodes.containsKey(abi)) {
                 val multiplier = versionCodes[abi]!!
                 output.versionCode.set((1000000 * multiplier) + appVersionCode)
+            }
+
+            if (variant.buildType == "debug") {
+                val abiSuffix = if (abi != "universal") "-$abi" else ""
+                output.outputFileName.set("MikuRay_$appVersionName$abiSuffix-debug-$apkBuildDate.apk")
             }
         }
     }
