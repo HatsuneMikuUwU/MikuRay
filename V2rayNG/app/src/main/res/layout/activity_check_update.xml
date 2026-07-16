@@ -33,6 +33,7 @@
             app:titleCollapseMode="scale">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:theme="@style/AppThemeToolbarCircleNavigationButton"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

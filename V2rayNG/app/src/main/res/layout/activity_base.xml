@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:theme="@style/ThemeOverlay.Material3.Toolbar.CircleNavigationButton"
+        android:theme="@style/AppThemeToolbarCircleNavigationButton"
         android:layout_marginLeft="8.0dip"
         android:layout_marginRight="8.0dip"
         android:elevation="0.0dip"

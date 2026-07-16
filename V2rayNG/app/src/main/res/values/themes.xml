@@ -19,7 +19,7 @@
         <item name="android:colorEdgeEffect">@null</item>
         <item name="elevation">0.0dip</item>
         <item name="preferenceTheme">@style/AppThemePreference</item>
-        <item name="android:homeAsUpIndicator">@drawable/uwu_back_arrow</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24</item>
         <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
     </style>  
@@ -1317,6 +1317,11 @@
         <item name="cornerSizeTopRight">28dp</item>
         <item name="cornerSizeBottomLeft">28dp</item>
         <item name="cornerSizeBottomRight">28dp</item>
+    </style>
+    
+    <style name="AppThemeToolbarCircleNavigationButton" parent="">
+        <item name="toolbarNavigationButtonCircleColor">?attr/colorCard</item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.Material3.Toolbar.Button.Navigation.Circle</item>
     </style>
 
 </resources>
