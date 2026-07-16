@@ -57,14 +57,97 @@
         <activity
             android:name=".ui.WelcomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Splash">
+            android:theme="@style/Theme.App.Splash" />
+
+        <activity-alias
+            android:name=".ui.LauncherDefault"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        
+        <activity-alias
+            android:name=".ui.LauncherAlt5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <activity
             android:name=".ui.SplashActivity"

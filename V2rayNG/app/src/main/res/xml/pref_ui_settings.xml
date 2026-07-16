@@ -159,6 +159,12 @@
             android:summary="%s"
             android:title="@string/title_pref_icon_shape" />
 
+        <com.v2ray.ang.ui.dialog.AppIconPickerDialog
+            android:icon="@drawable/ic_per_apps_24dp"
+            app:layout="@layout/uwu_mid"
+            app:key="pref_app_icon"
+            app:title="@string/title_pref_app_icon" />
+
         <com.v2ray.ang.ui.dialog.DpiSliderDialog
             android:icon="@drawable/ic_cellphone_screenshot"
             app:layout="@layout/uwu_mid"

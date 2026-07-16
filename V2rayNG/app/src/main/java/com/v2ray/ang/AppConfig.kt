@@ -122,6 +122,14 @@ object AppConfig {
     const val DEFAULT_BLUR_BOTTOM_ROUNDS = 3
     const val PREF_ICON_SHAPE = "pref_icon_shape"
     const val PREF_ICON_SHAPE_DEFAULT = "uwu_shape_cookie"
+
+    const val PREF_APP_ICON = "pref_app_icon"
+    const val APP_ICON_DEFAULT = "default"
+    const val APP_ICON_ALT1 = "alt1"
+    const val APP_ICON_ALT2 = "alt2"
+    const val APP_ICON_ALT3 = "alt3"
+    const val APP_ICON_ALT4 = "alt4"
+    const val APP_ICON_ALT5 = "alt5"
     const val PREF_INDICATOR_STYLE = "pref_indicator_style"
     const val PREF_GROUP_ALL_DISPLAY = "pref_group_all_display"
     const val PREF_GROUP_ALL_TAB_ICON = "pref_group_all_tab_icon"

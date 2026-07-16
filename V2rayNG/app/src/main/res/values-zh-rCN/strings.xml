@@ -805,5 +805,8 @@
     <string name="searchpreference_more">更多</string>
     <string name="searchpreference_clear_history">清除历史记录</string>
     <string name="searchpreference_no_results">没有结果</string>
+    
+    <string name="title_pref_app_icon">应用图标</string>
+    <string name="app_icon_updated">应用图标已更新。它可能需要片刻时间才会显示在你的主屏幕上。</string>
 
 </resources>

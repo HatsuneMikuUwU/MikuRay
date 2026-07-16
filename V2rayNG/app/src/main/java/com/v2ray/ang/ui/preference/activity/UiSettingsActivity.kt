@@ -103,6 +103,7 @@ class UiSettingsActivity : BaseActivity() {
         private val blurBottomStatus by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_BLUR_BOTTOM_STATUS) }
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
         private val iconShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ICON_SHAPE) }
+        private val appIcon by lazy { findPreference<com.v2ray.ang.ui.dialog.AppIconPickerDialog>(AppConfig.PREF_APP_ICON) }
         private val customDpi by lazy { findPreference<DpiSliderDialog>(AppConfig.PREF_CUSTOM_DPI) }
         private val blurIntensity by lazy { findPreference<BlurIntensityDialog>(AppConfig.PREF_BLUR_INTENSITY) }
         private val blurBottomIntensity by lazy { findPreference<BlurBottomIntensityDialog>(AppConfig.PREF_BLUR_BOTTOM_INTENSITY) }
@@ -366,6 +367,11 @@ class UiSettingsActivity : BaseActivity() {
                         putExtra(AppConfig.PREF_ICON_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ICON_SHAPE_DEFAULT })
                     }
                 )
+                true
+            }
+
+            appIcon?.setOnPreferenceChangeListener { _, _ ->
+                requireContext().toastSuccess(getString(R.string.app_icon_updated))
                 true
             }
 
@@ -963,6 +969,7 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         private fun initPreferenceSummaries() {
+            appIcon?.refreshSummary()
             fun traverse(group: androidx.preference.PreferenceGroup) {
                 for (i in 0 until group.preferenceCount) {
                     when (val p = group.getPreference(i)) {

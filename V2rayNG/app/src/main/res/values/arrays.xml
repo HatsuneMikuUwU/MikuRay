@@ -254,7 +254,25 @@
         <item>uwu_shape_pill</item>
         <item>uwu_shape_scallop</item>
     </string-array>
-    
+
+    <string-array name="app_icon_entries" translatable="false">
+        <item>Miku (Project SEKAI)</item>
+        <item>Miku (Teal)</item>
+        <item>Miku (LowRes)</item>
+        <item>Miku (Chibi)</item>
+        <item>Miku (Gradient)</item>
+        <item>Miku (Colorful)</item>
+    </string-array>
+
+    <string-array name="app_icon_values" translatable="false">
+        <item>default</item>
+        <item>alt1</item>
+        <item>alt2</item>
+        <item>alt3</item>
+        <item>alt4</item>
+        <item>alt5</item>
+    </string-array>
+
     <string-array name="uwu_random_text">
         <item>@string/uwu_random_text_1</item>
         <item>@string/uwu_random_text_2</item>

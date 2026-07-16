@@ -807,5 +807,8 @@ yang kamu butuhin."</string>
     <string name="searchpreference_more">Lainnya</string>
     <string name="searchpreference_clear_history">Hapus riwayat</string>
     <string name="searchpreference_no_results">Nggak ada hasil</string>
+    
+    <string name="title_pref_app_icon">Ikon Aplikasi</string>
+    <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh sedikit waktu untuk muncul di layar beranda.</string>
 
 </resources>
