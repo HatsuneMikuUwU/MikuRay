@@ -387,6 +387,15 @@
     <string name="title_pref_fragment_maxsplit">Максимальное число фрагментов</string>
     <string name="title_pref_fragment_enabled">Включить фрагментацию</string>
 
+    <string name="title_observatory_settings">Настройки наблюдения соединений</string>
+    <string name="title_pref_observatory_least_ping_interval">Интервал leastPing</string>
+    <string name="title_pref_observatory_least_load_interval">Интервал leastLoad</string>
+    <string name="title_pref_observatory_least_load_method">HTTP-метод leastLoad</string>
+    <string name="title_pref_observatory_least_load_sampling">Выборка leastLoad</string>
+    <string name="title_pref_observatory_least_load_timeout">Тайм-аут leastLoad</string>
+    <string name="toast_invalid_observatory_duration">Недопустимая длительность. Используйте значение вроде 3m или 30s.</string>
+    <string name="toast_invalid_observatory_sampling">Недопустимая выборка. Используйте положительное число.</string>
+
     <string name="update_check_for_update">Проверить обновления</string>
     <string name="update_already_latest_version">Установлена последняя версия</string>
     <string name="update_new_version_found">Найдена новая версия: %s</string>
@@ -540,6 +549,7 @@
     <string name="summary_navigate_mux_settings">Статус Mux, подключения, подключения XUDP, обработка QUIC и т.д.</string>
     <string name="summary_navigate_fragment_settings">Статус фрагментации, длина, интервал, maxsplit, пакеты и т.д.</string>
     <string name="summary_navigate_advanced_settings">Автозапуск, действия автотеста, URL API задержки/IP, стратегия маршрутизации, режим, скрыть из недавних приложений, отправка HWID и т.д.</string>
+    <string name="summary_navigate_observatory_settings">Интервал leastPing, интервал leastLoad, HTTP-метод leastLoad, выборка leastLoad, тайм-аут leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Выберите, какие приложения будут использовать прокси</string>
     <string name="title_ui_general">Общие</string>
     <string name="title_ui_theme">Тема</string>

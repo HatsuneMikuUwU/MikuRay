@@ -55,4 +55,11 @@
         android:title="@string/title_fragment_settings"
         app:layout="@layout/uwu_grid" />
 
+    <com.v2ray.ang.ui.preference.FullSpanPreference
+        android:icon="@drawable/ic_connection"
+        android:key="pref_navigate_observatory_settings"
+        android:summary="@string/summary_navigate_observatory_settings"
+        android:title="@string/title_observatory_settings"
+        app:layout="@layout/uwu_grid_sin" />
+
 </PreferenceScreen>

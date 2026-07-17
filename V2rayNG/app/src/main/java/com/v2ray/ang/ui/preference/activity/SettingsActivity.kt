@@ -44,6 +44,7 @@ import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import kotlinx.coroutines.launch
+import com.v2ray.ang.ui.preference.FullSpanPreference
 
 class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
@@ -120,6 +121,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             index(R.xml.pref_mux_settings).addBreadcrumb(R.string.title_mux_settings)
             index(R.xml.pref_fragment_settings).addBreadcrumb(R.string.title_fragment_settings)
             index(R.xml.pref_advanced_settings).addBreadcrumb(R.string.title_advanced)
+            index(R.xml.pref_observatory_settings).addBreadcrumb(R.string.title_observatory_settings)
         }
 
         btnClearHistory.setOnClickListener {
@@ -332,6 +334,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             R.xml.pref_mux_settings      -> MuxSettingsActivity::class.java
             R.xml.pref_fragment_settings -> FragmentSettingsActivity::class.java
             R.xml.pref_advanced_settings -> AdvancedSettingsActivity::class.java
+            R.xml.pref_observatory_settings -> ObservatorySettingsActivity::class.java
             else                         -> null
         }
 
@@ -358,6 +361,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         private val navigateMuxSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_MUX_SETTINGS) }
         private val navigateFragmentSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_FRAGMENT_SETTINGS) }
         private val navigateAdvancedSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_ADVANCED_SETTINGS) }
+        private val navigateObservatorySettings by lazy { findPreference<FullSpanPreference>(AppConfig.PREF_NAVIGATE_OBSERVATORY_SETTINGS) }
 
         override fun onCreateRecyclerView(
             inflater: LayoutInflater,
@@ -422,6 +426,11 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
             navigateAdvancedSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), AdvancedSettingsActivity::class.java))
+                true
+            }
+
+            navigateObservatorySettings?.setOnPreferenceClickListener {
+                startActivity(android.content.Intent(requireContext(), ObservatorySettingsActivity::class.java))
                 true
             }
         }

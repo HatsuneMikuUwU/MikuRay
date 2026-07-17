@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_observatory_settings"
+        android:title="@string/title_observatory_settings"
+        app:sectionIcon="@drawable/ic_connection">
+
+        <EditTextPreference
+            android:icon="@drawable/ic_pencil"
+            app:layout="@layout/uwu_top"
+            android:key="pref_observatory_least_ping_interval"
+            android:defaultValue="3m"
+            android:title="@string/title_pref_observatory_least_ping_interval" />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_pencil"
+            app:layout="@layout/uwu_mid"
+            android:key="pref_observatory_least_load_interval"
+            android:defaultValue="5m"
+            android:title="@string/title_pref_observatory_least_load_interval" />
+
+        <ListPreference
+            android:icon="@drawable/ic_arrow_decision"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="HEAD"
+            android:entries="@array/observatory_least_load_method"
+            android:entryValues="@array/observatory_least_load_method"
+            android:key="pref_observatory_least_load_method"
+            android:summary="%s"
+            android:title="@string/title_pref_observatory_least_load_method" />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_numeric"
+            app:layout="@layout/uwu_mid"
+            android:inputType="number"
+            android:key="pref_observatory_least_load_sampling"
+            android:defaultValue="2"
+            android:title="@string/title_pref_observatory_least_load_sampling" />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_pencil"
+            app:layout="@layout/uwu_bot"
+            android:key="pref_observatory_least_load_timeout"
+            android:defaultValue="30s"
+            android:title="@string/title_pref_observatory_least_load_timeout" />
+
+    </com.neko.widget.UwuPreferenceCategory>
+
+</PreferenceScreen>

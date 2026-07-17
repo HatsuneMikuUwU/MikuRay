@@ -383,6 +383,15 @@
     <string name="title_pref_fragment_maxsplit">分片最大分割数</string>
     <string name="title_pref_fragment_enabled">启用分片（Fragment）</string>
 
+    <string name="title_observatory_settings">连接监测设置</string>
+    <string name="title_pref_observatory_least_ping_interval">leastPing 间隔</string>
+    <string name="title_pref_observatory_least_load_interval">leastLoad 间隔</string>
+    <string name="title_pref_observatory_least_load_method">leastLoad HTTP 方法</string>
+    <string name="title_pref_observatory_least_load_sampling">leastLoad 采样次数</string>
+    <string name="title_pref_observatory_least_load_timeout">leastLoad 超时</string>
+    <string name="toast_invalid_observatory_duration">时长无效，请使用如 3m 或 30s 的格式。</string>
+    <string name="toast_invalid_observatory_sampling">采样次数无效，请使用正整数。</string>
+
     <string name="update_check_for_update">检查更新</string>
     <string name="update_already_latest_version">目前已是最新版本</string>
     <string name="update_new_version_found">发现新版本: %s</string>
@@ -520,6 +529,7 @@
     <string name="summary_navigate_mux_settings">Mux 状态、并发、XUDP 并发、QUIC 处理等</string>
     <string name="summary_navigate_fragment_settings">分片状态、长度、间隔、最大分割 (maxsplit)、数据包等</string>
     <string name="summary_navigate_advanced_settings">自动启动、自动测试操作、延迟/IP API URL、路由策略、模式、从最近任务中隐藏、发送 HWID 等</string>
+    <string name="summary_navigate_observatory_settings">leastPing 间隔、leastLoad 间隔、leastLoad HTTP 方法、leastLoad 采样次数、leastLoad 超时</string>
     <string name="summary_navigate_per_app_proxy_settings">选择哪些应用通过代理</string>
     <string name="title_ui_general">通用</string>
     <string name="title_ui_theme">主题</string>

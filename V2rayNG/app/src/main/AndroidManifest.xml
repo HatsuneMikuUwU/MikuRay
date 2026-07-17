@@ -1371,6 +1371,9 @@
             android:name=".ui.preference.activity.AdvancedSettingsActivity"
             android:exported="false" />           
         <activity
+            android:name=".ui.preference.activity.ObservatorySettingsActivity"
+            android:exported="false" />
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="false" />      
         <activity

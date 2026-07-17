@@ -403,6 +403,15 @@
     <string name="title_pref_fragment_maxsplit">Fragment Max Split</string>
     <string name="title_pref_fragment_enabled">Enable Fragment</string>
 
+    <string name="title_observatory_settings">Observatory Settings</string>
+    <string name="title_pref_observatory_least_ping_interval">leastPing Interval</string>
+    <string name="title_pref_observatory_least_load_interval">leastLoad Interval</string>
+    <string name="title_pref_observatory_least_load_method">leastLoad HTTP Method</string>
+    <string name="title_pref_observatory_least_load_sampling">leastLoad Sampling</string>
+    <string name="title_pref_observatory_least_load_timeout">leastLoad Timeout</string>
+    <string name="toast_invalid_observatory_duration">Invalid duration. Use a value like 3m or 30s.</string>
+    <string name="toast_invalid_observatory_sampling">Invalid sampling. Use a positive number.</string>
+
     <string name="update_check_for_update">Check for update</string>
     <string name="update_already_latest_version">Already on the latest version</string>
     <string name="update_new_version_found">New version found: %s</string>
@@ -557,6 +566,7 @@
     <string name="summary_navigate_mux_settings">Mux status, concurrency, XUDP concurrency, QUIC handling, etc.</string>
     <string name="summary_navigate_fragment_settings">Fragment status, length, interval, maxsplit, packets, etc.</string>
     <string name="summary_navigate_advanced_settings">Auto-start, auto-test actions, delay/IP API URLs, routing strategy, mode, hide from recent apps, send HWID, etc.</string>
+    <string name="summary_navigate_observatory_settings">leastPing interval, leastLoad interval, leastLoad HTTP method, leastLoad sampling, leastLoad timeout</string>
     <string name="summary_navigate_per_app_proxy_settings">Choose which apps go through the proxy</string>
     <string name="title_ui_general">General</string>
     <string name="title_ui_theme">Theme</string>

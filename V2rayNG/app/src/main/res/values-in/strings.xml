@@ -381,6 +381,15 @@
     <string name="title_pref_fragment_maxsplit">Maksimal Split Fragmen</string>
     <string name="title_pref_fragment_enabled">Aktifin Fragmen</string>
 
+    <string name="title_observatory_settings">Settingan Observatory</string>
+    <string name="title_pref_observatory_least_ping_interval">Interval leastPing</string>
+    <string name="title_pref_observatory_least_load_interval">Interval leastLoad</string>
+    <string name="title_pref_observatory_least_load_method">Metode HTTP leastLoad</string>
+    <string name="title_pref_observatory_least_load_sampling">Sampling leastLoad</string>
+    <string name="title_pref_observatory_least_load_timeout">Timeout leastLoad</string>
+    <string name="toast_invalid_observatory_duration">Durasi nggak valid. Pake nilai kayak 3m atau 30s.</string>
+    <string name="toast_invalid_observatory_sampling">Sampling nggak valid. Pake angka positif.</string>
+
     <string name="update_check_for_update">Cek Update</string>
     <string name="update_already_latest_version">Udah pake versi paling baru kok</string>
     <string name="update_new_version_found">Ada versi baru nih bro: %s</string>
@@ -522,6 +531,7 @@
     <string name="summary_navigate_mux_settings">Status mux, konkurensi, konkurensi XUDP, penanganan QUIC, dll.</string>
     <string name="summary_navigate_fragment_settings">Status fragment, panjang, interval, maxsplit, paket, dll.</string>
     <string name="summary_navigate_advanced_settings">Auto-start, aksi auto-test, URL API delay/IP, strategi routing, mode, sembunyiin dari recent apps, kirim HWID, dll.</string>
+    <string name="summary_navigate_observatory_settings">Interval leastPing, interval leastLoad, metode HTTP leastLoad, sampling leastLoad, timeout leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Pilih aplikasi mana aja yang mau pakai proxy</string>
     <string name="title_ui_general">Umum</string>
     <string name="title_ui_theme">Tema</string>
