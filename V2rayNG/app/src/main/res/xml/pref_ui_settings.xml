@@ -231,10 +231,16 @@
 
         <Preference
             android:icon="@drawable/ic_delete_24dp"
-            app:layout="@layout/uwu_bot"
+            app:layout="@layout/uwu_mid"
             android:key="action_delete_custom_font"
             android:title="@string/title_pref_app_font_custom_delete"
             android:summary="@string/summary_pref_app_font_custom_delete_empty" />
+
+        <com.v2ray.ang.ui.dialog.FontSizeSliderDialog
+            android:icon="@drawable/ic_format_font"
+            app:layout="@layout/uwu_bot"
+            app:key="pref_app_font_size"
+            app:title="@string/pref_font_size" />
 
     </com.neko.widget.UwuPreferenceCategory>
 

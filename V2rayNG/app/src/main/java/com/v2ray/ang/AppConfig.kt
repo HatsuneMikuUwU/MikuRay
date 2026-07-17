@@ -157,6 +157,7 @@ object AppConfig {
     const val PREF_LANGUAGE = "pref_language"
     const val PREF_UI_MODE_NIGHT = "pref_ui_mode_night"
     const val PREF_CUSTOM_DPI = "pref_custom_dpi"
+    const val PREF_APP_FONT_SIZE = "pref_app_font_size"
     const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"    
     const val PREF_SHOW_SPLASH = "pref_show_splash_screen"
     const val PREF_KEEP_AWAKE = "pref_keep_awake"
@@ -193,6 +194,9 @@ object AppConfig {
     const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
     const val PREF_HOME_BANNER_HEIGHT = "pref_home_banner_height"
     const val HOME_BANNER_HEIGHT_DEFAULT = 170
+    const val FONT_SIZE_DEFAULT = 1.0f
+    const val FONT_SIZE_MIN = 0.50f
+    const val FONT_SIZE_MAX = 1.50f
     const val HOME_BANNER_HEIGHT_MIN = 150
     const val HOME_BANNER_HEIGHT_MAX = 300
     const val PREF_HEADER_TOP_ROW_PADDING = "pref_header_top_row_padding"

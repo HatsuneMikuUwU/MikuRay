@@ -39,6 +39,8 @@ import com.v2ray.ang.ui.CheckUpdateActivity
 import com.v2ray.ang.ui.TabIconPickerAdapter
 import com.v2ray.ang.ui.bottomsheet.IndicatorStyleBottomSheet
 import com.v2ray.ang.ui.dialog.DpiSliderDialog
+import com.v2ray.ang.ui.dialog.FontSizeSliderDialog
+import kotlin.math.roundToInt
 import com.v2ray.ang.ui.dialog.BlurIntensityDialog
 import com.v2ray.ang.ui.dialog.BlurBottomIntensityDialog
 import com.v2ray.ang.ui.dialog.ThemeColorDialog
@@ -107,6 +109,7 @@ class UiSettingsActivity : BaseActivity() {
         private val appIcon by lazy { findPreference<com.v2ray.ang.ui.dialog.AppIconPickerDialog>(AppConfig.PREF_APP_ICON) }
         private val customAppName by lazy { findPreference<ListPreference>(AppConfig.PREF_CUSTOM_APP_NAME) }
         private val customDpi by lazy { findPreference<DpiSliderDialog>(AppConfig.PREF_CUSTOM_DPI) }
+        private val fontSizeSlider by lazy { findPreference<FontSizeSliderDialog>(AppConfig.PREF_APP_FONT_SIZE) }
         private val blurIntensity by lazy { findPreference<BlurIntensityDialog>(AppConfig.PREF_BLUR_INTENSITY) }
         private val blurBottomIntensity by lazy { findPreference<BlurBottomIntensityDialog>(AppConfig.PREF_BLUR_BOTTOM_INTENSITY) }
         private val indicatorStyle by lazy { findPreference<Preference>(AppConfig.PREF_INDICATOR_STYLE) }
@@ -1055,6 +1058,9 @@ class UiSettingsActivity : BaseActivity() {
             val savedDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
             val systemDpi = resources.displayMetrics.densityDpi
             customDpi?.summary = if (savedDpi > 0) savedDpi.toString() else systemDpi.toString()
+
+            val savedFontSize = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
+            fontSizeSlider?.summary = "${(savedFontSize * 100f).roundToInt()}%"
             
             val savedRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS)
             val savedRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)

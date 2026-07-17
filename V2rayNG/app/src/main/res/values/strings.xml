@@ -554,6 +554,8 @@
     <string name="title_pref_icon_shape">Icon Shape</string>
     <string name="summary_pref_icon_shape">Choose the shape style for profile icons</string>
     <string name="pref_custom_dpi">Custom App DPI</string>
+    <string name="pref_font_size">Font Size</string>
+    <string name="pref_font_size_preview_format">Aa · %s</string>
     <string name="reset">Reset</string>
     <string name="pref_custom_color_title">Custom Theme Color</string>
     <string name="pref_custom_color_reset">Reset to Preset</string>

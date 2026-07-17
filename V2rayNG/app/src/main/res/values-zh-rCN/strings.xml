@@ -517,6 +517,8 @@
     <string name="title_pref_icon_shape">图标形状</string>
     <string name="summary_pref_icon_shape">选择配置文件图标的形状样式</string>
     <string name="pref_custom_dpi">自定义应用DPI</string>
+    <string name="pref_font_size">字体大小</string>
+    <string name="pref_font_size_preview_format">Aa · %s</string>
     <string name="reset">重置</string>
     <string name="pref_custom_color_title">自定义主题颜色</string>
     <string name="pref_custom_color_reset">重置为预设</string>

@@ -31,6 +31,7 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.CustomDividerItemDecoration
 import com.v2ray.ang.util.DPIController
+import com.v2ray.ang.util.FontSizeController
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.WindowBlurUtils
 import com.qmdeve.blurview.widget.BlurView
@@ -104,8 +105,10 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         val base = newBase ?: return
         val dpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
+        val fontScale = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
         val localeWrapped = MyContextWrapper.wrap(base, SettingsManager.getLocale())
-        val finalContext = if (dpi > 0) DPIController.wrapWithDpi(localeWrapped, dpi) else localeWrapped
+        val dpiWrapped = if (dpi > 0) DPIController.wrapWithDpi(localeWrapped, dpi) else localeWrapped
+        val finalContext = FontSizeController.wrapWithFontScale(dpiWrapped, fontScale)
         super.attachBaseContext(finalContext)
     }
 
@@ -118,6 +121,11 @@ abstract class BaseActivity : AppCompatActivity() {
             val dpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
             if (dpi > 0) {
                 overrideConfiguration.densityDpi = dpi
+            }
+
+            val fontScale = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
+            if (fontScale > 0f) {
+                overrideConfiguration.fontScale = fontScale
             }
         }
         super.applyOverrideConfiguration(overrideConfiguration)
