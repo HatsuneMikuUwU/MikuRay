@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import com.v2ray.ang.R
 import com.v2ray.ang.contracts.MainAdapterListener
 import com.v2ray.ang.databinding.ItemRecyclerFooterBinding
@@ -28,10 +29,16 @@ import com.v2ray.ang.AppConfig
 class MainRecyclerAdapter(
     private val mainViewModel: MainViewModel,
     private val adapterListener: MainAdapterListener?
-) : RecyclerView.Adapter<MainRecyclerAdapter.BaseViewHolder>(), ItemTouchHelperAdapter {
+) : RecyclerView.Adapter<MainRecyclerAdapter.BaseViewHolder>(), ItemTouchHelperAdapter,
+    FastScrollRecyclerView.SectionedAdapter {
     companion object {
         private const val VIEW_TYPE_ITEM = 1
         private const val VIEW_TYPE_FOOTER = 2
+    }
+
+    override fun getSectionName(position: Int): String {
+        val remarks = data.getOrNull(position)?.profile?.remarks.orEmpty()
+        return remarks.firstOrNull { it.isLetterOrDigit() }?.uppercase() ?: ""
     }
 
     private var data: MutableList<ServersCache> = mutableListOf()

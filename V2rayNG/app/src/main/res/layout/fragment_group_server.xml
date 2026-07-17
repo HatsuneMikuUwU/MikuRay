@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,14 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
             android:id="@+id/recycler_view"
             android:paddingBottom="60dp"
             android:paddingTop="62dp"
             android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            app:fastScrollAutoHide="true"
+            app:fastScrollAutoHideDelay="1500"
+            app:fastScrollTrackColor="#00000000"
+            app:fastScrollThumbColor="?attr/colorPrimary"
+            app:fastScrollThumbInactiveColor="?attr/colorOutline"
+            app:fastScrollPopupBgColor="?attr/colorPrimary"
+            app:fastScrollPopupTextColor="?attr/colorOnPrimary" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
