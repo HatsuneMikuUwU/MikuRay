@@ -32,6 +32,7 @@ import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.SoundPlayer
 import com.v2ray.ang.util.Utils
 import java.lang.ref.SoftReference
+import java.util.concurrent.atomic.AtomicBoolean
 
 @SuppressLint("VpnServicePolicy")
 class CoreVpnService : VpnService(), ServiceControl {
@@ -39,6 +40,7 @@ class CoreVpnService : VpnService(), ServiceControl {
     private var isRunning = false
     private var tun2SocksService: Tun2SocksControl? = null
     private var wakeLock: PowerManager.WakeLock? = null
+    private val isStartingLock = AtomicBoolean(false)
 
     /**destroy
      * Unfortunately registerDefaultNetworkCallback is going to return our VPN interface: https://android.googlesource.com/platform/frameworks/base/+/dda156ab0c5d66ad82bdcf76cda07cbc0a9c8a2e
@@ -113,15 +115,24 @@ class CoreVpnService : VpnService(), ServiceControl {
             }
         }
 
+        unlockStart()
         NotificationManager.cancelNotification()
         TrafficController.stop()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!tryLockStart()) {
+            LogUtil.w(AppConfig.TAG, "StartCore-VPN: Start already in progress")
+            return START_NOT_STICKY
+        }
         LogUtil.i(AppConfig.TAG, "StartCore-VPN: Service command received")
         NotificationManager.showNotification(null)
         TrafficController.start()
-        setupVpnService()
+        if (!setupVpnService()) {
+            unlockStart()
+            stopSelf()
+            return START_NOT_STICKY
+        }
         startService()
         return START_STICKY
         //return super.onStartCommand(intent, flags, startId)
@@ -162,21 +173,20 @@ class CoreVpnService : VpnService(), ServiceControl {
      * Sets up the VPN service.
      * Prepares the VPN and configures it if preparation is successful.
      */
-    private fun setupVpnService() {
+    private fun setupVpnService(): Boolean {
         val prepare = prepare(this)
         if (prepare != null) {
             LogUtil.e(AppConfig.TAG, "StartCore-VPN: Permission not granted")
-            stopSelf()
-            return
+            return false
         }
 
         if (configureVpnService() != true) {
             LogUtil.e(AppConfig.TAG, "StartCore-VPN: Configuration failed")
-            stopSelf()
-            return
+            return false
         }
 
         runTun2socks()
+        return true
     }
 
     /**
@@ -365,6 +375,7 @@ class CoreVpnService : VpnService(), ServiceControl {
     }
 
     private fun stopAllService(isForced: Boolean = true) {
+        unlockStart()
         isRunning = false
         RootLanSharing.stopClientSharing(this)
         wakeLock?.let {
@@ -416,6 +427,16 @@ class CoreVpnService : VpnService(), ServiceControl {
                 LogUtil.e(AppConfig.TAG, "StartCore-VPN: Failed to close interface", e)
             }
         }
+    }
+
+    fun tryLockStart(): Boolean {
+        LogUtil.w(AppConfig.TAG, "StartCore-VPN: tryLockStart: ${isStartingLock.get()}")
+        return isStartingLock.compareAndSet(false, true)
+    }
+
+    fun unlockStart() {
+        isStartingLock.set(false)
+        LogUtil.w(AppConfig.TAG, "StartCore-VPN: unlockStart")
     }
 }
 
