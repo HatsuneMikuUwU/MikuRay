@@ -560,6 +560,7 @@ object AngConfigManager {
 
             LogUtil.i(AppConfig.TAG, url)
             val userAgent = it.subscription.userAgent
+            val requestHeaders = it.subscription.requestHeaders
             val proxyUsername = SettingsManager.getSocksUsername()
             val proxyPassword = SettingsManager.getSocksPassword()
             val hwid = if (SettingsManager.isSendHwidEnabled()) {
@@ -575,6 +576,7 @@ object AngConfigManager {
                     UrlContentRequest(
                         url = url,
                         userAgent = userAgent,
+                        requestHeaders = requestHeaders,
                         timeout = 15000,
                         httpPort = httpPort,
                         proxyUsername = proxyUsername,
@@ -592,6 +594,7 @@ object AngConfigManager {
                         UrlContentRequest(
                             url = url,
                             userAgent = userAgent,
+                            requestHeaders = requestHeaders,
                             hwid = hwid
                         )
                     )

@@ -310,6 +310,7 @@
     <string name="sub_setting_remarks">примечания</string>
     <string name="sub_setting_url">Необязательный URL</string>
     <string name="sub_setting_user_agent">User Agent</string>
+    <string name="sub_setting_request_headers">Заголовки запроса (формат JSON)</string>
     <string name="sub_setting_filter">Фильтр примечаний (регулярное выражение)</string>
     <string name="sub_setting_enable">Включить обновление</string>
     <string name="sub_auto_update">Включить автоматическое обновление</string>

@@ -92,4 +92,29 @@ object JsonUtil {
             return null
         }
     }
+
+    /**
+     * Parses a JSON object string of key-value pairs into a map of HTTP headers.
+     *
+     * @param headersJson The JSON string representing headers, e.g. {"X-Custom": "value"}.
+     * @return A map of header names to values. Empty if parsing fails or input is null/blank.
+     */
+    fun parseHeadersToMap(headersJson: String?): Map<String, String> {
+        val headerMap = mutableMapOf<String, String>()
+        val jsonObject = parseString(headersJson) ?: return headerMap
+        try {
+            for ((key, jsonElement) in jsonObject.entrySet()) {
+                if (key.isNullOrBlank() || jsonElement == null || jsonElement.isJsonNull) {
+                    continue
+                }
+                val value = if (jsonElement.isJsonPrimitive) jsonElement.asString else jsonElement.toString()
+                if (value.isNotBlank()) {
+                    headerMap[key] = value
+                }
+            }
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to parse headers JSON", e)
+        }
+        return headerMap
+    }
 }

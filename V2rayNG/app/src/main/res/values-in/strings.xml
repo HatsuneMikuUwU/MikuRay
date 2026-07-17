@@ -305,6 +305,7 @@
     <string name="sub_setting_remarks">Nama</string>
     <string name="sub_setting_url">URL (Opsional)</string>
     <string name="sub_setting_user_agent">User Agent</string>
+    <string name="sub_setting_request_headers">Header Permintaan (format JSON)</string>
     <string name="sub_setting_filter">Filter Reguler Catatan</string>
     <string name="sub_setting_enable">Aktifin update</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
