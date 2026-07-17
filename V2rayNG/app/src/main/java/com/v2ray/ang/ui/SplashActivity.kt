@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.v2ray.ang.AppConfig.PREF_SHOW_SPLASH
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.util.AppNameHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,6 +47,8 @@ class SplashActivity : BaseActivity() {
             )
             insets
         }
+
+        findViewById<TextView>(R.id.splash_name).text = AppNameHelper.getDisplayName(this)
 
         val versionText = findViewById<TextView>(R.id.splash_version)
         versionText.text = getString(

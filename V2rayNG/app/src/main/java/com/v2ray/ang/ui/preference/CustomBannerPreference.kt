@@ -26,6 +26,7 @@ class CustomBannerPreference @JvmOverloads constructor(
         holder.itemView.isClickable = false
         holder.itemView.isFocusable = false
 
+        (holder.findViewById(R.id.uwu_name_title_summary) as? TextView)?.text = com.v2ray.ang.util.AppNameHelper.getDisplayName(context)
         (holder.findViewById(R.id.uwu_version_name_summary) as? TextView)?.text = context.getString(R.string.uwu_version_name)
         (holder.findViewById(R.id.uwu_version_code_summary) as? TextView)?.text = context.getString(R.string.uwu_version_code)
         (holder.findViewById(R.id.uwu_package_name_summary) as? TextView)?.text = context.getString(R.string.uwu_package_name)

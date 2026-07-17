@@ -60,10 +60,11 @@
             android:theme="@style/Theme.App.Splash" />
 
         <activity-alias
-            android:name=".ui.LauncherDefault"
+            android:name=".ui.LauncherDefaultDefault"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -75,10 +76,203 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".ui.LauncherAlt1"
+            android:name=".ui.LauncherDefaultMiku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherDefaultMiku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
+            android:label="@string/app_name_variant_miku12"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Default"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name"
             android:enabled="false"
             android:exported="true">
             <intent-filter>
@@ -90,10 +284,203 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".ui.LauncherAlt2"
+            android:name=".ui.LauncherAlt1Miku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt1Miku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt1"
+            android:roundIcon="@mipmap/ic_launcher_alt1"
+            android:label="@string/app_name_variant_miku12"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Default"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name"
             android:enabled="false"
             android:exported="true">
             <intent-filter>
@@ -105,10 +492,203 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".ui.LauncherAlt3"
+            android:name=".ui.LauncherAlt2Miku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt2Miku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt2"
+            android:roundIcon="@mipmap/ic_launcher_alt2"
+            android:label="@string/app_name_variant_miku12"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Default"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name"
             android:enabled="false"
             android:exported="true">
             <intent-filter>
@@ -120,10 +700,203 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".ui.LauncherAlt4"
+            android:name=".ui.LauncherAlt3Miku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt3Miku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt3"
+            android:roundIcon="@mipmap/ic_launcher_alt3"
+            android:label="@string/app_name_variant_miku12"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Default"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name"
             android:enabled="false"
             android:exported="true">
             <intent-filter>
@@ -133,12 +906,397 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity-alias>
-        
+
         <activity-alias
-            android:name=".ui.LauncherAlt5"
+            android:name=".ui.LauncherAlt4Miku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt4Miku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt4"
+            android:roundIcon="@mipmap/ic_launcher_alt4"
+            android:label="@string/app_name_variant_miku12"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Default"
             android:targetActivity=".ui.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku1"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku1"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku2"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku2"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku3"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku3"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku4"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku4"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku5"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku5"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku6"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku6"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku7"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku7"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku8"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku8"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku9"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku9"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku10"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku10"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku11"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku11"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ui.LauncherAlt5Miku12"
+            android:targetActivity=".ui.WelcomeActivity"
+            android:icon="@mipmap/ic_launcher_alt5"
+            android:roundIcon="@mipmap/ic_launcher_alt5"
+            android:label="@string/app_name_variant_miku12"
             android:enabled="false"
             android:exported="true">
             <intent-filter>

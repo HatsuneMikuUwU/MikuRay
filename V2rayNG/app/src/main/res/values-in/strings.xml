@@ -672,7 +672,7 @@ yang kamu butuhin."</string>
     <string name="uwu_package_name_title">Nama Paket</string>
     <string name="uwu_mikubox_author_title">Pembuat</string>
     <string name="uwu_build_date_title">Tanggal Build</string>
-    <string name="uwu_update_summary">Yuk update MikuRay master!</string>
+    <string name="uwu_update_summary">Yuk update %1$s master!</string>
     <string name="uwu_about_version_title">Tentang Aplikasi</string>
     <string name="uwu_about_version_summary">Klik di sini atau ikon panah buat cari tau lebih lanjut tentang aplikasi ini.</string>
     <string name="uwu_splash_title">Dibuat dengan ❤️\noleh HatsuneMikuUwU Development</string>

@@ -26,7 +26,7 @@ class QSTileService : TileService() {
         qsTile?.icon = Icon.createWithResource(applicationContext, R.drawable.ic_stat_name)
         if (state == Tile.STATE_INACTIVE) {
             qsTile?.state = Tile.STATE_INACTIVE
-            qsTile?.label = getString(R.string.app_name)
+            qsTile?.label = com.v2ray.ang.util.AppNameHelper.getDisplayName(applicationContext)
         } else if (state == Tile.STATE_ACTIVE) {
             qsTile?.state = Tile.STATE_ACTIVE
             qsTile?.label = CoreServiceManager.getRunningServerName()

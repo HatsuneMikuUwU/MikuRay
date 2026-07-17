@@ -690,7 +690,7 @@
     <string name="uwu_package_name_title">Имя пакета</string>
     <string name="uwu_mikubox_author_title">Автор</string>
     <string name="uwu_build_date_title">Дата сборки</string>
-    <string name="uwu_update_summary">"Давайте обновим MikuRay!"</string>
+    <string name="uwu_update_summary">"Давайте обновим %1$s!"</string>
     <string name="uwu_about_version_title">О приложении</string>
     <string name="uwu_about_version_summary">Нажмите здесь или на значок стрелки, чтобы узнать больше о приложении.</string>
     <string name="uwu_splash_title">Сделано с ❤️\nот HatsuneMikuUwU Development</string>

@@ -670,7 +670,7 @@
     <string name="uwu_package_name_title">包名</string>
     <string name="uwu_mikubox_author_title">作者</string>
     <string name="uwu_build_date_title">构建日期</string>
-    <string name="uwu_update_summary">来更新 MikuRay 吧，主人！</string>
+    <string name="uwu_update_summary">来更新 %1$s 吧，主人！</string>
     <string name="uwu_about_version_title">关于应用</string>
     <string name="uwu_about_version_summary">点击此处或箭头图标, 了解应用更多信息.</string>
     <string name="uwu_splash_title">用心制作 ❤️\nHatsuneMikuUwU 开发组</string>

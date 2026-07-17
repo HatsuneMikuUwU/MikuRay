@@ -148,7 +148,7 @@ object NotificationHelper {
             ""
         }
 
-        val displayTitle = title.ifEmpty { context.getString(R.string.app_name) }
+        val displayTitle = title.ifEmpty { com.v2ray.ang.util.AppNameHelper.getDisplayName(context) }
         return NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_stat_name)
             .setContentTitle(displayTitle)

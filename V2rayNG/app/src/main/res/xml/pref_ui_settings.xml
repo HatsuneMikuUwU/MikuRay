@@ -164,6 +164,16 @@
             app:layout="@layout/uwu_mid"
             app:key="pref_app_icon"
             app:title="@string/title_pref_app_icon" />
+            
+        <ListPreference
+            android:icon="@drawable/ic_edit_24dp"
+            app:layout="@layout/uwu_mid"
+            android:key="pref_custom_app_name"
+            android:title="@string/title_pref_custom_app_name"
+            android:summary="%s"
+            android:entries="@array/app_name_entries"
+            android:entryValues="@array/app_name_values"
+            android:defaultValue="default" />
 
         <com.v2ray.ang.ui.dialog.DpiSliderDialog
             android:icon="@drawable/ic_cellphone_screenshot"

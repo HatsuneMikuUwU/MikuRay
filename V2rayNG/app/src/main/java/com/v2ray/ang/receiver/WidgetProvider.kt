@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreServiceManager
+import com.v2ray.ang.util.AppNameHelper
 
 class WidgetProvider : AppWidgetProvider() {
     /**
@@ -44,6 +45,7 @@ class WidgetProvider : AppWidgetProvider() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         remoteViews.setOnClickPendingIntent(R.id.layout_switch, pendingIntent)
+        remoteViews.setTextViewText(R.id.widget_app_name, AppNameHelper.getDisplayName(context))
         if (isRunning) {
             remoteViews.setInt(R.id.image_switch, "setImageResource", R.drawable.ic_stop_24dp)
             remoteViews.setInt(R.id.layout_background, "setBackgroundResource", R.drawable.ic_rounded_corner_active)

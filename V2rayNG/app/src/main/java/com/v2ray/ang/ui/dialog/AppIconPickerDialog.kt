@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.R
 import com.v2ray.ang.ui.AppIconPickerAdapter
-import com.v2ray.ang.util.IconSwitcher
+import com.v2ray.ang.util.LauncherAliasSwitcher
 import com.v2ray.ang.util.WindowBlurUtils
 
 class AppIconPickerDialog @JvmOverloads constructor(
@@ -18,13 +18,13 @@ class AppIconPickerDialog @JvmOverloads constructor(
 ) : Preference(context, attrs) {
 
     fun refreshSummary() {
-        val current = IconSwitcher.currentVariant()
+        val current = LauncherAliasSwitcher.currentIconVariant()
         val icons = AppIconPickerAdapter.icons(context)
         summary = icons.firstOrNull { it.first == current }?.third ?: icons.first().third
     }
 
     override fun onClick() {
-        val current = IconSwitcher.currentVariant()
+        val current = LauncherAliasSwitcher.currentIconVariant()
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_app_icon_picker, null)
         val rv = dialogView.findViewById<RecyclerView>(R.id.rv_app_icons)
 
@@ -34,7 +34,7 @@ class AppIconPickerDialog @JvmOverloads constructor(
             context = context,
             selectedValue = current,
             onSelect = { value ->
-                IconSwitcher.applyVariant(context.applicationContext, value)
+                LauncherAliasSwitcher.applyIconVariant(context.applicationContext, value)
                 summary = AppIconPickerAdapter.icons(context).firstOrNull { it.first == value }?.third ?: value
                 callChangeListener(value)
                 dialog.dismiss()

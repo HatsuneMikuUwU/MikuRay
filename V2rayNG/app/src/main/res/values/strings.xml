@@ -709,7 +709,7 @@ you need."</string>
     <string name="uwu_package_name_title">Package Name</string>
     <string name="uwu_mikubox_author_title">Author</string>
     <string name="uwu_build_date_title">Build Date</string>
-    <string name="uwu_update_summary">"Let's update MikuRay master!"</string>
+    <string name="uwu_update_summary">"Let\'s update %1$s master!"</string>
     <string name="uwu_about_version_title">About app</string>
     <string name="uwu_about_version_summary">Tap here or arrow icon to know more about the app.</string>
     <string name="uwu_splash_title">Made With ❤️\nby HatsuneMikuUwU Development</string>
@@ -840,5 +840,20 @@ you need."</string>
     
     <string name="title_pref_app_icon">App Icon</string>
     <string name="app_icon_updated">App icon updated. It may take a moment to appear on your home screen.</string>
+    
+    <string name="title_pref_custom_app_name">App Name</string>
+    <string name="summary_pref_custom_app_name">Also renames the launcher/app-drawer icon. Some launchers cache the old name until you restart them or reboot.</string>
+    <string name="app_name_variant_miku1">HatsuneRay</string>
+    <string name="app_name_variant_miku2">MikuNG</string>
+    <string name="app_name_variant_miku3">HatsuneNG</string>
+    <string name="app_name_variant_miku4">MikuTunnel</string>
+    <string name="app_name_variant_miku5">MikuBoard</string>
+    <string name="app_name_variant_miku6">MikuPoi</string>
+    <string name="app_name_variant_miku7">MikuHub</string>
+    <string name="app_name_variant_miku8">MikuCube</string>
+    <string name="app_name_variant_miku9">MikuDayo</string>
+    <string name="app_name_variant_miku10">MikuProxy</string>
+    <string name="app_name_variant_miku11">MikuExpo</string>
+    <string name="app_name_variant_miku12">v2mikuNG</string>
 
 </resources>

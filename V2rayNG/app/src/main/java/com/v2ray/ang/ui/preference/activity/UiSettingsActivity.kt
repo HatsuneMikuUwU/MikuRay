@@ -47,6 +47,7 @@ import com.v2ray.ang.ui.dialog.BannerHeightSliderDialog
 import com.v2ray.ang.ui.dialog.HeaderTopRowPaddingDialog
 import com.v2ray.ang.ui.preference.CustomBannerPreference
 import com.v2ray.ang.ui.preference.CategoryStyleHelper
+import com.v2ray.ang.util.AppNameHelper
 import com.v2ray.ang.util.BannerColorExtractor
 import com.v2ray.ang.util.CustomFontManager
 import com.v2ray.ang.util.ThemeManager
@@ -104,6 +105,7 @@ class UiSettingsActivity : BaseActivity() {
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
         private val iconShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ICON_SHAPE) }
         private val appIcon by lazy { findPreference<com.v2ray.ang.ui.dialog.AppIconPickerDialog>(AppConfig.PREF_APP_ICON) }
+        private val customAppName by lazy { findPreference<ListPreference>(AppConfig.PREF_CUSTOM_APP_NAME) }
         private val customDpi by lazy { findPreference<DpiSliderDialog>(AppConfig.PREF_CUSTOM_DPI) }
         private val blurIntensity by lazy { findPreference<BlurIntensityDialog>(AppConfig.PREF_BLUR_INTENSITY) }
         private val blurBottomIntensity by lazy { findPreference<BlurBottomIntensityDialog>(AppConfig.PREF_BLUR_BOTTOM_INTENSITY) }
@@ -280,6 +282,7 @@ class UiSettingsActivity : BaseActivity() {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_ui_settings)
             initPreferenceSummaries()
+            updateCheckUpdateSummary()
 
             navigateCheckUpdate?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), CheckUpdateActivity::class.java))
@@ -372,6 +375,17 @@ class UiSettingsActivity : BaseActivity() {
 
             appIcon?.setOnPreferenceChangeListener { _, _ ->
                 requireContext().toastSuccess(getString(R.string.app_icon_updated))
+                true
+            }
+
+            customAppName?.setOnPreferenceChangeListener { pref, newValue ->
+                val valueStr = newValue.toString()
+                (pref as? ListPreference)?.let { lp ->
+                    val idx = lp.findIndexOfValue(valueStr)
+                    lp.summary = if (idx >= 0) lp.entries[idx] else valueStr
+                }
+                com.v2ray.ang.util.LauncherAliasSwitcher.applyNameVariant(requireContext().applicationContext, valueStr)
+                updateCheckUpdateSummary(valueStr)
                 true
             }
 
@@ -966,6 +980,15 @@ class UiSettingsActivity : BaseActivity() {
 
         private fun broadcastSelectedBannerChanged() {
             com.v2ray.ang.util.SelectedProfileBannerController.broadcastChanged(requireContext())
+        }
+
+        private fun updateCheckUpdateSummary(pendingVariant: String? = null) {
+            val appName = if (pendingVariant != null) {
+                AppNameHelper.getDisplayName(requireContext(), pendingVariant)
+            } else {
+                AppNameHelper.getDisplayName(requireContext())
+            }
+            navigateCheckUpdate?.summary = getString(R.string.uwu_update_summary, appName)
         }
 
         private fun initPreferenceSummaries() {
