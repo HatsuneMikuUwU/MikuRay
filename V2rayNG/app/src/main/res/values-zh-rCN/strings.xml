@@ -808,5 +808,7 @@
     
     <string name="title_pref_app_icon">应用图标</string>
     <string name="app_icon_updated">应用图标已更新。它可能需要片刻时间才会显示在你的主屏幕上。</string>
+    <string name="title_pref_custom_app_name">应用名称</string>
+    <string name="summary_pref_custom_app_name">同时重命名启动器/应用抽屉中的图标。某些启动器会缓存旧名称，直到你重启它们或重启设备。</string>
 
 </resources>

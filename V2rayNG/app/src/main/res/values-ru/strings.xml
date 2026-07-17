@@ -829,5 +829,7 @@
     
     <string name="title_pref_app_icon">Значок приложения</string>
     <string name="app_icon_updated">Значок приложения обновлен. Может потребоваться немного времени, чтобы он отобразился на главном экране.</string>
+    <string name="title_pref_custom_app_name">Название приложения</string>
+    <string name="summary_pref_custom_app_name">Также переименовывает значок в лаунчере/меню приложений. Некоторые лаунчеры кэшируют старое название, пока вы не перезапустите их или не перезагрузите устройство.</string>
 
 </resources>

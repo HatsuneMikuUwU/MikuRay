@@ -810,5 +810,7 @@ yang kamu butuhin."</string>
     
     <string name="title_pref_app_icon">Ikon Aplikasi</string>
     <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh sedikit waktu untuk muncul di layar beranda.</string>
+    <string name="title_pref_custom_app_name">Nama Aplikasi</string>
+    <string name="summary_pref_custom_app_name">Juga mengubah nama ikon di launcher/app-drawer. Beberapa launcher menyimpan cache nama lama sampai kamu memulai ulang atau reboot.</string>
 
 </resources>
