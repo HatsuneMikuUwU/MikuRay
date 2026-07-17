@@ -1,12 +1,11 @@
 package com.v2ray.ang.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.R
@@ -46,13 +45,7 @@ class AboutActivity : BaseActivity() {
         }
 
         binding.layoutOssLicenses.setOnClickListener {
-            val webView = android.webkit.WebView(this)
-            webView.loadUrl("file:///android_asset/open_source_licenses.html")
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Open source licenses")
-                .setView(webView)
-                .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                .showBlur()
+            startActivity(Intent(this, LibraryActivity::class.java))
         }
 
         binding.layoutTgChannel.setOnClickListener {

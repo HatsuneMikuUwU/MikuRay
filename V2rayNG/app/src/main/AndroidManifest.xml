@@ -1454,6 +1454,9 @@
         <activity
             android:name=".ui.AboutActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.LibraryActivity"
+            android:exported="false" />
 
         <activity
             android:name=".ui.weather.WeatherForecastActivity"

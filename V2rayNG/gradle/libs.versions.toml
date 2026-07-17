@@ -2,6 +2,7 @@
 agp = "9.3.0"
 desugarJdkLibs = "2.1.5"
 gradleLicensePlugin = "0.9.9"
+aboutLibraries = "14.2.1"
 kotlin = "2.4.10"
 coreKtx = "1.19.0"
 junit = "4.13.2"
@@ -80,8 +81,10 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 palette = { module = "androidx.palette:palette-ktx", version.ref = "palette" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+aboutlibraries-view = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutLibraries" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }

@@ -5,6 +5,7 @@ import com.android.build.api.variant.FilterConfiguration
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.aboutLibraries)
 }
 
 val appVersionName = "2.2.7"
@@ -182,6 +183,7 @@ dependencies {
     implementation(libs.skydoves.colorpickerview)
     implementation(libs.qmdeve.blurview)
     implementation(libs.com.airbnb.android.lottie)
+    implementation(libs.aboutlibraries.view)
 
     // Data and Storage Libraries
     implementation(libs.mmkv.static)
