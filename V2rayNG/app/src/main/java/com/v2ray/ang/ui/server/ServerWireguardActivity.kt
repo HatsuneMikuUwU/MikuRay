@@ -13,6 +13,7 @@ import com.v2ray.ang.AppConfig.WIREGUARD_LOCAL_MTU
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.nullIfBlank
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.AngConfigManager
@@ -42,6 +43,7 @@ class ServerWireguardActivity : BaseActivity() {
     private val et_reserved1: EditText? by lazy { findViewById(R.id.et_reserved1) }
     private val et_local_address: EditText? by lazy { findViewById(R.id.et_local_address) }
     private val et_local_mtu: EditText? by lazy { findViewById(R.id.et_local_mtu) }
+    private val et_fm: EditText? by lazy { findViewById(R.id.et_fm) }
 
     private lateinit var addressPortFields: AddressPortFields
     private lateinit var softInputAssist: SoftInputAssist
@@ -76,6 +78,7 @@ class ServerWireguardActivity : BaseActivity() {
         et_reserved1?.text = Utils.getEditable(config.reserved ?: "0,0,0")
         et_local_address?.text = Utils.getEditable(config.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4)
         et_local_mtu?.text = Utils.getEditable(config.mtu?.toString() ?: WIREGUARD_LOCAL_MTU)
+        et_fm?.text = Utils.getEditable(config.finalMask)
         return true
     }
 
@@ -86,6 +89,7 @@ class ServerWireguardActivity : BaseActivity() {
         et_reserved1?.text = Utils.getEditable("0,0,0")
         et_local_address?.text = Utils.getEditable(WIREGUARD_LOCAL_ADDRESS_V4)
         et_local_mtu?.text = Utils.getEditable(WIREGUARD_LOCAL_MTU)
+        et_fm?.text = null
         return true
     }
 
@@ -131,6 +135,7 @@ class ServerWireguardActivity : BaseActivity() {
         config.reserved = et_reserved1?.text.toString().trim()
         config.localAddress = et_local_address?.text.toString().trim()
         config.mtu = Utils.parseInt(et_local_mtu?.text.toString())
+        config.finalMask = et_fm?.text?.toString()?.trim()?.nullIfBlank()
     }
 
     private fun deleteServer(): Boolean {

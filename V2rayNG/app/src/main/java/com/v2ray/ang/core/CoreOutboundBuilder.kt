@@ -264,6 +264,14 @@ object CoreOutboundBuilder {
             wireguard.reserved = profileItem.reserved?.takeIf { it.isNotBlank() }?.split(",")?.filter { it.isNotBlank() }?.map { it.trim().toInt() }
         }
 
+        if (!profileItem.finalMask.isNullOrBlank()) {
+            outboundBean?.streamSettings = OutboundBean.StreamSettingsBean()
+            outboundBean?.streamSettings?.let {
+                updateOutboundFinalMask(it, profileItem)
+                it.network = null
+            }
+        }
+
         return outboundBean
     }
 
@@ -674,5 +682,25 @@ object CoreOutboundBuilder {
             return domain
         }
         return resolvedIps.first()
+    }
+
+    /**
+     * Applies a user-supplied raw finalMask JSON to the given stream settings.
+     *
+     * Used for outbounds (e.g. WireGuard) that don't go through [populateTransportSettings].
+     *
+     * @param streamSettings The stream settings to update
+     * @param profileItem The profile containing the raw finalMask JSON
+     */
+    private fun updateOutboundFinalMask(streamSettings: OutboundBean.StreamSettingsBean, profileItem: ProfileItem) {
+        val finalMask = profileItem.finalMask
+        finalMask?.let {
+            val parsedFinalMask = JsonUtil.parseString(profileItem.finalMask)
+            if (parsedFinalMask != null) {
+                streamSettings.finalmask = parsedFinalMask
+            } else {
+                LogUtil.w("V2rayConfigManager", "Invalid finalMask JSON, keeping previously generated finalmask")
+            }
+        }
     }
 }
