@@ -1,4 +1,4 @@
-package com.v2ray.ang.ui
+package com.v2ray.ang.ui.server
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -22,6 +22,7 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
+import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.util.SoftInputAssist

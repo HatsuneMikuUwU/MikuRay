@@ -41,9 +41,10 @@
                 android:id="@android:id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="false"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textAppearance="?textAppearanceTitleMedium"
-                android:textColor="?colorOnSurface"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="17.0sp" />
                 
             <TextView
@@ -51,9 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4.0dp"
-                android:singleLine="false"
+                android:ellipsize="end"
+                android:maxLines="5"
                 android:textAppearance="?textAppearanceTitleSmall"
-                android:textColor="?colorOnSurfaceVariant"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="14.0sp" />
         </LinearLayout>
     </RelativeLayout>

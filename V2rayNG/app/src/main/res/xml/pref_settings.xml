@@ -13,12 +13,12 @@
         app:selectable="false"
         android:summary="@string/uwu_maintainer_summary" />
         
-    <Preference
+    <com.v2ray.ang.ui.preference.FullSpanPreference
         android:icon="@drawable/ic_baseline_color_lens_24"
         android:key="pref_navigate_ui_settings"
         android:summary="@string/summary_navigate_ui_settings"
         android:title="@string/title_ui_settings"
-        app:layout="@layout/uwu_grid" />
+        app:layout="@layout/uwu_grid_sin" />
         
     <Preference
         android:icon="@drawable/ic_toggle_switch"
@@ -40,13 +40,6 @@
         android:summary="@string/summary_navigate_mux_settings"
         android:title="@string/title_mux_settings"
         app:layout="@layout/uwu_grid" />
-        
-    <Preference
-        android:icon="@drawable/ic_pencil"
-        android:key="pref_navigate_advanced_settings"
-        android:summary="@string/summary_navigate_advanced_settings"
-        android:title="@string/title_advanced"
-        app:layout="@layout/uwu_grid" />
 
     <Preference
         android:icon="@drawable/ic_currency_eth"
@@ -55,11 +48,18 @@
         android:title="@string/title_fragment_settings"
         app:layout="@layout/uwu_grid" />
 
-    <com.v2ray.ang.ui.preference.FullSpanPreference
+    <Preference
         android:icon="@drawable/ic_connection"
         android:key="pref_navigate_observatory_settings"
         android:summary="@string/summary_navigate_observatory_settings"
         android:title="@string/title_observatory_settings"
-        app:layout="@layout/uwu_grid_sin" />
+        app:layout="@layout/uwu_grid" />
+        
+     <Preference
+        android:icon="@drawable/ic_pencil"
+        android:key="pref_navigate_advanced_settings"
+        android:summary="@string/summary_navigate_advanced_settings"
+        android:title="@string/title_advanced"
+        app:layout="@layout/uwu_grid" />
 
 </PreferenceScreen>

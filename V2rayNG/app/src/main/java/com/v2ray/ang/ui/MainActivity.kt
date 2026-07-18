@@ -30,6 +30,15 @@ import com.v2ray.ang.core.CoreServiceManager
 import com.v2ray.ang.databinding.ActivityMainBinding
 import com.v2ray.ang.databinding.ItemQrcodeBinding
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.ui.server.ServerGroupActivity
+import com.v2ray.ang.ui.server.ServerHysteria2Activity
+import com.v2ray.ang.ui.server.ServerProxyChainActivity
+import com.v2ray.ang.ui.server.ServerShadowsocksActivity
+import com.v2ray.ang.ui.server.ServerSocksActivity
+import com.v2ray.ang.ui.server.ServerTrojanActivity
+import com.v2ray.ang.ui.server.ServerVlessActivity
+import com.v2ray.ang.ui.server.ServerVmessActivity
+import com.v2ray.ang.ui.server.ServerWireguardActivity
 import com.v2ray.ang.enums.PermissionType
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarError
@@ -801,11 +810,20 @@ class MainActivity : HelperBaseActivity(),
                     .setClass(this, ServerProxyChainActivity::class.java)
             )
         } else {
+            val targetActivity = when (EConfigType.fromInt(createConfigType)) {
+                EConfigType.VLESS -> ServerVlessActivity::class.java
+                EConfigType.TROJAN -> ServerTrojanActivity::class.java
+                EConfigType.SHADOWSOCKS -> ServerShadowsocksActivity::class.java
+                EConfigType.SOCKS, EConfigType.HTTP -> ServerSocksActivity::class.java
+                EConfigType.WIREGUARD -> ServerWireguardActivity::class.java
+                EConfigType.HYSTERIA2 -> ServerHysteria2Activity::class.java
+                else -> ServerVmessActivity::class.java
+            }
             startActivity(
                 Intent()
                     .putExtra("createConfigType", createConfigType)
                     .putExtra("subscriptionId", mainViewModel.subscriptionId)
-                    .setClass(this, ServerActivity::class.java)
+                    .setClass(this, targetActivity)
             )
         }
     }

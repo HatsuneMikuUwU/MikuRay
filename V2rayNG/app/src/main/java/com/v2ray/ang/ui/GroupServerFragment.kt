@@ -17,6 +17,16 @@ import com.v2ray.ang.contracts.MainAdapterListener
 import com.v2ray.ang.databinding.FragmentGroupServerBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.ui.server.ServerCustomConfigActivity
+import com.v2ray.ang.ui.server.ServerGroupActivity
+import com.v2ray.ang.ui.server.ServerHysteria2Activity
+import com.v2ray.ang.ui.server.ServerProxyChainActivity
+import com.v2ray.ang.ui.server.ServerShadowsocksActivity
+import com.v2ray.ang.ui.server.ServerSocksActivity
+import com.v2ray.ang.ui.server.ServerTrojanActivity
+import com.v2ray.ang.ui.server.ServerVlessActivity
+import com.v2ray.ang.ui.server.ServerVmessActivity
+import com.v2ray.ang.ui.server.ServerWireguardActivity
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
@@ -91,8 +101,36 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
                 ownerActivity.startActivity(intent.setClass(ownerActivity, ServerProxyChainActivity::class.java))
             }
 
+            EConfigType.VMESS -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerVmessActivity::class.java))
+            }
+
+            EConfigType.VLESS -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerVlessActivity::class.java))
+            }
+
+            EConfigType.TROJAN -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerTrojanActivity::class.java))
+            }
+
+            EConfigType.SHADOWSOCKS -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerShadowsocksActivity::class.java))
+            }
+
+            EConfigType.SOCKS, EConfigType.HTTP -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerSocksActivity::class.java))
+            }
+
+            EConfigType.WIREGUARD -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerWireguardActivity::class.java))
+            }
+
+            EConfigType.HYSTERIA2 -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerHysteria2Activity::class.java))
+            }
+
             else -> {
-                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerActivity::class.java))
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerVmessActivity::class.java))
             }
         }
     }

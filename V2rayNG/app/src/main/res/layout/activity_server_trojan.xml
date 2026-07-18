@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ServerActivity">
+    tools:context=".ui.server.ServerTrojanActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
