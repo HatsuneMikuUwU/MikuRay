@@ -5,14 +5,13 @@
     android:layout_height="250.0dip"
     android:layout_marginTop="16.0dip"
     android:layout_marginBottom="8.0dip"
+    android:layout_marginHorizontal="16.0dip"
     android:minHeight="?android:listPreferredItemHeightSmall"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="fill_parent"
         android:layout_height="250.0dip"
-        android:layout_marginStart="4.0dip"
-        android:layout_marginEnd="4.0dip"
         app:cardBackgroundColor="?attr/colorCard"
         app:cardCornerRadius="28.0dip"
         app:cardElevation="0.0dip"

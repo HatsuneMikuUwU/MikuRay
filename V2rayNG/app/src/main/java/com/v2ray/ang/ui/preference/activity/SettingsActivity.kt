@@ -2,12 +2,9 @@ package com.v2ray.ang.ui.preference.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -23,8 +20,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bytehamster.lib.preferencesearch.SearchPreferenceActionView
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
@@ -38,13 +33,11 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.HelperBaseActivity
-import com.v2ray.ang.ui.PerAppProxyActivity
 import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import kotlinx.coroutines.launch
-import com.v2ray.ang.ui.preference.FullSpanPreference
 
 class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
@@ -355,45 +348,13 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
     class SettingsFragment : PreferenceFragmentCompat() {
 
-        private val navigateUiSettings by lazy { findPreference<FullSpanPreference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
+        private val navigateUiSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
         private val navigateVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_VPN_SETTINGS) }
         private val navigateCoreSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_CORE_SETTINGS) }
         private val navigateMuxSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_MUX_SETTINGS) }
         private val navigateFragmentSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_FRAGMENT_SETTINGS) }
         private val navigateAdvancedSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_ADVANCED_SETTINGS) }
         private val navigateObservatorySettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_OBSERVATORY_SETTINGS) }
-
-        override fun onCreateRecyclerView(
-            inflater: LayoutInflater,
-            parent: ViewGroup,
-            savedInstanceState: Bundle?
-        ): RecyclerView {
-            val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState)
-            recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
-            val paddingHorizontalPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                12f,
-                resources.displayMetrics
-            ).toInt()
-
-            val paddingVerticalPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                4f,
-                resources.displayMetrics
-            ).toInt()
-
-            recyclerView.setPadding(
-                paddingHorizontalPx,
-                paddingVerticalPx,
-                paddingHorizontalPx,
-                paddingVerticalPx
-            )
-
-            recyclerView.clipToPadding = false
-
-            return recyclerView
-        }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
