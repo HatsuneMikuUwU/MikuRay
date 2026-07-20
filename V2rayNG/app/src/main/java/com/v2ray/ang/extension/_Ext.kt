@@ -48,9 +48,6 @@ import java.util.Locale
 val Context.v2RayApplication: AngApplication?
     get() = applicationContext as? AngApplication
 
-/**
- * Keeps a weak reference to the Activity that is currently in the foreground (resumed).
- */
 object ForegroundActivityTracker : Application.ActivityLifecycleCallbacks {
 
     private var resumedActivity: WeakReference<Activity>? = null
@@ -136,11 +133,6 @@ fun Context.toastWarning(message: CharSequence) {
     Toasty.warning(this, message, Toast.LENGTH_SHORT, true).show()
 }
 
-private fun Context.findSnackbarParent(): View? {
-    val activity = this as? Activity ?: ForegroundActivityTracker.currentActivity ?: return null
-    return activity.window?.decorView
-}
-
 private fun showSnackbar(
     context: Context,
     title: CharSequence,
@@ -157,8 +149,10 @@ private fun showSnackbar(
         return
     }
 
-    val parent = context.findSnackbarParent()
-    if (parent == null) {
+    val activity = context as? Activity ?: ForegroundActivityTracker.currentActivity
+    val parent = activity?.window?.decorView
+
+    if (activity == null || parent == null) {
         val fallbackMessage = if (title.isNotNullEmpty()) "$title: $message" else message
         Toast.makeText(context, fallbackMessage, Toast.LENGTH_SHORT).show()
         return
@@ -171,13 +165,13 @@ private fun showSnackbar(
     snackbarLayout.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         ?.visibility = View.INVISIBLE
 
-    val contentView = LayoutInflater.from(parent.context)
+    val contentView = LayoutInflater.from(activity)
         .inflate(R.layout.layout_snackbar_custom, snackbarLayout, false)
 
     val resolvedTextColor = if (textColorAttr != null) {
-        parent.context.getColorAttr(textColorAttr)
+        activity.getColorAttr(textColorAttr)
     } else {
-        parent.context.getColorAttr(R.attr.colorOnSurfaceInverse)
+        activity.getColorAttr(R.attr.colorOnSurfaceInverse)
     }
 
     contentView.findViewById<ImageView>(R.id.iv_snackbar_icon)?.apply {
@@ -257,11 +251,12 @@ private fun showSnackbar(
         Handler(Looper.getMainLooper()).postDelayed(::slideRightThenDismiss, it)
     }
 
-    val cornerRadiusPx = 28f * parent.context.resources.displayMetrics.density
+    val cornerRadiusPx = 28f * activity.resources.displayMetrics.density
+    
     val backgroundColor = if (backgroundColorAttr != null) {
-        parent.context.getColorAttr(backgroundColorAttr)
+        activity.getColorAttr(backgroundColorAttr)
     } else {
-        parent.context.getColorAttr(R.attr.colorSurfaceInverse)
+        activity.getColorAttr(R.attr.colorSurfaceInverse)
     }
 
     snackbarLayout.backgroundTintList = null
