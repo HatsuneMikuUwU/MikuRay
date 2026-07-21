@@ -235,6 +235,30 @@ object MmkvManager {
     }
 
     /**
+     * Removes multiple server configurations from a subscription.
+     *
+     * @param guids The list of server GUIDs.
+     * @param subscriptionId The subscription ID.
+     */
+    fun removeServers(guids: List<String>, subscriptionId: String) {
+        if (guids.isEmpty()) return
+        val subId = getSubscriptionId(subscriptionId)
+        val serverList = decodeServerList(subId)
+        if (serverList.removeAll(guids)) {
+            encodeServerList(serverList, subId)
+        }
+
+        val selectedServer = getSelectServer()
+        guids.forEach { guid ->
+            if (selectedServer == guid) {
+                mainStorage.remove(KEY_SELECTED_SERVER)
+            }
+            profileFullStorage.remove(guid)
+            serverAffStorage.remove(guid)
+        }
+    }
+
+    /**
      * Removes the server configurations via subscription ID.
      *
      * @param subscriptionId The subscription ID.

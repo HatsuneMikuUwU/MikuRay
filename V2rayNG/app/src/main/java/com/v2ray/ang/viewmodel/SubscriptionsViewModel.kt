@@ -6,6 +6,7 @@ import com.v2ray.ang.dto.entities.SubscriptionItem
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
+import com.v2ray.ang.handler.SubscriptionUpdater
 
 class SubscriptionsViewModel : ViewModel() {
     private val subscriptions: MutableList<SubscriptionCache> =
@@ -47,6 +48,14 @@ class SubscriptionsViewModel : ViewModel() {
     fun commitOrder() {
         SettingsManager.saveSubscriptionsOrder(subscriptions.map { it.guid })
         SettingsChangeManager.makeSetupGroupTab()
+    }
+
+    /**
+     * Triggers a background update for all enabled subscriptions via WorkManager.
+     * Progress is reported through notifications instead of blocking the UI.
+     */
+    fun updateSubscriptions() {
+        SubscriptionUpdater.updateAllByManual()
     }
 }
 

@@ -11,11 +11,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.appcompat.app.AlertDialog
 import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
-import com.v2ray.ang.util.showSubUpdateDiffDialog
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
@@ -23,14 +22,11 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.contracts.BaseAdapterListener
 import com.v2ray.ang.databinding.ActivitySubSettingBinding
+import com.v2ray.ang.databinding.DialogSubUpdateOptionsBinding
 import com.v2ray.ang.databinding.ItemQrcodeBinding
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.snackbarError
-import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.toast
-import com.v2ray.ang.extension.toastSuccess
-import com.v2ray.ang.extension.toastError
-import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.util.LogUtil
@@ -38,9 +34,6 @@ import com.v2ray.ang.util.QRCodeDecoder
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.viewmodel.SubscriptionsViewModel
 import com.v2ray.ang.ui.bottomsheet.ShareSubBottomSheet
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionClickListener {
     private val binding by lazy { ActivitySubSettingBinding.inflate(layoutInflater) }
@@ -96,30 +89,7 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             true
         }
         R.id.sub_update -> {
-            showLoading()
-            lifecycleScope.launch(Dispatchers.IO) {
-                val result = AngConfigManager.updateConfigViaSubAll()
-                delay(500L)
-                launch(Dispatchers.Main) {
-                    if (result.successCount + result.failureCount + result.skipCount == 0) {
-                        toastSuccess(getString(R.string.title_update_subscription_no_subscription))
-                    } else if (result.successCount > 0 && result.failureCount + result.skipCount == 0) {
-                        toastSuccess(getString(R.string.title_update_config_count, result.configCount))
-                    } else {
-                        toastSuccess(
-                            getString(
-                                R.string.title_update_subscription_result,
-                                result.configCount, result.successCount, result.failureCount, result.skipCount
-                            )
-                        )
-                    }
-                    if (result.addedProfiles.isNotEmpty() || result.deletedProfiles.isNotEmpty()) {
-                        showSubUpdateDiffDialog(this@SubSettingActivity, result)
-                    }
-                    hideLoading()
-                    refreshData()
-                }
-            }
+            showSubUpdateOptionsDialog()
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -129,6 +99,55 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
     fun refreshData() {
         viewModel.reload()
         adapter.notifyDataSetChanged()
+    }
+
+    /**
+     * Shows a dialog to pick auto-test/remove-invalid/sort options, then enqueues
+     * the background subscription update job via [SubscriptionsViewModel.updateSubscriptions].
+     */
+    private fun showSubUpdateOptionsDialog() {
+        val dialogBinding = DialogSubUpdateOptionsBinding.inflate(layoutInflater)
+
+        dialogBinding.switchAutoTest.isChecked =
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION, false)
+        dialogBinding.switchAutoRemoveInvalid.isChecked =
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)
+        dialogBinding.switchAutoSort.isChecked =
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
+
+        // Tapping anywhere on a row toggles its switch too, not just the thumb itself.
+        dialogBinding.rowAutoTest.setOnClickListener {
+            dialogBinding.switchAutoTest.toggle()
+        }
+        dialogBinding.rowAutoRemoveInvalid.setOnClickListener {
+            dialogBinding.switchAutoRemoveInvalid.toggle()
+        }
+        dialogBinding.rowAutoSort.setOnClickListener {
+            dialogBinding.switchAutoSort.toggle()
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.title_sub_update)
+            .setView(dialogBinding.root)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                MmkvManager.encodeSettings(
+                    AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION,
+                    dialogBinding.switchAutoTest.isChecked
+                )
+                MmkvManager.encodeSettings(
+                    AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST,
+                    dialogBinding.switchAutoRemoveInvalid.isChecked
+                )
+                MmkvManager.encodeSettings(
+                    AppConfig.PREF_AUTO_SORT_AFTER_TEST,
+                    dialogBinding.switchAutoSort.isChecked
+                )
+
+                viewModel.updateSubscriptions()
+                toast(getString(R.string.subscription_updater_job_tips))
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .showBlur()
     }
 
     override fun onShareSubOptionClicked(optionId: Int, url: String) {

@@ -160,6 +160,9 @@
     <string name="title_pref_is_booted">Auto-konek pas HP nyala</string>
     <string name="summary_pref_is_booted">Langsung nyambungin ke server pas HP baru nyala, tapi kadang bisa gagal sih</string>
 
+    <string name="subscription_updater_job_tips">Tugas bakal jalan di background, progressnya bisa dipantau lewat notifikasi.</string>
+    <string name="title_pref_auto_test_after_update_subscription">Auto tes abis update langganan</string>
+    <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu, sabar ya.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Auto hapus konfig ngaco abis dites</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Hasil tes belum tentu akurat 100%; konfig yang kehapus ga bisa balik lagi lho.</string>
     <string name="title_pref_auto_sort_after_test">Auto urutin abis dites</string>
