@@ -839,18 +839,10 @@
 
     <!-- Bottom Sheet -->
     <style name="AppThemeBottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:colorBackground">?attr/colorBg</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">false</item>
         <item name="android:windowAnimationStyle">@style/Animation.Material3.BottomSheetDialog</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?attr/colorBg</item>
-        <item name="android:windowElevation">0.0dip</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
         <item name="bottomSheetStyle">@style/AppThemeBottomSheetStyle</item>
-        <item name="enableEdgeToEdge">true</item>
-        <item name="paddingBottomSystemWindowInsets">true</item>
-        <item name="paddingLeftSystemWindowInsets">true</item>
-        <item name="paddingRightSystemWindowInsets">true</item>
     </style>
 
     <style name="AppThemeBottomSheetStyle" parent="@style/Widget.Material3.BottomSheet.Modal">

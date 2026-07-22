@@ -1,18 +1,17 @@
 package com.v2ray.ang.ui.bottomsheet
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
-import android.view.WindowManager
 import androidx.core.view.ViewCompat
+import android.view.WindowManager
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.v2ray.ang.R
 import com.v2ray.ang.ui.FontPickerAdapter
 import com.v2ray.ang.util.WindowBlurUtils
-import com.v2ray.ang.util.getColorAttr
 
 class FontPickerBottomSheet(
     private val context: Context,
@@ -40,22 +39,24 @@ class FontPickerBottomSheet(
             skipCollapsed = true
         }
 
-        val bgColor = context.getColorAttr(R.attr.colorBg)
-
         val bottomSheet = dialog.findViewById<android.view.View>(
             com.google.android.material.R.id.design_bottom_sheet
         )
         if (bottomSheet != null) {
-            bottomSheet.backgroundTintList = ColorStateList.valueOf(bgColor)
-
             bottomSheet.clipToOutline = true
 
-            ViewCompat.setOnApplyWindowInsetsListener(bottomSheet) { v, insets ->
+            ViewCompat.setOnApplyWindowInsetsListener(bottomSheet) { bottomSheetView, insets ->
                 val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-                val screenHeight = v.resources.displayMetrics.heightPixels
-                val margin = (8 * v.resources.displayMetrics.density).toInt()
+                val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+                
+                val screenHeight = bottomSheetView.resources.displayMetrics.heightPixels
+                val baseSizePx = (8 * bottomSheetView.resources.displayMetrics.density).toInt() 
 
-                dialog.behavior.maxHeight = screenHeight - statusBarInset - margin
+                dialog.behavior.maxHeight = screenHeight - statusBarInset - baseSizePx
+
+                bottomSheetView.findViewById<android.view.View>(R.id.bottom_sheet)?.updatePadding(
+                    bottom = baseSizePx + navBarInset
+                )
 
                 insets
             }
@@ -63,11 +64,7 @@ class FontPickerBottomSheet(
 
         dialog.window?.let { window ->
             WindowBlurUtils.applyWindowBlur(window)
-
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-
-            window.navigationBarColor = bgColor
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
 
         dialog.show()

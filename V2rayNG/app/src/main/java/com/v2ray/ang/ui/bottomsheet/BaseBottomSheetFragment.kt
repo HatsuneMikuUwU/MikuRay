@@ -1,16 +1,15 @@
 package com.v2ray.ang.ui.bottomsheet
 
-import android.content.res.ColorStateList
-import android.view.WindowManager
 import androidx.core.view.ViewCompat
+import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.v2ray.ang.R
 import com.v2ray.ang.util.WindowBlurUtils
-import com.v2ray.ang.util.getColorAttr
+import com.v2ray.ang.R
 
 abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -18,21 +17,15 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
         super.onStart()
         val sheetDialog = dialog as? BottomSheetDialog ?: return
 
-        val bgColor = requireContext().getColorAttr(R.attr.colorBg)
-
         sheetDialog.window?.let { window ->
             WindowBlurUtils.applyWindowBlur(window)
-            
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            window.navigationBarColor = bgColor
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
         
         val bottomSheet = sheetDialog.findViewById<android.view.View>(
             com.google.android.material.R.id.design_bottom_sheet
         ) ?: return
 
-        bottomSheet.backgroundTintList = ColorStateList.valueOf(bgColor)
         bottomSheet.clipToOutline = true
 
         sheetDialog.behavior.apply {
@@ -42,10 +35,16 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
         ViewCompat.setOnApplyWindowInsetsListener(bottomSheet) { view, insets ->
             val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            
             val screenHeight = view.resources.displayMetrics.heightPixels
-            val margin = (8 * view.resources.displayMetrics.density).toInt()
+            val baseSizePx = (8 * view.resources.displayMetrics.density).toInt() 
 
-            sheetDialog.behavior.maxHeight = screenHeight - statusBarInset - margin
+            sheetDialog.behavior.maxHeight = screenHeight - statusBarInset - baseSizePx
+
+            view.findViewById<android.view.View>(R.id.bottom_sheet)?.updatePadding(
+                bottom = baseSizePx + navBarInset
+            )
 
             insets
         }
