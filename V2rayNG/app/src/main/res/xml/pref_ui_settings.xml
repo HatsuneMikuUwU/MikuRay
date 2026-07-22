@@ -48,6 +48,15 @@
             android:key="pref_network_security_enabled"
             android:summary="@string/pref_network_security_enabled_summary"
             android:title="@string/pref_network_security_enabled_title" />
+            
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_router"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_show_isp_info"
+            android:summary="@string/summary_pref_show_isp_info"
+            android:title="@string/title_pref_show_isp_info" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_delete_24dp"

@@ -227,6 +227,8 @@
 
     <string name="title_pref_ip_api_url">URL для теста информации о текущем соединении</string>
     <string name="summary_pref_ip_api_url">URL</string>
+    <string name="title_pref_show_isp_info">Показывать имя провайдера</string>
+    <string name="summary_pref_show_isp_info">Показывать название провайдера/организации рядом с обнаруженным IP</string>
 
     <string name="title_pref_proxy_sharing_enabled">Разрешить подключения из локальной сети</string>
     <string name="summary_pref_proxy_sharing_enabled">Другие устройства могут подключаться к прокси по вашему IP через локальный прокси. Включайте только в доверенных сетях во избежание несанкционированных подключений</string>

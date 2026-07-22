@@ -243,6 +243,8 @@
 
     <string name="title_pref_ip_api_url">Current connection info test url</string>
     <string name="summary_pref_ip_api_url">Url</string>
+    <string name="title_pref_show_isp_info">Show ISP name</string>
+    <string name="summary_pref_show_isp_info">Display the ISP/organization name next to the detected IP</string>
 
     <string name="title_pref_proxy_sharing_enabled">Allow connections from the LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Other devices can connect to proxy by your IP address through local proxy. Only enable in trusted networks to avoid unauthorized connections</string>

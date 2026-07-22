@@ -377,15 +377,16 @@
                 android:layout_toStartOf="@+id/fab_container"
                 android:layout_alignParentStart="true">
 
-                <TextView
+                <com.neko.marquee.text.AutoMarqueeTextView
                     android:id="@+id/tv_ip_state"
                     android:textAppearance="?textAppearanceTitleSmall"
                     android:textSize="12sp"
                     android:textColor="?colorOnSurfaceVariant"
-                    android:ellipsize="end"
+                    android:ellipsize="marquee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever" />
 
                 <com.neko.marquee.text.AutoMarqueeTextView
                     android:id="@+id/tv_test_state"

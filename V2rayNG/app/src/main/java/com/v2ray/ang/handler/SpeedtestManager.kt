@@ -82,8 +82,23 @@ object SpeedtestManager {
             ipInfo.location?.country_code
         ).firstOrNull { !it.isNullOrBlank() }
 
+        val showIsp = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_ISP_INFO, true)
+        val isp = if (showIsp) {
+            listOf(
+                ipInfo.isp,
+                ipInfo.organization,
+                ipInfo.org,
+                ipInfo.asn_organization,
+                ipInfo.asOrg,
+                ipInfo.asname
+            ).firstOrNull { !it.isNullOrBlank() }
+        } else {
+            null
+        }
+
         val flag = Utils.countryCodeToFlag(country)
         val flagPrefix = if (flag.isNotEmpty()) "$flag " else ""
-        return "${flagPrefix}(${country ?: "unknown"}) ${ip ?: "unknown"}"
+        val ispSuffix = if (!isp.isNullOrBlank()) " · $isp" else ""
+        return "${flagPrefix}(${country ?: "unknown"}) ${ip ?: "unknown"}$ispSuffix"
     }
 }

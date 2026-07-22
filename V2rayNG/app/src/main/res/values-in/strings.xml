@@ -223,6 +223,8 @@
 
     <string name="title_pref_ip_api_url">URL tes info koneksi saat ini</string>
     <string name="summary_pref_ip_api_url">URL</string>
+    <string name="title_pref_show_isp_info">Tampilin nama ISP</string>
+    <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi~</string>
 
     <string name="title_pref_proxy_sharing_enabled">Bolehin koneksi dari LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Device lain bisa numpang proxy pake IP HP lu via proxy lokal. Nyalain pas di jaringan yang lu percaya aja ya, biar ga ada yang nebeng diam-diam</string>
