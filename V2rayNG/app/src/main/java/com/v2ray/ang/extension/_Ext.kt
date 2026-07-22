@@ -150,126 +150,142 @@ private fun showSnackbar(
     }
 
     val activity = context as? Activity ?: ForegroundActivityTracker.currentActivity
-    val parent = activity?.window?.decorView
+    val parent = activity?.findViewById<View>(android.R.id.content)
+
+    val fallbackMessage = if (title.isNotNullEmpty()) "$title: $message" else message
+
+    fun showToastyFallback() {
+        val toastDuration = Toast.LENGTH_LONG
+        when (iconRes) {
+            R.drawable.ic_check_circle -> Toasty.success(context, fallbackMessage, toastDuration, true).show()
+            R.drawable.ic_warning -> Toasty.error(context, fallbackMessage, toastDuration, true).show()
+            else -> Toasty.normal(context, fallbackMessage, toastDuration).show()
+        }
+    }
 
     if (activity == null || parent == null) {
-        val fallbackMessage = if (title.isNotNullEmpty()) "$title: $message" else message
-        Toast.makeText(context, fallbackMessage, Toast.LENGTH_SHORT).show()
+        showToastyFallback()
         return
     }
     
-    val snackbar = Snackbar.make(parent, "", Snackbar.LENGTH_INDEFINITE)
-    val snackbarLayout = snackbar.view as ViewGroup
-    snackbarLayout.contentDescription = if (title.isNotNullEmpty()) "$title: $message" else message
+    try {
+        val snackbar = Snackbar.make(parent, "", Snackbar.LENGTH_INDEFINITE)
+        val snackbarLayout = snackbar.view as ViewGroup
+        snackbarLayout.contentDescription = fallbackMessage
 
-    snackbarLayout.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        ?.visibility = View.INVISIBLE
+        snackbarLayout.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            ?.visibility = View.INVISIBLE
 
-    val contentView = LayoutInflater.from(activity)
-        .inflate(R.layout.layout_snackbar_custom, snackbarLayout, false)
+        val contentView = LayoutInflater.from(activity)
+            .inflate(R.layout.layout_snackbar_custom, snackbarLayout, false)
 
-    val resolvedTextColor = if (textColorAttr != null) {
-        activity.getColorAttr(textColorAttr)
-    } else {
-        activity.getColorAttr(R.attr.colorOnSurfaceInverse)
-    }
-
-    contentView.findViewById<ImageView>(R.id.iv_snackbar_icon)?.apply {
-        setImageResource(iconRes)
-        DrawableCompat.setTint(drawable.mutate(), resolvedTextColor)
-    }
-    contentView.findViewById<TextView>(R.id.tv_snackbar_title)?.apply {
-        if (title.isNotNullEmpty()) {
-            text = title
-            visibility = View.VISIBLE
-            setTextColor(resolvedTextColor)
+        val resolvedTextColor = if (textColorAttr != null) {
+            activity.getColorAttr(textColorAttr)
         } else {
-            visibility = View.GONE
+            activity.getColorAttr(R.attr.colorOnSurfaceInverse)
         }
-    }
-    contentView.findViewById<TextView>(R.id.tv_snackbar_message)?.apply {
-        text = message
-        setTextColor(resolvedTextColor)
-    }
 
-    snackbarLayout.addView(contentView, 0)
+        contentView.findViewById<ImageView>(R.id.iv_snackbar_icon)?.apply {
+            setImageResource(iconRes)
+            DrawableCompat.setTint(drawable.mutate(), resolvedTextColor)
+        }
+        contentView.findViewById<TextView>(R.id.tv_snackbar_title)?.apply {
+            if (title.isNotNullEmpty()) {
+                text = title
+                visibility = View.VISIBLE
+                setTextColor(resolvedTextColor)
+            } else {
+                visibility = View.GONE
+            }
+        }
+        contentView.findViewById<TextView>(R.id.tv_snackbar_message)?.apply {
+            text = message
+            setTextColor(resolvedTextColor)
+        }
 
-    (snackbarLayout.parent as? ViewGroup)?.bringChildToFront(snackbarLayout)
+        snackbarLayout.addView(contentView, 0)
 
-    val layoutParams = snackbarLayout.layoutParams
-    when (layoutParams) {
-        is CoordinatorLayout.LayoutParams -> layoutParams.gravity = Gravity.TOP
-        is FrameLayout.LayoutParams -> layoutParams.gravity = Gravity.TOP
-    }
-    snackbarLayout.layoutParams = layoutParams
+        (snackbarLayout.parent as? ViewGroup)?.bringChildToFront(snackbarLayout)
 
-    ViewCompat.setOnApplyWindowInsetsListener(snackbarLayout) { view, insets ->
-        val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+        val layoutParams = snackbarLayout.layoutParams
+        when (layoutParams) {
+            is CoordinatorLayout.LayoutParams -> layoutParams.gravity = Gravity.TOP
+            is FrameLayout.LayoutParams -> layoutParams.gravity = Gravity.TOP
+        }
+        snackbarLayout.layoutParams = layoutParams
+
+        ViewCompat.setOnApplyWindowInsetsListener(snackbarLayout) { view, insets ->
+            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            
+            val margin5dp = (5f * view.context.resources.displayMetrics.density).toInt()
+            val margin16dp = (16f * view.context.resources.displayMetrics.density).toInt()
+
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = statusBarTop + margin5dp
+                bottomMargin = margin5dp
+                leftMargin = margin16dp
+                rightMargin = margin16dp
+            }
+            insets
+        }
+
+        snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+
+        snackbarLayout.doOnPreDraw { view ->
+            view.translationY = -view.height.toFloat()
+            view.animate()
+                .translationY(0f)
+                .setDuration(300L)
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+        }
+
+        fun slideRightThenDismiss() {
+            if (!snackbarLayout.isAttachedToWindow) {
+                snackbar.dismiss()
+                return
+            }
+            snackbarLayout.animate()
+                .translationX(snackbarLayout.width.toFloat())
+                .setDuration(300L)
+                .setInterpolator(AccelerateInterpolator())
+                .withEndAction { snackbar.dismiss() }
+                .start()
+        }
+
+        val autoDismissDelayMs = when (duration) {
+            Snackbar.LENGTH_INDEFINITE -> null
+            Snackbar.LENGTH_SHORT -> 1500L
+            else -> 2750L
+        }
+        autoDismissDelayMs?.let {
+            Handler(Looper.getMainLooper()).postDelayed(::slideRightThenDismiss, it)
+        }
+
+        val cornerRadiusPx = 28f * activity.resources.displayMetrics.density
         
-        val margin5dp = (5f * view.context.resources.displayMetrics.density).toInt()
-        val margin16dp = (16f * view.context.resources.displayMetrics.density).toInt()
-
-        view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            topMargin = statusBarTop + margin5dp
-            bottomMargin = margin5dp
-            leftMargin = margin16dp
-            rightMargin = margin16dp
+        val backgroundColor = if (backgroundColorAttr != null) {
+            activity.getColorAttr(backgroundColorAttr)
+        } else {
+            activity.getColorAttr(R.attr.colorSurfaceInverse)
         }
-        insets
-    }
 
-    snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+        snackbarLayout.backgroundTintList = null
+        snackbarLayout.backgroundTintMode = null
 
-    snackbarLayout.doOnPreDraw { view ->
-        view.translationY = -view.height.toFloat()
-        view.animate()
-            .translationY(0f)
-            .setDuration(300L)
-            .setInterpolator(DecelerateInterpolator())
-            .start()
-    }
-
-    fun slideRightThenDismiss() {
-        if (!snackbarLayout.isAttachedToWindow) {
-            snackbar.dismiss()
-            return
+        snackbarLayout.background = MaterialShapeDrawable(
+            ShapeAppearanceModel.builder().setAllCornerSizes(cornerRadiusPx).build()
+        ).apply {
+            fillColor = ColorStateList.valueOf(backgroundColor)
+            elevation = snackbarLayout.elevation
         }
-        snackbarLayout.animate()
-            .translationX(snackbarLayout.width.toFloat())
-            .setDuration(300L)
-            .setInterpolator(AccelerateInterpolator())
-            .withEndAction { snackbar.dismiss() }
-            .start()
-    }
 
-    val autoDismissDelayMs = when (duration) {
-        Snackbar.LENGTH_INDEFINITE -> null
-        Snackbar.LENGTH_SHORT -> 1500L
-        else -> 2750L
+        snackbar.show()
+        
+    } catch (e: Exception) {
+        e.printStackTrace()
+        showToastyFallback()
     }
-    autoDismissDelayMs?.let {
-        Handler(Looper.getMainLooper()).postDelayed(::slideRightThenDismiss, it)
-    }
-
-    val cornerRadiusPx = 28f * activity.resources.displayMetrics.density
-    
-    val backgroundColor = if (backgroundColorAttr != null) {
-        activity.getColorAttr(backgroundColorAttr)
-    } else {
-        activity.getColorAttr(R.attr.colorSurfaceInverse)
-    }
-
-    snackbarLayout.backgroundTintList = null
-    snackbarLayout.backgroundTintMode = null
-
-    snackbarLayout.background = MaterialShapeDrawable(
-        ShapeAppearanceModel.builder().setAllCornerSizes(cornerRadiusPx).build()
-    ).apply {
-        fillColor = ColorStateList.valueOf(backgroundColor)
-        elevation = snackbarLayout.elevation
-    }
-
-    snackbar.show()
 }
 
 fun Context.snackbarDefault(message: Int, title: CharSequence = "") {

@@ -11,6 +11,7 @@
         <item name="android:windowBackground">?colorBg</item>
         <item name="colorBg">?colorSurfaceVariant</item>
         <item name="colorCard">?colorSurfaceContainerLow</item>
+        <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
         <item name="bottomSheetDialogTheme">@style/AppThemeBottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/AppThemeAlertDialog</item>
         <item name="alertDialogTheme">@style/AppThemeAlertDialog</item>
