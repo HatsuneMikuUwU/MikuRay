@@ -784,6 +784,17 @@
     <string name="sheet_banner_updated">Баннер панели успешно обновлен.</string>
     <string name="particles_disable_title">Отключить анимацию частиц</string>
     <string name="particles_disable_summary">Скрыть эффект частиц на нижней панели</string>
+
+    <string name="pref_particles_settings_title">Настройки анимации частиц</string>
+    <string name="pref_particles_settings_summary">Настройте скорость, размер, плотность и другое</string>
+
+    <string name="particles_slider_frame_delay_label">Скорость анимации (задержка кадра)</string>
+    <string name="particles_slider_line_length_label">Длина линии</string>
+    <string name="particles_slider_line_thickness_label">Толщина линии</string>
+    <string name="particles_slider_radius_max_label">Максимальный радиус частицы</string>
+    <string name="particles_slider_radius_min_label">Минимальный радиус частицы</string>
+    <string name="particles_slider_density_label">Плотность частиц</string>
+    <string name="particles_slider_speed_factor_label">Коэффициент скорости движения</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Стиль выбранного профиля</string>

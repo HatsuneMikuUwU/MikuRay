@@ -14,6 +14,8 @@ import com.v2ray.ang.R
 import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.util.ParticlesController
+import com.neko.particlesdrawable.ParticlesView
 
 class ShareConfigBottomSheet : BaseBottomSheetFragment() {
 
@@ -52,10 +54,13 @@ class ShareConfigBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val particlesView = view.findViewById<View>(R.id.ParticlesView)
+        val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
         if (particlesView != null) {
             val disabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
             particlesView.visibility = if (disabled) View.GONE else View.VISIBLE
+            if (!disabled) {
+                ParticlesController.applyTo(particlesView)
+            }
         }
         loadBanner(view)
 

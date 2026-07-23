@@ -763,6 +763,17 @@
     <string name="sheet_banner_updated">底部横幅更新成功。</string>
     <string name="particles_disable_title">禁用粒子动画</string>
     <string name="particles_disable_summary">隐藏底部面板中的粒子效果</string>
+
+    <string name="pref_particles_settings_title">粒子动画设置</string>
+    <string name="pref_particles_settings_summary">调整速度、大小、密度等参数</string>
+
+    <string name="particles_slider_frame_delay_label">动画速度（帧延迟）</string>
+    <string name="particles_slider_line_length_label">连线长度</string>
+    <string name="particles_slider_line_thickness_label">连线粗细</string>
+    <string name="particles_slider_radius_max_label">粒子最大半径</string>
+    <string name="particles_slider_radius_min_label">粒子最小半径</string>
+    <string name="particles_slider_density_label">粒子密度</string>
+    <string name="particles_slider_speed_factor_label">移动速度倍率</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">选中配置的样式</string>

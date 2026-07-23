@@ -12,6 +12,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.util.ParticlesController
+import com.neko.particlesdrawable.ParticlesView
 
 class MainMenuBottomSheet : BaseBottomSheetFragment() {
 
@@ -42,10 +44,13 @@ class MainMenuBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val particlesView = view.findViewById<View>(R.id.ParticlesView)
+        val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
         if (particlesView != null) {
             val disabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
             particlesView.visibility = if (disabled) View.GONE else View.VISIBLE
+            if (!disabled) {
+                ParticlesController.applyTo(particlesView)
+            }
         }
         loadBanner(view)
 

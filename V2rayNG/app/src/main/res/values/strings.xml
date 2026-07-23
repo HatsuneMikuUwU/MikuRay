@@ -805,6 +805,17 @@ you need."</string>
     <string name="sheet_banner_updated">Sheet banner updated successfully.</string>
     <string name="particles_disable_title">Disable particles animation</string>
     <string name="particles_disable_summary">Hide the particles effect in bottomsheet</string>
+
+    <string name="pref_particles_settings_title">Particle animation settings</string>
+    <string name="pref_particles_settings_summary">Adjust speed, size, density and more</string>
+
+    <string name="particles_slider_frame_delay_label">Animation speed (frame delay)</string>
+    <string name="particles_slider_line_length_label">Line length</string>
+    <string name="particles_slider_line_thickness_label">Line thickness</string>
+    <string name="particles_slider_radius_max_label">Particle max radius</string>
+    <string name="particles_slider_radius_min_label">Particle min radius</string>
+    <string name="particles_slider_density_label">Particle density</string>
+    <string name="particles_slider_speed_factor_label">Movement speed factor</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Selected Profile Style</string>

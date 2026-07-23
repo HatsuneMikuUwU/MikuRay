@@ -217,6 +217,44 @@ object AppConfig {
     const val PREF_ACTION_CHANGE_SELECTED_BANNER = "action_change_selected_banner_image"
     const val PREF_ACTION_DELETE_SELECTED_BANNER = "action_delete_selected_banner_image"
 
+    // Particles animation controller
+    const val PREF_PARTICLES_SETTINGS = "pref_particles_settings"
+
+    const val PREF_PARTICLES_FRAME_DELAY = "pref_particles_frame_delay"
+    const val PARTICLES_FRAME_DELAY_DEFAULT = 10f
+    const val PARTICLES_FRAME_DELAY_MIN = 0f
+    const val PARTICLES_FRAME_DELAY_MAX = 100f
+
+    const val PREF_PARTICLES_LINE_LENGTH = "pref_particles_line_length"
+    const val PARTICLES_LINE_LENGTH_DEFAULT = 86f
+    const val PARTICLES_LINE_LENGTH_MIN = 20f
+    const val PARTICLES_LINE_LENGTH_MAX = 200f
+
+    const val PREF_PARTICLES_LINE_THICKNESS = "pref_particles_line_thickness"
+    const val PARTICLES_LINE_THICKNESS_DEFAULT = 1f
+    const val PARTICLES_LINE_THICKNESS_MIN = 1f
+    const val PARTICLES_LINE_THICKNESS_MAX = 10f
+
+    const val PREF_PARTICLES_RADIUS_MAX = "pref_particles_radius_max"
+    const val PARTICLES_RADIUS_MAX_DEFAULT = 4f
+    const val PARTICLES_RADIUS_MAX_MIN = 1f
+    const val PARTICLES_RADIUS_MAX_MAX = 20f
+
+    const val PREF_PARTICLES_RADIUS_MIN = "pref_particles_radius_min"
+    const val PARTICLES_RADIUS_MIN_DEFAULT = 1f
+    const val PARTICLES_RADIUS_MIN_MIN = 1f
+    const val PARTICLES_RADIUS_MIN_MAX = 10f
+
+    const val PREF_PARTICLES_DENSITY = "pref_particles_density"
+    const val PARTICLES_DENSITY_DEFAULT = 60f
+    const val PARTICLES_DENSITY_MIN = 10f
+    const val PARTICLES_DENSITY_MAX = 150f
+
+    const val PREF_PARTICLES_SPEED_FACTOR = "pref_particles_speed_factor"
+    const val PARTICLES_SPEED_FACTOR_DEFAULT = 1.0f
+    const val PARTICLES_SPEED_FACTOR_MIN = 0.1f
+    const val PARTICLES_SPEED_FACTOR_MAX = 3.0f
+
     /** Cache keys. */
     const val CACHE_SUBSCRIPTION_ID = "cache_subscription_id"
 
@@ -232,6 +270,7 @@ object AppConfig {
     const val BROADCAST_ACTION_HOME_BANNER_CHANGED = "$ANG_PACKAGE.action.home_banner_changed"
     const val BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED = "$ANG_PACKAGE.action.header_top_row_padding_changed"
     const val BROADCAST_ACTION_SELECTED_BANNER_CHANGED = "$ANG_PACKAGE.action.selected_banner_changed"
+    const val BROADCAST_ACTION_PARTICLES_CHANGED = "$ANG_PACKAGE.action.particles_changed"
     const val BROADCAST_ACTION_CATEGORY_STYLE_CHANGED = "$ANG_PACKAGE.action.category_style_changed"
 
     /** Tasker extras. */

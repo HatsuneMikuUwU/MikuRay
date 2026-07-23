@@ -765,6 +765,17 @@ yang kamu butuhin."</string>
     <string name="sheet_banner_updated">Banner sheet berhasil diupdate.</string>
     <string name="particles_disable_title">Matiin animasi partikel</string>
     <string name="particles_disable_summary">Sembunyiin efek partikel di bottomsheet</string>
+
+    <string name="pref_particles_settings_title">Pengaturan animasi partikel</string>
+    <string name="pref_particles_settings_summary">Atur kecepatan, ukuran, kepadatan, dan lainnya</string>
+
+    <string name="particles_slider_frame_delay_label">Kecepatan animasi (frame delay)</string>
+    <string name="particles_slider_line_length_label">Panjang garis</string>
+    <string name="particles_slider_line_thickness_label">Ketebalan garis</string>
+    <string name="particles_slider_radius_max_label">Radius partikel maksimum</string>
+    <string name="particles_slider_radius_min_label">Radius partikel minimum</string>
+    <string name="particles_slider_density_label">Kepadatan partikel</string>
+    <string name="particles_slider_speed_factor_label">Faktor kecepatan gerak</string>
     
     <!-- Selected profile card banner style -->
     <string name="selected_banner_category">Style Profil yang Dipilih</string>

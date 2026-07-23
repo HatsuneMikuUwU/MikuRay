@@ -405,6 +405,13 @@
             android:summary="@string/particles_disable_summary"
             android:defaultValue="false" />
 
+        <com.v2ray.ang.ui.dialog.ParticlesSettingsDialog
+            android:icon="@drawable/ic_baseline_speed_24"
+            app:layout="@layout/uwu_mid"
+            android:key="pref_particles_settings"
+            android:title="@string/pref_particles_settings_title"
+            android:summary="@string/pref_particles_settings_summary" />
+
         <Preference
             android:icon="@drawable/ic_image_edit_24dp"
             app:layout="@layout/uwu_mid"
@@ -420,7 +427,7 @@
             android:summary="@string/sheet_banner_delete_summary" />
 
     </com.neko.widget.UwuPreferenceCategory>
-
+    
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_selected_banner"
         android:title="@string/selected_banner_category"
