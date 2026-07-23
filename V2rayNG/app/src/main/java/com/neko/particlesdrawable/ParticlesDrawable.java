@@ -16,16 +16,14 @@
 package com.neko.particlesdrawable;
 
 import android.content.res.Resources;
-import android.content.res.Resources.Theme;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Xml;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
@@ -33,6 +31,17 @@ import androidx.annotation.IntRange;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.neko.particlesdrawable.contract.SceneConfiguration;
+import com.neko.particlesdrawable.contract.SceneController;
+import com.neko.particlesdrawable.contract.SceneRenderer;
+import com.neko.particlesdrawable.contract.SceneScheduler;
+import com.neko.particlesdrawable.engine.Engine;
+import com.neko.particlesdrawable.engine.SceneConfigurator;
+import com.neko.particlesdrawable.model.Scene;
+import com.neko.particlesdrawable.renderer.CanvasSceneRenderer;
+import com.neko.particlesdrawable.renderer.DefaultSceneRenderer;
+import com.v2ray.ang.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -43,80 +52,133 @@ import java.io.IOException;
  * The Particles Drawable
  */
 @Keep
-public class ParticlesDrawable extends Drawable
-        implements Animatable, IParticlesView, SceneScheduler, ParticlesScene {
+public class ParticlesDrawable extends Drawable implements
+        Animatable,
+        SceneConfiguration,
+        SceneController,
+        SceneScheduler {
 
-    private final CanvasParticlesView mCanvasParticlesView = new CanvasParticlesView();
-    private final SceneController mController = new SceneController(this, this);
+    // Fields below cannot be final because it would not allow replacing them with mocks for testing
+
+    /**
+     * @noinspection FieldMayBeFinal
+     */
+    private CanvasSceneRenderer canvasRenderer = new CanvasSceneRenderer();
+
+    /**
+     * @noinspection FieldMayBeFinal
+     */
+    private Scene scene = new Scene();
+
+    /**
+     * @noinspection FieldMayBeFinal
+     */
+    private SceneConfigurator sceneConfigurator = new SceneConfigurator();
+
+    /**
+     * @noinspection FieldMayBeFinal
+     */
+    private SceneRenderer renderer = new DefaultSceneRenderer(canvasRenderer);
+
+    /**
+     * @noinspection FieldMayBeFinal
+     */
+    private Engine engine = new Engine(scene, this, renderer);
 
     @Override
-    public void inflate(@NonNull final Resources r,
+    public void inflate(
+            @NonNull final Resources r,
             @NonNull final XmlPullParser parser,
             @NonNull final AttributeSet attrs,
-            @Nullable final Theme theme) throws XmlPullParserException, IOException {
+            @Nullable final Resources.Theme theme) throws XmlPullParserException, IOException {
         super.inflate(r, parser, attrs, theme);
-        mController.inflate(r, attrs);
-    }
+        
+        final TypedArray a;
+        if (theme != null) {
+            a = theme.obtainStyledAttributes(attrs, R.styleable.ParticlesView, 0, 0);
+        } else {
+            a = r.obtainAttributes(attrs, R.styleable.ParticlesView);
+        }
 
-    @NonNull
-    @Keep
-    public Paint getPaint() {
-        return mCanvasParticlesView.getPaint();
+        try {
+            final int count = a.getIndexCount();
+            float particleRadiusMax = Defaults.PARTICLE_RADIUS_MAX;
+            float particleRadiusMin = Defaults.PARTICLE_RADIUS_MIN;
+            
+            for (int i = 0; i < count; i++) {
+                final int attr = a.getIndex(i);
+                if (attr == R.styleable.ParticlesView_density) {
+                    scene.setDensity(a.getInteger(attr, Defaults.DENSITY));
+                } else if (attr == R.styleable.ParticlesView_frameDelayMillis) {
+                    scene.setFrameDelay(a.getInteger(attr, Defaults.FRAME_DELAY));
+                } else if (attr == R.styleable.ParticlesView_lineColor) {
+                    scene.setLineColor(a.getColor(attr, Defaults.LINE_COLOR));
+                } else if (attr == R.styleable.ParticlesView_lineLength) {
+                    scene.setLineLength(a.getDimension(attr, Defaults.LINE_LENGTH));
+                } else if (attr == R.styleable.ParticlesView_lineThickness) {
+                    scene.setLineThickness(a.getDimension(attr, Defaults.LINE_THICKNESS));
+                } else if (attr == R.styleable.ParticlesView_particleColor) {
+                    scene.setParticleColor(a.getColor(attr, Defaults.PARTICLE_COLOR));
+                } else if (attr == R.styleable.ParticlesView_particleRadiusMax) {
+                    particleRadiusMax = a.getDimension(attr, Defaults.PARTICLE_RADIUS_MAX);
+                } else if (attr == R.styleable.ParticlesView_particleRadiusMin) {
+                    particleRadiusMin = a.getDimension(attr, Defaults.PARTICLE_RADIUS_MIN);
+                } else if (attr == R.styleable.ParticlesView_speedFactor) {
+                    scene.setSpeedFactor(a.getFloat(attr, Defaults.SPEED_FACTOR));
+                }
+            }
+            scene.setParticleRadiusRange(particleRadiusMin, particleRadiusMax);
+        } finally {
+            a.recycle();
+        }
     }
 
     @Override
     public void setBounds(final int left, final int top, final int right, final int bottom) {
         super.setBounds(left, top, right, bottom);
-        mController.setBounds(left, top, right, bottom);
+        engine.setDimensions(right - left, bottom - top);
     }
 
     @Override
     public void draw(@NonNull final Canvas canvas) {
-        mCanvasParticlesView.setCanvas(canvas);
-        mController.draw();
-        mCanvasParticlesView.setCanvas(null);
-    }
-
-    @Override
-    public void drawLine(final float startX, final float startY, final float stopX,
-            final float stopY, final float strokeWidth, @ColorInt final int color) {
-        mCanvasParticlesView.drawLine(startX, startY, stopX, stopY, strokeWidth, color);
-    }
-
-    @Override
-    public void fillCircle(final float cx, final float cy, final float radius,
-            @ColorInt final int color) {
-        mCanvasParticlesView.fillCircle(cx, cy, radius, color);
+        canvasRenderer.setCanvas(canvas);
+        engine.draw();
+        canvasRenderer.setCanvas(null);
+        engine.run();
     }
 
     @Override
     public void scheduleNextFrame(final long delay) {
-        scheduleSelf(mController, SystemClock.uptimeMillis() + delay);
+        if (delay == 0L) {
+            requestRender();
+        } else {
+            scheduleSelf(invalidateSelfRunnable, SystemClock.uptimeMillis() + delay);
+        }
     }
 
     @Override
     public void unscheduleNextFrame() {
-        unscheduleSelf(mController);
+        unscheduleSelf(invalidateSelfRunnable);
     }
 
     @Override
-    public void invalidate() {
+    public void requestRender() {
         invalidateSelf();
     }
 
     @Override
     public void setAlpha(final int alpha) {
-        mController.setAlpha(alpha);
+        engine.setAlpha(alpha);
     }
 
     @Override
     public int getAlpha() {
-        return mController.getAlpha();
+        return engine.getAlpha();
     }
 
     @Override
-    public void setColorFilter(final ColorFilter colorFilter) {
-        mCanvasParticlesView.setColorFilter(colorFilter);
+    public void setColorFilter(@Nullable final ColorFilter colorFilter) {
+        canvasRenderer.setColorFilter(colorFilter);
     }
 
     @Override
@@ -126,17 +188,17 @@ public class ParticlesDrawable extends Drawable
 
     @Override
     public void start() {
-        mController.start();
+        engine.start();
     }
 
     @Override
     public void stop() {
-        mController.stop();
+        engine.stop();
     }
 
     @Override
     public boolean isRunning() {
-        return mController.isRunning();
+        return engine.isRunning();
     }
 
     /**
@@ -144,23 +206,23 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public void nextFrame() {
-        mController.nextFrame();
+        engine.nextFrame();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void makeBrandNewFrame() {
-        mController.makeBrandNewFrame();
+    public void makeFreshFrame() {
+        engine.makeFreshFrame();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void makeBrandNewFrameWithPointsOffscreen() {
-        mController.makeBrandNewFrameWithPointsOffscreen();
+    public void makeFreshFrameWithParticlesOffscreen() {
+        engine.makeFreshFrameWithParticlesOffscreen();
     }
 
     /**
@@ -168,7 +230,7 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public void setFrameDelay(@IntRange(from = 0) final int delay) {
-        mController.setFrameDelay(delay);
+        scene.setFrameDelay(delay);
     }
 
     /**
@@ -176,48 +238,49 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public int getFrameDelay() {
-        return mController.getFrameDelay();
+        return scene.getFrameDelay();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setStepMultiplier(@FloatRange(from = 0) final float stepMultiplier) {
-        mController.setStepMultiplier(stepMultiplier);
+    public void setSpeedFactor(@FloatRange(from = 0) final float speedFactor) {
+        scene.setSpeedFactor(speedFactor);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getStepMultiplier() {
-        return mController.getStepMultiplier();
+    public float getSpeedFactor() {
+        return scene.getSpeedFactor();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setDotRadiusRange(@FloatRange(from = 0.5f) final float minRadius,
+    public void setParticleRadiusRange(
+            @FloatRange(from = 0.5f) final float minRadius,
             @FloatRange(from = 0.5f) final float maxRadius) {
-        mController.setDotRadiusRange(minRadius, maxRadius);
+        scene.setParticleRadiusRange(minRadius, maxRadius);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getMinDotRadius() {
-        return mController.getMinDotRadius();
+    public float getParticleRadiusMin() {
+        return scene.getParticleRadiusMin();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getMaxDotRadius() {
-        return mController.getMaxDotRadius();
+    public float getParticleRadiusMax() {
+        return scene.getParticleRadiusMax();
     }
 
     /**
@@ -225,7 +288,7 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public void setLineThickness(@FloatRange(from = 1) final float lineThickness) {
-        mController.setLineThickness(lineThickness);
+        scene.setLineThickness(lineThickness);
     }
 
     /**
@@ -233,53 +296,53 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public float getLineThickness() {
-        return mController.getLineThickness();
+        return scene.getLineThickness();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setLineDistance(@FloatRange(from = 0) final float lineDistance) {
-        mController.setLineDistance(lineDistance);
+    public void setLineLength(@FloatRange(from = 0) final float lineLength) {
+        scene.setLineLength(lineLength);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public float getLineDistance() {
-        return mController.getLineDistance();
+    public float getLineLength() {
+        return scene.getLineLength();
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setNumDots(@IntRange(from = 0) final int newNum) {
-        mController.setNumDots(newNum);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getNumDots() {
-        return mController.getNumDots();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setDotColor(@ColorInt final int dotColor) {
-        mController.setDotColor(dotColor);
+    public void setDensity(@IntRange(from = 0) final int newNum) {
+        scene.setDensity(newNum);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getDotColor() {
-        return mController.getDotColor();
+    public int getDensity() {
+        return scene.getDensity();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setParticleColor(@ColorInt final int color) {
+        scene.setParticleColor(color);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getParticleColor() {
+        return scene.getParticleColor();
     }
 
     /**
@@ -287,7 +350,7 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public void setLineColor(@ColorInt final int lineColor) {
-        mController.setLineColor(lineColor);
+        scene.setLineColor(lineColor);
     }
 
     /**
@@ -295,6 +358,13 @@ public class ParticlesDrawable extends Drawable
      */
     @Override
     public int getLineColor() {
-        return mController.getLineColor();
+        return scene.getLineColor();
     }
+
+    private final Runnable invalidateSelfRunnable = new Runnable() {
+        @Override
+        public void run() {
+            invalidateSelf();
+        }
+    };
 }

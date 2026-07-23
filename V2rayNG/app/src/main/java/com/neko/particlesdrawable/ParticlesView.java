@@ -15,202 +15,293 @@
  */
 package com.neko.particlesdrawable;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.os.Build;
+import android.graphics.drawable.Animatable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewParent;
+
+import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.annotation.VisibleForTesting;
-import com.v2ray.ang.R;
 
-public class ParticlesView extends View implements IParticlesView, SceneScheduler, ParticlesScene {
+import com.neko.particlesdrawable.contract.SceneConfiguration;
+import com.neko.particlesdrawable.contract.SceneController;
+import com.neko.particlesdrawable.contract.SceneRenderer;
+import com.neko.particlesdrawable.contract.SceneScheduler;
+import com.neko.particlesdrawable.engine.Engine;
+import com.neko.particlesdrawable.engine.SceneConfigurator;
+import com.neko.particlesdrawable.model.Scene;
+import com.neko.particlesdrawable.renderer.CanvasSceneRenderer;
+import com.neko.particlesdrawable.renderer.DefaultSceneRenderer;
 
-    private final SceneController mController = new SceneController(this, this);
-    private final CanvasParticlesView mCanvasParticlesView = new CanvasParticlesView();
+/**
+ * The Particles View.
+ * <p>
+ * Automatically starts on {@link #onAttachedToWindow()} or when visibility is set to
+ * {@link #VISIBLE}. Automatically stops on {@link #onDetachedFromWindow()} or when visbility set
+ * to {@link #INVISIBLE} or {@link #GONE}.
+ * <p>
+ * You may also use {@link #start()} and {@link #stop()} on your behalf. Note when you call {@link
+ * #stop()} explicitly, the animation will not automatically restart when you trigger visibility or
+ * when this View gets attached to window.
+ * <p>
+ * The View does not use Lifecycle api and thus cannot tell whether your hosting Activity or
+ * Fragment is started or stopped. It can only tell when it's being destroyed
+ * ({@link #onDetachedFromWindow()} will be called) so this is where it stops animations
+ * automatically. Thus, It is recommended to call {@link #stop()} when the hosting component gets
+ * onStop() call and call {@link #start()} when the hosting component gets onStart() call.
+ */
+@Keep
+public class ParticlesView extends View implements
+        Animatable,
+        SceneConfiguration,
+        SceneController,
+        SceneScheduler {
 
-    @VisibleForTesting
-    boolean mExplicitlyStopped;
+    private final CanvasSceneRenderer canvasSceneRenderer = new CanvasSceneRenderer();
+    private final Scene scene = new Scene();
+    private final SceneConfigurator sceneConfigurator = new SceneConfigurator();
+    private final SceneRenderer renderer = new DefaultSceneRenderer(canvasSceneRenderer);
+    private final Engine engine = new Engine(scene, this, renderer);
+
+    /**
+     * Whether explicitly stopped by user. This means it will not start automatically on visibility
+     * change or when attached to window.
+     */
+    private boolean mExplicitlyStopped;
 
     private boolean mAttachedToWindow;
     private boolean mEmulateOnAttachToWindow;
 
-    public ParticlesView(final Context context) {
+    public ParticlesView(@NonNull final Context context) {
         super(context);
         init(context, null);
     }
 
-    public ParticlesView(final Context context, final AttributeSet attrs) {
+    public ParticlesView(@NonNull final Context context, @Nullable final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ParticlesView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
+    public ParticlesView(
+            @NonNull final Context context,
+            @Nullable final AttributeSet attrs,
+            @AttrRes final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ParticlesView(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
+    public ParticlesView(
+            @NonNull final Context context,
+            @Nullable final AttributeSet attrs,
+            @AttrRes final int defStyleAttr,
+            @StyleRes final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
 
     private void init(@NonNull final Context context, @Nullable final AttributeSet attrs) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            setLayerType(LAYER_TYPE_HARDWARE, mCanvasParticlesView.getPaint());
-        }
+        setLayerType(LAYER_TYPE_HARDWARE, canvasSceneRenderer.getPaint());
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ParticlesView);
-            try {
-                mController.handleAttrs(a);
-            } finally {
-                a.recycle();
-            }
+            sceneConfigurator.configureSceneFromAttributes(scene, context, attrs);
         }
     }
 
-    @NonNull
-    @Keep
-    public Paint getPaint() {
-        return mCanvasParticlesView.getPaint();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void nextFrame() {
-        mController.nextFrame();
+        engine.nextFrame();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void makeBrandNewFrame() {
-        mController.makeBrandNewFrame();
+    public void makeFreshFrame() {
+        engine.makeFreshFrame();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void makeBrandNewFrameWithPointsOffscreen() {
-        mController.makeBrandNewFrameWithPointsOffscreen();
+    public void makeFreshFrameWithParticlesOffscreen() {
+        engine.makeFreshFrameWithParticlesOffscreen();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFrameDelay(@IntRange(from = 0) final int delay) {
-        mController.setFrameDelay(delay);
+        scene.setFrameDelay(delay);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getFrameDelay() {
-        return mController.getFrameDelay();
+        return scene.getFrameDelay();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setStepMultiplier(@FloatRange(from = 0) final float stepMultiplier) {
-        mController.setStepMultiplier(stepMultiplier);
+    public void setSpeedFactor(@FloatRange(from = 0) final float speedFactor) {
+        scene.setSpeedFactor(speedFactor);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public float getStepMultiplier() {
-        return mController.getStepMultiplier();
+    public float getSpeedFactor() {
+        return scene.getSpeedFactor();
     }
 
-    public void setDotRadiusRange(@FloatRange(from = 0.5f) final float minRadius, @FloatRange(from = 0.5f) final float maxRadius) {
-        mController.setDotRadiusRange(minRadius, maxRadius);
+    /**
+     * {@inheritDoc}
+     */
+    public void setParticleRadiusRange(@FloatRange(from = 0.5f) final float minRadius,
+                                       @FloatRange(from = 0.5f) final float maxRadius) {
+        scene.setParticleRadiusRange(minRadius, maxRadius);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public float getMinDotRadius() {
-        return mController.getMinDotRadius();
+    public float getParticleRadiusMin() {
+        return scene.getParticleRadiusMin();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public float getMaxDotRadius() {
-        return mController.getMaxDotRadius();
+    public float getParticleRadiusMax() {
+        return scene.getParticleRadiusMax();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void setLineThickness(@FloatRange(from = 1) final float lineThickness) {
-        mController.setLineThickness(lineThickness);
+        scene.setLineThickness(lineThickness);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getLineThickness() {
-        return mController.getLineThickness();
+        return scene.getLineThickness();
     }
 
-    public void setLineDistance(@FloatRange(from = 0) final float lineDistance) {
-        mController.setLineDistance(lineDistance);
+    /**
+     * {@inheritDoc}
+     */
+    public void setLineLength(@FloatRange(from = 0) final float lineLength) {
+        scene.setLineLength(lineLength);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public float getLineDistance() {
-        return mController.getLineDistance();
+    public float getLineLength() {
+        return scene.getLineLength();
     }
 
-    public void setNumDots(@IntRange(from = 0) final int newNum) {
-        mController.setNumDots(newNum);
+    /**
+     * {@inheritDoc}
+     */
+    public void setDensity(@IntRange(from = 0) final int newNum) {
+        scene.setDensity(newNum);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getNumDots() {
-        return mController.getNumDots();
+    public int getDensity() {
+        return scene.getDensity();
     }
 
-    public void setDotColor(@ColorInt final int dotColor) {
-        mController.setDotColor(dotColor);
+    /**
+     * {@inheritDoc}
+     */
+    public void setParticleColor(@ColorInt final int color) {
+        scene.setParticleColor(color);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getDotColor() {
-        return mController.getDotColor();
+    public int getParticleColor() {
+        return scene.getParticleColor();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void setLineColor(@ColorInt final int lineColor) {
-        mController.setLineColor(lineColor);
+        scene.setLineColor(lineColor);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLineColor() {
-        return mController.getLineColor();
+        return scene.getLineColor();
+    }
+
+    @Override
+    public void requestRender() {
+        invalidate();
     }
 
     @Override
     protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mController.setBounds(0, 0, w, h);
+        engine.setDimensions(w, h);
     }
 
     @Override
-    protected void onDraw(final Canvas canvas) {
+    protected void onDraw(@NonNull final Canvas canvas) {
         super.onDraw(canvas);
-        mCanvasParticlesView.setCanvas(canvas);
-        mController.draw();
-        mController.run();
-        mCanvasParticlesView.setCanvas(null);
-    }
-
-    @Override
-    public void drawLine(final float startX, final float startY, final float stopX, final float stopY, final float strokeWidth, @ColorInt final int color) {
-        mCanvasParticlesView.drawLine(startX, startY, stopX, stopY, strokeWidth, color);
-    }
-
-    @Override
-    public void fillCircle(final float cx, final float cy, final float radius, @ColorInt final int color) {
-        mCanvasParticlesView.fillCircle(cx, cy, radius, color);
+        canvasSceneRenderer.setCanvas(canvas);
+        engine.draw();
+        canvasSceneRenderer.setCanvas(null);
+        engine.run();
     }
 
     @Override
     public void scheduleNextFrame(final long delay) {
-        postInvalidateDelayed(delay);
+        if (delay == 0) {
+            requestRender();
+        } else {
+            postInvalidateDelayed(delay);
+        }
     }
 
     @Override
     public void unscheduleNextFrame() {
+
     }
 
     @Override
@@ -237,33 +328,40 @@ public class ParticlesView extends View implements IParticlesView, SceneSchedule
         stopInternal();
     }
 
-    @Keep
+    /**
+     * Start animating. This will clear the explicit control flag if set by {@link #stop()}.
+     * Note that if this View's visibility is not {@link #VISIBLE} or it's not attached to window,
+     * this will not start animating until the state changes to meet the requirements above.
+     */
+    @Override
     public void start() {
         mExplicitlyStopped = false;
         startInternal();
     }
 
-    @Keep
+    /**
+     * Explicilty stop animating. This will stop animating and no animations will start
+     * automatically until you call {@link #start()}.
+     */
+    @Override
     public void stop() {
         mExplicitlyStopped = true;
         stopInternal();
     }
 
-    @VisibleForTesting
-    void startInternal() {
+    @Override
+    public boolean isRunning() {
+        return engine.isRunning();
+    }
+
+    private void startInternal() {
         if (!mExplicitlyStopped && isVisibleWithAllParents(this) && isAttachedToWindowCompat()) {
-            mController.start();
+            engine.start();
         }
     }
 
-    @VisibleForTesting
-    void stopInternal() {
-        mController.stop();
-    }
-
-    @VisibleForTesting
-    boolean isRunning() {
-        return mController.isRunning();
+    private void stopInternal() {
+        engine.stop();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -276,10 +374,7 @@ public class ParticlesView extends View implements IParticlesView, SceneSchedule
             return mAttachedToWindow;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return isAttachedToWindow();
-        }
-        return mAttachedToWindow;
+        return isAttachedToWindow();
     }
 
     private boolean isVisibleWithAllParents(@NonNull final View view) {

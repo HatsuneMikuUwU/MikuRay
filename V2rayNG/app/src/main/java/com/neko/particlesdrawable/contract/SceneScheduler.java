@@ -13,31 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.neko.particlesdrawable;
+package com.neko.particlesdrawable.contract;
 
 import androidx.annotation.Keep;
 
 /**
- * The Particles scene
+ * Used for scheduling redraw
  */
 @Keep
-public interface ParticlesScene extends ParticlesSceneConfiguration {
+public interface SceneScheduler {
 
-    /**
-     * Use this if you want to manually set to next frame, while animations are stopped.
-     */
-    void nextFrame();
+    void scheduleNextFrame(long delay);
 
-    /**
-     * Resets and makes new random frame. This is useful for re-generating new fancy static
-     * backgrounds when not using animations.
-     */
-    void makeBrandNewFrame();
+    void unscheduleNextFrame();
 
-    /**
-     * Resets and makes new random frame where all points are out of screen bounds and will be
-     * moving into the screen once animation starts.
-     */
-    void makeBrandNewFrameWithPointsOffscreen();
-
+    void requestRender();
 }

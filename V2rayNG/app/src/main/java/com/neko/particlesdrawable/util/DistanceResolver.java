@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Yaroslav Mytkalyk
+ * Copyright (C) 2018 Yaroslav Mytkalyk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.neko.particlesdrawable;
+package com.neko.particlesdrawable.util;
 
-/**
- * Used for scheduling redraw
- */
-interface SceneScheduler {
+import com.neko.particlesdrawable.KeepAsApi;
 
-    void scheduleNextFrame(long delay);
-    void unscheduleNextFrame();
-    void invalidate();
+@KeepAsApi
+public final class DistanceResolver {
+
+    /**
+     * Calculates the distance between two points
+     *
+     * @return distance between two points
+     */
+    public static float distance(final float ax, final float ay,
+                                 final float bx, final float by) {
+        return (float) Math.sqrt(
+                (ax - bx) * (ax - bx) +
+                        (ay - by) * (ay - by)
+        );
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Yaroslav Mytkalyk
+ * Copyright (C) 2018 Yaroslav Mytkalyk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,40 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.neko.particlesdrawable;
+package com.neko.particlesdrawable.contract;
 
-/**
- * Represents a Particle by holding x and y coordinates, travel direction and step multiplier
- */
-final class Particle {
+import com.neko.particlesdrawable.KeepAsApi;
+import com.neko.particlesdrawable.model.Scene;
 
-    /**
-     * Direction cosine
-     */
-    float dCos;
+import androidx.annotation.NonNull;
 
-    /**
-     * Direction sine
-     */
-    float dSin;
+@KeepAsApi
+public interface SceneRenderer {
 
-    /**
-     * Current X
-     */
-    float x;
-
-    /**
-     * Current Y
-     */
-    float y;
-
-    /**
-     * Step multiplier for this dot
-     */
-    float stepMultiplier;
-
-    /**
-     * Radius multiplier for this dot
-     */
-    float radius;
+    void drawScene(@NonNull Scene scene);
 }

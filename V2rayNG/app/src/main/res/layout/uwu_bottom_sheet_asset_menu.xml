@@ -64,15 +64,15 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_centerInParent="true"
-                            app:dotColor="?colorPrimary"
+                            app:particleColor="?colorPrimary"
                             app:frameDelayMillis="10"
                             app:lineColor="?colorPrimary"
-                            app:lineDistance="86.0dip"
+                            app:lineLength="86.0dip"
                             app:lineThickness="1.0dip"
-                            app:maxDotRadius="4.0dip"
-                            app:minDotRadius="1.0dip"
-                            app:numDots="60"
-                            app:stepMultiplier="1.0" />
+                            app:particleRadiusMax="4.0dip"
+                            app:particleRadiusMin="1.0dip"
+                            app:density="60"
+                            app:speedFactor="1.0" />
                         <LinearLayout
                             android:gravity="bottom"
                             android:layout_gravity="bottom"

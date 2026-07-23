@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Yaroslav Mytkalyk
+ * Copyright (C) 2018 Yaroslav Mytkalyk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.neko.particlesdrawable;
+package com.neko.particlesdrawable.util;
 
+import android.graphics.Color;
 import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
 
-/**
- * Particles View
- */
-interface IParticlesView {
+public final class ParticleColorResolver {
 
-    void drawLine(float startX, float startY, float stopX, float stopY, float strokeWidth,
-            @ColorInt int color);
+    private ParticleColorResolver() {
 
-    void fillCircle(float cx, float cy, float radius, @ColorInt int color);
+    }
+
+    @ColorInt
+    public static int resolveParticleColorWithSceneAlpha(
+            @ColorInt final int particleColor,
+            @IntRange(from = 0, to = 255) final int sceneAlpha
+    ) {
+        final int alpha = Color.alpha(particleColor) * sceneAlpha / 255;
+        return (particleColor & 0x00FFFFFF) | (alpha << 24);
+    }
 }

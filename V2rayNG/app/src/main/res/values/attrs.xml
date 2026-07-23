@@ -57,22 +57,22 @@
 
     <declare-styleable name="ParticlesView">
         <attr
-            name="minDotRadius"
+            name="particleRadiusMin"
             format="dimension" />
         <attr
-            name="maxDotRadius"
+            name="particleRadiusMax"
             format="dimension" />
         <attr
             name="lineThickness"
             format="dimension" />
         <attr
-            name="lineDistance"
+            name="lineLength"
             format="dimension" />
         <attr
-            name="numDots"
+            name="density"
             format="integer" />
         <attr
-            name="dotColor"
+            name="particleColor"
             format="color" />
         <attr
             name="lineColor"
@@ -81,7 +81,7 @@
             name="frameDelayMillis"
             format="integer" />
         <attr
-            name="stepMultiplier"
+            name="speedFactor"
             format="float" />
     </declare-styleable>
     
