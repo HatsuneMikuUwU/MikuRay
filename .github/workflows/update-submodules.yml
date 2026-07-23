@@ -3,12 +3,22 @@ name: Update Submodules
 on:
   workflow_dispatch:
     inputs:
+      update_xray:
+        description: 'Update AndroidLibXrayLite?'
+        required: false
+        type: boolean
+        default: false
       xray_commit:
-        description: 'Commit hash for AndroidLibXrayLite (leave blank if skip)'
+        description: 'Xray commit hash (leave blank for latest)'
         required: false
         type: string
+      update_socks5:
+        description: 'Update hev-socks5-tunnel?'
+        required: false
+        type: boolean
+        default: false
       socks5_commit:
-        description: 'Commit hash for hev-socks5-tunnel (leave blank if skip)'
+        description: 'Socks5 commit hash (leave blank for latest)'
         required: false
         type: string
 
@@ -27,28 +37,60 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update submodules to specific commit
+      - name: Update selected submodules
         run: |
-          if [ -n "${{ inputs.xray_commit }}" ]; then
-            echo "Checkout AndroidLibXrayLite to ${{ inputs.xray_commit }}..."
-            cd AndroidLibXrayLite
-            git fetch --all
-            git checkout ${{ inputs.xray_commit }}
-            cd ..
+          UPDATED=""
+          
+          # Process AndroidLibXrayLite
+          if [ "${{ inputs.update_xray }}" = "true" ]; then
+            echo "Processing AndroidLibXrayLite..."
+            if [ -n "${{ inputs.xray_commit }}" ]; then
+              echo "Checking out to specific commit: ${{ inputs.xray_commit }}"
+              cd AndroidLibXrayLite
+              git fetch --all
+              git checkout ${{ inputs.xray_commit }}
+              cd ..
+            else
+              echo "Fetching latest version..."
+              git submodule update --remote AndroidLibXrayLite
+            fi
+            git add AndroidLibXrayLite
+            UPDATED="AndroidLibXrayLite"
           fi
           
-          if [ -n "${{ inputs.socks5_commit }}" ]; then
-            echo "Checkout hev-socks5-tunnel to ${{ inputs.socks5_commit }}..."
-            cd hev-socks5-tunnel
-            git fetch --all
-            git checkout ${{ inputs.socks5_commit }}
-            cd ..
+          # Process hev-socks5-tunnel
+          if [ "${{ inputs.update_socks5 }}" = "true" ]; then
+            echo "Processing hev-socks5-tunnel..."
+            if [ -n "${{ inputs.socks5_commit }}" ]; then
+              echo "Checking out to specific commit: ${{ inputs.socks5_commit }}"
+              cd hev-socks5-tunnel
+              git fetch --all
+              git checkout ${{ inputs.socks5_commit }}
+              cd ..
+            else
+              echo "Fetching latest version..."
+              git submodule update --remote hev-socks5-tunnel
+            fi
+            git add hev-socks5-tunnel
+            
+            # Format commit message
+            if [ -n "$UPDATED" ]; then
+              UPDATED="$UPDATED & hev-socks5-tunnel"
+            else
+              UPDATED="hev-socks5-tunnel"
+            fi
           fi
+          
+          # Save to environment variable
+          echo "UPDATED_MODULES=$UPDATED" >> $GITHUB_ENV
 
       - name: Commit & push if changed
         run: |
-          git config user.name "HatsuneMikuUwU"
-          git config user.email "HatsuneMikuUwU@users.noreply.github.com"
-          git add AndroidLibXrayLite hev-socks5-tunnel
-          git diff --staged --quiet || git commit -m "chore: update submodules to specific commit"
-          git push
+          if git diff --staged --quiet; then
+            echo "No submodules selected or no changes detected. Skipping commit."
+          else
+            git config user.name "HatsuneMikuUwU"
+            git config user.email "HatsuneMikuUwU@users.noreply.github.com"
+            git commit -m "chore: update submodule ${{ env.UPDATED_MODULES }}"
+            git push
+          fi
