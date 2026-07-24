@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name" translatable="false">MikuRay</string>
     <string name="app_widget_name">Switch</string>
+    <string name="widget_status_connected">Connected</string>
+    <string name="widget_status_disconnected">Disconnected</string>
+    <string name="widget_no_server_selected">No server selected</string>
     <string name="app_tile_name">Switch</string>
     <string name="app_tile_first_use">First use of this feature, please use the app to add server</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

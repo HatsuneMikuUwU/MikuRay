@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_widget_name">Tombol Switch</string>
+    <string name="widget_status_connected">Konek</string>
+    <string name="widget_status_disconnected">Gak konek</string>
+    <string name="widget_no_server_selected">Belum ada server dipilih</string>
     <string name="app_tile_name">Tombol Switch</string>
     <string name="app_tile_first_use">Baru pertama pake fitur ini ya? Tambahin server lewat aplikasi dulu gih</string>
     <string name="navigation_drawer_open">Buka menu navigasi</string>
