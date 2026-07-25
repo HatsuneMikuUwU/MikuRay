@@ -347,6 +347,7 @@
     <string name="toast_server_not_found_in_group">Выбранный сервер не найден в текущей группе</string>
     <string name="toast_fragment_not_available">Не удалось найти текущий вид</string>
     <string name="title_locate_selected_config">Найти выбранную конфигурацию</string>
+    <string name="title_clear_test_results">Очистить результаты тестов</string>
 
     <string name="tasker_start_service">Запустить службу</string>
     <string name="tasker_setting_confirm">Подтвердить</string>

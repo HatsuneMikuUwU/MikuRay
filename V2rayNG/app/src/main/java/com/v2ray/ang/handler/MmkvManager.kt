@@ -396,6 +396,17 @@ object MmkvManager {
     }
 
     /**
+     * Checks whether any server has a recorded connection test result (real ping/tcping).
+     *
+     * @return true if at least one server has a non-zero test delay recorded.
+     */
+    fun hasAnyTestDelayResults(): Boolean {
+        return decodeAllServerList().any { guid ->
+            decodeServerAffiliationInfo(guid)?.testDelayMillis?.let { it != 0L } ?: false
+        }
+    }
+
+    /**
      * Clears all test delay results.
      *
      * @param keys The list of server GUIDs.

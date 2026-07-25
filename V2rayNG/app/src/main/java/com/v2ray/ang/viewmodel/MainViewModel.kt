@@ -488,6 +488,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         updateListAction.postValue(-1)
     }
 
+    /**
+     * Clears all recorded connection test results (real ping / tcping) for every server.
+     */
+    fun clearTestResults() {
+        MessageUtil.sendMsg2TestService(
+            getApplication(),
+            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
+        )
+        MmkvManager.clearAllTestDelayResults(MmkvManager.decodeAllServerList())
+        updateListAction.postValue(-1)
+    }
+
     private val mMsgReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
             when (intent?.getIntExtra("key", 0)) {

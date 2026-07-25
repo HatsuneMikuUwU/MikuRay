@@ -342,6 +342,7 @@
     <string name="toast_server_not_found_in_group">Server yang lu pilih ga ada di grup ini euy</string>
     <string name="toast_fragment_not_available">Waduh, ga nemu nih tampilan yang lagi lu buka</string>
     <string name="title_locate_selected_config">Cari lokasi konfig yang dipilih</string>
+    <string name="title_clear_test_results">Hapus hasil tes</string>
 
     <string name="tasker_start_service">Nyalain Servis</string>
     <string name="tasker_setting_confirm">Sip, Konfirmasi</string>

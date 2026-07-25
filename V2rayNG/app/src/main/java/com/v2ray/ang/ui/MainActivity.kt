@@ -528,6 +528,7 @@ class MainActivity : HelperBaseActivity(),
             R.id.del_invalid_config -> delInvalidConfig()
             R.id.sub_update -> importConfigViaSub()
             R.id.locate_selected_config -> locateSelectedServer()
+            R.id.clear_test_results -> mainViewModel.clearTestResults()
             R.id.reset_traffic -> {
                 val currentGroupName = mainViewModel.getSubscriptions(this)
                     .firstOrNull { it.id == mainViewModel.subscriptionId }
