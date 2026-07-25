@@ -104,7 +104,11 @@ class MainRecyclerAdapter(
 
             //Name address
             holder.itemMainBinding.tvName.text = profile.remarks
-            holder.itemMainBinding.tvStatistics.text = SensorTextController.getAddress(profile)
+            holder.itemMainBinding.tvStatistics.text = if (profile.configType == EConfigType.POLICYGROUP) {
+                getPolicyGroupSubText(context, profile)
+            } else {
+                SensorTextController.getAddress(profile)
+            }
             holder.itemMainBinding.tvType.text = getProtocolName(profile)
 
             // Network & security icon+text (TCP Fix)
@@ -223,6 +227,16 @@ class MainRecyclerAdapter(
 
     private fun getProtocolName(profile: ProfileItem): String {
         return profile.configType.name
+    }
+
+    private fun getPolicyGroupSubText(context: android.content.Context, profile: ProfileItem): String {
+        val subId = profile.policyGroupSubscriptionId
+        if (subId.isNullOrEmpty()) {
+            return context.getString(R.string.filter_config_all)
+        }
+        val sub = MmkvManager.decodeSubscriptions().firstOrNull { it.guid == subId }
+        val name = sub?.subscription?.remarks?.takeIf { it.isNotBlank() }
+        return name ?: subId
     }
 
     private fun bindNetworkSecurity(
