@@ -543,7 +543,7 @@
     <string name="summary_navigate_core_settings">Sniffing, route only, proxy lokal/sharing, SOCKS, DNS, level log, resolusi domain, file geo, dll.</string>
     <string name="summary_navigate_mux_settings">Status mux, konkurensi, konkurensi XUDP, penanganan QUIC, dll.</string>
     <string name="summary_navigate_fragment_settings">Status fragment, panjang, interval, maxsplit, paket, dll.</string>
-    <string name="summary_navigate_advanced_settings">Auto-start, aksi auto-test, URL API delay/IP, strategi routing, mode, sembunyiin dari recent apps, kirim HWID, dll.</string>
+    <string name="summary_navigate_advanced_settings">Auto-start, URL API delay/IP, strategi routing, mode, sembunyiin dari recent apps, kirim HWID, dll.</string>
     <string name="summary_navigate_observatory_settings">Interval leastPing, interval leastLoad, metode HTTP leastLoad, sampling leastLoad, timeout leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Pilih aplikasi mana aja yang mau pakai proxy</string>
     <string name="title_ui_general">Umum</string>

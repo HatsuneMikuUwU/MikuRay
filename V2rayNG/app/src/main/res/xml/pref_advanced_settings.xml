@@ -15,24 +15,6 @@
             android:summary="@string/summary_pref_is_booted"
             android:title="@string/title_pref_is_booted" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_delete_24dp"
-            app:layout="@layout/uwu_mid_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:key="pref_auto_remove_invalid_after_test"
-            android:defaultValue="false"
-            android:summary="@string/summary_pref_auto_remove_invalid_after_test"
-            android:title="@string/title_pref_auto_remove_invalid_after_test" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_sort"
-            app:layout="@layout/uwu_mid_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:key="pref_auto_sort_after_test"
-            android:defaultValue="false"
-            android:summary="@string/summary_pref_auto_sort_after_test"
-            android:title="@string/title_pref_auto_sort_after_test" />
-
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
