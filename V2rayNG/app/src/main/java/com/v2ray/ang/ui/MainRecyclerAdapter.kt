@@ -15,6 +15,7 @@ import com.v2ray.ang.databinding.ItemRecyclerFooterBinding
 import com.v2ray.ang.databinding.ItemRecyclerMainBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.ServersCache
+import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.ItemTouchHelperAdapter
@@ -247,8 +248,18 @@ class MainRecyclerAdapter(
         }
 
         val isComplex = profile.configType.isComplexType()
+        val isPolicyGroup = profile.configType == EConfigType.POLICYGROUP
         val network = profile.network?.takeIf { it.isNotBlank() }
-        
+
+        val policyGroupTypeLabel = if (isPolicyGroup) {
+            val typePos = profile.policyGroupType?.toIntOrNull() ?: 0
+            context.resources.getStringArray(R.array.policy_group_type)
+                .getOrNull(typePos)
+                ?.lowercase()
+        } else {
+            null
+        }
+
         val security = profile.security?.takeIf { it.isNotBlank() }?.let { sec ->
             if (profile.insecure == true && sec.equals("tls", ignoreCase = true)) {
                 "$sec(insecure)"
@@ -257,11 +268,15 @@ class MainRecyclerAdapter(
             }
         } ?: "none"
 
-        val showAny = enabled && !isComplex && (network != null || security != null)
+        val showAny = enabled && (isPolicyGroup || (!isComplex && (network != null || security != null)))
         holder.itemMainBinding.layoutNetworkSecurity.visibility =
             if (showAny) View.VISIBLE else View.GONE
 
-        if (enabled && !isComplex && network != null) {
+        if (enabled && isPolicyGroup && policyGroupTypeLabel != null) {
+            holder.itemMainBinding.tvNetwork.text = policyGroupTypeLabel
+            holder.itemMainBinding.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
+            holder.itemMainBinding.tvNetwork.visibility = View.VISIBLE
+        } else if (enabled && !isComplex && network != null) {
             holder.itemMainBinding.tvNetwork.text = network
             holder.itemMainBinding.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
             holder.itemMainBinding.tvNetwork.visibility = View.VISIBLE
