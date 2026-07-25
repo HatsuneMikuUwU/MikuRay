@@ -13,6 +13,7 @@ import com.v2ray.ang.AppConfig.TAG_PROXY
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityRoutingEditBinding
 import com.v2ray.ang.dto.entities.RulesetItem
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.nullIfBlank
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
@@ -21,7 +22,6 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.v2ray.ang.util.SoftInputAssist
 
 class RoutingEditActivity : BaseActivity() {
     private val binding by lazy { ActivityRoutingEditBinding.inflate(layoutInflater) }
@@ -33,15 +33,13 @@ class RoutingEditActivity : BaseActivity() {
             binding.etProcess.setText(Utils.getEditable(selectedPackages.joinToString(",")))
         }
     }
-    
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
         
-        softInputAssist = SoftInputAssist(this)
+        binding.editScrollContent.applyEdgeToEdgeListInsets()
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
@@ -189,25 +187,5 @@ class RoutingEditActivity : BaseActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
-    
-   override fun onResume() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onResume()
-        }
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onPause()
-        }
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onDestroy()
-        }
-        super.onDestroy()
-    } 
+ 
 }

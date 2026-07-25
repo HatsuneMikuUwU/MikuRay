@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.R
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.ui.BaseActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -65,6 +66,8 @@ class WeatherForecastActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_forecast)
+
+        findViewById<androidx.core.widget.NestedScrollView>(R.id.weather_forecast_content).applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.weather_forecast_title))

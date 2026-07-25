@@ -31,6 +31,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -420,4 +421,20 @@ fun EConfigType.isGroupType(): Boolean {
 
 fun EConfigType.isComplexType(): Boolean {
     return this == EConfigType.CUSTOM || this == EConfigType.POLICYGROUP || this == EConfigType.PROXYCHAIN
+}
+
+fun View.applyEdgeToEdgeListInsets() {
+    if (this is ViewGroup) clipToPadding = false
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+        val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+        view.updatePadding(bottom = maxOf(systemBars.bottom, displayCutout.bottom, ime.bottom))
+        insets
+    }
+    ViewCompat.requestApplyInsets(this)
+}
+
+fun androidx.preference.PreferenceFragmentCompat.applyEdgeToEdgeListInsets() {
+    listView?.applyEdgeToEdgeListInsets()
 }

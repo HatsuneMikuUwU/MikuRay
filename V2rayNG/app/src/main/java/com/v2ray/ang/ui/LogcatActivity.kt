@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityLogcatBinding
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.util.Utils
@@ -36,6 +37,8 @@ class LogcatActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+
+        binding.recyclerView.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_logcat))

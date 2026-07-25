@@ -1336,43 +1336,43 @@
         <activity
             android:name=".ui.server.ServerVmessActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerVlessActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerTrojanActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerShadowsocksActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerSocksActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerWireguardActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerHysteria2Activity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerCustomConfigActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerGroupActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.server.ServerProxyChainActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateUnchanged" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.preference.activity.SettingsActivity"
             android:exported="false" />
@@ -1414,7 +1414,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.RoutingEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.SubSettingActivity"
             android:exported="false" />
@@ -1423,11 +1424,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.UserAssetUrlActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
 
         <activity
             android:name=".ui.SubEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.ScannerActivity"
             android:exported="false" />

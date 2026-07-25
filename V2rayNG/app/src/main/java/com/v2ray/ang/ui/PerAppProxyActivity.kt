@@ -16,6 +16,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityBypassListBinding
 import com.v2ray.ang.dto.AppInfo
 import com.v2ray.ang.dto.UrlContentRequest
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.v2RayApplication
@@ -42,6 +43,8 @@ class PerAppProxyActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+
+        binding.recyclerView.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.per_app_proxy_settings))

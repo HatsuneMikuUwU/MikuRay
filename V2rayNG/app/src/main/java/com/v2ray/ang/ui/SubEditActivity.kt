@@ -19,6 +19,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivitySubEditBinding
 import com.v2ray.ang.dto.entities.SubscriptionItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.toastSuccess
@@ -31,7 +32,6 @@ import com.v2ray.ang.util.WindowBlurUtils
 import com.v2ray.ang.util.getColorAttr
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.v2ray.ang.util.SoftInputAssist
 
 class SubEditActivity : BaseActivity() {
     private val binding by lazy { ActivitySubEditBinding.inflate(layoutInflater) }
@@ -41,8 +41,6 @@ class SubEditActivity : BaseActivity() {
 
     private val editSubId by lazy { intent.getStringExtra("subId").orEmpty() }
 
-    private lateinit var softInputAssist: SoftInputAssist
-
     private var selectedIconDrawable: String? = null
 
     private val tabIcons: List<String> = TabIconPickerAdapter.DEFAULT_ICONS
@@ -51,7 +49,7 @@ class SubEditActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        softInputAssist = SoftInputAssist(this)
+        binding.editScrollContent.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
@@ -306,19 +304,8 @@ class SubEditActivity : BaseActivity() {
 
     // ── Lifecycle ───────────────────────────────────────────────────────────
 
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) softInputAssist.onResume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) softInputAssist.onPause()
-        super.onPause()
-    }
-
     override fun onDestroy() {
         dialog?.dismiss()
-        if (::softInputAssist.isInitialized) softInputAssist.onDestroy()
         super.onDestroy()
     }
 }

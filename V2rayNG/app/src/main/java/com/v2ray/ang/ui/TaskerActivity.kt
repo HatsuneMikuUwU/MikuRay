@@ -11,6 +11,7 @@ import android.widget.ListView
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityTaskerBinding
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.LogUtil
 
@@ -42,6 +43,7 @@ class TaskerActivity : BaseActivity() {
         )
         listview = findViewById<View>(R.id.listview) as ListView
         listview?.adapter = adapter
+        listview?.applyEdgeToEdgeListInsets()
 
         init()
     }

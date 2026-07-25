@@ -13,6 +13,7 @@ import com.v2ray.ang.AppConfig.WIREGUARD_LOCAL_MTU
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.nullIfBlank
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.toastSuccess
@@ -20,7 +21,6 @@ import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.ui.server.fields.AddressPortFields
-import com.v2ray.ang.util.SoftInputAssist
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.util.showDeleteConfirmDialog
 
@@ -46,7 +46,6 @@ class ServerWireguardActivity : BaseActivity() {
     private val et_fm: EditText? by lazy { findViewById(R.id.et_fm) }
 
     private lateinit var addressPortFields: AddressPortFields
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +54,9 @@ class ServerWireguardActivity : BaseActivity() {
 
         setContentView(R.layout.activity_server_wireguard)
 
+        findViewById<androidx.core.widget.NestedScrollView>(R.id.server_scroll_content).applyEdgeToEdgeListInsets()
+
         addressPortFields = AddressPortFields(this)
-        softInputAssist = SoftInputAssist(this)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString())
@@ -184,20 +184,5 @@ class ServerWireguardActivity : BaseActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) softInputAssist.onResume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) softInputAssist.onPause()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) softInputAssist.onDestroy()
-        super.onDestroy()
     }
 }

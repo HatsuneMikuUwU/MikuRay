@@ -16,6 +16,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityBackupBinding
 import com.v2ray.ang.databinding.DialogWebdavBinding
 import com.v2ray.ang.dto.entities.WebDavConfig
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.handler.MmkvManager
@@ -43,6 +44,8 @@ class BackupActivity : HelperBaseActivity() {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+
+        binding.backupScrollContent.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_configuration_backup_restore))

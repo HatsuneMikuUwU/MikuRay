@@ -47,6 +47,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/check_update_scroll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"

@@ -14,6 +14,7 @@ import com.v2ray.ang.contracts.BaseAdapterListener
 import com.v2ray.ang.databinding.ActivityServerProxyChainBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarError
@@ -25,7 +26,6 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.handler.SettingsChangeManager
-import com.v2ray.ang.util.SoftInputAssist
 
 class ServerProxyChainActivity : BaseActivity() {
     private val binding by lazy { ActivityServerProxyChainBinding.inflate(layoutInflater) }
@@ -41,15 +41,13 @@ class ServerProxyChainActivity : BaseActivity() {
     private lateinit var memberAdapter: ServerProxyChainMemberAdapter
 
     private var allRemarks: List<String> = emptyList()
-    
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
         
-        softInputAssist = SoftInputAssist(this)
+        binding.serverScrollContent.applyEdgeToEdgeListInsets()
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
@@ -224,25 +222,5 @@ class ServerProxyChainActivity : BaseActivity() {
 
         else -> super.onOptionsItemSelected(item)
     }
-    
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onResume()
-        }
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onPause()
-        }
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onDestroy()
-        }
-        super.onDestroy()
-    } 
+ 
 }

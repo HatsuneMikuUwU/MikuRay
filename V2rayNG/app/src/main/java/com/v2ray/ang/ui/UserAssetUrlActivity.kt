@@ -10,6 +10,7 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityUserAssetUrlBinding
 import com.v2ray.ang.dto.entities.AssetUrlItem
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.toastSuccess
@@ -17,7 +18,6 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.Utils
 import java.io.File
-import com.v2ray.ang.util.SoftInputAssist
 
 class UserAssetUrlActivity : BaseActivity() {
     // Receive QRcode URL from UserAssetActivity
@@ -32,15 +32,13 @@ class UserAssetUrlActivity : BaseActivity() {
 
     private val extDir by lazy { File(Utils.userAssetPath(this)) }
     private val editAssetId by lazy { intent.getStringExtra("assetId").orEmpty() }
-    
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
         
-        softInputAssist = SoftInputAssist(this)
+        binding.userAssetUrlScrollContent.applyEdgeToEdgeListInsets()
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
@@ -172,25 +170,5 @@ class UserAssetUrlActivity : BaseActivity() {
 
         else -> super.onOptionsItemSelected(item)
     }
-    
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onResume()
-        }
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onPause()
-        }
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onDestroy()
-        }
-        super.onDestroy()
-    } 
+ 
 }

@@ -11,6 +11,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityServerGroupBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.isNotNullEmpty
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarError
@@ -19,7 +20,6 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.util.Utils
-import com.v2ray.ang.util.SoftInputAssist
 
 class ServerGroupActivity : BaseActivity() {
     private val binding by lazy { ActivityServerGroupBinding.inflate(layoutInflater) }
@@ -40,15 +40,13 @@ class ServerGroupActivity : BaseActivity() {
     private val policyGroupTypes: Array<out String> by lazy { 
         resources.getStringArray(R.array.policy_group_type) 
     }
-    
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
         
-        softInputAssist = SoftInputAssist(this)
+        binding.serverScrollContent.applyEdgeToEdgeListInsets()
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
@@ -206,25 +204,5 @@ class ServerGroupActivity : BaseActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
-    
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onResume()
-        }
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onPause()
-        }
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) {
-            softInputAssist.onDestroy()
-        }
-        super.onDestroy()
-    } 
+ 
 }

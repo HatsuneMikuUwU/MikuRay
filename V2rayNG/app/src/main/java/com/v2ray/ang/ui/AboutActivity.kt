@@ -2,15 +2,13 @@ package com.v2ray.ang.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityAboutBinding
 import com.v2ray.ang.core.CoreNativeManager
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.util.Utils
 
 class AboutActivity : BaseActivity() {
@@ -21,17 +19,7 @@ class AboutActivity : BaseActivity() {
         
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
-                left   = maxOf(systemBars.left,   displayCutout.left),
-                right  = maxOf(systemBars.right,  displayCutout.right)
-            )
-            insets
-        }
+        binding.aboutContent.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_about))

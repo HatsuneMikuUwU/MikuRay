@@ -10,6 +10,7 @@ import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityCheckUpdateBinding
 import com.v2ray.ang.dto.CheckUpdateResult
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.handler.MmkvManager
@@ -27,6 +28,8 @@ class CheckUpdateActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         
         setContentView(binding.root)
+
+        binding.checkUpdateScrollContent.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.update_check_for_update))

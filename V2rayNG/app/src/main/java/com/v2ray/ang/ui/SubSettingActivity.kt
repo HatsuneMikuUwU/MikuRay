@@ -3,9 +3,6 @@ package com.v2ray.ang.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -24,6 +21,7 @@ import com.v2ray.ang.contracts.BaseAdapterListener
 import com.v2ray.ang.databinding.ActivitySubSettingBinding
 import com.v2ray.ang.databinding.DialogSubUpdateOptionsBinding
 import com.v2ray.ang.databinding.ItemQrcodeBinding
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.toast
@@ -48,18 +46,7 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         
         setContentView(binding.root)
         
-        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
-                left   = maxOf(systemBars.left,   displayCutout.left),
-                right  = maxOf(systemBars.right,  displayCutout.right)
-            )
-            insets
-        }
-
+        binding.recyclerView.applyEdgeToEdgeListInsets()
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
 

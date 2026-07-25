@@ -2,9 +2,6 @@ package com.v2ray.ang.ui.preference.activity
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -15,6 +12,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.VPN
 import com.v2ray.ang.R
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
@@ -30,20 +28,6 @@ class VpnSettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
-        val rootView = findViewById<View>(R.id.main_content)
-        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom,    displayCutout.bottom),
-                left   = maxOf(systemBars.left,   displayCutout.left),
-                right  = maxOf(systemBars.right,  displayCutout.right)
-            )
-            insets
-        }
-
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_vpn_settings))
 
@@ -124,6 +108,7 @@ class VpnSettingsActivity : BaseActivity() {
         override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             SearchPreferenceHighlighter.applyFromIntent(this)
+            applyEdgeToEdgeListInsets()
         }
 
         /**

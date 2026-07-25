@@ -12,9 +12,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -25,6 +22,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.toastError
 import com.v2ray.ang.extension.toastInfo
@@ -67,20 +65,6 @@ class UiSettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
-        val rootView = findViewById<View>(R.id.main_content)
-        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom, displayCutout.bottom),
-                left   = maxOf(systemBars.left,   displayCutout.left),
-                right  = maxOf(systemBars.right,  displayCutout.right)
-            )
-            insets
-        }
-
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_ui_settings))
 
@@ -508,6 +492,7 @@ class UiSettingsActivity : BaseActivity() {
         override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             SearchPreferenceHighlighter.applyFromIntent(this)
+            applyEdgeToEdgeListInsets()
         }
 
         private fun extractAndSaveBannerColor(uri: Uri) {

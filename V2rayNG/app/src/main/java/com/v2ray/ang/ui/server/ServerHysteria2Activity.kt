@@ -11,6 +11,7 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.toastSuccess
@@ -20,7 +21,6 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.ui.server.fields.AddressPortFields
 import com.v2ray.ang.ui.server.fields.TlsFields
-import com.v2ray.ang.util.SoftInputAssist
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +49,6 @@ class ServerHysteria2Activity : BaseActivity() {
 
     private lateinit var addressPortFields: AddressPortFields
     private lateinit var tlsFields: TlsFields
-    private lateinit var softInputAssist: SoftInputAssist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +57,10 @@ class ServerHysteria2Activity : BaseActivity() {
 
         setContentView(R.layout.activity_server_hysteria2)
 
+        findViewById<androidx.core.widget.NestedScrollView>(R.id.server_scroll_content).applyEdgeToEdgeListInsets()
+
         addressPortFields = AddressPortFields(this)
         tlsFields = TlsFields(this)
-        softInputAssist = SoftInputAssist(this)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString())
@@ -226,20 +226,5 @@ class ServerHysteria2Activity : BaseActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onResume() {
-        if (::softInputAssist.isInitialized) softInputAssist.onResume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        if (::softInputAssist.isInitialized) softInputAssist.onPause()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        if (::softInputAssist.isInitialized) softInputAssist.onDestroy()
-        super.onDestroy()
     }
 }

@@ -11,10 +11,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.NonNull
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.enums.PermissionType
+import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
@@ -54,20 +52,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_search)
-
-        val rootView = findViewById<View>(R.id.main_content)
-        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top    = maxOf(systemBars.top,    displayCutout.top),
-                bottom = maxOf(systemBars.bottom, displayCutout.bottom),
-                left   = maxOf(systemBars.left,   displayCutout.left),
-                right  = maxOf(systemBars.right,  displayCutout.right)
-            )
-            insets
-        }
-
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_settings))
 
@@ -347,6 +331,11 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            applyEdgeToEdgeListInsets()
+        }
 
         private val navigateUiSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
         private val navigateVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_VPN_SETTINGS) }
