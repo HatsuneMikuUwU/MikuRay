@@ -156,6 +156,7 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
             R.id.del_invalid_config,
             R.id.export_all,
             R.id.real_ping_all,
+            R.id.tcping_all,
             R.id.locate_selected_config,
             R.id.sub_update,
             R.id.reset_traffic

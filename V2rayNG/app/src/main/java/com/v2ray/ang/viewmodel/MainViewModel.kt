@@ -200,7 +200,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Tests the real ping for all servers.
      */
-    fun testAllRealPing() {
+    fun testAllRealPing(onlyTcp: Boolean = false) {
         MessageUtil.sendMsg2TestService(
             getApplication(),
             TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
@@ -217,7 +217,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 TestServiceMessage(
                     key = AppConfig.MSG_MEASURE_CONFIG_START,
                     subscriptionId = subscriptionId,
-                    serverGuids = if (keywordFilter.isNotEmpty()) serversCache.map { it.guid } else emptyList()
+                    serverGuids = if (keywordFilter.isNotEmpty()) serversCache.map { it.guid } else emptyList(),
+                    onlyTcp = onlyTcp
                 )
             )
         }

@@ -518,6 +518,10 @@ class MainActivity : HelperBaseActivity(),
                 snackbarDefault(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_real_ping_all_server))
                 mainViewModel.testAllRealPing()
             }
+            R.id.tcping_all -> {
+                snackbarDefault(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_ping_all_server))
+                mainViewModel.testAllRealPing(true)
+            }
             R.id.service_restart -> restartV2Ray()
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
