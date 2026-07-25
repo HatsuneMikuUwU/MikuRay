@@ -55,9 +55,6 @@ class ServerProxyChainActivity : BaseActivity() {
 
         loadAvailableRemarks()
         setupRecycler()
-        binding.fabAddProxyChainMember.setOnClickListener {
-            addMemberRow()
-        }
 
         val config = MmkvManager.decodeServerConfig(editGuid)
         if (config != null) {
@@ -201,7 +198,7 @@ class ServerProxyChainActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.action_server, menu)
+        menuInflater.inflate(R.menu.action_server_proxy_chain, menu)
 
         val delButton = menu.findItem(R.id.del_config)
         delButton?.isVisible = editGuid.isNotEmpty() && !isRunning
@@ -210,6 +207,11 @@ class ServerProxyChainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.add_proxy_chain_member -> {
+            addMemberRow()
+            true
+        }
+
         R.id.del_config -> {
             deleteServer()
             true

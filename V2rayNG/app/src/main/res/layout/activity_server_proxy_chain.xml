@@ -131,16 +131,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_proxy_chain_member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:backgroundTint="?colorPrimary"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
-        app:tint="?colorOnPrimary"
-        android:contentDescription="@string/menu_item_add_config"
-        app:srcCompat="@drawable/ic_add_24dp" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
