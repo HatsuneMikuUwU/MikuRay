@@ -7,9 +7,11 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import com.google.android.material.appbar.MaterialToolbar
+import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityServerGroupBinding
 import com.v2ray.ang.dto.entities.ProfileItem
+import com.v2ray.ang.enums.BalancerStrategyType
 import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.isNotNullEmpty
@@ -18,6 +20,7 @@ import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.ui.BaseActivity
 import com.v2ray.ang.util.Utils
 
@@ -41,6 +44,12 @@ class ServerGroupActivity : BaseActivity() {
         resources.getStringArray(R.array.policy_group_type) 
     }
 
+    private val fallbackSuggestions: List<String> by lazy {
+        (AppConfig.BUILTIN_OUTBOUND_TAGS + SettingsManager.getProfileRemarks(
+            excludeConfigTypes = setOf(EConfigType.CUSTOM, EConfigType.POLICYGROUP)
+        )).filter { it != AppConfig.TAG_PROXY }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
@@ -55,12 +64,35 @@ class ServerGroupActivity : BaseActivity() {
         val config = MmkvManager.decodeServerConfig(editGuid)
         
         populateSubscriptionSpinner()
+        populateFallbackSuggestions()
+
+        binding.spPolicyGroupType.setOnItemClickListener { _, _, _, _ -> updateFallbackVisibility() }
+        binding.chkPolicyGroupTestOutbounds.setOnCheckedChangeListener { _, _ -> updateFallbackVisibility() }
 
         if (config != null) {
             bindingServer(config)
         } else {
             clearServer()
         }
+        updateFallbackVisibility()
+    }
+
+    private fun populateFallbackSuggestions() {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, fallbackSuggestions)
+        binding.spPolicyGroupFallback.setAdapter(adapter)
+    }
+
+    /**
+     * Show the "test outbounds" switch only for strategies that support an
+     * observatory (random / roundRobin); show the fallback tag field only
+     * when that switch is on.
+     */
+    private fun updateFallbackVisibility() {
+        val typePos = policyGroupTypes.indexOf(binding.spPolicyGroupType.text.toString()).let { if (it >= 0) it else 0 }
+        val supportsObservatory = BalancerStrategyType.from(typePos.toString()).supportsObservatory
+        binding.layoutPolicyGroupTestOutbounds.visibility = if (supportsObservatory) android.view.View.VISIBLE else android.view.View.GONE
+        binding.layoutPolicyGroupFallback.visibility =
+            if (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked) android.view.View.VISIBLE else android.view.View.GONE
     }
 
     /**
@@ -79,6 +111,12 @@ class ServerGroupActivity : BaseActivity() {
         if (pos in displayList.indices) {
             binding.spPolicyGroupSubId.setText(displayList[pos], false)
         }
+
+        val supportsObservatory = BalancerStrategyType.from(config.policyGroupType).supportsObservatory
+        binding.chkPolicyGroupTestOutbounds.isChecked =
+            config.policyGroupTestOutbounds != false || !supportsObservatory
+        binding.spPolicyGroupFallback.setText(config.policyGroupFallbackTag.orEmpty(), false)
+        updateFallbackVisibility()
 
         return true
     }
@@ -103,6 +141,10 @@ class ServerGroupActivity : BaseActivity() {
         } else if (displayList.isNotEmpty()) {
             binding.spPolicyGroupSubId.setText(displayList[0], false)
         }
+
+        binding.chkPolicyGroupTestOutbounds.isChecked = true
+        binding.spPolicyGroupFallback.setText("", false)
+        updateFallbackVisibility()
         return true
     }
 
@@ -129,6 +171,9 @@ class ServerGroupActivity : BaseActivity() {
         val selectedSubStr = binding.spPolicyGroupSubId.text.toString()
         val selPos = displayList.indexOf(selectedSubStr)
         config.policyGroupSubscriptionId = if (selPos >= 0 && selPos < subIds.size) subIds[selPos] else null
+
+        config.policyGroupTestOutbounds = binding.chkPolicyGroupTestOutbounds.isChecked
+        config.policyGroupFallbackTag = binding.spPolicyGroupFallback.text.toString().trim().takeIf { it.isNotEmpty() }
 
         if (config.subscriptionId.isEmpty() && !subscriptionId.isNullOrEmpty()) {
             config.subscriptionId = subscriptionId.orEmpty()

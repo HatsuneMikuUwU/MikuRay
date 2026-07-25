@@ -410,6 +410,8 @@
     <string name="title_policy_group_type">策略组类型</string>
     <string name="title_policy_group_subscription_id">来自订阅分组</string>
     <string name="title_policy_group_subscription_filter">别名正则过滤</string>
+    <string name="title_policy_group_test_outbounds">测试出站</string>
+    <string name="title_policy_group_fallback">备用出站（可选）</string>
 
     <!-- BackupActivity -->
     <string name="title_configuration_backup_restore">备份 &amp; 还原</string>

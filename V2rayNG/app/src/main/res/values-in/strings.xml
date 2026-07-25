@@ -408,6 +408,8 @@
     <string name="title_policy_group_type">Tipe Grup Policy</string>
     <string name="title_policy_group_subscription_id">Dari grup langganan</string>
     <string name="title_policy_group_subscription_filter">Filter Reguler Catatan</string>
+    <string name="title_policy_group_test_outbounds">Uji outbound</string>
+    <string name="title_policy_group_fallback">Outbound cadangan (opsional)</string>
 
     <string name="server_proxy_chain_members">Anggota Proxy Chain</string>
     <string name="server_proxy_chain_pick_members">Pencet sini buat milih membernya</string>

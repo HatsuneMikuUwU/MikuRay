@@ -168,6 +168,47 @@
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:id="@+id/layout_policy_group_test_outbounds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="16.0dip"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/title_policy_group_test_outbounds"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        app:thumbIcon="@drawable/mtrl_ic_check"
+                        android:id="@+id/chk_policy_group_test_outbounds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_policy_group_fallback"
+                    app:shapeAppearance="?shapeAppearanceCornerMedium"
+                    app:boxStrokeWidth="1.5dip"
+                    app:boxStrokeWidthFocused="1.5dip"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_spacing_dp16"
+                    android:hint="@string/title_policy_group_fallback"
+                    android:visibility="gone">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/sp_policy_group_fallback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         
