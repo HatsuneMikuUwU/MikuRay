@@ -89,7 +89,7 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
     }
 
     /**
-     * Shows a dialog to pick auto-test/remove-invalid/sort options, then enqueues
+     * Shows a dialog to pick auto-test/remove-invalid/sort/send-HWID options, then enqueues
      * the background subscription update job via [SubscriptionsViewModel.updateSubscriptions].
      */
     private fun showSubUpdateOptionsDialog() {
@@ -101,6 +101,8 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)
         dialogBinding.switchAutoSort.isChecked =
             MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
+        dialogBinding.switchSendHwid.isChecked =
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_SEND_HWID, false)
 
         // Tapping anywhere on a row toggles its switch too, not just the thumb itself.
         dialogBinding.rowAutoTest.setOnClickListener {
@@ -111,6 +113,9 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         }
         dialogBinding.rowAutoSort.setOnClickListener {
             dialogBinding.switchAutoSort.toggle()
+        }
+        dialogBinding.rowSendHwid.setOnClickListener {
+            dialogBinding.switchSendHwid.toggle()
         }
 
         MaterialAlertDialogBuilder(this)
@@ -128,6 +133,10 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
                 MmkvManager.encodeSettings(
                     AppConfig.PREF_AUTO_SORT_AFTER_TEST,
                     dialogBinding.switchAutoSort.isChecked
+                )
+                MmkvManager.encodeSettings(
+                    AppConfig.PREF_SEND_HWID,
+                    dialogBinding.switchSendHwid.isChecked
                 )
 
                 viewModel.updateSubscriptions()
