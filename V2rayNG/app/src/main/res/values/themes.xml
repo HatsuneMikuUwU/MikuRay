@@ -15,6 +15,7 @@
         <item name="colorCard">?colorSurfaceContainerLow</item>
         <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
         <item name="bottomSheetDialogTheme">@style/AppThemeBottomSheetDialog</item>
+        <item name="sideSheetDialogTheme">@style/AppThemeSideSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/AppThemeAlertDialog</item>
         <item name="alertDialogTheme">@style/AppThemeAlertDialog</item>
         <item name="android:scrollbarSize">0.0dip</item>
@@ -858,6 +859,24 @@
         <item name="cornerSizeTopLeft">35dp</item>
         <item name="cornerSizeTopRight">35dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    
+    <style name="AppThemeSideSheetDialog" parent="@style/ThemeOverlay.Material3.SideSheetDialog">
+        <item name="android:windowAnimationStyle">@style/Animation.Material3.SideSheetDialog</item>
+        <item name="sideSheetModalStyle">@style/AppThemeSideSheetStyle</item>
+    </style>
+    
+    <style name="AppThemeSideSheetStyle" parent="@style/Widget.Material3.SideSheet.Modal">
+        <item name="backgroundTint">?attr/colorBg</item>
+        <item name="shapeAppearance">@style/AppThemeSideSheetShape</item>
+    </style>
+    
+    <style name="AppThemeSideSheetShape" parent="@style/ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">28dp</item>
+        <item name="cornerSizeBottomLeft">28dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 

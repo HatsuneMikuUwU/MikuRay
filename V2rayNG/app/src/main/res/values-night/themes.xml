@@ -16,6 +16,7 @@
         <item name="colorCard">?colorSurfaceContainerLow</item>       
         <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
         <item name="bottomSheetDialogTheme">@style/AppThemeBottomSheetDialog</item>
+        <item name="sideSheetDialogTheme">@style/AppThemeSideSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/AppThemeAlertDialog</item>
         <item name="alertDialogTheme">@style/AppThemeAlertDialog</item>
         <item name="android:scrollbarSize">0.0dip</item>

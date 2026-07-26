@@ -7,9 +7,15 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import com.google.android.material.sidesheet.SideSheetDialog
 import androidx.appcompat.app.AlertDialog
+import com.v2ray.ang.util.WindowBlurUtils
 import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -118,32 +124,53 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             dialogBinding.switchSendHwid.toggle()
         }
 
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.title_sub_update)
-            .setView(dialogBinding.root)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                MmkvManager.encodeSettings(
-                    AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION,
-                    dialogBinding.switchAutoTest.isChecked
-                )
-                MmkvManager.encodeSettings(
-                    AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST,
-                    dialogBinding.switchAutoRemoveInvalid.isChecked
-                )
-                MmkvManager.encodeSettings(
-                    AppConfig.PREF_AUTO_SORT_AFTER_TEST,
-                    dialogBinding.switchAutoSort.isChecked
-                )
-                MmkvManager.encodeSettings(
-                    AppConfig.PREF_SEND_HWID,
-                    dialogBinding.switchSendHwid.isChecked
-                )
+        val sideSheetDialog = SideSheetDialog(this)
+        sideSheetDialog.setContentView(dialogBinding.root)
 
-                viewModel.updateSubscriptions()
-                toast(getString(R.string.subscription_updater_job_tips))
+        dialogBinding.btnCancel.setOnClickListener { sideSheetDialog.dismiss() }
+        dialogBinding.btnClose.setOnClickListener { sideSheetDialog.dismiss() }
+        dialogBinding.btnOk.setOnClickListener {
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION,
+                dialogBinding.switchAutoTest.isChecked
+            )
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST,
+                dialogBinding.switchAutoRemoveInvalid.isChecked
+            )
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_AUTO_SORT_AFTER_TEST,
+                dialogBinding.switchAutoSort.isChecked
+            )
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_SEND_HWID,
+                dialogBinding.switchSendHwid.isChecked
+            )
+
+            viewModel.updateSubscriptions()
+            toast(getString(R.string.subscription_updater_job_tips))
+            sideSheetDialog.dismiss()
+        }
+
+        sideSheetDialog.window?.let { window ->
+            WindowBlurUtils.applyWindowBlur(window)
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+            ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
+                val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+                val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+                window.findViewById<View>(R.id.side_sheet_root)?.updatePadding(
+                    top = statusBarInset,
+                    bottom = navBarInset
+                )
+                insets
             }
-            .setNegativeButton(android.R.string.cancel, null)
-            .showBlur()
+        }
+
+        sideSheetDialog.show()
+        
+        val sideSheetContainer = sideSheetDialog.findViewById<View>(com.google.android.material.R.id.m3_side_sheet)
+        sideSheetContainer?.clipToOutline = true
     }
 
     override fun onShareSubOptionClicked(optionId: Int, url: String) {
