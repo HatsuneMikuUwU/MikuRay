@@ -35,6 +35,69 @@
                 app:contentPadding="0dp">
 
                 <LinearLayout
+                    android:id="@+id/row_update_subscription"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:minHeight="?android:listPreferredItemHeightSmall"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_sub_update"
+                            android:textAppearance="?textAppearanceTitleMedium"
+                            android:textColor="?android:textColorPrimary"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/summary_pref_update_subscription"
+                            android:textAppearance="?textAppearanceTitleSmall"
+                            android:textColor="?android:textColorSecondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_update_subscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        app:thumbIcon="@drawable/mtrl_ic_check" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0.0dip"
+                android:layout_marginBottom="4.0dip"
+                android:layout_marginStart="8.0dip"
+                android:layout_marginEnd="8.0dip"
+                android:clipToPadding="false"
+                app:cardBackgroundColor="?attr/colorCard"
+                app:cardElevation="0.0dip"
+                app:strokeWidth="0.0dip"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="0dp">
+
+                <LinearLayout
                     android:id="@+id/row_auto_test"
                     android:clickable="true"
                     android:focusable="true"

@@ -101,6 +101,8 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
     private fun showSubUpdateOptionsDialog() {
         val dialogBinding = DialogSubUpdateOptionsBinding.inflate(layoutInflater)
 
+        dialogBinding.switchUpdateSubscription.isChecked =
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_UPDATE_SUBSCRIPTION, false)
         dialogBinding.switchAutoTest.isChecked =
             MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION, false)
         dialogBinding.switchAutoRemoveInvalid.isChecked =
@@ -111,6 +113,9 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             MmkvManager.decodeSettingsBool(AppConfig.PREF_SEND_HWID, false)
 
         // Tapping anywhere on a row toggles its switch too, not just the thumb itself.
+        dialogBinding.rowUpdateSubscription.setOnClickListener {
+            dialogBinding.switchUpdateSubscription.toggle()
+        }
         dialogBinding.rowAutoTest.setOnClickListener {
             dialogBinding.switchAutoTest.toggle()
         }
@@ -129,6 +134,10 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
 
         dialogBinding.btnCancel.setOnClickListener { sideSheetDialog.dismiss() }
         dialogBinding.btnOk.setOnClickListener {
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_UPDATE_SUBSCRIPTION,
+                dialogBinding.switchUpdateSubscription.isChecked
+            )
             MmkvManager.encodeSettings(
                 AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION,
                 dialogBinding.switchAutoTest.isChecked

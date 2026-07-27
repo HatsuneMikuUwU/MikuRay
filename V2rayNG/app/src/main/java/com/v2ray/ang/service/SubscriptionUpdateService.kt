@@ -104,7 +104,7 @@ class SubscriptionUpdateService : Service() {
             updateSemaphore.withPermit {
                 try {
                     message.subIds.forEach { subId ->
-                        updateSingle(subId)
+                        updateSingle(subId, message.forcedUpdate)
                     }
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "SubscriptionUpdateService update failed", e)
@@ -118,7 +118,7 @@ class SubscriptionUpdateService : Service() {
         }
     }
 
-    private suspend fun updateSingle(subId: String) {
+    private suspend fun updateSingle(subId: String, forcedUpdate: Boolean) {
         val subItem = MmkvManager.decodeSubscription(subId) ?: return
         if (!subItem.enabled || subItem.url.isEmpty()) {
             return
@@ -133,7 +133,9 @@ class SubscriptionUpdateService : Service() {
             content = "Updating ${subItem.remarks}"
         )
 
-        AngConfigManager.updateConfigViaSub(sub)
+        if (forcedUpdate || MmkvManager.decodeSettingsBool(AppConfig.PREF_UPDATE_SUBSCRIPTION, false)) {
+            AngConfigManager.updateConfigViaSub(sub)
+        }
 
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION, false)) {
             testSubscriptionServers(sub)

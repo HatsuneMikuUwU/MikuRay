@@ -169,6 +169,7 @@
     <string name="summary_pref_is_booted">Автоматически подключается к выбранному серверу при запуске (может не сработать)</string>
 
     <string name="subscription_updater_job_tips">Задача будет выполняться в фоновом режиме, информация о прогрессе будет отображаться в уведомлении.</string>
+    <string name="summary_pref_update_subscription">Выключите, чтобы пропустить повторную загрузку подписки и только тестировать/сортировать существующие серверы.</string>
     <string name="title_pref_auto_test_after_update_subscription">Автотест после обновления подписки</string>
     <string name="summary_pref_auto_test_after_update_subscription">Автоматическое тестирование занимает довольно много времени, пожалуйста, будьте терпеливы.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Автоудаление недействительных конфигураций после теста</string>

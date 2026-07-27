@@ -65,7 +65,7 @@ class SubscriptionsViewModel : ViewModel() {
 
         MessageUtil.sendMsg2SubscriptionService(
             AngApplication.application,
-            SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, subIds)
+            SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, false, subIds)
         )
     }
 }

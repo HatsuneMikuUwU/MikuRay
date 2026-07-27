@@ -164,6 +164,7 @@
     <string name="summary_pref_is_booted">Langsung nyambungin ke server pas HP baru nyala, tapi kadang bisa gagal sih</string>
 
     <string name="subscription_updater_job_tips">Tugas bakal jalan di background, progressnya bisa dipantau lewat notifikasi.</string>
+    <string name="summary_pref_update_subscription">Matiin biar cuma tes/sortir server yang udah ada, tanpa narik ulang konten langganan.</string>
     <string name="title_pref_auto_test_after_update_subscription">Auto tes abis update langganan</string>
     <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu, sabar ya.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Auto hapus konfig ngaco abis dites</string>
