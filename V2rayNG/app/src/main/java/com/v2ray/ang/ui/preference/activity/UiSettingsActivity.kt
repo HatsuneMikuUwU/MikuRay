@@ -1068,13 +1068,6 @@ class UiSettingsActivity : BaseActivity() {
             updateSelectedBannerCategoryVisibility()
         }
 
-        /**
-         * Kategori "selected banner" (indicator style, banner particle, dll)
-         * gak relevan lagi kalau mode grid/double column lagi aktif -- di
-         * grid mode, indicator selected server cuma dikasih stroke card
-         * (lihat MainRecyclerAdapter.onBindViewHolder), jadi kategori ini
-         * disembunyiin sepenuhnya selama grid mode nyala.
-         */
         private fun updateSelectedBannerCategoryVisibility() {
             val isGridMode = MmkvManager.decodeSettingsBool(AppConfig.PREF_DOUBLE_COLUMN_DISPLAY, false)
             selectedBannerCategory?.isVisible = !isGridMode

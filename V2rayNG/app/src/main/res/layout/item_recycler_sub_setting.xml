@@ -73,20 +73,37 @@
                 android:textSize="12sp"
                 app:chipBackgroundColor="?attr/colorSecondaryContainer"
                 app:chipMinTouchTargetSize="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_url" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tv_server_count"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginStart="6dp"
+                android:checkable="false"
+                android:clickable="false"
+                android:focusable="false"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="?attr/colorOnTertiaryContainer"
+                android:textSize="12sp"
+                app:chipBackgroundColor="?attr/colorTertiaryContainer"
+                app:chipMinTouchTargetSize="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_last_updated"
+                app:layout_constraintStart_toEndOf="@id/tv_last_updated"
+                app:layout_constraintTop_toTopOf="@id/tv_last_updated" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/layout_share"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/bg_icon_button" 
                 android:contentDescription="@string/title_configuration_share"
                 android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="@id/tv_last_updated"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/layout_edit"
-                app:layout_constraintTop_toTopOf="@id/tv_last_updated"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_updated"
                 app:srcCompat="@drawable/ic_share_color"
                 app:tint="@null" />
 
@@ -97,9 +114,9 @@
                 android:background="@drawable/bg_icon_button" 
                 android:contentDescription="@string/menu_item_edit_config"
                 android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="@id/tv_last_updated"
+                app:layout_constraintBottom_toBottomOf="@id/layout_share"
                 app:layout_constraintEnd_toStartOf="@id/layout_remove"
-                app:layout_constraintTop_toTopOf="@id/tv_last_updated"
+                app:layout_constraintTop_toTopOf="@id/layout_share"
                 app:srcCompat="@drawable/ic_edit_color"
                 app:tint="@null" />
 
@@ -110,9 +127,9 @@
                 android:background="@drawable/bg_icon_button" 
                 android:contentDescription="@string/menu_item_del_config"
                 android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="@id/tv_last_updated"
+                app:layout_constraintBottom_toBottomOf="@id/layout_share"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_last_updated"
+                app:layout_constraintTop_toTopOf="@id/layout_share"
                 app:srcCompat="@drawable/ic_delete_empty"
                 app:tint="?attr/colorError" />
 

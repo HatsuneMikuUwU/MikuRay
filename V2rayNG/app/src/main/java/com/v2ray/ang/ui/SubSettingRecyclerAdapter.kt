@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.v2ray.ang.contracts.BaseAdapterListener
+import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ItemRecyclerSubSettingBinding
+import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.ItemTouchHelperAdapter
 import com.v2ray.ang.helper.ItemTouchHelperViewHolder
 import com.v2ray.ang.util.Utils
@@ -28,6 +30,10 @@ class SubSettingRecyclerAdapter(
         holder.itemSubSettingBinding.tvName.text = subItem.remarks
         holder.itemSubSettingBinding.tvUrl.text = subItem.url
         holder.itemSubSettingBinding.chkEnable.isChecked = subItem.enabled
+        val serverCount = MmkvManager.decodeServerList(subId).size
+        holder.itemSubSettingBinding.tvServerCount.text = holder.itemView.context.resources.getQuantityString(
+            R.plurals.sub_setting_server_count, serverCount, serverCount
+        )
         holder.itemSubSettingBinding.tvLastUpdated.text = Utils.formatTimestamp(subItem.lastUpdated)
         holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
@@ -50,11 +56,13 @@ class SubSettingRecyclerAdapter(
             holder.itemSubSettingBinding.layoutShare.visibility = View.INVISIBLE
             holder.itemSubSettingBinding.chkEnable.visibility = View.INVISIBLE
             holder.itemSubSettingBinding.tvLastUpdated.visibility = View.INVISIBLE
+            holder.itemSubSettingBinding.tvServerCount.visibility = View.INVISIBLE
         } else {
             holder.itemSubSettingBinding.tvUrl.visibility = View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.visibility = View.VISIBLE
             holder.itemSubSettingBinding.chkEnable.visibility = View.VISIBLE
             holder.itemSubSettingBinding.tvLastUpdated.visibility = View.VISIBLE
+            holder.itemSubSettingBinding.tvServerCount.visibility = View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.setOnClickListener {
                 adapterListener?.onShare(subItem.url)
             }
