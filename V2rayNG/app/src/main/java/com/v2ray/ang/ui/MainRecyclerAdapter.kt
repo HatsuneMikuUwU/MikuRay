@@ -13,6 +13,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.contracts.MainAdapterListener
 import com.v2ray.ang.databinding.ItemRecyclerFooterBinding
 import com.v2ray.ang.databinding.ItemRecyclerMainBinding
+import com.v2ray.ang.databinding.ItemRecyclerMainGridBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.enums.EConfigType
@@ -25,6 +26,7 @@ import java.util.Collections
 import com.v2ray.ang.util.IndicatorStyle
 import com.v2ray.ang.util.SelectedProfileBannerController
 import com.v2ray.ang.util.SensorTextController
+import com.v2ray.ang.util.getColorAttr
 import com.v2ray.ang.AppConfig
 
 class MainRecyclerAdapter(
@@ -33,8 +35,9 @@ class MainRecyclerAdapter(
 ) : RecyclerView.Adapter<MainRecyclerAdapter.BaseViewHolder>(), ItemTouchHelperAdapter,
     FastScrollRecyclerView.SectionedAdapter {
     companion object {
-        private const val VIEW_TYPE_ITEM = 1
+        private const val VIEW_TYPE_ITEM_LIST = 1
         private const val VIEW_TYPE_FOOTER = 2
+        private const val VIEW_TYPE_ITEM_GRID = 3
     }
 
     override fun getSectionName(position: Int): String {
@@ -43,6 +46,15 @@ class MainRecyclerAdapter(
     }
 
     private var data: MutableList<ServersCache> = mutableListOf()
+    private var isGridMode: Boolean = false
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setGridMode(gridMode: Boolean) {
+        if (isGridMode != gridMode) {
+            isGridMode = gridMode
+            notifyDataSetChanged()
+        }
+    }
     
     private var isRunningObserver: androidx.lifecycle.Observer<Boolean>? = null
     private var selectedBannerController: SelectedProfileBannerController? = null
@@ -96,20 +108,20 @@ class MainRecyclerAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (holder is MainViewHolder) {
-            val context = holder.itemMainBinding.root.context
+            val context = holder.views.root.context
             val guid = data[position].guid
             val profile = data[position].profile
 
             holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
             //Name address
-            holder.itemMainBinding.tvName.text = profile.remarks
-            holder.itemMainBinding.tvStatistics.text = if (profile.configType == EConfigType.POLICYGROUP) {
+            holder.views.tvName.text = profile.remarks
+            holder.views.tvStatistics.text = if (profile.configType == EConfigType.POLICYGROUP) {
                 getPolicyGroupSubText(context, profile)
             } else {
                 SensorTextController.getAddress(profile)
             }
-            holder.itemMainBinding.tvType.text = getProtocolName(profile)
+            holder.views.tvType.text = getProtocolName(profile)
 
             // Network & security icon+text (TCP Fix)
             val isNetSecEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_NETWORK_SECURITY_ENABLED) == true
@@ -117,49 +129,62 @@ class MainRecyclerAdapter(
 
             //TestResult
             val aff = MmkvManager.decodeServerAffiliationInfo(guid)
-            holder.itemMainBinding.tvTestResult.text = aff?.getTestDelayString().orEmpty()
+            holder.views.tvTestResult.text = aff?.getTestDelayString().orEmpty()
             if ((aff?.testDelayMillis ?: 0L) < 0L) {
-                holder.itemMainBinding.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPingRed))
+                holder.views.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPingRed))
             } else {
-                holder.itemMainBinding.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPing))
+                holder.views.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPing))
             }
 
             val isTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRAFFIC_ENABLED) == true
             val trafficStr = MmkvManager.getProfileTrafficString(guid)
             
             if (isTrafficEnabled && !trafficStr.isNullOrEmpty()) {
-                holder.itemMainBinding.tvTraffic.text = trafficStr
-                holder.itemMainBinding.tvTraffic.visibility = View.VISIBLE
+                holder.views.tvTraffic.text = trafficStr
+                holder.views.tvTraffic.visibility = View.VISIBLE
             } else {
-                holder.itemMainBinding.tvTraffic.visibility = View.GONE
+                holder.views.tvTraffic.visibility = View.GONE
             }
 
             val isSelectedServer = (guid == MmkvManager.getSelectServer())
             val isVpnConnected = mainViewModel.isRunning.value == true 
 
             if (isSelectedServer && isVpnConnected) {
-                holder.itemMainBinding.vStatusDot.setBackgroundResource(R.drawable.blink_color)
-                val blinkAnimDrawable = holder.itemMainBinding.vStatusDot.background
+                holder.views.vStatusDot.setBackgroundResource(R.drawable.blink_color)
+                val blinkAnimDrawable = holder.views.vStatusDot.background
                 
                 if (blinkAnimDrawable is android.graphics.drawable.AnimationDrawable) {
-                    holder.itemMainBinding.vStatusDot.visibility = View.VISIBLE
-                    holder.itemMainBinding.vStatusDot.post {
+                    holder.views.vStatusDot.visibility = View.VISIBLE
+                    holder.views.vStatusDot.post {
                         if (!blinkAnimDrawable.isRunning) {
                             blinkAnimDrawable.start()
                         }
                     }
                 }
             } else {
-                val blinkAnimDrawable = holder.itemMainBinding.vStatusDot.background
+                val blinkAnimDrawable = holder.views.vStatusDot.background
                 if (blinkAnimDrawable is android.graphics.drawable.AnimationDrawable) {
                     blinkAnimDrawable.stop()
                 }
-                holder.itemMainBinding.vStatusDot.visibility = View.GONE
-                holder.itemMainBinding.vStatusDot.background = null
+                holder.views.vStatusDot.visibility = View.GONE
+                holder.views.vStatusDot.background = null
             }
 
             //layoutIndicator & Card Background
-            if (isSelectedServer) {
+            if (isGridMode) {
+                selectedBannerController?.clear(holder.views.layoutIndicator)
+                holder.views.layoutIndicator.setBackgroundResource(0)
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
+                holder.views.layoutCard.setCardBackgroundColor(typedValue.data)
+                if (isSelectedServer) {
+                    val strokeWidthPx = (3 * context.resources.displayMetrics.density).toInt()
+                    holder.views.layoutCard.strokeWidth = strokeWidthPx
+                    holder.views.layoutCard.setStrokeColor(context.getColorAttr(R.attr.colorPrimary))
+                } else {
+                    holder.views.layoutCard.strokeWidth = 0
+                }
+            } else if (isSelectedServer) {
                 val styleName = MmkvManager.decodeSettingsString(
                     AppConfig.PREF_INDICATOR_STYLE,
                     IndicatorStyle.STYLE_0.name
@@ -170,46 +195,48 @@ class MainRecyclerAdapter(
 
                 val bannerController = selectedBannerController
                 if (bannerController != null && bannerController.isEnabled() && bannerController.hasBanner()) {
-                    bannerController.applyTo(holder.itemMainBinding.layoutIndicator)
+                    bannerController.applyTo(holder.views.layoutIndicator)
                 } else {
-                    bannerController?.clear(holder.itemMainBinding.layoutIndicator)
-                    holder.itemMainBinding.layoutIndicator.setBackgroundResource(indicatorStyle.drawableRes)
+                    bannerController?.clear(holder.views.layoutIndicator)
+                    holder.views.layoutIndicator.setBackgroundResource(indicatorStyle.drawableRes)
                 }
-                holder.itemMainBinding.layoutCard.setCardBackgroundColor(Color.TRANSPARENT)
+                holder.views.layoutCard.strokeWidth = 0
+                holder.views.layoutCard.setCardBackgroundColor(Color.TRANSPARENT)
             } else {
-                selectedBannerController?.clear(holder.itemMainBinding.layoutIndicator)
-                holder.itemMainBinding.layoutIndicator.setBackgroundResource(0)
+                selectedBannerController?.clear(holder.views.layoutIndicator)
+                holder.views.layoutIndicator.setBackgroundResource(0)
                 val typedValue = TypedValue()
                 context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
-                holder.itemMainBinding.layoutCard.setCardBackgroundColor(typedValue.data)
+                holder.views.layoutCard.strokeWidth = 0
+                holder.views.layoutCard.setCardBackgroundColor(typedValue.data)
             }
 
             //subscription remarks
             val subRemarks = getSubscriptionRemarks(profile)
-            holder.itemMainBinding.tvSubscription.text = subRemarks
+            holder.views.tvSubscription.text = subRemarks
             
             val isSubVisible = if (subRemarks.isEmpty()) View.GONE else View.VISIBLE
-            holder.itemMainBinding.tvSubscription.visibility = isSubVisible
-            holder.itemMainBinding.layoutSubscription.visibility = isSubVisible
+            holder.views.tvSubscription.visibility = isSubVisible
+            holder.views.layoutSubscription.visibility = isSubVisible
 
             //layout
-            holder.itemMainBinding.layoutShare.visibility = View.VISIBLE
-            holder.itemMainBinding.layoutEdit.visibility = View.VISIBLE
-            holder.itemMainBinding.layoutRemove.visibility = View.VISIBLE
+            holder.views.layoutShare.visibility = View.VISIBLE
+            holder.views.layoutEdit.visibility = View.VISIBLE
+            holder.views.layoutRemove.visibility = View.VISIBLE
 
-            holder.itemMainBinding.layoutShare.setOnClickListener {
+            holder.views.layoutShare.setOnClickListener {
                 adapterListener?.onShare(guid, profile, position, false)
             }
 
-            holder.itemMainBinding.layoutEdit.setOnClickListener {
+            holder.views.layoutEdit.setOnClickListener {
                 adapterListener?.onEdit(guid, position, profile)
             }
             
-            holder.itemMainBinding.layoutRemove.setOnClickListener {
+            holder.views.layoutRemove.setOnClickListener {
                 adapterListener?.onRemove(guid, position)
             }
 
-            holder.itemMainBinding.infoContainer.setOnClickListener {
+            holder.views.infoContainer.setOnClickListener {
                 adapterListener?.onSelectServer(guid)
             }
         }
@@ -283,28 +310,28 @@ class MainRecyclerAdapter(
         } ?: "none"
 
         val showAny = enabled && (isPolicyGroup || (!isComplex && (network != null || security != null)))
-        holder.itemMainBinding.layoutNetworkSecurity.visibility =
+        holder.views.layoutNetworkSecurity.visibility =
             if (showAny) View.VISIBLE else View.GONE
 
         if (enabled && isPolicyGroup && policyGroupTypeLabel != null) {
-            holder.itemMainBinding.tvNetwork.text = policyGroupTypeLabel
-            holder.itemMainBinding.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
-            holder.itemMainBinding.tvNetwork.visibility = View.VISIBLE
+            holder.views.tvNetwork.text = policyGroupTypeLabel
+            holder.views.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
+            holder.views.tvNetwork.visibility = View.VISIBLE
         } else if (enabled && !isComplex && network != null) {
-            holder.itemMainBinding.tvNetwork.text = network
-            holder.itemMainBinding.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
-            holder.itemMainBinding.tvNetwork.visibility = View.VISIBLE
+            holder.views.tvNetwork.text = network
+            holder.views.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
+            holder.views.tvNetwork.visibility = View.VISIBLE
         } else {
-            holder.itemMainBinding.tvNetwork.visibility = View.GONE
+            holder.views.tvNetwork.visibility = View.GONE
         }
 
         if (enabled && !isComplex && security != null) {
-            holder.itemMainBinding.tvSecurity.text = security
+            holder.views.tvSecurity.text = security
             val iconRes = if (security == "none") R.drawable.ic_unlock_24dp else R.drawable.ic_lock_24dp
-            holder.itemMainBinding.tvSecurity.setCompoundDrawables(makeIcon(iconRes), null, null, null)
-            holder.itemMainBinding.tvSecurity.visibility = View.VISIBLE
+            holder.views.tvSecurity.setCompoundDrawables(makeIcon(iconRes), null, null, null)
+            holder.views.tvSecurity.visibility = View.VISIBLE
         } else {
-            holder.itemMainBinding.tvSecurity.visibility = View.GONE
+            holder.views.tvSecurity.visibility = View.GONE
         }
     }
 
@@ -324,15 +351,25 @@ class MainRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            VIEW_TYPE_ITEM ->
-                MainViewHolder(ItemRecyclerMainBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            VIEW_TYPE_ITEM_LIST ->
+                MainViewHolder(
+                    ListItemViews(ItemRecyclerMainBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+                )
+            VIEW_TYPE_ITEM_GRID ->
+                MainViewHolder(
+                    GridItemViews(ItemRecyclerMainGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+                )
             else ->
                 FooterViewHolder(ItemRecyclerFooterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == data.size) VIEW_TYPE_FOOTER else VIEW_TYPE_ITEM
+        return when {
+            position == data.size -> VIEW_TYPE_FOOTER
+            isGridMode -> VIEW_TYPE_ITEM_GRID
+            else -> VIEW_TYPE_ITEM_LIST
+        }
     }
 
     open class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
@@ -340,19 +377,82 @@ class MainRecyclerAdapter(
         override fun onItemClear() {}
     }
 
-    class MainViewHolder(val itemMainBinding: ItemRecyclerMainBinding) :
-        BaseViewHolder(itemMainBinding.root) {
+    interface MainItemViews {
+        val root: View
+        val layoutCard: com.google.android.material.card.MaterialCardView
+        val layoutIndicator: View
+        val infoContainer: View
+        val tvName: android.widget.TextView
+        val vStatusDot: View
+        val tvType: com.google.android.material.chip.Chip
+        val layoutSubscription: View
+        val tvSubscription: com.google.android.material.chip.Chip
+        val layoutShare: View
+        val layoutEdit: View
+        val layoutRemove: View
+        val tvStatistics: android.widget.TextView
+        val tvTestResult: android.widget.TextView
+        val layoutNetworkSecurity: View
+        val tvNetwork: android.widget.TextView
+        val tvSecurity: android.widget.TextView
+        val tvTraffic: android.widget.TextView
+    }
+
+    private class ListItemViews(private val b: ItemRecyclerMainBinding) : MainItemViews {
+        override val root get() = b.root
+        override val layoutCard get() = b.layoutCard
+        override val layoutIndicator get() = b.layoutIndicator
+        override val infoContainer get() = b.infoContainer
+        override val tvName get() = b.tvName
+        override val vStatusDot get() = b.vStatusDot
+        override val tvType get() = b.tvType
+        override val layoutSubscription get() = b.layoutSubscription
+        override val tvSubscription get() = b.tvSubscription
+        override val layoutShare get() = b.layoutShare
+        override val layoutEdit get() = b.layoutEdit
+        override val layoutRemove get() = b.layoutRemove
+        override val tvStatistics get() = b.tvStatistics
+        override val tvTestResult get() = b.tvTestResult
+        override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
+        override val tvNetwork get() = b.tvNetwork
+        override val tvSecurity get() = b.tvSecurity
+        override val tvTraffic get() = b.tvTraffic
+    }
+
+    private class GridItemViews(private val b: ItemRecyclerMainGridBinding) : MainItemViews {
+        override val root get() = b.root
+        override val layoutCard get() = b.layoutCard
+        override val layoutIndicator get() = b.layoutIndicator
+        override val infoContainer get() = b.infoContainer
+        override val tvName get() = b.tvName
+        override val vStatusDot get() = b.vStatusDot
+        override val tvType get() = b.tvType
+        override val layoutSubscription get() = b.layoutSubscription
+        override val tvSubscription get() = b.tvSubscription
+        override val layoutShare get() = b.layoutShare
+        override val layoutEdit get() = b.layoutEdit
+        override val layoutRemove get() = b.layoutRemove
+        override val tvStatistics get() = b.tvStatistics
+        override val tvTestResult get() = b.tvTestResult
+        override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
+        override val tvNetwork get() = b.tvNetwork
+        override val tvSecurity get() = b.tvSecurity
+        override val tvTraffic get() = b.tvTraffic
+    }
+
+    class MainViewHolder(val views: MainItemViews) :
+        BaseViewHolder(views.root) {
         override fun onItemSelected() {
             val context = itemView.context
             val typedValue = TypedValue()
             context.theme.resolveAttribute(R.attr.colorSurfaceVariant, typedValue, true)
-            itemMainBinding.layoutCard.setCardBackgroundColor(typedValue.data)
+            views.layoutCard.setCardBackgroundColor(typedValue.data)
         }
         override fun onItemClear() {
             val context = itemView.context
             val typedValue = TypedValue()
             context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
-            itemMainBinding.layoutCard.setCardBackgroundColor(typedValue.data)
+            views.layoutCard.setCardBackgroundColor(typedValue.data)
         }
     }
 

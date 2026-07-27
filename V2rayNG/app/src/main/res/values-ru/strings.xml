@@ -263,7 +263,7 @@
     <string name="summary_pref_append_http_proxy">HTTP-прокси будет использоваться напрямую браузером и некоторыми совместимыми приложениями без прохождения через виртуальный сетевой адаптер (Android 10+)</string>
 
     <string name="title_pref_double_column_display">Включить двухколоночное отображение</string>
-    <string name="summary_pref_double_column_display">Список профилей отображается в две колонки, что позволяет видеть больше содержимого на экране. Для применения необходим перезапуск приложения.</string>
+    <string name="summary_pref_double_column_display">Список профилей отображается в две колонки, что позволяет показывать больше контента на экране.</string>
 
     <string name="title_pref_group_all_display">Показывать все группы</string>
     <string name="summary_pref_group_all_display">Добавить дополнительную вкладку «Все»</string>

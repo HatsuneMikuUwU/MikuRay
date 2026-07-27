@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.MaterialToolbar
@@ -109,6 +110,7 @@ class UiSettingsActivity : BaseActivity() {
         private val groupAllTabIcon by lazy { findPreference<Preference>(AppConfig.PREF_GROUP_ALL_TAB_ICON) }
         private val showWeatherChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_WEATHER_CHIP) }
         private val selectedBannerStyleEnabled by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED) }
+        private val selectedBannerCategory by lazy { findPreference<PreferenceCategory>("pref_category_selected_banner") }
 
         private val weatherUnit by lazy { findPreference<ListPreference>(AppConfig.PREF_WEATHER_USE_CELSIUS) }
         private val weatherCustomLocation by lazy { findPreference<EditTextPreference>(AppConfig.PREF_WEATHER_CUSTOM_LOCATION) }
@@ -487,6 +489,7 @@ class UiSettingsActivity : BaseActivity() {
             setupSheetBannerPreferences()
             setupSelectedBannerPreferences()
             setupParticlesPreferences()
+            updateSelectedBannerCategoryVisibility()
         }
 
         override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
@@ -1061,6 +1064,20 @@ class UiSettingsActivity : BaseActivity() {
             val savedBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
             val savedBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
             blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomRounds)
+
+            updateSelectedBannerCategoryVisibility()
+        }
+
+        /**
+         * Kategori "selected banner" (indicator style, banner particle, dll)
+         * gak relevan lagi kalau mode grid/double column lagi aktif -- di
+         * grid mode, indicator selected server cuma dikasih stroke card
+         * (lihat MainRecyclerAdapter.onBindViewHolder), jadi kategori ini
+         * disembunyiin sepenuhnya selama grid mode nyala.
+         */
+        private fun updateSelectedBannerCategoryVisibility() {
+            val isGridMode = MmkvManager.decodeSettingsBool(AppConfig.PREF_DOUBLE_COLUMN_DISPLAY, false)
+            selectedBannerCategory?.isVisible = !isGridMode
         }
 
         private fun updateTrueBlackState(isNight: Boolean) {

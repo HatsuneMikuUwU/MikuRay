@@ -54,10 +54,12 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         adapter = MainRecyclerAdapter(mainViewModel, ActivityAdapterListener())
+        adapter.setGridMode(isDoubleColumnEnabled())
         binding.recyclerView.setHasFixedSize(true)
-        
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-        
+
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount())
+        applyGridEdgePadding(isDoubleColumnEnabled())
+
         binding.recyclerView.adapter = adapter
 
         val animator = binding.recyclerView.itemAnimator
@@ -81,6 +83,34 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
     override fun onResume() {
         super.onResume()
         mainViewModel.subscriptionIdChanged(subId)
+
+        val doubleColumnEnabled = isDoubleColumnEnabled()
+        val layoutManager = binding.recyclerView.layoutManager as? GridLayoutManager
+        val desiredSpanCount = if (doubleColumnEnabled) 2 else 1
+        if (layoutManager != null && layoutManager.spanCount != desiredSpanCount) {
+            layoutManager.spanCount = desiredSpanCount
+        }
+        adapter.setGridMode(doubleColumnEnabled)
+        applyGridEdgePadding(doubleColumnEnabled)
+    }
+
+    private fun isDoubleColumnEnabled(): Boolean {
+        return MmkvManager.decodeSettingsBool(AppConfig.PREF_DOUBLE_COLUMN_DISPLAY, false)
+    }
+
+    private fun spanCount(): Int {
+        return if (isDoubleColumnEnabled()) 2 else 1
+    }
+
+    private fun applyGridEdgePadding(gridMode: Boolean) {
+        val density = resources.displayMetrics.density
+        val extraEdgePaddingPx = if (gridMode) (12 * density).toInt() else 0
+        binding.recyclerView.setPadding(
+            extraEdgePaddingPx,
+            binding.recyclerView.paddingTop,
+            extraEdgePaddingPx,
+            binding.recyclerView.paddingBottom
+        )
     }
 
     private fun editServer(guid: String, profile: ProfileItem) {

@@ -259,7 +259,7 @@
     <string name="summary_pref_append_http_proxy">Proxy HTTP bakal dipake langsung dari (browser/ beberapa app yang dukung), tanpa kudu lewat perangkat virtual NIC (Buat Android 10+ doang)</string>
 
     <string name="title_pref_double_column_display">Aktifin tampilan dua kolom</string>
-    <string name="summary_pref_double_column_display">Daftar profil bakal ditampilin jadi dua kolom, biar layar lu bisa muat lebih banyak. Tapi harus restart app dulu ya biar jalan.</string>
+    <string name="summary_pref_double_column_display">Daftar profil ditampilin dalam dua kolom, bikin lebih banyak konten yang muat di layar.</string>
 
     <string name="title_pref_group_all_display">Tampilin semua grup</string>
     <string name="summary_pref_group_all_display">Nambahin tab ekstra "Semua Tab"</string>
