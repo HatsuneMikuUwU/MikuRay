@@ -30,7 +30,7 @@ import com.v2ray.ang.databinding.ItemQrcodeBinding
 import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.snackbarError
-import com.v2ray.ang.extension.toast
+import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.util.LogUtil
@@ -156,7 +156,9 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             )
 
             viewModel.updateSubscriptions()
-            toast(getString(R.string.subscription_updater_job_tips))
+            if (dialogBinding.switchUpdateSubscription.isChecked) {
+                toastSuccess(R.string.subscription_updater_job_tips)
+            }
             sideSheetDialog.dismiss()
         }
 
