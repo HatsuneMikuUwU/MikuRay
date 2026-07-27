@@ -1,12 +1,15 @@
 package com.v2ray.ang.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.v2ray.ang.AngApplication
+import com.v2ray.ang.AppConfig
+import com.v2ray.ang.dto.SubscriptionUpdateMessage
 import com.v2ray.ang.dto.entities.SubscriptionCache
 import com.v2ray.ang.dto.entities.SubscriptionItem
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
-import com.v2ray.ang.handler.SubscriptionUpdater
+import com.v2ray.ang.util.MessageUtil
 
 class SubscriptionsViewModel : ViewModel() {
     private val subscriptions: MutableList<SubscriptionCache> =
@@ -51,11 +54,19 @@ class SubscriptionsViewModel : ViewModel() {
     }
 
     /**
-     * Triggers a background update for all enabled subscriptions via WorkManager.
+     * Triggers an immediate update for all enabled subscriptions via SubscriptionUpdateService.
      * Progress is reported through notifications instead of blocking the UI.
      */
     fun updateSubscriptions() {
-        SubscriptionUpdater.updateAllByManual()
+        val subIds = MmkvManager.decodeSubscriptions()
+            .filter { it.subscription.enabled && it.subscription.url.isNotEmpty() }
+            .map { it.guid }
+        if (subIds.isEmpty()) return
+
+        MessageUtil.sendMsg2SubscriptionService(
+            AngApplication.application,
+            SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, subIds)
+        )
     }
 }
 

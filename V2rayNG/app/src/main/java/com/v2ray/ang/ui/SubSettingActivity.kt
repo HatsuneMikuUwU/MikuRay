@@ -128,7 +128,6 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         sideSheetDialog.setContentView(dialogBinding.root)
 
         dialogBinding.btnCancel.setOnClickListener { sideSheetDialog.dismiss() }
-        dialogBinding.btnClose.setOnClickListener { sideSheetDialog.dismiss() }
         dialogBinding.btnOk.setOnClickListener {
             MmkvManager.encodeSettings(
                 AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION,
