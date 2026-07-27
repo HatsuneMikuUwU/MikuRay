@@ -58,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title_sub_update"
                             android:textAppearance="?textAppearanceTitleMedium"
-                            android:textColor="?android:textColorPrimary"
+                            android:textColor="?colorOnSurface"
                             android:textSize="16sp" />
 
                         <TextView
@@ -67,7 +67,7 @@
                             android:layout_marginTop="2dp"
                             android:text="@string/summary_pref_update_subscription"
                             android:textAppearance="?textAppearanceTitleSmall"
-                            android:textColor="?android:textColorSecondary"
+                            android:textColor="?colorOnSurfaceVariant"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title_pref_auto_test_after_update_subscription"
                             android:textAppearance="?textAppearanceTitleMedium"
-                            android:textColor="?android:textColorPrimary"
+                            android:textColor="?colorOnSurface"
                             android:textSize="16sp" />
 
                         <TextView
@@ -130,7 +130,7 @@
                             android:layout_marginTop="2dp"
                             android:text="@string/summary_pref_auto_test_after_update_subscription"
                             android:textAppearance="?textAppearanceTitleSmall"
-                            android:textColor="?android:textColorSecondary"
+                            android:textColor="?colorOnSurfaceVariant"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -184,7 +184,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title_pref_auto_remove_invalid_after_test"
                             android:textAppearance="?textAppearanceTitleMedium"
-                            android:textColor="?android:textColorPrimary"
+                            android:textColor="?colorOnSurface"
                             android:textSize="16sp" />
 
                         <TextView
@@ -193,7 +193,7 @@
                             android:layout_marginTop="2dp"
                             android:text="@string/summary_pref_auto_remove_invalid_after_test"
                             android:textAppearance="?textAppearanceTitleSmall"
-                            android:textColor="?android:textColorSecondary"
+                            android:textColor="?colorOnSurfaceVariant"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -247,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title_pref_auto_sort_after_test"
                             android:textAppearance="?textAppearanceTitleMedium"
-                            android:textColor="?android:textColorPrimary"
+                            android:textColor="?colorOnSurface"
                             android:textSize="16sp" />
 
                         <TextView
@@ -256,7 +256,7 @@
                             android:layout_marginTop="2dp"
                             android:text="@string/summary_pref_auto_sort_after_test"
                             android:textAppearance="?textAppearanceTitleSmall"
-                            android:textColor="?android:textColorSecondary"
+                            android:textColor="?colorOnSurfaceVariant"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -310,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title_pref_send_hwid"
                             android:textAppearance="?textAppearanceTitleMedium"
-                            android:textColor="?android:textColorPrimary"
+                            android:textColor="?colorOnSurface"
                             android:textSize="16sp" />
 
                         <TextView
@@ -319,7 +319,7 @@
                             android:layout_marginTop="2dp"
                             android:text="@string/summary_pref_send_hwid"
                             android:textAppearance="?textAppearanceTitleSmall"
-                            android:textColor="?android:textColorSecondary"
+                            android:textColor="?colorOnSurfaceVariant"
                             android:textSize="13sp" />
                     </LinearLayout>
 
