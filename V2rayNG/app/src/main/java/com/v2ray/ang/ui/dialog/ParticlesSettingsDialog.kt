@@ -190,7 +190,13 @@ class ParticlesSettingsDialog @JvmOverloads constructor(
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             sliders.forEach { (param, slider) ->
                 slider.value = param.default
+                dialogView.findViewById<TextView>(param.labelViewId).text =
+                    labelText(param, param.default)
+                MmkvManager.encodeSettings(param.prefKey, param.default)
             }
+            activity.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_PARTICLES_CHANGED))
+
+            dialog.dismiss()
         }
     }
 }

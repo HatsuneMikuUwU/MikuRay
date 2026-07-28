@@ -79,13 +79,18 @@ class BlurIntensityDialog @JvmOverloads constructor(
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            sliderRadius.value = AppConfig.DEFAULT_BLUR_RADIUS.toFloat()
-            sliderRounds.value = AppConfig.DEFAULT_BLUR_ROUNDS.toFloat()
-            WindowBlurUtils.updateWindowBlur(
-                dialog.window,
-                AppConfig.DEFAULT_BLUR_RADIUS.toFloat(),
-                AppConfig.DEFAULT_BLUR_ROUNDS
-            )
+            val defaultRadius = AppConfig.DEFAULT_BLUR_RADIUS
+            val defaultRounds = AppConfig.DEFAULT_BLUR_ROUNDS
+
+            sliderRadius.value = defaultRadius.toFloat()
+            sliderRounds.value = defaultRounds.toFloat()
+            WindowBlurUtils.updateWindowBlur(dialog.window, defaultRadius.toFloat(), defaultRounds)
+
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_RADIUS, defaultRadius)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_ROUNDS, defaultRounds)
+            updateSummary(defaultRadius, defaultRounds)
+
+            dialog.dismiss()
         }
     }
 

@@ -67,7 +67,14 @@ class SelectedBannerDimSliderDialog @JvmOverloads constructor(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            slider.value = AppConfig.SELECTED_BANNER_DIM_DEFAULT.toFloat()
+            val default = AppConfig.SELECTED_BANNER_DIM_DEFAULT
+            slider.value = default.toFloat()
+
+            MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_DIM, default)
+            summary = context.getString(R.string.selected_banner_dim_summary_value, default)
+            SelectedProfileBannerController.broadcastChanged(activity)
+
+            dialog.dismiss()
         }
 
         updateSummary()

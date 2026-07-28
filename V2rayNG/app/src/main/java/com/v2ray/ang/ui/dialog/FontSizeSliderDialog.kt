@@ -74,7 +74,18 @@ class FontSizeSliderDialog @JvmOverloads constructor(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            slider.value = AppConfig.FONT_SIZE_DEFAULT
+            val default = AppConfig.FONT_SIZE_DEFAULT
+            slider.value = default
+            preview.text = context.getString(R.string.pref_font_size_preview_format, formatPercent(default))
+            preview.textSize = 17f * default
+
+            MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_SIZE, default)
+            summary = formatPercent(default)
+
+            FontSizeController.applyFontScale(activity.applicationContext, default)
+
+            dialog.dismiss()
+            activity.recreate()
         }
     }
 }

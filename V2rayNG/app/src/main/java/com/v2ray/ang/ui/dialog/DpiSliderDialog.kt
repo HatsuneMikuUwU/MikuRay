@@ -66,6 +66,14 @@ class DpiSliderDialog @JvmOverloads constructor(
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             slider.value = systemDpi.toFloat().coerceIn(160f, 640f)
+
+            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_DPI, 0)
+            summary = systemDpi.toString()
+
+            DPIController.applyDpi(activity.applicationContext, systemDpi)
+
+            dialog.dismiss()
+            activity.recreate()
         }
     }
 }

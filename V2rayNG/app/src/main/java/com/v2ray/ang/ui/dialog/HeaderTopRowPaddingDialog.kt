@@ -67,7 +67,17 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            slider.value = AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT.toFloat()
+            val default = AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT
+            slider.value = default.toFloat()
+
+            MmkvManager.encodeSettings(AppConfig.PREF_HEADER_TOP_ROW_PADDING, default)
+            summary = context.getString(R.string.pref_header_top_row_padding_summary_value, default)
+            val intent = android.content.Intent(
+                AppConfig.BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED
+            )
+            activity.sendBroadcast(intent)
+
+            dialog.dismiss()
         }
 
         updateSummary()

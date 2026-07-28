@@ -67,7 +67,17 @@ class BannerHeightSliderDialog @JvmOverloads constructor(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            slider.value = AppConfig.HOME_BANNER_HEIGHT_DEFAULT.toFloat()
+            val default = AppConfig.HOME_BANNER_HEIGHT_DEFAULT
+            slider.value = default.toFloat()
+
+            MmkvManager.encodeSettings(AppConfig.PREF_HOME_BANNER_HEIGHT, default)
+            summary = context.getString(R.string.pref_home_banner_height_summary_value, default)
+            val intent = android.content.Intent(
+                AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED
+            )
+            activity.sendBroadcast(intent)
+
+            dialog.dismiss()
         }
 
         updateSummary()
