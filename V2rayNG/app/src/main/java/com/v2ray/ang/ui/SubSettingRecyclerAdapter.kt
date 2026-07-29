@@ -53,10 +53,10 @@ class SubSettingRecyclerAdapter(
 
         if (TextUtils.isEmpty(subItem.url)) {
             holder.itemSubSettingBinding.tvUrl.visibility = View.GONE
-            holder.itemSubSettingBinding.layoutShare.visibility = View.INVISIBLE
-            holder.itemSubSettingBinding.chkEnable.visibility = View.INVISIBLE
-            holder.itemSubSettingBinding.tvLastUpdated.visibility = View.INVISIBLE
-            holder.itemSubSettingBinding.tvServerCount.visibility = View.INVISIBLE
+            holder.itemSubSettingBinding.layoutShare.visibility = View.GONE
+            holder.itemSubSettingBinding.chkEnable.visibility = View.GONE
+            holder.itemSubSettingBinding.tvLastUpdated.visibility = View.GONE
+            holder.itemSubSettingBinding.tvServerCount.visibility = View.GONE
         } else {
             holder.itemSubSettingBinding.tvUrl.visibility = View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.visibility = View.VISIBLE
