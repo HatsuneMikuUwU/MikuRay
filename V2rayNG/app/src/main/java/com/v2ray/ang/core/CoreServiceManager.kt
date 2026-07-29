@@ -184,11 +184,12 @@ object CoreServiceManager {
 //        val result = V2rayConfigUtil.getV2rayConfig(context, guid)
 //        if (!result.status) error(result.errorMessage.ifBlank { "Failed to get V2Ray config" })
 
-        if (config.insecure == true) {
+        if (config.insecure == true && config.pinnedCA256.isNullOrEmpty()) {
             context.snackbarError(
                 context.getString(R.string.toast_allow_insecure_deprecated),
                 title = context.getString(R.string.title_alerter_error)
             )
+            Utils.setClipboard(context, context.getString(R.string.toast_allow_insecure_deprecated))
         }
 
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_PROXY_SHARING)) {

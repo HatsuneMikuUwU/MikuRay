@@ -813,7 +813,7 @@ yang kamu butuhin."</string>
     <string name="pref_blur_bottom_intensity">Kekuatan Blur Kartu Bawah</string>
     <string name="title_blur_settings">Pengaturan Blur</string>
     <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja dengan radius 25-40.</string>
-    <string name="toast_allow_insecure_deprecated">PERINGATAN: Lewati verifikasi sertifikat "allowInsecure" akan dinonaktifkan pada Agustus 2026. Segera gunakan certificate fingerprint. Fitur ini tidak akan tersedia setelah kedaluwarsa.</string>
+    <string name="toast_allow_insecure_deprecated">Node ini menggunakan koneksi tanpa enkripsi. Komunikasi Anda berpotensi dapat dilihat langsung oleh infrastruktur jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node semacam ini tidak dapat terhubung melalui Xray core versi 26.2.6+.\nJika ini node buatan sendiri, aktifkan enkripsi keamanan seperti TLS, atau gunakan certificate pinning (pinnedCA256).\nJika ini node dari penyedia layanan, hubungi penyedia untuk melakukan pembaruan teknis. Jika penyedia menolak, disarankan untuk beralih ke penyedia yang lebih memperhatikan keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>
 
     <!-- WelcomeActivity -->
     <string name="uwu_skip">Lewatin</string>
