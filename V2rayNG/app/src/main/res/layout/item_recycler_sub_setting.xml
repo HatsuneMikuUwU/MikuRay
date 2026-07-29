@@ -24,35 +24,41 @@
             android:layout_height="wrap_content"
             android:padding="12dp">
 
-            <TextView
-                android:id="@+id/tv_name"
+            <LinearLayout
+                android:id="@+id/header_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@id/chk_enable"
-                app:layout_constraintEnd_toStartOf="@id/chk_enable"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/chk_enable" />
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/chk_enable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:thumbIcon="@drawable/mtrl_ic_check" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="17sp" />
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/chk_enable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:thumbIcon="@drawable/mtrl_ic_check" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="tv_name,chk_enable" />
+                app:constraint_referenced_ids="header_layout" />
 
             <TextView
                 android:id="@+id/tv_url"
