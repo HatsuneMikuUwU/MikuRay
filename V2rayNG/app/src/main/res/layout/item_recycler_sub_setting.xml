@@ -34,17 +34,17 @@
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@id/chk_enable"
                 app:layout_constraintEnd_toStartOf="@id/chk_enable"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/chk_enable" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/chk_enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/tv_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_name"
+                app:layout_constraintTop_toTopOf="parent"
                 app:thumbIcon="@drawable/mtrl_ic_check" />
 
             <androidx.constraintlayout.widget.Barrier
