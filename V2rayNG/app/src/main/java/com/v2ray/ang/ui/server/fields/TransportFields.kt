@@ -157,9 +157,7 @@ class TransportFields(private val activity: Activity) {
             spNetwork?.setText(networks[0], false)
             updateForNetwork(networks[0], null)
         }
-        if (browserDialerModes.isNotEmpty()) {
-            spBrowserDialerMode?.setText(browserDialerModes[0], false)
-        }
+        spBrowserDialerMode?.setText("", false)
     }
 
     /** Returns false (no-op) when this section isn't present in the current layout. */
@@ -190,10 +188,11 @@ class TransportFields(private val activity: Activity) {
         profileItem.kcpMtu = etKcpMtu?.text?.toString()?.toIntOrNull()
         profileItem.kcpTti = etKcpTti?.text?.toString()?.toIntOrNull()
 
-        val browserDialerMode = spBrowserDialerMode?.text?.toString() ?: browserDialerModes.firstOrNull().orEmpty()
+        val browserDialerMode = spBrowserDialerMode?.text?.toString().orEmpty()
         val defaultDialerMode = browserDialerModes.firstOrNull().orEmpty()
         profileItem.browserDialerMode =
             if ((networks[networkPos] == NetworkType.WS.type || networks[networkPos] == NetworkType.XHTTP.type)
+                && browserDialerMode.isNotEmpty()
                 && browserDialerMode != defaultDialerMode
             ) {
                 browserDialerMode
