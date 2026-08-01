@@ -341,8 +341,8 @@
     <string name="sub_update_diff_added">已添加：\n%s</string>
     <string name="sub_update_diff_deleted">已删除：\n%s</string>
     <string name="toast_server_not_found_in_group">当前分组中未找到选中的服务器</string>
+    <string name="btn_scroll_to_selected_server">前往选中的配置</string>
     <string name="toast_fragment_not_available">无法定位当前视图</string>
-    <string name="title_locate_selected_config">定位所选配置</string>
     <string name="title_clear_test_results">清除测试结果</string>
 
     <string name="tasker_start_service">启动服务</string>

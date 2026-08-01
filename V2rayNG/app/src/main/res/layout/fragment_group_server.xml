@@ -27,4 +27,25 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_scroll_to_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:minWidth="55dp"
+        android:minHeight="55dp"
+        android:contentDescription="@string/btn_scroll_to_selected_server"
+        android:visibility="gone"
+        android:alpha="0"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        app:backgroundTint="?attr/colorPrimary"
+        app:icon="@drawable/ic_crosshairs"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="?attr/colorOnPrimary"
+        style="@style/Widget.Material3Expressive.Button.IconButton.Filled" />
+
 </FrameLayout>

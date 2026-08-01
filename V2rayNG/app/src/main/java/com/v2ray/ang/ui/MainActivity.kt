@@ -527,7 +527,6 @@ class MainActivity : HelperBaseActivity(),
             R.id.del_duplicate_config -> delDuplicateConfig()
             R.id.del_invalid_config -> delInvalidConfig()
             R.id.sub_update -> importConfigViaSub()
-            R.id.locate_selected_config -> locateSelectedServer()
             R.id.clear_test_results -> mainViewModel.clearTestResults()
             R.id.reset_traffic -> {
                 val currentGroupName = mainViewModel.getSubscriptions(this)
@@ -1049,7 +1048,7 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
-    private fun locateSelectedServer() {
+    fun locateSelectedServer() {
         val targetSubscriptionId = mainViewModel.findSubscriptionIdBySelect()
         if (targetSubscriptionId.isNullOrEmpty()) {
             snackbarDefault(getString(R.string.title_file_chooser), title = getString(R.string.title_alerter_info))
