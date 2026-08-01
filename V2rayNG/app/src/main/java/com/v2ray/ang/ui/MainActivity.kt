@@ -26,7 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
-import com.v2ray.ang.core.CoreServiceManager
+import com.v2ray.ang.core.LauncherManager
 import com.v2ray.ang.databinding.ActivityMainBinding
 import com.v2ray.ang.databinding.ItemQrcodeBinding
 import com.v2ray.ang.enums.EConfigType
@@ -728,7 +728,7 @@ class MainActivity : HelperBaseActivity(),
         applyRunningState(isLoading = true, isRunning = false)
 
         if (mainViewModel.isRunning.value == true) {
-            CoreServiceManager.stopVService(this)
+            LauncherManager.stopService(this)
         } else if (SettingsManager.isVpnMode()) {
             val intent = VpnService.prepare(this)
             if (intent == null) {
@@ -759,12 +759,12 @@ class MainActivity : HelperBaseActivity(),
             checkAndRequestPermission(PermissionType.ACCESS_LOCAL_NETWORK) {}
         }
 
-        CoreServiceManager.startVService(this)
+        LauncherManager.startService(this)
     }
 
     fun restartV2Ray() {
         if (mainViewModel.isRunning.value == true) {
-            CoreServiceManager.stopVService(this)
+            LauncherManager.stopService(this)
         }
         lifecycleScope.launch {
             delay(500)

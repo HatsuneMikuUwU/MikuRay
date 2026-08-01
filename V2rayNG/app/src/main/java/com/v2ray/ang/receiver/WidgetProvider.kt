@@ -25,6 +25,7 @@ import com.google.android.material.color.DynamicColorsOptions
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreServiceManager
+import com.v2ray.ang.core.LauncherManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.ui.MainActivity
 import com.v2ray.ang.util.ThemeManager
@@ -158,9 +159,9 @@ class WidgetProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
         if (AppConfig.BROADCAST_ACTION_WIDGET_CLICK == intent.action) {
             if (CoreServiceManager.isRunning()) {
-                CoreServiceManager.stopVService(context)
+                LauncherManager.stopService(context)
             } else {
-                CoreServiceManager.startVServiceFromToggle(context)
+                LauncherManager.startServiceFromToggle(context)
             }
         } else if (AppConfig.BROADCAST_ACTION_ACTIVITY == intent.action) {
             AppWidgetManager.getInstance(context)?.let { manager ->
