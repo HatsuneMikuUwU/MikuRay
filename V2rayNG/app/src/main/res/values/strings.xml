@@ -367,6 +367,8 @@
     <string name="sub_update_diff_deleted">Deleted:\n%s</string>
     <string name="toast_server_not_found_in_group">Selected server not found in current group</string>
     <string name="btn_scroll_to_selected_server">Go to selected profile</string>
+    <string name="btn_scroll_to_top">Scroll to top</string>
+    <string name="btn_scroll_to_bottom">Scroll to bottom</string>
     <string name="toast_fragment_not_available">Unable to locate current view</string>
     <string name="title_clear_test_results">Clear test results</string>
 
