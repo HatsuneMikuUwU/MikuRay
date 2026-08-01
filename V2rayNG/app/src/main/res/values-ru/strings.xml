@@ -347,6 +347,8 @@
     <string name="sub_update_diff_deleted">Удалено:\n%s</string>
     <string name="toast_server_not_found_in_group">Выбранный сервер не найден в текущей группе</string>
     <string name="btn_scroll_to_selected_server">Перейти к выбранному профилю</string>
+    <string name="btn_scroll_to_top">Прокрутить наверх</string>
+    <string name="btn_scroll_to_bottom">Прокрутить вниз</string>
     <string name="toast_fragment_not_available">Не удалось найти текущий вид</string>
     <string name="title_clear_test_results">Очистить результаты тестов</string>
 

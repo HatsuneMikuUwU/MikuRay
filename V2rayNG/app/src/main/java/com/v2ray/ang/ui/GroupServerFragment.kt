@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.core.view.isVisible
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -45,7 +46,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
     private val subId: String by lazy { arguments?.getString(ARG_SUB_ID).orEmpty() }
     private val scrollButtonHideHandler = Handler(Looper.getMainLooper())
     private var scrollButtonVisible = false
-    private val hideScrollButtonRunnable = Runnable { setScrollButtonVisible(false) }
+    private val hideScrollButtonRunnable = Runnable { setScrollButtonsVisible(false) }
     private var bottomStatusCard: View? = null
     private val bottomStatusLayoutListener =
         View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> syncButtonMarginWithBottomStatus() }
@@ -92,14 +93,29 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         binding.btnScrollToSelected.setOnClickListener {
             ownerActivity.locateSelectedServer()
             scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
-            setScrollButtonVisible(false)
+            setScrollButtonsVisible(false)
+        }
+
+        binding.btnScrollToTop.setOnClickListener {
+            binding.recyclerView.smoothScrollToPosition(0)
+            scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
+            setScrollButtonsVisible(false)
+        }
+
+        binding.btnScrollToBottom.setOnClickListener {
+            val lastPosition = adapter.itemCount - 1
+            if (lastPosition >= 0) {
+                binding.recyclerView.smoothScrollToPosition(lastPosition)
+            }
+            scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
+            setScrollButtonsVisible(false)
         }
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy == 0) return
-                if (MmkvManager.getSelectServer().isNullOrEmpty()) return
-                setScrollButtonVisible(true)
+                binding.btnScrollToSelected.isVisible = !MmkvManager.getSelectServer().isNullOrEmpty()
+                setScrollButtonsVisible(true)
                 scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
                 scrollButtonHideHandler.postDelayed(hideScrollButtonRunnable, SCROLL_BUTTON_AUTO_HIDE_DELAY_MS)
             }
@@ -113,31 +129,31 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
     private fun syncButtonMarginWithBottomStatus() {
         if (!isAdded || view == null) return
         val statusCard = bottomStatusCard ?: return
-        val btn = binding.btnScrollToSelected
+        val container = binding.layoutScrollButtons
         if (statusCard.height <= 0) return
 
         val cardMarginBottom = (statusCard.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
         val gap = (16 * resources.displayMetrics.density).toInt()
         val desiredMargin = statusCard.height + cardMarginBottom + gap
 
-        val btnParams = btn.layoutParams as? ViewGroup.MarginLayoutParams ?: return
-        if (btnParams.bottomMargin != desiredMargin) {
-            btnParams.bottomMargin = desiredMargin
-            btn.layoutParams = btnParams
+        val containerParams = container.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+        if (containerParams.bottomMargin != desiredMargin) {
+            containerParams.bottomMargin = desiredMargin
+            container.layoutParams = containerParams
         }
     }
 
-    private fun setScrollButtonVisible(visible: Boolean) {
+    private fun setScrollButtonsVisible(visible: Boolean) {
         if (visible == scrollButtonVisible) return
         scrollButtonVisible = visible
-        val button = binding.btnScrollToSelected
-        button.clearAnimation()
+        val container = binding.layoutScrollButtons
+        container.clearAnimation()
         if (visible) {
-            button.visibility = View.VISIBLE
-            button.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(150).start()
+            container.visibility = View.VISIBLE
+            container.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(150).start()
         } else {
-            button.animate().alpha(0f).scaleX(0.6f).scaleY(0.6f).setDuration(150)
-                .withEndAction { button.visibility = View.GONE }.start()
+            container.animate().alpha(0f).scaleX(0.6f).scaleY(0.6f).setDuration(150)
+                .withEndAction { container.visibility = View.GONE }.start()
         }
     }
 
