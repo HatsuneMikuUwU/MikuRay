@@ -53,7 +53,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
 
     companion object {
         private const val ARG_SUB_ID = "subscriptionId"
-        private const val SCROLL_BUTTON_AUTO_HIDE_DELAY_MS = 2000L
+        private const val SCROLL_BUTTON_AUTO_HIDE_DELAY_MS = 1500L
         fun newInstance(subId: String) = GroupServerFragment().apply {
             arguments = Bundle().apply { putString(ARG_SUB_ID, subId) }
         }
