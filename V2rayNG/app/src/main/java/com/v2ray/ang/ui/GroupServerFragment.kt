@@ -114,6 +114,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy == 0) return
+                if (isHideScrollButtonsEnabled()) return
                 binding.btnScrollToSelected.isVisible = !MmkvManager.getSelectServer().isNullOrEmpty()
                 setScrollButtonsVisible(true)
                 scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
@@ -143,12 +144,13 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         }
     }
 
-    private fun setScrollButtonsVisible(visible: Boolean) {
-        if (visible == scrollButtonVisible) return
-        scrollButtonVisible = visible
+    private fun setScrollButtonsVisible(wantVisible: Boolean) {
+        val targetVisible = wantVisible && !isHideScrollButtonsEnabled()
+        if (targetVisible == scrollButtonVisible) return
+        scrollButtonVisible = targetVisible
         val container = binding.layoutScrollButtons
         container.clearAnimation()
-        if (visible) {
+        if (targetVisible) {
             container.visibility = View.VISIBLE
             container.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(150).start()
         } else {
@@ -177,10 +179,19 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         }
         adapter.setGridMode(doubleColumnEnabled)
         applyGridEdgePadding(doubleColumnEnabled)
+
+        if (isHideScrollButtonsEnabled()) {
+            scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
+            setScrollButtonsVisible(false)
+        }
     }
 
     private fun isDoubleColumnEnabled(): Boolean {
         return MmkvManager.decodeSettingsBool(AppConfig.PREF_DOUBLE_COLUMN_DISPLAY, false)
+    }
+
+    private fun isHideScrollButtonsEnabled(): Boolean {
+        return MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_SCROLL_BUTTONS, false)
     }
 
     private fun spanCount(): Int {

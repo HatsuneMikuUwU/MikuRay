@@ -55,6 +55,7 @@ object AppConfig {
     const val PREF_SPEED_ENABLED = "pref_speed_enabled"
     const val PREF_TRAFFIC_ENABLED = "pref_traffic_enabled"
     const val PREF_NETWORK_SECURITY_ENABLED = "pref_network_security_enabled"
+    const val PREF_HIDE_SCROLL_BUTTONS = "pref_hide_scroll_buttons"
     const val PREF_SEND_HWID = "pref_send_hwid"
     const val PREF_HIDE_FROM_RECENT_APPS = "hide_from_recent_apps"
     const val PREF_CONFIRM_REMOVE = "pref_confirm_remove"

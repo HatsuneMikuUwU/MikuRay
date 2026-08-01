@@ -115,6 +115,11 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
         val hasTestResults = MmkvManager.hasAnyTestDelayResults()
         view.findViewById<View>(R.id.clear_test_results)?.visibility = if (hasTestResults) View.VISIBLE else View.GONE
 
+        val isScrollButtonsHidden = MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_SCROLL_BUTTONS, false)
+        val hasSelectedServer = !MmkvManager.getSelectServer().isNullOrEmpty()
+        view.findViewById<View>(R.id.action_scroll_to_selected)?.visibility =
+            if (isScrollButtonsHidden && hasSelectedServer) View.VISIBLE else View.GONE
+
         view.findViewById<View>(R.id.card_order_origin)?.setOnClickListener {
             view.findViewById<View>(R.id.action_order_origin)?.performClick()
         }
@@ -162,7 +167,8 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
             R.id.tcping_all,
             R.id.clear_test_results,
             R.id.sub_update,
-            R.id.reset_traffic
+            R.id.reset_traffic,
+            R.id.action_scroll_to_selected
         ).forEach { id ->
             view.findViewById<View>(id)?.setOnClickListener(clickListener)
         }

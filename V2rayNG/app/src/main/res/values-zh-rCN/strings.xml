@@ -226,6 +226,8 @@
     <string name="summary_pref_ip_api_url">URL</string>
     <string name="title_pref_show_isp_info">显示运营商名称</string>
     <string name="summary_pref_show_isp_info">在检测到的 IP 旁显示运营商/组织名称</string>
+    <string name="title_pref_hide_scroll_buttons">隐藏悬浮滚动按钮</string>
+    <string name="summary_pref_hide_scroll_buttons">隐藏服务器列表上悬浮的滚动到顶部/底部/选中项按钮。开启后，可在\"更多\"菜单中使用「前往选中的配置」代替</string>
 
     <string name="title_pref_proxy_sharing_enabled">允许来自局域网的连接</string>
     <string name="summary_pref_proxy_sharing_enabled">其他设备可以使用 socks/http 协议通过您的 IP 地址连接到代理, 仅在受信任的网络中启用以避免未经授权的连接</string>

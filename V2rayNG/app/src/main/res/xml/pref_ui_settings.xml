@@ -99,6 +99,15 @@
             android:summary="@string/summary_pref_double_column_display"
             android:title="@string/title_pref_double_column_display" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_crosshairs"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_hide_scroll_buttons"
+            android:summary="@string/summary_pref_hide_scroll_buttons"
+            android:title="@string/title_pref_hide_scroll_buttons" />
+
         <ListPreference
             android:icon="@drawable/ic_translate"
             app:layout="@layout/uwu_bot"

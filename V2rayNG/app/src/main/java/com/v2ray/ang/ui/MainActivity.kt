@@ -523,6 +523,7 @@ class MainActivity : HelperBaseActivity(),
                 mainViewModel.testAllRealPing(true)
             }
             R.id.service_restart -> restartV2Ray()
+            R.id.action_scroll_to_selected -> locateSelectedServer()
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
             R.id.del_invalid_config -> delInvalidConfig()
