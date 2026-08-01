@@ -104,6 +104,8 @@ class ServerCustomConfigActivity : BaseActivity() {
         }
         config.server = profileItem?.server
         config.serverPort = profileItem?.serverPort
+        config.network = profileItem?.network
+        config.security = profileItem?.security
         config.description = AngConfigManager.generateDescription(config)
 
         MmkvManager.encodeServerConfig(editGuid, config)

@@ -288,7 +288,7 @@ class MainRecyclerAdapter(
             return wrapped
         }
 
-        val isComplex = profile.configType.isComplexType()
+        val isComplex = profile.configType.isComplexType() && profile.configType != EConfigType.CUSTOM
         val isPolicyGroup = profile.configType == EConfigType.POLICYGROUP
         val network = profile.network?.takeIf { it.isNotBlank() }
 
