@@ -562,7 +562,7 @@
     <string name="menu_item_search_main">搜索配置</string>
     <string name="title_search_bar_chip">搜索栏组件</string>
     <string name="pref_show_weather_chip_title">显示天气组件</string>
-    <string name="pref_show_weather_chip_summary">根据你的位置，在搜索栏旁边显示当前温度。不能与总下载量组件同时启用</string>
+    <string name="pref_show_weather_chip_summary">根据您的位置在搜索栏旁显示当前温度。不能与总流量组件同时启用</string>
     <string name="pref_show_total_traffic_chip_title">显示总流量组件</string>
     <string name="pref_show_total_traffic_chip_summary">在搜索栏旁边显示所有配置的上传+下载总流量。不能与天气组件同时启用</string>
     <string name="pref_search_chip_gradient_title">渐变组件背景</string>

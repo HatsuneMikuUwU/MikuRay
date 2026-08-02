@@ -605,7 +605,7 @@
     <string name="weather_temp_format">%d°C</string>
     <string name="title_search_bar_chip">Search Bar Chip</string>
     <string name="pref_show_weather_chip_title">Show weather chip</string>
-    <string name="pref_show_weather_chip_summary">Show current temperature next to the search bar based on your location. Can\'t be active at the same time as the total download usage chip</string>
+    <string name="pref_show_weather_chip_summary">Show current temperature next to the search bar based on your location. Can\'t be active at the same time as the total traffic chip</string>
     <string name="pref_show_total_traffic_chip_title">Show total traffic usage chip</string>
     <string name="pref_show_total_traffic_chip_summary">Show total upload + download traffic across all profiles next to the search bar. Can\'t be active at the same time as the weather chip</string>
     <string name="pref_search_chip_gradient_title">Gradient chip background</string>

@@ -582,7 +582,7 @@
     <string name="menu_item_search_main">Поиск конфига</string>
     <string name="title_search_bar_chip">Плашка строки поиска</string>
     <string name="pref_show_weather_chip_title">Показывать плашку погоды</string>
-    <string name="pref_show_weather_chip_summary">Показывать текущую температуру рядом со строкой поиска на основе вашего местоположения. Не может работать одновременно с плашкой общего объема скачивания</string>
+    <string name="pref_show_weather_chip_summary">Показывать текущую температуру рядом с поисковой строкой на основе вашего местоположения. Не может быть активна одновременно с плашкой общего трафика</string>
     <string name="pref_show_total_traffic_chip_title">Показывать плашку общего объема трафика</string>
     <string name="pref_show_total_traffic_chip_summary">Показывать общий трафик (отправка + загрузка) для всех профилей рядом со строкой поиска. Не может работать одновременно с плашкой погоды</string>
     <string name="pref_search_chip_gradient_title">Градиентный фон плашки</string>

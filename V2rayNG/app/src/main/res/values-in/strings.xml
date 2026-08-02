@@ -564,7 +564,7 @@
     <string name="menu_item_search_main">Cari konfig</string>
     <string name="title_search_bar_chip">Chip Bar Pencarian</string>
     <string name="pref_show_weather_chip_title">Tampilin info cuaca</string>
-    <string name="pref_show_weather_chip_summary">Tampilin suhu sekarang di sebelah bar pencarian sesuai lokasi kamu. Nggak bisa aktif barengan sama chip total pemakaian download</string>
+    <string name="pref_show_weather_chip_summary">Tampilin suhu saat ini di sebelah bar pencarian berdasarkan lokasi kamu. Nggak bisa aktif barengan sama chip total traffic</string>    
     <string name="pref_show_total_traffic_chip_title">Tampilin chip total pemakaian traffic</string>
     <string name="pref_show_total_traffic_chip_summary">Tampilin total traffic upload + download dari semua profil di sebelah bar pencarian. Nggak bisa aktif barengan sama chip info cuaca</string>
     <string name="pref_search_chip_gradient_title">Background chip gradasi</string>
