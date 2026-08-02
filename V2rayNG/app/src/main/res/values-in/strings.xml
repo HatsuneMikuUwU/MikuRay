@@ -153,7 +153,6 @@
     <string name="msg_file_not_found">Filenya ga ketemu cuy</string>
     <string name="msg_remark_is_duplicate">Nama catatannya udah ada yang pake tuh</string>
     <string name="asset_geo_files_sources">Sumber file Geo</string>
-    <string name="asset_geo_files_sources_tip">Opsional</string>
 
     <string name="msg_dialog_progress">Sabar, lagi loading...</string>
     <string name="menu_item_search">Cari</string>

@@ -138,8 +138,7 @@
             android:entryValues="@array/geo_files_sources_values"
             android:key="pref_geo_files_sources"
             android:summary="%s"
-            android:title="@string/asset_geo_files_sources"
-            android:dialogMessage="@string/asset_geo_files_sources_tip" />
+            android:title="@string/asset_geo_files_sources"/>
 
     </com.neko.widget.UwuPreferenceCategory>
 

@@ -154,7 +154,6 @@
     <string name="msg_file_not_found">文件未找到</string>
     <string name="msg_remark_is_duplicate">备注已经存在</string>
     <string name="asset_geo_files_sources">Geo 文件来源</string>
-    <string name="asset_geo_files_sources_tip">可选</string>
 
     <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">正在加载</string>

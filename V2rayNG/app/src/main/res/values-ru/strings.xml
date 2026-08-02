@@ -156,7 +156,6 @@
     <string name="msg_file_not_found">Файл не найден</string>
     <string name="msg_remark_is_duplicate">Такое примечание уже существует</string>
     <string name="asset_geo_files_sources">Источник Geo-файлов</string>
-    <string name="asset_geo_files_sources_tip">Необязательно</string>
 
     <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Загрузка</string>

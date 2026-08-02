@@ -170,7 +170,6 @@
     <string name="msg_file_not_found">File not found</string>
     <string name="msg_remark_is_duplicate">The remarks already exists</string>
     <string name="asset_geo_files_sources">Geo files source</string>
-    <string name="asset_geo_files_sources_tip">Optional</string>
 
     <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Loading</string>
