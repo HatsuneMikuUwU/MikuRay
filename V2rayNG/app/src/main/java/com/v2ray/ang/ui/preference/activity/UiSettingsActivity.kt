@@ -78,9 +78,12 @@ class UiSettingsActivity : BaseActivity() {
 
     class UiSettingsFragment : PreferenceFragmentCompat() {
 
-        companion object {
-            private const val REQUEST_CODE_LOCATION = 9001
-        }
+        private val locationPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
+                    WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
+                }
+            }
 
         private val appTheme by lazy { findPreference<Preference>(AppConfig.PREF_APP_THEME) }
         private val dynamicColor by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_DYNAMIC_COLOR) }
@@ -421,10 +424,7 @@ class UiSettingsActivity : BaseActivity() {
                         requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                     if (!hasForegroundPermission && !WeatherHelper.hasCustomLocation()) {
-                        requestPermissions(
-                            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                            REQUEST_CODE_LOCATION
-                        )
+                        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
                     } else {
                         WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
                     }
@@ -1014,20 +1014,6 @@ class UiSettingsActivity : BaseActivity() {
             preferenceScreen?.let { traverse(it) }
         }
 
-        override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            when (requestCode) {
-                REQUEST_CODE_LOCATION -> {
-                    if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
-                        WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
-                    }
-                }
-            }
-        }
 
         override fun onStart() {
             super.onStart()

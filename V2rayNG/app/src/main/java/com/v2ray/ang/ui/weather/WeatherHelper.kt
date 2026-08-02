@@ -562,7 +562,7 @@ object WeatherHelper {
             .header("Accept", "application/json")
             .build()
         return client.newCall(req).execute().use { resp ->
-            if (!resp.isSuccessful) null else resp.body?.string()
+            if (!resp.isSuccessful) null else resp.body.string()
         }
     }
 

@@ -488,7 +488,7 @@ class BackupActivity : HelperBaseActivity() {
             dialogBinding.etWebdavUrl.setText(cfg.baseUrl)
             dialogBinding.etWebdavUser.setText(cfg.username ?: "")
             dialogBinding.etWebdavPass.setText(cfg.password ?: "")
-            dialogBinding.etWebdavRemotePath.setText(cfg.remoteBasePath ?: "/")
+            dialogBinding.etWebdavRemotePath.setText(cfg.remoteBasePath)
         }
 
         MaterialAlertDialogBuilder(this)

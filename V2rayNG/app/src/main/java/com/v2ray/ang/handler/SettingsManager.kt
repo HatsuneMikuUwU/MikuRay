@@ -623,6 +623,7 @@ object SettingsManager {
         initRoutingRulesets(context)
     }
 
+    @Suppress("DEPRECATION")
     private fun migrateHysteria2PinSHA256() {
         // Check if migration has already been done
         val migrationKey = "hysteria2_pin_sha256_migrated"
@@ -713,7 +714,9 @@ object SettingsManager {
             // Move top
             val subsList = decodeSubsList()
             if (subsList.count() > 1) {
-                swapSubscriptions(0, subsList.count() - 1)
+                val reordered = subsList.toMutableList()
+                reordered.add(reordered.removeAt(0))
+                saveSubscriptionsOrder(reordered)
             }
         }
     }

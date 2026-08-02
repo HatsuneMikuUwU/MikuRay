@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.Interpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.core.os.BundleCompat
 import androidx.core.view.children
 import com.v2ray.ang.R
 import kotlin.math.max
@@ -129,7 +130,7 @@ class ExpandableView @JvmOverloads constructor(
         if (parcelable is Bundle) {
             expansion = parcelable.getFloat(KEY_EXPANSION)
             state = if (expansion == 1f) State.EXPANDED else State.COLLAPSED
-            val superState: Parcelable? = parcelable.getParcelable(KEY_SUPER_STATE)
+            val superState: Parcelable? = BundleCompat.getParcelable(parcelable, KEY_SUPER_STATE, Parcelable::class.java)
             super.onRestoreInstanceState(superState)
         } else {
             super.onRestoreInstanceState(parcelable)

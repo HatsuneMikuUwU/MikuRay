@@ -112,7 +112,7 @@ class SvgToPath private constructor(private val atts: XmlPullParser) {
     private fun popPath(): Path {
         val poppedPath = pathStack.pop()
         if (pathStack.isNotEmpty()) {
-            this.path = pathStack.peek()
+            this.path = pathStack.peek()!!
         }
         return poppedPath
     }
@@ -544,7 +544,7 @@ private object ParseUtil {
 private object PathParser {
     fun doPath(d: String): Path {
         return try {
-            androidx.core.graphics.PathParser.createPathFromPathData(d) ?: Path()
+            androidx.core.graphics.PathParser.createPathFromPathData(d)
         } catch (t: Throwable) {
             Path()
         }

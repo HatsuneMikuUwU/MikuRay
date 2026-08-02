@@ -410,7 +410,7 @@ object AngConfigManager {
                     var count = 0
                     val keyToProfile = mutableMapOf<String, ProfileItem>()
                     for (srv in serverList.reversed()) {
-                        val config = CustomFmt.parse(JsonUtil.toJson(srv)) ?: continue
+                        val config = CustomFmt.parse(JsonUtil.toJson(srv))
                         config.subscriptionId = subid
                         val key = MmkvManager.encodeServerConfig("", config)
                         MmkvManager.encodeServerRaw(key, JsonUtil.toJsonPretty(srv) ?: "")
@@ -429,7 +429,7 @@ object AngConfigManager {
 
             try {
                 // For compatibility
-                val config = CustomFmt.parse(server) ?: return 0
+                val config = CustomFmt.parse(server)
                 config.subscriptionId = subid
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
@@ -443,7 +443,7 @@ object AngConfigManager {
             return 0
         } else if (server.startsWith("[Interface]") && server.contains("[Peer]")) {
             try {
-                val config = WireguardFmt.parseWireguardConfFile(server) ?: return R.string.toast_incorrect_protocol
+                val config = WireguardFmt.parseWireguardConfFile(server)
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
                 }

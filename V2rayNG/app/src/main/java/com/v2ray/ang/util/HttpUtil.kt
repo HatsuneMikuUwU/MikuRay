@@ -125,7 +125,7 @@ object HttpUtil {
                     LogUtil.w(AppConfig.TAG, "Failed to get URL content, code=${response.code}")
                     return null
                 }
-                return response.body?.string()
+                return response.body.string()
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to get URL content", e)
@@ -196,7 +196,7 @@ object HttpUtil {
                     }
 
                     response.isSuccessful -> {
-                        return response.body?.string() ?: ""
+                        return response.body.string()
                     }
 
                     else -> {
@@ -292,7 +292,7 @@ object HttpUtil {
                     LogUtil.w(AppConfig.TAG, "Failed to download file, code=${response.code}, url=$url")
                     return false
                 }
-                val body = response.body ?: return false
+                val body = response.body
                 body.byteStream().use { input ->
                     targetFile.outputStream().use { output ->
                         input.copyTo(output)

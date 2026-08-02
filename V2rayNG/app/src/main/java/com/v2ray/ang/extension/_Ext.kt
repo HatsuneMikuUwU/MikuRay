@@ -79,7 +79,7 @@ object ForegroundActivityTracker : Application.ActivityLifecycleCallbacks {
 
 private fun Context.vibrateOnError() {
     try {
-        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        val vibrator = getSystemService(Vibrator::class.java)
         if (vibrator?.hasVibrator() == true) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(VibrationEffect.createOneShot(200L, VibrationEffect.DEFAULT_AMPLITUDE))

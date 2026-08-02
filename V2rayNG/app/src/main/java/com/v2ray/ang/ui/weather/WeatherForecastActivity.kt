@@ -150,8 +150,8 @@ class WeatherForecastActivity : BaseActivity() {
             "${Math.round(entry.apparentTemperatureCelsius)}\u00b0"
         )
 
-        val todayMax = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(0)
-        val todayMin = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(0)
+        val todayMax = entry.dailyTemperatureMaxCelsius.getOrNull(0)
+        val todayMin = entry.dailyTemperatureMinCelsius.getOrNull(0)
         tvMaxMin.isVisible = todayMax != null && todayMin != null
         if (todayMax != null && todayMin != null) {
             tvMaxMin.text = getString(
@@ -179,9 +179,9 @@ class WeatherForecastActivity : BaseActivity() {
 
     private fun buildDaySummary(entry: WeatherHelper.WeatherCacheEntry): String {
         val conditionLabel = getString(WeatherHelper.conditionLabelRes(entry.weatherCode)).lowercase(Locale.getDefault())
-        val hi = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(0)
-        val lo = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(0)
-        val precip = (entry.dailyPrecipitationProbabilityMax as? List<Int>)?.getOrNull(0) ?: 0
+        val hi = entry.dailyTemperatureMaxCelsius.getOrNull(0)
+        val lo = entry.dailyTemperatureMinCelsius.getOrNull(0)
+        val precip = entry.dailyPrecipitationProbabilityMax.getOrNull(0) ?: 0
         val wind = entry.windSpeedKmh
 
         val parts = mutableListOf<String>()
@@ -249,20 +249,20 @@ class WeatherForecastActivity : BaseActivity() {
             "${entry.cloudCoverPercent}%"
         )
 
-        (entry.dailyUvIndexMax as? List<Double>)?.getOrNull(0)?.let { uv ->
+        entry.dailyUvIndexMax.getOrNull(0)?.let { uv ->
             items += DetailItem(
                 R.drawable.ic_weather_sunny,
                 getString(R.string.weather_detail_uv_index),
                 String.format(Locale.getDefault(), "%.1f", uv)
             )
         }
-        formatTimeOfDay((entry.dailySunriseIso as? List<String>)?.getOrNull(0))?.let { sunrise ->
+        formatTimeOfDay(entry.dailySunriseIso.getOrNull(0))?.let { sunrise ->
             items += DetailItem(R.drawable.ic_weather_sunrise, getString(R.string.weather_detail_sunrise), sunrise)
         }
-        formatTimeOfDay((entry.dailySunsetIso as? List<String>)?.getOrNull(0))?.let { sunset ->
+        formatTimeOfDay(entry.dailySunsetIso.getOrNull(0))?.let { sunset ->
             items += DetailItem(R.drawable.ic_weather_sunset, getString(R.string.weather_detail_sunset), sunset)
         }
-        (entry.dailyPrecipitationSumMm as? List<Double>)?.getOrNull(0)?.let { mm ->
+        entry.dailyPrecipitationSumMm.getOrNull(0)?.let { mm ->
             items += DetailItem(
                 R.drawable.ic_weather_rain,
                 getString(R.string.weather_detail_precipitation),
@@ -309,7 +309,7 @@ class WeatherForecastActivity : BaseActivity() {
     }
 
     private fun buildHourlyItems(entry: WeatherHelper.WeatherCacheEntry): List<HourlyForecastItem> {
-        val times = entry.hourlyTimeIso as? List<String>
+        val times = entry.hourlyTimeIso
         if (times.isNullOrEmpty()) return emptyList()
 
         val nowIso = SimpleDateFormat("yyyy-MM-dd'T'HH:00", Locale.US).format(Date())
@@ -322,10 +322,10 @@ class WeatherForecastActivity : BaseActivity() {
 
         return (startIndex until endIndex).mapNotNull { i ->
             val iso = times.getOrNull(i) ?: return@mapNotNull null
-            val temp = (entry.hourlyTemperatureCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
-            val code = (entry.hourlyWeatherCode as? List<Int>)?.getOrNull(i) ?: 0
-            val precip = (entry.hourlyPrecipitationProbability as? List<Int>)?.getOrNull(i) ?: 0
-            val isDay = ((entry.hourlyIsDay as? List<Int>)?.getOrNull(i) ?: 1) == 1
+            val temp = entry.hourlyTemperatureCelsius.getOrNull(i) ?: return@mapNotNull null
+            val code = entry.hourlyWeatherCode.getOrNull(i) ?: 0
+            val precip = entry.hourlyPrecipitationProbability.getOrNull(i) ?: 0
+            val isDay = (entry.hourlyIsDay.getOrNull(i) ?: 1) == 1
             val date = try {
                 isoParser.parse(iso)
             } catch (e: Exception) {
@@ -348,7 +348,7 @@ class WeatherForecastActivity : BaseActivity() {
     }
 
     private fun buildDailyItems(entry: WeatherHelper.WeatherCacheEntry): List<DailyForecastItem> {
-        val dates = entry.dailyDateIso as? List<String>
+        val dates = entry.dailyDateIso
         if (dates.isNullOrEmpty()) return emptyList()
 
         val dateParser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
@@ -356,10 +356,10 @@ class WeatherForecastActivity : BaseActivity() {
 
         return dates.indices.mapNotNull { i ->
             val dateStr = dates.getOrNull(i) ?: return@mapNotNull null
-            val max = (entry.dailyTemperatureMaxCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
-            val min = (entry.dailyTemperatureMinCelsius as? List<Double>)?.getOrNull(i) ?: return@mapNotNull null
-            val code = (entry.dailyWeatherCode as? List<Int>)?.getOrNull(i) ?: 0
-            val precip = (entry.dailyPrecipitationProbabilityMax as? List<Int>)?.getOrNull(i) ?: 0
+            val max = entry.dailyTemperatureMaxCelsius.getOrNull(i) ?: return@mapNotNull null
+            val min = entry.dailyTemperatureMinCelsius.getOrNull(i) ?: return@mapNotNull null
+            val code = entry.dailyWeatherCode.getOrNull(i) ?: 0
+            val precip = entry.dailyPrecipitationProbabilityMax.getOrNull(i) ?: 0
 
             val weekdayLabel = if (i == 0) {
                 getString(R.string.weather_today)

@@ -47,7 +47,7 @@ class ServerProxyChainMemberAdapter(
         holder.binding.spMemberRemark.setOnItemClickListener { _, _, selectedIndex, _ ->
             val adapterPos = holder.bindingAdapterPosition
             if (adapterPos != RecyclerView.NO_POSITION && adapterPos in members.indices) {
-                val selectedItem = dropdownAdapter.getItem(selectedIndex)?.toString() ?: ""
+                val selectedItem = dropdownAdapter.getItem(selectedIndex) ?: ""
                 members[adapterPos] = selectedItem.trim()
                 adapterListener?.onRefreshData()
             }

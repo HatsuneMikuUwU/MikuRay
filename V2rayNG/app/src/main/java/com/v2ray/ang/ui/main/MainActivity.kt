@@ -132,6 +132,7 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -900,7 +901,7 @@ class MainActivity : HelperBaseActivity(),
 
     private fun importClipboard(): Boolean {
         return try {
-            Utils.getClipboard(this)?.let { importBatchConfig(it) }
+            Utils.getClipboard(this).let { importBatchConfig(it) }
             true
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to import config from clipboard", e)
