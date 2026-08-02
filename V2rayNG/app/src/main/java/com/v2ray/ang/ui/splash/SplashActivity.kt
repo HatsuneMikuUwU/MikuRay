@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.v2ray.ang.AppConfig.PREF_SHOW_SPLASH
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.ui.base.BaseActivity
 import com.v2ray.ang.util.AppNameHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

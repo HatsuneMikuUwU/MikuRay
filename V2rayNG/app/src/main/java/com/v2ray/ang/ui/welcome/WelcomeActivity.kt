@@ -9,6 +9,7 @@ import androidx.core.view.updatePadding
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.ui.base.BaseActivity
+import com.v2ray.ang.ui.splash.SplashActivity
 
 class WelcomeActivity : BaseActivity() {
 

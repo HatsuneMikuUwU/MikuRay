@@ -1,6 +1,6 @@
 package com.v2ray.ang.ui.main
 import com.v2ray.ang.ui.base.HelperBaseActivity
-import com.v2ray.ang.ui.AboutActivity
+import com.v2ray.ang.ui.about.AboutActivity
 import com.v2ray.ang.ui.subscription.SubSettingActivity
 import com.v2ray.ang.ui.subscription.SubEditActivity
 import com.v2ray.ang.ui.routing.RoutingSettingActivity
