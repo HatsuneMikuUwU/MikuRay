@@ -170,6 +170,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_final_mask"
+        app:helperText="@string/server_lab_final_mask_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_extra">
