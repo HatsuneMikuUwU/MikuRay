@@ -180,7 +180,7 @@
     <string name="subscription_updater_job_tips">Tugas bakal jalan di background, progressnya bisa dipantau lewat notifikasi.</string>
     <string name="summary_pref_update_subscription">Matiin biar cuma tes/sortir server yang udah ada, tanpa narik ulang konten langganan.</string>
     <string name="title_pref_auto_test_after_update_subscription">Auto tes abis update langganan</string>
-    <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu, sabar ya.</string>
+    <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu. Kalau diaktifin, tugasnya jalan di background; kalau enggak, jalan di halaman ini.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Auto hapus konfig ngaco abis dites</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Hasil tes belum tentu akurat 100%; konfig yang kehapus ga bisa balik lagi lho.</string>
     <string name="title_pref_auto_sort_after_test">Auto urutin abis dites</string>

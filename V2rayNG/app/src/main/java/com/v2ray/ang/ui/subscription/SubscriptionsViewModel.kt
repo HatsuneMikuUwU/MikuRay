@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.v2ray.ang.AngApplication
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.dto.SubscriptionUpdateMessage
+import com.v2ray.ang.dto.SubscriptionUpdateResult
 import com.v2ray.ang.dto.entities.SubscriptionCache
 import com.v2ray.ang.dto.entities.SubscriptionItem
+import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
@@ -56,8 +58,9 @@ class SubscriptionsViewModel : ViewModel() {
     /**
      * Triggers an immediate update for all enabled subscriptions via SubscriptionUpdateService.
      * Progress is reported through notifications instead of blocking the UI.
+     * Use this when auto-test-after-update is enabled, since that phase can run for a while.
      */
-    fun updateSubscriptions() {
+    fun updateSubscriptionsMore() {
         val subIds = MmkvManager.decodeSubscriptions()
             .filter { it.subscription.enabled && it.subscription.url.isNotEmpty() }
             .map { it.guid }
@@ -67,6 +70,15 @@ class SubscriptionsViewModel : ViewModel() {
             AngApplication.application,
             SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, false, subIds)
         )
+    }
+
+    /**
+     * Updates all enabled subscriptions synchronously (on the caller's dispatcher) without
+     * going through the foreground service/notification. Use this when auto-test-after-update
+     * is disabled, so a quick update doesn't need a persistent background task.
+     */
+    fun updateSubscriptionsOnly(): SubscriptionUpdateResult {
+        return AngConfigManager.updateConfigViaSubAll()
     }
 }
 

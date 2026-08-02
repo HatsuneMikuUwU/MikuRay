@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,11 +33,16 @@ import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.toastSuccess
+import com.v2ray.ang.extension.toastInfo
+import com.v2ray.ang.extension.toastError
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.QRCodeDecoder
 import com.v2ray.ang.util.Utils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import com.v2ray.ang.ui.bottomsheet.ShareSubBottomSheet
 
@@ -156,9 +162,48 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
                 dialogBinding.switchSendHwid.isChecked
             )
 
-            viewModel.updateSubscriptions()
-            if (dialogBinding.switchUpdateSubscription.isChecked) {
-                toastSuccess(R.string.subscription_updater_job_tips)
+            when {
+                // Auto-test can take a while, so run it through the foreground
+                // service and report progress via notification instead of blocking the UI.
+                dialogBinding.switchAutoTest.isChecked -> {
+                    viewModel.updateSubscriptionsMore()
+                    toastSuccess(R.string.subscription_updater_job_tips)
+                }
+                // Update-only is quick, so just do it inline with a loading indicator
+                // instead of spinning up the background service/notification.
+                dialogBinding.switchUpdateSubscription.isChecked -> {
+                    showLoading()
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            val result = viewModel.updateSubscriptionsOnly()
+                            withContext(Dispatchers.Main) {
+                                when {
+                                    result.successCount + result.failureCount + result.skipCount == 0 ->
+                                        toastInfo(getString(R.string.title_update_subscription_no_subscription))
+
+                                    result.successCount > 0 && result.failureCount + result.skipCount == 0 ->
+                                        toastSuccess(getString(R.string.title_update_config_count, result.configCount))
+
+                                    else ->
+                                        toastInfo(
+                                            getString(
+                                                R.string.title_update_subscription_result,
+                                                result.configCount, result.successCount, result.failureCount, result.skipCount
+                                            )
+                                        )
+                                }
+                                refreshData()
+                                hideLoading()
+                            }
+                        } catch (e: Exception) {
+                            LogUtil.e(AppConfig.TAG, "Subscription update failed", e)
+                            withContext(Dispatchers.Main) {
+                                toastError(R.string.toast_failure)
+                                hideLoading()
+                            }
+                        }
+                    }
+                }
             }
             sideSheetDialog.dismiss()
         }
