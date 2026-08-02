@@ -32,7 +32,7 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
         
-        resValue("string", "uwu_version_name", appVersionName.toString())
+        resValue("string", "uwu_version_name", appVersionName)
         resValue("string", "uwu_version_code", appVersionCode.toString())
         resValue("string", "uwu_package_name", applicationId.toString())
         resValue("string", "uwu_build_date", appBuildDate.toString())
