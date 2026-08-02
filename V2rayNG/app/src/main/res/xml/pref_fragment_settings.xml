@@ -19,14 +19,16 @@
             app:layout="@layout/uwu_mid"
             android:key="pref_fragment_length"
             android:summary="50-100"
-            android:title="@string/title_pref_fragment_length" />
+            android:title="@string/title_pref_fragment_length"
+            android:dialogMessage="@string/title_pref_fragment_length_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:key="pref_fragment_interval"
             android:summary="10-20"
-            android:title="@string/title_pref_fragment_interval" />
+            android:title="@string/title_pref_fragment_interval"
+            android:dialogMessage="@string/title_pref_fragment_interval_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"

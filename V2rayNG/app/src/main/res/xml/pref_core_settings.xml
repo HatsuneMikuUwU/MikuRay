@@ -65,7 +65,8 @@
             app:layout="@layout/uwu_mid"
             android:key="pref_socks_username"
             android:summary="@string/summary_pref_socks_username"
-            android:title="@string/title_pref_socks_username" />
+            android:title="@string/title_pref_socks_username"
+            android:dialogMessage="@string/title_pref_socks_username_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_account_edit"
@@ -73,7 +74,8 @@
             android:inputType="textPassword"
             android:key="pref_socks_password"
             android:summary="@string/summary_pref_socks_password"
-            android:title="@string/title_pref_socks_password" />
+            android:title="@string/title_pref_socks_password"
+            android:dialogMessage="@string/title_pref_socks_password_tip" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_toggle_switch"
@@ -89,21 +91,24 @@
             app:layout="@layout/uwu_mid"
             android:key="pref_remote_dns"
             android:summary="@string/summary_pref_remote_dns"
-            android:title="@string/title_pref_remote_dns" />
+            android:title="@string/title_pref_remote_dns"
+            android:dialogMessage="@string/title_pref_remote_dns_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_domestic_dns"
             android:summary="@string/summary_pref_domestic_dns"
-            android:title="@string/title_pref_domestic_dns" />
+            android:title="@string/title_pref_domestic_dns"
+            android:dialogMessage="@string/title_pref_domestic_dns_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_dns_hosts"
             android:summary="@string/summary_pref_dns_hosts"
-            android:title="@string/title_pref_dns_hosts" />
+            android:title="@string/title_pref_dns_hosts"
+            android:dialogMessage="@string/title_pref_dns_hosts_tip" />
 
         <ListPreference
             android:icon="@drawable/ic_math_log"
@@ -133,7 +138,8 @@
             android:entryValues="@array/geo_files_sources_values"
             android:key="pref_geo_files_sources"
             android:summary="%s"
-            android:title="@string/asset_geo_files_sources" />
+            android:title="@string/asset_geo_files_sources"
+            android:dialogMessage="@string/asset_geo_files_sources_tip" />
 
     </com.neko.widget.UwuPreferenceCategory>
 

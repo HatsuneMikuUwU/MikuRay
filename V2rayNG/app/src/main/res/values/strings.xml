@@ -82,21 +82,29 @@
     <string name="server_lab_port3">port</string>
     <string name="server_lab_id3">password</string>
     <string name="server_lab_security3">security</string>
-    <string name="server_lab_id4">Password(Optional)</string>
-    <string name="server_lab_security4">User(Optional)</string>
+    <string name="server_lab_id4">Password</string>
+    <string name="server_lab_id4_tip">Optional</string>
+    <string name="server_lab_security4">User</string>
+    <string name="server_lab_security4_tip">Optional</string>
     <string name="server_lab_encryption">encryption</string>
     <string name="server_lab_flow">flow</string>
     <string name="server_lab_public_key">PublicKey</string>
-    <string name="server_lab_preshared_key">PreSharedKey(optional)</string>
+    <string name="server_lab_preshared_key">PreSharedKey</string>
+    <string name="server_lab_preshared_key_tip">Optional</string>
     <string name="server_lab_short_id">ShortId</string>
     <string name="server_lab_spider_x">SpiderX</string>
     <string name="server_lab_mldsa65_verify">Mldsa65Verify</string>
     <string name="server_lab_secret_key">SecretKey</string>
-    <string name="server_lab_reserved">Reserved(Optional, separated by commas)</string>
-    <string name="server_lab_local_address">Local address (optional IPv4/IPv6, separated by commas)</string>
-    <string name="server_lab_local_mtu">Mtu(optional, default 1420)</string>
-    <string name="server_lab_kcp_mtu">mKCP MTU (Optional, core default 1350)</string>
-    <string name="server_lab_kcp_tti">mKCP TTI (Optional, core default 50)</string>
+    <string name="server_lab_reserved">Reserved</string>
+    <string name="server_lab_reserved_tip">Optional, separated by commas</string>
+    <string name="server_lab_local_address">Local address</string>
+    <string name="server_lab_local_address_tip">Optional IPv4/IPv6, separated by commas</string>
+    <string name="server_lab_local_mtu">Mtu</string>
+    <string name="server_lab_local_mtu_tip">Optional, default 1420</string>
+    <string name="server_lab_kcp_mtu">mKCP MTU</string>
+    <string name="server_lab_kcp_mtu_tip">Optional, core default 1350</string>
+    <string name="server_lab_kcp_tti">mKCP TTI</string>
+    <string name="server_lab_kcp_tti_tip">Optional, core default 50</string>
     <string name="toast_success">Success</string>
     <string name="toast_failure">Failure</string>
     <string name="toast_none_data">There is nothing</string>
@@ -115,16 +123,22 @@
     <string name="server_lab_request_host6">Host(SNI)(Optional)</string>
     <string name="toast_action_not_allowed">Action not allowed</string>
     <string name="server_obfs_password">Obfs password</string>
-    <string name="server_lab_port_hop">Port Hopping(will override the port)</string>
+    <string name="server_lab_port_hop">Port Hopping</string>
+    <string name="server_lab_port_hop_tip">Will override the port</string>
     <string name="server_lab_port_hop_interval">Port Hopping Interval</string>
-    <string name="server_lab_bandwidth_down">Bandwidth down (Supported units: k/m/g/t)</string>
-    <string name="server_lab_bandwidth_up">Bandwidth up (Supported units: k/m/g/t)</string>
+    <string name="server_lab_bandwidth_down">Bandwidth down</string>
+    <string name="server_lab_bandwidth_down_tip">Supported units: k/m/g/t</string>
+    <string name="server_lab_bandwidth_up">Bandwidth up</string>
+    <string name="server_lab_bandwidth_up_tip">Supported units: k/m/g/t</string>
     <string name="server_lab_xhttp_mode">XHTTP Mode</string>
-    <string name="server_lab_xhttp_extra">XHTTP Extra raw JSON, format: { XHTTPObject }</string>
-    <string name="server_lab_final_mask">finalMask raw JSON, format: { FinalMaskObject }</string>
+    <string name="server_lab_xhttp_extra">XHTTP Extra</string>
+    <string name="server_lab_xhttp_extra_tip">Raw JSON, format: { XHTTPObject }</string>
+    <string name="server_lab_final_mask">finalMask</string>
+    <string name="server_lab_final_mask_tip">Raw JSON, format: { FinalMaskObject }</string>
     <string name="server_lab_ech_config_list">EchConfigList</string>
     <string name="server_lab_verify_peer_cert_by_name">Verify Peer Cert By Name</string>
-    <string name="server_lab_pinned_ca256">Certificate fingerprint (SHA-256)</string>
+    <string name="server_lab_pinned_ca256">Certificate fingerprint</string>
+    <string name="server_lab_pinned_ca256_tip">SHA-256</string>
     <string name="pinned_ca256_action_fetch">Fetch and fill certificate fingerprint</string>
     <string name="toast_fetch_cert_sha256_success">Certificate fingerprint fetched successfully</string>
     <string name="toast_fetch_cert_sha256_failed">Failed to fetch certificate fingerprint</string>
@@ -155,7 +169,8 @@
     <string name="title_user_asset_add_url">Add asset URL</string>
     <string name="msg_file_not_found">File not found</string>
     <string name="msg_remark_is_duplicate">The remarks already exists</string>
-    <string name="asset_geo_files_sources">Geo files source (optional)</string>
+    <string name="asset_geo_files_sources">Geo files source</string>
+    <string name="asset_geo_files_sources_tip">Optional</string>
 
     <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Loading</string>
@@ -224,21 +239,32 @@
     <string name="title_pref_prefer_ipv6">Prefer IPv6</string>
     <string name="summary_pref_prefer_ipv6">Prefer IPv6 addresses when resolving domain names</string>
 
-    <string name="title_pref_remote_dns">Remote DNS (udp/tcp/https/quic)(Optional)</string>
+    <string name="title_pref_remote_dns">Remote DNS</string>
+
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Optional</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
-    <string name="title_pref_vpn_dns">VPN DNS (only IPv4/v6)</string>
+    <string name="title_pref_vpn_dns">VPN DNS</string>
+
+    <string name="title_pref_vpn_dns_tip">Only IPv4/v6</string>
     <string name="title_pref_vpn_bypass_lan">Does VPN bypass LAN</string>
 
     <string name="title_pref_vpn_interface_address">VPN Interface Address</string>
 
-    <string name="title_pref_vpn_mtu">VPN MTU (default 1500)</string>
+    <string name="title_pref_vpn_mtu">VPN MTU</string>
+
+    <string name="title_pref_vpn_mtu_tip">Default 1500</string>
 
 
-    <string name="title_pref_domestic_dns">Domestic DNS (Optional)</string>
+    <string name="title_pref_domestic_dns">Domestic DNS</string>
+
+
+    <string name="title_pref_domestic_dns_tip">Optional</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
-    <string name="title_pref_dns_hosts">DNS hosts (Format: domain:address,…)</string>
+    <string name="title_pref_dns_hosts">DNS hosts</string>
+
+    <string name="title_pref_dns_hosts_tip">Format: domain:address,…</string>
     <string name="summary_pref_dns_hosts">domain:address,…</string>
 
     <string name="title_pref_delay_test_url">True delay test url </string>
@@ -263,9 +289,11 @@
     <string name="summary_pref_socks_port">Local proxy port</string>
     <string name="title_pref_dynamic_socks_port">Enable dynamic local proxy port</string>
     <string name="summary_pref_dynamic_socks_port">Generate a random local proxy port each time the inbound is created</string>
-    <string name="title_pref_socks_username">Local proxy username (optional)</string>
+    <string name="title_pref_socks_username">Local proxy username</string>
+    <string name="title_pref_socks_username_tip">Optional</string>
     <string name="summary_pref_socks_username">Username</string>
-    <string name="title_pref_socks_password">Local proxy password (optional)</string>
+    <string name="title_pref_socks_password">Local proxy password</string>
+    <string name="title_pref_socks_password_tip">Optional</string>
     <string name="summary_pref_socks_password">Password</string>
 
     <string name="title_pref_local_dns_port">Local DNS port</string>
@@ -303,7 +331,8 @@
 
     <string name="title_pref_auto_update_subscription">Automatic update subscriptions</string>
     <string name="summary_pref_auto_update_subscription">Update your subscriptions automatically at set intervals in the background. Depending on the device, this feature may not always work</string>
-    <string name="title_pref_auto_update_interval">Auto Update Interval (Minutes, Min value 15)</string>
+    <string name="title_pref_auto_update_interval">Auto Update Interval</string>
+    <string name="title_pref_auto_update_interval_tip">Minutes, Min value 15</string>
 
     <string name="title_core_loglevel">Log Level</string>
     <string name="title_outbound_domain_resolve_method">Outbound domain pre-resolve method</string>
@@ -315,7 +344,8 @@
     <string name="title_pref_use_hev_tunnel">Enable Hev TUN Feature</string>
     <string name="summary_pref_use_hev_tunnel">When enabled, TUN will use hev-socks5-tunnel; otherwise, it will use xray-core.</string>
     <string name="title_pref_hev_tunnel_loglevel">Hev Tun Log Level</string>
-    <string name="title_pref_hev_tunnel_rw_timeout">Hev Tun read/write timeout (seconds) (tcp,udp default 300,60)</string>
+    <string name="title_pref_hev_tunnel_rw_timeout">Hev Tun read/write timeout</string>
+    <string name="title_pref_hev_tunnel_rw_timeout_tip">Seconds, tcp/udp default 300,60</string>
 
     <string name="title_category_root_mode">Root mode</string>
     <string name="title_pref_root_mode">Root mode (system-wide)</string>
@@ -337,7 +367,8 @@
     <string name="sub_setting_remarks">remarks</string>
     <string name="sub_setting_url">Optional URL</string>
     <string name="sub_setting_user_agent">User Agent</string>
-    <string name="sub_setting_request_headers">Request Headers (JSON format)</string>
+    <string name="sub_setting_request_headers">Request Headers</string>
+    <string name="sub_setting_request_headers_tip">JSON format</string>
     <string name="sub_setting_filter">Remarks regular filter</string>
     <string name="sub_setting_enable">Enable update</string>
     <plurals name="sub_setting_server_count">
@@ -393,7 +424,10 @@
     <string name="routing_settings_locked">Locked, keep this rule when import presets</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
-    <string name="routing_settings_process">process (Package Name — only supported when using Xray TUN, routeOnly enabled, and Android 10+)</string>
+    <string name="routing_settings_process">process</string>
+    <string name="routing_settings_process_tip">Separated by commas(,), 
+choose domain or ip or process
+Package Name — only supported when using Xray TUN, routeOnly enabled, and Android 10+</string>
     <string name="routing_settings_port">port</string>
     <string name="routing_settings_protocol">protocol</string>
     <string name="routing_settings_protocol_tip">[http,tls,bittorrent]</string>
@@ -417,8 +451,10 @@
     <string name="import_subscription_failure">Import subscription failed</string>
     <string name="title_fragment_settings">Fragment Settings</string>
     <string name="title_pref_fragment_packets">Fragment Packets</string>
-    <string name="title_pref_fragment_length">Fragment Length (min-max)</string>
-    <string name="title_pref_fragment_interval">Fragment Interval (min-max)</string>
+    <string name="title_pref_fragment_length">Fragment Length</string>
+    <string name="title_pref_fragment_length_tip">min-max</string>
+    <string name="title_pref_fragment_interval">Fragment Interval</string>
+    <string name="title_pref_fragment_interval_tip">min-max</string>
     <string name="title_pref_fragment_maxsplit">Fragment Max Split</string>
     <string name="title_pref_fragment_enabled">Enable Fragment</string>
 
@@ -442,7 +478,8 @@
     <string name="title_policy_group_subscription_id">From subscription group</string>
     <string name="title_policy_group_subscription_filter">Remarks regular filter</string>
     <string name="title_policy_group_test_outbounds">Test outbounds</string>
-    <string name="title_policy_group_fallback">Fallback outbound (optional)</string>
+    <string name="title_policy_group_fallback">Fallback outbound</string>
+    <string name="title_policy_group_fallback_tip">Optional</string>
 
     <string name="server_proxy_chain_members">Proxy chain members</string>
     <string name="server_proxy_chain_pick_members">Tap here to pick member</string>
@@ -727,8 +764,10 @@
     <string name="summary_pref_send_hwid">Send device ID when updating subscription</string>
     <string name="title_pref_hide_from_recent_apps">Hide from recent tasks</string>
     <string name="summary_pref_hide_from_recent_apps">Hide the app from recent tasks when running in background</string>
-    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (seconds, 0 = disabled)</string>
-    <string name="title_pref_ws_heartbeat_period">WS Ping Interval (seconds, 0 = disabled)</string>
+    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle</string>
+    <string name="title_pref_tcp_keepalive_idle_tip">Seconds, 0 = disabled</string>
+    <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
+    <string name="title_pref_ws_heartbeat_period_tip">Seconds, 0 = disabled</string>
     
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings

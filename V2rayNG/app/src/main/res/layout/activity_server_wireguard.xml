@@ -145,7 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_preshared_key">
+                    android:hint="@string/server_lab_preshared_key"
+                    app:helperText="@string/server_lab_preshared_key_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_preshared_key"
                         android:layout_width="match_parent"
@@ -161,7 +162,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_reserved">
+                    android:hint="@string/server_lab_reserved"
+                    app:helperText="@string/server_lab_reserved_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_reserved1"
                         android:layout_width="match_parent"
@@ -177,7 +179,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_local_address">
+                    android:hint="@string/server_lab_local_address"
+                    app:helperText="@string/server_lab_local_address_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_address"
                         android:layout_width="match_parent"
@@ -193,7 +196,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_local_mtu">
+                    android:hint="@string/server_lab_local_mtu"
+                    app:helperText="@string/server_lab_local_mtu_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_mtu"
                         android:layout_width="match_parent"
@@ -209,7 +213,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_final_mask">
+                    android:hint="@string/server_lab_final_mask"
+                    app:helperText="@string/server_lab_final_mask_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_fm"
                         android:layout_width="match_parent"

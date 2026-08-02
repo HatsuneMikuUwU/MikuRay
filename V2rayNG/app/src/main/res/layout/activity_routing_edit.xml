@@ -136,7 +136,7 @@
                     app:endIconContentDescription="@string/routing_settings_process"
                     app:endIconDrawable="@drawable/ic_per_apps_24dp"
                     app:endIconMode="custom"
-                    app:helperText="@string/routing_settings_tips">
+                    app:helperText="@string/routing_settings_process_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_process"
                         android:layout_width="match_parent"

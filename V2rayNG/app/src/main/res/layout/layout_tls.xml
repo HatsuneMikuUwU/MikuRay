@@ -172,6 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_pinned_ca256"
+        app:helperText="@string/server_lab_pinned_ca256_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_verify_peer_cert_by_name">

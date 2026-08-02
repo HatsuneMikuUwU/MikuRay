@@ -158,7 +158,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/sub_setting_request_headers">
+                    android:hint="@string/sub_setting_request_headers"
+                    app:helperText="@string/sub_setting_request_headers_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_request_headers"
                         android:layout_width="match_parent"
@@ -224,7 +225,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/title_pref_auto_update_interval">
+                    android:hint="@string/title_pref_auto_update_interval"
+                    app:helperText="@string/title_pref_auto_update_interval_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_update_interval"
                         android:layout_width="match_parent"

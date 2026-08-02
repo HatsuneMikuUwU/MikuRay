@@ -79,21 +79,29 @@
     <string name="server_lab_port3">Port</string>
     <string name="server_lab_id3">Password</string>
     <string name="server_lab_security3">Keamanan</string>
-    <string name="server_lab_id4">Password (Opsional)</string>
-    <string name="server_lab_security4">User (Opsional)</string>
+    <string name="server_lab_id4">Password</string>
+    <string name="server_lab_id4_tip">Opsional</string>
+    <string name="server_lab_security4">User</string>
+    <string name="server_lab_security4_tip">Opsional</string>
     <string name="server_lab_encryption">Enkripsi</string>
     <string name="server_lab_flow">Flow</string>
     <string name="server_lab_public_key">PublicKey</string>
-    <string name="server_lab_preshared_key">PreSharedKey (Opsional)</string>
+    <string name="server_lab_preshared_key">PreSharedKey</string>
+    <string name="server_lab_preshared_key_tip">Opsional</string>
     <string name="server_lab_short_id">ShortId</string>
     <string name="server_lab_spider_x">SpiderX</string>
     <string name="server_lab_mldsa65_verify">Mldsa65Verify</string>
     <string name="server_lab_secret_key">SecretKey</string>
-    <string name="server_lab_reserved">Reserved (Opsional, dipisah pake koma)</string>
-    <string name="server_lab_local_address">Alamat lokal (opsional IPv4/IPv6, dipisah pake koma)</string>
-    <string name="server_lab_local_mtu">MTU (opsional, bawaan 1420)</string>
-    <string name="server_lab_kcp_mtu">MTU mKCP (Opsional, core bawaan 1350)</string>
-    <string name="server_lab_kcp_tti">TTI mKCP (Opsional, core bawaan 50)</string>
+    <string name="server_lab_reserved">Reserved</string>
+    <string name="server_lab_reserved_tip">Opsional, dipisah pake koma</string>
+    <string name="server_lab_local_address">Alamat lokal</string>
+    <string name="server_lab_local_address_tip">Opsional IPv4/IPv6, dipisah pake koma</string>
+    <string name="server_lab_local_mtu">MTU</string>
+    <string name="server_lab_local_mtu_tip">Opsional, bawaan 1420</string>
+    <string name="server_lab_kcp_mtu">MTU mKCP</string>
+    <string name="server_lab_kcp_mtu_tip">Opsional, core bawaan 1350</string>
+    <string name="server_lab_kcp_tti">TTI mKCP</string>
+    <string name="server_lab_kcp_tti_tip">Opsional, core bawaan 50</string>
     <string name="toast_success">Mantap Berhasil</string>
     <string name="toast_failure">Yah Gagal</string>
     <string name="toast_none_data">Kosong melompong nih</string>
@@ -112,16 +120,22 @@
     <string name="server_lab_request_host6">Host (SNI) (Opsional)</string>
     <string name="toast_action_not_allowed">Eh, ga boleh ngelakuin ini</string>
     <string name="server_obfs_password">Password Obfs</string>
-    <string name="server_lab_port_hop">Port Hopping (bakal nimpa port aslinya)</string>
+    <string name="server_lab_port_hop">Port Hopping</string>
+    <string name="server_lab_port_hop_tip">Bakal nimpa port aslinya</string>
     <string name="server_lab_port_hop_interval">Interval Port Hopping</string>
-    <string name="server_lab_bandwidth_down">Limit Bandwidth turun (Satuan: k/m/g/t)</string>
-    <string name="server_lab_bandwidth_up">Limit Bandwidth naik (Satuan: k/m/g/t)</string>
+    <string name="server_lab_bandwidth_down">Limit Bandwidth turun</string>
+    <string name="server_lab_bandwidth_down_tip">Satuan: k/m/g/t</string>
+    <string name="server_lab_bandwidth_up">Limit Bandwidth naik</string>
+    <string name="server_lab_bandwidth_up_tip">Satuan: k/m/g/t</string>
     <string name="server_lab_xhttp_mode">Mode XHTTP</string>
-    <string name="server_lab_xhttp_extra">JSON mentah XHTTP Extra, format: { XHTTPObject }</string>
-    <string name="server_lab_final_mask">JSON mentah finalMask, format: { FinalMaskObject }</string>
+    <string name="server_lab_xhttp_extra">XHTTP Extra</string>
+    <string name="server_lab_xhttp_extra_tip">JSON mentah, format: { XHTTPObject }</string>
+    <string name="server_lab_final_mask">finalMask</string>
+    <string name="server_lab_final_mask_tip">JSON mentah, format: { FinalMaskObject }</string>
     <string name="server_lab_ech_config_list">EchConfigList</string>
     <string name="server_lab_verify_peer_cert_by_name">Verifikasi Sertifikat Peer lewat Nama</string>
-    <string name="server_lab_pinned_ca256">Fingerprint Sertifikat (SHA-256)</string>
+    <string name="server_lab_pinned_ca256">Fingerprint Sertifikat</string>
+    <string name="server_lab_pinned_ca256_tip">SHA-256</string>
     <string name="pinned_ca256_action_fetch">Ambil &amp; isi fingerprint sertifikat</string>
     <string name="toast_fetch_cert_sha256_success">Fingerprint sertifikat berhasil diambil</string>
     <string name="toast_fetch_cert_sha256_failed">Gagal ambil fingerprint sertifikat</string>
@@ -138,7 +152,8 @@
     <string name="title_user_asset_add_url">Tambah URL aset</string>
     <string name="msg_file_not_found">Filenya ga ketemu cuy</string>
     <string name="msg_remark_is_duplicate">Nama catatannya udah ada yang pake tuh</string>
-    <string name="asset_geo_files_sources">Sumber file Geo (opsional)</string>
+    <string name="asset_geo_files_sources">Sumber file Geo</string>
+    <string name="asset_geo_files_sources_tip">Opsional</string>
 
     <string name="msg_dialog_progress">Sabar, lagi loading...</string>
     <string name="menu_item_search">Cari</string>
@@ -204,21 +219,32 @@
     <string name="title_pref_prefer_ipv6">Utamain IPv6</string>
     <string name="summary_pref_prefer_ipv6">Prioritasin alamat IPv6 pas lagi nyari nama domain</string>
 
-    <string name="title_pref_remote_dns">DNS Remote (udp/tcp/https/quic)(Opsional)</string>
+    <string name="title_pref_remote_dns">DNS Remote</string>
+
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Opsional</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
-    <string name="title_pref_vpn_dns">DNS VPN (Cuma IPv4/v6)</string>
+    <string name="title_pref_vpn_dns">DNS VPN</string>
+
+    <string name="title_pref_vpn_dns_tip">Cuma IPv4/v6</string>
     <string name="title_pref_vpn_bypass_lan">Bypass LAN lewat VPN gak?</string>
 
     <string name="title_pref_vpn_interface_address">Alamat Antarmuka VPN</string>
 
-    <string name="title_pref_vpn_mtu">MTU VPN (Bawaan 1500)</string>
+    <string name="title_pref_vpn_mtu">MTU VPN</string>
+
+    <string name="title_pref_vpn_mtu_tip">Bawaan 1500</string>
 
 
-    <string name="title_pref_domestic_dns">DNS Domestik (Opsional)</string>
+    <string name="title_pref_domestic_dns">DNS Domestik</string>
+
+
+    <string name="title_pref_domestic_dns_tip">Opsional</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
-    <string name="title_pref_dns_hosts">Host DNS (Format: domain:alamat,…)</string>
+    <string name="title_pref_dns_hosts">Host DNS</string>
+
+    <string name="title_pref_dns_hosts_tip">Format: domain:alamat,…</string>
     <string name="summary_pref_dns_hosts">domain:alamat,…</string>
 
     <string name="title_pref_delay_test_url">URL buat tes ping</string>
@@ -243,9 +269,11 @@
     <string name="summary_pref_socks_port">Port proxy lokal</string>
     <string name="title_pref_dynamic_socks_port">Port proxy lokalnya acak aja (Dinamis)</string>
     <string name="summary_pref_dynamic_socks_port">Bikin port proxy lokal secara acak tiap kali inbound dibuat</string>
-    <string name="title_pref_socks_username">Username proxy lokal (opsional)</string>
+    <string name="title_pref_socks_username">Username proxy lokal</string>
+    <string name="title_pref_socks_username_tip">Opsional</string>
     <string name="summary_pref_socks_username">Username</string>
-    <string name="title_pref_socks_password">Password proxy lokal (opsional)</string>
+    <string name="title_pref_socks_password">Password proxy lokal</string>
+    <string name="title_pref_socks_password_tip">Opsional</string>
     <string name="summary_pref_socks_password">Password</string>
 
     <string name="title_pref_local_dns_port">Port DNS lokal</string>
@@ -282,7 +310,8 @@
 
     <string name="title_pref_auto_update_subscription">Otomatis update langganan</string>
     <string name="summary_pref_auto_update_subscription">Update langganan lu otomatis di background sesuai jadwal. Di beberapa HP, fitur ini kadang suka mandek</string>
-    <string name="title_pref_auto_update_interval">Jeda Update Otomatis (Dalem menit, Paling cepet 15)</string>
+    <string name="title_pref_auto_update_interval">Jeda Update Otomatis</string>
+    <string name="title_pref_auto_update_interval_tip">Dalem menit, Paling cepet 15</string>
 
     <string name="title_core_loglevel">Level Log</string>
     <string name="title_outbound_domain_resolve_method">Metode pre-resolve domain outbound</string>
@@ -294,7 +323,8 @@
     <string name="title_pref_use_hev_tunnel">Aktifin Fitur Hev TUN</string>
     <string name="summary_pref_use_hev_tunnel">Kalo nyala, TUN bakal pake hev-socks5-tunnel; kalo nggak, tetep pake xray-core.</string>
     <string name="title_pref_hev_tunnel_loglevel">Level Log Hev Tun</string>
-    <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu (timeout) baca/tulis Hev Tun (detik) (tcp,udp bawaan 300,60)</string>
+    <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu baca/tulis Hev Tun</string>
+    <string name="title_pref_hev_tunnel_rw_timeout_tip">timeout, detik, tcp,udp bawaan 300,60</string>
 
     <string name="title_category_root_mode">Mode Root</string>
     <string name="title_pref_root_mode">Mode Root (seluruh sistem)</string>
@@ -316,7 +346,8 @@
     <string name="sub_setting_remarks">Nama</string>
     <string name="sub_setting_url">URL (Opsional)</string>
     <string name="sub_setting_user_agent">User Agent</string>
-    <string name="sub_setting_request_headers">Header Permintaan (format JSON)</string>
+    <string name="sub_setting_request_headers">Header Permintaan</string>
+    <string name="sub_setting_request_headers_tip">Format JSON</string>
     <string name="sub_setting_filter">Filter Reguler Catatan</string>
     <string name="sub_setting_enable">Aktifin update</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
@@ -367,7 +398,10 @@
     <string name="routing_settings_locked">Kunci ah, biar aturan ini tetep ada pas lu ngimpor preset</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
-    <string name="routing_settings_process">proses (Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+)</string>
+    <string name="routing_settings_process">proses</string>
+    <string name="routing_settings_process_tip">Pisahin pake koma(,) yak, 
+tinggal pilih mau pake domain, ip, atau proses
+Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+</string>
     <string name="routing_settings_port">port</string>
     <string name="routing_settings_protocol">protokol</string>
     <string name="routing_settings_protocol_tip">[http,tls,bittorrent]</string>
@@ -391,8 +425,10 @@
     <string name="import_subscription_failure">Yah, Impor Langganan Gagal</string>
     <string name="title_fragment_settings">Settingan Fragmen</string>
     <string name="title_pref_fragment_packets">Paket Fragmen</string>
-    <string name="title_pref_fragment_length">Panjang Fragmen (min-max)</string>
-    <string name="title_pref_fragment_interval">Jeda Fragmen (min-max)</string>
+    <string name="title_pref_fragment_length">Panjang Fragmen</string>
+    <string name="title_pref_fragment_length_tip">min-max</string>
+    <string name="title_pref_fragment_interval">Jeda Fragmen</string>
+    <string name="title_pref_fragment_interval_tip">min-max</string>
     <string name="title_pref_fragment_maxsplit">Maksimal Split Fragmen</string>
     <string name="title_pref_fragment_enabled">Aktifin Fragmen</string>
 
@@ -416,7 +452,8 @@
     <string name="title_policy_group_subscription_id">Dari grup langganan</string>
     <string name="title_policy_group_subscription_filter">Filter Reguler Catatan</string>
     <string name="title_policy_group_test_outbounds">Uji outbound</string>
-    <string name="title_policy_group_fallback">Outbound cadangan (opsional)</string>
+    <string name="title_policy_group_fallback">Outbound cadangan</string>
+    <string name="title_policy_group_fallback_tip">Opsional</string>
 
     <string name="server_proxy_chain_members">Anggota Proxy Chain</string>
     <string name="server_proxy_chain_pick_members">Pencet sini buat milih membernya</string>
@@ -686,8 +723,10 @@
     <string name="summary_pref_send_hwid">Kirim ID perangkat pas lagi update langganan</string>
     <string name="title_pref_hide_from_recent_apps">Sembunyikan dari recent apps</string>
     <string name="summary_pref_hide_from_recent_apps">Sembunyikan app dari recent tasks pas lagi jalan di background</string>
-    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (detik, 0 = nonaktif)</string>
-    <string name="title_pref_ws_heartbeat_period">WS Ping Interval (detik, 0 = nonaktif)</string>
+    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle</string>
+    <string name="title_pref_tcp_keepalive_idle_tip">Detik, 0 = nonaktif</string>
+    <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
+    <string name="title_pref_ws_heartbeat_period_tip">Detik, 0 = nonaktif</string>
 
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu

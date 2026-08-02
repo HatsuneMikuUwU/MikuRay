@@ -201,6 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/title_policy_group_fallback"
+                    app:helperText="@string/title_policy_group_fallback_tip"
                     android:visibility="gone">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_fallback"

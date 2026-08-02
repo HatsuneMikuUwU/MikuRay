@@ -81,21 +81,29 @@
     <string name="server_lab_port3">服务器端口</string>
     <string name="server_lab_id3">密码</string>
     <string name="server_lab_security3">加密方式</string>
-    <string name="server_lab_id4">密码 (可选)</string>
-    <string name="server_lab_security4">用户名 (可选)</string>
+    <string name="server_lab_id4">密码</string>
+    <string name="server_lab_id4_tip">可选</string>
+    <string name="server_lab_security4">用户名</string>
+    <string name="server_lab_security4_tip">可选</string>
     <string name="server_lab_encryption">加密方式 (encryption)</string>
     <string name="server_lab_flow">流控 (flow)</string>
     <string name="server_lab_public_key">PublicKey</string>
-    <string name="server_lab_preshared_key">PreSharedKey (optional)</string>
+    <string name="server_lab_preshared_key">PreSharedKey</string>
+    <string name="server_lab_preshared_key_tip">Optional</string>
     <string name="server_lab_short_id">ShortId</string>
     <string name="server_lab_spider_x">SpiderX</string>
     <string name="server_lab_mldsa65_verify">Mldsa65Verify</string>
     <string name="server_lab_secret_key">SecretKey</string>
-    <string name="server_lab_reserved">Reserved (可选，逗号隔开)</string>
-    <string name="server_lab_local_address">本地地址 (可选 IPv4/IPv6，逗号隔开)</string>
-    <string name="server_lab_local_mtu">Mtu (可选, 默认 1420)</string>
-    <string name="server_lab_kcp_mtu">mKCP MTU (可选, 默认 1350)</string>
-    <string name="server_lab_kcp_tti">mKCP TTI (可选, 默认 50)</string>
+    <string name="server_lab_reserved">Reserved</string>
+    <string name="server_lab_reserved_tip">可选，逗号隔开</string>
+    <string name="server_lab_local_address">本地地址</string>
+    <string name="server_lab_local_address_tip">可选 IPv4/IPv6，逗号隔开</string>
+    <string name="server_lab_local_mtu">Mtu</string>
+    <string name="server_lab_local_mtu_tip">可选, 默认 1420</string>
+    <string name="server_lab_kcp_mtu">mKCP MTU</string>
+    <string name="server_lab_kcp_mtu_tip">可选, 默认 1350</string>
+    <string name="server_lab_kcp_tti">mKCP TTI</string>
+    <string name="server_lab_kcp_tti_tip">可选, 默认 50</string>
     <string name="toast_success">成功</string>
     <string name="toast_failure">失败</string>
     <string name="toast_none_data">没有数据</string>
@@ -114,19 +122,27 @@
     <string name="server_lab_request_host6">Host (SNI) (可选)</string>
     <string name="toast_action_not_allowed">禁止此项操作</string>
     <string name="server_obfs_password">混淆密码</string>
-    <string name="server_lab_port_hop">跳跃端口 (会覆盖服务器端口)</string>
+    <string name="server_lab_port_hop">跳跃端口</string>
+    <string name="server_lab_port_hop_tip">会覆盖服务器端口</string>
     <string name="server_lab_port_hop_interval">端口跳跃间隔 (秒)</string>
-    <string name="server_lab_bandwidth_down">带宽下行 (支持的单位 k/m/g/t)</string>
-    <string name="server_lab_bandwidth_up">带宽上行 (支持的单位 k/m/g/t)</string>
+    <string name="server_lab_bandwidth_down">带宽下行</string>
+    <string name="server_lab_bandwidth_down_tip">支持的单位 k/m/g/t</string>
+    <string name="server_lab_bandwidth_up">带宽上行</string>
+    <string name="server_lab_bandwidth_up_tip">支持的单位 k/m/g/t</string>
     <string name="server_lab_xhttp_mode">XHTTP 模式</string>
-    <string name="server_lab_xhttp_extra">XHTTP Extra 原始 JSON，格式： { XHTTPObject }</string>
-    <string name="server_lab_final_mask">FinalMask 原始 JSON 格式: { FinalMaskObject }</string>
+    <string name="server_lab_xhttp_extra">XHTTP Extra</string>
+    <string name="server_lab_xhttp_extra_tip">原始 JSON，格式： { XHTTPObject }</string>
+    <string name="server_lab_final_mask">FinalMask</string>
+    <string name="server_lab_final_mask_tip">原始 JSON 格式: { FinalMaskObject }</string>
     <string name="server_lab_ech_config_list">EchConfigList</string>
     <string name="server_lab_verify_peer_cert_by_name">Verify Peer Cert By Name</string>
-    <string name="server_lab_pinned_ca256">证书指纹 (SHA-256)</string>
+    <string name="server_lab_pinned_ca256">证书指纹</string>
+    <string name="server_lab_pinned_ca256_tip">SHA-256</string>
     <string name="pinned_ca256_action_fetch">获取并填充证书指纹</string>
     <string name="toast_fetch_cert_sha256_success">证书指纹获取成功</string>
     <string name="toast_fetch_cert_sha256_failed">获取证书指纹失败</string>
+    <string name="server_lab_browser_dialer">启用 Browser Dialer</string>
+    <string name="server_lab_browser_dialer_tip">仅支持 xhttp（packet-up）和 ws 出站；TLS 相关设置可能被忽略或冲突</string>
 
     <!-- UserAssetActivity -->
     <string name="toast_asset_copy_failed">失败, 请使用文件管理器</string>
@@ -137,7 +153,8 @@
     <string name="title_user_asset_add_url">添加资产网址</string>
     <string name="msg_file_not_found">文件未找到</string>
     <string name="msg_remark_is_duplicate">备注已经存在</string>
-    <string name="asset_geo_files_sources">Geo 文件来源 (可选)</string>
+    <string name="asset_geo_files_sources">Geo 文件来源</string>
+    <string name="asset_geo_files_sources_tip">可选</string>
 
     <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">正在加载</string>
@@ -204,19 +221,28 @@
     <string name="title_pref_prefer_ipv6">IPv6 优先</string>
     <string name="summary_pref_prefer_ipv6">解析域名时优先使用 IPv6 地址</string>
 
-    <string name="title_pref_remote_dns">远程 DNS (udp/tcp/https/quic)(可选)</string>
+    <string name="title_pref_remote_dns">远程 DNS</string>
+
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic，可选</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
-    <string name="title_pref_vpn_dns">VPN DNS (仅支持 IPv4/v6)</string>
+    <string name="title_pref_vpn_dns">VPN DNS</string>
+
+    <string name="title_pref_vpn_dns_tip">仅支持 IPv4/v6</string>
     <string name="title_pref_vpn_bypass_lan">VPN 是否绕过局域网</string>
 
     <string name="title_pref_vpn_interface_address">VPN 接口地址</string>
-    <string name="title_pref_vpn_mtu">VPN MTU (默认 1500)</string>
+    <string name="title_pref_vpn_mtu">VPN MTU</string>
+    <string name="title_pref_vpn_mtu_tip">默认 1500</string>
 
-    <string name="title_pref_domestic_dns">境内 DNS (可选)</string>
+    <string name="title_pref_domestic_dns">境内 DNS</string>
+
+    <string name="title_pref_domestic_dns_tip">可选</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
-    <string name="title_pref_dns_hosts">DNS hosts (格式: 域名: 地址,…)</string>
+    <string name="title_pref_dns_hosts">DNS hosts</string>
+
+    <string name="title_pref_dns_hosts_tip">格式: 域名: 地址,…</string>
     <string name="summary_pref_dns_hosts">domain: address,…</string>
 
     <string name="title_pref_delay_test_url">真连接延迟测试网址 </string>
@@ -240,9 +266,11 @@
      <string name="summary_pref_socks_port">本地代理端口</string>
      <string name="title_pref_dynamic_socks_port">启用动态本地代理端口</string>
      <string name="summary_pref_dynamic_socks_port">每次生成 inbound 时随机生成一个本地代理端口</string>
-     <string name="title_pref_socks_username">本地代理用户名 (可选)</string>
+     <string name="title_pref_socks_username">本地代理用户名</string>
+     <string name="title_pref_socks_username_tip">可选</string>
      <string name="summary_pref_socks_username">用户名</string>
-     <string name="title_pref_socks_password">本地代理密码 (可选)</string>
+     <string name="title_pref_socks_password">本地代理密码</string>
+     <string name="title_pref_socks_password_tip">可选</string>
      <string name="summary_pref_socks_password">密码</string>
 
      <string name="title_pref_local_dns_port">本地 DNS 端口</string>
@@ -280,7 +308,8 @@
 
     <string name="title_pref_auto_update_subscription">自动更新订阅</string>
     <string name="summary_pref_auto_update_subscription">在后台按一定时间间隔自动更新您的订阅。受设备影响，此功能不一定总是有效</string>
-    <string name="title_pref_auto_update_interval">自动更新间隔（分钟，最小值 15）</string>
+    <string name="title_pref_auto_update_interval">自动更新间隔</string>
+    <string name="title_pref_auto_update_interval_tip">分钟，最小值 15</string>
 
     <string name="title_core_loglevel">日志级别</string>
     <string name="title_outbound_domain_resolve_method">Outbound 域名预解析方式</string>
@@ -292,7 +321,8 @@
     <string name="title_pref_use_hev_tunnel">启用 Hev TUN 功能</string>
     <string name="summary_pref_use_hev_tunnel">选择启用后 TUN 将使用 hev-socks5-tunnel 否则使用 xray-core</string>
     <string name="title_pref_hev_tunnel_loglevel">HevTun 日志级别</string>
-    <string name="title_pref_hev_tunnel_rw_timeout">HevTun 读写超时(秒) (tcp,udp 默认 300,60)</string>
+    <string name="title_pref_hev_tunnel_rw_timeout">HevTun 读写超时</string>
+    <string name="title_pref_hev_tunnel_rw_timeout_tip">秒, tcp,udp 默认 300,60</string>
 
     <string name="title_category_root_mode">Root 模式</string>
     <string name="title_pref_root_mode">Root 模式（全局代理）</string>
@@ -315,7 +345,8 @@
     <string name="sub_setting_remarks">备注</string>
     <string name="sub_setting_url">可选地址 (url)</string>
     <string name="sub_setting_user_agent">User Agent</string>
-    <string name="sub_setting_request_headers">请求头（JSON 格式）</string>
+    <string name="sub_setting_request_headers">请求头</string>
+    <string name="sub_setting_request_headers_tip">JSON 格式</string>
     <string name="sub_setting_filter">别名正则过滤</string>
     <string name="sub_setting_enable">启用更新</string>
     <string name="sub_auto_update">启用自动更新</string>
@@ -368,7 +399,9 @@
     <string name="routing_settings_locked">锁定中，导入预设时不删除此规则</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
-    <string name="routing_settings_process">process (包名 — 仅在使用 Xray 的 TUN、开启 routeOnly 且 Android 10+ 时可用)</string>
+    <string name="routing_settings_process">process</string>
+    <string name="routing_settings_process_tip">用逗号（,）分隔，选择填写 domain、ip 或 process 中的一项
+包名 — 仅在使用 Xray 的 TUN、开启 routeOnly 且 Android 10+ 时可用</string>
     <string name="routing_settings_port">port</string>
     <string name="routing_settings_protocol">protocol</string>
     <string name="routing_settings_protocol_tip">[http,tls,bittorrent]</string>
@@ -393,8 +426,10 @@
     <string name="menu_item_add_url">添加链接</string>
     <string name="title_fragment_settings">分片（Fragment）设置</string>
     <string name="title_pref_fragment_packets">分片方式</string>
-    <string name="title_pref_fragment_length">分片包长（最小 - 最大）</string>
-    <string name="title_pref_fragment_interval">分片间隔（最小 - 最大）</string>
+    <string name="title_pref_fragment_length">分片包长</string>
+    <string name="title_pref_fragment_length_tip">最小 - 最大</string>
+    <string name="title_pref_fragment_interval">分片间隔</string>
+    <string name="title_pref_fragment_interval_tip">最小 - 最大</string>
     <string name="title_pref_fragment_maxsplit">分片最大分割数</string>
     <string name="title_pref_fragment_enabled">启用分片（Fragment）</string>
 
@@ -418,7 +453,8 @@
     <string name="title_policy_group_subscription_id">来自订阅分组</string>
     <string name="title_policy_group_subscription_filter">别名正则过滤</string>
     <string name="title_policy_group_test_outbounds">测试出站</string>
-    <string name="title_policy_group_fallback">备用出站（可选）</string>
+    <string name="title_policy_group_fallback">备用出站</string>
+    <string name="title_policy_group_fallback_tip">可选</string>
 
     <!-- BackupActivity -->
     <string name="title_configuration_backup_restore">备份 &amp; 还原</string>
@@ -684,8 +720,10 @@
     <string name="summary_pref_send_hwid">更新订阅时发送设备 ID</string>
     <string name="title_pref_hide_from_recent_apps">从最近任务中隐藏</string>
     <string name="summary_pref_hide_from_recent_apps">在后台运行时从最近任务列表中隐藏本应用</string>
-    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle (秒，0 = 禁用)</string>
-    <string name="title_pref_ws_heartbeat_period">WS Ping 间隔（秒，0 = 禁用）</string>
+    <string name="title_pref_tcp_keepalive_idle">TCP Keepalive idle</string>
+    <string name="title_pref_tcp_keepalive_idle_tip">秒，0 = 禁用</string>
+    <string name="title_pref_ws_heartbeat_period">WS Ping 间隔</string>
+    <string name="title_pref_ws_heartbeat_period_tip">秒，0 = 禁用</string>
     
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,

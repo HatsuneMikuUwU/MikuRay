@@ -106,7 +106,8 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/server_lab_kcp_mtu">
+            android:hint="@string/server_lab_kcp_mtu"
+            app:helperText="@string/server_lab_kcp_mtu_tip">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_kcp_mtu"
@@ -123,7 +124,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_spacing_dp16"
-            android:hint="@string/server_lab_kcp_tti">
+            android:hint="@string/server_lab_kcp_tti"
+            app:helperText="@string/server_lab_kcp_tti_tip">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_kcp_tti"
@@ -143,6 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_xhttp_extra"
+        app:helperText="@string/server_lab_xhttp_extra_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_kcp">

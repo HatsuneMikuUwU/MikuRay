@@ -61,7 +61,8 @@
             app:layout="@layout/uwu_mid"
             android:key="pref_vpn_dns"
             android:summary="@string/summary_pref_remote_dns"
-            android:title="@string/title_pref_vpn_dns" />
+            android:title="@string/title_pref_vpn_dns"
+            android:dialogMessage="@string/title_pref_vpn_dns_tip" />
 
         <ListPreference
             android:icon="@drawable/ic_lan"
@@ -89,7 +90,8 @@
             android:inputType="number"
             android:key="pref_vpn_mtu"
             android:summary="1500"
-            android:title="@string/title_pref_vpn_mtu" />
+            android:title="@string/title_pref_vpn_mtu"
+            android:dialogMessage="@string/title_pref_vpn_mtu_tip" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_toggle_switch"
@@ -115,7 +117,8 @@
             app:layout="@layout/uwu_mid"
             android:key="pref_hev_tunnel_rw_timeout_v2"
             android:summary="300,60"
-            android:title="@string/title_pref_hev_tunnel_rw_timeout" />
+            android:title="@string/title_pref_hev_tunnel_rw_timeout"
+            android:dialogMessage="@string/title_pref_hev_tunnel_rw_timeout_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
@@ -123,7 +126,8 @@
             android:inputType="number"
             android:key="pref_tcp_keepalive_idle"
             android:defaultValue="30"
-            android:title="@string/title_pref_tcp_keepalive_idle" />
+            android:title="@string/title_pref_tcp_keepalive_idle"
+            android:dialogMessage="@string/title_pref_tcp_keepalive_idle_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
@@ -131,7 +135,8 @@
             android:inputType="number"
             android:key="pref_ws_heartbeat_period"
             android:defaultValue="60"
-            android:title="@string/title_pref_ws_heartbeat_period" />
+            android:title="@string/title_pref_ws_heartbeat_period"
+            android:dialogMessage="@string/title_pref_ws_heartbeat_period_tip" />
 
         <Preference
             android:icon="@drawable/ic_per_apps_24dp"
