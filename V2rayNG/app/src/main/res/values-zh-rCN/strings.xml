@@ -191,8 +191,9 @@
     <string name="title_mux_settings">Mux 多路复用 设置</string>
     <string name="title_pref_mux_enabled">启用 Mux 多路复用</string>
     <string name="summary_pref_mux_enabled">减低延时，但可能会断流，建议不要启用。\nTCP，UDP 及 QUIC 流量处理方式下方可选。</string>
-    <string name="title_pref_mux_concurency">TCP 复用子链接数（可填 -1 至 1024）</string>
-    <string name="title_pref_mux_xudp_concurency">XUDP 复用子链接数（可填 -1 至 1024）</string>
+    <string name="title_pref_mux_concurency">TCP 复用子链接数</string>
+    <string name="title_pref_mux_xudp_concurency">XUDP 复用子链接数</string>
+    <string name="title_pref_mux_concurency_tip">可填 -1 至 1024</string>
     <string name="title_pref_mux_xudp_quic">QUIC 流量处理方式</string>
     <string-array name="mux_xudp_quic_entries">
         <item>不代理</item>

@@ -189,8 +189,9 @@
     <string name="title_mux_settings">Settingan Mux</string>
     <string name="title_pref_mux_enabled">Aktifin Mux</string>
     <string name="summary_pref_mux_enabled">Lebih kenceng sih, tapi koneksi kadang jadi goyang\nAtur sendiri deh cara nanganin TCP, UDP, dan QUIC di bawah</string>
-    <string name="title_pref_mux_concurency">Koneksi TCP (dari -1 sampe 1024)</string>
-    <string name="title_pref_mux_xudp_concurency">Koneksi XUDP (dari -1 sampe 1024)</string>
+    <string name="title_pref_mux_concurency">Koneksi TCP</string>
+    <string name="title_pref_mux_xudp_concurency">Koneksi XUDP</string>
+    <string name="title_pref_mux_concurency_tip">dari -1 sampe 1024</string>
     <string name="title_pref_mux_xudp_quic">Gimana nanganin QUIC di tunnel mux</string>
     <string-array name="mux_xudp_quic_entries">
         <item>tolak</item>

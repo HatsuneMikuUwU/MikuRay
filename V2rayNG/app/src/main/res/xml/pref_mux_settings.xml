@@ -21,7 +21,8 @@
             android:inputType="number"
             android:key="pref_mux_concurrency"
             android:summary="8"
-            android:title="@string/title_pref_mux_concurency" />
+            android:title="@string/title_pref_mux_concurency"
+            android:dialogMessage="@string/title_pref_mux_concurency_tip" />
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
@@ -29,7 +30,8 @@
             android:inputType="number"
             android:key="pref_mux_xudp_concurrency"
             android:summary="8"
-            android:title="@string/title_pref_mux_xudp_concurency" />
+            android:title="@string/title_pref_mux_xudp_concurency"
+            android:dialogMessage="@string/title_pref_mux_concurency_tip" />
 
         <ListPreference
             android:icon="@drawable/ic_currency_eth"

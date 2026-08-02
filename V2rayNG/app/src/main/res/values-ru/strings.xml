@@ -194,8 +194,9 @@
     <string name="title_mux_settings">Настройки Mux</string>
     <string name="title_pref_mux_enabled">Включить Mux</string>
     <string name="summary_pref_mux_enabled">Быстрее, но может вызвать нестабильное соединение\nНастройте обработку TCP, UDP и QUIC ниже</string>
-    <string name="title_pref_mux_concurency">TCP-соединения (диапазон от -1 до 1024)</string>
-    <string name="title_pref_mux_xudp_concurency">XUDP-соединения (диапазон от -1 до 1024)</string>
+    <string name="title_pref_mux_concurency">TCP-соединения</string>
+    <string name="title_pref_mux_xudp_concurency">XUDP-соединения</string>
+    <string name="title_pref_mux_concurency_tip">диапазон от -1 до 1024</string>
     <string name="title_pref_mux_xudp_quic">Обработка QUIC в mux-туннеле</string>
     <string-array name="mux_xudp_quic_entries">
         <item>отклонить</item>
