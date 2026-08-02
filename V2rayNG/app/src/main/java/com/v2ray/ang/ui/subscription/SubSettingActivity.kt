@@ -33,13 +33,13 @@ import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.toastSuccess
-import com.v2ray.ang.extension.toastInfo
 import com.v2ray.ang.extension.toastError
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.QRCodeDecoder
 import com.v2ray.ang.util.Utils
+import com.v2ray.ang.util.showSubUpdateDiffDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -177,20 +177,8 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
                         try {
                             val result = viewModel.updateSubscriptionsOnly()
                             withContext(Dispatchers.Main) {
-                                when {
-                                    result.successCount + result.failureCount + result.skipCount == 0 ->
-                                        toastInfo(getString(R.string.title_update_subscription_no_subscription))
-
-                                    result.successCount > 0 && result.failureCount + result.skipCount == 0 ->
-                                        toastSuccess(getString(R.string.title_update_config_count, result.configCount))
-
-                                    else ->
-                                        toastInfo(
-                                            getString(
-                                                R.string.title_update_subscription_result,
-                                                result.configCount, result.successCount, result.failureCount, result.skipCount
-                                            )
-                                        )
+                                if (result.addedProfiles.isNotEmpty() || result.deletedProfiles.isNotEmpty()) {
+                                    showSubUpdateDiffDialog(this@SubSettingActivity, result)
                                 }
                                 refreshData()
                                 hideLoading()
