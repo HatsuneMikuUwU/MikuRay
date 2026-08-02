@@ -12,7 +12,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
-import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.base.BaseActivity
 import com.v2ray.ang.ui.preference.SearchPreferenceHighlighter
 import com.v2ray.ang.ui.preference.CategoryStyleHelper
 

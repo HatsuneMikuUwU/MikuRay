@@ -19,7 +19,7 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.CertificateFingerprintManager
 import com.v2ray.ang.handler.MmkvManager
-import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.base.BaseActivity
 import com.v2ray.ang.ui.server.fields.AddressPortFields
 import com.v2ray.ang.ui.server.fields.TlsFields
 import com.v2ray.ang.ui.server.fields.TransportFields

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.R
 import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
-import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.base.BaseActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

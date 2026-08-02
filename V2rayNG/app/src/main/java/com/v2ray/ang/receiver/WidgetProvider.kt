@@ -27,7 +27,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreServiceManager
 import com.v2ray.ang.core.LauncherManager
 import com.v2ray.ang.handler.MmkvManager
-import com.v2ray.ang.ui.MainActivity
+import com.v2ray.ang.ui.main.MainActivity
 import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.getColorAttr
 import kotlin.math.max

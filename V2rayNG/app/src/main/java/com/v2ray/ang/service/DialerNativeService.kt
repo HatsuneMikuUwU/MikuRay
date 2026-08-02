@@ -1,4 +1,5 @@
 package com.v2ray.ang.service
+import com.v2ray.ang.contracts.IDialerService
 
 import android.content.Context
 import com.v2ray.ang.AppConfig

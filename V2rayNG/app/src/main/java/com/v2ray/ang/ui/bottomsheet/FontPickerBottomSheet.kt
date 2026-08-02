@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.v2ray.ang.R
-import com.v2ray.ang.ui.FontPickerAdapter
+import com.v2ray.ang.util.FontPickerAdapter
 import com.v2ray.ang.util.WindowBlurUtils
 
 class FontPickerBottomSheet(

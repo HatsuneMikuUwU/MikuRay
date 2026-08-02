@@ -23,7 +23,7 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
-import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.base.BaseActivity
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.handler.SettingsChangeManager
 

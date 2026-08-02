@@ -5,7 +5,7 @@ import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.v2ray.ang.ui.BaseActivity
+import com.v2ray.ang.ui.base.BaseActivity
 import java.io.File
 
 class CrashDialogActivity : BaseActivity() {

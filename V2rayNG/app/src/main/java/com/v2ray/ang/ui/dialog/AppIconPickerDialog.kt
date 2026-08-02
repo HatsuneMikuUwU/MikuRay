@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.R
-import com.v2ray.ang.ui.AppIconPickerAdapter
+import com.v2ray.ang.util.AppIconPickerAdapter
 import com.v2ray.ang.util.LauncherAliasSwitcher
 import com.v2ray.ang.util.WindowBlurUtils
 

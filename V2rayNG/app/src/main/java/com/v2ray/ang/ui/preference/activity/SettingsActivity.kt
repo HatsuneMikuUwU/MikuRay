@@ -30,7 +30,7 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
-import com.v2ray.ang.ui.HelperBaseActivity
+import com.v2ray.ang.ui.base.HelperBaseActivity
 import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.ui.weather.WeatherHelper

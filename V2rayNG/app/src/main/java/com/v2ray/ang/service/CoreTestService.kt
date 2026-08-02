@@ -13,7 +13,7 @@ import com.v2ray.ang.extension.serializable
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MessageUtil
-import com.v2ray.ang.util.NotificationHelper
+import com.v2ray.ang.helper.NotificationHelper
 import java.util.Collections
 
 class CoreTestService : Service() {

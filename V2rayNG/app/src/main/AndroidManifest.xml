@@ -55,13 +55,13 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Splash" />
 
         <activity-alias
             android:name=".ui.LauncherDefaultDefault"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -77,7 +77,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku1"
@@ -93,7 +93,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku2"
@@ -109,7 +109,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku3"
@@ -125,7 +125,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku4"
@@ -141,7 +141,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku5"
@@ -157,7 +157,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku6"
@@ -173,7 +173,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku7"
@@ -189,7 +189,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku8"
@@ -205,7 +205,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku9"
@@ -221,7 +221,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku10"
@@ -237,7 +237,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku11"
@@ -253,7 +253,7 @@
 
         <activity-alias
             android:name=".ui.LauncherDefaultMiku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
             android:label="@string/app_name_variant_miku12"
@@ -269,7 +269,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Default"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name"
@@ -285,7 +285,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku1"
@@ -301,7 +301,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku2"
@@ -317,7 +317,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku3"
@@ -333,7 +333,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku4"
@@ -349,7 +349,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku5"
@@ -365,7 +365,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku6"
@@ -381,7 +381,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku7"
@@ -397,7 +397,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku8"
@@ -413,7 +413,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku9"
@@ -429,7 +429,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku10"
@@ -445,7 +445,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku11"
@@ -461,7 +461,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt1Miku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt1"
             android:roundIcon="@mipmap/ic_launcher_alt1"
             android:label="@string/app_name_variant_miku12"
@@ -477,7 +477,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Default"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name"
@@ -493,7 +493,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku1"
@@ -509,7 +509,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku2"
@@ -525,7 +525,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku3"
@@ -541,7 +541,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku4"
@@ -557,7 +557,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku5"
@@ -573,7 +573,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku6"
@@ -589,7 +589,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku7"
@@ -605,7 +605,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku8"
@@ -621,7 +621,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku9"
@@ -637,7 +637,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku10"
@@ -653,7 +653,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku11"
@@ -669,7 +669,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt2Miku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt2"
             android:roundIcon="@mipmap/ic_launcher_alt2"
             android:label="@string/app_name_variant_miku12"
@@ -685,7 +685,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Default"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name"
@@ -701,7 +701,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku1"
@@ -717,7 +717,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku2"
@@ -733,7 +733,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku3"
@@ -749,7 +749,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku4"
@@ -765,7 +765,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku5"
@@ -781,7 +781,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku6"
@@ -797,7 +797,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku7"
@@ -813,7 +813,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku8"
@@ -829,7 +829,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku9"
@@ -845,7 +845,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku10"
@@ -861,7 +861,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku11"
@@ -877,7 +877,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt3Miku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt3"
             android:roundIcon="@mipmap/ic_launcher_alt3"
             android:label="@string/app_name_variant_miku12"
@@ -893,7 +893,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Default"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name"
@@ -909,7 +909,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku1"
@@ -925,7 +925,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku2"
@@ -941,7 +941,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku3"
@@ -957,7 +957,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku4"
@@ -973,7 +973,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku5"
@@ -989,7 +989,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku6"
@@ -1005,7 +1005,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku7"
@@ -1021,7 +1021,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku8"
@@ -1037,7 +1037,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku9"
@@ -1053,7 +1053,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku10"
@@ -1069,7 +1069,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku11"
@@ -1085,7 +1085,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt4Miku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt4"
             android:roundIcon="@mipmap/ic_launcher_alt4"
             android:label="@string/app_name_variant_miku12"
@@ -1101,7 +1101,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Default"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name"
@@ -1117,7 +1117,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku1"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku1"
@@ -1133,7 +1133,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku2"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku2"
@@ -1149,7 +1149,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku3"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku3"
@@ -1165,7 +1165,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku4"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku4"
@@ -1181,7 +1181,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku5"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku5"
@@ -1197,7 +1197,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku6"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku6"
@@ -1213,7 +1213,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku7"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku7"
@@ -1229,7 +1229,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku8"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku8"
@@ -1245,7 +1245,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku9"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku9"
@@ -1261,7 +1261,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku10"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku10"
@@ -1277,7 +1277,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku11"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku11"
@@ -1293,7 +1293,7 @@
 
         <activity-alias
             android:name=".ui.LauncherAlt5Miku12"
-            android:targetActivity=".ui.WelcomeActivity"
+            android:targetActivity=".ui.welcome.WelcomeActivity"
             android:icon="@mipmap/ic_launcher_alt5"
             android:roundIcon="@mipmap/ic_launcher_alt5"
             android:label="@string/app_name_variant_miku12"
@@ -1308,11 +1308,11 @@
         </activity-alias>
 
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             
@@ -1401,60 +1401,60 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="false" />      
         <activity
-            android:name=".ui.PerAppProxyActivity"
+            android:name=".ui.perappproxy.PerAppProxyActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.AppPickerActivity"
+            android:name=".ui.apppicker.AppPickerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LogcatActivity"
+            android:name=".ui.logcat.LogcatActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.RoutingSettingActivity"
+            android:name=".ui.routing.RoutingSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.RoutingEditActivity"
+            android:name=".ui.routing.RoutingEditActivity"
             android:exported="false"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
-            android:name=".ui.SubSettingActivity"
+            android:name=".ui.subscription.SubSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.UserAssetActivity"
+            android:name=".ui.userasset.UserAssetActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.UserAssetUrlActivity"
+            android:name=".ui.userasset.UserAssetUrlActivity"
             android:exported="false"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
 
         <activity
-            android:name=".ui.SubEditActivity"
+            android:name=".ui.subscription.SubEditActivity"
             android:exported="false"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.ScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ScSwitchActivity"
+            android:name=".ui.shortcut.ScSwitchActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:process=":RunSoLibV2RayDaemon"
             android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
         <activity
-            android:name=".ui.ScStartActivity"
+            android:name=".ui.shortcut.ScStartActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:process=":RunSoLibV2RayDaemon"
             android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
         <activity
-            android:name=".ui.ScStopActivity"
+            android:name=".ui.shortcut.ScStopActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:process=":RunSoLibV2RayDaemon"
             android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
 
         <activity
-            android:name=".ui.UrlSchemeActivity"
+            android:name=".ui.urlscheme.UrlSchemeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -1473,16 +1473,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.CheckUpdateActivity"
+            android:name=".ui.checkupdate.CheckUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BackupActivity"
+            android:name=".ui.backup.BackupActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.AboutActivity"
+            android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LibraryActivity"
+            android:name=".ui.about.LibraryActivity"
             android:exported="false" />
 
         <activity
@@ -1593,7 +1593,7 @@
                 android:value="tile" />
         </service>
         <activity
-            android:name=".ui.TaskerActivity"
+            android:name=".ui.shortcut.TaskerActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher">
             <intent-filter>

@@ -14,8 +14,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.IndicatorStyle
 import com.v2ray.ang.util.WindowBlurUtils
-import com.v2ray.ang.ui.IndicatorStyleAdapter
-
+import com.v2ray.ang.util.IndicatorStyleAdapter
 class IndicatorStyleBottomSheet(
     private val context: Context,
     private val onSelected: () -> Unit
