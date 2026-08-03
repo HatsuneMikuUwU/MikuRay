@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -169,8 +170,8 @@ abstract class BaseActivity : AppCompatActivity() {
         val centerSubtitle = MmkvManager.decodeSettingsBool(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE, false)
         val subtitleText = if (centerSubtitle) toolbarSubtitle else null
 
-        supportActionBar?.subtitle = subtitleText
-        collapsingToolbar.subtitle = subtitleText
+        supportActionBar?.subtitle = null
+        collapsingToolbar.subtitle = null
 
         if (centerSubtitle) {
             collapsingToolbar.titleCollapseMode = CollapsingToolbarLayout.TITLE_COLLAPSE_MODE_FADE
@@ -179,6 +180,26 @@ abstract class BaseActivity : AppCompatActivity() {
             collapsingToolbar.titleCollapseMode = CollapsingToolbarLayout.TITLE_COLLAPSE_MODE_SCALE
             collapsingToolbar.setExpandedTitleGravity(Gravity.START or Gravity.BOTTOM)
         }
+
+        val customSubtitleView = findViewById<TextView>(R.id.custom_expanded_subtitle)
+        val density = resources.displayMetrics.density
+
+        if (!subtitleText.isNullOrEmpty()) {
+            customSubtitleView?.text = subtitleText
+            customSubtitleView?.visibility = View.VISIBLE
+            
+            customSubtitleView?.post {
+                val subtitleHeight = customSubtitleView.height
+                val spacing = (32 * density).toInt() 
+                collapsingToolbar.expandedTitleMarginBottom = subtitleHeight + spacing
+                collapsingToolbar.requestLayout()
+            }
+        } else {
+            customSubtitleView?.visibility = View.GONE
+            collapsingToolbar.expandedTitleMarginBottom = (24 * density).toInt()
+        }
+        
+        customSubtitleView?.gravity = if (centerSubtitle) Gravity.CENTER else Gravity.START
 
         collapsingToolbar.requestLayout()
         collapsingToolbar.invalidate()
@@ -189,7 +210,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val container = base.findViewById<FrameLayout>(R.id.content_container)
         LayoutInflater.from(this).inflate(layoutResId, container, true)
         super.setContentView(base)
-        setupToolbar(base, showHomeAsUp, title, subtitle)
+        setupBaseToolbar(base, showHomeAsUp, title, subtitle)
     }
 
     protected fun setContentViewWithToolbar(childView: View, showHomeAsUp: Boolean = true, title: CharSequence? = null, subtitle: CharSequence? = null) {
@@ -197,17 +218,12 @@ abstract class BaseActivity : AppCompatActivity() {
         val container = base.findViewById<FrameLayout>(R.id.content_container)
         container.addView(childView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         super.setContentView(base)
-        setupToolbar(base, showHomeAsUp, title, subtitle)
+        setupBaseToolbar(base, showHomeAsUp, title, subtitle)
     }
 
-    private fun setupToolbar(baseRoot: View, showHomeAsUp: Boolean, title: CharSequence?, subtitle: CharSequence?) {
+    private fun setupBaseToolbar(baseRoot: View, showHomeAsUp: Boolean, title: CharSequence?, subtitle: CharSequence?) {
         val toolbar = baseRoot.findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar?.let {
-            setSupportActionBar(it)
-            supportActionBar?.setDisplayHomeAsUpEnabled(showHomeAsUp)
-            title?.let { t -> supportActionBar?.title = t }
-            subtitle?.let { s -> supportActionBar?.subtitle = s }
-        }
+        setupToolbar(toolbar, showHomeAsUp, title, subtitle)
     }
 
     private fun getOrCreateLoadingOverlay(): FrameLayout {

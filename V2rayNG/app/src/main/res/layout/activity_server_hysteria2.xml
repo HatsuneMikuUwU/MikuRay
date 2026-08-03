@@ -29,15 +29,26 @@
             app:expandedTitleMarginTop="96dp"
             app:expandedTitleTextAppearance="?attr/textAppearanceDisplaySmallEmphasized"
             app:expandedTitleTextColor="?attr/colorOnSurface"
-            app:collapsedSubtitleTextAppearance="?attr/textAppearanceTitleSmall"
-            app:collapsedSubtitleTextColor="?attr/colorOnSurfaceVariant"
-            app:expandedSubtitleTextAppearance="?attr/textAppearanceTitleMedium"
-            app:expandedSubtitleTextColor="?attr/colorOnSurfaceVariant"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:subtitleMaxLines="3"
             app:titleMaxLines="3"
             app:titleCollapseMode="fade"
             app:expandedTitleGravity="center_horizontal|bottom">
+
+            <TextView
+                android:id="@+id/custom_expanded_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:theme="@style/AppThemeToolbarCircleNavigationButton"
