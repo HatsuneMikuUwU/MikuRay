@@ -21,7 +21,7 @@ class ObservatorySettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_observatory_settings))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_observatory_settings), subtitle = getString(R.string.subtitle_observatory_settings))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

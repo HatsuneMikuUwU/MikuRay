@@ -54,7 +54,7 @@ class SubEditActivity : BaseActivity() {
         binding.editScrollContent.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting), subtitle = getString(R.string.subtitle_sub_edit))
 
         setupProfileRemarkInputs()
         setupTabIconField()

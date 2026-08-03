@@ -16,7 +16,7 @@ class LibraryActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupToolbar(binding.toolbar, showHomeAsUp = true, title = getString(R.string.title_oss_license))
+        setupToolbar(binding.toolbar, showHomeAsUp = true, title = getString(R.string.title_oss_license), subtitle = getString(R.string.subtitle_library))
         binding.collapsingToolbar.title = getString(R.string.title_oss_license)
 
         if (savedInstanceState == null) {

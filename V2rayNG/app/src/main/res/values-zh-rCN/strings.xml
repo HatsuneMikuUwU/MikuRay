@@ -829,6 +829,9 @@
     <string name="selected_banner_category">选中配置的样式</string>
     <string name="selected_banner_enable_title">选中配置的横幅样式</string>
     <string name="selected_banner_enable_summary">在活动服务器卡片后面显示横幅图片。未设置自定义图片时使用默认横幅</string>
+    <string name="title_category_toolbar_style">工具栏样式</string>
+    <string name="title_pref_toolbar_center_subtitle_mode">居中工具栏副标题</string>
+    <string name="summary_pref_toolbar_center_subtitle_mode">显示居中副标题和淡入淡出动画，而不是普通标准标题</string>
     <string name="selected_banner_dim_title">横幅遮罩强度</string>
     <string name="selected_banner_custom_title">更改选中配置的横幅</string>
     <string name="selected_banner_custom_summary">为选中的服务器卡片设置自定义图片（可选）</string>
@@ -889,5 +892,30 @@
     <string name="app_icon_updated">应用图标已更新。它可能需要片刻时间才会显示在你的主屏幕上。</string>
     <string name="title_pref_custom_app_name">应用名称</string>
     <string name="summary_pref_custom_app_name">同时重命名启动器/应用抽屉中的图标。某些启动器会缓存旧名称，直到你重启它们或重启设备。</string>
+
+    <!-- 各屏幕的工具栏副标题，"工具栏标题居中"开启后显示 -->
+    <string name="subtitle_server_config">配置此服务器的连接详情</string>
+    <string name="subtitle_routing_edit">添加或编辑一条路由规则</string>
+    <string name="subtitle_routing_setting">管理你的自定义路由规则</string>
+    <string name="subtitle_check_update">检查是否有新版本可用</string>
+    <string name="subtitle_logcat">查看应用运行日志</string>
+    <string name="subtitle_weather_forecast">每小时及每日天气预报详情</string>
+    <string name="subtitle_backup">备份或恢复你的配置</string>
+    <string name="subtitle_app_picker">选择要包含的应用</string>
+    <string name="subtitle_per_app_proxy">选择使用 VPN 的应用</string>
+    <string name="subtitle_about">应用信息、版本与鸣谢</string>
+    <string name="subtitle_library">本应用使用的开源库</string>
+    <string name="subtitle_user_asset">管理地理数据与资源文件</string>
+    <string name="subtitle_user_asset_url">通过链接添加资源文件</string>
+    <string name="subtitle_sub_edit">编辑此订阅的设置</string>
+    <string name="subtitle_sub_setting">管理你的订阅</string>
+    <string name="subtitle_fragment_settings">配置流量分片</string>
+    <string name="subtitle_core_settings">配置代理核心引擎</string>
+    <string name="subtitle_observatory_settings">配置延迟探测</string>
+    <string name="subtitle_vpn_settings">配置 VPN 连接行为</string>
+    <string name="subtitle_advanced_settings">应用高级配置</string>
+    <string name="subtitle_ui_settings">自定义应用外观</string>
+    <string name="subtitle_mux_settings">配置连接多路复用</string>
+    <string name="subtitle_settings">应用偏好设置与配置</string>
 
 </resources>

@@ -21,7 +21,7 @@ class AdvancedSettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_advanced))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_advanced), subtitle = getString(R.string.subtitle_advanced_settings))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

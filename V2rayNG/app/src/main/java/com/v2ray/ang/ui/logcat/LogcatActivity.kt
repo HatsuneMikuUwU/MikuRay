@@ -42,7 +42,7 @@ class LogcatActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener {
         binding.recyclerView.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_logcat))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_logcat), subtitle = getString(R.string.subtitle_logcat))
 
         adapter = LogcatRecyclerAdapter(viewModel, ::onLogLongClick)
 

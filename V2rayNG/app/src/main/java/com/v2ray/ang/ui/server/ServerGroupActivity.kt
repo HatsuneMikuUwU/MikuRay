@@ -59,7 +59,7 @@ class ServerGroupActivity : BaseActivity() {
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.POLICYGROUP.toString())
+        setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.POLICYGROUP.toString(), subtitle = getString(R.string.subtitle_server_config))
 
         val config = MmkvManager.decodeServerConfig(editGuid)
         

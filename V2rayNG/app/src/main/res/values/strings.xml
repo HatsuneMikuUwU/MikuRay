@@ -876,6 +876,9 @@ you need."</string>
     <string name="selected_banner_category">Selected Profile Style</string>
     <string name="selected_banner_enable_title">Banner style for selected profile</string>
     <string name="selected_banner_enable_summary">Show a banner image behind the active server card. Uses the default banner unless a custom one is set</string>
+    <string name="title_category_toolbar_style">Toolbar style</string>
+    <string name="title_pref_toolbar_center_subtitle_mode">Center toolbar subtitle</string>
+    <string name="summary_pref_toolbar_center_subtitle_mode">Show a centered subtitle with fade animation instead of the plain standard title</string>
     <string name="selected_banner_dim_title">Banner overlay strength</string>
     <string name="selected_banner_dim_summary_value">%1$d%%</string>
     <string name="selected_banner_custom_title">Change selected profile banner</string>
@@ -939,5 +942,30 @@ you need."</string>
     <string name="app_name_variant_miku10">MikuProxy</string>
     <string name="app_name_variant_miku11">MikuExpo</string>
     <string name="app_name_variant_miku12">v2mikuNG</string>
+
+    <!-- Toolbar subtitles, shown per-screen when "Center toolbar title" is enabled -->
+    <string name="subtitle_server_config">Configure the connection details for this server</string>
+    <string name="subtitle_routing_edit">Add or edit a single routing rule</string>
+    <string name="subtitle_routing_setting">Manage your custom routing rules</string>
+    <string name="subtitle_check_update">See if a newer app version is available</string>
+    <string name="subtitle_logcat">View the app\'s runtime logs</string>
+    <string name="subtitle_weather_forecast">Hourly and daily forecast details</string>
+    <string name="subtitle_backup">Back up or restore your configuration</string>
+    <string name="subtitle_app_picker">Choose which apps to include</string>
+    <string name="subtitle_per_app_proxy">Choose which apps use the VPN</string>
+    <string name="subtitle_about">App info, version, and credits</string>
+    <string name="subtitle_library">Open source libraries used by this app</string>
+    <string name="subtitle_user_asset">Manage geo data and asset files</string>
+    <string name="subtitle_user_asset_url">Add an asset file from a URL</string>
+    <string name="subtitle_sub_edit">Edit this subscription\'s settings</string>
+    <string name="subtitle_sub_setting">Manage your subscriptions</string>
+    <string name="subtitle_fragment_settings">Configure traffic fragmentation</string>
+    <string name="subtitle_core_settings">Configure the proxy core engine</string>
+    <string name="subtitle_observatory_settings">Configure latency probing</string>
+    <string name="subtitle_vpn_settings">Configure VPN connection behavior</string>
+    <string name="subtitle_advanced_settings">Advanced app configuration</string>
+    <string name="subtitle_ui_settings">Customize the app\'s appearance</string>
+    <string name="subtitle_mux_settings">Configure connection multiplexing</string>
+    <string name="subtitle_settings">App preferences and configuration</string>
 
 </resources>

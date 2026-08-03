@@ -22,7 +22,7 @@ class CoreSettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_core_settings))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_core_settings), subtitle = getString(R.string.subtitle_core_settings))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

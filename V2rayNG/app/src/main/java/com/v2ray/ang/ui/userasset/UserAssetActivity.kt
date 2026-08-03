@@ -50,7 +50,7 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
         
         binding.userAssetScrollContent.applyEdgeToEdgeListInsets()
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting), subtitle = getString(R.string.subtitle_user_asset))
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

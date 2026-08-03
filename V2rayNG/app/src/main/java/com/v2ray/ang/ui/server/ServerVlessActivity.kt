@@ -68,7 +68,7 @@ class ServerVlessActivity : BaseActivity() {
         tlsFields = TlsFields(this)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString())
+        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         transportFields.setOnNetworkChanged { network -> transportFields.updateForNetwork(network, config) }
         tlsFields.setOnSecurityChanged { security -> tlsFields.updateForSecurity(security) }

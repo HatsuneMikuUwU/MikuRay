@@ -48,7 +48,7 @@ class PerAppProxyActivity : BaseActivity() {
         binding.recyclerView.applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.per_app_proxy_settings))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.per_app_proxy_settings), subtitle = getString(R.string.subtitle_per_app_proxy))
 
         initList()
 

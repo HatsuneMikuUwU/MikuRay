@@ -67,7 +67,7 @@ class UiSettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_ui_settings))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_ui_settings), subtitle = getString(R.string.subtitle_ui_settings))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -119,6 +119,7 @@ class UiSettingsActivity : BaseActivity() {
         private val weatherCustomLocation by lazy { findPreference<EditTextPreference>(AppConfig.PREF_WEATHER_CUSTOM_LOCATION) }
         private val showTotalTrafficChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP) }
         private val searchChipGradient by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SEARCH_CHIP_GRADIENT) }
+        private val toolbarCenterSubtitleMode by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE) }
 
         private var tabIconPickerDialog: androidx.appcompat.app.AlertDialog? = null
 
@@ -329,6 +330,12 @@ class UiSettingsActivity : BaseActivity() {
                 summary = if (!isNightModeActive) getString(R.string.pref_true_black_only_in_night_mode)
                           else getString(R.string.summary_pref_true_black)
                 setOnPreferenceChangeListener { _, _ -> activity?.recreate(); true }
+            }
+
+            toolbarCenterSubtitleMode?.setOnPreferenceChangeListener { _, newValue ->
+                MmkvManager.encodeSettings(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE, newValue as Boolean)
+                activity?.recreate()
+                true
             }
 
             enableBlur?.setOnPreferenceChangeListener { _, newValue ->

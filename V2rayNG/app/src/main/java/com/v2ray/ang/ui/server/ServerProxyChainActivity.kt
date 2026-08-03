@@ -51,7 +51,7 @@ class ServerProxyChainActivity : BaseActivity() {
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.PROXYCHAIN.toString())
+        setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.PROXYCHAIN.toString(), subtitle = getString(R.string.subtitle_server_config))
 
         loadAvailableRemarks()
         setupRecycler()

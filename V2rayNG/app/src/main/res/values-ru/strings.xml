@@ -850,6 +850,9 @@
     <string name="selected_banner_category">Стиль выбранного профиля</string>
     <string name="selected_banner_enable_title">Стиль баннера для выбранного профиля</string>
     <string name="selected_banner_enable_summary">Показывать баннер позади карточки активного сервера. Используется баннер по умолчанию, если не задан свой</string>
+    <string name="title_category_toolbar_style">Стиль панели инструментов</string>
+    <string name="title_pref_toolbar_center_subtitle_mode">Центрированный подзаголовок панели</string>
+    <string name="summary_pref_toolbar_center_subtitle_mode">Показывать центрированный подзаголовок с анимацией затухания вместо обычного заголовка</string>
     <string name="selected_banner_dim_title">Интенсивность затемнения баннера</string>
     <string name="selected_banner_custom_title">Изменить баннер выбранного профиля</string>
     <string name="selected_banner_custom_summary">Задать свою картинку для карточки выбранного сервера (необязательно)</string>
@@ -910,5 +913,30 @@
     <string name="app_icon_updated">Значок приложения обновлен. Может потребоваться немного времени, чтобы он отобразился на главном экране.</string>
     <string name="title_pref_custom_app_name">Название приложения</string>
     <string name="summary_pref_custom_app_name">Также переименовывает значок в лаунчере/меню приложений. Некоторые лаунчеры кэшируют старое название, пока вы не перезапустите их или не перезагрузите устройство.</string>
+
+    <!-- Подзаголовки панели инструментов для каждого экрана, показываются при включенном "Заголовок панели по центру" -->
+    <string name="subtitle_server_config">Настройте параметры подключения для этого сервера</string>
+    <string name="subtitle_routing_edit">Добавьте или измените одно правило маршрутизации</string>
+    <string name="subtitle_routing_setting">Управляйте своими правилами маршрутизации</string>
+    <string name="subtitle_check_update">Проверьте, доступна ли новая версия приложения</string>
+    <string name="subtitle_logcat">Просмотр журнала работы приложения</string>
+    <string name="subtitle_weather_forecast">Почасовой и ежедневный прогноз погоды</string>
+    <string name="subtitle_backup">Резервное копирование или восстановление конфигурации</string>
+    <string name="subtitle_app_picker">Выберите приложения для включения</string>
+    <string name="subtitle_per_app_proxy">Выберите приложения, использующие VPN</string>
+    <string name="subtitle_about">Информация о приложении, версия и авторы</string>
+    <string name="subtitle_library">Библиотеки с открытым кодом, используемые приложением</string>
+    <string name="subtitle_user_asset">Управление гео-данными и файлами ресурсов</string>
+    <string name="subtitle_user_asset_url">Добавить файл ресурса по URL</string>
+    <string name="subtitle_sub_edit">Изменить настройки этой подписки</string>
+    <string name="subtitle_sub_setting">Управление вашими подписками</string>
+    <string name="subtitle_fragment_settings">Настройка фрагментации трафика</string>
+    <string name="subtitle_core_settings">Настройка ядра прокси</string>
+    <string name="subtitle_observatory_settings">Настройка проверки задержки</string>
+    <string name="subtitle_vpn_settings">Настройка поведения VPN-подключения</string>
+    <string name="subtitle_advanced_settings">Расширенная настройка приложения</string>
+    <string name="subtitle_ui_settings">Настройка внешнего вида приложения</string>
+    <string name="subtitle_mux_settings">Настройка мультиплексирования соединений</string>
+    <string name="subtitle_settings">Настройки и конфигурация приложения</string>
 
 </resources>

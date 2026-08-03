@@ -59,7 +59,7 @@ class ServerWireguardActivity : BaseActivity() {
         addressPortFields = AddressPortFields(this)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString())
+        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         if (config != null) {
             bindingServer(config)

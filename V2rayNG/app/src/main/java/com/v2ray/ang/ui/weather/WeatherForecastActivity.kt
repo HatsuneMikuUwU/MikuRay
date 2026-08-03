@@ -70,7 +70,7 @@ class WeatherForecastActivity : BaseActivity() {
         findViewById<androidx.core.widget.NestedScrollView>(R.id.weather_forecast_content).applyEdgeToEdgeListInsets()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.weather_forecast_title))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.weather_forecast_title), subtitle = getString(R.string.subtitle_weather_forecast))
 
         ivIcon = findViewById(R.id.ivForecastCurrentIcon)
         tvCondition = findViewById(R.id.tvForecastCurrentCondition)

@@ -43,7 +43,7 @@ class UserAssetUrlActivity : BaseActivity() {
         
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_add_url))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_add_url), subtitle = getString(R.string.subtitle_user_asset_url))
 
         val assetItem = MmkvManager.decodeAsset(editAssetId)
         val assetUrlQrcode = intent.getStringExtra(ASSET_URL_QRCODE)

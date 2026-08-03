@@ -219,6 +219,9 @@ object AppConfig {
     const val PREF_ACTION_CHANGE_SELECTED_BANNER = "action_change_selected_banner_image"
     const val PREF_ACTION_DELETE_SELECTED_BANNER = "action_delete_selected_banner_image"
 
+    // Collapsing toolbar style
+    const val PREF_TOOLBAR_CENTER_SUBTITLE_MODE = "pref_toolbar_center_subtitle_mode"
+
     // Particles animation controller
     const val PREF_PARTICLES_SETTINGS = "pref_particles_settings"
 

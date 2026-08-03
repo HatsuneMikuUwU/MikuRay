@@ -548,4 +548,20 @@
 
     </com.neko.widget.UwuPreferenceCategory>
 
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_toolbar_style"
+        android:title="@string/title_category_toolbar_style"
+        app:sectionIcon="@drawable/ic_format_align_center_24dp">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_format_align_center_24dp"
+            app:layout="@layout/uwu_sin_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_toolbar_center_subtitle_mode"
+            android:title="@string/title_pref_toolbar_center_subtitle_mode"
+            android:summary="@string/summary_pref_toolbar_center_subtitle_mode" />
+
+    </com.neko.widget.UwuPreferenceCategory>
+
 </PreferenceScreen>

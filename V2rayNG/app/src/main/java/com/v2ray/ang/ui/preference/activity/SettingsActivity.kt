@@ -53,7 +53,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_search)
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_settings))
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_settings), subtitle = getString(R.string.subtitle_settings))
 
         setupSearchActionView()
         setupWeatherTrafficChip()

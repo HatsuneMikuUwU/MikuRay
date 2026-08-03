@@ -832,6 +832,9 @@ yang kamu butuhin."</string>
     <string name="selected_banner_category">Style Profil yang Dipilih</string>
     <string name="selected_banner_enable_title">Style banner buat profil yang dipilih</string>
     <string name="selected_banner_enable_summary">Tampilin gambar banner di belakang kartu server yang aktif. Bakal pakai banner bawaan kalau kamu nggak pasang yang kustom</string>
+    <string name="title_category_toolbar_style">Gaya toolbar</string>
+    <string name="title_pref_toolbar_center_subtitle_mode">Subtitle toolbar center</string>
+    <string name="summary_pref_toolbar_center_subtitle_mode">Tampilkan subtitle center dengan animasi fade, bukan title polos standar</string>
     <string name="selected_banner_dim_title">Intensitas overlay banner</string>
     <string name="selected_banner_custom_title">Ganti banner profil yang dipilih</string>
     <string name="selected_banner_custom_summary">Pasang gambar kustom buat kartu server yang dipilih (opsional)</string>
@@ -892,5 +895,30 @@ yang kamu butuhin."</string>
     <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh sedikit waktu untuk muncul di layar beranda.</string>
     <string name="title_pref_custom_app_name">Nama Aplikasi</string>
     <string name="summary_pref_custom_app_name">Juga mengubah nama ikon di launcher/app-drawer. Beberapa launcher menyimpan cache nama lama sampai kamu memulai ulang atau reboot.</string>
+
+    <!-- Subjudul toolbar per layar, muncul kalo "Judul toolbar di tengah" dinyalain -->
+    <string name="subtitle_server_config">Atur detail koneksi buat server ini</string>
+    <string name="subtitle_routing_edit">Tambah atau edit satu aturan routing</string>
+    <string name="subtitle_routing_setting">Kelola aturan routing custom kamu</string>
+    <string name="subtitle_check_update">Cek ada versi app yang lebih baru gak</string>
+    <string name="subtitle_logcat">Liat log runtime aplikasi</string>
+    <string name="subtitle_weather_forecast">Detail perkiraan cuaca per jam &amp; harian</string>
+    <string name="subtitle_backup">Backup atau restore konfigurasi kamu</string>
+    <string name="subtitle_app_picker">Pilih aplikasi yang mau dimasukin</string>
+    <string name="subtitle_per_app_proxy">Pilih aplikasi yang pake VPN</string>
+    <string name="subtitle_about">Info app, versi, sama credits</string>
+    <string name="subtitle_library">Library open source yang dipake app ini</string>
+    <string name="subtitle_user_asset">Kelola file geo data sama asset</string>
+    <string name="subtitle_user_asset_url">Tambah file asset dari URL</string>
+    <string name="subtitle_sub_edit">Edit pengaturan subscription ini</string>
+    <string name="subtitle_sub_setting">Kelola subscription kamu</string>
+    <string name="subtitle_fragment_settings">Atur fragmentasi traffic</string>
+    <string name="subtitle_core_settings">Atur core engine proxy</string>
+    <string name="subtitle_observatory_settings">Atur pengecekan latency</string>
+    <string name="subtitle_vpn_settings">Atur perilaku koneksi VPN</string>
+    <string name="subtitle_advanced_settings">Konfigurasi lanjutan aplikasi</string>
+    <string name="subtitle_ui_settings">Kustomisasi tampilan aplikasi</string>
+    <string name="subtitle_mux_settings">Atur multiplexing koneksi</string>
+    <string name="subtitle_settings">Preferensi sama konfigurasi aplikasi</string>
 
 </resources>

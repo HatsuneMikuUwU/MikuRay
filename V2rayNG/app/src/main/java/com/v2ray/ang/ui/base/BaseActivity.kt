@@ -42,6 +42,9 @@ abstract class BaseActivity : AppCompatActivity() {
     
     private lateinit var themeStateManager: ThemeStateManager
 
+    private var toolbarSubtitle: CharSequence? = null
+    private var collapsingToolbarRef: CollapsingToolbarLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -64,6 +67,9 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeStateManager.checkThemeChangedAndRecreate()
+        if (collapsingToolbarRef != null) {
+            applyToolbarStyle()
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -74,6 +80,8 @@ abstract class BaseActivity : AppCompatActivity() {
             findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)?.apply {
                 setExpandedTitleTypeface(typeface)
                 setCollapsedTitleTypeface(typeface)
+                setExpandedSubtitleTypeface(typeface)
+                setCollapsedSubtitleTypeface(typeface)
             }
         }
     }
@@ -138,37 +146,67 @@ abstract class BaseActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
-    protected fun setupToolbar(toolbar: Toolbar?, showHomeAsUp: Boolean = true, title: CharSequence? = null) {
+    protected fun setupToolbar(toolbar: Toolbar?, showHomeAsUp: Boolean = true, title: CharSequence? = null, subtitle: CharSequence? = null) {
         val tb = toolbar ?: findViewById<Toolbar?>(R.id.toolbar)
         tb?.let {
             setSupportActionBar(it)
             supportActionBar?.setDisplayHomeAsUpEnabled(showHomeAsUp)
             title?.let { t -> this.title = t }
+
+            toolbarSubtitle = subtitle
+            collapsingToolbarRef = findViewById(R.id.collapsing_toolbar)
+
+            applyToolbarStyle()
         }
     }
 
-    protected fun setContentViewWithToolbar(layoutResId: Int, showHomeAsUp: Boolean = true, title: CharSequence? = null) {
+    fun refreshToolbarStyle() {
+        applyToolbarStyle()
+    }
+
+    private fun applyToolbarStyle() {
+        val collapsingToolbar = collapsingToolbarRef ?: return
+        val centerSubtitle = MmkvManager.decodeSettingsBool(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE, false)
+        val subtitleText = if (centerSubtitle) toolbarSubtitle else null
+
+        supportActionBar?.subtitle = subtitleText
+        collapsingToolbar.subtitle = subtitleText
+
+        if (centerSubtitle) {
+            collapsingToolbar.titleCollapseMode = CollapsingToolbarLayout.TITLE_COLLAPSE_MODE_FADE
+            collapsingToolbar.setExpandedTitleGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
+        } else {
+            collapsingToolbar.titleCollapseMode = CollapsingToolbarLayout.TITLE_COLLAPSE_MODE_SCALE
+            collapsingToolbar.setExpandedTitleGravity(Gravity.START or Gravity.BOTTOM)
+        }
+
+        collapsingToolbar.requestLayout()
+        collapsingToolbar.invalidate()
+    }
+
+    protected fun setContentViewWithToolbar(layoutResId: Int, showHomeAsUp: Boolean = true, title: CharSequence? = null, subtitle: CharSequence? = null) {
         val base = LayoutInflater.from(this).inflate(R.layout.activity_base, null)
         val container = base.findViewById<FrameLayout>(R.id.content_container)
         LayoutInflater.from(this).inflate(layoutResId, container, true)
         super.setContentView(base)
-        setupToolbar(base, showHomeAsUp, title)
+        setupToolbar(base, showHomeAsUp, title, subtitle)
     }
 
-    protected fun setContentViewWithToolbar(childView: View, showHomeAsUp: Boolean = true, title: CharSequence? = null) {
+    protected fun setContentViewWithToolbar(childView: View, showHomeAsUp: Boolean = true, title: CharSequence? = null, subtitle: CharSequence? = null) {
         val base = LayoutInflater.from(this).inflate(R.layout.activity_base, null)
         val container = base.findViewById<FrameLayout>(R.id.content_container)
         container.addView(childView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         super.setContentView(base)
-        setupToolbar(base, showHomeAsUp, title)
+        setupToolbar(base, showHomeAsUp, title, subtitle)
     }
 
-    private fun setupToolbar(baseRoot: View, showHomeAsUp: Boolean, title: CharSequence?) {
+    private fun setupToolbar(baseRoot: View, showHomeAsUp: Boolean, title: CharSequence?, subtitle: CharSequence?) {
         val toolbar = baseRoot.findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar?.let {
             setSupportActionBar(it)
             supportActionBar?.setDisplayHomeAsUpEnabled(showHomeAsUp)
             title?.let { t -> supportActionBar?.title = t }
+            subtitle?.let { s -> supportActionBar?.subtitle = s }
         }
     }
 

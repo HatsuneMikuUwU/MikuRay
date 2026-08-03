@@ -21,16 +21,22 @@
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
             app:contentScrim="?attr/colorBg"
             app:collapsedTitleTextAppearance="?attr/textAppearanceTitleLargeEmphasized"
-            app:collapsedTitleTextColor="?attr/colorOnSurfaceVariant"
+            app:collapsedTitleTextColor="?attr/colorOnSurface"
             app:expandedTitleMarginBottom="24dp"
             app:expandedTitleMarginEnd="24dp"
             app:expandedTitleMarginStart="24dp"
             app:expandedTitleMarginTop="96dp"
             app:expandedTitleTextAppearance="?attr/textAppearanceDisplaySmallEmphasized"
-            app:expandedTitleTextColor="?attr/colorOnSurfaceVariant"
+            app:expandedTitleTextColor="?attr/colorOnSurface"
+            app:collapsedSubtitleTextAppearance="?attr/textAppearanceTitleSmall"
+            app:collapsedSubtitleTextColor="?attr/colorOnSurfaceVariant"
+            app:expandedSubtitleTextAppearance="?attr/textAppearanceTitleMedium"
+            app:expandedSubtitleTextColor="?attr/colorOnSurfaceVariant"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:maxLines="4"
-            app:titleCollapseMode="scale">
+            app:subtitleMaxLines="3"
+            app:titleMaxLines="3"
+            app:titleCollapseMode="fade"
+            app:expandedTitleGravity="center_horizontal|bottom">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:theme="@style/AppThemeToolbarCircleNavigationButton"
