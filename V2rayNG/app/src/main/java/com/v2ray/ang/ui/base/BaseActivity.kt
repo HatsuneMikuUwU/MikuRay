@@ -188,11 +188,17 @@ abstract class BaseActivity : AppCompatActivity() {
             customSubtitleView?.text = subtitleText
             customSubtitleView?.visibility = View.VISIBLE
             
-            customSubtitleView?.post {
-                val subtitleHeight = customSubtitleView.height
+            if (customSubtitleView != null) {
+                val screenWidth = resources.displayMetrics.widthPixels
+                val marginPx = (48 * density).toInt()
+                val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(screenWidth - marginPx, View.MeasureSpec.AT_MOST)
+                val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                
+                customSubtitleView.measure(widthMeasureSpec, heightMeasureSpec)
+                
+                val subtitleHeight = customSubtitleView.measuredHeight
                 val spacing = (32 * density).toInt() 
                 collapsingToolbar.expandedTitleMarginBottom = subtitleHeight + spacing
-                collapsingToolbar.requestLayout()
             }
         } else {
             customSubtitleView?.visibility = View.GONE
