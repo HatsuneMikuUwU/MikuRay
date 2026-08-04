@@ -10,6 +10,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarError
+import com.v2ray.ang.extension.toastError
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.root.RootManager
@@ -129,10 +130,7 @@ object LauncherManager {
         SettingsManager.refreshRuntimeSocksPort()
 
         if (config.insecure == true && config.pinnedCA256.isNullOrEmpty()) {
-            context.snackbarError(
-                context.getString(R.string.toast_allow_insecure_deprecated),
-                title = context.getString(R.string.title_alerter_error)
-            )
+            context.toastError(context.getString(R.string.toast_allow_insecure_deprecated))
             Utils.setClipboard(context, context.getString(R.string.toast_allow_insecure_deprecated))
         }
 
