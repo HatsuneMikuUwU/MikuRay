@@ -46,6 +46,12 @@
             <enum name="vertical" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="ExpandableLayout">
+        <attr name="el_headerViewId" format="reference" />
+        <attr name="el_arrowViewId" format="reference" />
+        <attr name="el_contentViewId" format="reference" />
+    </declare-styleable>
     
     <declare-styleable name="DynamicShapeImageView">
         <attr name="shapeBackgroundColor" format="color|reference" />

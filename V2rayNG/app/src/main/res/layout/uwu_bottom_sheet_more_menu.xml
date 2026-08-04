@@ -8,28 +8,11 @@
     android:paddingBottom="8.0dip"
     android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginStart="16.0dip"
-        android:layout_marginTop="16.0dip"
-        android:layout_marginEnd="16.0dip"
-        android:layout_marginBottom="0.0dip"
-        android:paddingTop="0.0dip"
-        app:cardBackgroundColor="#00000000"
-        app:cardCornerRadius="28.0dip"
-        app:cardElevation="0.0dip"
-        app:strokeWidth="0.0dip">
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginStart="-16.0dip"
-            android:layout_marginTop="-16.0dip"
-            android:layout_marginEnd="-16.0dip">
+            android:layout_height="fill_parent">
 
             <LinearLayout
-                android:id="@+id/menu_container_parent"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -197,8 +180,16 @@
                         android:layout_marginEnd="-16.0dip"
                         android:orientation="vertical">
 
+                        <com.neko.expandable.layout.ExpandableLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:el_headerViewId="@id/quick_actions_header"
+                            app:el_arrowViewId="@id/quick_actions_arrow"
+                            app:el_contentViewId="@id/quick_actions_content">
+
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/quick_actions_expand_header"
+                            android:id="@+id/quick_actions_header"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16.0dip"
@@ -292,7 +283,7 @@
                                         app:strokeWidth="0.0dip">
 
                                         <ImageView
-                                            android:id="@+id/quick_actions_expand_arrow"
+                                            android:id="@+id/quick_actions_arrow"
                                             android:layout_width="25.0dip"
                                             android:layout_height="25.0dip"
                                             android:layout_marginStart="2.0dip"
@@ -304,12 +295,19 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
-                        <LinearLayout
-                            android:id="@+id/quick_actions_expand_content"
+                        <com.neko.expandable.layout.ExpandableView
+                            android:id="@+id/quick_actions_content"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            app:el_duration="300"
+                            app:el_expanded="false"
+                            app:el_orientation="vertical"
+                            app:el_parallax="1.0">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/action_scroll_to_selected"
@@ -842,10 +840,22 @@
                                 </LinearLayout>
                             </com.google.android.material.card.MaterialCardView>
 
-                          </LinearLayout>
+                        </LinearLayout>
+
+                        </com.neko.expandable.layout.ExpandableView>
+
+                        </com.neko.expandable.layout.ExpandableLayout>
+
+                        <com.neko.expandable.layout.ExpandableLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:el_headerViewId="@id/management_header"
+                            app:el_arrowViewId="@id/management_arrow"
+                            app:el_contentViewId="@id/management_content">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/management_expand_header"
+                            android:id="@+id/management_header"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16.0dip"
@@ -939,7 +949,7 @@
                                         app:strokeWidth="0.0dip">
 
                                         <ImageView
-                                            android:id="@+id/management_expand_arrow"
+                                            android:id="@+id/management_arrow"
                                             android:layout_width="25.0dip"
                                             android:layout_height="25.0dip"
                                             android:layout_marginStart="2.0dip"
@@ -951,12 +961,19 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
-                        <LinearLayout
-                            android:id="@+id/management_expand_content"
+                        <com.neko.expandable.layout.ExpandableView
+                            android:id="@+id/management_content"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            app:el_duration="300"
+                            app:el_expanded="false"
+                            app:el_orientation="vertical"
+                            app:el_parallax="1.0">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/export_all"
@@ -1595,6 +1612,10 @@
                             </com.google.android.material.card.MaterialCardView>
                             
                         </LinearLayout>
+
+                        </com.neko.expandable.layout.ExpandableView>
+
+                        </com.neko.expandable.layout.ExpandableLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -1819,5 +1840,4 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

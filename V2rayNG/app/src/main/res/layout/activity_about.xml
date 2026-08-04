@@ -78,7 +78,10 @@
             <com.neko.expandable.layout.ExpandableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:el_headerViewId="@id/card_expandable"
+                app:el_arrowViewId="@id/arrow_button"
+                app:el_contentViewId="@id/expandable_view">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"

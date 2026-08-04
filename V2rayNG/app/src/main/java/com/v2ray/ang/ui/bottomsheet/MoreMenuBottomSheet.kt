@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
 import android.widget.ImageView
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.v2ray.ang.AppConfig
@@ -17,20 +15,6 @@ import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.ParticlesController
 import com.neko.particlesdrawable.ParticlesView
-
-private const val TRANSITION_DURATION = 300L
-
-private fun View.toggleWithTransition(parentView: ViewGroup, isExpanding: Boolean) {
-    TransitionManager.beginDelayedTransition(parentView, AutoTransition().setDuration(TRANSITION_DURATION))
-    this.visibility = if (isExpanding) View.VISIBLE else View.GONE
-}
-
-private fun ImageView.animateRotation(endDegree: Float) {
-    this.animate()
-        .rotation(endDegree)
-        .setDuration(TRANSITION_DURATION)
-        .start()
-}
 
 class MoreMenuBottomSheet : BaseBottomSheetFragment() {
 
@@ -76,8 +60,6 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rootContainer = view.findViewById<ViewGroup>(R.id.menu_container_parent) ?: view as ViewGroup
-
         val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
         if (particlesView != null) {
             val disabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
@@ -87,16 +69,6 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
             }
         }
         loadBanner(view)
-
-        val qaHeader  = view.findViewById<View>(R.id.quick_actions_expand_header)
-        val qaContent = view.findViewById<View>(R.id.quick_actions_expand_content)
-        val qaArrow   = view.findViewById<ImageView>(R.id.quick_actions_expand_arrow)
-        setupExpandable(rootContainer, qaHeader, qaContent, qaArrow)
-
-        val managementHeader  = view.findViewById<View>(R.id.management_expand_header)
-        val managementContent = view.findViewById<View>(R.id.management_expand_content)
-        val managementArrow   = view.findViewById<ImageView>(R.id.management_expand_arrow)
-        setupExpandable(rootContainer, managementHeader, managementContent, managementArrow)
 
         val checkOrigin = view.findViewById<CheckedTextView>(R.id.action_order_origin)
         val checkName   = view.findViewById<CheckedTextView>(R.id.action_order_by_name)
@@ -201,23 +173,6 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
                 bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)
             }
             bannerImageView.tag = targetTag
-        }
-    }
-
-    private fun setupExpandable(
-        parent: ViewGroup,
-        toggleHeader: View?,
-        expandableContent: View?,
-        arrowIcon: ImageView?
-    ) {
-        if (toggleHeader == null || expandableContent == null) return
-
-        arrowIcon?.rotation = if (expandableContent.visibility == View.VISIBLE) 90f else 0f
-
-        toggleHeader.setOnClickListener {
-            val isExpanding = expandableContent.visibility == View.GONE
-            expandableContent.toggleWithTransition(parent, isExpanding)
-            arrowIcon?.animateRotation(if (isExpanding) 90f else 0f)
         }
     }
 

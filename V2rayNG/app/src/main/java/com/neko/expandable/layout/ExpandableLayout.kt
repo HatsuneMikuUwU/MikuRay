@@ -16,12 +16,31 @@ class ExpandableLayout(context: Context, attrs: AttributeSet?) : LinearLayout(co
     private var cardExpandable: MaterialCardView? = null
     private var expandableContent: ExpandableView? = null
 
+    // Resolved per-instance from XML so multiple ExpandableLayout siblings on
+    // the same screen never collide on the same view id. No fallback default:
+    // every usage must declare app:el_headerViewId/el_arrowViewId/el_contentViewId.
+    private val headerViewId: Int
+    private val arrowViewId: Int
+    private val contentViewId: Int
+
+    init {
+        val a = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayout)
+        headerViewId = a.getResourceId(R.styleable.ExpandableLayout_el_headerViewId, View.NO_ID)
+        arrowViewId = a.getResourceId(R.styleable.ExpandableLayout_el_arrowViewId, View.NO_ID)
+        contentViewId = a.getResourceId(R.styleable.ExpandableLayout_el_contentViewId, View.NO_ID)
+        a.recycle()
+
+        require(headerViewId != View.NO_ID && arrowViewId != View.NO_ID && contentViewId != View.NO_ID) {
+            "ExpandableLayout requires app:el_headerViewId, app:el_arrowViewId and app:el_contentViewId to be set"
+        }
+    }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
         
-        expandableContent = findViewById(R.id.expandable_view)
-        arrowIcon = findViewById(R.id.arrow_button)
-        cardExpandable = findViewById(R.id.card_expandable)
+        expandableContent = findViewById(contentViewId)
+        arrowIcon = findViewById(arrowViewId)
+        cardExpandable = findViewById(headerViewId)
         
         cardExpandable?.setOnClickListener(this)
         arrowIcon?.setOnClickListener(this)
