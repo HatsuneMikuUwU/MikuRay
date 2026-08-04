@@ -200,7 +200,7 @@ dependencies {
     implementation(libs.language.json)
 
     // Intent and Utility Libraries
-    implementation(libs.quickie.foss)
+    implementation(libs.zxing.lite)
     implementation(libs.core)
 
     // Image loading & cropping

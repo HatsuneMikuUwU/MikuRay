@@ -1,26 +1,30 @@
 package com.v2ray.ang.helper
 
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import io.github.g00fy2.quickie.QRResult
-import io.github.g00fy2.quickie.ScanCustomCode
-import io.github.g00fy2.quickie.config.BarcodeFormat
-import io.github.g00fy2.quickie.config.ScannerConfig
+import com.king.camera.scan.CameraScan
+import com.v2ray.ang.ui.scanner.QrCaptureActivity
 
 /**
  * Helper for scanning QR codes.
  *
  * This class encapsulates the logic for launching the QR code scanner directly
- * using the Quickie library and handling the scan result.
+ * using the ZXingLite (ZXing + CameraScan) library and handling the scan result.
  */
 class QRCodeScannerHelper(private val activity: AppCompatActivity) {
     private var scanCallback: ((String?) -> Unit)? = null
 
-    private val scanLauncher = activity.registerForActivityResult(ScanCustomCode()) { result ->
-        if (result is QRResult.QRSuccess) {
-            scanCallback?.invoke(result.content.rawValue)
+    private val scanLauncher = activity.registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val text = if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.getStringExtra(CameraScan.SCAN_RESULT)
         } else {
-            scanCallback?.invoke(null)
+            null
         }
+        scanCallback?.invoke(text)
         scanCallback = null
     }
 
@@ -31,13 +35,6 @@ class QRCodeScannerHelper(private val activity: AppCompatActivity) {
      */
     fun launch(onResult: (String?) -> Unit) {
         scanCallback = onResult
-        scanLauncher.launch(
-            ScannerConfig.build {
-                setHapticSuccessFeedback(true)
-                setShowTorchToggle(true)
-                setShowCloseButton(true)
-                setBarcodeFormats(listOf(BarcodeFormat.QR_CODE))
-            }
-        )
+        scanLauncher.launch(Intent(activity, QrCaptureActivity::class.java))
     }
 }

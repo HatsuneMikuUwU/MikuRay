@@ -54,6 +54,14 @@
         android:theme="@style/AppThemeBase"
         android:usesCleartextTraffic="true">
 
+        <!--
+        QR scanner (ZXingLite/CameraScan, CameraX-based) - kept in portrait to
+        match the rest of the app.
+        -->
+        <activity
+            android:name=".ui.scanner.QrCaptureActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="true"

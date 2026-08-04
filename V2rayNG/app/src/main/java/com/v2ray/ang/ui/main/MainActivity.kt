@@ -75,10 +75,8 @@ import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import com.v2ray.ang.util.showSubUpdateDiffDialog
 
-import io.github.g00fy2.quickie.QRResult
-import io.github.g00fy2.quickie.ScanCustomCode
-import io.github.g00fy2.quickie.config.BarcodeFormat
-import io.github.g00fy2.quickie.config.ScannerConfig
+import com.king.camera.scan.CameraScan
+import com.v2ray.ang.ui.scanner.QrCaptureActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -126,9 +124,9 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
-    private val scanQrCode = registerForActivityResult(ScanCustomCode()) { result ->
-        if (result is QRResult.QRSuccess) {
-            importBatchConfig(result.content.rawValue.orEmpty())
+    private val scanQrCode = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.getStringExtra(CameraScan.SCAN_RESULT)?.let { importBatchConfig(it) }
         }
     }
 
@@ -868,14 +866,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun launchScan() {
-        scanQrCode.launch(
-            ScannerConfig.build {
-                setHapticSuccessFeedback(true)
-                setShowTorchToggle(true)
-                setShowCloseButton(true)
-                setBarcodeFormats(listOf(BarcodeFormat.QR_CODE))
-            }
-        )
+        scanQrCode.launch(Intent(this, QrCaptureActivity::class.java))
     }
 
     private fun showQRFileChooser() {
