@@ -553,10 +553,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> {
-                    val content = intent.getStringExtra("content")
-                    if (content == "0") {
-                        onTestsFinished()
-                    }
+                    onTestsFinished()
                 }
 
                 AppConfig.MSG_TRAFFIC_UPDATED -> {
