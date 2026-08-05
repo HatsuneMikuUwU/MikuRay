@@ -61,7 +61,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * Called when the ViewModel is cleared.
      */
     override fun onCleared() {
-        getApplication<AngApplication>().unregisterReceiver(mMsgReceiver)
+        try {
+            getApplication<AngApplication>().unregisterReceiver(mMsgReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
         LogUtil.i(AppConfig.TAG, "Main ViewModel is cleared")
         super.onCleared()
     }

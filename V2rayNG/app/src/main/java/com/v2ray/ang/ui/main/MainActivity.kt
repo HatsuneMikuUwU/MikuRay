@@ -1,4 +1,5 @@
 package com.v2ray.ang.ui.main
+
 import com.v2ray.ang.ui.base.HelperBaseActivity
 import com.v2ray.ang.ui.about.AboutActivity
 import com.v2ray.ang.ui.subscription.SubSettingActivity
@@ -6,7 +7,6 @@ import com.v2ray.ang.ui.subscription.SubEditActivity
 import com.v2ray.ang.ui.routing.RoutingSettingActivity
 import com.v2ray.ang.ui.logcat.LogcatActivity
 import com.v2ray.ang.ui.backup.BackupActivity
-
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -75,7 +75,6 @@ import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import com.v2ray.ang.util.showSubUpdateDiffDialog
-
 import com.king.camera.scan.CameraScan
 import com.v2ray.ang.ui.scanner.QrCaptureActivity
 import kotlinx.coroutines.Dispatchers
@@ -172,18 +171,9 @@ class MainActivity : HelperBaseActivity(),
 
     private var isColdStart = true
 
-    // Cached raw values so the bottom-status IP text can be re-rendered whenever either the
-    // IP result or the live traffic speed changes, without the two observers clobbering
-    // each other's output.
     private var lastIpStateText: String = ""
     private var lastTrafficSpeedText: String = ""
 
-    /**
-     * Shows real-time upload/download speed (mirroring the notification's speed text)
-     * in place of the connected IP, when the user has enabled it. The IP itself is
-     * irrelevant in this mode, so it falls back to a zero-speed reading instead of
-     * "IP: unknown" whenever the VPN isn't running or no speed tick has arrived yet.
-     */
     private fun refreshIpStateText() {
         val showRealtimeTraffic = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)
         binding.tvIpState.text = if (showRealtimeTraffic) {
@@ -468,6 +458,7 @@ class MainActivity : HelperBaseActivity(),
         binding.viewPager.apply {
             adapter = groupPagerAdapter
             isUserInputEnabled = true
+            offscreenPageLimit = 10
         }
     }
 
@@ -658,7 +649,6 @@ class MainActivity : HelperBaseActivity(),
         } else {
             badge.visibility = View.GONE
         }
-        badge.post { badge.requestLayout() }
     }
 
     private fun setTabIcon(iconView: android.widget.ImageView?, iconName: String?) {
@@ -682,69 +672,65 @@ class MainActivity : HelperBaseActivity(),
         position: Int = tab?.position ?: 0,
         tabCount: Int = binding.tabGroup.tabCount
     ) {
-        val view = tab?.customView ?: return
-        val icon = view.findViewById<android.widget.ImageView>(R.id.tab_icon)
-        val label = view.findViewById<TextView>(R.id.tab_label) ?: return
-        val badge = view.findViewById<TextView>(R.id.tab_badge) ?: return
-
-        val tintColor = if (selected) getColorAttr(R.attr.colorOnPrimary) else getColorAttr(R.attr.colorOnSurfaceVariant)
-        label.setTextColor(tintColor)
-        icon?.imageTintList = android.content.res.ColorStateList.valueOf(tintColor)
-
-        if (selected) {
-            badge.setTextColor(getColorAttr(R.attr.colorPrimary))
-            badge.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                getColorAttr(R.attr.colorOnPrimary)
-            )
-        } else {
-            badge.setTextColor(getColorAttr(R.attr.colorOnPrimary))
-            badge.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                getColorAttr(R.attr.colorPrimary)
-            )
-        }
     }
 
     private fun setupGroupTab() {
-        val groups = mainViewModel.getSubscriptions(this)
-        groupPagerAdapter.update(groups)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val groups = mainViewModel.getSubscriptions(this@MainActivity)
+            withContext(Dispatchers.Main) {
+                if (isFinishing || isDestroyed) return@withContext
 
-        tabMediator?.detach()
-        tabMediator = TabLayoutMediator(binding.tabGroup, binding.viewPager) { tab, position ->
-            groupPagerAdapter.groups.getOrNull(position)?.let { group ->
-                tab.tag = group.id
-                val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_group, null)
-                val tabIcon = tabView.findViewById<android.widget.ImageView>(R.id.tab_icon)
-                val tabLabel = tabView.findViewById<TextView>(R.id.tab_label)
-                val tabBadge = tabView.findViewById<TextView>(R.id.tab_badge)
-                tabLabel.text = group.remarks
-                setTabIcon(tabIcon, group.icon)
-                setBadgeVisibility(tabBadge, tabLabel, group.serverCount)
-                tab.customView = tabView
-            }
-        }.also { it.attach() }
+                val currentIds = (0 until binding.tabGroup.tabCount).map { binding.tabGroup.getTabAt(it)?.tag }
+                val structureUnchanged = currentIds == groups.map { it.id } &&
+                    groupPagerAdapter.groups.map { it.icon } == groups.map { it.icon } &&
+                    groupPagerAdapter.groups.map { it.remarks } == groups.map { it.remarks }
 
-        binding.tabGroup.post {
-            for (i in 0 until binding.tabGroup.tabCount) {
-                val tab = binding.tabGroup.getTabAt(i)
-                applyTabSelectedStyle(tab, i == binding.tabGroup.selectedTabPosition, i, binding.tabGroup.tabCount)
+                groupPagerAdapter.update(groups)
+
+                if (structureUnchanged && binding.tabGroup.tabCount == groups.size) {
+                    refreshTabBadges()
+                    return@withContext
+                }
+
+                val targetIndex = groups.indexOfFirst { it.id == mainViewModel.subscriptionId }
+                    .takeIf { it >= 0 } ?: (groups.size - 1)
+
+                tabMediator?.detach()
+                tabMediator = TabLayoutMediator(binding.tabGroup, binding.viewPager) { tab, position ->
+                    groupPagerAdapter.groups.getOrNull(position)?.let { group ->
+                        tab.tag = group.id
+                        val tabView = LayoutInflater.from(this@MainActivity).inflate(R.layout.item_tab_group, null)
+                        val tabIcon = tabView.findViewById<android.widget.ImageView>(R.id.tab_icon)
+                        val tabLabel = tabView.findViewById<TextView>(R.id.tab_label)
+                        val tabBadge = tabView.findViewById<TextView>(R.id.tab_badge)
+                        tabLabel.text = group.remarks
+                        setTabIcon(tabIcon, group.icon)
+                        setBadgeVisibility(tabBadge, tabLabel, group.serverCount)
+                        tab.customView = tabView
+                    }
+                }.also { it.attach() }
+
+                binding.tabGroup.post {
+                    for (i in 0 until binding.tabGroup.tabCount) {
+                        val tab = binding.tabGroup.getTabAt(i)
+                        applyTabSelectedStyle(tab, i == binding.tabGroup.selectedTabPosition, i, binding.tabGroup.tabCount)
+                    }
+                }
+
+                binding.tabGroup.removeOnTabSelectedListener(tabSelectedListener)
+                binding.tabGroup.addOnTabSelectedListener(tabSelectedListener)
+
+                if (targetIndex >= 0) {
+                    binding.viewPager.setCurrentItem(targetIndex, false)
+                }
+                
+                val hasAnyGroup = groups.isNotEmpty()
+                
+                binding.layoutTabWrapper.isVisible = hasAnyGroup
+                binding.tabGroup.isVisible = hasAnyGroup
+                (binding.tabGroup.parent as? View)?.isVisible = hasAnyGroup
             }
         }
-
-        binding.tabGroup.removeOnTabSelectedListener(tabSelectedListener)
-        binding.tabGroup.addOnTabSelectedListener(tabSelectedListener)
-
-        val targetIndex = groups.indexOfFirst { it.id == mainViewModel.subscriptionId }
-            .takeIf { it >= 0 } ?: (groups.size - 1)
-            
-        if (targetIndex >= 0) {
-            binding.viewPager.setCurrentItem(targetIndex, false)
-        }
-        
-        val hasAnyGroup = groups.isNotEmpty()
-        
-        binding.layoutTabWrapper.isVisible = hasAnyGroup
-        binding.tabGroup.isVisible = hasAnyGroup
-        (binding.tabGroup.parent as? View)?.isVisible = hasAnyGroup
     }
 
     fun refreshGroupTabTitles(refreshAll: Boolean = false) {
@@ -752,13 +738,18 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun refreshTabBadges() {
-        val groups = mainViewModel.getSubscriptions(this)
-        for (i in groups.indices) {
-            val tab = binding.tabGroup.getTabAt(i) ?: continue
-            val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
-            val count = groups.getOrNull(i)?.serverCount ?: 0
-            val tabLabel = tab.customView?.findViewById<TextView>(R.id.tab_label) ?: continue
-            setBadgeVisibility(tabBadge, tabLabel, count)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val groups = mainViewModel.getSubscriptions(this@MainActivity)
+            withContext(Dispatchers.Main) {
+                if (isFinishing || isDestroyed) return@withContext
+                for (i in groups.indices) {
+                    val tab = binding.tabGroup.getTabAt(i) ?: continue
+                    val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
+                    val count = groups.getOrNull(i)?.serverCount ?: 0
+                    val tabLabel = tab.customView?.findViewById<TextView>(R.id.tab_label) ?: continue
+                    setBadgeVisibility(tabBadge, tabLabel, count)
+                }
+            }
         }
     }
 

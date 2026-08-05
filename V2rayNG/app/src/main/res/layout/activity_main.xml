@@ -299,7 +299,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         app:tabIndicator="@drawable/uwu_tabs_rounded_indicator"
-                        app:tabIndicatorAnimationMode="elastic"
                         app:tabIndicatorColor="?colorPrimary"
                         app:tabIndicatorFullWidth="true"
                         app:tabIndicatorHeight="40dp"
@@ -307,11 +306,7 @@
                         app:tabMode="scrollable"
                         app:tabPaddingEnd="0dp"
                         app:tabPaddingStart="0dp"
-                        app:tabRippleColor="@android:color/transparent"
-                        app:tabSelectedTextAppearance="?textAppearanceTitleSmall"
-                        app:tabSelectedTextColor="?colorSurface"
-                        app:tabTextAppearance="?textAppearanceTitleSmall"
-                        app:tabTextColor="?colorOnSurfaceVariant" />
+                        app:tabRippleColor="@android:color/transparent" />
 
                 </com.google.android.material.card.MaterialCardView>
             </com.google.android.material.card.MaterialCardView>
