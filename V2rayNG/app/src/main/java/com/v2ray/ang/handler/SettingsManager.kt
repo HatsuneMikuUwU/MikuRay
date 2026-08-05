@@ -327,7 +327,7 @@ object SettingsManager {
         }
 
         val defaultSub = SubscriptionItem(
-            remarks = "Bawaan",
+            remarks = "Miku",
         )
         encodeSubscription(DEFAULT_SUBSCRIPTION_ID, defaultSub)
     }
