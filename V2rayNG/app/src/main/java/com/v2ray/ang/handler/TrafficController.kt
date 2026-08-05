@@ -3,6 +3,7 @@ package com.v2ray.ang.handler
 import android.app.Service
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.core.CoreServiceManager
+import com.v2ray.ang.extension.toSpeedString
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MessageUtil
 import kotlinx.coroutines.CoroutineScope
@@ -98,6 +99,16 @@ object TrafficController {
             listener?.onTraffic(proxyUplink, proxyDownlink, directUplink, directDownlink, intervalMs)
         }.onFailure { e ->
             LogUtil.e(AppConfig.TAG, "TrafficController: listener failed", e)
+        }
+
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false) == true) {
+            val sinceLastQueryInSeconds = intervalMs / 1000.0
+            val upSpeed = ((proxyUplink + directUplink) / sinceLastQueryInSeconds).toLong()
+            val downSpeed = ((proxyDownlink + directDownlink) / sinceLastQueryInSeconds).toLong()
+            val speedText = "↑ ${upSpeed.toSpeedString()}  ↓ ${downSpeed.toSpeedString()}"
+            getService()?.let { svc ->
+                MessageUtil.sendMsg2UI(svc, AppConfig.MSG_TRAFFIC_SPEED_UPDATED, speedText)
+            }
         }
 
         if (proxyUplink + proxyDownlink <= 0L) return

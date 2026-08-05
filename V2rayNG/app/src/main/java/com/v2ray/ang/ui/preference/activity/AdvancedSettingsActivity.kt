@@ -9,6 +9,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.extension.applyEdgeToEdgeListInsets
+import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.ui.base.BaseActivity
@@ -33,6 +34,7 @@ class AdvancedSettingsActivity : BaseActivity() {
     class AdvancedSettingsFragment : PreferenceFragmentCompat() {
 
         private val mode by lazy { findPreference<ListPreference>(AppConfig.PREF_MODE) }
+        private val ipApiUrl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_IP_API_URL) }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
@@ -49,6 +51,17 @@ class AdvancedSettingsActivity : BaseActivity() {
                 true
             }
             mode?.dialogLayoutResource = R.layout.preference_with_help_link
+
+            // pref_ip_api_url is the endpoint used to detect the connected IP, but that IP text
+            // is replaced entirely by live speed when real-time traffic is on, so the URL has
+            // nothing left to affect and is disabled with an explanatory summary while active.
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)) {
+                ipApiUrl?.isEnabled = false
+                ipApiUrl?.summary = getString(
+                    R.string.summary_pref_disabled_realtime_traffic_ip,
+                    getString(R.string.title_pref_show_realtime_traffic_ip)
+                )
+            }
         }
 
         override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {

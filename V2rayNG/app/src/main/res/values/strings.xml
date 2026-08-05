@@ -222,6 +222,10 @@
     <string name="summary_pref_speed_enabled">Display current speed in the notification.\nNotification icon would change based on
         usage.</string>
 
+    <string name="title_pref_show_realtime_traffic_ip">Show real-time traffic instead of IP</string>
+    <string name="summary_pref_show_realtime_traffic_ip">Replace the IP text on the home screen with live upload/download speed, just like the notification.</string>
+    <string name="summary_pref_disabled_realtime_traffic_ip">Disabled while "%1$s" is enabled.</string>
+
     <string name="title_pref_sniffing_enabled">Enable Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Try sniff domain from the packet (default on)</string>
     <string name="title_pref_route_only_enabled">Enable routeOnly</string>

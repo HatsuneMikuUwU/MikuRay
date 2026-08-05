@@ -202,6 +202,10 @@
     <string name="title_pref_speed_enabled">Tampilin kecepatan</string>
     <string name="summary_pref_speed_enabled">Biar keliatan speed sekarang di notif.\nIkon notifnya bakal berubah ngikutin pemakaian lo.</string>
 
+    <string name="title_pref_show_realtime_traffic_ip">Tampilin traffic real-time ganti IP</string>
+    <string name="summary_pref_show_realtime_traffic_ip">Ganti teks IP di layar utama jadi kecepatan upload/download real-time, kayak di notifikasi.</string>
+    <string name="summary_pref_disabled_realtime_traffic_ip">Dinonaktifin selama "%1$s" lagi aktif.</string>
+
     <string name="title_pref_sniffing_enabled">Aktifin Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Cobain sniff domain dari paketnya (bawaannya nyala)</string>
     <string name="title_pref_route_only_enabled">Aktifin routeOnly</string>

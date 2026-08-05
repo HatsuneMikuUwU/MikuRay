@@ -207,6 +207,10 @@
     <string name="title_pref_speed_enabled">Включить отображение скорости</string>
     <string name="summary_pref_speed_enabled">Показывать текущую скорость в уведомлении.\nЗначок уведомления изменяется в зависимости от использования.</string>
 
+    <string name="title_pref_show_realtime_traffic_ip">Показывать трафик вместо IP</string>
+    <string name="summary_pref_show_realtime_traffic_ip">Заменить текст IP на главном экране скоростью загрузки/отдачи в реальном времени, как в уведомлении.</string>
+    <string name="summary_pref_disabled_realtime_traffic_ip">Отключено, пока включено «%1$s».</string>
+
     <string name="title_pref_sniffing_enabled">Включить сниффинг</string>
     <string name="summary_pref_sniffing_enabled">Попытаться определить домен из пакета (по умолчанию включено)</string>
     <string name="title_pref_route_only_enabled">Включить routeOnly</string>

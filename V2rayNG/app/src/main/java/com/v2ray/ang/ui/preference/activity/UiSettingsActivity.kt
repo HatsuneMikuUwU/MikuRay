@@ -120,6 +120,8 @@ class UiSettingsActivity : BaseActivity() {
         private val showTotalTrafficChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP) }
         private val searchChipGradient by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SEARCH_CHIP_GRADIENT) }
         private val toolbarCenterSubtitleMode by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE) }
+        private val showRealtimeTrafficIp by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP) }
+        private val showIspInfo by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_ISP_INFO) }
 
         private var tabIconPickerDialog: androidx.appcompat.app.AlertDialog? = null
 
@@ -475,6 +477,22 @@ class UiSettingsActivity : BaseActivity() {
             }
 
             updateChipPreferenceEnabledState()
+
+            updateShowIspInfoEnabledState()
+            showRealtimeTrafficIp?.setOnPreferenceChangeListener { _, newValue ->
+                val checked = newValue as Boolean
+                MmkvManager.encodeSettings(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, checked)
+                showIspInfo?.isEnabled = !checked
+                showIspInfo?.summary = if (checked) {
+                    getString(
+                        R.string.summary_pref_disabled_realtime_traffic_ip,
+                        getString(R.string.title_pref_show_realtime_traffic_ip)
+                    )
+                } else {
+                    getString(R.string.summary_pref_show_isp_info)
+                }
+                true
+            }
 
             updateGroupAllTabIconSummary()
             groupAllTabIcon?.setOnPreferenceClickListener {
@@ -1123,6 +1141,24 @@ class UiSettingsActivity : BaseActivity() {
             showTotalTrafficChip?.isEnabled = !weatherOn
             searchChipGradient?.isEnabled = weatherOn || trafficOn
             updateWeatherSubPrefsEnabled(weatherOn)
+        }
+
+        /**
+         * pref_show_isp_info shows ISP/org info next to the connected IP text, but that text
+         * gets replaced entirely by live speed when real-time traffic is on — so ISP info has
+         * nothing to attach to and is disabled with an explanatory summary while that's active.
+         */
+        private fun updateShowIspInfoEnabledState() {
+            val realtimeTrafficOn = showRealtimeTrafficIp?.isChecked == true
+            showIspInfo?.isEnabled = !realtimeTrafficOn
+            showIspInfo?.summary = if (realtimeTrafficOn) {
+                getString(
+                    R.string.summary_pref_disabled_realtime_traffic_ip,
+                    getString(R.string.title_pref_show_realtime_traffic_ip)
+                )
+            } else {
+                getString(R.string.summary_pref_show_isp_info)
+            }
         }
 
         override fun onDestroyView() {

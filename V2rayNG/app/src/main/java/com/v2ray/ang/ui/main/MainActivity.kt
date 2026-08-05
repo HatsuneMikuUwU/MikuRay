@@ -50,6 +50,7 @@ import com.v2ray.ang.enums.PermissionType
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.extension.snackbarError
 import com.v2ray.ang.extension.snackbarSuccess
+import com.v2ray.ang.extension.toSpeedString
 import com.v2ray.ang.extension.toastInfo
 import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.extension.toastError
@@ -171,9 +172,35 @@ class MainActivity : HelperBaseActivity(),
 
     private var isColdStart = true
 
+    // Cached raw values so the bottom-status IP text can be re-rendered whenever either the
+    // IP result or the live traffic speed changes, without the two observers clobbering
+    // each other's output.
+    private var lastIpStateText: String = ""
+    private var lastTrafficSpeedText: String = ""
+
+    /**
+     * Shows real-time upload/download speed (mirroring the notification's speed text)
+     * in place of the connected IP, when the user has enabled it. The IP itself is
+     * irrelevant in this mode, so it falls back to a zero-speed reading instead of
+     * "IP: unknown" whenever the VPN isn't running or no speed tick has arrived yet.
+     */
+    private fun refreshIpStateText() {
+        val showRealtimeTraffic = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)
+        binding.tvIpState.text = if (showRealtimeTraffic) {
+            if (mainViewModel.isRunning.value == true && lastTrafficSpeedText.isNotEmpty()) {
+                lastTrafficSpeedText
+            } else {
+                "↑ ${0L.toSpeedString()}  ↓ ${0L.toSpeedString()}"
+            }
+        } else {
+            lastIpStateText.ifEmpty { getString(R.string.ip_unknown) }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         refreshSearchBarChip()
+        refreshIpStateText()
     }
 
     private fun refreshSearchBarChip() {
@@ -597,11 +624,16 @@ class MainActivity : HelperBaseActivity(),
         mainViewModel.updateGroupBadgeAction.observe(this) { refreshTabBadges() }
         mainViewModel.updateTestResultAction.observe(this) { setTestState(it) }
         mainViewModel.updateIpResultAction.observe(this) { ip ->
-            binding.tvIpState.text = if (ip.isNullOrEmpty()) {
+            lastIpStateText = if (ip.isNullOrEmpty()) {
                 getString(R.string.ip_unknown)
             } else {
                 getString(R.string.ip_connected, ip)
             }
+            refreshIpStateText()
+        }
+        mainViewModel.updateTrafficSpeedAction.observe(this) { speedText ->
+            lastTrafficSpeedText = speedText
+            refreshIpStateText()
         }
         mainViewModel.isRunning.observe(this) { isRunning ->
             applyRunningState(isLoading = false, isRunning = isRunning)
@@ -802,7 +834,9 @@ class MainActivity : HelperBaseActivity(),
             binding.fabNoBlur.setImageResource(R.drawable.ic_play_24dp)
             binding.fabNoBlur.contentDescription = getString(R.string.tasker_start_service)
             setTestState(getString(R.string.connection_not_connected))
-            binding.tvIpState.text = getString(R.string.ip_unknown)
+            lastTrafficSpeedText = ""
+            lastIpStateText = getString(R.string.ip_unknown)
+            refreshIpStateText()
             binding.cardBottomStatus.isFocusable = false
         }
     }

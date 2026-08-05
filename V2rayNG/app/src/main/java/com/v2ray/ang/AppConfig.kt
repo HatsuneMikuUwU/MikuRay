@@ -180,6 +180,7 @@ object AppConfig {
     const val WEATHER_LOCATION_STALE_METERS = 5_000f
     const val PREF_SHOW_TOTAL_TRAFFIC_CHIP = "pref_show_total_traffic_chip"
     const val PREF_SEARCH_CHIP_GRADIENT = "pref_search_chip_gradient"
+    const val PREF_SHOW_REALTIME_TRAFFIC_IP = "pref_show_realtime_traffic_ip"
 
     // Profile banner, sheet banner, home banner & username
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"
@@ -367,6 +368,7 @@ object AppConfig {
     const val MSG_SUB_UPDATE_START = 8
     const val MSG_SUB_UPDATE_CANCEL = 81
         const val MSG_TRAFFIC_UPDATED = 81
+    const val MSG_TRAFFIC_SPEED_UPDATED = 82
 
     /** Notification channel IDs and names. */
     // Use a new ID because Android does not let an app raise an existing channel's importance.

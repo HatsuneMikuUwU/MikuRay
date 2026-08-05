@@ -42,6 +42,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateListAction by lazy { MutableLiveData<Int>() }
     val updateTestResultAction by lazy { MutableLiveData<String>() }
     val updateIpResultAction by lazy { MutableLiveData<String>() }
+    val updateTrafficSpeedAction by lazy { MutableLiveData<String>() }
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
 
@@ -559,6 +560,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 AppConfig.MSG_TRAFFIC_UPDATED -> {
                     val guid = intent.getStringExtra("content") ?: return
                     updateListAction.postValue(getPosition(guid))
+                }
+
+                AppConfig.MSG_TRAFFIC_SPEED_UPDATED -> {
+                    val speedText = intent.getStringExtra("content") ?: return
+                    updateTrafficSpeedAction.postValue(speedText)
                 }
             }
         }
