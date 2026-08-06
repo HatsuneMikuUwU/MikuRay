@@ -120,10 +120,11 @@
         <ListPreference
             android:icon="@drawable/ic_translate"
             app:layout="@layout/uwu_bot"
-            android:defaultValue="auto"
+            android:defaultValue=""
             android:entries="@array/language_select"
             android:entryValues="@array/language_select_value"
             android:key="pref_language"
+            android:persistent="false"
             android:summary="%s"
             android:title="@string/title_language" />
 

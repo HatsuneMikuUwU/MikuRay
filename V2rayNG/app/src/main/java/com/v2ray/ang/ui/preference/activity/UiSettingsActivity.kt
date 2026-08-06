@@ -11,7 +11,9 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -92,6 +94,7 @@ class UiSettingsActivity : BaseActivity() {
         private val trueBlack by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TRUE_BLACK) }
         private val enableBlur by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_ENABLE_BLUR) }
         private val blurBottomStatus by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_BLUR_BOTTOM_STATUS) }
+        private val appLanguage by lazy { findPreference<ListPreference>(AppConfig.PREF_LANGUAGE) }
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
         private val iconShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ICON_SHAPE) }
         private val appIcon by lazy { findPreference<com.v2ray.ang.ui.dialog.AppIconPickerDialog>(AppConfig.PREF_APP_ICON) }
@@ -349,6 +352,8 @@ class UiSettingsActivity : BaseActivity() {
                 MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_STATUS, newValue as Boolean)
                 true
             }
+
+            setupLanguagePreference()
 
             nightTheme?.setOnPreferenceChangeListener { pref, newValue ->
                 val valueStr = newValue.toString()
@@ -817,6 +822,44 @@ class UiSettingsActivity : BaseActivity() {
                         .showBlur()
                 }
                 true
+            }
+        }
+
+        /**
+         * Wires the language picker to AndroidX's per-app language API, the same
+         * mechanism uses: AppCompatDelegate.setApplicationLocales() applies
+         * the new locale to every open Activity immediately, no manual context
+         * wrapping or app restart needed.
+         */
+        private fun setupLanguagePreference() {
+            val languageValues = resources.getStringArray(R.array.language_select_value)
+            val languageLabels = resources.getStringArray(R.array.language_select)
+
+            fun labelFor(tag: String): CharSequence {
+                val idx = languageValues.indexOf(tag)
+                return if (idx >= 0) languageLabels[idx] else tag
+            }
+
+            val currentTag = when (val tag = AppCompatDelegate.getApplicationLocales().toLanguageTags()) {
+                // Some old Android versions report Indonesian as "in" rather than "id".
+                "id" -> "in"
+                else -> tag
+            }
+            val resolvedTag = if (currentTag in languageValues) currentTag else ""
+
+            appLanguage?.apply {
+                value = resolvedTag
+                summary = labelFor(resolvedTag)
+                setOnPreferenceChangeListener { _, newValue ->
+                    val newTag = newValue as String
+                    AppCompatDelegate.setApplicationLocales(
+                        if (newTag.isEmpty()) LocaleListCompat.getEmptyLocaleList()
+                        else LocaleListCompat.forLanguageTags(newTag)
+                    )
+                    summary = labelFor(newTag)
+                    value = newTag
+                    true
+                }
             }
         }
 

@@ -20,7 +20,6 @@ import com.v2ray.ang.dto.entities.RulesetItem
 import com.v2ray.ang.dto.entities.SubscriptionItem
 import com.v2ray.ang.dto.V2rayConfig
 import com.v2ray.ang.enums.EConfigType
-import com.v2ray.ang.enums.Language
 import com.v2ray.ang.enums.RoutingType
 import com.v2ray.ang.enums.VpnInterfaceAddressConfig
 import com.v2ray.ang.handler.MmkvManager.decodeAllServerList
@@ -471,23 +470,8 @@ object SettingsManager {
      * @return The locale.
      */
     fun getLocale(): Locale {
-        val langCode =
-            MmkvManager.decodeSettingsString(AppConfig.PREF_LANGUAGE) ?: Language.AUTO.code
-        val language = Language.fromCode(langCode)
-
-        return when (language) {
-            Language.AUTO -> Utils.getSysLocale()
-            Language.ENGLISH -> Locale.ENGLISH
-            Language.CHINA -> Locale.CHINA
-            Language.TRADITIONAL_CHINESE -> Locale.TRADITIONAL_CHINESE
-            Language.VIETNAMESE -> Locale.forLanguageTag("vi")
-            Language.RUSSIAN -> Locale.forLanguageTag("ru")
-            Language.PERSIAN -> Locale.forLanguageTag("fa")
-            Language.ARABIC -> Locale.forLanguageTag("ar")
-            Language.BANGLA -> Locale.forLanguageTag("bn")
-            Language.BAKHTIARI -> Locale.forLanguageTag("bqi-IR")
-            Language.INDONESIAN -> Locale.forLanguageTag("id")
-        }
+        val appLocales = AppCompatDelegate.getApplicationLocales()
+        return if (!appLocales.isEmpty) appLocales[0] ?: Utils.getSysLocale() else Utils.getSysLocale()
     }
 
     /**

@@ -164,11 +164,11 @@
     </string-array>
 
     <string-array name="language_select_value" translatable="false">
-        <item>auto</item>
+        <item></item>
         <item>en</item>
-        <item>zh-rCN</item>
+        <item>zh-CN</item>
         <item>ru</item>
-        <item>id</item>
+        <item>in</item>
     </string-array>
 
     <string-array name="mux_xudp_quic_value" translatable="false">
