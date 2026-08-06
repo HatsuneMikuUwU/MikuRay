@@ -35,12 +35,21 @@ class AdvancedSettingsActivity : BaseActivity() {
 
         private val mode by lazy { findPreference<ListPreference>(AppConfig.PREF_MODE) }
         private val ipApiUrl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_IP_API_URL) }
+        private val realPingConcurrency by lazy { findPreference<EditTextPreference>(AppConfig.PREF_REAL_PING_CONCURRENCY) }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_advanced_settings)
             initPreferenceSummaries()
             CategoryStyleHelper.applyToFragment(this)
+
+            realPingConcurrency?.summary =
+                MmkvManager.decodeSettingsString(AppConfig.PREF_REAL_PING_CONCURRENCY, "16")
+            realPingConcurrency?.setOnPreferenceChangeListener { pref, newValue ->
+                val concurrency = (newValue as? String)?.toIntOrNull() ?: 16
+                pref.summary = concurrency.toString()
+                true
+            }
 
             mode?.setOnPreferenceChangeListener { pref, newValue ->
                 val valueStr = newValue.toString()
