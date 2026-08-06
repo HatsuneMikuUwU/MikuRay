@@ -195,6 +195,20 @@ class MainActivity : HelperBaseActivity(),
         super.onResume()
         refreshSearchBarChip()
         refreshIpStateText()
+        if (SettingsChangeManager.consumeRefreshDisplayPrefs()) {
+            refreshAllGroupListDisplays()
+        }
+    }
+
+    // Rebind every already-created group tab's list (not just the one currently
+    // visible) so per-item display prefs toggled from Settings apply right away,
+    // without needing to swipe through each ViewPager tab manually.
+    private fun refreshAllGroupListDisplays() {
+        for (i in groupPagerAdapter.groups.indices) {
+            val itemId = groupPagerAdapter.getItemId(i)
+            val fragment = supportFragmentManager.findFragmentByTag("f$itemId") as? GroupServerFragment
+            fragment?.refreshDisplayPrefs()
+        }
     }
 
     private fun refreshSearchBarChip() {
@@ -556,7 +570,12 @@ class MainActivity : HelperBaseActivity(),
             R.id.del_duplicate_config -> delDuplicateConfig()
             R.id.del_invalid_config -> delInvalidConfig()
             R.id.sub_update -> importConfigViaSub()
-            R.id.clear_test_results -> mainViewModel.clearTestResults()
+            R.id.clear_test_results -> {
+                mainViewModel.clearTestResults()
+                // Clears results for every server across every group, not just the
+                // currently visible tab — refresh every already-created tab now.
+                refreshAllGroupListDisplays()
+            }
             R.id.reset_traffic -> {
                 val currentGroupName = mainViewModel.getSubscriptions(this)
                     .firstOrNull { it.id == mainViewModel.subscriptionId }
@@ -586,7 +605,12 @@ class MainActivity : HelperBaseActivity(),
                             }
                             else -> {
                                 msgRes = R.string.confirm_reset_traffic_all
-                                action = { mainViewModel.resetAllTraffic() }
+                                // Touches every server across every group — refresh every
+                                // already-created tab, not just the one currently visible.
+                                action = {
+                                    mainViewModel.resetAllTraffic()
+                                    refreshAllGroupListDisplays()
+                                }
                             }
                         }
                         

@@ -293,7 +293,9 @@ class UiSettingsActivity : BaseActivity() {
             }
 
             indicatorStyle?.setOnPreferenceClickListener {
-                IndicatorStyleBottomSheet(requireContext()) {}.show()
+                IndicatorStyleBottomSheet(requireContext()) {
+                    SettingsChangeManager.makeRefreshDisplayPrefs()
+                }.show()
                 true
             }
 

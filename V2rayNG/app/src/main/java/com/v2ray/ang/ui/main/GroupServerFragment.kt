@@ -168,8 +168,17 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
 
     override fun onResume() {
         super.onResume()
-        mainViewModel.subscriptionIdChanged(subId)
+        mainViewModel.subscriptionIdChangedAsync(subId)
 
+        applyGridModeState()
+
+        if (isHideScrollButtonsEnabled()) {
+            scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
+            setScrollButtonsVisible(false)
+        }
+    }
+
+    private fun applyGridModeState() {
         val doubleColumnEnabled = isDoubleColumnEnabled()
         val layoutManager = binding.recyclerView.layoutManager as? GridLayoutManager
         val desiredSpanCount = if (doubleColumnEnabled) 2 else 1
@@ -178,11 +187,6 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         }
         adapter.setGridMode(doubleColumnEnabled)
         applyGridEdgePadding(doubleColumnEnabled)
-
-        if (isHideScrollButtonsEnabled()) {
-            scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)
-            setScrollButtonsVisible(false)
-        }
     }
 
     private fun isDoubleColumnEnabled(): Boolean {
@@ -324,6 +328,12 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
 
     override fun onRefresh() {
         ownerActivity.importConfigViaSub()
+    }
+
+    fun refreshDisplayPrefs() {
+        if (!isAdded) return
+        applyGridModeState()
+        adapter.refreshDisplayPrefs()
     }
 
     fun scrollToSelectedServer() {

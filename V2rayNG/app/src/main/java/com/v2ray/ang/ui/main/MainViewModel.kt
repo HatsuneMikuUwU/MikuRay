@@ -76,6 +76,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Reloads the server list based on current subscription filter.
      */
+    @Synchronized
     fun reloadServerList() {
         // If ORDER_ORIGIN is selected and a pre-sort snapshot exists, restore it first (per active group)
         val subId = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
@@ -95,7 +96,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         updateCache()
-        updateListAction.value = -1
+        // postValue instead of value: reloadServerList() can now be invoked from a
+        // background thread (see subscriptionIdChanged) as well as the main thread.
+        updateListAction.postValue(-1)
     }
 
     /**
@@ -253,6 +256,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             MmkvManager.encodeSettings(AppConfig.CACHE_SUBSCRIPTION_ID, subscriptionId)
         }
         reloadServerList()
+    }
+
+    /**
+     * Same as [subscriptionIdChanged], but does the MMKV decode/parse/sort work on
+     * a background thread instead of the caller's (usually main) thread. Used when
+     * switching group tabs so ViewPager swipes don't jank on large server lists.
+     */
+    fun subscriptionIdChangedAsync(id: String) {
+        if (subscriptionId != id) {
+            subscriptionId = id
+            MmkvManager.encodeSettings(AppConfig.CACHE_SUBSCRIPTION_ID, subscriptionId)
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            reloadServerList()
+        }
     }
 
     /**

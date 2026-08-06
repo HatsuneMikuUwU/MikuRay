@@ -55,6 +55,14 @@ class MainRecyclerAdapter(
             notifyDataSetChanged()
         }
     }
+
+    // Re-run onBindViewHolder for every visible item so per-item display prefs
+    // (traffic text, masked address, network/security row) pick up their new value
+    // immediately, without touching item count/order.
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshDisplayPrefs() {
+        notifyDataSetChanged()
+    }
     
     private var isRunningObserver: androidx.lifecycle.Observer<Boolean>? = null
     private var selectedBannerController: SelectedProfileBannerController? = null
