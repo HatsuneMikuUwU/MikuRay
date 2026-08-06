@@ -9,6 +9,7 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreNativeManager
 import com.v2ray.ang.dto.RealPingEvent
+import com.v2ray.ang.dto.TestProgressInfo
 import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.enums.NotificationChannelType
 import com.v2ray.ang.extension.serializable
@@ -136,7 +137,11 @@ class CoreTestService : Service() {
                     title = getString(R.string.app_name),
                     content = getString(R.string.connection_runing_task_left, event.text)
                 )
-                MessageUtil.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_NOTIFY, event.text)
+                MessageUtil.sendMsg2UI(
+                    this,
+                    AppConfig.MSG_MEASURE_CONFIG_NOTIFY,
+                    TestProgressInfo(event.guid, event.delayMillis, event.current, event.total)
+                )
             }
 
             is RealPingEvent.Result -> {

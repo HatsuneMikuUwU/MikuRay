@@ -75,6 +75,7 @@ import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
 import com.v2ray.ang.util.showSubUpdateDiffDialog
+import com.v2ray.ang.util.UrlTestProgressDialogController
 import com.king.camera.scan.CameraScan
 import com.v2ray.ang.ui.scanner.QrCaptureActivity
 import kotlinx.coroutines.Dispatchers
@@ -172,6 +173,9 @@ class MainActivity : HelperBaseActivity(),
     private var isColdStart = true
 
     private var lastIpStateText: String = ""
+    private val urlTestProgressDialog: UrlTestProgressDialogController by lazy {
+        UrlTestProgressDialogController(this) { mainViewModel.cancelRealPingTest() }
+    }
     private var lastTrafficSpeedText: String = ""
 
     private fun refreshIpStateText() {
@@ -539,11 +543,11 @@ class MainActivity : HelperBaseActivity(),
         when (viewId) {
             R.id.export_all -> exportAll()
             R.id.real_ping_all -> {
-                snackbarDefault(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_real_ping_all_server))
+                urlTestProgressDialog.show(mainViewModel.serversCache.count())
                 mainViewModel.testAllRealPing()
             }
             R.id.tcping_all -> {
-                snackbarDefault(getString(R.string.connection_test_testing_count, mainViewModel.serversCache.count()), title = getString(R.string.title_ping_all_server))
+                urlTestProgressDialog.show(mainViewModel.serversCache.count())
                 mainViewModel.testAllRealPing(true)
             }
             R.id.service_restart -> restartV2Ray()
@@ -614,6 +618,13 @@ class MainActivity : HelperBaseActivity(),
         }
         mainViewModel.updateGroupBadgeAction.observe(this) { refreshTabBadges() }
         mainViewModel.updateTestResultAction.observe(this) { setTestState(it) }
+        mainViewModel.testProgressAction.observe(this) { info ->
+            if (info == null) {
+                urlTestProgressDialog.finish()
+            } else {
+                urlTestProgressDialog.update(info)
+            }
+        }
         mainViewModel.updateIpResultAction.observe(this) { ip ->
             lastIpStateText = if (ip.isNullOrEmpty()) {
                 getString(R.string.ip_unknown)
@@ -1150,7 +1161,8 @@ class MainActivity : HelperBaseActivity(),
 
     override fun onDestroy() {
         hideLoading()
-        
+        urlTestProgressDialog.dismiss()
+
         tabMediator?.detach()
         
         try {

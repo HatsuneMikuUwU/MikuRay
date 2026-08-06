@@ -38,24 +38,36 @@ class RealPingWorkerService(
 
     private val runningCount = AtomicInteger(0)
     private val totalCount = AtomicInteger(0)
+    private val completedCount = AtomicInteger(0)
+    private val batchSize = guids.size
 
     fun start() {
         val jobs = guids.map { guid ->
             totalCount.incrementAndGet()
             scope.launch {
                 runningCount.incrementAndGet()
+                var delayMillis = -1L
                 try {
-                    val result = if (onlyTcp) startTcping(guid) else startRealPing(guid)
+                    delayMillis = if (onlyTcp) startTcping(guid) else startRealPing(guid)
                     if (scope.isActive) {
-                        onEvent(RealPingEvent.Result(guid, result))
+                        onEvent(RealPingEvent.Result(guid, delayMillis))
                     }
                 } catch (_: Throwable) {
                     // ignore
                 } finally {
                     val count = totalCount.decrementAndGet()
                     val left = runningCount.decrementAndGet()
+                    val completed = completedCount.incrementAndGet()
                     if (scope.isActive) {
-                        onEvent(RealPingEvent.Progress("$left / $count"))
+                        onEvent(
+                            RealPingEvent.Progress(
+                                text = "$left / $count",
+                                guid = guid,
+                                delayMillis = delayMillis,
+                                current = completed,
+                                total = batchSize
+                            )
+                        )
                     }
                 }
             }

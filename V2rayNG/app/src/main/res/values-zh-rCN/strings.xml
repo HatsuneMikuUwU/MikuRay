@@ -423,6 +423,9 @@
     <string name="connection_connected">已连接。点击测试</string>
     <string name="connection_not_connected">未连接</string>
     <string name="connection_runing_task_left">运行测试：%s</string>
+    <string name="action_minimize">最小化</string>
+    <string name="test_progress_counter">%1$d / %2$d</string>
+    <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">订阅导入成功</string>
     <string name="import_subscription_failure">导入订阅失败</string>

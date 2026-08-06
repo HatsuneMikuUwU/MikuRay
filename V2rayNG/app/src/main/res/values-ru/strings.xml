@@ -429,6 +429,9 @@
     <string name="connection_connected">Подключено. Нажмите для теста</string>
     <string name="connection_not_connected">Отключено</string>
     <string name="connection_runing_task_left">Выполняется тестов: %s</string>
+    <string name="action_minimize">Свернуть</string>
+    <string name="test_progress_counter">%1$d / %2$d</string>
+    <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">Подписка успешно импортирована</string>
     <string name="import_subscription_failure">Ошибка импорта подписки</string>

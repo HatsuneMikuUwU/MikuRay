@@ -17,9 +17,11 @@ import com.v2ray.ang.dto.GroupMapItem
 import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.dto.entities.SubscriptionCache
 import com.v2ray.ang.dto.SubscriptionUpdateResult
+import com.v2ray.ang.dto.TestProgressInfo
 import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.extension.matchesPattern
+import com.v2ray.ang.extension.serializable
 import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
@@ -41,6 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val isRunning by lazy { MutableLiveData<Boolean>() }
     val updateListAction by lazy { MutableLiveData<Int>() }
     val updateTestResultAction by lazy { MutableLiveData<String>() }
+    val testProgressAction by lazy { MutableLiveData<TestProgressInfo?>() }
     val updateIpResultAction by lazy { MutableLiveData<String>() }
     val updateTrafficSpeedAction by lazy { MutableLiveData<String>() }
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
@@ -494,6 +497,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
+     * Cancels the currently running batch URL test (real ping / tcping) without clearing
+     * results already collected.
+     */
+    fun cancelRealPingTest() {
+        MessageUtil.sendMsg2TestService(
+            getApplication(),
+            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
+        )
+    }
+
+    /**
      * Clears all recorded connection test results (real ping / tcping) for every server.
      */
     fun clearTestResults() {
@@ -552,12 +566,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 AppConfig.MSG_MEASURE_CONFIG_NOTIFY -> {
-                    val content = intent.getStringExtra("content")
-                    updateTestResultAction.value =
-                        getApplication<AngApplication>().getString(R.string.connection_runing_task_left, content)
+                    testProgressAction.value = intent.serializable<TestProgressInfo>("content")
                 }
 
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> {
+                    testProgressAction.value = null
                     onTestsFinished()
                 }
 

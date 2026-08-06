@@ -424,6 +424,9 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="connection_connected">Udah konek. Tap buat tes</string>
     <string name="connection_not_connected">Gak konek</string>
     <string name="connection_runing_task_left">Tes berjalan: %s</string>
+    <string name="action_minimize">Minimize</string>
+    <string name="test_progress_counter">%1$d / %2$d</string>
+    <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">Asik, Langganan Berhasil Masuk</string>
     <string name="import_subscription_failure">Yah, Impor Langganan Gagal</string>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4.0dip"
+    android:layout_marginBottom="4.0dip"
+    app:cardBackgroundColor="?colorCard"
+    app:cardCornerRadius="12.0dip"
+    app:cardElevation="0.0dip"
+    app:strokeColor="?colorOutlineVariant"
+    app:strokeWidth="1.0dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="12.0dip"
+        android:paddingEnd="12.0dip"
+        android:paddingTop="10.0dip"
+        android:paddingBottom="10.0dip">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_server_name"
+            style="?attr/textAppearanceTitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Server Name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tv_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="26.0dip"
+                android:checkable="false"
+                android:clickable="false"
+                android:focusable="false"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="?colorOnSecondaryContainer"
+                android:textSize="11.0sp"
+                app:chipBackgroundColor="?colorSecondaryContainer"
+                app:chipMinTouchTargetSize="0.0dip"
+                tools:text="VMESS" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_ping_result"
+                style="?attr/textAppearanceTitleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPing"
+                tools:text="128ms" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
