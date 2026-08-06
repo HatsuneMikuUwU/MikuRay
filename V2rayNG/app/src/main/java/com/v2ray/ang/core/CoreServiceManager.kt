@@ -123,6 +123,8 @@ object CoreServiceManager {
         val guid = MmkvManager.getSelectServer() ?: error("No server selected")
         val config = MmkvManager.decodeServerConfig(guid) ?: error("Failed to decode server config")
 
+        SettingsManager.initAssets(service, service.assets)
+
         LogUtil.i(AppConfig.TAG, "StartCore-Manager: Starting core loop for ${config.remarks}")
         val result = CoreConfigManager.getV2rayConfig(service, guid)
         LogUtil.d(AppConfig.TAG, result.content)
@@ -339,12 +341,22 @@ object CoreServiceManager {
             }
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_DELAY_SUCCESS, result)
 
-            // Only fetch IP info if the delay test was successful
             if (time >= 0) {
-                SpeedtestManager.getRemoteIPInfo()?.let { ip ->
-                    MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_DELAY_SUCCESS, "$result\n$ip")
-                }
+                val ip = SpeedtestManager.getRemoteIPInfo()
+                MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_IP_SUCCESS, ip.orEmpty())
             }
+        }
+    }
+
+    private fun measureIpOnly() {
+        if (!isRunning()) {
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val service = getService() ?: return@launch
+            val ip = SpeedtestManager.getRemoteIPInfo()
+            MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_IP_SUCCESS, ip.orEmpty())
         }
     }
 
@@ -476,6 +488,10 @@ object CoreServiceManager {
 
                 AppConfig.MSG_MEASURE_DELAY -> {
                     measureV2rayDelay()
+                }
+
+                AppConfig.MSG_MEASURE_IP -> {
+                    measureIpOnly()
                 }
             }
 

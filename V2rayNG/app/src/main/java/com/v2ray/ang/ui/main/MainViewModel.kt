@@ -239,6 +239,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_MEASURE_DELAY, "")
     }
 
+    fun fetchCurrentIp() {
+        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_MEASURE_IP, "")
+    }
+
     /**
      * Changes the subscription ID.
      * @param id The new subscription ID.
@@ -554,10 +558,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 AppConfig.MSG_MEASURE_DELAY_SUCCESS -> {
-                    val content = intent.getStringExtra("content").orEmpty()
-                    val parts = content.split("\n", limit = 2)
-                    updateTestResultAction.value = parts[0]
-                    updateIpResultAction.value = if (parts.size > 1) parts[1] else null
+                    updateTestResultAction.value = intent.getStringExtra("content").orEmpty()
+                }
+
+                AppConfig.MSG_MEASURE_IP_SUCCESS -> {
+                    val ip = intent.getStringExtra("content")
+                    updateIpResultAction.value = ip
                 }
 
                 AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> {

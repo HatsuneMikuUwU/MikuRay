@@ -644,6 +644,7 @@ class MainActivity : HelperBaseActivity(),
         mainViewModel.alertAction.observe(this) { (isSuccess, message) ->
             if (isSuccess) {
                 snackbarSuccess(message, title = getString(R.string.title_alerter_success))
+                mainViewModel.fetchCurrentIp()
             } else {
                 snackbarError(message, title = getString(R.string.title_alerter_error))
             }
