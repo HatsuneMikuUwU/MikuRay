@@ -12,6 +12,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.DialogUrlTestProgressBinding
 import com.v2ray.ang.databinding.ItemUrlTestResultBinding
 import com.v2ray.ang.dto.TestProgressInfo
+import com.v2ray.ang.extension.vibrateOnError
 import com.v2ray.ang.handler.MmkvManager
 
 class UrlTestProgressDialogController(
@@ -161,6 +162,7 @@ class UrlTestProgressDialogController(
                 } else {
                     b.tvPingResult.setText(R.string.connection_test_fail)
                     b.tvPingResult.setTextColor(ContextCompat.getColor(context, R.color.colorPingRed))
+                    context.vibrateOnError()
                 }
             }
         }

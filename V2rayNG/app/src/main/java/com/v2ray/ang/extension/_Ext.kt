@@ -77,7 +77,7 @@ object ForegroundActivityTracker : Application.ActivityLifecycleCallbacks {
     override fun onActivityDestroyed(activity: Activity) {}
 }
 
-private fun Context.vibrateOnError() {
+fun Context.vibrateOnError() {
     try {
         val vibrator = getSystemService(Vibrator::class.java)
         if (vibrator?.hasVibrator() == true) {
