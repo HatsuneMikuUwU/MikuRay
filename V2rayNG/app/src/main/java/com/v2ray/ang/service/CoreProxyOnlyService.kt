@@ -11,9 +11,17 @@ import com.v2ray.ang.handler.NotificationManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MyContextWrapper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.lang.ref.SoftReference
 
 class CoreProxyOnlyService : Service(), ServiceControl {
+    // startCoreLoop() blocks on the native core startup; keep it off onStartCommand's
+    // main thread so it doesn't stall the rest of the (same-process) app UI.
+    private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     /**
      * Initializes the service.
      */
@@ -33,7 +41,9 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationManager.ensureForeground()
         LogUtil.i(AppConfig.TAG, "StartCore-Proxy: Service command received")
-        CoreServiceManager.startCoreLoop(null)
+        serviceScope.launch {
+            CoreServiceManager.startCoreLoop(null)
+        }
         return START_STICKY
     }
 
@@ -43,6 +53,7 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         CoreServiceManager.stopCoreLoop()
+        serviceScope.cancel()
     }
 
     /**

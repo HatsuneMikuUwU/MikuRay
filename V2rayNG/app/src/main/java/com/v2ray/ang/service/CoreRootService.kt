@@ -51,22 +51,25 @@ class CoreRootService : Service(), ServiceControl {
         NotificationManager.showNotification(null)
         TrafficController.start()
 
-        // Start core first so the SOCKS inbound is ready before hev connects to it
-        if (!CoreServiceManager.startCoreLoop(null)) {
-            LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
-            stopAllService()
-            return START_NOT_STICKY
-        }
-
-        isRunning = true
-
-        // Sound
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SOUND_ON_CONNECT, true)) {
-            SoundPlayer.playConnect(this)
-        }
-
-        // Async iptables + tun + hev setup
+        // Start core first so the SOCKS inbound is ready before hev connects to it.
+        // startCoreLoop() blocks on native core startup, so it's folded into the same
+        // async job as the iptables/tun/hev setup below instead of running on
+        // onStartCommand's main thread — otherwise it stalls the (same-process) app UI
+        // for however long that takes.
         setupJob = CoroutineScope(Dispatchers.IO).launch {
+            if (!CoreServiceManager.startCoreLoop(null)) {
+                LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
+                stopAllService()
+                return@launch
+            }
+
+            isRunning = true
+
+            // Sound
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SOUND_ON_CONNECT, true)) {
+                SoundPlayer.playConnect(this@CoreRootService)
+            }
+
             try {
                 RootProxyManager.start(this@CoreRootService)
                 LogUtil.i(AppConfig.TAG, "StartCore-Root: iptables/tun/hev setup complete")

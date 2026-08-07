@@ -27,6 +27,12 @@ import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.SoundPlayer
 import com.v2ray.ang.util.Utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ref.SoftReference
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -37,6 +43,14 @@ class CoreVpnService : VpnService(), ServiceControl {
     private var tun2SocksService: Tun2SocksControl? = null
     private var wakeLock: PowerManager.WakeLock? = null
     private val isStartingLock = AtomicBoolean(false)
+
+    // setupVpnService() (Builder.establish()) and startService() (native core startLoop)
+    // both do blocking work. onStartCommand() always runs on the main thread, and since
+    // this service shares a process with MainActivity, calling them synchronously there
+    // blocks all UI touch input (fab / bottom status card) for however long VPN interface
+    // establishment + native core startup takes. Run that work on this scope instead so
+    // the main thread stays free. Cancelled in onDestroy().
+    private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()
@@ -77,6 +91,7 @@ class CoreVpnService : VpnService(), ServiceControl {
         unlockStart()
         NotificationManager.cancelNotification()
         TrafficController.stop()
+        serviceScope.cancel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -93,13 +108,25 @@ class CoreVpnService : VpnService(), ServiceControl {
         }
         LogUtil.i(AppConfig.TAG, "StartCore-VPN: Service command received, systemVpnStart=$isSystemVpnStart")
         TrafficController.start()
-        if (!setupVpnService()) {
-            unlockStart()
-            // Stop service if setup fails to avoid infinite restart loops (START_STICKY)
-            stopSelf()
-            return START_NOT_STICKY
+
+        // Off the main thread: see comment on serviceScope above.
+        serviceScope.launch {
+            val ok = try {
+                setupVpnService()
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "StartCore-VPN: setupVpnService threw", e)
+                false
+            }
+            if (!ok) {
+                withContext(Dispatchers.Main) {
+                    unlockStart()
+                    // Stop service if setup fails to avoid infinite restart loops (START_STICKY)
+                    stopSelf()
+                }
+            } else {
+                startService()
+            }
         }
-        startService()
         return START_STICKY
     }
 

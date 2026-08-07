@@ -1004,33 +1004,41 @@ class MainActivity : HelperBaseActivity(),
     fun importConfigViaSub(): Boolean {
         showLoading()
         lifecycleScope.launch(Dispatchers.IO) {
-            val result = mainViewModel.updateConfigViaSubAll()
-            delay(500L)
-            withContext(Dispatchers.Main) {
-                when {
-                    result.successCount + result.failureCount + result.skipCount == 0 -> {
-                        toastInfo(getString(R.string.title_update_subscription_no_subscription))
-                    }
-                    result.successCount > 0 && result.failureCount + result.skipCount == 0 -> {
-                        toastSuccess(getString(R.string.title_update_config_count, result.configCount))
-                    }
-                    else -> {
-                        toastInfo(
-                            getString(
-                                R.string.title_update_subscription_result,
-                                result.configCount, result.successCount, result.failureCount, result.skipCount
+            try {
+                val result = mainViewModel.updateConfigViaSubAll()
+                delay(500L)
+                withContext(Dispatchers.Main) {
+                    when {
+                        result.successCount + result.failureCount + result.skipCount == 0 -> {
+                            toastInfo(getString(R.string.title_update_subscription_no_subscription))
+                        }
+                        result.successCount > 0 && result.failureCount + result.skipCount == 0 -> {
+                            toastSuccess(getString(R.string.title_update_config_count, result.configCount))
+                        }
+                        else -> {
+                            toastInfo(
+                                getString(
+                                    R.string.title_update_subscription_result,
+                                    result.configCount, result.successCount, result.failureCount, result.skipCount
+                                )
                             )
-                        )
+                        }
+                    }
+                    if (result.configCount > 0) {
+                        mainViewModel.reloadServerList()
+                        refreshGroupTabTitles()
+                    }
+                    if (result.addedProfiles.isNotEmpty() || result.deletedProfiles.isNotEmpty()) {
+                        showSubUpdateDiffDialog(this@MainActivity, result)
                     }
                 }
-                if (result.configCount > 0) {
-                    mainViewModel.reloadServerList()
-                    refreshGroupTabTitles()
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to update config via subscription", e)
+                withContext(Dispatchers.Main) {
+                    snackbarError(getString(R.string.title_update_subscription_no_subscription), title = getString(R.string.title_alerter_error))
                 }
-                if (result.addedProfiles.isNotEmpty() || result.deletedProfiles.isNotEmpty()) {
-                    showSubUpdateDiffDialog(this@MainActivity, result)
-                }
-                hideLoading()
+            } finally {
+                withContext(Dispatchers.Main) { hideLoading() }
             }
         }
         return true
@@ -1039,11 +1047,19 @@ class MainActivity : HelperBaseActivity(),
     private fun exportAll() {
         showLoading()
         lifecycleScope.launch(Dispatchers.IO) {
-            val ret = mainViewModel.exportAllServer()
-            withContext(Dispatchers.Main) {
-                if (ret > 0) snackbarSuccess(getString(R.string.title_export_config_count, ret), title = getString(R.string.title_alerter_success))
-                else snackbarError(getString(R.string.action_export), title = getString(R.string.title_alerter_error))
-                hideLoading()
+            try {
+                val ret = mainViewModel.exportAllServer()
+                withContext(Dispatchers.Main) {
+                    if (ret > 0) snackbarSuccess(getString(R.string.title_export_config_count, ret), title = getString(R.string.title_alerter_success))
+                    else snackbarError(getString(R.string.action_export), title = getString(R.string.title_alerter_error))
+                }
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to export all configs", e)
+                withContext(Dispatchers.Main) {
+                    snackbarError(getString(R.string.action_export), title = getString(R.string.title_alerter_error))
+                }
+            } finally {
+                withContext(Dispatchers.Main) { hideLoading() }
             }
         }
     }
@@ -1052,12 +1068,20 @@ class MainActivity : HelperBaseActivity(),
         showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
             showLoading()
             lifecycleScope.launch(Dispatchers.IO) {
-                val ret = mainViewModel.removeAllServer()
-                withContext(Dispatchers.Main) {
-                    mainViewModel.reloadServerList()
-                    refreshGroupTabTitles()
-                    snackbarSuccess(getString(R.string.title_del_config_count, ret), title = getString(R.string.title_alerter_success))
-                    hideLoading()
+                try {
+                    val ret = mainViewModel.removeAllServer()
+                    withContext(Dispatchers.Main) {
+                        mainViewModel.reloadServerList()
+                        refreshGroupTabTitles()
+                        snackbarSuccess(getString(R.string.title_del_config_count, ret), title = getString(R.string.title_alerter_success))
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to remove all configs", e)
+                    withContext(Dispatchers.Main) {
+                        snackbarError(getString(R.string.del_config_dialog_comfirm_message), title = getString(R.string.title_alerter_error))
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) { hideLoading() }
                 }
             }
         }
@@ -1067,12 +1091,20 @@ class MainActivity : HelperBaseActivity(),
         showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
             showLoading()
             lifecycleScope.launch(Dispatchers.IO) {
-                val ret = mainViewModel.removeDuplicateServer()
-                withContext(Dispatchers.Main) {
-                    mainViewModel.reloadServerList()
-                    refreshGroupTabTitles()
-                    snackbarSuccess(getString(R.string.title_del_duplicate_config_count, ret), title = getString(R.string.title_alerter_success))
-                    hideLoading()
+                try {
+                    val ret = mainViewModel.removeDuplicateServer()
+                    withContext(Dispatchers.Main) {
+                        mainViewModel.reloadServerList()
+                        refreshGroupTabTitles()
+                        snackbarSuccess(getString(R.string.title_del_duplicate_config_count, ret), title = getString(R.string.title_alerter_success))
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to remove duplicate configs", e)
+                    withContext(Dispatchers.Main) {
+                        snackbarError(getString(R.string.del_config_dialog_comfirm_message), title = getString(R.string.title_alerter_error))
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) { hideLoading() }
                 }
             }
         }
@@ -1082,12 +1114,20 @@ class MainActivity : HelperBaseActivity(),
         showDeleteConfirmDialog(context = this, messageRes = R.string.del_invalid_config_comfirm) {
             showLoading()
             lifecycleScope.launch(Dispatchers.IO) {
-                val ret = mainViewModel.removeInvalidServer()
-                withContext(Dispatchers.Main) {
-                    mainViewModel.reloadServerList()
-                    refreshGroupTabTitles()
-                    snackbarSuccess(getString(R.string.title_del_config_count, ret), title = getString(R.string.title_alerter_success))
-                    hideLoading()
+                try {
+                    val ret = mainViewModel.removeInvalidServer()
+                    withContext(Dispatchers.Main) {
+                        mainViewModel.reloadServerList()
+                        refreshGroupTabTitles()
+                        snackbarSuccess(getString(R.string.title_del_config_count, ret), title = getString(R.string.title_alerter_success))
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to remove invalid configs", e)
+                    withContext(Dispatchers.Main) {
+                        snackbarError(getString(R.string.del_invalid_config_comfirm), title = getString(R.string.title_alerter_error))
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) { hideLoading() }
                 }
             }
         }
