@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.contracts.MainAdapterListener
@@ -35,8 +34,7 @@ import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
 
-class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
-    SwipeRefreshLayout.OnRefreshListener {
+class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
     private val ownerActivity: MainActivity
         get() = requireActivity() as MainActivity
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -79,8 +77,6 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
 
         itemTouchHelper = ItemTouchHelper(SimpleItemTouchHelperCallback(adapter, allowSwipe = false))
         itemTouchHelper?.attachToRecyclerView(binding.recyclerView)
-
-        binding.refreshLayout.isEnabled = false
 
         mainViewModel.updateListAction.observe(viewLifecycleOwner) { index ->
             if (mainViewModel.subscriptionId != subId) {
@@ -324,10 +320,6 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>(),
         override fun onShare(guid: String, profile: ProfileItem, position: Int, more: Boolean) {
             ownerActivity.showShareBottomSheet(guid, profile.configType.value)
         }
-    }
-
-    override fun onRefresh() {
-        ownerActivity.importConfigViaSub()
     }
 
     fun refreshDisplayPrefs() {

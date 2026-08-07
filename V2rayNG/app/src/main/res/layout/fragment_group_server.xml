@@ -4,28 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+        android:id="@+id/recycler_view"
+        android:paddingBottom="60dp"
+        android:paddingTop="62dp"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
-            android:id="@+id/recycler_view"
-            android:paddingBottom="60dp"
-            android:paddingTop="62dp"
-            android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            app:fastScrollAutoHide="true"
-            app:fastScrollAutoHideDelay="1500"
-            app:fastScrollTrackColor="#00000000"
-            app:fastScrollThumbColor="?attr/colorPrimary"
-            app:fastScrollThumbInactiveColor="?attr/colorOutline"
-            app:fastScrollPopupBgColor="?attr/colorPrimary"
-            app:fastScrollPopupTextColor="?attr/colorOnPrimary" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:fastScrollAutoHide="true"
+        app:fastScrollAutoHideDelay="1500"
+        app:fastScrollTrackColor="#00000000"
+        app:fastScrollThumbColor="?attr/colorPrimary"
+        app:fastScrollThumbInactiveColor="?attr/colorOutline"
+        app:fastScrollPopupBgColor="?attr/colorPrimary"
+        app:fastScrollPopupTextColor="?attr/colorOnPrimary" />
 
     <LinearLayout
         android:id="@+id/layout_scroll_buttons"
