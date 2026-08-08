@@ -740,6 +740,10 @@
     <string name="confirm_reset_traffic_all">Сбросить статистику трафика для всех групп? Это действие нельзя отменить</string>
     <string name="pref_traffic_enabled_title">Показывать статистику трафика</string>
     <string name="pref_traffic_enabled_summary">Показывать объем загрузки и отдачи на каждом сервере</string>
+    <string name="title_total_traffic_detail">Общий объем трафика</string>
+    <string name="label_total_traffic_upload">Отдача</string>
+    <string name="label_total_traffic_download">Загрузка</string>
+    <string name="label_total_traffic_combined">Всего</string>
     <string name="pref_network_security_enabled_title">Показывать сеть и безопасность</string>
     <string name="pref_network_security_enabled_summary">Показывать информацию о транспорте и безопасности на каждом сервере</string>
     <string name="pref_disable_sensor_text_title">Показывать полный адрес</string>

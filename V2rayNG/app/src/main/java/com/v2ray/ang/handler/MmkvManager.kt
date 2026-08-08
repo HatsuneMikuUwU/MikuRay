@@ -375,6 +375,15 @@ object MmkvManager {
      * been recorded yet.
      */
     fun getTotalTrafficString(): String? {
+        val (uplinkTotal, downlinkTotal) = getTotalTrafficDetail() ?: return null
+        return formatTrafficBytes(uplinkTotal + downlinkTotal)
+    }
+
+    /**
+     * Returns the combined upload (first) and download (second) totals in bytes
+     * across all profiles. Returns null if no traffic has been recorded yet.
+     */
+    fun getTotalTrafficDetail(): Pair<Long, Long>? {
         var uplinkTotal = 0L
         var downlinkTotal = 0L
         decodeAllServerList().forEach { guid ->
@@ -382,10 +391,15 @@ object MmkvManager {
             uplinkTotal += aff.uplinkTotal
             downlinkTotal += aff.downlinkTotal
         }
-        val total = uplinkTotal + downlinkTotal
-        if (total == 0L) return null
-        return formatTrafficBytes(total)
+        if (uplinkTotal + downlinkTotal == 0L) return null
+        return uplinkTotal to downlinkTotal
     }
+
+    /**
+     * Returns a formatted traffic byte count, e.g. "1.23 GB". Exposed for callers
+     * (such as UI dialogs) that need to render individual upload/download totals.
+     */
+    fun formatTrafficBytesPublic(bytes: Long): String = formatTrafficBytes(bytes)
 
     private fun formatTrafficBytes(bytes: Long): String {
         val units = arrayOf("B", "KB", "MB", "GB", "TB")

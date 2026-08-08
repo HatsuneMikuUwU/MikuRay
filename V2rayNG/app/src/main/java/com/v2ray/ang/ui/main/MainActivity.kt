@@ -54,6 +54,7 @@ import com.v2ray.ang.extension.toSpeedString
 import com.v2ray.ang.extension.toastInfo
 import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.extension.toastError
+import com.v2ray.ang.util.showTotalTrafficDetailDialog
 import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
@@ -502,8 +503,15 @@ class MainActivity : HelperBaseActivity(),
         }
 
         binding.layoutWeatherChip.setOnClickListener {
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
-                startActivity(Intent(this, WeatherForecastActivity::class.java))
+            when {
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false) -> {
+                    startActivity(Intent(this, WeatherForecastActivity::class.java))
+                }
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) -> {
+                    if (MmkvManager.getTotalTrafficDetail() != null) {
+                        showTotalTrafficDetailDialog(this)
+                    }
+                }
             }
         }
     }
