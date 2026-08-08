@@ -476,7 +476,6 @@ class MainActivity : HelperBaseActivity(),
         binding.viewPager.apply {
             adapter = groupPagerAdapter
             isUserInputEnabled = true
-            offscreenPageLimit = 10
         }
     }
 
