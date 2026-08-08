@@ -35,6 +35,7 @@ import kotlin.jvm.Volatile
 import libv2ray.CoreCallbackHandler
 import libv2ray.CoreController
 import libv2ray.ProcessFinder
+import java.io.File
 import java.lang.ref.SoftReference
 import java.net.InetSocketAddress
 
@@ -124,6 +125,12 @@ object CoreServiceManager {
         val config = MmkvManager.decodeServerConfig(guid) ?: error("Failed to decode server config")
 
         SettingsManager.initAssets(service, service.assets)
+        val assetFolder = Utils.userAssetPath(service)
+        val missingGeoFiles = listOf(AppConfig.GEOSITE_DAT, AppConfig.GEOIP_DAT)
+            .filterNot { File(assetFolder, it).exists() }
+        if (missingGeoFiles.isNotEmpty()) {
+            error("Geo data file not found: ${missingGeoFiles.joinToString()}. Try clearing the app data and then reopening it.")
+        }
 
         LogUtil.i(AppConfig.TAG, "StartCore-Manager: Starting core loop for ${config.remarks}")
         val result = CoreConfigManager.getV2rayConfig(service, guid)

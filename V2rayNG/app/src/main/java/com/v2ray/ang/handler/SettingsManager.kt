@@ -380,28 +380,52 @@ object SettingsManager {
 
     /**
      * Initialize assets.
+     *
+     * Copies the bundled geo asset files (geosite.dat, geoip.dat, geoip-only-cn-private.dat)
+     * from the APK assets into the internal folder used as xray.location.asset
+     * ([Utils.userAssetPath]), which is what the native core is actually told to use.
+     *
+     * As a defensive mirror, the same files are also copied to the legacy external-storage
+     * location ([Utils.legacyExternalAssetPath]). Some Xray-core builds have shipped
+     * regressions in their geo asset lookup that ignore xray.location.asset and fall back to
+     * that legacy path instead (see 2dust/v2rayNG#6035, #5877), causing "failed to open
+     * geosite.dat" / core-start failures even though the asset was copied correctly to the
+     * configured location. Mirroring the files there too costs nothing when unaffected, and
+     * avoids the crash when it is.
+     *
      * @param context The application context.
      * @param assets The AssetManager.
      */
     fun initAssets(context: Context, assets: AssetManager) {
-        val extFolder = Utils.userAssetPath(context)
+        val geo = arrayOf(AppConfig.GEOSITE_DAT, AppConfig.GEOIP_DAT, AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT)
+        val targetFolders = listOfNotNull(
+            Utils.userAssetPath(context).takeIf { it.isNotEmpty() },
+            Utils.legacyExternalAssetPath(context).takeIf { it.isNotEmpty() },
+        )
 
-        try {
-            val geo = arrayOf(AppConfig.GEOSITE_DAT, AppConfig.GEOIP_DAT, AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT)
-            assets.list("")
-                ?.filter { geo.contains(it) }
-                ?.filter { !File(extFolder, it).exists() }
-                ?.forEach {
-                    val target = File(extFolder, it)
-                    assets.open(it).use { input ->
-                        FileOutputStream(target).use { output ->
-                            input.copyTo(output)
+        if (targetFolders.isEmpty()) {
+            LogUtil.e(ANG_PACKAGE, "asset copy failed: no writable asset folder available")
+            return
+        }
+
+        targetFolders.forEach { folderPath ->
+            try {
+                val folder = File(folderPath).apply { mkdirs() }
+                assets.list("")
+                    ?.filter { geo.contains(it) }
+                    ?.filter { !File(folder, it).exists() }
+                    ?.forEach {
+                        val target = File(folder, it)
+                        assets.open(it).use { input ->
+                            FileOutputStream(target).use { output ->
+                                input.copyTo(output)
+                            }
                         }
+                        LogUtil.i(AppConfig.TAG, "Copied from apk assets folder to ${target.absolutePath}")
                     }
-                    LogUtil.i(AppConfig.TAG, "Copied from apk assets folder to ${target.absolutePath}")
-                }
-        } catch (e: Exception) {
-            LogUtil.e(ANG_PACKAGE, "asset copy failed", e)
+            } catch (e: Exception) {
+                LogUtil.e(ANG_PACKAGE, "asset copy failed for $folderPath", e)
+            }
         }
     }
 

@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.LOOPBACK
 import com.v2ray.ang.BuildConfig
+import java.io.File
 import java.io.IOException
 import java.net.InetAddress
 import java.net.ServerSocket
@@ -404,6 +405,33 @@ object Utils {
             context.getDir(AppConfig.DIR_ASSETS, Context.MODE_PRIVATE).absolutePath
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to get user asset path", e)
+            ""
+        }
+    }
+
+    /**
+     * Get the legacy external-storage asset directory (Android/data/<pkg>/files/assets).
+     *
+     * This is NOT the path passed to the native core via xray.location.asset (that's
+     * [userAssetPath], which lives on internal storage). It exists purely as a defensive
+     * mirror location: some Xray-core builds have shipped regressions where the bundled
+     * geo asset lookup falls back to this legacy external path instead of honoring the
+     * configured asset env var (see 2dust/v2rayNG#6035, #5877). Keeping geosite.dat/geoip.dat
+     * mirrored here as well means a core built against that broken lookup path still finds
+     * the files, without us needing to patch or rebuild the native library.
+     *
+     * @param context The context to use.
+     * @return The path to the legacy external asset directory, or "" if unavailable
+     * (e.g. external storage not mounted).
+     */
+    fun legacyExternalAssetPath(context: Context?): String {
+        if (context == null) return ""
+
+        return try {
+            val externalFilesDir = context.getExternalFilesDir(null) ?: return ""
+            File(externalFilesDir, "assets").absolutePath
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to get legacy external asset path", e)
             ""
         }
     }
