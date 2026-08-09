@@ -16,7 +16,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                	
+
              <com.google.android.material.card.MaterialCardView
                 android:clipToPadding="false"
                 android:layout_width="fill_parent"
@@ -204,7 +204,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -432,7 +432,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -538,7 +538,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -750,7 +750,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -870,7 +870,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -991,7 +991,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -1080,7 +1080,7 @@
                                     </LinearLayout>
                                 </LinearLayout>
                             </com.google.android.material.card.MaterialCardView>
-                            
+
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/reset_traffic"
                                 android:layout_width="fill_parent"
@@ -1186,7 +1186,7 @@
                                     </LinearLayout>
                                 </LinearLayout>
                             </com.google.android.material.card.MaterialCardView>
-                            
+
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/clear_test_results"
                                 android:layout_width="fill_parent"
@@ -1309,7 +1309,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -1415,7 +1415,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -1521,7 +1521,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Bottom"
                                 app:cardPreventCornerOverlap="false"
                                 app:contentPadding="0dp">
-                                
+
                                 <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -1610,7 +1610,7 @@
                                     </LinearLayout>
                                 </LinearLayout>
                             </com.google.android.material.card.MaterialCardView>
-                            
+
                         </LinearLayout>
 
                         </com.neko.expandable.layout.ExpandableView>

@@ -19,18 +19,7 @@ import java.util.concurrent.TimeUnit
 
 object SubscriptionUpdater {
 
-    // -------------------------------------------------------------------------
-    // Public API — the only methods external callers should ever use
-    // -------------------------------------------------------------------------
 
-    /**
-     * Sync all subscription tasks with current settings.
-     *
-     * Startup/boot callers should use the default mode so existing periodic work is kept.
-     * Use forceReschedule=true only when the next run time needs to be recalculated from
-     * the latest persisted subscription state (for example after a manual refresh).
-     * Call from: MainActivity.onCreate(), BootReceiver.onReceive().
-     */
     fun sync(
         context: Context = AngApplication.application,
         forceReschedule: Boolean = false
@@ -57,10 +46,6 @@ object SubscriptionUpdater {
         )
     }
 
-    /**
-     * Sync a single subscription's task.
-     * Call from: SubEditActivity after saving, after a manual update (to reset the timer).
-     */
     fun syncOne(context: Context = AngApplication.application, subId: String) {
         scheduleOne(
             context = context,
@@ -69,19 +54,11 @@ object SubscriptionUpdater {
         )
     }
 
-    /**
-     * Cancel the auto-update task for a single subscription.
-     * Call from: when a subscription is deleted.
-     */
     fun cancelOne(context: Context = AngApplication.application, subId: String) {
         RemoteWorkManager.getInstance(context)
             .cancelUniqueWork(taskName(subId))
     }
 
-    /**
-     * Update the last updated timestamp and reschedule the task.
-     * This is used to reset the periodic timer and prevent rapid rescheduling loops.
-     */
     fun updateLastUpdatedAndReschedule(context: Context = AngApplication.application, subId: String) {
         val subItem = MmkvManager.decodeSubscription(subId) ?: return
         subItem.lastUpdated = System.currentTimeMillis()
@@ -89,9 +66,6 @@ object SubscriptionUpdater {
         syncOne(context, subId)
     }
 
-    // -------------------------------------------------------------------------
-    // Internal scheduling logic
-    // -------------------------------------------------------------------------
 
     private fun taskName(subId: String) = "${AppConfig.SUBSCRIPTION_UPDATE_TASK_NAME}_$subId"
 
@@ -118,7 +92,6 @@ object SubscriptionUpdater {
             subItem.updateInterval
         )
 
-        // Base initial delay on the last successful update time persisted in subscription.
         val lastUpdated = subItem.lastUpdated
         val intervalMillis = intervalMinutes * 60 * 1000L
         val now = System.currentTimeMillis()
@@ -128,7 +101,6 @@ object SubscriptionUpdater {
             maxOf(0L, lastUpdated + intervalMillis - now)
         }
 
-        // Add a small floor to initial delay to prevent rapid rescheduling loops.
         if (existingWorkPolicy == ExistingPeriodicWorkPolicy.REPLACE && initialDelayMillis < 5000L) {
             initialDelayMillis = 5000L
         }
@@ -157,9 +129,6 @@ object SubscriptionUpdater {
         )
     }
 
-    // -------------------------------------------------------------------------
-    // Worker
-    // -------------------------------------------------------------------------
 
     private const val KEY_SUB_ID = "subId"
 

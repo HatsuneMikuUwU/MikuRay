@@ -14,7 +14,6 @@ class LogcatViewModel : ViewModel() {
     private var filteredLogs: List<String> = emptyList()
     private var currentFilter: String = ""
 
-    /** True if last load succeeded via logcat process; false = fell back to in-process buffer. */
     var usedFallback: Boolean = false
         private set
 
@@ -30,11 +29,6 @@ class LogcatViewModel : ViewModel() {
         applyFilter()
     }
 
-    /**
-     * Strategy 1: ProcessBuilder with stderr merged.
-     * More reliable than Runtime.exec on MIUI — avoids shell escaping issues
-     * and correctly captures GoLog output on stderr.
-     */
     private fun tryLogcatProcessBuilder(): List<String>? {
         return try {
             val process = ProcessBuilder(
@@ -65,11 +59,6 @@ class LogcatViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Strategy 2: Filter by own PID only.
-     * MIUI/HyperOS sometimes allows reading own-process logs even when
-     * broad logcat access is restricted.
-     */
     private fun tryLogcatPidOnly(): List<String>? {
         return try {
             val pid = Process.myPid().toString()
@@ -95,10 +84,6 @@ class LogcatViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Strategy 3: In-process buffer captured by LogUtil.
-     * Always works regardless of OS restrictions.
-     */
     private fun useInProcessBuffer(): List<String> {
         usedFallback = true
         return InProcessLogBuffer.getAll()

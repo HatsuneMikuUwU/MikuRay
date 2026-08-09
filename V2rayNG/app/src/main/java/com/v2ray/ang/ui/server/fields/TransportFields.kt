@@ -40,7 +40,6 @@ class TransportFields(private val activity: Activity) {
     val extraText: String? get() = etExtra?.text?.toString()
     val finalMaskText: String? get() = etFm?.text?.toString()
 
-    /** Notifies the caller whenever the user picks a different network type. */
     fun setOnNetworkChanged(onChanged: (network: String) -> Unit) {
         spNetwork?.setOnItemClickListener { parent, _, position, _ ->
             onChanged(parent.getItemAtPosition(position).toString())
@@ -55,7 +54,6 @@ class TransportFields(private val activity: Activity) {
         else -> arrayOf("---")
     }
 
-    /** Refreshes header-type options, hints, and per-network visibility. */
     fun updateForNetwork(network: String, config: ProfileItem?) {
         val types = transportTypes(network)
         spHeaderType?.isEnabled = types.size > 1
@@ -160,7 +158,6 @@ class TransportFields(private val activity: Activity) {
         spBrowserDialerMode?.setText("", false)
     }
 
-    /** Returns false (no-op) when this section isn't present in the current layout. */
     fun save(profileItem: ProfileItem): Boolean {
         val networkPos = Utils.arrayFind(networks, spNetwork?.text.toString())
         if (networkPos < 0) return false

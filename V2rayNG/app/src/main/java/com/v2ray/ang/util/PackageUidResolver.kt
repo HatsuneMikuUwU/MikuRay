@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 object PackageUidResolver {
 
-    // In-process cache to avoid resolving the same package UID repeatedly.
     private val packageUidCache = ConcurrentHashMap<String, String>()
 
     val packageUidMap: Map<String, String>
@@ -31,9 +30,8 @@ object PackageUidResolver {
     }
 
     private fun resolveUid(context: Context, packageName: String): String? {
-        // Special token for connections whose UID cannot be resolved (mapped to -1)
         if (packageName == AppConfig.UNIDENTIFIED_PACKAGE) {
-            val uid = "-1" 
+            val uid = "-1"
             LogUtil.d(AppConfig.TAG, "Special package: $packageName -> UID: $uid")
             return uid
         }

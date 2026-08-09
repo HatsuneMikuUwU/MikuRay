@@ -43,9 +43,9 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.routingScrollContent.applyEdgeToEdgeListInsets()
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.routing_settings_title), subtitle = getString(R.string.subtitle_routing_setting))
@@ -110,7 +110,6 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                     }
                 }
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    //do nothing
                 }
                 .showBlur()
         }.showBlur()
@@ -148,7 +147,6 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                 }
             }
             .setNegativeButton(android.R.string.cancel) { _, _ ->
-                //do nothing
             }
             .showBlur()
     }
@@ -201,7 +199,6 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                 }
             }
             .setNegativeButton(android.R.string.cancel) { _, _ ->
-                //do nothing
             }
             .showBlur()
         return true

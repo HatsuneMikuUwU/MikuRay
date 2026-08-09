@@ -30,7 +30,7 @@ object AppFontResolver {
     fun getTypeface(context: Context, value: String?): Typeface? {
         val resId = fontResId(value)
         if (resId == 0) return null
-        
+
         return try {
             ResourcesCompat.getFont(context, resId)
         } catch (e: Exception) {

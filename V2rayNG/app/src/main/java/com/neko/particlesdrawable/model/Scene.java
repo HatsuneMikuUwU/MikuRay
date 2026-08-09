@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2017 Yaroslav Mytkalyk
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.neko.particlesdrawable.model;
 
 import com.neko.particlesdrawable.Defaults;
@@ -32,7 +17,6 @@ public final class Scene implements SceneConfiguration {
 
     private static final int COORDINATES_PER_VERTEX = 2;
 
-    // The alpha value of the scene
     private int alpha = 255;
 
     private int density = Defaults.DENSITY;
@@ -60,10 +44,6 @@ public final class Scene implements SceneConfiguration {
 
     private FloatBuffer coordinates;
 
-    /**
-     * First index is for cos, next index is for sin.
-     * Next follows for next perticle in the same format.
-     */
     private FloatBuffer directions;
     private FloatBuffer radiuses;
     private FloatBuffer speedFactors;
@@ -194,17 +174,11 @@ public final class Scene implements SceneConfiguration {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getDensity() {
         return density;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setDensity(@IntRange(from = 0) final int density) {
         if (density < 0) {
@@ -216,17 +190,11 @@ public final class Scene implements SceneConfiguration {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getFrameDelay() {
         return frameDelay;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setFrameDelay(@IntRange(from = 0) final int delay) {
         if (delay < 0) {
@@ -235,41 +203,26 @@ public final class Scene implements SceneConfiguration {
         frameDelay = delay;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getLineColor() {
         return lineColor;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineColor(@ColorInt final int lineColor) {
         this.lineColor = lineColor;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineLength() {
         return lineLength;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineThickness() {
         return lineThickness;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineThickness(@FloatRange(from = 1) final float lineThickness) {
         if (lineThickness < 1) {
@@ -281,9 +234,6 @@ public final class Scene implements SceneConfiguration {
         this.lineThickness = lineThickness;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineLength(@FloatRange(from = 0) final float lineLength) {
         if (lineLength < 0) {
@@ -296,41 +246,26 @@ public final class Scene implements SceneConfiguration {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getParticleColor() {
         return particleColor;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setParticleColor(@ColorInt final int color) {
         particleColor = color;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMin() {
         return particleRadiusMin;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMax() {
         return particleRadiusMax;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setParticleRadiusRange(
             @FloatRange(from = 0.5f) final float minRadius,
@@ -351,17 +286,11 @@ public final class Scene implements SceneConfiguration {
         particleRadiusMax = maxRadius;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getSpeedFactor() {
         return speedFactor;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setSpeedFactor(@FloatRange(from = 0) final float speedFactor) {
         if (speedFactor < 0) {

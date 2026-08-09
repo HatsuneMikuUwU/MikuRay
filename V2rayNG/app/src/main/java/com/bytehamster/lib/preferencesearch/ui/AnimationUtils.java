@@ -32,7 +32,6 @@ public class AnimationUtils {
                     int height = revealSettings.getHeight();
                     int duration = context.getResources().getInteger(android.R.integer.config_longAnimTime);
 
-                    //Simply use the diagonal of the view
                     float finalRadius = (float) Math.sqrt(width * width + height * height);
                     Animator anim = ViewAnimationUtils.createCircularReveal(v, cx, cy, 0, finalRadius).setDuration(duration);
                     anim.setInterpolator(new FastOutSlowInInterpolator());

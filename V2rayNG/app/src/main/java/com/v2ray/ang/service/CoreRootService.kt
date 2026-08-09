@@ -22,17 +22,6 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-/**
- * Foreground service for Root mode (system-wide proxy without VpnService).
- *
- * Unlike [CoreVpnService] this service does not extend [android.net.VpnService].
- * Traffic is captured via iptables mangle MARK chains + a TUN device managed by
- * [RootProxyManager], which also spawns hev-socks5-tunnel as a standalone root process.
- *
- * The iptables setup runs asynchronously in [setupJob] so it doesn't block
- * [onStartCommand]. [onDestroy] waits for [setupJob] to finish before tearing down
- * so teardown always runs after setup — preventing orphan routing rules.
- */
 class CoreRootService : Service(), ServiceControl {
 
     private var isRunning = false
@@ -50,13 +39,6 @@ class CoreRootService : Service(), ServiceControl {
         NotificationManager.showNotification(null)
         TrafficController.start()
 
-        // Start core first so the SOCKS inbound is ready before hev connects to it.
-        // startCoreLoop() blocks on native core startup, so it's folded into the same
-        // async job as the iptables/tun/hev setup below instead of running on
-        // onStartCommand's main thread — this service runs in its own :RunSoLibV2RayDaemon
-        // process (see manifest), so this doesn't block the app UI, but it would still
-        // delay this service's own broadcast receiver registration in doStartCoreLoop()
-        // if left on the main thread.
         setupJob = CoroutineScope(Dispatchers.IO).launch {
             if (!CoreServiceManager.startCoreLoop(null)) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
@@ -66,7 +48,6 @@ class CoreRootService : Service(), ServiceControl {
 
             isRunning = true
 
-            // Sound
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SOUND_ON_CONNECT, true)) {
                 SoundPlayer.playConnect(this@CoreRootService)
             }
@@ -95,7 +76,6 @@ class CoreRootService : Service(), ServiceControl {
     override fun getService(): Service = this
 
     override fun startService() {
-        // nothing; core loop is started in onStartCommand
     }
 
     override fun stopService() {
@@ -113,7 +93,6 @@ class CoreRootService : Service(), ServiceControl {
         super.attachBaseContext(context)
     }
 
-    // ---- private -----------------------------------------------------------
 
     private fun stopAllService(isForced: Boolean = true) {
         isRunning = false
@@ -122,16 +101,11 @@ class CoreRootService : Service(), ServiceControl {
             SoundPlayer.playDisconnect(this)
         }
 
-        // Wait for any in-flight setup to finish before tearing down.
-        // If setup is still running when we try to tear down, teardown would finish
-        // first and setup would then re-install the rules into a dead core,
-        // leaving orphan iptables chains and a tun that black-holes all traffic.
         runBlocking {
             setupJob?.cancelAndJoin()
         }
         setupJob = null
 
-        // Tear down iptables/tun/hev
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 RootProxyManager.stopFull(this@CoreRootService)

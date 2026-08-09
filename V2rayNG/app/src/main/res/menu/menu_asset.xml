@@ -6,8 +6,8 @@
         android:icon="@drawable/ic_action_note_add"
         android:title="@string/menu_item_add_asset"
         app:showAsAction="always" />
-        
-        
+
+
     <item
         android:id="@+id/download_file"
         android:icon="@drawable/ic_cloud_download_24dp"

@@ -34,11 +34,11 @@ object ThemeManager {
         if (isDynamicBanner && bannerColor != 0) {
             val builder = DynamicColorsOptions.Builder()
                 .setContentBasedSource(bannerColor)
-            
+
             if (isTrueBlack) {
                 builder.setThemeOverlay(R.style.ThemeOverlay_App_TrueBlack)
             }
-            
+
             DynamicColors.applyToActivityIfAvailable(activity, builder.build())
             themeApplied = true
         }
@@ -120,7 +120,7 @@ object ThemeManager {
         MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_COLOR, color)
         activity.recreate()
     }
-    
+
     fun clearCustomColor(activity: Activity) {
         MmkvManager.encodeSettings(AppConfig.PREF_USE_CUSTOM_COLOR, false)
         MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_COLOR, 0)

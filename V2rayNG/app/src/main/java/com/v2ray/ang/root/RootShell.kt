@@ -6,20 +6,12 @@ import com.v2ray.ang.util.LogUtil
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-/**
- * Minimal root command runner backed by the `su` binary.
- *
- * Scripts are written to the app's private root runtime dir and executed with
- * `su -c sh <file>` so shell quoting stays simple. stderr is merged into stdout to
- * avoid pipe-buffer deadlocks.
- */
 object RootShell {
 
     data class Result(val code: Int, val output: String) {
         val success: Boolean get() = code == 0
     }
 
-    /** Write [script] to `<filesDir>/root/<name>` and run it as root. */
     fun runScript(context: Context, name: String, script: String): Result {
         val dir = File(context.filesDir, AppConfig.ROOT_RUNTIME_DIR).apply { mkdirs() }
         val file = File(dir, name).apply {

@@ -14,13 +14,6 @@ import java.net.UnknownHostException
 
 object SpeedtestManager {
 
-    /**
-     * Measures the time taken to establish a TCP connection to a given URL and port.
-     *
-     * @param url The URL to connect to.
-     * @param port The port to connect to.
-     * @return The connection time in milliseconds, or -1 if the connection failed.
-     */
     fun socketConnectTime(url: String, port: Int, timeoutMs: Int = 1500): Long {
         var socket: Socket? = null
         val start = System.currentTimeMillis()

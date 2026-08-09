@@ -56,7 +56,7 @@
             android:key="pref_mode"
             android:summary="%s"
             android:title="@string/title_mode" />
-            
+
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/ic_eye_off"
             app:layout="@layout/uwu_bot_switch"

@@ -56,7 +56,6 @@ class TlsFields(activity: Activity) {
         btnPinnedCa256Action?.isEnabled = enabled
     }
 
-    /** Notifies the caller whenever the user picks a different stream security type. */
     fun setOnSecurityChanged(onChanged: (security: String) -> Unit) {
         spStreamSecurity?.setOnItemClickListener { parent, _, position, _ ->
             onChanged(parent.getItemAtPosition(position).toString())
@@ -67,13 +66,11 @@ class TlsFields(activity: Activity) {
         btnPinnedCa256Action?.setOnClickListener { onClick() }
     }
 
-    /** True only when a real (non-blank) stream security value is currently selected. */
     fun isSecuritySelected(): Boolean {
         val pos = Utils.arrayFind(streamSecuritys, selectedSecurityText)
         return pos >= 0 && !TextUtils.isEmpty(streamSecuritys[pos])
     }
 
-    /** Refreshes which sub-sections (TLS vs REALITY vs none) are visible. */
     fun updateForSecurity(security: String) {
         val isBlank = security.isBlank()
         val isTLS = security.equals(TLS, ignoreCase = true)
@@ -114,7 +111,6 @@ class TlsFields(activity: Activity) {
                 ).forEach { it?.visibility = View.GONE }
             }
             else -> {
-                // REALITY dan lainnya
                 listOf(
                     containerSni,
                     containerFingerprint,
@@ -182,7 +178,6 @@ class TlsFields(activity: Activity) {
         etPublicKey?.text = null
     }
 
-    /** Returns false (no-op) when this section isn't present in the current layout. */
     fun save(config: ProfileItem): Boolean {
         val streamSecPos = Utils.arrayFind(streamSecuritys, selectedSecurityText)
         if (streamSecPos < 0) return false

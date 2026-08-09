@@ -15,12 +15,6 @@ import com.v2ray.ang.util.Utils
 import java.net.URI
 
 object VmessFmt : FmtBase() {
-    /**
-     * Parses a Vmess string into a ProfileItem object.
-     *
-     * @param str the Vmess string to parse
-     * @return the parsed ProfileItem object, or null if parsing fails
-     */
     fun parse(str: String): ProfileItem? {
         if (str.indexOf('?') > 0 && str.indexOf('&') > 0) {
             return parseVmessStd(str)
@@ -35,7 +29,6 @@ object VmessFmt : FmtBase() {
             return null
         }
         val vmessQRCode = JsonUtil.fromJson(result, VmessQRCode::class.java) ?: return null
-        // Although VmessQRCode fields are non null, looks like Gson may still create null fields
         if (TextUtils.isEmpty(vmessQRCode.add)
             || TextUtils.isEmpty(vmessQRCode.port)
             || TextUtils.isEmpty(vmessQRCode.id)
@@ -65,10 +58,6 @@ object VmessFmt : FmtBase() {
                 config.seed = vmessQRCode.path
             }
 
-//            NetworkType.QUIC -> {
-//                config.quicSecurity = vmessQRCode.host
-//                config.quicKey = vmessQRCode.path
-//            }
 
             NetworkType.GRPC -> {
                 config.mode = vmessQRCode.type
@@ -90,16 +79,10 @@ object VmessFmt : FmtBase() {
         }
         config.verifyPeerCertByName = vmessQRCode.vcn
         config.pinnedCA256 = vmessQRCode.pcs
-        
+
         return config
     }
 
-    /**
-     * Converts a ProfileItem object to a URI string.
-     *
-     * @param config the ProfileItem object to convert
-     * @return the converted URI string
-     */
     fun toUri(config: ProfileItem): String {
         val vmessQRCode = VmessQRCode()
 
@@ -118,10 +101,6 @@ object VmessFmt : FmtBase() {
                 vmessQRCode.path = config.seed.orEmpty()
             }
 
-//            NetworkType.QUIC -> {
-//                vmessQRCode.host = config.quicSecurity.orEmpty()
-//                vmessQRCode.path = config.quicKey.orEmpty()
-//            }
 
             NetworkType.GRPC -> {
                 vmessQRCode.type = config.mode.orEmpty()
@@ -151,12 +130,6 @@ object VmessFmt : FmtBase() {
         return Utils.encode(json)
     }
 
-    /**
-     * Parses a standard Vmess URI string into a ProfileItem object.
-     *
-     * @param str the standard Vmess URI string to parse
-     * @return the parsed ProfileItem object, or null if parsing fails
-     */
     fun parseVmessStd(str: String): ProfileItem? {
         val config = ProfileItem.create(EConfigType.VMESS)
 

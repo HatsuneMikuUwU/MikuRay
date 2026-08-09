@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2015 Paul Burke
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.v2ray.ang.helper
 
 import android.animation.ValueAnimator
@@ -25,15 +10,6 @@ import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.sign
 
-/**
- * An implementation of [ItemTouchHelper.Callback] that enables basic drag & drop and
- * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
- *
- * Expects the `RecyclerView.Adapter` to listen for [ ] callbacks and the `RecyclerView.ViewHolder` to implement
- * [ItemTouchHelperViewHolder].
- *
- * @author Paul Burke (ipaulpro)
- */
 class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter, private val allowSwipe: Boolean = false) : ItemTouchHelper.Callback() {
     private var mReturnAnimator: ValueAnimator? = null
 
@@ -71,7 +47,6 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        // Do not delete; simply return item to original position
         returnViewToOriginalPosition(viewHolder)
     }
 
@@ -85,7 +60,6 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
             val swipeAmount = abs(dX)
             val direction = sign(dX)
 
-            // Limit maximum swipe distance
             val translationX = min(swipeAmount, maxSwipeDistance) * direction
             val alpha = ALPHA_FULL - min(swipeAmount, maxSwipeDistance) / maxSwipeDistance
 
@@ -132,11 +106,11 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
     }
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-        return 1.1f // Set a value greater than 1 to prevent default swipe delete
+        return 1.1f
     }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
-        return defaultValue * 10 // Increase swipe escape velocity to make swipe harder to trigger
+        return defaultValue * 10
     }
 
     companion object {

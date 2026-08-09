@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <item
         android:id="@+id/add_rule"
         android:icon="@drawable/ic_action_note_add"
         android:title="@string/routing_settings_add_rule"
         app:showAsAction="ifRoom" />
-        
+
     <item
         android:id="@+id/action_more_menu"
-        android:icon="@drawable/ic_more_vert_24dp" 
+        android:icon="@drawable/ic_more_vert_24dp"
         android:title="More"
         app:showAsAction="always" />
 

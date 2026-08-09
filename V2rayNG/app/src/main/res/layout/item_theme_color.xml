@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Satu item warna di dalam GridLayout dialog tema.
-    Berisi lingkaran berwarna + centang (checkmark) jika terpilih.
-    Background diset secara programatis di ThemeColorDialog.kt.
--->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"

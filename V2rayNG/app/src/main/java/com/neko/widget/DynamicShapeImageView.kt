@@ -23,7 +23,7 @@ class DynamicShapeImageView @JvmOverloads constructor(
 ) : ShaderImageView(context, attrs, defStyleAttr) {
 
     private var currentShapeKey: String? = AppConfig.PREF_ICON_SHAPE_DEFAULT
-    
+
     private var customBgColor: Int? = null
 
     private val shapeChangeReceiver = object : BroadcastReceiver() {
@@ -43,19 +43,19 @@ class DynamicShapeImageView @JvmOverloads constructor(
     init {
         if (attrs != null) {
             val typedArray = context.obtainStyledAttributes(
-                attrs, 
-                R.styleable.DynamicShapeImageView, 
-                defStyleAttr, 
+                attrs,
+                R.styleable.DynamicShapeImageView,
+                defStyleAttr,
                 0
             )
-            
+
             if (typedArray.hasValue(R.styleable.DynamicShapeImageView_shapeBackgroundColor)) {
                 customBgColor = typedArray.getColor(
-                    R.styleable.DynamicShapeImageView_shapeBackgroundColor, 
+                    R.styleable.DynamicShapeImageView_shapeBackgroundColor,
                     0
                 )
             }
-            
+
             typedArray.recycle()
         }
 
@@ -66,11 +66,11 @@ class DynamicShapeImageView @JvmOverloads constructor(
     private fun loadColorBitmap() {
         try {
             val color = customBgColor ?: context.getColorAttr(R.attr.colorPrimary)
-            
+
             val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             canvas.drawColor(color)
-            
+
             setImageBitmap(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -101,7 +101,7 @@ class DynamicShapeImageView @JvmOverloads constructor(
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)
-        
+
         if (hasWindowFocus && !isInEditMode) {
             val savedKey = MmkvManager.decodeSettingsString(AppConfig.PREF_ICON_SHAPE)
                 ?: AppConfig.PREF_ICON_SHAPE_DEFAULT

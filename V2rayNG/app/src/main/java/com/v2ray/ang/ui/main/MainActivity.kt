@@ -97,8 +97,8 @@ class MainActivity : HelperBaseActivity(),
     val mainViewModel: MainViewModel by viewModels()
     private lateinit var groupPagerAdapter: GroupPagerAdapter
     private var tabMediator: TabLayoutMediator? = null
-    
-    private var bannerReceiver: android.content.BroadcastReceiver? = null 
+
+    private var bannerReceiver: android.content.BroadcastReceiver? = null
 
     private val tabSelectedListener = object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab) {
@@ -136,7 +136,7 @@ class MainActivity : HelperBaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        
+
         hideLoading()
 
         window.statusBarColor = android.graphics.Color.TRANSPARENT
@@ -200,15 +200,9 @@ class MainActivity : HelperBaseActivity(),
         if (SettingsChangeManager.consumeRefreshDisplayPrefs()) {
             refreshAllGroupListDisplays()
         }
-        // Self-heal: if a state broadcast from the daemon was missed while we were away
-        // (or during a slow VPN start), this re-syncs isRunning so the FAB / bottom status
-        // card don't stay stuck reflecting a stale state.
         mainViewModel.resyncState()
     }
 
-    // Rebind every already-created group tab's list (not just the one currently
-    // visible) so per-item display prefs toggled from Settings apply right away,
-    // without needing to swipe through each ViewPager tab manually.
     private fun refreshAllGroupListDisplays() {
         for (i in groupPagerAdapter.groups.indices) {
             val itemId = groupPagerAdapter.getItemId(i)
@@ -343,26 +337,26 @@ class MainActivity : HelperBaseActivity(),
 
     override fun onContentChanged() {
         super.onContentChanged()
-        
+
         val root = findViewById<View>(R.id.main_content) ?: return
-        
+
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val displayCutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            
+
             view.updatePadding(
-                top   = 0, 
+                top   = 0,
                 left  = maxOf(systemBars.left,  displayCutout.left),
                 right = maxOf(systemBars.right, displayCutout.right),
                 bottom = maxOf(systemBars.bottom, displayCutout.bottom)
             )
-            
+
             val bottomInset = maxOf(systemBars.bottom, displayCutout.bottom)
             binding.cardBottomStatus.updatePadding(bottom = bottomInset)
 
             val headerContent = view.findViewById<View>(R.id.header_content)
             headerContent?.updatePadding(top = systemBars.top)
-            
+
             insets
         }
     }
@@ -466,7 +460,7 @@ class MainActivity : HelperBaseActivity(),
                 }
             }
         }
-        
+
         val filter = android.content.IntentFilter(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
         filter.addAction(AppConfig.BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
@@ -489,20 +483,20 @@ class MainActivity : HelperBaseActivity(),
     private fun setupListeners() {
         binding.fab.setOnClickListener { handleFabAction() }
         binding.fabNoBlur.setOnClickListener { handleFabAction() }
-        
+
         binding.cardBottomStatus.setOnClickListener { handleLayoutTestClick() }
         binding.btnHome.setOnClickListener {
             MainMenuBottomSheet().show(supportFragmentManager, MainMenuBottomSheet.TAG)
         }
-        
+
         binding.btnAddConfig.setOnClickListener {
             AddConfigBottomSheet().show(supportFragmentManager, AddConfigBottomSheet.TAG)
         }
-        
+
         binding.btnMoreMenu.setOnClickListener {
             MoreMenuBottomSheet.newInstance(mainViewModel.subscriptionId).show(supportFragmentManager, MoreMenuBottomSheet.TAG)
         }
-        
+
         binding.btnAddSub.setOnClickListener {
             requestActivityLauncher.launch(Intent(this, SubEditActivity::class.java))
         }
@@ -585,8 +579,6 @@ class MainActivity : HelperBaseActivity(),
             R.id.sub_update -> importConfigViaSub()
             R.id.clear_test_results -> {
                 mainViewModel.clearTestResults()
-                // Clears results for every server across every group, not just the
-                // currently visible tab — refresh every already-created tab now.
                 refreshAllGroupListDisplays()
             }
             R.id.reset_traffic -> {
@@ -606,7 +598,7 @@ class MainActivity : HelperBaseActivity(),
                     .setItems(options) { _, which ->
                         val msgRes: Int
                         val action: () -> Unit
-                        
+
                         when (which) {
                             0 -> {
                                 msgRes = R.string.confirm_reset_traffic_profile
@@ -618,15 +610,13 @@ class MainActivity : HelperBaseActivity(),
                             }
                             else -> {
                                 msgRes = R.string.confirm_reset_traffic_all
-                                // Touches every server across every group — refresh every
-                                // already-created tab, not just the one currently visible.
                                 action = {
                                     mainViewModel.resetAllTraffic()
                                     refreshAllGroupListDisplays()
                                 }
                             }
                         }
-                        
+
                         showDeleteConfirmDialog(
                             context = this,
                             titleRes = R.string.title_reset_traffic,
@@ -680,7 +670,7 @@ class MainActivity : HelperBaseActivity(),
         mainViewModel.isRunning.observe(this) { isRunning ->
             applyRunningState(isLoading = false, isRunning = isRunning)
         }
-        
+
         mainViewModel.alertAction.observe(this) { (isSuccess, message) ->
             if (isSuccess) {
                 snackbarSuccess(message, title = getString(R.string.title_alerter_success))
@@ -775,9 +765,9 @@ class MainActivity : HelperBaseActivity(),
                 if (targetIndex >= 0) {
                     binding.viewPager.setCurrentItem(targetIndex, false)
                 }
-                
+
                 val hasAnyGroup = groups.isNotEmpty()
-                
+
                 binding.layoutTabWrapper.isVisible = hasAnyGroup
                 binding.tabGroup.isVisible = hasAnyGroup
                 (binding.tabGroup.parent as? View)?.isVisible = hasAnyGroup
@@ -831,8 +821,8 @@ class MainActivity : HelperBaseActivity(),
 
     private fun startV2Ray() {
         if (MmkvManager.getSelectServer().isNullOrEmpty()) {
-            snackbarError(getString(R.string.title_file_chooser), title = getString(R.string.title_alerter_error)) 
-            applyRunningState(isLoading = false, isRunning = false) 
+            snackbarError(getString(R.string.title_file_chooser), title = getString(R.string.title_alerter_error))
+            applyRunningState(isLoading = false, isRunning = false)
             return
         }
 
@@ -980,7 +970,7 @@ class MainActivity : HelperBaseActivity(),
 
     private fun importBatchConfig(server: String?) {
         if (server.isNullOrEmpty()) return
-        
+
         showLoading()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -1246,13 +1236,13 @@ class MainActivity : HelperBaseActivity(),
         urlTestProgressDialog.dismiss()
 
         tabMediator?.detach()
-        
+
         try {
             bannerReceiver?.let { unregisterReceiver(it) }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to unregister bannerReceiver", e)
         }
-        
+
         super.onDestroy()
     }
 }

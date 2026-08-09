@@ -106,7 +106,6 @@ class ServerHysteria2Activity : BaseActivity() {
             snackbarError(getString(R.string.server_lab_address), title = getString(R.string.title_alerter_error))
             return false
         }
-        // Hysteria2 doesn't require a fixed single port (port hopping is supported).
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
         if (TextUtils.isEmpty(et_id.text.toString())) {

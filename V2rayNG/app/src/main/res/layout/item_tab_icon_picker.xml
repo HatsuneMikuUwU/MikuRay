@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Grid cell untuk icon picker tab group.
-    48dp total touchable area, icon 26dp di tengah.
-    Selected state: background colorPrimaryContainer, icon tint colorOnPrimaryContainer.
-    Unselected: background transparent, icon tint colorOnSurfaceVariant.
--->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

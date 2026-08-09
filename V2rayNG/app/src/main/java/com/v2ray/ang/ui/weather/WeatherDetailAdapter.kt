@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.v2ray.ang.R
 
-/** Feeds the "Details" card's staggered grid — every remaining Open-Meteo field, one plain card per field. */
 class WeatherDetailAdapter(
     private val context: Context,
     private val items: List<DetailItem>

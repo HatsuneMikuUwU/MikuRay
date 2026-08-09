@@ -56,9 +56,9 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.recyclerView.applyEdgeToEdgeListInsets()
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_sub_setting), subtitle = getString(R.string.subtitle_sub_setting))
@@ -101,10 +101,6 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         adapter.notifyDataSetChanged()
     }
 
-    /**
-     * Shows a dialog to pick auto-test/remove-invalid/sort/send-HWID options, then enqueues
-     * the background subscription update job via [SubscriptionsViewModel.updateSubscriptions].
-     */
     private fun showSubUpdateOptionsDialog() {
         val dialogBinding = DialogSubUpdateOptionsBinding.inflate(layoutInflater)
 
@@ -119,7 +115,6 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         dialogBinding.switchSendHwid.isChecked =
             MmkvManager.decodeSettingsBool(AppConfig.PREF_SEND_HWID, false)
 
-        // Tapping anywhere on a row toggles its switch too, not just the thumb itself.
         dialogBinding.rowUpdateSubscription.setOnClickListener {
             dialogBinding.switchUpdateSubscription.toggle()
         }
@@ -163,14 +158,10 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
             )
 
             when {
-                // Auto-test can take a while, so run it through the foreground
-                // service and report progress via notification instead of blocking the UI.
                 dialogBinding.switchAutoTest.isChecked -> {
                     viewModel.updateSubscriptionsMore()
                     toastSuccess(R.string.subscription_updater_job_tips)
                 }
-                // Update-only is quick, so just do it inline with a loading indicator
-                // instead of spinning up the background service/notification.
                 dialogBinding.switchUpdateSubscription.isChecked -> {
                     showLoading()
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -212,7 +203,7 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         }
 
         sideSheetDialog.show()
-        
+
         val sideSheetContainer = sideSheetDialog.findViewById<View>(com.google.android.material.R.id.m3_side_sheet)
         sideSheetContainer?.clipToOutline = true
     }

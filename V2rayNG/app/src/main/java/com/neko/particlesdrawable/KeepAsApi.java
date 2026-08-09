@@ -11,10 +11,6 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PACKAGE;
 import static java.lang.annotation.ElementType.TYPE;
 
-/**
- * Custom Keep annotation that is controlled by this project proguard config.
- * Some flavors can be built with exposing properties hidden by ConfigurableKeep.
- */
 @Retention(RetentionPolicy.CLASS)
 @Target({PACKAGE, TYPE, ANNOTATION_TYPE, CONSTRUCTOR, METHOD, FIELD})
 public @interface KeepAsApi {

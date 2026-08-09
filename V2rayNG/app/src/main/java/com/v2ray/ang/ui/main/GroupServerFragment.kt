@@ -221,7 +221,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
             EConfigType.POLICYGROUP -> {
                 ownerActivity.startActivity(intent.setClass(ownerActivity, ServerGroupActivity::class.java))
             }
-            
+
             EConfigType.PROXYCHAIN -> {
                 ownerActivity.startActivity(intent.setClass(ownerActivity, ServerProxyChainActivity::class.java))
             }

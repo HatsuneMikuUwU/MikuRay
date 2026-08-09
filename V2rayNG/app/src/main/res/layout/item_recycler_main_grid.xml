@@ -60,7 +60,7 @@
                         android:layout_marginTop="4dp"
                         android:visibility="gone" />
                 </LinearLayout>
-                
+
                 <TextView
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textSize="11.0sp"

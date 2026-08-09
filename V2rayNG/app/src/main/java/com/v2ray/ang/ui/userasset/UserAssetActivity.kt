@@ -45,9 +45,9 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.userAssetScrollContent.applyEdgeToEdgeListInsets()
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting), subtitle = getString(R.string.subtitle_user_asset))

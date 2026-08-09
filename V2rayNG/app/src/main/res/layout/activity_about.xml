@@ -319,7 +319,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Top"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -425,7 +425,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -531,7 +531,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -637,7 +637,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -743,7 +743,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Bottom"
                             app:cardPreventCornerOverlap="false"
                             app:contentPadding="0dp">
-                            
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

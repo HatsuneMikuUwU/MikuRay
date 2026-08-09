@@ -27,7 +27,7 @@ class CheckUpdateActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
 
         binding.checkUpdateScrollContent.applyEdgeToEdgeListInsets()

@@ -56,7 +56,7 @@ class ThemeStateManager(private val activity: Activity) {
 
     fun checkThemeChangedAndRecreate() {
         val newState = fetchCurrentState()
-        
+
         if (currentState != newState) {
             currentState = newState
             activity.recreate()

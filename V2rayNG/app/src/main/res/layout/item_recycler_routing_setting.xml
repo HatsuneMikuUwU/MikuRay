@@ -103,7 +103,7 @@
                 android:id="@+id/layout_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_icon_button" 
+                android:background="@drawable/bg_icon_button"
                 android:contentDescription="@string/menu_item_edit_config"
                 android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="@id/outboundTag"

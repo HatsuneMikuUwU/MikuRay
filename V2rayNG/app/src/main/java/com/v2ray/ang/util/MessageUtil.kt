@@ -15,34 +15,14 @@ import java.io.Serializable
 object MessageUtil {
 
 
-    /**
-     * Sends a message to the service.
-     *
-     * @param ctx The context.
-     * @param what The message identifier.
-     * @param content The message content.
-     */
     fun sendMsg2Service(ctx: Context, what: Int, content: Serializable) {
         sendMsg(ctx, AppConfig.BROADCAST_ACTION_SERVICE, what, content)
     }
 
-    /**
-     * Sends a message to the UI.
-     *
-     * @param ctx The context.
-     * @param what The message identifier.
-     * @param content The message content.
-     */
     fun sendMsg2UI(ctx: Context, what: Int, content: Serializable) {
         sendMsg(ctx, AppConfig.BROADCAST_ACTION_ACTIVITY, what, content)
     }
 
-    /**
-     * Sends a message to the test service.
-     *
-     * @param ctx The context.
-     * @param message The test service message containing key, subscriptionId, and serverGuids.
-     */
     fun sendMsg2TestService(ctx: Context, message: TestServiceMessage) {
         try {
             val intent = Intent()
@@ -58,7 +38,6 @@ object MessageUtil {
                 }
 
                 AppConfig.MSG_MEASURE_CONFIG_CANCEL -> {
-                    // Do not wake up service just to cancel; stop only if it is already running.
                     ctx.stopService(intent)
                 }
 
@@ -71,12 +50,6 @@ object MessageUtil {
         }
     }
 
-    /**
-     * Sends a message to the subscription update service.
-     *
-     * @param ctx The context.
-     * @param message The subscription update message containing key and subIds.
-     */
     fun sendMsg2SubscriptionService(ctx: Context, message: SubscriptionUpdateMessage) {
         try {
             val intent = Intent()
@@ -92,7 +65,6 @@ object MessageUtil {
                 }
 
                 AppConfig.MSG_SUB_UPDATE_CANCEL -> {
-                    // Do not wake up service just to cancel; stop only if it is already running.
                     ctx.stopService(intent)
                 }
 
@@ -105,14 +77,6 @@ object MessageUtil {
         }
     }
 
-    /**
-     * Sends a message with the specified action.
-     *
-     * @param ctx The context.
-     * @param action The action string.
-     * @param what The message identifier.
-     * @param content The message content.
-     */
     private fun sendMsg(ctx: Context, action: String, what: Int, content: Serializable) {
         try {
             val intent = Intent()

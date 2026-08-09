@@ -11,14 +11,11 @@ import com.google.android.material.card.MaterialCardView
 import com.v2ray.ang.R
 
 class ExpandableLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs), View.OnClickListener {
-    
+
     private var arrowIcon: ImageView? = null
     private var cardExpandable: MaterialCardView? = null
     private var expandableContent: ExpandableView? = null
 
-    // Resolved per-instance from XML so multiple ExpandableLayout siblings on
-    // the same screen never collide on the same view id. No fallback default:
-    // every usage must declare app:el_headerViewId/el_arrowViewId/el_contentViewId.
     private val headerViewId: Int
     private val arrowViewId: Int
     private val contentViewId: Int
@@ -37,14 +34,14 @@ class ExpandableLayout(context: Context, attrs: AttributeSet?) : LinearLayout(co
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        
+
         expandableContent = findViewById(contentViewId)
         arrowIcon = findViewById(arrowViewId)
         cardExpandable = findViewById(headerViewId)
-        
+
         cardExpandable?.setOnClickListener(this)
         arrowIcon?.setOnClickListener(this)
-        
+
         initializeLogic()
     }
 
@@ -67,12 +64,12 @@ class ExpandableLayout(context: Context, attrs: AttributeSet?) : LinearLayout(co
     private fun initializeLogic() {
         arrowIcon?.apply {
             background = RippleDrawable(
-                ColorStateList(arrayOf(intArrayOf()), intArrayOf(-0x8a8a8b)), 
-                null, 
+                ColorStateList(arrayOf(intArrayOf()), intArrayOf(-0x8a8a8b)),
+                null,
                 null
             )
             isClickable = true
-            
+
             rotation = if (expandableContent?.isExpanded == true) 90.0f else 0.0f
         }
     }

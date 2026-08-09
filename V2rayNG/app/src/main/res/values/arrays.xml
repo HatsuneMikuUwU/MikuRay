@@ -49,7 +49,6 @@
     <string-array name="mode_type_grpc" translatable="false">
         <item>gun</item>
         <item>multi</item>
-        <!--Hide this option until core support it       <item>guna</item>-->
     </string-array>
 
     <string-array name="streamsecuritys" translatable="false">
@@ -135,7 +134,7 @@
         <item>VPN</item>
         <item>Proxy only</item>
     </string-array>
-    
+
     <string-array name="browser_dialer_mode_value" translatable="false">
         <item>Disable</item>
         <item>OkHttp</item>
@@ -322,7 +321,7 @@
         <item>@string/uwu_random_text_9</item>
         <item>@string/uwu_random_text_10</item>
     </string-array>
-    
+
     <string-array name="app_font_entries" translatable="false">
         <item>Default</item>
         <item>IOS 15</item>
@@ -362,7 +361,7 @@
         <item>rine</item>
         <item>evolve</item>
     </string-array>
-    
+
     <string-array name="category_style_entries" translatable="false">
         <item>Gradient</item>
         <item>Hatsune Miku (Modern)</item>

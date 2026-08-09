@@ -66,7 +66,7 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
                 activity.theme.applyStyle(fontOverlayId, true)
             }
         }
-        
+
         val isTrueBlack = ThemeManager.isDarkMode(activity) && MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
         if (isTrueBlack) {
             activity.theme.applyStyle(R.style.ThemeOverlay_App_TrueBlack_DialogFix, true)

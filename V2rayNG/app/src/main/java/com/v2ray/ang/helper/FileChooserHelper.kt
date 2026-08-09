@@ -11,10 +11,6 @@ import com.v2ray.ang.R
 import com.v2ray.ang.extension.snackbarDefault
 import com.v2ray.ang.util.LogUtil
 
-/**
- * Helper for choosing and creating files using Android Storage Access Framework.
- * Supports both file selection (ACTION_GET_CONTENT) and file creation (CreateDocument).
- */
 class FileChooserHelper(private val activity: AppCompatActivity) {
     private var fileChooserCallback: ((Uri?) -> Unit)? = null
     private var documentCreateCallback: ((Uri?) -> Unit)? = null
@@ -36,12 +32,6 @@ class FileChooserHelper(private val activity: AppCompatActivity) {
             documentCreateCallback = null
         }
 
-    /**
-     * Launch file chooser with ACTION_GET_CONTENT intent to select an existing file.
-     *
-     * @param mimeType MIME type filter for files
-     * @param onResult Callback invoked with the selected file URI (null if cancelled)
-     */
     fun launch(
         mimeType: String = "*/*",
         onResult: (Uri?) -> Unit
@@ -65,12 +55,6 @@ class FileChooserHelper(private val activity: AppCompatActivity) {
         }
     }
 
-    /**
-     * Launch document creator to create a new file at user-selected location.
-     *
-     * @param fileName Default file name for the new document
-     * @param onResult Callback invoked with the created file URI (null if cancelled)
-     */
     fun createDocument(
         fileName: String,
         onResult: (Uri?) -> Unit

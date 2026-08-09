@@ -2,7 +2,7 @@
 <resources>
     <attr name="colorBg" format="color" />
     <attr name="colorCard" format="color" />
-    
+
     <attr name="siArrowPosition">
         <enum name="left" value="0" />
         <enum name="right" value="1" />
@@ -36,7 +36,7 @@
         <attr name="siStrokeJoin"/>
         <attr name="siStrokeMiter" format="dimension" />
     </declare-styleable>
-    
+
     <declare-styleable name="ExpandableView">
         <attr name="el_duration" format="integer" />
         <attr name="el_expanded" format="boolean" />
@@ -52,11 +52,11 @@
         <attr name="el_arrowViewId" format="reference" />
         <attr name="el_contentViewId" format="reference" />
     </declare-styleable>
-    
+
     <declare-styleable name="DynamicShapeImageView">
         <attr name="shapeBackgroundColor" format="color|reference" />
     </declare-styleable>
-    
+
     <declare-styleable name="UwuHeaderIconView">
         <attr name="sectionIcon" format="reference" />
     </declare-styleable>
@@ -90,7 +90,7 @@
             name="speedFactor"
             format="float" />
     </declare-styleable>
-    
+
     <declare-styleable name="SearchPreference">
         <attr name="textHint" format="string" />
         <attr name="textNoResults" format="string" />

@@ -14,14 +14,6 @@ import java.util.zip.ZipOutputStream
 object ZipUtil {
     private const val BUFFER_SIZE = 4096
 
-    /**
-     * Zip the contents of a folder.
-     *
-     * @param folderPath The path to the folder to zip.
-     * @param outputZipFilePath The path to the output zip file.
-     * @return True if the operation is successful, false otherwise.
-     * @throws IOException If an I/O error occurs.
-     */
     @Throws(IOException::class)
     fun zipFromFolder(folderPath: String, outputZipFilePath: String): Boolean {
         val buffer = ByteArray(BUFFER_SIZE)
@@ -34,8 +26,7 @@ object ZipUtil {
             val directory = File(folderPath)
             if (!directory.isDirectory) return false
 
-            // Collect all files recursively, preserving relative paths for zip entries
-            val filesToCompress = ArrayList<Pair<String, File>>() // <entryName, file>
+            val filesToCompress = ArrayList<Pair<String, File>>()
             fun collectFiles(dir: File, prefix: String) {
                 dir.listFiles()?.forEach { f ->
                     if (f.isFile) {
@@ -74,14 +65,6 @@ object ZipUtil {
         return true
     }
 
-    /**
-     * Unzip the contents of a zip file to a folder.
-     *
-     * @param zipFile The zip file to unzip.
-     * @param destDirectory The destination directory.
-     * @return True if the operation is successful, false otherwise.
-     * @throws IOException If an I/O error occurs.
-     */
     @Throws(IOException::class)
     fun unzipToFolder(zipFile: File, destDirectory: String): Boolean {
         File(destDirectory).run {
@@ -110,13 +93,6 @@ object ZipUtil {
         return true
     }
 
-    /**
-     * Extract a file from an input stream.
-     *
-     * @param inputStream The input stream to read from.
-     * @param destFilePath The destination file path.
-     * @throws IOException If an I/O error occurs.
-     */
     @Throws(IOException::class)
     private fun extractFile(inputStream: InputStream, destFilePath: String) {
         File(destFilePath).parentFile?.mkdirs()

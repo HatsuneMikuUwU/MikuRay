@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="20" />
-                
+
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
@@ -75,5 +75,5 @@
         app:layout_constraintTop_toBottomOf="@id/card_container"
         app:backgroundTint="?attr/colorError"
         android:textColor="?attr/colorOnError" />
-        
+
 </androidx.constraintlayout.widget.ConstraintLayout>

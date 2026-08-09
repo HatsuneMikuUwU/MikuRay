@@ -169,7 +169,6 @@ class SubEditActivity : BaseActivity() {
         return true
     }
 
-    // ── Profile remark autocomplete ─────────────────────────────────────────
 
     private fun setupProfileRemarkInputs() {
         val suggestions = SettingsManager.getProfileRemarks(
@@ -198,7 +197,6 @@ class SubEditActivity : BaseActivity() {
         }
     }
 
-    // ── Save ────────────────────────────────────────────────────────────────
 
     private fun saveServer(): Boolean {
         val subItem = MmkvManager.decodeSubscription(editSubId) ?: SubscriptionItem()
@@ -268,7 +266,6 @@ class SubEditActivity : BaseActivity() {
         return true
     }
 
-    // ── Delete ──────────────────────────────────────────────────────────────
 
     private fun deleteServer(): Boolean {
         if (editSubId.isNotEmpty()) {
@@ -289,7 +286,6 @@ class SubEditActivity : BaseActivity() {
         return true
     }
 
-    // ── Menu ────────────────────────────────────────────────────────────────
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_server, menu)
@@ -304,7 +300,6 @@ class SubEditActivity : BaseActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    // ── Lifecycle ───────────────────────────────────────────────────────────
 
     override fun onDestroy() {
         dialog?.dismiss()

@@ -14,7 +14,6 @@
     <string name="migration_fail">Data migration failed!</string>
     <string name="pull_down_to_refresh">Please pull down to refresh!</string>
 
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">Stop</string>
     <string name="notification_connect_time">timer : %s</string>
     <string name="notification_data_usage" formatted="false">total : ↑ %s  ↓ %s</string>
@@ -26,7 +25,6 @@
     <string name="toast_services_success">Start Services Success</string>
     <string name="toast_services_failure">Start Services Failure</string>
 
-    <!--ServerActivity-->
     <string name="title_server">Config</string>
     <string name="menu_item_add_config">Add config</string>
     <string name="menu_item_save_config">Save config</string>
@@ -146,7 +144,6 @@
     <string name="server_lab_browser_dialer_tip">Only supports xhttp (packet-up) and ws outbound; TLS-related settings may be ignored or conflict</string>
     <string name="toast_allow_insecure_deprecated">Current node uses an unencrypted connection. Your communication may be directly viewed by network intermediate facilities controlled by authoritarian governments.\nFor security reasons, such nodes cannot be connected via Xray core version 26.2.6+.\nIf it is a self-built node, please enable security encryption such as TLS, or pin the certificate pinnedCA256.\nIf it is a provider node, please contact the service provider to complete the technical upgrade. If the service provider refuses to cooperate, it is recommended to switch to a provider that pays more attention to user security.\nFor more information, please visit https://github.com/2dust/v2rayN/discussions/9460</string>
 
-    <!-- WelcomeActivity -->
     <string name="uwu_skip">Skip</string>
     <string name="uwu_next">Next</string>
     <string name="uwu_start">Start</string>
@@ -158,7 +155,6 @@
     <string name="uwu_welcome_page2_desc">Supports VLESS, VMess, Trojan, Shadowsocks, and more.</string>
     <string name="uwu_welcome_page3_desc">Experience fast, secure internet wrapped in a cute Miku-inspired design.</string>
 
-    <!-- UserAssetActivity -->
     <string name="toast_asset_copy_failed">File copy failed, please use File Manager</string>
     <string name="menu_item_add_asset">Add asset</string>
     <string name="menu_item_add_file">Add files</string>
@@ -171,7 +167,6 @@
     <string name="msg_remark_is_duplicate">The remarks already exists</string>
     <string name="asset_geo_files_sources">Geo files source</string>
 
-    <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Loading</string>
     <string name="menu_item_search">Search</string>
     <string name="menu_item_select_all">Select all</string>
@@ -186,7 +181,6 @@
     <string name="per_app_proxy_settings_enable">Enable per-app</string>
     <string name="app_picker_unknown_app">Unknown app (unidentified UID)</string>
 
-    <!-- Preferences -->
     <string name="title_settings">Settings</string>
     <string name="title_advanced">Advanced Settings</string>
     <string name="title_core_settings">Core Settings</string>
@@ -319,7 +313,6 @@
     <string name="summary_pref_group_all_display">Add an extra "All Tabs" page</string>
     <string name="title_pref_group_all_tab_icon">"All" tab icon</string>
 
-    <!-- AboutActivity -->
     <string name="title_pref_feedback">Feedback</string>
     <string name="summary_pref_feedback">Feedback enhancements or bugs to GitHub</string>
     <string name="summary_pref_tg_group">Join Telegram Group</string>
@@ -412,7 +405,6 @@
     <string name="tasker_start_service">Start Service</string>
     <string name="tasker_setting_confirm">Confirm</string>
 
-    <!-- RoutingSettingActivity -->
     <string name="routing_settings_domain_strategy">Domain strategy</string>
     <string name="routing_settings_title">Routing Settings</string>
     <string name="routing_settings_tips">Separated by commas(,), \nchoose domain or ip or process</string>
@@ -429,7 +421,7 @@
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">process</string>
-    <string name="routing_settings_process_tip">Separated by commas(,), 
+    <string name="routing_settings_process_tip">Separated by commas(,),
 choose domain or ip or process
 Package Name — only supported when using Xray TUN, routeOnly enabled, and Android 10+</string>
     <string name="routing_settings_port">port</string>
@@ -495,7 +487,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="server_proxy_chain_members_insufficient">Insufficient members</string>
     <string name="server_proxy_chain_members_invalid">Invalid chain members: %1$s</string>
 
-    <!-- BackupActivity -->
     <string name="title_configuration_backup_restore">Backup &amp; Restore</string>
     <string name="title_configuration_backup">Backup config</string>
     <string name="title_configuration_restore">Restore config</string>
@@ -576,7 +567,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     </string-array>
 
 
-    <!-- New string from new UI-->
     <string name="status">Status</string>
     <string name="import_configuration">Import Configuration</string>
     <string name="add_server_manually">Add Server Manually</string>
@@ -627,8 +617,8 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="indicator_style_title">Select Indicator Style</string>
     <string name="pref_indicator_style_title">Server Indicator Style</string>
     <string name="pref_indicator_style_summary">Select the active server indicator display</string>
-    <string name="summary_navigate_ui_settings">General UI, themes, appearance, search chips, blur, banners, sound, etc.</string> 
-    <string name="summary_navigate_vpn_settings">IPv6, keep awake, DNS, HTTP proxy, bypass LAN, interface, MTU, Hev TUN, TCP/WS timers, per-app proxy, Root mode, etc.</string>   
+    <string name="summary_navigate_ui_settings">General UI, themes, appearance, search chips, blur, banners, sound, etc.</string>
+    <string name="summary_navigate_vpn_settings">IPv6, keep awake, DNS, HTTP proxy, bypass LAN, interface, MTU, Hev TUN, TCP/WS timers, per-app proxy, Root mode, etc.</string>
     <string name="summary_navigate_core_settings">Sniffing, route only, local proxy/sharing, SOCKS, DNS, log level, domain resolve, geo files, etc.</string>
     <string name="summary_navigate_mux_settings">Mux status, concurrency, XUDP concurrency, QUIC handling, etc.</string>
     <string name="summary_navigate_fragment_settings">Fragment status, length, interval, maxsplit, packets, etc.</string>
@@ -719,7 +709,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="weather_aqi_unhealthy">Unhealthy</string>
     <string name="weather_aqi_very_unhealthy">Very unhealthy</string>
     <string name="weather_aqi_hazardous">Hazardous</string>
-    
+
     <string name="title_pref_sound_on_connect">Connection Sound</string>
     <string name="summary_pref_sound_on_connect">Play a sound when connected or disconnected</string>
     <string name="ip_unknown">IP: unknown</string>
@@ -779,7 +769,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_pref_tcp_keepalive_idle_tip">Seconds, 0 = disabled</string>
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Seconds, 0 = disabled</string>
-    
+
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings
 menu, please select
@@ -798,8 +788,7 @@ you need."</string>
     <string name="uwu_about_version_summary">Tap here or arrow icon to know more about the app.</string>
     <string name="uwu_splash_title">Made With ❤️\nby HatsuneMikuUwU Development</string>
     <string name="uwu_splash_summary">Version %1$s (%2$d)</string>
-    
-    <!-- miku-->
+
     <string name="uwu_miku_gender_title">Gender </string>
     <string name="uwu_miku_gender_summary">Female</string>
     <string name="uwu_miku_birthday_title">Birthday </string>
@@ -814,7 +803,7 @@ you need."</string>
     <string name="uwu_miku_height_summary">158 cm</string>
     <string name="uwu_about_miku_title">Who is Hatsune Miku?</string>
     <string name="uwu_about_miku_summary">Hatsune Miku is a Vocaloid-based virtual singer released by Crypton Future Media, code-named CV01. Known for her long turquoise twintails and clear voice, she is a 16-year-old girl and a globally renowned virtual idol. She is active in music, concerts, and anime, and is deeply loved by her fans.</string>
-    
+
     <string name="uwu_random_text_1">Beautiful day for a song!</string>
     <string name="uwu_random_text_2">Have a great day, Master!</string>
     <string name="uwu_random_text_3">"Let\'s do our best! 39!"</string>
@@ -825,19 +814,16 @@ you need."</string>
     <string name="uwu_random_text_8">Let the music in..!</string>
     <string name="uwu_random_text_9">Reach the highest note!</string>
     <string name="uwu_random_text_10">Writing lyrics for me?</string>
-    
-    <!-- greeting -->
+
     <string name="uwu_greeting_morning">Good morning...</string>
     <string name="uwu_greeting_afternoon">Good afternoon...</string>
     <string name="uwu_greeting_evening">Good evening...</string>
     <string name="uwu_greeting_night">Good night...</string>
     <string name="uwu_greeting_late_night">"It's time to go to sleep..."</string>
-    
-    <!-- Header banner: username display -->
+
     <string name="uwu_profile_banner_title">master</string>
     <string name="uwu_profile_banner_title_custom">Hi, %1$s</string>
 
-    <!-- Profile banner settings -->
     <string name="banner_profile_category">Profile</string>
     <string name="profile_name_custom_title">Header name</string>
     <string name="profile_name_custom_dialog">Change display name</string>
@@ -847,8 +833,7 @@ you need."</string>
     <string name="delete_custom_banner_profile">Remove custom profile banner</string>
     <string name="delete_custom_banner_profile_summary">Custom banner removed. Default profile banner will be used instead</string>
     <string name="custom_banner_profile_set">Profile banner updated successfully.</string>
-    
-    <!-- Home banner settings -->
+
     <string name="home_banner_category">Home Banner</string>
     <string name="home_banner_show_title">Show home banner</string>
     <string name="home_banner_show_summary">Display the banner image at the top of the home screen</string>
@@ -861,8 +846,7 @@ you need."</string>
     <string name="pref_home_banner_height_summary_value">%1$ddp</string>
     <string name="pref_header_top_row_padding_title">Header top padding</string>
     <string name="pref_header_top_row_padding_summary_value">%1$ddp</string>
-    
-    <!-- Sheet banner settings -->   	
+
     <string name="sheet_banner_category">Bottomsheet Banner</string>
     <string name="sheet_banner_custom_title">Change sheet banner</string>
     <string name="sheet_banner_custom_summary">Set a custom image for the bottomsheet (optional)</string>
@@ -882,8 +866,7 @@ you need."</string>
     <string name="particles_slider_radius_min_label">Particle min radius</string>
     <string name="particles_slider_density_label">Particle density</string>
     <string name="particles_slider_speed_factor_label">Movement speed factor</string>
-    
-    <!-- Selected profile card banner style -->
+
     <string name="selected_banner_category">Selected Profile Style</string>
     <string name="selected_banner_enable_title">Banner style for selected profile</string>
     <string name="selected_banner_enable_summary">Show a banner image behind the active server card. Uses the default banner unless a custom one is set</string>
@@ -899,11 +882,10 @@ you need."</string>
     <string name="selected_banner_updated">Selected profile banner updated successfully.</string>
     <string name="pref_indicator_style_summary_disabled_by_banner">Disabled while the selected profile banner style is active</string>
 
-    <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Info</string>
     <string name="title_alerter_success">Success</string>
     <string name="title_alerter_error">Error</string>
-    
+
     <string name="title_pref_enable_blur">Enable Blur</string>
     <string name="summary_pref_enable_blur">Enable background blur effect on windows</string>
     <string name="title_pref_blur_bottom_status">Blur Status Bottom Card</string>
@@ -922,23 +904,21 @@ you need."</string>
 
     <string name="weather_loading">Loading…</string>
 
-    <!-- Reset all settings -->
     <string name="title_pref_reset_all_settings">Reset All Settings</string>
     <string name="dialog_reset_settings_title">Reset All Settings?</string>
     <string name="dialog_reset_settings_message">This will restore all settings to their default values.\n\nServer profiles and subscriptions will not be deleted.\n\nThis action cannot be undone.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
     <string name="reset_settings_success">Settings have been reset to default.</string>
 
-    <!-- SearchPreference (in-module fork) -->
     <string name="searchpreference_search">Search…</string>
     <string name="searchpreference_clear">Clear</string>
     <string name="searchpreference_more">More</string>
     <string name="searchpreference_clear_history">Clear history</string>
     <string name="searchpreference_no_results">No results</string>
-    
+
     <string name="title_pref_app_icon">App Icon</string>
     <string name="app_icon_updated">App icon updated. It may take a moment to appear on your home screen.</string>
-    
+
     <string name="title_pref_custom_app_name">App Name</string>
     <string name="summary_pref_custom_app_name">Also renames the launcher/app-drawer icon. Some launchers cache the old name until you restart them or reboot.</string>
     <string name="app_name_variant_miku1">HatsuneRay</string>
@@ -954,7 +934,6 @@ you need."</string>
     <string name="app_name_variant_miku11">MikuExpo</string>
     <string name="app_name_variant_miku12">v2mikuNG</string>
 
-    <!-- Toolbar subtitles, shown per-screen when "Center toolbar title" is enabled -->
     <string name="subtitle_server_config">Configure the connection details for this server</string>
     <string name="subtitle_routing_edit">Add or edit a single routing rule</string>
     <string name="subtitle_routing_setting">Manage your custom routing rules</string>

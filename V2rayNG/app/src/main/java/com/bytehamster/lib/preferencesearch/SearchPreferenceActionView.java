@@ -54,10 +54,6 @@ public class SearchPreferenceActionView extends SearchView {
         return searchConfiguration;
     }
 
-    /**
-     * Hides the search fragment
-     * @return true if it was hidden, so the calling activity should not go back itself.
-     */
     public boolean cancelSearch() {
         setQuery("", false);
 
@@ -69,16 +65,6 @@ public class SearchPreferenceActionView extends SearchView {
         if (searchFragment != null && searchFragment.isVisible()) {
             removeFragment();
 
-            /*
-            AnimationUtils.startCircularExitAnimation(getContext(), searchFragment.getView(),
-                    getSearchConfiguration().getRevealAnimationSetting(),
-                    new AnimationUtils.OnDismissedListener() {
-                @Override
-                public void onDismissed() {
-                    removeFragment();
-                }
-            });
-            */
 
             didSomething = true;
         }

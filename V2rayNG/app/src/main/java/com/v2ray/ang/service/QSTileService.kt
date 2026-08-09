@@ -19,10 +19,6 @@ import java.lang.ref.SoftReference
 
 class QSTileService : TileService() {
 
-    /**
-     * Sets the state of the tile.
-     * @param state The state to set.
-     */
     fun setState(state: Int) {
         qsTile?.icon = Icon.createWithResource(applicationContext, R.drawable.ic_stat_name)
         if (state == Tile.STATE_INACTIVE) {
@@ -36,10 +32,6 @@ class QSTileService : TileService() {
         qsTile?.updateTile()
     }
 
-    /**
-     * Refer to the official documentation for [registerReceiver](https://developer.android.com/reference/androidx/core/content/ContextCompat#registerReceiver(android.content.Context,android.content.BroadcastReceiver,android.content.IntentFilter,int):
-     * `registerReceiver(Context, BroadcastReceiver, IntentFilter, int)`.
-     */
     override fun onStartListening() {
         super.onStartListening()
 
@@ -54,9 +46,6 @@ class QSTileService : TileService() {
         MessageUtil.sendMsg2Service(this, AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
-    /**
-     * Called when the tile stops listening.
-     */
     override fun onStopListening() {
         super.onStopListening()
 
@@ -69,9 +58,6 @@ class QSTileService : TileService() {
 
     }
 
-    /**
-     * Called when the tile is clicked.
-     */
     override fun onClick() {
         super.onClick()
         when (qsTile.state) {

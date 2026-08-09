@@ -7,14 +7,11 @@ import com.v2ray.ang.enums.NetworkType
 
 @Suppress("PropertyName")
 data class V2rayNShareItem(
-    // val IndexId: String?,
     val ConfigType: Int?,
-    // val CoreType: Int?,
     val ConfigVersion: Int?,
     val Subid: String?,
     val IsSub: Boolean?,
     val PreSocksPort: Int?,
-    // val DisplayLog: Boolean?,
     val Remarks: String?,
     val Address: String?,
     val Port: Int?,
@@ -30,8 +27,6 @@ data class V2rayNShareItem(
     val ShortId: String?,
     val SpiderX: String?,
     val Mldsa65Verify: String?,
-    // val MuxEnabled: Boolean?,
-    // val Cert: String?,
     val CertSha: String?,
     val EchConfigList: String?,
     val VerifyPeerCertByName: String?,
@@ -84,7 +79,6 @@ data class V2rayNShareItem(
             5 -> EConfigType.VLESS
             6 -> EConfigType.TROJAN
             7 -> EConfigType.HYSTERIA2
-            // 8 -> EConfigType.TUIC
             9 -> EConfigType.WIREGUARD
             10 -> EConfigType.HTTP
             101 -> EConfigType.POLICYGROUP
@@ -154,14 +148,9 @@ data class V2rayNShareItem(
                 4 -> BalancerStrategyType.LEAST_LOAD.policyGroupType
                 else -> BalancerStrategyType.LEAST_PING.policyGroupType
             },
-            // NOTE: not safe, suggest converting and rewriting
-            // policyGroupSubscriptionId = ProtoExtraObj?.SubChildItems,
             policyGroupSubscriptionId = if (ProtoExtraObj?.SubChildItems == "self") "self" else null,
             policyGroupFilter = ProtoExtraObj?.Filter,
-            // NOTE: proxyChainProfiles stores remarks, not IndexId
-            // proxyChainProfiles = ProtoExtraObj?.ChildItems,
         )
-        // profile.description =
         return profile
     }
 }

@@ -6,12 +6,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.databinding.DialogTotalTrafficDetailBinding
 import com.v2ray.ang.handler.MmkvManager
 
-/**
- * Shows a Material 3 styled dialog breaking down the combined upload and
- * download traffic totals across all profiles.
- *
- * @param context The context used to inflate and show the dialog.
- */
 fun showTotalTrafficDetailDialog(context: Context) {
     val (uploadBytes, downloadBytes) = MmkvManager.getTotalTrafficDetail() ?: return
 

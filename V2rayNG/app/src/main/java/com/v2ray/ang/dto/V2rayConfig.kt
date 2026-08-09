@@ -72,36 +72,26 @@ data class V2rayConfig(
         var mux: MuxBean? = MuxBean(false)
     ) {
         data class OutSettingsBean(
-            /*Common */
             var address: Any? = null,
             var port: Int? = null,
             var level: Int? = null,
             var email: String? = null,
-            /*HTTP/SOCKS*/
             var user: String? = null,
             var pass: String? = null,
             var headers: Map<String, String>? = null,
-            /*VMess/VLESS*/
             var id: String? = null,
             var security: String? = null,
             var encryption: String? = null,
-            /*VLESS*/
             var flow: String? = null,
-            /*Trojan/Shadowsocks*/
             var password: String? = null,
-            /*Shadowsocks*/
             var method: String? = null,
-            /*Hysteria/Hysteria2*/
             var version: Int? = null,
-            /*Wireguard*/
             var secretKey: String? = null,
             val peers: List<WireGuardBean>? = null,
             var reserved: List<Int>? = null,
             var mtu: Int? = null,
             var domainStrategy: String? = null,
-            /*VMess/VLESS standard Xray schema*/
             var vnext: List<VnextBean>? = null,
-            /*Trojan/Shadowsocks standard Xray schema*/
             var servers: List<ServerEntryBean>? = null,
         ) {
 
@@ -224,7 +214,7 @@ data class V2rayConfig(
             data class HappyEyeballsBean(
                 var prioritizeIPv6: Boolean? = null,
                 var maxConcurrentTry: Int? = 4,
-                var tryDelayMs: Int? = 250, // ms
+                var tryDelayMs: Int? = 250,
                 var interleave: Int? = null,
             )
 
@@ -243,7 +233,6 @@ data class V2rayConfig(
                 var echConfigList: String? = null,
                 var verifyPeerCertByName: String? = null,
                 var pinnedPeerCertSha256: String? = null,
-                // REALITY settings
                 var publicKey: String? = null,
                 var shortId: String? = null,
                 var spiderX: String? = null,
@@ -271,7 +260,6 @@ data class V2rayConfig(
                 var auth: String? = null
             )
 
-            //https://xtls.github.io/config/transport.html#finalmaskobject
             data class FinalMaskBean(
                 var tcp: List<MaskBean>? = null,
                 var udp: List<MaskBean>? = null,
@@ -285,20 +273,15 @@ data class V2rayConfig(
                         val password: String? = null,
                         val header: String? = null,
                         val value: String? = null,
-                        // fragment
                         val packets: String? = null,
                         val length: String? = null,
                         val delay: String? = null,
                         val maxSplit: String? = null,
-                        // noise
                         val reset: Int? = null,
                         val noise: List<NoiseMaskBean>? = null
                     ) {
                         data class NoiseMaskBean(
                             val rand: String? = null,
-                            // val randRange: String? = null,
-                            // val type: String? = null,
-                            // val packet: String? = null,
                             val delay: String? = null,
                         )
                     }
@@ -310,7 +293,6 @@ data class V2rayConfig(
                     var brutalDown: String? = null,
                     var udpHop: UdpHopBean? = null,
                 ) {
-                    // Nested data class for the udpHop JSON object
                     data class UdpHopBean(
                         var ports: String? = null,
                         var interval: String? = null
@@ -330,11 +312,8 @@ data class V2rayConfig(
             return if (protocol.equals(EConfigType.WIREGUARD.name, true)) {
                 settings?.peers?.firstOrNull()?.endpoint?.substringBeforeLast(":")
             } else {
-                // Flat schema: Trojan/Shadowsocks/Hysteria/Hysteria2/Socks style ("settings.address")
                 (settings?.address as? String)
-                // Fallback: VMess/VLESS standard Xray schema ("settings.vnext[0].address")
                     ?: settings?.vnext?.firstOrNull()?.address
-                    // Fallback: Trojan/Shadowsocks standard Xray schema ("settings.servers[0].address")
                     ?: settings?.servers?.firstOrNull()?.address
             }
         }
@@ -415,7 +394,7 @@ data class V2rayConfig(
         )
 
         data class StrategyObject(
-            val type: String = "random", // "random" | "roundRobin" | "leastPing" | "leastLoad"
+            val type: String = "random",
             val settings: StrategySettingsObject? = null
         )
 
@@ -473,7 +452,7 @@ data class V2rayConfig(
     data class FakednsBean(
         var ipPool: String = "198.18.0.0/15",
         var poolSize: Int = 10000
-    ) // roughly 10 times smaller than total ip pool
+    )
 
     fun getProxyOutbound(): OutboundBean? {
         outbounds.forEach { outbound ->

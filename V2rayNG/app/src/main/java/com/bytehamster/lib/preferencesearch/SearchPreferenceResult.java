@@ -29,34 +29,18 @@ public class SearchPreferenceResult {
         this.screen = screen;
     }
 
-    /**
-     * Returns the key of the preference pressed
-     * @return The key
-     */
     public String getKey() {
         return key;
     }
 
-    /**
-     * Returns the file in which the result was found
-     * @return The file in which the result was found
-     */
     public int getResourceFile() {
         return file;
     }
 
-    /**
-     * Returns the screen in which the result was found
-     * @return The screen in which the result was found
-     */
     public String getScreen() {
         return screen;
     }
 
-    /**
-     * Highlight the preference that was found
-     * @param prefsFragment Fragment that contains the preference
-     */
     public void highlight(final PreferenceFragmentCompat prefsFragment) {
         new Handler().post(() -> doHighlight(prefsFragment));
     }
@@ -92,9 +76,6 @@ public class SearchPreferenceResult {
         highlightFallback(prefsFragment, prefResult);
     }
 
-    /**
-     * Alternative highlight method if accessing the view did not work
-     */
     private void highlightFallback(PreferenceFragmentCompat prefsFragment, final Preference prefResult) {
         final Drawable oldIcon = prefResult.getIcon();
         final boolean oldSpaceReserved = prefResult.isIconSpaceReserved();
@@ -120,10 +101,6 @@ public class SearchPreferenceResult {
         return color;
     }
 
-    /**
-     * Closes the search results page
-     * @param activity The current activity
-     */
     public void closeSearchPage(AppCompatActivity activity) {
         FragmentManager fm = activity.getSupportFragmentManager();
         fm.beginTransaction().remove(fm.findFragmentByTag(SearchPreferenceFragment.TAG)).commit();

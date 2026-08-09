@@ -36,12 +36,12 @@ class ServerGroupActivity : BaseActivity() {
     private val subscriptionId by lazy {
         intent.getStringExtra("subscriptionId")
     }
-    
+
     private val subIds = mutableListOf<String>()
     private val displayList = mutableListOf<String>()
-    
-    private val policyGroupTypes: Array<out String> by lazy { 
-        resources.getStringArray(R.array.policy_group_type) 
+
+    private val policyGroupTypes: Array<out String> by lazy {
+        resources.getStringArray(R.array.policy_group_type)
     }
 
     private val fallbackSuggestions: List<String> by lazy {
@@ -52,17 +52,17 @@ class ServerGroupActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
-        
+
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.POLICYGROUP.toString(), subtitle = getString(R.string.subtitle_server_config))
 
         val config = MmkvManager.decodeServerConfig(editGuid)
-        
+
         populateSubscriptionSpinner()
         populateFallbackSuggestions()
 
@@ -82,11 +82,6 @@ class ServerGroupActivity : BaseActivity() {
         binding.spPolicyGroupFallback.setAdapter(adapter)
     }
 
-    /**
-     * Show the "test outbounds" switch only for strategies that support an
-     * observatory (random / roundRobin); show the fallback tag field only
-     * when that switch is on.
-     */
     private fun updateFallbackVisibility() {
         val typePos = policyGroupTypes.indexOf(binding.spPolicyGroupType.text.toString()).let { if (it >= 0) it else 0 }
         val supportsObservatory = BalancerStrategyType.from(typePos.toString()).supportsObservatory
@@ -95,9 +90,6 @@ class ServerGroupActivity : BaseActivity() {
             if (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked) android.view.View.VISIBLE else android.view.View.GONE
     }
 
-    /**
-     * Binding selected server config
-     */
     private fun bindingServer(config: ProfileItem): Boolean {
         binding.etRemarks.text = Utils.getEditable(config.remarks)
         binding.etPolicyGroupFilter.text = Utils.getEditable(config.policyGroupFilter)
@@ -121,14 +113,10 @@ class ServerGroupActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * clear or init server config
-     */
     private fun clearServer(): Boolean {
         binding.etRemarks.text = null
         binding.etPolicyGroupFilter.text = null
 
-        // Default type ke index 0
         if (policyGroupTypes.isNotEmpty()) {
             binding.spPolicyGroupType.setText(policyGroupTypes[0], false)
         }
@@ -148,9 +136,6 @@ class ServerGroupActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * save server config
-     */
     private fun saveServer(): Boolean {
         if (TextUtils.isEmpty(binding.etRemarks.text.toString())) {
             snackbarError(
@@ -187,9 +172,6 @@ class ServerGroupActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * delete server config
-     */
     private fun deleteServer(): Boolean {
         if (editGuid.isNotEmpty()) {
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
@@ -204,10 +186,10 @@ class ServerGroupActivity : BaseActivity() {
         val subs = MmkvManager.decodeSubscriptions()
         displayList.clear()
         subIds.clear()
-        
-        displayList.add(getString(R.string.filter_config_all)) // none
-        subIds.add("") // index 0 => All
-        
+
+        displayList.add(getString(R.string.filter_config_all))
+        subIds.add("")
+
         subs.forEach { sub ->
             val name = when {
                 sub.subscription.remarks.isNotBlank() -> sub.subscription.remarks
@@ -216,7 +198,7 @@ class ServerGroupActivity : BaseActivity() {
             displayList.add(name)
             subIds.add(sub.guid)
         }
-        
+
         val subAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, displayList)
         binding.spPolicyGroupSubId.setAdapter(subAdapter)
     }
@@ -249,5 +231,5 @@ class ServerGroupActivity : BaseActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
- 
+
 }

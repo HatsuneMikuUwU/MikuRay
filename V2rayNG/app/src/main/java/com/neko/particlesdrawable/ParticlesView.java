@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2017 Yaroslav Mytkalyk
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.neko.particlesdrawable;
 
 import android.content.Context;
@@ -42,23 +27,6 @@ import com.neko.particlesdrawable.model.Scene;
 import com.neko.particlesdrawable.renderer.CanvasSceneRenderer;
 import com.neko.particlesdrawable.renderer.DefaultSceneRenderer;
 
-/**
- * The Particles View.
- * <p>
- * Automatically starts on {@link #onAttachedToWindow()} or when visibility is set to
- * {@link #VISIBLE}. Automatically stops on {@link #onDetachedFromWindow()} or when visbility set
- * to {@link #INVISIBLE} or {@link #GONE}.
- * <p>
- * You may also use {@link #start()} and {@link #stop()} on your behalf. Note when you call {@link
- * #stop()} explicitly, the animation will not automatically restart when you trigger visibility or
- * when this View gets attached to window.
- * <p>
- * The View does not use Lifecycle api and thus cannot tell whether your hosting Activity or
- * Fragment is started or stopped. It can only tell when it's being destroyed
- * ({@link #onDetachedFromWindow()} will be called) so this is where it stops animations
- * automatically. Thus, It is recommended to call {@link #stop()} when the hosting component gets
- * onStop() call and call {@link #start()} when the hosting component gets onStart() call.
- */
 @Keep
 public class ParticlesView extends View implements
         Animatable,
@@ -72,10 +40,6 @@ public class ParticlesView extends View implements
     private final SceneRenderer renderer = new DefaultSceneRenderer(canvasSceneRenderer);
     private final Engine engine = new Engine(scene, this, renderer);
 
-    /**
-     * Whether explicitly stopped by user. This means it will not start automatically on visibility
-     * change or when attached to window.
-     */
     private boolean mExplicitlyStopped;
 
     private boolean mAttachedToWindow;
@@ -115,156 +79,96 @@ public class ParticlesView extends View implements
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void nextFrame() {
         engine.nextFrame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrame() {
         engine.makeFreshFrame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrameWithParticlesOffscreen() {
         engine.makeFreshFrameWithParticlesOffscreen();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setFrameDelay(@IntRange(from = 0) final int delay) {
         scene.setFrameDelay(delay);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getFrameDelay() {
         return scene.getFrameDelay();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setSpeedFactor(@FloatRange(from = 0) final float speedFactor) {
         scene.setSpeedFactor(speedFactor);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getSpeedFactor() {
         return scene.getSpeedFactor();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setParticleRadiusRange(@FloatRange(from = 0.5f) final float minRadius,
                                        @FloatRange(from = 0.5f) final float maxRadius) {
         scene.setParticleRadiusRange(minRadius, maxRadius);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMin() {
         return scene.getParticleRadiusMin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMax() {
         return scene.getParticleRadiusMax();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setLineThickness(@FloatRange(from = 1) final float lineThickness) {
         scene.setLineThickness(lineThickness);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineThickness() {
         return scene.getLineThickness();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setLineLength(@FloatRange(from = 0) final float lineLength) {
         scene.setLineLength(lineLength);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineLength() {
         return scene.getLineLength();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setDensity(@IntRange(from = 0) final int newNum) {
         scene.setDensity(newNum);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getDensity() {
         return scene.getDensity();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setParticleColor(@ColorInt final int color) {
         scene.setParticleColor(color);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getParticleColor() {
         return scene.getParticleColor();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setLineColor(@ColorInt final int lineColor) {
         scene.setLineColor(lineColor);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getLineColor() {
         return scene.getLineColor();
@@ -328,21 +232,12 @@ public class ParticlesView extends View implements
         stopInternal();
     }
 
-    /**
-     * Start animating. This will clear the explicit control flag if set by {@link #stop()}.
-     * Note that if this View's visibility is not {@link #VISIBLE} or it's not attached to window,
-     * this will not start animating until the state changes to meet the requirements above.
-     */
     @Override
     public void start() {
         mExplicitlyStopped = false;
         startInternal();
     }
 
-    /**
-     * Explicilty stop animating. This will stop animating and no animations will start
-     * automatically until you call {@link #start()}.
-     */
     @Override
     public void stop() {
         mExplicitlyStopped = true;

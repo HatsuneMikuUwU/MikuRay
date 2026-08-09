@@ -319,13 +319,13 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             val intent = Intent(this, targetActivity).apply {
                 putExtra(AppConfig.EXTRA_HIGHLIGHT_KEY, result.key)
             }
-            
+
             val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
                 R.anim.fade_in,
                 R.anim.fade_out
             )
-            
+
             startActivity(intent, options.toBundle())
         }
     }

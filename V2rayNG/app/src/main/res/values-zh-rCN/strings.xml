@@ -13,7 +13,6 @@
     <string name="migration_fail">数据迁移失败啦!</string>
     <string name="pull_down_to_refresh">请下拉刷新!</string>
 
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">停止</string>
     <string name="notification_connect_time">时长 : %s</string>
     <string name="notification_data_usage" formatted="false">总计 : ↑ %s  ↓ %s</string>
@@ -25,7 +24,6 @@
     <string name="toast_services_success">启动服务成功</string>
     <string name="toast_services_failure">启动服务失败</string>
 
-    <!--ServerActivity-->
     <string name="title_server">配置项</string>
     <string name="menu_item_add_config">添加配置</string>
     <string name="menu_item_save_config">保存配置</string>
@@ -144,7 +142,6 @@
     <string name="server_lab_browser_dialer">启用 Browser Dialer</string>
     <string name="server_lab_browser_dialer_tip">仅支持 xhttp（packet-up）和 ws 出站；TLS 相关设置可能被忽略或冲突</string>
 
-    <!-- UserAssetActivity -->
     <string name="toast_asset_copy_failed">失败, 请使用文件管理器</string>
     <string name="menu_item_add_file">添加文件</string>
     <string name="menu_item_scan_qrcode">扫描 QRcode</string>
@@ -155,7 +152,6 @@
     <string name="msg_remark_is_duplicate">备注已经存在</string>
     <string name="asset_geo_files_sources">Geo 文件来源</string>
 
-    <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">正在加载</string>
     <string name="menu_item_search">搜索</string>
     <string name="menu_item_select_all">全选</string>
@@ -169,7 +165,6 @@
     <string name="per_app_proxy_settings">分应用设置</string>
     <string name="per_app_proxy_settings_enable">启用分应用</string>
 
-    <!-- Preferences -->
     <string name="title_settings">设置</string>
     <string name="title_advanced">进阶设置</string>
     <string name="title_core_settings">核心设置</string>
@@ -296,7 +291,6 @@
     <string name="summary_pref_group_all_display">添加一个额外的“所有选项卡”页面</string>
     <string name="title_pref_group_all_tab_icon">“全部”标签图标</string>
 
-    <!-- AboutActivity -->
     <string name="title_pref_feedback">反馈</string>
     <string name="summary_pref_feedback">反馈改进或漏洞至 GitHub</string>
     <string name="summary_pref_tg_group">加入 Telegram Group</string>
@@ -387,7 +381,6 @@
     <string name="tasker_start_service">启动服务</string>
     <string name="tasker_setting_confirm">确定</string>
 
-    <!-- RoutingSettingActivity -->
     <string name="routing_settings_domain_strategy">域名策略</string>
     <string name="routing_settings_title">路由设置</string>
     <string name="routing_settings_tips">用逗号（,）分隔，选择填写 domain、ip 或 process 中的一项</string>
@@ -463,7 +456,6 @@
     <string name="title_policy_group_fallback">备用出站</string>
     <string name="title_policy_group_fallback_tip">可选</string>
 
-    <!-- BackupActivity -->
     <string name="title_configuration_backup_restore">备份 &amp; 还原</string>
     <string name="title_configuration_backup">备份配置</string>
     <string name="title_configuration_restore">还原配置</string>
@@ -535,8 +527,7 @@
         <item>本地</item>
         <item>WebDAV</item>
     </string-array>
-    
-    <!-- New string from new UI-->
+
     <string name="import_configuration">导入配置</string>
     <string name="add_server_manually">手动添加服务器</string>
     <string name="protocol_policy_group">策略组</string>
@@ -566,7 +557,7 @@
     <string name="server_proxy_chain_members_invalid">无效的链路成员: %1$s</string>
     <string name="title_pref_real_ping_concurrency">真连接延迟测试并发数量</string>
     <string name="title_pref_app_theme">应用颜色主题</string>
-    <string name="summary_pref_app_theme">选择应用的强调色调色板</string>    
+    <string name="summary_pref_app_theme">选择应用的强调色调色板</string>
     <string name="pref_theme_color_title">主题颜色</string>
     <string name="title_pref_dynamic_color">动态配色 (Material You)</string>
     <string name="summary_pref_dynamic_color">使用基于壁纸的配色 (Android 12+)。这将覆盖已选的颜色主题</string>
@@ -585,8 +576,8 @@
     <string name="indicator_style_title">选择指示器样式</string>
     <string name="pref_indicator_style_title">服务器指示器样式</string>
     <string name="pref_indicator_style_summary">选择活动服务器指示器的显示方式</string>
-    <string name="summary_navigate_ui_settings">通用 UI、主题、外观、搜索组件、模糊效果、横幅、提示音等</string> 
-    <string name="summary_navigate_vpn_settings">IPv6、保持唤醒、DNS、HTTP 代理、绕过局域网、接口、MTU、Hev TUN、TCP/WS 定时器、分应用代理、Root 模式等</string>   
+    <string name="summary_navigate_ui_settings">通用 UI、主题、外观、搜索组件、模糊效果、横幅、提示音等</string>
+    <string name="summary_navigate_vpn_settings">IPv6、保持唤醒、DNS、HTTP 代理、绕过局域网、接口、MTU、Hev TUN、TCP/WS 定时器、分应用代理、Root 模式等</string>
     <string name="summary_navigate_core_settings">嗅探、仅路由 (route only)、本地代理/共享、SOCKS、DNS、日志级别、域名解析、Geo 文件等</string>
     <string name="summary_navigate_mux_settings">Mux 状态、并发、XUDP 并发、QUIC 处理等</string>
     <string name="summary_navigate_fragment_settings">分片状态、长度、间隔、最大分割 (maxsplit)、数据包等</string>
@@ -735,7 +726,7 @@
     <string name="title_pref_tcp_keepalive_idle_tip">秒，0 = 禁用</string>
     <string name="title_pref_ws_heartbeat_period">WS Ping 间隔</string>
     <string name="title_pref_ws_heartbeat_period_tip">秒，0 = 禁用</string>
-    
+
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
 请选择任何你
@@ -754,8 +745,7 @@
     <string name="uwu_about_version_summary">点击此处或箭头图标, 了解应用更多信息.</string>
     <string name="uwu_splash_title">用心制作 ❤️\nHatsuneMikuUwU 开发组</string>
     <string name="uwu_splash_summary">版本 %1$s (%2$d)</string>
-    
-    <!-- miku-->
+
     <string name="uwu_miku_gender_title">性别</string>
     <string name="uwu_miku_gender_summary">女性</string>
     <string name="uwu_miku_birthday_title">生日</string>
@@ -770,7 +760,7 @@
     <string name="uwu_miku_height_summary">158 厘米</string>
     <string name="uwu_about_miku_title">谁是 Hatsune Miku？</string>
     <string name="uwu_about_miku_summary">初音未来(Hatsune Miku) 是 Crypton Future Media 发布的基于 Vocaloid 制作的虚拟歌手, 代号CV01. 以青绿色的长双马尾和清亮嗓音著称, 人设为16岁少女, 是全球知名虚拟偶像, 广泛活跃于音乐、演唱会及动画, 深受粉丝们喜爱.</string>
-    
+
     <string name="uwu_random_text_1">适合唱歌的好天气！</string>
     <string name="uwu_random_text_2">今天也要开心哦，Master！</string>
     <string name="uwu_random_text_3">"一起加油吧！39！"</string>
@@ -781,18 +771,15 @@
     <string name="uwu_random_text_8">感受旋律吧..！</string>
     <string name="uwu_random_text_9">冲向最高音！</string>
     <string name="uwu_random_text_10">在给Miku写歌词吗？</string>
-    
-    <!-- greeting -->
+
     <string name="uwu_greeting_morning">早上好...</string>
     <string name="uwu_greeting_afternoon">下午好...</string>
     <string name="uwu_greeting_evening">晚上好...</string>
     <string name="uwu_greeting_night">晚安...</string>
     <string name="uwu_greeting_late_night">"该睡觉啦..."</string>
-    
-    <!-- Header banner: username display -->
+
     <string name="uwu_profile_banner_title_custom">嗨, %1$s</string>
-    
-    <!-- Profile banner settings -->
+
    <string name="banner_profile_category">个人资料</string>
    <string name="profile_name_custom_title">头部名称</string>
    <string name="profile_name_custom_dialog">更改显示名称</string>
@@ -802,8 +789,7 @@
    <string name="delete_custom_banner_profile">删除自定义个人资料横幅</string>
    <string name="delete_custom_banner_profile_summary">自定义横幅已移除，将改用默认个人资料横幅</string>
    <string name="custom_banner_profile_set">个人资料横幅更新成功。</string>
-   
-   <!-- Home banner settings -->
+
     <string name="home_banner_category">主页横幅</string>
     <string name="home_banner_show_title">显示主页横幅</string>
     <string name="home_banner_show_summary">在主屏幕顶部显示横幅图片</string>
@@ -814,8 +800,7 @@
     <string name="home_banner_updated">主页横幅更新成功。</string>
     <string name="pref_home_banner_height_title">横幅高度</string>
     <string name="pref_header_top_row_padding_title">头部顶部内边距</string>
-    
-    <!-- Sheet banner settings -->   	
+
     <string name="sheet_banner_category">底部面板横幅</string>
     <string name="sheet_banner_custom_title">更改底部横幅</string>
     <string name="sheet_banner_custom_summary">为底部面板设置自定义图片（可选）</string>
@@ -835,8 +820,7 @@
     <string name="particles_slider_radius_min_label">粒子最小半径</string>
     <string name="particles_slider_density_label">粒子密度</string>
     <string name="particles_slider_speed_factor_label">移动速度倍率</string>
-    
-    <!-- Selected profile card banner style -->
+
     <string name="selected_banner_category">选中配置的样式</string>
     <string name="selected_banner_enable_title">选中配置的横幅样式</string>
     <string name="selected_banner_enable_summary">在活动服务器卡片后面显示横幅图片。未设置自定义图片时使用默认横幅</string>
@@ -851,11 +835,10 @@
     <string name="selected_banner_updated">已成功更新选中配置的横幅。</string>
     <string name="pref_indicator_style_summary_disabled_by_banner">选中配置的横幅样式启用时此选项将被禁用</string>
 
-    <!-- Snackbar notification titles -->
     <string name="title_alerter_info">提示</string>
     <string name="title_alerter_success">成功</string>
     <string name="title_alerter_error">错误</string>
- 
+
     <string name="title_pref_enable_blur">开启模糊</string>
     <string name="summary_pref_enable_blur">开启窗口背景模糊效果</string>
     <string name="title_pref_blur_bottom_status">底部状态卡片模糊</string>
@@ -869,7 +852,6 @@
     <string name="title_blur_warning">较高的迭代次数 (10+) 可能会导致掉帧。建议：迭代 2-5 次，半径为 25-40。</string>
     <string name="toast_allow_insecure_deprecated">当前节点使用未加密连接，您的通信可能会被威权政府掌控的网络中间设施直接查看\n为了安全，此类节点无法通过 26.2.6+ 版本的 Xray 核心连接\n如果是自建节点请启用 TLS 等安全加密，或固定证书 pinnedCA256\n如果机场节点请联系服务商完成技术升级，如服务商拒绝配合，建议更换更重视用户安全的服务商\n更多的信息，请访问 https://github.com/2dust/v2rayN/discussions/9460</string>
 
-    <!-- WelcomeActivity -->
     <string name="uwu_skip">跳过</string>
     <string name="uwu_next">继续</string>
     <string name="uwu_start">开始</string>
@@ -880,31 +862,28 @@
     <string name="uwu_welcome_page1_desc">免费开源的 Android V2Ray/Xray 客户端。</string>
     <string name="uwu_welcome_page2_desc">支持 VLESS、VMess、Trojan、Shadowsocks 等协议。</string>
     <string name="uwu_welcome_page3_desc">在可爱的 Miku 风格设计中，体验快速且安全的网络连接。</string>
-    
+
     <string name="sub_setting_tab_icon">标签页图标</string>
     <string name="sub_setting_tab_icon_hint">在标签栏的分组名称旁边显示</string>
     <string name="sub_tab_icon_none">无</string>
 
-    <!-- Reset all settings -->
     <string name="title_pref_reset_all_settings">重置所有设置</string>
     <string name="dialog_reset_settings_title">重置所有设置？</string>
     <string name="dialog_reset_settings_message">这将把所有设置恢复为默认值。\n\n服务器配置和订阅不会被删除。\n\n此操作无法撤销。</string>
     <string name="dialog_reset_settings_confirm">重置</string>
-    <string name="reset_settings_success">设置已重置为默认值。</string>    
+    <string name="reset_settings_success">设置已重置为默认值。</string>
 
-    <!-- SearchPreference (in-module fork) -->
     <string name="searchpreference_search">搜索…</string>
     <string name="searchpreference_clear">清除</string>
     <string name="searchpreference_more">更多</string>
     <string name="searchpreference_clear_history">清除历史记录</string>
     <string name="searchpreference_no_results">没有结果</string>
-    
+
     <string name="title_pref_app_icon">应用图标</string>
     <string name="app_icon_updated">应用图标已更新。它可能需要片刻时间才会显示在你的主屏幕上。</string>
     <string name="title_pref_custom_app_name">应用名称</string>
     <string name="summary_pref_custom_app_name">同时重命名启动器/应用抽屉中的图标。某些启动器会缓存旧名称，直到你重启它们或重启设备。</string>
 
-    <!-- 各屏幕的工具栏副标题，"工具栏标题居中"开启后显示 -->
     <string name="subtitle_server_config">配置此服务器的连接详情</string>
     <string name="subtitle_routing_edit">添加或编辑一条路由规则</string>
     <string name="subtitle_routing_setting">管理你的自定义路由规则</string>

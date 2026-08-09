@@ -16,11 +16,6 @@ import com.v2ray.ang.handler.MmkvManager
 
 object SearchChipGradientController {
 
-    /**
-     * Holds references to the weather/total-traffic chip views. Decoupled from
-     * any specific Activity's ViewBinding so it can be reused by any screen
-     * that embeds the same chip (MainActivity, SettingsActivity, ...).
-     */
     data class ChipViews(
         val layoutWeatherChip: View,
         val ivWeatherIcon: ImageView,
@@ -36,7 +31,6 @@ object SearchChipGradientController {
         return gradientSwitchOn && (weatherEnabled || totalTrafficEnabled)
     }
 
-    /** Back-compat overload for MainActivity, which still uses ViewBinding. */
     fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding) {
         applyState(
             activity,

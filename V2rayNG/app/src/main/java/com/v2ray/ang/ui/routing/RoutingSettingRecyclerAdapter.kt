@@ -29,9 +29,9 @@ class RoutingSettingRecyclerAdapter(
         holder.itemRoutingSettingBinding.domainIp.text = (ruleset.domain ?: ruleset.ip ?: ruleset.process ?: ruleset.port)?.toString()
         holder.itemRoutingSettingBinding.outboundTag.text = ruleset.outboundTag
         holder.itemRoutingSettingBinding.chkEnable.isChecked = ruleset.enabled
-        
+
         holder.itemRoutingSettingBinding.imgLocked.isVisible = ruleset.locked == true
-        
+
         holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
         holder.itemRoutingSettingBinding.layoutEdit.setOnClickListener {
@@ -57,7 +57,7 @@ class RoutingSettingRecyclerAdapter(
 
     class MainViewHolder(val itemRoutingSettingBinding: ItemRecyclerRoutingSettingBinding) :
         BaseViewHolder(itemRoutingSettingBinding.root), ItemTouchHelperViewHolder {
-        
+
         override fun onItemSelected() {
             val context = itemView.context
             val typedValue = TypedValue()

@@ -145,7 +145,7 @@ object WeatherHelper {
     }
 
     fun iconResForCode(code: Int, isDay: Boolean): Int = weatherConditionForCode(code).iconRes(isDay)
-    
+
     fun conditionLabelRes(code: Int): Int = weatherConditionForCode(code).labelRes
 
     @StringRes
@@ -591,10 +591,10 @@ object WeatherHelper {
         override suspend fun doWork(): Result {
             if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false))
                 return Result.success()
-                
+
             if (!hasCustomLocation() && !hasBackgroundLocationPermission(applicationContext))
                 return Result.success()
-                
+
             val result = fetchCurrentWeather(applicationContext)
             return if (result != null) Result.success() else Result.retry()
         }

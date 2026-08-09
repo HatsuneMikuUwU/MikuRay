@@ -2,23 +2,18 @@ package com.v2ray.ang
 
 object AppConfig {
 
-    /** The application's package name. */
     const val ANG_PACKAGE = BuildConfig.APPLICATION_ID
     const val TAG = BuildConfig.APPLICATION_ID
 
-    /** Directory names used in the app's file system. */
     const val DIR_ASSETS = "assets"
 
     const val WEBDAV_BACKUP_DIR = "backups"
     const val WEBDAV_BACKUP_FILE_NAME = "backup_ng.zip"
 
-    /** Legacy configuration keys. */
     const val ANG_CONFIG = "ang_config"
 
-    // Default subscription ID for ungrouped servers
     const val DEFAULT_SUBSCRIPTION_ID = "__default_subscription__"
 
-    /** Preferences mapped to MMKV storage. */
     const val PREF_SNIFFING_ENABLED = "pref_sniffing_enabled"
     const val PREF_ROUTE_ONLY_ENABLED = "pref_route_only_enabled"
     const val PREF_PER_APP_PROXY = "pref_per_app_proxy"
@@ -92,7 +87,7 @@ object AppConfig {
     const val PREF_AUTO_REMOVE_INVALID_AFTER_TEST = "pref_auto_remove_invalid_after_test"
     const val PREF_AUTO_SORT_AFTER_TEST = "pref_auto_sort_after_test"
     const val PREF_REAL_PING_CONCURRENCY = "pref_real_ping_concurrency"
-    
+
     const val PREF_NAVIGATE_UI_SETTINGS = "pref_navigate_ui_settings"
     const val PREF_NAVIGATE_CHECK_UPDATE = "pref_navigate_check_update"
     const val PREF_NAVIGATE_VPN_SETTINGS = "pref_navigate_vpn_settings"
@@ -103,8 +98,7 @@ object AppConfig {
     const val PREF_NAVIGATE_OBSERVATORY_SETTINGS = "pref_navigate_observatory_settings"
     const val PREF_NAVIGATE_PER_APP_PROXY_SETTINGS = "pref_navigate_per_app_proxy_settings"
     const val PREF_SERVER_ORDER = "pref_server_order"
-    
-    // UI
+
     const val PREF_APP_THEME = "pref_app_theme"
     const val PREF_DYNAMIC_COLOR = "pref_dynamic_color"
     const val PREF_DYNAMIC_COLOR_BANNER = "pref_dynamic_color_banner"
@@ -162,7 +156,7 @@ object AppConfig {
     const val PREF_UI_MODE_NIGHT = "pref_ui_mode_night"
     const val PREF_CUSTOM_DPI = "pref_custom_dpi"
     const val PREF_APP_FONT_SIZE = "pref_app_font_size"
-    const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"    
+    const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"
     const val PREF_SHOW_SPLASH = "pref_show_splash_screen"
     const val PREF_KEEP_AWAKE = "pref_keep_awake"
     const val PREF_SHOW_WEATHER_CHIP = "pref_show_weather_chip"
@@ -182,7 +176,6 @@ object AppConfig {
     const val PREF_SEARCH_CHIP_GRADIENT = "pref_search_chip_gradient"
     const val PREF_SHOW_REALTIME_TRAFFIC_IP = "pref_show_realtime_traffic_ip"
 
-    // Profile banner, sheet banner, home banner & username
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"
     const val PREF_PROFILE_BANNER_URI = "profile_banner_uri"
     const val PREF_PROFILE_BANNER_SHAPE = "profile_banner_shape"
@@ -209,7 +202,6 @@ object AppConfig {
     const val HEADER_TOP_ROW_PADDING_MIN = 0
     const val HEADER_TOP_ROW_PADDING_MAX = 100
 
-    // Selected profile card banner style
     const val PREF_DISABLE_SENSOR_TEXT = "pref_disable_sensor_text"
     const val PREF_SELECTED_BANNER_STYLE_ENABLED = "pref_selected_banner_style_enabled"
     const val PREF_SELECTED_BANNER_URI = "custom_selected_banner_uri"
@@ -220,10 +212,8 @@ object AppConfig {
     const val PREF_ACTION_CHANGE_SELECTED_BANNER = "action_change_selected_banner_image"
     const val PREF_ACTION_DELETE_SELECTED_BANNER = "action_delete_selected_banner_image"
 
-    // Collapsing toolbar style
     const val PREF_TOOLBAR_CENTER_SUBTITLE_MODE = "pref_toolbar_center_subtitle_mode"
 
-    // Particles animation controller
     const val PREF_PARTICLES_SETTINGS = "pref_particles_settings"
 
     const val PREF_PARTICLES_FRAME_DELAY = "pref_particles_frame_delay"
@@ -261,13 +251,10 @@ object AppConfig {
     const val PARTICLES_SPEED_FACTOR_MIN = 0.1f
     const val PARTICLES_SPEED_FACTOR_MAX = 3.0f
 
-    /** Cache keys. */
     const val CACHE_SUBSCRIPTION_ID = "cache_subscription_id"
 
-    /** Protocol identifiers. */
     const val PROTOCOL_FREEDOM = "freedom"
 
-    /** Broadcast actions. */
     const val BROADCAST_ACTION_SERVICE = "$ANG_PACKAGE.action.service"
     const val BROADCAST_ACTION_ACTIVITY = "$ANG_PACKAGE.action.activity"
     const val BROADCAST_ACTION_WIDGET_CLICK = "$ANG_PACKAGE.action.widget.click"
@@ -279,14 +266,12 @@ object AppConfig {
     const val BROADCAST_ACTION_PARTICLES_CHANGED = "$ANG_PACKAGE.action.particles_changed"
     const val BROADCAST_ACTION_CATEGORY_STYLE_CHANGED = "$ANG_PACKAGE.action.category_style_changed"
 
-    /** Tasker extras. */
     const val TASKER_EXTRA_BUNDLE = "com.twofortyfouram.locale.intent.extra.BUNDLE"
     const val TASKER_EXTRA_STRING_BLURB = "com.twofortyfouram.locale.intent.extra.BLURB"
     const val TASKER_EXTRA_BUNDLE_SWITCH = "tasker_extra_bundle_switch"
     const val TASKER_EXTRA_BUNDLE_GUID = "tasker_extra_bundle_guid"
     const val TASKER_DEFAULT_GUID = "Default"
 
-    /** Tags for different proxy modes. */
     const val TAG_PROXY = "proxy"
     const val TAG_DIRECT = "direct"
     const val TAG_BLOCKED = "block"
@@ -296,11 +281,9 @@ object AppConfig {
     const val TAG_BALANCER = "balancer-main"
     const val TAG_BALANCER_PRE = "balancer"
 
-    /** Network-related constants. */
     const val UPLINK = "uplink"
     const val DOWNLINK = "downlink"
 
-    /** URLs for various resources. */
     const val GITHUB_URL = "https://github.com"
     const val GITHUB_RAW_URL = "https://raw.githubusercontent.com"
     const val GITHUB_DOWNLOAD_URL = "$GITHUB_URL/%s/releases/latest/download"
@@ -320,10 +303,8 @@ object AppConfig {
     const val OBSERVATORY_LEAST_LOAD_SAMPLING = "2"
     const val OBSERVATORY_LEAST_LOAD_TIMEOUT = "30s"
 
-    //    const val IP_API_URL = "https://speed.cloudflare.com/meta"
     const val IP_API_URL = "https://api.ip.sb/geoip"
 
-    /** DNS server addresses. */
     const val DNS_PROXY = "https://cloudflare-dns.com/dns-query"
     const val DNS_DIRECT = "223.5.5.5"
     const val DNS_VPN = "1.1.1.1"
@@ -332,13 +313,11 @@ object AppConfig {
     const val GEOIP_PRIVATE = "geoip:private"
     const val GEOIP_CN = "geoip:cn"
 
-    /** Geo data file names. */
     const val GEOSITE_DAT = "geosite.dat"
     const val GEOIP_DAT = "geoip.dat"
     const val GEOIP_ONLY_CN_PRIVATE_DAT = "geoip-only-cn-private.dat"
     const val GEOIP_ONLY_CN_PRIVATE_URL = "$GITHUB_RAW_URL/Loyalsoldier/geoip/release/$GEOIP_ONLY_CN_PRIVATE_DAT"
 
-    /** Ports and addresses for various services. */
     const val PORT_LOCAL_DNS = "10853"
     const val PORT_SOCKS = "10808"
     const val WIREGUARD_LOCAL_ADDRESS_V4 = "172.16.0.2/32"
@@ -346,7 +325,6 @@ object AppConfig {
     const val WIREGUARD_LOCAL_MTU = "1420"
     const val LOOPBACK = "127.0.0.1"
 
-    /** Message constants for communication. */
     const val MSG_REGISTER_CLIENT = 1
     const val MSG_STATE_RUNNING = 11
     const val MSG_STATE_NOT_RUNNING = 12
@@ -372,12 +350,9 @@ object AppConfig {
         const val MSG_TRAFFIC_UPDATED = 81
     const val MSG_TRAFFIC_SPEED_UPDATED = 82
 
-    /** Notification channel IDs and names. */
-    // Use a new ID because Android does not let an app raise an existing channel's importance.
     const val RAY_NG_CHANNEL_ID = "CORE_M_CH_ID_V2"
     const val RAY_NG_CHANNEL_NAME = "Core Background Service"
 
-    /** Protocols Scheme **/
     const val VMESS = "vmess://"
     const val CUSTOM = ""
     const val SHADOWSOCKS = "ss://"
@@ -394,39 +369,32 @@ object AppConfig {
     const val HY2 = "hy2://"
     const val V2RAYNFMTS = "v2rayn://"
 
-    /** Give a good name to this, IDK*/
     const val VPN = "VPN"
     const val VPN_MTU = 1500
 
-    /** Root (system-wide) mode runtime constants. */
     const val ROOT_RUNTIME_DIR = "sys_cache"
     const val ROOT_IPTABLES_CHAIN = "CORE_FILTER"
-    const val ROOT_FWMARK = 255            // defensive RETURN tag; hev's only upstream socket is loopback (already bypassed)
-    const val ROOT_MARK_ROUTE = 1          // packets we want pushed into the tun device
+    const val ROOT_FWMARK = 255
+    const val ROOT_MARK_ROUTE = 1
     const val ROOT_ROUTE_TABLE = 2024
     const val ROOT_RULE_PRIORITY = 1000
     const val ROOT_TUN_NAME = "utun7788"
     const val ROOT_TUN_ADDR_V4 = "198.18.0.1/15"
     const val ROOT_TUN_ADDR_V6 = "fdfe:dcba:9876::1/64"
-    // hev-socks5-tunnel run as a standalone root binary (reuses the same project already
-    // bundled for the VPN hev path; distinct filename from the JNI lib to avoid collision).
     const val ROOT_TUN2SOCKS_BIN = "libhevsockstun.so"
-    const val ROOT_FWD_CHAIN = "CORE_FWD"   // FORWARD chain for LAN/tethering sharing
-    const val ROOT_DNS_CHAIN = "CORE_DNS"   // nat chain for tethered-client DNS DNAT
-    const val ROOT_V6_CHAIN = "CORE6_FILTER"       // ip6tables filter/OUTPUT chain: blackhole native IPv6 when it isn't tunneled
-    const val ROOT_V6_FWD_CHAIN = "CORE6_FWD" // ip6tables FORWARD chain: route or reject tethered clients' native IPv6
-    const val ROOT_V6_PRE_CHAIN = "CORE6_PRE" // ip6tables mangle/PREROUTING chain: mark forwarded clients' IPv6 into the tun
-    const val ROOT_LAN_DNS = "1.1.1.1"          // fallback resolver for tethered clients when no plain-IPv4 DNS is configured
-    const val ROOT_OOM_SCORE = "-1000"          // oom_score_adj that makes the LMK never kill us
+    const val ROOT_FWD_CHAIN = "CORE_FWD"
+    const val ROOT_DNS_CHAIN = "CORE_DNS"
+    const val ROOT_V6_CHAIN = "CORE6_FILTER"
+    const val ROOT_V6_FWD_CHAIN = "CORE6_FWD"
+    const val ROOT_V6_PRE_CHAIN = "CORE6_PRE"
+    const val ROOT_LAN_DNS = "1.1.1.1"
+    const val ROOT_OOM_SCORE = "-1000"
 
-    /** hev-sock5-tunnel read-write-timeout value */
     const val HEVTUN_RW_TIMEOUT = "300,60"
 
-    // Google API rule constants
     const val GOOGLEAPIS_CN_DOMAIN = "domain:googleapis.cn"
     const val GOOGLEAPIS_COM_DOMAIN = "googleapis.com"
 
-    // Android Private DNS constants
     const val DNS_ALIDNS_DOMAIN = "dns.alidns.com"
     const val DNS_CISCO_SSE_DOMAIN = "dns.sse.cisco.com"
     const val DNS_CISCO_UMBRELLA_DOMAIN = "dns.umbrella.com"
@@ -467,7 +435,6 @@ object AppConfig {
     val DNS_SB_ADDRESSES = arrayListOf("45.11.45.11", "185.222.222.222", "2a09::", "2a11::")
     val DNS_YANDEX_ADDRESSES = arrayListOf("77.88.8.8", "77.88.8.1", "2a02:6b8::feed:0ff", "2a02:6b8:0:1::feed:0ff")
 
-    //minimum list https://serverfault.com/a/304791
     val ROUTED_IP_LIST = arrayListOf(
         "0.0.0.0/5",
         "8.0.0.0/7",

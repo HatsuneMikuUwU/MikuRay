@@ -10,21 +10,9 @@ import libv2ray.CoreController
 import libv2ray.Libv2ray
 import java.util.concurrent.atomic.AtomicBoolean
 
-/**
- * V2Ray Native Library Manager
- *
- * Thread-safe singleton wrapper for Libv2ray native methods.
- * Provides initialization protection and unified API for V2Ray core operations.
- */
 object CoreNativeManager {
     private val initialized = AtomicBoolean(false)
 
-    /**
-     * Initialize V2Ray core environment.
-     * This method is thread-safe and ensures initialization happens only once.
-     * Subsequent calls will be ignored silently.
-     *
-     */
     fun initCoreEnv(context: Context?) {
         if (initialized.compareAndSet(false, true)) {
             try {
@@ -53,11 +41,6 @@ object CoreNativeManager {
     }
 
 
-    /**
-     * Get V2Ray core version.
-     *
-     * @return Version string of the V2Ray core
-     */
     fun getLibVersion(): String {
         return try {
             Libv2ray.checkVersionX()
@@ -67,13 +50,6 @@ object CoreNativeManager {
         }
     }
 
-    /**
-     * Measure outbound connection delay.
-     *
-     * @param config The configuration JSON string
-     * @param testUrl The URL to test against
-     * @return Delay in milliseconds, or -1 if test failed
-     */
     fun measureOutboundDelay(config: String, testUrl: String): Long {
         return try {
             Libv2ray.measureOutboundDelay(config, testUrl)
@@ -83,12 +59,6 @@ object CoreNativeManager {
         }
     }
 
-    /**
-     * Create a new core controller instance.
-     *
-     * @param handler The callback handler for core events
-     * @return A new CoreController instance
-     */
     fun newCoreController(handler: CoreCallbackHandler): CoreController {
         return try {
             Libv2ray.newCoreController(handler)

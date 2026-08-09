@@ -9,14 +9,6 @@ import com.v2ray.ang.util.Utils
 import java.net.URI
 
 open class FmtBase {
-    /**
-     * Converts a ProfileItem object to a URI string.
-     *
-     * @param config the ProfileItem object to convert
-     * @param userInfo the user information to include in the URI
-     * @param dicQuery the query parameters to include in the URI
-     * @return the converted URI string
-     */
     fun toUri(config: ProfileItem, userInfo: String?, dicQuery: HashMap<String, String>?): String {
         val query = if (dicQuery != null)
             "?" + dicQuery.toList().joinToString(
@@ -34,23 +26,11 @@ open class FmtBase {
         return "${url}${query}#${Utils.encodeURIComponent(config.remarks)}"
     }
 
-    /**
-     * Extracts query parameters from a URI.
-     *
-     * @param uri the URI to extract query parameters from
-     * @return a map of query parameters
-     */
     fun getQueryParam(uri: URI): Map<String, String> {
         return uri.rawQuery.split("&")
             .associate { it.split("=").let { (k, v) -> k to Utils.decodeURIComponent(v) } }
     }
 
-    /**
-     * Populates a ProfileItem object with values from query parameters.
-     *
-     * @param config the ProfileItem object to populate
-     * @param queryParam the query parameters to use for populating the ProfileItem
-     */
     fun getItemFormQuery(config: ProfileItem, queryParam: Map<String, String>) {
         config.network = queryParam["type"] ?: NetworkType.TCP.type
         config.headerType = queryParam["headerType"]
@@ -73,7 +53,6 @@ open class FmtBase {
         if (config.security != AppConfig.TLS && config.security != AppConfig.REALITY) {
             config.security = null
         }
-        // Support multiple possible query keys for allowInsecure like the C# implementation
         val allowInsecureKeys = arrayOf("insecure", "allowInsecure", "allow_insecure")
         config.insecure = when {
             allowInsecureKeys.any { queryParam[it] == "1" } -> true
@@ -93,12 +72,6 @@ open class FmtBase {
         config.flow = queryParam["flow"]
     }
 
-    /**
-     * Creates a map of query parameters from a ProfileItem object.
-     *
-     * @param config the ProfileItem object to create query parameters from
-     * @return a map of query parameters
-     */
     fun getQueryDic(config: ProfileItem): HashMap<String, String> {
         val dicQuery = HashMap<String, String>()
         dicQuery["security"] = config.security?.ifEmpty { "none" }.orEmpty()
@@ -116,7 +89,6 @@ open class FmtBase {
         config.finalMask?.nullIfBlank()?.let { dicQuery["fm"] = it }
         config.kcpMtu?.let { dicQuery["mtu"] = it.toString() }
         config.kcpTti?.let { dicQuery["tti"] = it.toString() }
-        // Add two keys for compatibility: "insecure" and "allowInsecure"
         if (config.security == AppConfig.TLS) {
             val insecureFlag = if (config.insecure == true) "1" else "0"
             dicQuery["insecure"] = insecureFlag
@@ -155,11 +127,6 @@ open class FmtBase {
                 config.path?.nullIfBlank()?.let { dicQuery["path"] = it }
             }
 
-//            NetworkType.QUIC -> {
-//                dicQuery["headerType"] = config.headerType?.ifEmpty { "none" }.orEmpty()
-//                config.quicSecurity?.nullIfBlank()?.let { dicQuery["quicSecurity"] = it }
-//                config.quicKey?.nullIfBlank()?.let { dicQuery["key"] = it }
-//            }
 
             NetworkType.GRPC -> {
                 config.mode?.nullIfBlank()?.let { dicQuery["mode"] = it }

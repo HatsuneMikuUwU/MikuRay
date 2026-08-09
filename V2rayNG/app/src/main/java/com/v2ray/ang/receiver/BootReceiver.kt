@@ -11,14 +11,6 @@ import com.v2ray.ang.handler.SubscriptionUpdater
 import com.v2ray.ang.util.LogUtil
 
 class BootReceiver : BroadcastReceiver() {
-    /**
-     * This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-     * It handles BOOT_COMPLETED, LOCKED_BOOT_COMPLETED, and MY_PACKAGE_REPLACED.
-     * If the conditions are met, it starts the V2Ray service.
-     *
-     * @param context The Context in which the receiver is running.
-     * @param intent The Intent being received.
-     */
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action ?: return
         if (context == null) return
@@ -28,7 +20,6 @@ class BootReceiver : BroadcastReceiver() {
         when (action) {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED -> {
-                // Continue
             }
             Intent.ACTION_LOCKED_BOOT_COMPLETED -> {
                 val userManager = context.getSystemService(Context.USER_SERVICE) as? UserManager

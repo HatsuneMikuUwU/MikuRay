@@ -10,12 +10,6 @@ import java.net.URI
 
 object VlessFmt : FmtBase() {
 
-    /**
-     * Parses a Vless URI string into a ProfileItem object.
-     *
-     * @param str the Vless URI string to parse
-     * @return the parsed ProfileItem object, or null if parsing fails
-     */
     fun parse(str: String): ProfileItem? {
         val config = ProfileItem.create(EConfigType.VLESS)
 
@@ -34,12 +28,6 @@ object VlessFmt : FmtBase() {
         return config
     }
 
-    /**
-     * Converts a ProfileItem object to a URI string.
-     *
-     * @param config the ProfileItem object to convert
-     * @return the converted URI string
-     */
     fun toUri(config: ProfileItem): String {
         val dicQuery = getQueryDic(config)
         dicQuery["encryption"] = config.method ?: "none"

@@ -15,10 +15,6 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.SelectedProfileBannerController
 import com.v2ray.ang.util.WindowBlurUtils
 
-/**
- * Slider preference controlling how dark the dim overlay is on top of the
- * selected-profile banner image (for text legibility over busy images).
- */
 class SelectedBannerDimSliderDialog @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null

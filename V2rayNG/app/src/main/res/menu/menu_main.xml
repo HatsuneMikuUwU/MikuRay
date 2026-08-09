@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-        
+
     <item
         android:id="@+id/action_add_config"
         android:icon="@drawable/ic_action_note_add"
@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/action_more_menu"
-        android:icon="@drawable/ic_more_vert_24dp" 
+        android:icon="@drawable/ic_more_vert_24dp"
         android:title="More"
         app:showAsAction="always" />
 </menu>

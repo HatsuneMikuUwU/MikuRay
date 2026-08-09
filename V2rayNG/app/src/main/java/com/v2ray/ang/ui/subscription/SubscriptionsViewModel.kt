@@ -41,7 +41,6 @@ class SubscriptionsViewModel : ViewModel() {
         }
     }
 
-    /** Called on every drag step — only updates in-memory list, does NOT persist. */
     fun swap(fromPosition: Int, toPosition: Int) {
         if (fromPosition in subscriptions.indices && toPosition in subscriptions.indices) {
             val item = subscriptions.removeAt(fromPosition)
@@ -49,17 +48,11 @@ class SubscriptionsViewModel : ViewModel() {
         }
     }
 
-    /** Called once when drag is finished — persists the final order to MMKV. */
     fun commitOrder() {
         SettingsManager.saveSubscriptionsOrder(subscriptions.map { it.guid })
         SettingsChangeManager.makeSetupGroupTab()
     }
 
-    /**
-     * Triggers an immediate update for all enabled subscriptions via SubscriptionUpdateService.
-     * Progress is reported through notifications instead of blocking the UI.
-     * Use this when auto-test-after-update is enabled, since that phase can run for a while.
-     */
     fun updateSubscriptionsMore() {
         val subIds = MmkvManager.decodeSubscriptions()
             .filter { it.subscription.enabled && it.subscription.url.isNotEmpty() }
@@ -72,11 +65,6 @@ class SubscriptionsViewModel : ViewModel() {
         )
     }
 
-    /**
-     * Updates all enabled subscriptions synchronously (on the caller's dispatcher) without
-     * going through the foreground service/notification. Use this when auto-test-after-update
-     * is disabled, so a quick update doesn't need a persistent background task.
-     */
     fun updateSubscriptionsOnly(): SubscriptionUpdateResult {
         return AngConfigManager.updateConfigViaSubAll()
     }

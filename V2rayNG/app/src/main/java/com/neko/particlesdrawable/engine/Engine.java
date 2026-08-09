@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2018 Yaroslav Mytkalyk
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.neko.particlesdrawable.engine;
 
 import android.graphics.drawable.Animatable;
@@ -33,10 +18,10 @@ public final class Engine implements Animatable, Runnable, SceneController {
 
     private final FrameAdvancer frameAdvancer;
 
-    @SuppressWarnings("WeakerAccess") // to avoid synthetic accessor in initParticles
+    @SuppressWarnings("WeakerAccess")
     final ParticleGenerator particleGenerator;
 
-    @SuppressWarnings("WeakerAccess") // to avoid synthetic accessor in initParticles
+    @SuppressWarnings("WeakerAccess")
     final Scene scene;
 
     private final SceneScheduler scheduler;
@@ -134,9 +119,6 @@ public final class Engine implements Animatable, Runnable, SceneController {
         lastDrawDuration = timeProvider.uptimeMillis() - startTime;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrame() {
         final Scene scene = this.scene;
@@ -146,9 +128,6 @@ public final class Engine implements Animatable, Runnable, SceneController {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrameWithParticlesOffscreen() {
         final Scene scene = this.scene;
@@ -208,9 +187,6 @@ public final class Engine implements Animatable, Runnable, SceneController {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void nextFrame() {
         final float step = lastFrameTime == 0 ? 1f

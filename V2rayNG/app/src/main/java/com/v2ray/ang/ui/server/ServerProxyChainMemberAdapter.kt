@@ -41,7 +41,7 @@ class ServerProxyChainMemberAdapter(
         )
         holder.binding.spMemberRemark.setAdapter(dropdownAdapter)
         holder.binding.spMemberRemark.threshold = 0
-        
+
         holder.binding.spMemberRemark.setText(value, false)
 
         holder.binding.spMemberRemark.setOnItemClickListener { _, _, selectedIndex, _ ->
@@ -57,7 +57,7 @@ class ServerProxyChainMemberAdapter(
             if (hasFocus) return@OnFocusChangeListener
             val text = holder.binding.spMemberRemark.text?.toString().orEmpty().trim()
             val adapterPos = holder.bindingAdapterPosition
-            
+
             if (adapterPos != RecyclerView.NO_POSITION && adapterPos in members.indices && members[adapterPos] != text) {
                 members[adapterPos] = text
                 adapterListener?.onRefreshData()
@@ -122,7 +122,6 @@ class ServerProxyChainMemberAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
-        // Swipe-to-dismiss disabled for this adapter.
     }
 
     class MemberViewHolder(val binding: ItemRecyclerProxyChainMemberBinding) :

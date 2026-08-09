@@ -54,7 +54,7 @@ abstract class ShaderHelper {
 
     abstract fun draw(canvas: Canvas, imagePaint: Paint, borderPaint: Paint)
     abstract fun reset()
-    
+
     abstract fun calculate(
         bitmapWidth: Int,
         bitmapHeight: Int,
@@ -97,15 +97,15 @@ abstract class ShaderHelper {
 
     fun onSizeChanged(width: Int, height: Int) {
         if (viewWidth == width && viewHeight == height) return
-        
+
         viewWidth = width
         viewHeight = height
-        
+
         if (isSquare) {
             viewHeight = min(width, height)
             viewWidth = viewHeight
         }
-        
+
         if (shader != null) {
             calculateDrawableSizes()
         }

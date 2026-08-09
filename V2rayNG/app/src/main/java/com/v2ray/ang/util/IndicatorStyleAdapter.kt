@@ -40,7 +40,7 @@ class IndicatorStyleAdapter(
         holder.container.background = ContextCompat.getDrawable(context, style.drawableRes)
 
         val isSelected = style == selected
-        
+
         if (isSelected) {
             holder.check.visibility = View.VISIBLE
             holder.contentContainer.visibility = View.INVISIBLE

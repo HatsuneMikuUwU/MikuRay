@@ -21,7 +21,7 @@ class RandomText(context: Context, attrs: AttributeSet?) : AppCompatTextView(con
         marqueeRepeatLimit = -1
         setHorizontallyScrolling(true)
         isSelected = true
-        
+
     }
 
     override fun run() {
@@ -40,18 +40,18 @@ class RandomText(context: Context, attrs: AttributeSet?) : AppCompatTextView(con
         if (texts.isEmpty()) return
 
         text = texts.random()
-        
+
         isSelected = true
     }
 
     override fun onWindowVisibilityChanged(visibility: Int) {
         super.onWindowVisibilityChanged(visibility)
-        
+
         if (visibility == View.VISIBLE) {
             setRandomText()
-            
+
             if (isRunnable) {
-                updateHandler.removeCallbacks(this) 
+                updateHandler.removeCallbacks(this)
                 updateHandler.postDelayed(this, 3000)
             }
         } else {

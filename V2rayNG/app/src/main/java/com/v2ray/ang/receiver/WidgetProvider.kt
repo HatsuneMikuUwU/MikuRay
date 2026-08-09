@@ -124,7 +124,7 @@ class WidgetProvider : AppWidgetProvider() {
 
         val restartBgColor = themedContext.getColorAttr(R.attr.colorSecondaryContainer)
         val restartIconColor = themedContext.getColorAttr(R.attr.colorOnSecondaryContainer)
-        
+
         remoteViews.setInt(R.id.widget_restart_icon, "setImageResource", R.drawable.ic_restore_24dp)
         remoteViews.setInt(R.id.widget_restart_icon, "setColorFilter", restartIconColor)
 
@@ -139,7 +139,7 @@ class WidgetProvider : AppWidgetProvider() {
         val actionWidthPx = (72 * density).toInt()
         val restartWidthPx = (48 * density).toInt()
         val buttonHeightPx = (50 * density).toInt()
-        
+
         remoteViews.setImageViewBitmap(
             R.id.widget_action_bg,
             roundedRectBitmap(actionWidthPx, buttonHeightPx, 12f * density, actionBgColor)

@@ -27,7 +27,7 @@ object CategoryStyleHelper {
             if (pref is PreferenceGroup) applyToGroup(styleValue, pref)
         }
     }
-    
+
     fun applyToFragment(fragment: PreferenceFragmentCompat) {
         val saved = MmkvManager.decodeSettingsString(AppConfig.PREF_CATEGORY_STYLE, "gradient")
         fragment.preferenceScreen?.let { applyToGroup(saved, it) }

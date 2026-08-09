@@ -26,8 +26,8 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24</item>
         <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
-    </style>  
-    
+    </style>
+
         <style name="AppTheme_Red" parent="AppThemeBase">
         <item name="colorPrimary">@color/red_primary</item>
         <item name="colorOnPrimary">@color/red_onPrimary</item>
@@ -713,7 +713,7 @@
         <item name="colorSurfaceContainerHigh">@color/orange_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/orange_surfaceContainerHighest</item>
     </style>
-    
+
     <style name="AppTheme_Brown" parent="AppThemeBase">
         <item name="colorPrimary">@color/brown_primary</item>
         <item name="colorOnPrimary">@color/brown_onPrimary</item>
@@ -811,22 +811,22 @@
         <item name="colorSurfaceContainerHigh">@color/blueGrey_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/blueGrey_surfaceContainerHighest</item>
     </style>
-    
+
     <style name="Theme.App.Splash" parent="@style/AppThemeBase">
         <item name="android:windowSplashScreenBackground">?colorBg</item>
         <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
     </style>
-    
+
     <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">?attr/fontFamily</item>
         <item name="fontFamily">?attr/fontFamily</item>
     </style>
-    
+
     <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
         <item name="android:fontFamily">?attr/fontFamily</item>
         <item name="fontFamily">?attr/fontFamily</item>
     </style>
-    
+
     <style name="AppThemePreference" parent="@style/PreferenceThemeOverlay">
         <item name="editTextPreferenceStyle">@style/AppThemeEditTextPreference</item>
         <item name="preferenceCategoryStyle">@style/AppThemePreferenceCategory</item>
@@ -841,7 +841,6 @@
         <item name="iconSpaceReserved">false</item>
     </style>
 
-    <!-- Bottom Sheet -->
     <style name="AppThemeBottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:windowAnimationStyle">@style/Animation.Material3.BottomSheetDialog</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
@@ -861,17 +860,17 @@
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
-    
+
     <style name="AppThemeSideSheetDialog" parent="@style/ThemeOverlay.Material3.SideSheetDialog">
         <item name="android:windowAnimationStyle">@style/Animation.Material3.SideSheetDialog</item>
         <item name="sideSheetModalStyle">@style/AppThemeSideSheetStyle</item>
     </style>
-    
+
     <style name="AppThemeSideSheetStyle" parent="@style/Widget.Material3.SideSheet.Modal">
         <item name="backgroundTint">?attr/colorBg</item>
         <item name="shapeAppearance">@style/AppThemeSideSheetShape</item>
     </style>
-    
+
     <style name="AppThemeSideSheetShape" parent="@style/ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">28dp</item>
@@ -880,7 +879,6 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
-    <!-- Alert Dialog -->
     <style name="AppThemeAlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="shapeAppearance">@style/AppThemeAlertDialogShape</item>
         <item name="android:colorBackground">?attr/colorSurfaceContainer</item>
@@ -895,7 +893,7 @@
         <item name="android:windowMinWidthMajor">91%</item>
         <item name="android:windowMinWidthMinor">91%</item>
     </style>
-    
+
     <style name="CustomDialogFilledButtonPrimary" parent="Widget.Material3Expressive.Button">
         <item name="backgroundTint">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -903,14 +901,14 @@
         <item name="android:paddingHorizontal">12dp</item>
         <item name="android:layout_marginStart">12dp</item>
     </style>
-    
+
     <style name="CustomDialogFilledButtonSecondary" parent="Widget.Material3Expressive.Button">
         <item name="backgroundTint">?attr/colorSecondaryContainer</item>
         <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:paddingHorizontal">12dp</item>
     </style>
-    
+
     <style name="CustomDialogFilledButtonNeutral" parent="Widget.Material3Expressive.Button">
         <item name="backgroundTint">?attr/colorTertiary</item>
         <item name="android:textColor">?attr/colorOnTertiary</item>
@@ -923,19 +921,16 @@
         <item name="cornerSize">28dp</item>
     </style>
 
-    <!-- Translucent for dialogs/overlays -->
     <style name="AppThemeDayNight.NoActionBar.Translucent" parent="@style/AppThemeBase">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <!-- Switch uses primary violet -->
     <style name="BrandedSwitch" parent="AppThemeBase">
         <item name="colorPrimary">@color/color_fab_active</item>
     </style>
 
-    <!-- Shape appearances (M3 standard radii) -->
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
@@ -951,7 +946,6 @@
         <item name="cornerSize">16dp</item>
     </style>
 
-    <!-- Tab text style -->
     <style name="TabLayoutTextStyle" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/montserrat_thin</item>
@@ -961,7 +955,7 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">15.0dip</item>
     </style>
-    
+
     <style name="AppThemeCrashLogger" parent="@style/AppThemeBase">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -970,12 +964,12 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    
+
     <style name="StyleFontDefault">
     	<item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
     </style>
-    
+
     <style name="StyleFontIos15">
         <item name="android:fontFamily">@font/ios15</item>
         <item name="fontFamily">@font/ios15</item>
@@ -1095,7 +1089,7 @@
         <item name="materialAlertDialogTheme">@style/DialogFontRine</item>
         <item name="alertDialogTheme">@style/DialogFontRine</item>
     </style>
-    
+
     <style name="StyleFontEvolve">
         <item name="android:fontFamily">@font/evolvesans</item>
         <item name="fontFamily">@font/evolvesans</item>
@@ -1103,7 +1097,7 @@
         <item name="materialAlertDialogTheme">@style/DialogFontEvolve</item>
         <item name="alertDialogTheme">@style/DialogFontEvolve</item>
     </style>
-    
+
     <style name="Text.Font.Ios15" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">@font/ios15</item>
         <item name="fontFamily">@font/ios15</item>
@@ -1178,12 +1172,12 @@
         <item name="android:fontFamily">@font/rine</item>
         <item name="fontFamily">@font/rine</item>
     </style>
-    
+
     <style name="Text.Font.Evolve" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">@font/evolvesans</item>
         <item name="fontFamily">@font/evolvesans</item>
     </style>
-    
+
     <style name="DialogFontIos15" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/ios15</item>
         <item name="android:textAppearanceMedium">@style/Text.Font.Ios15</item>
@@ -1288,19 +1282,19 @@
         <item name="android:textAppearanceSmall">@style/Text.Font.Rine</item>
         <item name="android:textAppearance">@style/Text.Font.Rine</item>
     </style>
-    
+
     <style name="DialogFontEvolve" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/evolvesans</item>
         <item name="android:textAppearanceMedium">@style/Text.Font.Evolve</item>
         <item name="android:textAppearanceSmall">@style/Text.Font.Evolve</item>
         <item name="android:textAppearance">@style/Text.Font.Evolve</item>
     </style>
-    
+
     <style name="ThemeOverlay.App.TrueBlack.DialogFix">
         <item name="alertDialogTheme">@style/ThemeOverlay.App.TrueBlack.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.TrueBlack.AlertDialog</item>
     </style>
-    
+
     <style name="ShapeAppearance.App.CardView.Top" parent="ShapeAppearance.Material3.Corner.Medium">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">28dp</item>
@@ -1308,7 +1302,7 @@
         <item name="cornerSizeBottomLeft">4dp</item>
         <item name="cornerSizeBottomRight">4dp</item>
     </style>
-    
+
     <style name="ShapeAppearance.App.CardView.Middle" parent="ShapeAppearance.Material3.Corner.Medium">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">4dp</item>
@@ -1316,7 +1310,7 @@
         <item name="cornerSizeBottomLeft">4dp</item>
         <item name="cornerSizeBottomRight">4dp</item>
     </style>
-    
+
     <style name="ShapeAppearance.App.CardView.Bottom" parent="ShapeAppearance.Material3.Corner.Medium">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">4dp</item>
@@ -1324,7 +1318,7 @@
         <item name="cornerSizeBottomLeft">28dp</item>
         <item name="cornerSizeBottomRight">28dp</item>
     </style>
-    
+
     <style name="ShapeAppearance.App.CardView.Single" parent="ShapeAppearance.Material3.Corner.Medium">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">28dp</item>
@@ -1332,7 +1326,7 @@
         <item name="cornerSizeBottomLeft">28dp</item>
         <item name="cornerSizeBottomRight">28dp</item>
     </style>
-    
+
     <style name="AppThemeToolbarCircleNavigationButton" parent="">
         <item name="toolbarNavigationButtonCircleColor">?attr/colorCard</item>
         <item name="toolbarNavigationButtonStyle">@style/Widget.Material3.Toolbar.Button.Navigation.Circle</item>

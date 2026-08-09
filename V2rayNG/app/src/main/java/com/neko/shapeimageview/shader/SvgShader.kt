@@ -44,7 +44,7 @@ class SvgShader @JvmOverloads constructor(
 
     override fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         super.init(context, attrs, defStyle)
-        
+
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.ShaderImageView, defStyle, 0)
             resId = typedArray.getResourceId(R.styleable.ShaderImageView_siShape, resId)
@@ -83,7 +83,7 @@ class SvgShader @JvmOverloads constructor(
             STROKE_CAP_BUTT -> borderPaint.strokeCap = Paint.Cap.BUTT
             STROKE_CAP_ROUND -> borderPaint.strokeCap = Paint.Cap.ROUND
             STROKE_CAP_SQUARE -> borderPaint.strokeCap = Paint.Cap.SQUARE
-            STROKE_CAP_DEFAULT -> { /* No-op */ }
+            STROKE_CAP_DEFAULT -> {  }
         }
     }
 
@@ -93,7 +93,7 @@ class SvgShader @JvmOverloads constructor(
             STROKE_JOIN_BEVEL -> borderPaint.strokeJoin = Paint.Join.BEVEL
             STROKE_JOIN_MITER -> borderPaint.strokeJoin = Paint.Join.MITER
             STROKE_JOIN_ROUND -> borderPaint.strokeJoin = Paint.Join.ROUND
-            STROKE_JOIN_DEFAULT -> { /* No-op */ }
+            STROKE_JOIN_DEFAULT -> {  }
         }
     }
 
@@ -108,8 +108,8 @@ class SvgShader @JvmOverloads constructor(
 
     override fun draw(canvas: Canvas, imagePaint: Paint, borderPaint: Paint) {
         imagePaint.isAntiAlias = true
-        imagePaint.isFilterBitmap = true        
-        imagePaint.clearShadowLayer() 
+        imagePaint.isFilterBitmap = true
+        imagePaint.clearShadowLayer()
         borderPaint.clearShadowLayer()
         borderPaint.isAntiAlias = true
         canvas.save()
@@ -131,24 +131,21 @@ class SvgShader @JvmOverloads constructor(
         path.reset()
         borderPath.reset()
 
-        // Ensure shapePath is not null before proceeding
-        val currentShapePath = shapePath ?: return 
+        val currentShapePath = shapePath ?: return
 
         pathDimensions[0] = currentShapePath.width
         pathDimensions[1] = currentShapePath.height
 
         pathMatrix.reset()
 
-        // Calculate main path scaling
         val pathScale = min(width / pathDimensions[0], height / pathDimensions[1])
         val pathTx = ((width - pathDimensions[0] * pathScale) * 0.5f).roundToInt().toFloat()
         val pathTy = ((height - pathDimensions[1] * pathScale) * 0.5f).roundToInt().toFloat()
-        
+
         pathMatrix.setScale(pathScale, pathScale)
         pathMatrix.postTranslate(pathTx, pathTy)
         currentShapePath.transform(pathMatrix, path)
-        
-        // Adjust path for border width
+
         path.offset(borderWidth.toFloat(), borderWidth.toFloat())
 
         if (borderWidth > 0) {
@@ -156,7 +153,7 @@ class SvgShader @JvmOverloads constructor(
             val newWidth: Float
             val newHeight: Float
             val d: Float
-            
+
             if (borderType == BORDER_TYPE_DEFAULT) {
                 newWidth = viewWidth - borderWidth.toFloat()
                 newHeight = viewHeight - borderWidth.toFloat()
@@ -170,11 +167,10 @@ class SvgShader @JvmOverloads constructor(
             val borderScale = min(newWidth / pathDimensions[0], newHeight / pathDimensions[1])
             val borderTx = ((newWidth - pathDimensions[0] * borderScale) * 0.5f + d).roundToInt().toFloat()
             val borderTy = ((newHeight - pathDimensions[1] * borderScale) * 0.5f + d).roundToInt().toFloat()
-            
+
             pathMatrix.setScale(borderScale, borderScale)
             pathMatrix.postTranslate(borderTx, borderTy)
             currentShapePath.transform(pathMatrix, borderPath)
-            // borderPath.op(path, Path.Op.DIFFERENCE); // Commented out as in original
         }
 
         pathMatrix.reset()

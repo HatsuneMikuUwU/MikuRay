@@ -48,7 +48,7 @@ object BlurBottomStatusController {
         )
         val textColorOnPrimary = activity.getColorAttr(R.attr.colorOnPrimary)
         binding.tvIpState.setTextColor(textColorOnPrimary)
-        binding.tvIpState.alpha = 0.8f 
+        binding.tvIpState.alpha = 0.8f
         binding.tvTestState.setTextColor(textColorOnPrimary)
         binding.fab.visibility = View.GONE
         binding.fabNoBlur.visibility = View.VISIBLE

@@ -57,7 +57,7 @@ class WelcomeActivity : BaseActivity() {
         }
 
         val navigateAction = View.OnClickListener { navigateToMain() }
-        
+
         findViewById<View>(R.id.page_3button).setOnClickListener(navigateAction)
         findViewById<View>(R.id.page_1_skip).setOnClickListener(navigateAction)
         findViewById<View>(R.id.page_2_skip).setOnClickListener(navigateAction)

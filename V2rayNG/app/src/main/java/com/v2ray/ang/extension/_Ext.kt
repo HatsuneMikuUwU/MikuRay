@@ -168,7 +168,7 @@ private fun showSnackbar(
         showToastyFallback()
         return
     }
-    
+
     try {
         val snackbar = Snackbar.make(parent, "", Snackbar.LENGTH_INDEFINITE)
         val snackbarLayout = snackbar.view as ViewGroup
@@ -217,7 +217,7 @@ private fun showSnackbar(
 
         ViewCompat.setOnApplyWindowInsetsListener(snackbarLayout) { view, insets ->
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            
+
             val margin5dp = (5f * view.context.resources.displayMetrics.density).toInt()
             val margin16dp = (16f * view.context.resources.displayMetrics.density).toInt()
 
@@ -264,7 +264,7 @@ private fun showSnackbar(
         }
 
         val cornerRadiusPx = 28f * activity.resources.displayMetrics.density
-        
+
         val backgroundColor = if (backgroundColorAttr != null) {
             activity.getColorAttr(backgroundColorAttr)
         } else {
@@ -282,7 +282,7 @@ private fun showSnackbar(
         }
 
         snackbar.show()
-        
+
     } catch (e: Exception) {
         e.printStackTrace()
         showToastyFallback()

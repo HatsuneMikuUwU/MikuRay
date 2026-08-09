@@ -87,7 +87,6 @@ class ServerSocksActivity : BaseActivity() {
         }
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
-        // Socks/Http don't require an id/password.
         saveCommon(config)
 
         config.description = AngConfigManager.generateDescription(config)

@@ -6,8 +6,8 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
 class AutoMarqueeTextView @JvmOverloads constructor(
-    context: Context, 
-    attrs: AttributeSet? = null, 
+    context: Context,
+    attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.textViewStyle
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
@@ -16,17 +16,17 @@ class AutoMarqueeTextView @JvmOverloads constructor(
         ellipsize = TextUtils.TruncateAt.MARQUEE
         marqueeRepeatLimit = -1
         setHorizontallyScrolling(true)
-        isHorizontalFadingEdgeEnabled = false 
+        isHorizontalFadingEdgeEnabled = false
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        isSelected = true 
+        isSelected = true
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        isSelected = false 
+        isSelected = false
     }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {

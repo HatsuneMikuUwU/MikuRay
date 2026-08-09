@@ -71,7 +71,7 @@ class CrashHandler(private val context: Context) : Thread.UncaughtExceptionHandl
             .setAutoCancel(true)
             .build()
 
-        val notificationId = System.currentTimeMillis().toInt() // Unique ID for each crash
+        val notificationId = System.currentTimeMillis().toInt()
         notificationManager.notify(notificationId, notification)
     }
 }

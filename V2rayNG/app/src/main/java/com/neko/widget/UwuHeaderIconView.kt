@@ -89,7 +89,7 @@ class UwuHeaderIconView @JvmOverloads constructor(
     private fun buildGradientBackground(): GradientDrawable {
         val colorStart = context.getColorAttr(R.attr.colorPrimary)
         val colorEnd = context.getColorAttr(R.attr.colorTertiary)
-        
+
         return GradientDrawable(
             GradientDrawable.Orientation.TL_BR,
             intArrayOf(colorStart, colorEnd)

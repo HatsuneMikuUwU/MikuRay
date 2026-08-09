@@ -42,7 +42,7 @@ class PerAppProxyActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
 
         binding.recyclerView.applyEdgeToEdgeListInsets()
@@ -74,7 +74,7 @@ class PerAppProxyActivity : BaseActivity() {
                 val apps = withContext(Dispatchers.IO) {
                     val appsList = AppManagerUtil.loadNetworkAppList(this@PerAppProxyActivity)
                     val blacklistSet = viewModel.getAll()
-                    
+
                     if (blacklistSet.isNotEmpty()) {
                         appsList.forEach { app ->
                             app.isSelected = if (blacklistSet.contains(app.packageName)) 1 else 0
@@ -196,7 +196,6 @@ class PerAppProxyActivity : BaseActivity() {
                 ) ?: ""
             }
             launch(Dispatchers.Main) {
-                //LogUtil.i(AppConfig.TAG, content)
                 selectProxyApp(content, true)
                 snackbarSuccess(
                     getString(R.string.toast_success),

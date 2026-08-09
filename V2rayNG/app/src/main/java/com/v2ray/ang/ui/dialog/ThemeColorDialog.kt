@@ -64,13 +64,13 @@ class ThemeColorDialog : DialogFragment() {
             val check  = itemView.findViewById<ImageView>(R.id.iv_check)
 
             val isSelected = !useCustom && key == currentKey
-            
+
             val styleRes = ThemeManager.getThemeStyleRes(key)
             val wrappedContext = ContextThemeWrapper(requireContext(), styleRes)
             val m3PrimaryColor = wrappedContext.getColorAttr(R.attr.colorPrimary)
 
             applyCircleDrawable(circle, m3PrimaryColor, isSelected)
-            
+
             check.visibility = if (isSelected) View.VISIBLE else View.GONE
 
             itemView.setOnClickListener {
@@ -91,7 +91,7 @@ class ThemeColorDialog : DialogFragment() {
 
             val isCustomSelected = useCustom && savedColor != 0
             val rawCustomColor   = if (savedColor != 0) savedColor else ContextCompat.getColor(requireContext(), R.color.teal_primary)
-            
+
             val customOptions = DynamicColorsOptions.Builder()
                 .setContentBasedSource(rawCustomColor)
                 .build()
@@ -102,7 +102,7 @@ class ThemeColorDialog : DialogFragment() {
 
             customIcon.setImageResource(R.drawable.ic_pencil)
             customIcon.visibility = View.VISIBLE
-            
+
             val lum = calculateLuminance(m3CustomPrimary)
             customIcon.setColorFilter(if (lum > 0.4f) Color.BLACK else Color.WHITE)
 

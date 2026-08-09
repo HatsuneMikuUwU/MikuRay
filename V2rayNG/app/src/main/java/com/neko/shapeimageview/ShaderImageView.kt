@@ -37,10 +37,10 @@ abstract class ShaderImageView @JvmOverloads constructor(
 
     fun reloadShape() {
         val oldHelper = _pathHelper
-        
+
         val newHelper = createImageViewHelper()
         newHelper.init(context, null, 0)
-        
+
         if (oldHelper != null) {
             newHelper.borderColor = oldHelper.borderColor
             newHelper.borderWidth = oldHelper.borderWidth
@@ -49,12 +49,12 @@ abstract class ShaderImageView @JvmOverloads constructor(
         }
 
         _pathHelper = newHelper
-        
+
         _pathHelper?.onImageDrawableReset(drawable)
         if (width > 0 && height > 0) {
             _pathHelper?.onSizeChanged(width, height)
         }
-        
+
         invalidate()
     }
 

@@ -61,9 +61,6 @@ class AdvancedSettingsActivity : BaseActivity() {
             }
             mode?.dialogLayoutResource = R.layout.preference_with_help_link
 
-            // pref_ip_api_url is the endpoint used to detect the connected IP, but that IP text
-            // is replaced entirely by live speed when real-time traffic is on, so the URL has
-            // nothing left to affect and is disabled with an explanatory summary while active.
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)) {
                 ipApiUrl?.isEnabled = false
                 ipApiUrl?.summary = getString(

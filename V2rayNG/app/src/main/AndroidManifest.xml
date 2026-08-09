@@ -55,10 +55,6 @@
         android:theme="@style/AppThemeBase"
         android:usesCleartextTraffic="true">
 
-        <!--
-        QR scanner (ZXingLite/CameraScan, CameraX-based) - kept in portrait to
-        match the rest of the app.
-        -->
         <activity
             android:name=".ui.scanner.QrCaptureActivity"
             android:screenOrientation="portrait" />
@@ -1324,7 +1320,7 @@
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
-            
+
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
@@ -1333,7 +1329,7 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        
+
         <activity
             android:theme="@style/AppThemeCrashLogger"
             android:name="com.neko.crashlog.CrashDialogActivity"
@@ -1341,7 +1337,7 @@
             android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-            
+
         <activity
             android:name=".ui.server.ServerVmessActivity"
             android:exported="false"
@@ -1402,13 +1398,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.preference.activity.AdvancedSettingsActivity"
-            android:exported="false" />           
+            android:exported="false" />
         <activity
             android:name=".ui.preference.activity.ObservatorySettingsActivity"
             android:exported="false" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:exported="false" />      
+            android:exported="false" />
         <activity
             android:name=".ui.perappproxy.PerAppProxyActivity"
             android:exported="false" />

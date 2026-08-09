@@ -56,9 +56,9 @@ class IndicatorStyleBottomSheet(
             ViewCompat.setOnApplyWindowInsetsListener(bottomSheet) { bottomSheetView, insets ->
                 val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
                 val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-                
+
                 val screenHeight = bottomSheetView.resources.displayMetrics.heightPixels
-                val baseSizePx = (8 * bottomSheetView.resources.displayMetrics.density).toInt() 
+                val baseSizePx = (8 * bottomSheetView.resources.displayMetrics.density).toInt()
 
                 dialog.behavior.maxHeight = screenHeight - statusBarInset - baseSizePx
 
@@ -74,7 +74,7 @@ class IndicatorStyleBottomSheet(
             WindowBlurUtils.applyWindowBlur(window)
             window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
-        
+
         dialog.show()
     }
 }

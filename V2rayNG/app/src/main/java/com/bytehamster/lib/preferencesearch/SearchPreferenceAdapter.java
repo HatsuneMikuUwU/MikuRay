@@ -29,7 +29,6 @@ class SearchPreferenceAdapter extends RecyclerView.Adapter<SearchPreferenceAdapt
         dataset = new ArrayList<>();
     }
 
-    /** Update the current keyword so the adapter can highlight matching text. */
     void setKeyword(String keyword) {
         this.keyword = keyword == null ? "" : keyword;
     }
@@ -52,7 +51,6 @@ class SearchPreferenceAdapter extends RecyclerView.Adapter<SearchPreferenceAdapt
     public void onBindViewHolder(@NonNull final ViewHolder h, final int position) {
         final ListItem listItem = dataset.get(position);
 
-        // Resolve colorPrimary from theme for text highlight
         int highlightColor = ThemeManagerKt.getColorAttr(h.root.getContext(), R.attr.colorPrimary);
 
         if (getItemViewType(position) == HistoryItem.TYPE) {
@@ -89,10 +87,6 @@ class SearchPreferenceAdapter extends RecyclerView.Adapter<SearchPreferenceAdapt
         });
     }
 
-    /**
-     * Returns a SpannableString with all case-insensitive occurrences of the
-     * current keyword highlighted using the given background color.
-     */
     private SpannableString highlight(String text, int highlightColor) {
         SpannableString spannable = new SpannableString(text == null ? "" : text);
         if (keyword.isEmpty() || text == null) return spannable;

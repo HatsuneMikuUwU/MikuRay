@@ -34,7 +34,7 @@ class DpiSliderDialog @JvmOverloads constructor(
         val activity = context.findActivity() ?: return
 
         val systemDpi = Resources.getSystem().displayMetrics.densityDpi
-        
+
         val savedDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
         val currentDpi = if (savedDpi > 0) savedDpi else systemDpi
 
@@ -49,12 +49,12 @@ class DpiSliderDialog @JvmOverloads constructor(
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val clamped = slider.value.toInt()
                 val valueToSave = if (clamped == systemDpi) 0 else clamped
-                
+
                 MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_DPI, valueToSave)
                 summary = if (valueToSave == 0) systemDpi.toString() else clamped.toString()
-                
+
                 DPIController.applyDpi(activity.applicationContext, clamped)
-                
+
                 activity.recreate()
             }
             .setNeutralButton(R.string.reset, null)

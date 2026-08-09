@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class RoutingEditActivity : BaseActivity() {
     private val binding by lazy { ActivityRoutingEditBinding.inflate(layoutInflater) }
     private val position by lazy { intent.getIntExtra("position", -1) }
-    
+
     private val processPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedPackages = AppPickerActivity.getSelectedPackages(result.data)
@@ -38,11 +38,11 @@ class RoutingEditActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.editScrollContent.applyEdgeToEdgeListInsets()
-        
+
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.routing_settings_rule_title), subtitle = getString(R.string.subtitle_routing_edit))
@@ -84,10 +84,6 @@ class RoutingEditActivity : BaseActivity() {
             ?.distinct() ?: emptyList()
     }
 
-    /**
-     * Sets up the AutoCompleteTextView for outbound tag:
-     * suggestions = built-in tags (proxy/direct/block) + all existing profile remarks.
-     */
     private fun setupOutboundTagInput() {
         val profileRemarks = SettingsManager.getProfileRemarks()
 
@@ -95,9 +91,7 @@ class RoutingEditActivity : BaseActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, suggestions)
         binding.spOutboundTag.setAdapter(adapter)
         binding.spOutboundTag.threshold = 0
-        
-        // Material 3 ExposedDropdownMenu handles the click and dropdown automatically,
-        // we just ensure it shows on click.
+
         binding.spOutboundTag.setOnClickListener {
             binding.spOutboundTag.showDropDown()
         }
@@ -112,7 +106,6 @@ class RoutingEditActivity : BaseActivity() {
         binding.etPort.setText(Utils.getEditable(rulesetItem.port))
         binding.etProtocol.setText(Utils.getEditable(rulesetItem.protocol?.joinToString(",")))
         binding.etNetwork.setText(Utils.getEditable(rulesetItem.network))
-        // Set text directly; filter won't fire because we're not using setText(filter=true)
         binding.spOutboundTag.setText(rulesetItem.outboundTag, false)
         return true
     }
@@ -189,5 +182,5 @@ class RoutingEditActivity : BaseActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
- 
+
 }

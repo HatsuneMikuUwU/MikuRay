@@ -43,7 +43,7 @@
         android:valueTo="15"
         app:labelBehavior="floating"
         app:tickVisibilityMode="hidden" />
-        
+
      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

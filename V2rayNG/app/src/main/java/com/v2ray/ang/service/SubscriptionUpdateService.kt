@@ -26,17 +26,6 @@ import kotlinx.coroutines.sync.withPermit
 import java.util.Collections
 import java.util.concurrent.atomic.AtomicInteger
 
-/**
- * Dedicated foreground service that performs subscription synchronization and
- * post-update testing/sorting. Replaces the logic that used to live directly
- * inside SubscriptionUpdater's WorkManager CoroutineWorker.
- *
- * - runningTasks tracks in-flight onStartCommand batches (one per intent) so the
- *   service only stops itself once every queued batch has actually finished.
- * - updateSemaphore(1) forces subscriptions to update one at a time, protecting
- *   shared MMKV state and avoiding bursts of concurrent network/bandwidth usage.
- * - All work runs on Dispatchers.IO to avoid NetworkOnMainThreadException.
- */
 class SubscriptionUpdateService : Service() {
 
     private val serviceJob = Job()
@@ -44,7 +33,6 @@ class SubscriptionUpdateService : Service() {
 
     private val runningTasks = AtomicInteger(0)
 
-    // manage active real-ping workers so they're independent and cancellable
     private val activeWorkers = Collections.synchronizedList(mutableListOf<RealPingWorkerService>())
 
     private val updateSemaphore = Semaphore(1)

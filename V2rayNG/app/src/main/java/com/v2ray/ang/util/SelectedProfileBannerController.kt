@@ -29,7 +29,7 @@ class SelectedProfileBannerController(private val context: Context) {
     fun hasCustomBanner(): Boolean =
         !MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI).isNullOrEmpty()
 
-    fun hasBanner(): Boolean = true // always has at least the default banner
+    fun hasBanner(): Boolean = true
 
     fun applyTo(target: View, cornerRadiusDp: Float = 16f) {
         val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI)
@@ -49,7 +49,7 @@ class SelectedProfileBannerController(private val context: Context) {
 
         bitmapCache[bitmapKey]?.let { cached ->
             target.setLayerType(View.LAYER_TYPE_NONE, null)
-            
+
             target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
             target.setTag(TAG_KEY, tagKey)
             return
@@ -123,9 +123,9 @@ class SelectedProfileBannerController(private val context: Context) {
     fun clear(target: View) {
         if (target.getTag(TAG_KEY) == null) return
         target.setTag(TAG_KEY, null)
-        
+
         target.setLayerType(View.LAYER_TYPE_NONE, null)
-        
+
         Glide.with(context).clear(target)
     }
 
@@ -140,12 +140,12 @@ class SelectedProfileBannerController(private val context: Context) {
         private val dimColor: Int,
         private val cornerRadius: Float = 0f
     ) : Drawable() {
-        
+
         private val bitmapPaint = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
             isFilterBitmap = true
             colorFilter = android.graphics.PorterDuffColorFilter(dimColor, android.graphics.PorterDuff.Mode.SRC_OVER)
         }
-        
+
         private val matrix = android.graphics.Matrix()
         private val rectF = android.graphics.RectF()
 
@@ -192,10 +192,10 @@ class SelectedProfileBannerController(private val context: Context) {
         }
 
         override fun setAlpha(alpha: Int) { bitmapPaint.alpha = alpha }
-        
+
         override fun setColorFilter(colorFilter: android.graphics.ColorFilter?) {
         }
-        
+
         @Deprecated("Deprecated in Java")
         override fun getOpacity(): Int = android.graphics.PixelFormat.TRANSLUCENT
 

@@ -7,12 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.king.camera.scan.CameraScan
 import com.v2ray.ang.ui.scanner.QrCaptureActivity
 
-/**
- * Helper for scanning QR codes.
- *
- * This class encapsulates the logic for launching the QR code scanner directly
- * using the ZXingLite (ZXing + CameraScan) library and handling the scan result.
- */
 class QRCodeScannerHelper(private val activity: AppCompatActivity) {
     private var scanCallback: ((String?) -> Unit)? = null
 
@@ -28,11 +22,6 @@ class QRCodeScannerHelper(private val activity: AppCompatActivity) {
         scanCallback = null
     }
 
-    /**
-     * Launch the QR code scanner camera.
-     *
-     * @param onResult Callback invoked with the scan result (null if cancelled or failed)
-     */
     fun launch(onResult: (String?) -> Unit) {
         scanCallback = onResult
         scanLauncher.launch(Intent(activity, QrCaptureActivity::class.java))

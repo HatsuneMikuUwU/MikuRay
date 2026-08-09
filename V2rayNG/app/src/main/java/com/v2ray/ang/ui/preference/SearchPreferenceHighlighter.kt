@@ -32,7 +32,7 @@ object SearchPreferenceHighlighter {
     private fun jumpAndHighlight(fragment: PreferenceFragmentCompat, key: String) {
         val appBarLayout = fragment.activity?.findViewById<AppBarLayout>(R.id.app_bar)
         val recyclerView = fragment.listView
-        
+
         appBarLayout?.setExpanded(false, false)
 
         val pref = fragment.findPreference<androidx.preference.Preference>(key) ?: return
@@ -41,14 +41,14 @@ object SearchPreferenceHighlighter {
         if (adapter is PreferenceGroup.PreferencePositionCallback) {
             val position = adapter.getPreferenceAdapterPosition(pref)
             if (position != RecyclerView.NO_POSITION) {
-                
+
                 val layoutManager = recyclerView.layoutManager
                 if (layoutManager is LinearLayoutManager) {
                     layoutManager.scrollToPositionWithOffset(position, 0)
                 } else {
                     recyclerView.scrollToPosition(position)
                 }
-                
+
                 recyclerView.post {
                     val holder = recyclerView.findViewHolderForAdapterPosition(position)
                     holder?.itemView?.let { flashCard(it) }
@@ -59,18 +59,18 @@ object SearchPreferenceHighlighter {
 
     private fun flashCard(itemView: View) {
         val card = itemView as? MaterialCardView ?: return
-        
+
         val highlightColor = card.context.getColorAttr(R.attr.colorPrimary)
 
         val overlay = MaterialShapeDrawable(card.shapeAppearanceModel).apply {
-            setTint(highlightColor) 
+            setTint(highlightColor)
             shadowCompatibilityMode = MaterialShapeDrawable.SHADOW_COMPAT_MODE_NEVER
         }
 
         card.foreground = overlay
         overlay.alpha = 0
 
-        val targetAlpha = 128 
+        val targetAlpha = 128
 
         val fadeIn = ObjectAnimator.ofInt(overlay, "alpha", 0, targetAlpha).apply {
             duration = 200
@@ -79,7 +79,7 @@ object SearchPreferenceHighlighter {
             duration = 400
             startDelay = 800
         }
-        
+
         val animatorSet = AnimatorSet().apply {
             playSequentially(fadeIn, fadeOut)
             addListener(object : AnimatorListenerAdapter() {
@@ -98,7 +98,7 @@ object SearchPreferenceHighlighter {
             }
         }
         card.addOnAttachStateChangeListener(attachListener)
-        
+
         animatorSet.start()
     }
 }

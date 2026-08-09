@@ -43,7 +43,7 @@ class BackupActivity : HelperBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
 
         binding.backupScrollContent.applyEdgeToEdgeListInsets()
@@ -80,7 +80,7 @@ class BackupActivity : HelperBaseActivity() {
                 )
             } else {
                 snackbarError(
-                    getString(R.string.title_configuration_share), 
+                    getString(R.string.title_configuration_share),
                     title = getString(R.string.title_alerter_error)
                 )
             }
@@ -103,10 +103,6 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
-    /**
-     * Backup configuration to cache directory.
-     * Returns Pair<success, zipFilePath>
-     */
     private fun backupConfigurationToCache(): Pair<Boolean, String> {
         val dateFormatted = SimpleDateFormat(
             "yyyy-MM-dd-HH-mm-ss",
@@ -121,10 +117,8 @@ class BackupActivity : HelperBaseActivity() {
             return Pair(false, "")
         }
 
-        // Backup custom banner image files alongside MMKV data
         backupBannerImages(backupDir)
 
-        // Backup custom font file alongside MMKV data
         backupCustomFont(backupDir)
 
         return if (ZipUtil.zipFromFolder(backupDir, outputZipFilePath)) {
@@ -134,10 +128,6 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
-    /**
-     * Copy banner image files into the backup directory.
-     * Each banner is saved as "banners/<key>.jpg" so restore can find them by key.
-     */
     private fun backupBannerImages(backupDir: String) {
         val bannerKeys = listOf(
             AppConfig.PREF_CUSTOM_HOME_BANNER_URI,
@@ -169,9 +159,6 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
-    /**
-     * Copy the saved custom font file (if any) into the backup directory as "fonts/<filename>".
-     */
     private fun backupCustomFont(backupDir: String) {
         val srcFile = com.v2ray.ang.util.CustomFontManager.getFontFile(this) ?: return
         try {
@@ -193,14 +180,11 @@ class BackupActivity : HelperBaseActivity() {
         SettingsChangeManager.makeSetupGroupTab()
         SettingsChangeManager.makeRestartService()
 
-        // Restore custom banner image files and fix their paths in MMKV
         restoreBannerImages(backupDir)
         SettingsManager.preloadAllBanners(this)
 
-        // Restore custom font file, if one was included in the backup
         restoreCustomFont(backupDir)
 
-        // Re-extract banner color from restored home banner image if present
         val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
         if (!restoredHomeBannerUri.isNullOrBlank()) {
             lifecycleScope.launch {
@@ -212,11 +196,6 @@ class BackupActivity : HelperBaseActivity() {
         return count > 0
     }
 
-    /**
-     * Copy the custom font file from the backup dir (if present) into internal storage.
-     * If the backed-up settings say "custom" font but no font file was included, fall back
-     * to the default font instead of pointing at a missing file.
-     */
     private fun restoreCustomFont(backupDir: String) {
         val fontsDir = java.io.File(backupDir, "fonts")
         val srcFile = fontsDir.takeIf { it.exists() }?.listFiles()?.firstOrNull { it.isFile }
@@ -238,10 +217,6 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
-    /**
-     * Copy banner image files from the backup dir into cacheDir,
-     * then update each URI key in MMKV to the new path.
-     */
     private fun restoreBannerImages(backupDir: String) {
         val bannerKeys = listOf(
             AppConfig.PREF_CUSTOM_HOME_BANNER_URI,
@@ -255,7 +230,6 @@ class BackupActivity : HelperBaseActivity() {
         for (key in bannerKeys) {
             val srcFile = java.io.File(bannersDir, "$key.jpg")
             if (!srcFile.exists()) {
-                // No backup for this banner — clear the stale URI so we don't point to a missing file
                 MmkvManager.encodeSettings(key, "")
                 continue
             }
@@ -286,19 +260,19 @@ class BackupActivity : HelperBaseActivity() {
                 }
                 if (restoreConfiguration(targetFile)) {
                     snackbarSuccess(
-                        getString(R.string.title_configuration_restore), 
+                        getString(R.string.title_configuration_restore),
                         title = getString(R.string.title_alerter_success)
                     )
                 } else {
                     snackbarError(
-                        getString(R.string.title_configuration_restore), 
+                        getString(R.string.title_configuration_restore),
                         title = getString(R.string.title_alerter_error)
                     )
                 }
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "Error during file restore", e)
                 snackbarError(
-                    getString(R.string.title_configuration_restore), 
+                    getString(R.string.title_configuration_restore),
                     title = getString(R.string.title_alerter_error)
                 )
             }
@@ -317,28 +291,26 @@ class BackupActivity : HelperBaseActivity() {
                 try {
                     val ret = backupConfigurationToCache()
                     if (ret.first) {
-                        // Copy the cached zip file to user-selected location
                         contentResolver.openOutputStream(uri)?.use { output ->
                             File(ret.second).inputStream().use { input ->
                                 input.copyTo(output)
                             }
                         }
-                        // Clean up cache file
                         File(ret.second).delete()
                         snackbarSuccess(
-                            getString(R.string.title_configuration_backup), 
+                            getString(R.string.title_configuration_backup),
                             title = getString(R.string.title_alerter_success)
                         )
                     } else {
                         snackbarError(
-                            getString(R.string.title_configuration_backup), 
+                            getString(R.string.title_configuration_backup),
                             title = getString(R.string.title_alerter_error)
                         )
                     }
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Failed to backup configuration", e)
                     snackbarError(
-                        getString(R.string.title_configuration_backup), 
+                        getString(R.string.title_configuration_backup),
                         title = getString(R.string.title_alerter_error)
                     )
                 }
@@ -354,7 +326,7 @@ class BackupActivity : HelperBaseActivity() {
         val saved = MmkvManager.decodeWebDavConfig()
         if (saved == null || saved.baseUrl.isEmpty()) {
             snackbarError(
-                getString(R.string.title_webdav_config_setting_unknown), 
+                getString(R.string.title_webdav_config_setting_unknown),
                 title = getString(R.string.title_alerter_error)
             )
             return
@@ -369,7 +341,7 @@ class BackupActivity : HelperBaseActivity() {
                 if (!ret.first) {
                     withContext(Dispatchers.Main) {
                         snackbarError(
-                            getString(R.string.title_configuration_backup), 
+                            getString(R.string.title_configuration_backup),
                             title = getString(R.string.title_alerter_error)
                         )
                     }
@@ -389,12 +361,12 @@ class BackupActivity : HelperBaseActivity() {
                 withContext(Dispatchers.Main) {
                     if (ok) {
                         snackbarSuccess(
-                            getString(R.string.title_configuration_backup), 
+                            getString(R.string.title_configuration_backup),
                             title = getString(R.string.title_alerter_success)
                         )
                     } else {
                         snackbarError(
-                            getString(R.string.title_configuration_backup), 
+                            getString(R.string.title_configuration_backup),
                             title = getString(R.string.title_alerter_error)
                         )
                     }
@@ -403,7 +375,7 @@ class BackupActivity : HelperBaseActivity() {
                 LogUtil.e(AppConfig.TAG, "WebDAV backup error", e)
                 withContext(Dispatchers.Main) {
                     snackbarError(
-                        getString(R.string.title_configuration_backup), 
+                        getString(R.string.title_configuration_backup),
                         title = getString(R.string.title_alerter_error)
                     )
                 }
@@ -423,7 +395,7 @@ class BackupActivity : HelperBaseActivity() {
         val saved = MmkvManager.decodeWebDavConfig()
         if (saved == null || saved.baseUrl.isEmpty()) {
             snackbarError(
-                getString(R.string.title_webdav_config_setting_unknown), 
+                getString(R.string.title_webdav_config_setting_unknown),
                 title = getString(R.string.title_alerter_error)
             )
             return
@@ -440,7 +412,7 @@ class BackupActivity : HelperBaseActivity() {
                 if (!ok) {
                     withContext(Dispatchers.Main) {
                         snackbarError(
-                            getString(R.string.title_configuration_restore), 
+                            getString(R.string.title_configuration_restore),
                             title = getString(R.string.title_alerter_error)
                         )
                     }
@@ -451,23 +423,23 @@ class BackupActivity : HelperBaseActivity() {
                 withContext(Dispatchers.Main) {
                     if (restored) {
                         snackbarSuccess(
-                            getString(R.string.title_configuration_restore), 
+                            getString(R.string.title_configuration_restore),
                             title = getString(R.string.title_alerter_success)
                         )
                     } else {
                         snackbarError(
-                            getString(R.string.title_configuration_restore), 
+                            getString(R.string.title_configuration_restore),
                             title = getString(R.string.title_alerter_error)
                         )
                     }
                 }
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "WebDAV download error", e)
-                withContext(Dispatchers.Main) { 
+                withContext(Dispatchers.Main) {
                     snackbarError(
-                        getString(R.string.title_configuration_restore), 
+                        getString(R.string.title_configuration_restore),
                         title = getString(R.string.title_alerter_error)
-                    ) 
+                    )
                 }
             } finally {
                 try {
@@ -501,9 +473,9 @@ class BackupActivity : HelperBaseActivity() {
                 val remotePath = dialogBinding.etWebdavRemotePath.text.toString().trim().ifEmpty { AppConfig.WEBDAV_BACKUP_DIR }
                 val cfg = WebDavConfig(baseUrl = url, username = user, password = pass, remoteBasePath = remotePath)
                 MmkvManager.encodeWebDavConfig(cfg)
-                
+
                 snackbarSuccess(
-                    getString(R.string.title_webdav_config_setting), 
+                    getString(R.string.title_webdav_config_setting),
                     title = getString(R.string.title_alerter_success)
                 )
             }

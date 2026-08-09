@@ -1,10 +1,5 @@
 package com.v2ray.ang.enums
 
-/**
- * VPN interface address configuration enum class
- * Defines predefined IPv4 and IPv6 address pairs for VPN TUN interface configuration.
- * Each option provides client and router addresses to establish point-to-point VPN tunnels.
- */
 enum class VpnInterfaceAddressConfig(
     val displayName: String,
     val ipv4Client: String,
@@ -21,18 +16,11 @@ enum class VpnInterfaceAddressConfig(
     OPTION_7("192.168.100.x", "192.168.100.1", "192.168.100.2", "fc00::192:168:100:1", "fc00::192:168:100:2");
 
     companion object {
-        /**
-         * Retrieves the VPN interface address configuration based on the specified index.
-         *
-         * @param index The configuration index (0-based) corresponding to user selection
-         * @return The VpnInterfaceAddressConfig instance at the specified index,
-         *         or OPTION_1 (default) if the index is out of bounds
-         */
         fun getConfigByIndex(index: Int): VpnInterfaceAddressConfig {
             return if (index in entries.toTypedArray().indices) {
                 entries[index]
             } else {
-                OPTION_1 // Default to the first configuration
+                OPTION_1
             }
         }
     }

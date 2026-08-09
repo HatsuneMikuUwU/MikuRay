@@ -8,12 +8,6 @@ class Breadcrumb {
 
     }
 
-    /**
-     * Joins two breadcrumbs
-     * @param s1 First breadcrumb, might be null
-     * @param s2 Second breadcrumb
-     * @return Both breadcrumbs joined
-     */
     static String concat(@Nullable String s1, String s2) {
         if (TextUtils.isEmpty(s1)) {
             return s2;

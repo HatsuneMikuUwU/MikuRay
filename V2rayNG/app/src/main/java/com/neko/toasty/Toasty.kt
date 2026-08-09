@@ -227,11 +227,11 @@ object Toasty {
         val currentToast = Toast.makeText(context, "", duration)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val toastLayout = inflater.inflate(R.layout.toast_layout, null)
-        
+
         val toastRoot = toastLayout.findViewById<LinearLayout>(R.id.toast_root)
         val toastIcon = toastLayout.findViewById<ImageView>(R.id.toast_icon)
         val toastTextView = toastLayout.findViewById<TextView>(R.id.toast_text)
-        
+
         var drawableFrame: Drawable? = null
 
         if (shouldTint) {
@@ -245,7 +245,7 @@ object Toasty {
         } else {
             drawableFrame = ToastyUtils.getDrawable(context, R.drawable.uwu_bg_sin)
         }
-        
+
         ToastyUtils.setBackground(toastLayout, drawableFrame)
 
         if (withIcon) {

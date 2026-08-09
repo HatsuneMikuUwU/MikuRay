@@ -12,12 +12,6 @@ import kotlinx.coroutines.withContext
 
 object BannerColorExtractor {
 
-    /**
-     * Extract dominant color from the image at [uri], normalize it via HCT,
-     * save to [AppConfig.PREF_BANNER_COLOR], then invoke [onDone] on the main thread.
-     *
-     * Call this from a coroutine already on Dispatchers.IO, or use [extractAndSave].
-     */
     suspend fun extractAndSave(context: Context, uri: Uri, onDone: (colorChanged: Boolean) -> Unit = {}) {
         withContext(Dispatchers.IO) {
             try {

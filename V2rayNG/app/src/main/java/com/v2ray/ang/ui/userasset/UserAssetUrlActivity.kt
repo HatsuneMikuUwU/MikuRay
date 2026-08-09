@@ -21,7 +21,6 @@ import com.v2ray.ang.util.Utils
 import java.io.File
 
 class UserAssetUrlActivity : BaseActivity() {
-    // Receive QRcode URL from UserAssetActivity
     companion object {
         const val ASSET_URL_QRCODE = "ASSET_URL_QRCODE"
     }
@@ -36,11 +35,11 @@ class UserAssetUrlActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.userAssetUrlScrollContent.applyEdgeToEdgeListInsets()
-        
+
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_user_asset_add_url), subtitle = getString(R.string.subtitle_user_asset_url))
@@ -48,7 +47,7 @@ class UserAssetUrlActivity : BaseActivity() {
         val assetItem = MmkvManager.decodeAsset(editAssetId)
         val assetUrlQrcode = intent.getStringExtra(ASSET_URL_QRCODE)
         val assetNameQrcode = assetUrlQrcode?.let { File(it).name }
-        
+
         when {
             assetItem != null -> bindingAsset(assetItem)
             assetUrlQrcode != null -> {
@@ -59,33 +58,23 @@ class UserAssetUrlActivity : BaseActivity() {
         }
     }
 
-    /**
-     * binding selected asset config
-     */
     private fun bindingAsset(assetItem: AssetUrlItem): Boolean {
         binding.etRemarks.setText(Utils.getEditable(assetItem.remarks))
         binding.etUrl.setText(Utils.getEditable(assetItem.url))
         return true
     }
 
-    /**
-     * clear or init asset config
-     */
     private fun clearAsset(): Boolean {
         binding.etRemarks.text = null
         binding.etUrl.text = null
         return true
     }
 
-    /**
-     * save asset config
-     */
     private fun saveServer(): Boolean {
         var assetItem = MmkvManager.decodeAsset(editAssetId)
         var assetId = editAssetId
-        
+
         if (assetItem != null) {
-            // remove file associated with the asset
             val file = extDir.resolve(assetItem.remarks)
             if (file.exists()) {
                 try {
@@ -102,7 +91,6 @@ class UserAssetUrlActivity : BaseActivity() {
         assetItem.remarks = binding.etRemarks.text?.toString().orEmpty()
         assetItem.url = binding.etUrl.text?.toString().orEmpty()
 
-        // check remarks unique
         val assetList = MmkvManager.decodeAssetUrls()
         if (assetList.any { it.assetUrl.remarks == assetItem.remarks && it.guid != assetId }) {
             snackbarError(
@@ -133,9 +121,6 @@ class UserAssetUrlActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * delete server config
-     */
     private fun deleteServer(): Boolean {
         if (editAssetId.isNotEmpty()) {
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_file_asset_dialog_comfirm_message) {
@@ -171,5 +156,5 @@ class UserAssetUrlActivity : BaseActivity() {
 
         else -> super.onOptionsItemSelected(item)
     }
- 
+
 }

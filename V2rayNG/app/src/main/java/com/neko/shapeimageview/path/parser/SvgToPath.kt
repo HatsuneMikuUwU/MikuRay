@@ -71,8 +71,8 @@ class SvgToPath private constructor(private val atts: XmlPullParser) {
 
     private var width = 0f
     private var height = 0f
-    
-    private lateinit var path: Path 
+
+    private lateinit var path: Path
     private var pathInfo: PathInfo? = null
 
     @Throws(XmlPullParserException::class, IOException::class)
@@ -212,7 +212,7 @@ class SvgToPath private constructor(private val atts: XmlPullParser) {
                     val h = getFloatAttr("height", atts) ?: 0f
                     val rx = getFloatAttr("rx", atts, 0f) ?: 0f
                     val ry = getFloatAttr("ry", atts, 0f) ?: 0f
-                    
+
                     val p = Path()
                     if (rx <= 0f && ry <= 0f) {
                         p.addRect(x, y, x + w, y + h, Path.Direction.CW)

@@ -14,35 +14,14 @@ import java.lang.reflect.Type
 object JsonUtil {
     private var gson = Gson()
 
-    /**
-     * Converts an object to its JSON representation.
-     *
-     * @param src The object to convert.
-     * @return The JSON representation of the object.
-     */
     fun toJson(src: Any?): String {
         return gson.toJson(src)
     }
 
-    /**
-     * Parses a JSON string into an object of the specified class.
-     *
-     * @param src The JSON string to parse.
-     * @param cls The class of the object to parse into.
-     * @return The parsed object.
-     */
     fun <T> fromJson(src: String, cls: Class<T>): T? {
         return gson.fromJson(src, cls)
     }
 
-    /**
-     * Safely parses a JSON string into an object of the specified class.
-     * Returns null if parsing fails instead of throwing an exception.
-     *
-     * @param src The JSON string to parse.
-     * @param cls The class of the object to parse into.
-     * @return The parsed object, or null if parsing fails.
-     */
     fun <T> fromJsonSafe(src: String, cls: Class<T>): T? {
         return try {
             gson.fromJson(src, cls)
@@ -52,19 +31,13 @@ object JsonUtil {
         }
     }
 
-    /**
-     * Converts an object to its pretty-printed JSON representation.
-     *
-     * @param src The object to convert.
-     * @return The pretty-printed JSON representation of the object, or null if the object is null.
-     */
     fun toJsonPretty(src: Any?): String? {
         if (src == null)
             return null
         val gsonPre = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
-            .registerTypeAdapter( // custom serializer is needed here since JSON by default parse number as Double, core will fail to start
+            .registerTypeAdapter(
                 object : TypeToken<Double>() {}.type,
                 JsonSerializer { src: Double?, _: Type?, _: JsonSerializationContext? ->
                     JsonPrimitive(
@@ -76,12 +49,6 @@ object JsonUtil {
         return gsonPre.toJson(src)
     }
 
-    /**
-     * Parses a JSON string into a JsonObject.
-     *
-     * @param src The JSON string to parse.
-     * @return The parsed JsonObject, or null if parsing fails.
-     */
     fun parseString(src: String?): JsonObject? {
         if (src == null)
             return null
@@ -93,12 +60,6 @@ object JsonUtil {
         }
     }
 
-    /**
-     * Parses a JSON object string of key-value pairs into a map of HTTP headers.
-     *
-     * @param headersJson The JSON string representing headers, e.g. {"X-Custom": "value"}.
-     * @return A map of header names to values. Empty if parsing fails or input is null/blank.
-     */
     fun parseHeadersToMap(headersJson: String?): Map<String, String> {
         val headerMap = mutableMapOf<String, String>()
         val jsonObject = parseString(headersJson) ?: return headerMap

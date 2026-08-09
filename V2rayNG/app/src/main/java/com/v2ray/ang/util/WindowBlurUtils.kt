@@ -20,7 +20,7 @@ object WindowBlurUtils {
 
     fun applyWindowBlur(window: Window?) {
         if (window == null) return
-        
+
         val isBlurEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_BLUR, false)
         if (!isBlurEnabled) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -32,7 +32,7 @@ object WindowBlurUtils {
             val context = window.context
             val activity = context.getActivity() ?: return
             val decorView = activity.window?.decorView as? ViewGroup ?: return
-            
+
             decorView.findViewById<View>(BLUR_OVERLAY_ID)?.let {
                 decorView.removeView(it)
             }
@@ -43,20 +43,20 @@ object WindowBlurUtils {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-                
+
                 val blurRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS).toFloat()
                 val blurRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
                 setBlurRadius(blurRadius)
                 setBlurRounds(blurRounds)
                 setOverlayColor(Color.argb(120, 0, 0, 0))
-                
+
                 isClickable = false
                 isFocusable = false
                 elevation = 0f
                 outlineProvider = null
             }
 
-            decorView.addView(blurView)          
+            decorView.addView(blurView)
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
             window.decorView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
@@ -66,7 +66,7 @@ object WindowBlurUtils {
                     window.decorView.removeOnAttachStateChangeListener(this)
                 }
             })
-            
+
         } catch (e: Exception) {
             e.printStackTrace()
             window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -80,13 +80,13 @@ object WindowBlurUtils {
             val activity = window.context.getActivity() ?: return
             val decorView = activity.window?.decorView as? ViewGroup ?: return
             val blurView = decorView.findViewById<BlurView>(BLUR_OVERLAY_ID) ?: return
-            
+
             blurView.setBlurRadius(radius)
             blurView.setBlurRounds(rounds)
-            
+
             blurView.invalidate()
             decorView.invalidate()
-            
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -14,7 +14,7 @@
     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Single"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
-    
+
     <LinearLayout
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -25,14 +25,14 @@
         android:minHeight="?android:listPreferredItemHeightSmall"
         android:paddingHorizontal="20.0dip"
         android:paddingVertical="25.0dip">
-        
+
         <LinearLayout
             android:gravity="start|center"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-            
+
             <TextView
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textSize="17.0sp"
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2" />
-                
+
             <TextView
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textSize="14.0sp"
@@ -57,9 +57,9 @@
                 android:maxLines="10"
                 android:layout_below="@android:id/title"
                 android:layout_alignStart="@android:id/title" />
-                
+
         </LinearLayout>
-        
+
         <ImageView
             android:layout_gravity="end|center"
             android:id="@android:id/icon"
@@ -68,7 +68,7 @@
             android:layout_height="35.0dip"
             app:tint="?attr/colorOnPrimary"
             android:layout_marginStart="8.0dip" />
-            
+
     </LinearLayout>
-    
+
 </com.google.android.material.card.MaterialCardView>

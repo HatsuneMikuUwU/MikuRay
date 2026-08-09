@@ -197,7 +197,7 @@ class UiSettingsActivity : BaseActivity() {
                             val savedUri = saveBannerFile(cacheUri, "home_banner_")
                             MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, savedUri.toString())
                             SettingsManager.preloadBanner(requireContext(), savedUri.toString())
-                            
+
                             extractAndSaveBannerColor(savedUri)
                             broadcastHomeBannerChanged()
                             requireContext().toastSuccess(getString(R.string.home_banner_updated))
@@ -302,15 +302,15 @@ class UiSettingsActivity : BaseActivity() {
             dynamicColor?.setOnPreferenceChangeListener { _, newValue ->
                 val enabled = newValue as Boolean
                 MmkvManager.encodeSettings(AppConfig.PREF_DYNAMIC_COLOR, enabled)
-                
+
                 if (enabled) {
                     MmkvManager.encodeSettings(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
                     dynamicColorBanner?.isChecked = false
                 }
-                
+
                 dynamicColorBanner?.isEnabled = !enabled && showHomeBanner?.isChecked == true
                 appTheme?.isEnabled = !enabled
-                
+
                 activity?.recreate()
                 true
             }
@@ -318,15 +318,15 @@ class UiSettingsActivity : BaseActivity() {
             dynamicColorBanner?.setOnPreferenceChangeListener { _, newValue ->
                 val enabled = newValue as Boolean
                 MmkvManager.encodeSettings(AppConfig.PREF_DYNAMIC_COLOR_BANNER, enabled)
-                
+
                 if (enabled) {
                     MmkvManager.encodeSettings(AppConfig.PREF_DYNAMIC_COLOR, false)
                     dynamicColor?.isChecked = false
                 }
-                
+
                 dynamicColor?.isEnabled = !enabled
                 appTheme?.isEnabled = !enabled
-                
+
                 activity?.recreate()
                 true
             }
@@ -578,8 +578,6 @@ class UiSettingsActivity : BaseActivity() {
             customFontSwitch?.setOnPreferenceChangeListener { _, newValue ->
                 val checked = newValue as Boolean
                 if (checked && CustomFontManager.getFontFile(requireContext()) == null) {
-                    // No custom font saved yet — send the user to pick one instead of
-                    // silently flipping the switch on with nothing loaded.
                     pickCustomFontFile.launch(arrayOf("*/*"))
                     false
                 } else {
@@ -765,20 +763,20 @@ class UiSettingsActivity : BaseActivity() {
         private fun setupHomeBannerPreferences() {
             showHomeBanner?.apply {
                 isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-                
+
                 bannerHeightSlider?.isEnabled = isChecked
                 headerTopRowPaddingSlider?.isEnabled = isChecked
-                
+
                 setOnPreferenceChangeListener { _, newValue ->
                     val checked = newValue as Boolean
                     MmkvManager.encodeSettings(AppConfig.PREF_SHOW_HOME_BANNER, checked)
-                    
+
                     val isDynamicColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
                     dynamicColorBanner?.isEnabled = checked && !isDynamicColor
-                    
+
                     bannerHeightSlider?.isEnabled = checked
                     headerTopRowPaddingSlider?.isEnabled = checked
-                    
+
                     if (!checked) {
                         val isDynamicBannerActive = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
                         if (isDynamicBannerActive) {
@@ -788,7 +786,7 @@ class UiSettingsActivity : BaseActivity() {
                             activity?.recreate()
                         }
                     }
-                    
+
                     broadcastHomeBannerChanged()
                     true
                 }
@@ -812,7 +810,7 @@ class UiSettingsActivity : BaseActivity() {
                                 deleteOldFile(savedUri)
                                 MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_HOME_BANNER_URI, "")
                                 MmkvManager.encodeSettings(AppConfig.PREF_BANNER_COLOR, 0)
-                                
+
                                 if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
                                     activity?.recreate()
                                 }
@@ -827,12 +825,6 @@ class UiSettingsActivity : BaseActivity() {
             }
         }
 
-        /**
-         * Wires the language picker to AndroidX's per-app language API, the same
-         * mechanism uses: AppCompatDelegate.setApplicationLocales() applies
-         * the new locale to every open Activity immediately, no manual context
-         * wrapping or app restart needed.
-         */
         private fun setupLanguagePreference() {
             val languageValues = resources.getStringArray(R.array.language_select_value)
             val languageLabels = resources.getStringArray(R.array.language_select)
@@ -843,7 +835,6 @@ class UiSettingsActivity : BaseActivity() {
             }
 
             val currentTag = when (val tag = AppCompatDelegate.getApplicationLocales().toLanguageTags()) {
-                // Some old Android versions report Indonesian as "in" rather than "id".
                 "id" -> "in"
                 else -> tag
             }
@@ -888,11 +879,11 @@ class UiSettingsActivity : BaseActivity() {
             val displayMetrics = resources.displayMetrics
             val screenWidthPx = displayMetrics.widthPixels.toFloat()
             val targetHeightPx = displayMetrics.density * 150
-            
+
             val uCrop = UCrop.of(sourceUri, destUri)
                 .withAspectRatio(screenWidthPx, targetHeightPx)
                 .withMaxResultSize(1920, 1080)
-            
+
             try {
                 uCrop.withOptions(UCrop.Options().apply {
                     setDimmedLayerColor(Color.parseColor("#CC000000"))
@@ -930,20 +921,20 @@ class UiSettingsActivity : BaseActivity() {
         private fun startCropHomeBannerActivity(sourceUri: Uri) {
             val destFile = File(requireContext().cacheDir, "cropped_home_banner_temp.jpg")
             val destUri = Uri.fromFile(destFile)
-            
+
             val displayMetrics = resources.displayMetrics
             val screenWidthPx = displayMetrics.widthPixels.toFloat()
-            
+
             val heightDp = MmkvManager.decodeSettingsInt(
                 AppConfig.PREF_HOME_BANNER_HEIGHT,
                 AppConfig.HOME_BANNER_HEIGHT_DEFAULT
             )
             val targetHeightPx = displayMetrics.density * heightDp
-            
+
             val uCrop = UCrop.of(sourceUri, destUri)
                 .withAspectRatio(screenWidthPx, targetHeightPx)
                 .withMaxResultSize(1920, 1080)
-            
+
             try {
                 uCrop.withOptions(UCrop.Options().apply {
                     setDimmedLayerColor(Color.parseColor("#CC000000"))
@@ -952,7 +943,7 @@ class UiSettingsActivity : BaseActivity() {
                     setFreeStyleCropEnabled(false)
                 })
             } catch (e: Exception) { e.printStackTrace() }
-            
+
             cropHomeBannerImage.launch(uCrop.getIntent(requireContext()))
         }
 
@@ -962,7 +953,7 @@ class UiSettingsActivity : BaseActivity() {
             val uCrop = UCrop.of(sourceUri, destUri)
                 .withAspectRatio(1f, 1f)
                 .withMaxResultSize(512, 512)
-            
+
             try {
                 uCrop.withOptions(UCrop.Options().apply {
                     setDimmedLayerColor(Color.parseColor("#CC000000"))
@@ -1004,8 +995,6 @@ class UiSettingsActivity : BaseActivity() {
         @Throws(IOException::class)
         private suspend fun saveBannerFile(sourceUri: Uri, fileNamePrefix: String, ext: String = "jpg"): Uri = withContext(Dispatchers.IO) {
             val ctx = requireContext()
-            // Persistent banners must live in filesDir, NOT cacheDir — the system's
-            // "Clear Cache" wipes cacheDir but leaves filesDir untouched.
             val bannersDir = File(ctx.filesDir, "banners").apply { mkdirs() }
             val destFile = File(bannersDir, "${fileNamePrefix}${System.currentTimeMillis()}.$ext")
             ctx.contentResolver.openInputStream(sourceUri)?.use { input ->
@@ -1090,9 +1079,9 @@ class UiSettingsActivity : BaseActivity() {
             val isDynamicColor = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
             val isDynamicBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
             val isShowHomeBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-            
+
             appTheme?.isEnabled = !isDynamicColor && !isDynamicBanner
-            
+
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                 dynamicColor?.isEnabled = false
                 dynamicColor?.summary = requireContext().getString(R.string.summary_pref_dynamic_color_unavailable)
@@ -1102,21 +1091,21 @@ class UiSettingsActivity : BaseActivity() {
                 dynamicColor?.isEnabled = !isDynamicBanner
                 dynamicColorBanner?.isEnabled = !isDynamicColor && isShowHomeBanner
             }
-            
+
             bannerHeightSlider?.isEnabled = isShowHomeBanner
             headerTopRowPaddingSlider?.isEnabled = isShowHomeBanner
-            
+
             val savedDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
             val systemDpi = resources.displayMetrics.densityDpi
             customDpi?.summary = if (savedDpi > 0) savedDpi.toString() else systemDpi.toString()
 
             val savedFontSize = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
             fontSizeSlider?.summary = "${(savedFontSize * 100f).roundToInt()}%"
-            
+
             val savedRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS)
             val savedRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
             blurIntensity?.updateSummary(savedRadius, savedRounds)
-            
+
             val savedBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
             val savedBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
             blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomRounds)
@@ -1188,11 +1177,6 @@ class UiSettingsActivity : BaseActivity() {
             updateWeatherSubPrefsEnabled(weatherOn)
         }
 
-        /**
-         * pref_show_isp_info shows ISP/org info next to the connected IP text, but that text
-         * gets replaced entirely by live speed when real-time traffic is on — so ISP info has
-         * nothing to attach to and is disabled with an explanatory summary while that's active.
-         */
         private fun updateShowIspInfoEnabledState() {
             val realtimeTrafficOn = showRealtimeTrafficIp?.isChecked == true
             showIspInfo?.isEnabled = !realtimeTrafficOn

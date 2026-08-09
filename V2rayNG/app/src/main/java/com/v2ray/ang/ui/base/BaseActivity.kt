@@ -38,7 +38,7 @@ import com.v2ray.ang.util.ThemeStateManager
 
 abstract class BaseActivity : AppCompatActivity() {
     private var loadingOverlay: FrameLayout? = null
-    
+
     private lateinit var themeStateManager: ThemeStateManager
 
     private var toolbarSubtitle: CharSequence? = null
@@ -115,9 +115,6 @@ abstract class BaseActivity : AppCompatActivity() {
         val fontScale = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
         val dpiWrapped = if (dpi > 0) DPIController.wrapWithDpi(base, dpi) else base
         val finalContext = FontSizeController.wrapWithFontScale(dpiWrapped, fontScale)
-        // Locale is no longer applied here: AppCompatActivity's own attachBaseContext
-        // (called via super below) applies AppCompatDelegate's per-app language
-        // automatically, the same mechanism Exclave relies on.
         super.attachBaseContext(finalContext)
     }
 
@@ -187,24 +184,24 @@ abstract class BaseActivity : AppCompatActivity() {
         if (!subtitleText.isNullOrEmpty()) {
             customSubtitleView?.text = subtitleText
             customSubtitleView?.visibility = View.VISIBLE
-            
+
             if (customSubtitleView != null) {
                 val screenWidth = resources.displayMetrics.widthPixels
                 val marginPx = (48 * density).toInt()
                 val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(screenWidth - marginPx, View.MeasureSpec.AT_MOST)
                 val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-                
+
                 customSubtitleView.measure(widthMeasureSpec, heightMeasureSpec)
-                
+
                 val subtitleHeight = customSubtitleView.measuredHeight
-                val spacing = (32 * density).toInt() 
+                val spacing = (32 * density).toInt()
                 collapsingToolbar.expandedTitleMarginBottom = subtitleHeight + spacing
             }
         } else {
             customSubtitleView?.visibility = View.GONE
             collapsingToolbar.expandedTitleMarginBottom = (24 * density).toInt()
         }
-        
+
         customSubtitleView?.gravity = if (centerSubtitle) Gravity.CENTER else Gravity.START
 
         collapsingToolbar.requestLayout()

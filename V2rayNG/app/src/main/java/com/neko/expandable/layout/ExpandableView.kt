@@ -120,7 +120,7 @@ class ExpandableView @JvmOverloads constructor(
     override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
         val bundle = Bundle()
-        val currentExpansion = if (isExpanded) 1f else 0f       
+        val currentExpansion = if (isExpanded) 1f else 0f
         bundle.putFloat(KEY_EXPANSION, currentExpansion)
         bundle.putParcelable(KEY_SUPER_STATE, superState)
         return bundle
@@ -203,7 +203,7 @@ class ExpandableView @JvmOverloads constructor(
     fun setExpansion(isExpanded: Boolean) {
         if (isExpanded) {
             state = State.EXPANDED
-            this.expansion = 1f 
+            this.expansion = 1f
         } else {
             state = State.COLLAPSED
             this.expansion = 0f
@@ -248,7 +248,7 @@ class ExpandableView @JvmOverloads constructor(
         override fun onAnimationCancel(animation: Animator) {
             canceled = true
         }
-        
+
         override fun onAnimationRepeat(animation: Animator) {}
     }
 

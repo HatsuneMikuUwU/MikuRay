@@ -13,7 +13,6 @@
     <string name="migration_fail">Ошибка миграции данных!</string>
     <string name="pull_down_to_refresh">Потяните вниз для обновления!</string>
 
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">Стоп</string>
     <string name="notification_connect_time">таймер : %s</string>
     <string name="notification_data_usage" formatted="false">всего : ↑ %s  ↓ %s</string>
@@ -25,7 +24,6 @@
     <string name="toast_services_success">Службы успешно запущены</string>
     <string name="toast_services_failure">Ошибка запуска служб</string>
 
-    <!--ServerActivity-->
     <string name="title_server">Конфигурация</string>
     <string name="menu_item_add_config">Добавить конфигурацию</string>
     <string name="menu_item_save_config">Сохранить конфигурацию</string>
@@ -144,7 +142,6 @@
     <string name="server_lab_browser_dialer">Включить Browser Dialer</string>
     <string name="server_lab_browser_dialer_tip">Поддерживает только исходящие соединения xhttp (packet-up) и ws; настройки TLS могут игнорироваться или конфликтовать</string>
 
-    <!-- UserAssetActivity -->
     <string name="toast_asset_copy_failed">Ошибка копирования файла — используйте файловый менеджер</string>
     <string name="menu_item_add_asset">Добавить ресурс</string>
     <string name="menu_item_add_file">Добавить файлы</string>
@@ -157,7 +154,6 @@
     <string name="msg_remark_is_duplicate">Такое примечание уже существует</string>
     <string name="asset_geo_files_sources">Источник Geo-файлов</string>
 
-    <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Загрузка</string>
     <string name="menu_item_search">Поиск</string>
     <string name="menu_item_select_all">Выбрать все</string>
@@ -172,7 +168,6 @@
     <string name="per_app_proxy_settings_enable">Включить для каждого приложения</string>
     <string name="app_picker_unknown_app">Неизвестное приложение (неопознанный UID)</string>
 
-    <!-- Preferences -->
     <string name="title_settings">Настройки</string>
     <string name="title_advanced">Расширенные настройки</string>
     <string name="title_core_settings">Настройки ядра</string>
@@ -302,7 +297,6 @@
     <string name="summary_pref_group_all_display">Добавить дополнительную вкладку «Все»</string>
     <string name="title_pref_group_all_tab_icon">Иконка вкладки «Все»</string>
 
-    <!-- AboutActivity -->
     <string name="title_pref_feedback">Обратная связь</string>
     <string name="summary_pref_feedback">Сообщать об улучшениях или ошибках на GitHub</string>
     <string name="summary_pref_tg_group">Вступить в Telegram-группу</string>
@@ -391,7 +385,6 @@
     <string name="tasker_start_service">Запустить службу</string>
     <string name="tasker_setting_confirm">Подтвердить</string>
 
-    <!-- RoutingSettingActivity -->
     <string name="routing_settings_domain_strategy">Стратегия домена</string>
     <string name="routing_settings_title">Настройки маршрутизации</string>
     <string name="routing_settings_tips">Разделяйте запятыми (,), \nвыберите домен, IP или процесс</string>
@@ -408,7 +401,7 @@
     <string name="routing_settings_domain">домен</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">процесс</string>
-    <string name="routing_settings_process_tip">Разделяйте запятыми (,), 
+    <string name="routing_settings_process_tip">Разделяйте запятыми (,),
 выберите домен, IP или процесс
 Имя пакета — поддерживается только при Xray TUN, включённом routeOnly и Android 10+</string>
     <string name="routing_settings_port">порт</string>
@@ -474,7 +467,6 @@
     <string name="server_proxy_chain_members_insufficient">Недостаточно участников</string>
     <string name="server_proxy_chain_members_invalid">Недействительные участники цепочки: %1$s</string>
 
-    <!-- BackupActivity -->
     <string name="title_configuration_backup_restore">Резервное копирование и восстановление</string>
     <string name="title_configuration_backup">Резервная копия конфигурации</string>
     <string name="title_configuration_restore">Восстановить конфигурацию</string>
@@ -554,7 +546,6 @@
         <item>WebDAV</item>
     </string-array>
 
-    <!-- New string from new UI-->
     <string name="status">Статус</string>
     <string name="import_configuration">Импортировать конфигурацию</string>
     <string name="add_server_manually">Добавить сервер вручную</string>
@@ -605,8 +596,8 @@
     <string name="indicator_style_title">Выбрать стиль индикатора</string>
     <string name="pref_indicator_style_title">Стиль индикатора сервера</string>
     <string name="pref_indicator_style_summary">Выберите отображение индикатора активного сервера</string>
-    <string name="summary_navigate_ui_settings">Общий интерфейс, темы, внешний вид, плашки поиска, размытие, баннеры, звук и т.д.</string> 
-    <string name="summary_navigate_vpn_settings">IPv6, бодрствование (keep awake), DNS, HTTP-прокси, обход LAN, интерфейс, MTU, Hev TUN, таймеры TCP/WS, прокси для приложений, Root-режим и т.д.</string>   
+    <string name="summary_navigate_ui_settings">Общий интерфейс, темы, внешний вид, плашки поиска, размытие, баннеры, звук и т.д.</string>
+    <string name="summary_navigate_vpn_settings">IPv6, бодрствование (keep awake), DNS, HTTP-прокси, обход LAN, интерфейс, MTU, Hev TUN, таймеры TCP/WS, прокси для приложений, Root-режим и т.д.</string>
     <string name="summary_navigate_core_settings">Сниффинг, только маршрутизация, локальный прокси/общий доступ, SOCKS, DNS, уровень логов, разрешение доменов, Geo-файлы и т.д.</string>
     <string name="summary_navigate_mux_settings">Статус Mux, подключения, подключения XUDP, обработка QUIC и т.д.</string>
     <string name="summary_navigate_fragment_settings">Статус фрагментации, длина, интервал, maxsplit, пакеты и т.д.</string>
@@ -756,7 +747,7 @@
     <string name="title_pref_tcp_keepalive_idle_tip">Секунд, 0 = отключено</string>
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Секунд, 0 = отключено</string>
-    
+
     <string name="uwu_banner_settings_title">Привет...</string>
     <string name="uwu_banner_settings_summary">"Добро пожаловать в
 настройки, выберите
@@ -774,8 +765,7 @@
     <string name="uwu_about_version_summary">Нажмите здесь или на значок стрелки, чтобы узнать больше о приложении.</string>
     <string name="uwu_splash_title">Сделано с ❤️\nот HatsuneMikuUwU Development</string>
     <string name="uwu_splash_summary">Версия %1$s (%2$d)</string>
-    
-    <!-- miku-->
+
     <string name="uwu_miku_gender_title">Пол </string>
     <string name="uwu_miku_gender_summary">Женский</string>
     <string name="uwu_miku_birthday_title">День рождения </string>
@@ -790,7 +780,7 @@
     <string name="uwu_miku_height_summary">158 см</string>
     <string name="uwu_about_miku_title">Кто такая Хацунэ Мику?</string>
     <string name="uwu_about_miku_summary">Хацунэ Мику — виртуальная певица на основе Vocaloid, выпущенная компанией Crypton Future Media под кодовым названием CV01. Известна своими длинными бирюзовыми хвостиками и чистым голосом — 16-летняя девушка и всемирно известный виртуальный идол. Она активна в музыке, концертах и аниме, и горячо любима своими фанатами.</string>
-    
+
     <string name="uwu_random_text_1">Прекрасный день для песни!</string>
     <string name="uwu_random_text_2">Хорошего дня, мастер!</string>
     <string name="uwu_random_text_3">"Давай постараемся! 39!"</string>
@@ -801,19 +791,16 @@
     <string name="uwu_random_text_8">Впусти музыку...</string>
     <string name="uwu_random_text_9">Достигни самой высокой ноты!</string>
     <string name="uwu_random_text_10">Пишешь для меня слова?</string>
-    
-    <!-- greeting -->
+
      <string name="uwu_greeting_morning">Доброе утро...</string>
     <string name="uwu_greeting_afternoon">Добрый день...</string>
     <string name="uwu_greeting_evening">Добрый вечер...</string>
     <string name="uwu_greeting_night">Спокойной ночи...</string>
     <string name="uwu_greeting_late_night">"Пора ложиться спать..."</string>
-    
-    <!-- Header banner: username display -->
+
     <string name="uwu_profile_banner_title">мастер</string>
     <string name="uwu_profile_banner_title_custom">Привет, %1$s</string>
 
-    <!-- Profile banner settings -->
     <string name="banner_profile_category">Профиль</string>
     <string name="profile_name_custom_title">Имя в заголовке</string>
     <string name="profile_name_custom_dialog">Изменить отображаемое имя</string>
@@ -823,8 +810,7 @@
     <string name="delete_custom_banner_profile">Удалить свой баннер профиля</string>
     <string name="delete_custom_banner_profile_summary">Свой баннер удалён. Вместо него будет использоваться баннер профиля по умолчанию</string>
     <string name="custom_banner_profile_set">Баннер профиля успешно обновлён.</string>
-    
-    <!-- Home banner settings -->
+
     <string name="home_banner_category">Баннер главного экрана</string>
     <string name="home_banner_show_title">Показывать баннер главного экрана</string>
     <string name="home_banner_show_summary">Отображать баннер вверху главного экрана</string>
@@ -835,8 +821,7 @@
     <string name="home_banner_updated">Баннер главного экрана успешно обновлён.</string>
     <string name="pref_home_banner_height_title">Высота баннера</string>
     <string name="pref_header_top_row_padding_title">Верхний отступ заголовка</string>
-    
-    <!-- Sheet banner settings -->   	
+
     <string name="sheet_banner_category">Баннер нижней панели</string>
     <string name="sheet_banner_custom_title">Изменить баннер панели</string>
     <string name="sheet_banner_custom_summary">Задайте своё изображение для нижней панели (необязательно)</string>
@@ -856,8 +841,7 @@
     <string name="particles_slider_radius_min_label">Минимальный радиус частицы</string>
     <string name="particles_slider_density_label">Плотность частиц</string>
     <string name="particles_slider_speed_factor_label">Коэффициент скорости движения</string>
-    
-    <!-- Selected profile card banner style -->
+
     <string name="selected_banner_category">Стиль выбранного профиля</string>
     <string name="selected_banner_enable_title">Стиль баннера для выбранного профиля</string>
     <string name="selected_banner_enable_summary">Показывать баннер позади карточки активного сервера. Используется баннер по умолчанию, если не задан свой</string>
@@ -870,13 +854,12 @@
     <string name="selected_banner_delete_title">Удалить свой баннер выбранного профиля</string>
     <string name="selected_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер по умолчанию</string>
     <string name="selected_banner_updated">Баннер выбранного профиля успешно обновлен.</string>
-    <string name="pref_indicator_style_summary_disabled_by_banner">Отключено, пока активен стиль баннера для выбранного профиля</string>    
+    <string name="pref_indicator_style_summary_disabled_by_banner">Отключено, пока активен стиль баннера для выбранного профиля</string>
 
-    <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Информация</string>
     <string name="title_alerter_success">Успешно</string>
     <string name="title_alerter_error">Ошибка</string>
-    
+
     <string name="title_pref_enable_blur">Включить размытие</string>
     <string name="summary_pref_enable_blur">Включить эффект размытия фона в окнах</string>
     <string name="title_pref_blur_bottom_status">Размытие нижней карточки статуса</string>
@@ -890,7 +873,6 @@
     <string name="title_blur_warning">Высокое число итераций (10+) может снизить FPS. Рекомендуется: 2–5 итераций с радиусом 25–40</string>
     <string name="toast_allow_insecure_deprecated">Этот узел использует незашифрованное соединение. Ваши данные могут быть перехвачены и просмотрены государственными структурами через промежуточное сетевое оборудование.\nВ целях безопасности такие узлы больше не поддерживаются в Xray core версии 26.2.6+.\nДля исправления: включите TLS (или другое шифрование) на своем сервере или используйте Certificate Pinning (pinnedCA256).\nЕсли вы используете платный сервис, обратитесь в поддержку для обновления. Если провайдер отказывается, рекомендуем сменить его на более безопасный.\nПодробнее: https://github.com/2dust/v2rayN/discussions/9460</string>
 
-    <!-- WelcomeActivity -->
     <string name="uwu_skip">Пропустить</string>
     <string name="uwu_next">Далее</string>
     <string name="uwu_start">Начать</string>
@@ -901,31 +883,28 @@
     <string name="uwu_welcome_page1_desc">Бесплатный клиент V2Ray/Xray с открытым исходным кодом.</string>
     <string name="uwu_welcome_page2_desc">Поддерживает VLESS, VMess, Trojan, Shadowsocks и другие.</string>
     <string name="uwu_welcome_page3_desc">Ощутите быстрый и безопасный интернет в милом дизайне в стиле Мику.</string>
-    
+
     <string name="sub_setting_tab_icon">Иконка вкладки</string>
     <string name="sub_setting_tab_icon_hint">Отображается рядом с названием группы на панели вкладок</string>
     <string name="sub_tab_icon_none">Нет</string>
 
-    <!-- Reset all settings -->
     <string name="title_pref_reset_all_settings">Сбросить все настройки</string>
     <string name="dialog_reset_settings_title">Сбросить все настройки?</string>
     <string name="dialog_reset_settings_message">Это восстановит все настройки по умолчанию.\n\nПрофили серверов и подписки удалены не будут.\n\nЭто действие нельзя отменить.</string>
     <string name="dialog_reset_settings_confirm">Сбросить</string>
-    <string name="reset_settings_success">Настройки сброшены до значений по умолчанию.</string>    
+    <string name="reset_settings_success">Настройки сброшены до значений по умолчанию.</string>
 
-    <!-- SearchPreference (in-module fork) -->
     <string name="searchpreference_search">Поиск…</string>
     <string name="searchpreference_clear">Очистить</string>
     <string name="searchpreference_more">Ещё</string>
     <string name="searchpreference_clear_history">Очистить историю</string>
     <string name="searchpreference_no_results">Нет результатов</string>
-    
+
     <string name="title_pref_app_icon">Значок приложения</string>
     <string name="app_icon_updated">Значок приложения обновлен. Может потребоваться немного времени, чтобы он отобразился на главном экране.</string>
     <string name="title_pref_custom_app_name">Название приложения</string>
     <string name="summary_pref_custom_app_name">Также переименовывает значок в лаунчере/меню приложений. Некоторые лаунчеры кэшируют старое название, пока вы не перезапустите их или не перезагрузите устройство.</string>
 
-    <!-- Подзаголовки панели инструментов для каждого экрана, показываются при включенном "Заголовок панели по центру" -->
     <string name="subtitle_server_config">Настройте параметры подключения для этого сервера</string>
     <string name="subtitle_routing_edit">Добавьте или измените одно правило маршрутизации</string>
     <string name="subtitle_routing_setting">Управляйте своими правилами маршрутизации</string>

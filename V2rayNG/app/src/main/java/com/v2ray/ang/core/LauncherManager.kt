@@ -44,11 +44,6 @@ object LauncherManager {
         }
     }
 
-    /**
-     * Starts the V2Ray service from a toggle action.
-     * @param context The context from which the service is started.
-     * @return True if the service was started successfully, false otherwise.
-     */
     fun startServiceFromToggle(context: Context): Boolean {
         if (MmkvManager.getSelectServer().isNullOrEmpty()) {
             showFeedback(context, context.getString(R.string.app_tile_first_use), 2)
@@ -64,11 +59,6 @@ object LauncherManager {
         return true
     }
 
-    /**
-     * Starts the V2Ray service.
-     * @param context The context from which the service is started.
-     * @param guid The GUID of the server configuration to use (optional).
-     */
     fun startService(context: Context, guid: String? = null) {
         LogUtil.i(AppConfig.TAG, "LauncherManager: startService from ${context::class.java.simpleName}")
 
@@ -84,26 +74,10 @@ object LauncherManager {
         }
     }
 
-    /**
-     * Stops the V2Ray service.
-     * @param context The context from which the service is stopped.
-     */
     fun stopService(context: Context) {
         MessageUtil.sendMsg2Service(context, AppConfig.MSG_STATE_STOP, "")
     }
 
-    /**
-     * Starts the context service for V2Ray.
-     * Chooses between VPN service or Proxy-only service based on user settings.
-     * @param context The context from which the service is started.
-     * @throws IllegalStateException if no server is selected,
-     *   server config cannot be decoded, or server configuration is invalid.
-     * @throws Exception if the foreground service fails to start.
-     *
-     * Note: the isRunning check is intentionally not performed here, to avoid loading
-     * native libraries in the UI process. That check happens in CoreServiceManager once
-     * the service actually starts in the daemon process.
-     */
     @Throws(Exception::class)
     private fun startContextService(context: Context) {
         val guid = MmkvManager.getSelectServer()
@@ -126,7 +100,6 @@ object LauncherManager {
             error(context.getString(R.string.toast_config_file_invalid))
         }
 
-        // refresh socks port when enabled dynamic socks port
         SettingsManager.refreshRuntimeSocksPort()
 
         if (config.insecure == true && config.pinnedCA256.isNullOrEmpty()) {

@@ -6,10 +6,6 @@ import java.util.Date
 import java.util.LinkedList
 import java.util.Locale
 
-/**
- * In-process log buffer — fallback when logcat is blocked (e.g. MIUI/HyperOS).
- * Intercepts LogUtil calls and stores them in a bounded circular buffer.
- */
 object InProcessLogBuffer {
     private const val MAX_ENTRIES = 2000
     private val buffer: LinkedList<String> = LinkedList()

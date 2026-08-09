@@ -403,7 +403,7 @@
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">proses</string>
-    <string name="routing_settings_process_tip">Pisahin pake koma(,) yak, 
+    <string name="routing_settings_process_tip">Pisahin pake koma(,) yak,
 tinggal pilih mau pake domain, ip, atau proses
 Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+</string>
     <string name="routing_settings_port">port</string>
@@ -548,7 +548,6 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
         <item>WebDAV</item>
     </string-array>
 
-    <!-- New string from new UI-->
     <string name="status">Status</string>
     <string name="import_configuration">Masukin Konfig Baru</string>
     <string name="add_server_manually">Tambah Server Manual Sendiri</string>
@@ -588,8 +587,8 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="indicator_style_title">Pilih Model Indikator</string>
     <string name="pref_indicator_style_title">Model Indikator Server</string>
     <string name="pref_indicator_style_summary">Pilih tampilan indikator buat server yang lagi aktif</string>
-    <string name="summary_navigate_ui_settings">UI umum, tema, tampilan, chip pencarian, blur, banner, suara, dll.</string> 
-    <string name="summary_navigate_vpn_settings">IPv6, keep awake, DNS, HTTP proxy, bypass LAN, interface, MTU, Hev TUN, timer TCP/WS, proxy per aplikasi, mode Root, dll.</string>   
+    <string name="summary_navigate_ui_settings">UI umum, tema, tampilan, chip pencarian, blur, banner, suara, dll.</string>
+    <string name="summary_navigate_vpn_settings">IPv6, keep awake, DNS, HTTP proxy, bypass LAN, interface, MTU, Hev TUN, timer TCP/WS, proxy per aplikasi, mode Root, dll.</string>
     <string name="summary_navigate_core_settings">Sniffing, route only, proxy lokal/sharing, SOCKS, DNS, level log, resolusi domain, file geo, dll.</string>
     <string name="summary_navigate_mux_settings">Status mux, konkurensi, konkurensi XUDP, penanganan QUIC, dll.</string>
     <string name="summary_navigate_fragment_settings">Status fragment, panjang, interval, maxsplit, paket, dll.</string>
@@ -608,7 +607,7 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="menu_item_search_main">Cari konfig</string>
     <string name="title_search_bar_chip">Chip Bar Pencarian</string>
     <string name="pref_show_weather_chip_title">Tampilin info cuaca</string>
-    <string name="pref_show_weather_chip_summary">Tampilin suhu saat ini di sebelah bar pencarian berdasarkan lokasi kamu. Nggak bisa aktif barengan sama chip total traffic</string>    
+    <string name="pref_show_weather_chip_summary">Tampilin suhu saat ini di sebelah bar pencarian berdasarkan lokasi kamu. Nggak bisa aktif barengan sama chip total traffic</string>
     <string name="pref_show_total_traffic_chip_title">Tampilin chip total pemakaian traffic</string>
     <string name="pref_show_total_traffic_chip_summary">Tampilin total traffic upload + download dari semua profil di sebelah bar pencarian. Nggak bisa aktif barengan sama chip info cuaca</string>
     <string name="pref_search_chip_gradient_title">Background chip gradasi</string>
@@ -757,8 +756,7 @@ yang kamu butuhin."</string>
     <string name="uwu_about_version_summary">Klik di sini atau ikon panah buat cari tau lebih lanjut tentang aplikasi ini.</string>
     <string name="uwu_splash_title">Dibuat dengan ❤️\noleh HatsuneMikuUwU Development</string>
     <string name="uwu_splash_summary">Versi %1$s (%2$d)</string>
-    
-    <!-- miku-->
+
      <string name="uwu_miku_gender_title">Jenis Kelamin</string>
     <string name="uwu_miku_gender_summary">Cewek</string>
     <string name="uwu_miku_birthday_title">Ulang Tahun</string>
@@ -773,7 +771,7 @@ yang kamu butuhin."</string>
     <string name="uwu_miku_height_summary">158 cm</string>
     <string name="uwu_about_miku_title">Siapa itu Hatsune Miku?</string>
     <string name="uwu_about_miku_summary">Hatsune Miku itu penyanyi virtual berbasis Vocaloid yang dirilis sama Crypton Future Media, kode namanya CV01. Dikenal gara-gara rambut twintail panjang warna biru kehijauan sama suaranya yang jernih, dia itu cewek 16 tahun dan idola virtual yang terkenal sedunia. Dia aktif di musik, konser, dan anime, plus disayang banget sama fans-fansnya.</string>
-    
+
     <string name="uwu_random_text_1">Hari yang pas buat nyanyi!</string>
     <string name="uwu_random_text_2">Semangat terus hari ini, Master!</string>
     <string name="uwu_random_text_3">"Ayo berjuang! 39!"</string>
@@ -784,18 +782,15 @@ yang kamu butuhin."</string>
     <string name="uwu_random_text_8">Rasain melodinya..!</string>
     <string name="uwu_random_text_9">Tembus nada tertingginya!</string>
     <string name="uwu_random_text_10">Lagi nulis lirik buat Miku?</string>
-    
-    <!-- greeting -->
+
     <string name="uwu_greeting_morning">Met pagi...</string>
     <string name="uwu_greeting_afternoon">Met siang...</string>
     <string name="uwu_greeting_evening">Met sore...</string>
     <string name="uwu_greeting_night">Met malem...</string>
     <string name="uwu_greeting_late_night">"Udah waktunya tidur nih..."</string>
-    
-    <!-- Header banner: username display -->
+
     <string name="uwu_profile_banner_title_custom">Hai, %1$s</string>
-    
-    <!-- Profile banner settings -->
+
     <string name="banner_profile_category">Profil</string>
     <string name="profile_name_custom_title">Nama header</string>
     <string name="profile_name_custom_dialog">Ganti nama tampilan</string>
@@ -805,8 +800,7 @@ yang kamu butuhin."</string>
     <string name="delete_custom_banner_profile">Hapus banner profil kustom</string>
     <string name="delete_custom_banner_profile_summary">Banner kustom dihapus. Bakal balik pakai banner profil bawaan</string>
     <string name="custom_banner_profile_set">Banner profil berhasil diupdate.</string>
-    
-    <!-- Home banner settings -->
+
     <string name="home_banner_category">Banner Beranda</string>
     <string name="home_banner_show_title">Tampilin banner beranda</string>
     <string name="home_banner_show_summary">Tampilin gambar banner di bagian paling atas layar beranda</string>
@@ -817,8 +811,7 @@ yang kamu butuhin."</string>
     <string name="home_banner_updated">Banner beranda berhasil diupdate.</string>
     <string name="pref_home_banner_height_title">Tinggi banner</string>
     <string name="pref_header_top_row_padding_title">Padding atas header</string>
-    
-    <!-- Sheet banner settings -->   	
+
     <string name="sheet_banner_category">Banner Bottomsheet</string>
     <string name="sheet_banner_custom_title">Ganti banner sheet</string>
     <string name="sheet_banner_custom_summary">Pasang gambar kustom buat bottomsheet (opsional)</string>
@@ -838,8 +831,7 @@ yang kamu butuhin."</string>
     <string name="particles_slider_radius_min_label">Radius partikel minimum</string>
     <string name="particles_slider_density_label">Kepadatan partikel</string>
     <string name="particles_slider_speed_factor_label">Faktor kecepatan gerak</string>
-    
-    <!-- Selected profile card banner style -->
+
     <string name="selected_banner_category">Style Profil yang Dipilih</string>
     <string name="selected_banner_enable_title">Style banner buat profil yang dipilih</string>
     <string name="selected_banner_enable_summary">Tampilin gambar banner di belakang kartu server yang aktif. Bakal pakai banner bawaan kalau kamu nggak pasang yang kustom</string>
@@ -854,11 +846,10 @@ yang kamu butuhin."</string>
     <string name="selected_banner_updated">Banner profil yang dipilih berhasil diupdate.</string>
     <string name="pref_indicator_style_summary_disabled_by_banner">Dimatiin selama style banner profil yang dipilih lagi aktif</string>
 
-    <!-- Snackbar notification titles -->
     <string name="title_alerter_info">Info</string>
     <string name="title_alerter_success">Mantap Berhasil</string>
     <string name="title_alerter_error">Yah Gagal</string>
-    
+
     <string name="title_pref_enable_blur">Aktifin Blur</string>
     <string name="summary_pref_enable_blur">Nyalain efek blur di background window</string>
     <string name="title_pref_blur_bottom_status">Blur Card Status Bawah</string>
@@ -872,7 +863,6 @@ yang kamu butuhin."</string>
     <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja dengan radius 25-40.</string>
     <string name="toast_allow_insecure_deprecated">Node ini menggunakan koneksi tanpa enkripsi. Komunikasi Anda berpotensi dapat dilihat langsung oleh infrastruktur jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node semacam ini tidak dapat terhubung melalui Xray core versi 26.2.6+.\nJika ini node buatan sendiri, aktifkan enkripsi keamanan seperti TLS, atau gunakan certificate pinning (pinnedCA256).\nJika ini node dari penyedia layanan, hubungi penyedia untuk melakukan pembaruan teknis. Jika penyedia menolak, disarankan untuk beralih ke penyedia yang lebih memperhatikan keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>
 
-    <!-- WelcomeActivity -->
     <string name="uwu_skip">Lewatin</string>
     <string name="uwu_next">Lanjut</string>
     <string name="uwu_start">Mulai</string>
@@ -883,31 +873,28 @@ yang kamu butuhin."</string>
     <string name="uwu_welcome_page1_desc">Klien V2Ray/Xray Android gratis dan open source.</string>
     <string name="uwu_welcome_page2_desc">Mendukung VLESS, VMess, Trojan, Shadowsocks, dan lainnya.</string>
     <string name="uwu_welcome_page3_desc">Nikmatin internet cepet dan aman dengan balutan desain imut ala Miku.</string>
-    
+
     <string name="sub_setting_tab_icon">Ikon tab</string>
     <string name="sub_setting_tab_icon_hint">Ditampilin di sebelah nama grup di tab bar</string>
     <string name="sub_tab_icon_none">Nggak ada</string>
 
-    <!-- Reset all settings -->
     <string name="title_pref_reset_all_settings">Reset Semua Settingan</string>
     <string name="dialog_reset_settings_title">Reset Semua Settingan?</string>
     <string name="dialog_reset_settings_message">Ini akan mengembalikan semua settingan ke nilai default.\n\nProfil server dan langganan tidak akan dihapus.\n\nTindakan ini tidak dapat dibatalkan.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
-    <string name="reset_settings_success">Settingan telah direset ke default.</string>    
+    <string name="reset_settings_success">Settingan telah direset ke default.</string>
 
-    <!-- SearchPreference (in-module fork) -->
     <string name="searchpreference_search">Cari…</string>
     <string name="searchpreference_clear">Hapus</string>
     <string name="searchpreference_more">Lainnya</string>
     <string name="searchpreference_clear_history">Hapus riwayat</string>
     <string name="searchpreference_no_results">Nggak ada hasil</string>
-    
+
     <string name="title_pref_app_icon">Ikon Aplikasi</string>
     <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh sedikit waktu untuk muncul di layar beranda.</string>
     <string name="title_pref_custom_app_name">Nama Aplikasi</string>
     <string name="summary_pref_custom_app_name">Juga mengubah nama ikon di launcher/app-drawer. Beberapa launcher menyimpan cache nama lama sampai kamu memulai ulang atau reboot.</string>
 
-    <!-- Subjudul toolbar per layar, muncul kalo "Judul toolbar di tengah" dinyalain -->
     <string name="subtitle_server_config">Atur detail koneksi buat server ini</string>
     <string name="subtitle_routing_edit">Tambah atau edit satu aturan routing</string>
     <string name="subtitle_routing_setting">Kelola aturan routing custom kamu</string>

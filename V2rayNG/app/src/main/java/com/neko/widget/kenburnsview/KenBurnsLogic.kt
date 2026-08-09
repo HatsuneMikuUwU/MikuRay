@@ -102,7 +102,7 @@ class RandomTransitionGenerator @JvmOverloads constructor(
 
         mLastGenTrans = Transition(srcRect, dstRect, mTransitionDuration, mTransitionInterpolator)
         mLastDrawableBounds = RectF(drawableBounds)
-        
+
         return mLastGenTrans!!
     }
 
@@ -123,15 +123,15 @@ class RandomTransitionGenerator @JvmOverloads constructor(
 
         val randomFloat = MathUtils.truncate(mRandom.nextFloat(), 2)
         val factor = MIN_RECT_FACTOR + (1 - MIN_RECT_FACTOR) * randomFloat
-        
+
         val width = factor * maxCrop.width()
         val height = factor * maxCrop.height()
         val widthDiff = (drawableBounds.width() - width).toInt()
         val heightDiff = (drawableBounds.height() - height).toInt()
-        
+
         val left = if (widthDiff > 0) mRandom.nextInt(widthDiff).toFloat() else 0f
         val top = if (heightDiff > 0) mRandom.nextInt(heightDiff).toFloat() else 0f
-        
+
         return RectF(left, top, left + width, top + height)
     }
 

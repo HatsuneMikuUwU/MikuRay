@@ -56,14 +56,11 @@ class MainRecyclerAdapter(
         }
     }
 
-    // Re-run onBindViewHolder for every visible item so per-item display prefs
-    // (traffic text, masked address, network/security row) pick up their new value
-    // immediately, without touching item count/order.
     @SuppressLint("NotifyDataSetChanged")
     fun refreshDisplayPrefs() {
         notifyDataSetChanged()
     }
-    
+
     private var isRunningObserver: androidx.lifecycle.Observer<Boolean>? = null
     private var selectedBannerController: SelectedProfileBannerController? = null
 
@@ -122,7 +119,6 @@ class MainRecyclerAdapter(
 
             holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
-            //Name address
             holder.views.tvName.text = profile.remarks
             holder.views.tvStatistics.text = if (profile.configType == EConfigType.POLICYGROUP) {
                 getPolicyGroupSubText(context, profile)
@@ -131,11 +127,9 @@ class MainRecyclerAdapter(
             }
             holder.views.tvType.text = getProtocolName(profile)
 
-            // Network & security icon+text (TCP Fix)
             val isNetSecEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_NETWORK_SECURITY_ENABLED) == true
             bindNetworkSecurity(holder, profile, isNetSecEnabled)
 
-            //TestResult
             val aff = MmkvManager.decodeServerAffiliationInfo(guid)
             holder.views.tvTestResult.text = aff?.getTestDelayString().orEmpty()
             if ((aff?.testDelayMillis ?: 0L) < 0L) {
@@ -146,7 +140,7 @@ class MainRecyclerAdapter(
 
             val isTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRAFFIC_ENABLED) == true
             val trafficStr = MmkvManager.getProfileTrafficString(guid)
-            
+
             if (isTrafficEnabled && !trafficStr.isNullOrEmpty()) {
                 holder.views.tvTraffic.text = trafficStr
                 holder.views.tvTraffic.visibility = View.VISIBLE
@@ -155,12 +149,12 @@ class MainRecyclerAdapter(
             }
 
             val isSelectedServer = (guid == MmkvManager.getSelectServer())
-            val isVpnConnected = mainViewModel.isRunning.value == true 
+            val isVpnConnected = mainViewModel.isRunning.value == true
 
             if (isSelectedServer && isVpnConnected) {
                 holder.views.vStatusDot.setBackgroundResource(R.drawable.blink_color)
                 val blinkAnimDrawable = holder.views.vStatusDot.background
-                
+
                 if (blinkAnimDrawable is android.graphics.drawable.AnimationDrawable) {
                     holder.views.vStatusDot.visibility = View.VISIBLE
                     holder.views.vStatusDot.post {
@@ -178,7 +172,6 @@ class MainRecyclerAdapter(
                 holder.views.vStatusDot.background = null
             }
 
-            //layoutIndicator & Card Background
             if (isGridMode) {
                 selectedBannerController?.clear(holder.views.layoutIndicator)
                 holder.views.layoutIndicator.setBackgroundResource(0)
@@ -219,15 +212,13 @@ class MainRecyclerAdapter(
                 holder.views.layoutCard.setCardBackgroundColor(typedValue.data)
             }
 
-            //subscription remarks
             val subRemarks = getSubscriptionRemarks(profile)
             holder.views.tvSubscription.text = subRemarks
-            
+
             val isSubVisible = if (subRemarks.isEmpty()) View.GONE else View.VISIBLE
             holder.views.tvSubscription.visibility = isSubVisible
             holder.views.layoutSubscription.visibility = isSubVisible
 
-            //layout
             holder.views.layoutShare.visibility = View.VISIBLE
             holder.views.layoutEdit.visibility = View.VISIBLE
             holder.views.layoutRemove.visibility = View.VISIBLE
@@ -239,7 +230,7 @@ class MainRecyclerAdapter(
             holder.views.layoutEdit.setOnClickListener {
                 adapterListener?.onEdit(guid, position, profile)
             }
-            
+
             holder.views.layoutRemove.setOnClickListener {
                 adapterListener?.onRemove(guid, position)
             }
@@ -256,7 +247,7 @@ class MainRecyclerAdapter(
                 MmkvManager.decodeSubscription(profile.subscriptionId)?.remarks
             else
                 null
-        
+
         return subRemarks?.take(5) ?: ""
     }
 

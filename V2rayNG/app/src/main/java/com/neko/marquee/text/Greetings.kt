@@ -20,8 +20,8 @@ class Greetings @JvmOverloads constructor(
     private val timeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action in listOf(
-                    Intent.ACTION_TIME_TICK, 
-                    Intent.ACTION_TIME_CHANGED, 
+                    Intent.ACTION_TIME_TICK,
+                    Intent.ACTION_TIME_CHANGED,
                     Intent.ACTION_TIMEZONE_CHANGED
                 )
             ) {
@@ -74,10 +74,10 @@ class Greetings @JvmOverloads constructor(
             in 19..23 -> R.string.uwu_greeting_night
             else -> R.string.uwu_greeting_late_night
         }
-        
+
         text = context.getString(greetRes)
-        
+
         isSelected = false
-        isSelected = true 
+        isSelected = true
     }
 }

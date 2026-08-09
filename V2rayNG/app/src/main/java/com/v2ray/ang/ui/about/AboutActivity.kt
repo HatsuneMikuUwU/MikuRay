@@ -17,7 +17,7 @@ class AboutActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
 
         binding.aboutContent.applyEdgeToEdgeListInsets()

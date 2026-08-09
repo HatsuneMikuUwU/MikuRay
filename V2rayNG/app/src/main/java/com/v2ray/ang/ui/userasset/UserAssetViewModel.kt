@@ -46,7 +46,6 @@ class UserAssetViewModel : ViewModel() {
                     )
                 )
             }
-        // Force update URL for geoip-only-cn-private.dat
         return (builtInItems + savedAssets).map { cache ->
             if (cache.assetUrl.remarks == AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT) {
                 cache.copy(

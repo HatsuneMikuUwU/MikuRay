@@ -86,11 +86,11 @@ class KenBurnsView @JvmOverloads constructor(
                     val widthScale = mDrawableRect!!.width() / currentRect.width()
                     val heightScale = mDrawableRect!!.height() / currentRect.height()
                     val currRectToDrwScale = min(widthScale, heightScale)
-                    
+
                     val vpWidthScale = mViewportRect.width() / currentRect.width()
                     val vpHeightScale = mViewportRect.height() / currentRect.height()
                     val currRectToVpScale = min(vpWidthScale, vpHeightScale)
-                    
+
                     val totalScale = currRectToDrwScale * currRectToVpScale
 
                     val translX = totalScale * (mDrawableRect!!.centerX() - currentRect.left)

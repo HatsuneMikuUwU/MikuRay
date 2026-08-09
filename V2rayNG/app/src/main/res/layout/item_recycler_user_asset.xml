@@ -68,7 +68,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:contentDescription="@string/menu_item_edit_config"
-                        android:background="@drawable/bg_icon_button" 
+                        android:background="@drawable/bg_icon_button"
                         android:focusable="true"
                         app:srcCompat="@drawable/ic_edit_color"
                         app:tint="@null" />
@@ -78,7 +78,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:contentDescription="@string/menu_item_del_config"
-                        android:background="@drawable/bg_icon_button" 
+                        android:background="@drawable/bg_icon_button"
                         android:focusable="true"
                         app:srcCompat="@drawable/ic_delete_empty"
                         app:tint="?attr/colorError" />

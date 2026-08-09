@@ -9,13 +9,6 @@ import java.util.Locale
 
 open class MyContextWrapper(base: Context?) : ContextWrapper(base) {
     companion object {
-        /**
-         * Wraps the context with a new locale.
-         *
-         * @param context The original context.
-         * @param newLocale The new locale to set.
-         * @return A ContextWrapper with the new locale.
-         */
         fun wrap(context: Context, newLocale: Locale?): ContextWrapper {
             var mContext = context
             val res: Resources = mContext.resources

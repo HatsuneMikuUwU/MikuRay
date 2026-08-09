@@ -111,11 +111,6 @@ class VpnSettingsActivity : BaseActivity() {
             applyEdgeToEdgeListInsets()
         }
 
-        /**
-         * Probes for root access off the main thread (spawns su, can block briefly) and
-         * surfaces a snackbar if it's not available. Used to gate the Root mode and LAN
-         * sharing toggles so they can't be left on without root actually being granted.
-         */
         private suspend fun checkAndRequestRoot(): Boolean {
             val hasRoot = RootManager.refresh()
             if (!isAdded) return false

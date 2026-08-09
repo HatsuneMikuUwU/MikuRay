@@ -9,9 +9,6 @@ import com.v2ray.ang.R
 import com.v2ray.ang.enums.PermissionType
 import com.v2ray.ang.extension.snackbarDefault
 
-/**
- * Helper for requesting permissions.
- */
 class PermissionHelper(private val activity: AppCompatActivity) {
     private var permissionCallback: ((Boolean) -> Unit)? = null
 
@@ -22,12 +19,6 @@ class PermissionHelper(private val activity: AppCompatActivity) {
             permissionCallback = null
         }
 
-    /**
-     * Check the permission and request it if not granted.
-     *
-     * @param permissionType the type of permission
-     * @param onGranted called when permission is granted (called immediately if already granted)
-     */
     fun request(permissionType: PermissionType, onGranted: () -> Unit) {
         val permissions = permissionType.getPermissions()
         val alreadyGranted = permissions.any {

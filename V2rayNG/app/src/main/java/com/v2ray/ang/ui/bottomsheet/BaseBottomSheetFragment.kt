@@ -21,7 +21,7 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
             WindowBlurUtils.applyWindowBlur(window)
             window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
-        
+
         val bottomSheet = sheetDialog.findViewById<android.view.View>(
             com.google.android.material.R.id.design_bottom_sheet
         ) ?: return
@@ -36,9 +36,9 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
         ViewCompat.setOnApplyWindowInsetsListener(bottomSheet) { view, insets ->
             val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            
+
             val screenHeight = view.resources.displayMetrics.heightPixels
-            val baseSizePx = (8 * view.resources.displayMetrics.density).toInt() 
+            val baseSizePx = (8 * view.resources.displayMetrics.density).toInt()
 
             sheetDialog.behavior.maxHeight = screenHeight - statusBarInset - baseSizePx
 

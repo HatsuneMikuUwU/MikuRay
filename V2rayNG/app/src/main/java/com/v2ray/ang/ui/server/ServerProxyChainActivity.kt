@@ -44,11 +44,11 @@ class ServerProxyChainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
-        
+
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.PROXYCHAIN.toString(), subtitle = getString(R.string.subtitle_server_config))
@@ -183,7 +183,6 @@ class ServerProxyChainActivity : BaseActivity() {
 
     private inner class ActivityAdapterListener : BaseAdapterListener {
         override fun onEdit(guid: String, position: Int) {
-            // Row selection is handled directly by AutoCompleteTextView in the adapter.
         }
 
         override fun onRemove(guid: String, position: Int) {
@@ -224,5 +223,5 @@ class ServerProxyChainActivity : BaseActivity() {
 
         else -> super.onOptionsItemSelected(item)
     }
- 
+
 }

@@ -7,11 +7,6 @@ import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.util.LogUtil
 
-/**
- * PreferenceDataStore implementation that bridges AndroidX Preference framework to MMKV storage.
- * This ensures that all Preference UI operations read/write directly from/to MMKV,
- * avoiding inconsistencies between SharedPreferences and MMKV.
- */
 class MmkvPreferenceDataStore : PreferenceDataStore() {
 
     override fun putString(key: String, value: String?) {
@@ -72,21 +67,15 @@ class MmkvPreferenceDataStore : PreferenceDataStore() {
         return MmkvManager.decodeSettingsStringSet(key) ?: defaultValues
     }
 
-    // Internal helper: notify other modules about setting changes
     private fun notifySettingChanged(key: String) {
         if (key == AppConfig.PREF_LOGLEVEL) {
             LogUtil.refreshLogLevel()
         }
 
-        // Call SettingsManager.setNightMode if UI mode changed
         if (key == AppConfig.PREF_UI_MODE_NIGHT) {
             SettingsManager.setNightMode()
         }
 
-        // These only affect how each server item is rendered (traffic text, masked
-        // address, network/security row) or how the list is laid out (grid columns) —
-        // no service restart or tab rebuild needed, just a rebind of every group list
-        // that's already been created.
         if (key == AppConfig.PREF_TRAFFIC_ENABLED ||
             key == AppConfig.PREF_DISABLE_SENSOR_TEXT ||
             key == AppConfig.PREF_NETWORK_SECURITY_ENABLED ||
@@ -95,7 +84,6 @@ class MmkvPreferenceDataStore : PreferenceDataStore() {
             SettingsChangeManager.makeRefreshDisplayPrefs()
         }
 
-        // Notify listeners that require service restart or reinit
         SettingsChangeManager.makeRestartService()
         SettingsChangeManager.makeSetupGroupTab()
     }

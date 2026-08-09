@@ -135,11 +135,6 @@ public class SearchPreferenceFragment extends Fragment implements SearchPreferen
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             androidx.core.graphics.Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
-            // Only apply the top status-bar inset when this fragment's own search bar
-            // is shown (i.e. it's a true fullscreen overlay). When the search bar is
-            // disabled, the fragment is hosted inline below an existing toolbar/AppBarLayout
-            // that already accounts for the top inset, so adding it again here just creates
-            // an oversized gap between the host's search bar and the results list.
             int topInset = searchConfiguration.isSearchBarEnabled()
                 ? Math.max(systemBars.top, cutout.top)
                 : 0;

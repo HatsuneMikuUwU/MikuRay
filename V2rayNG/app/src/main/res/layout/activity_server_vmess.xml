@@ -201,9 +201,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_spacing_dp16">
-                    
+
                     <include layout="@layout/layout_transport" />
-                    
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -250,9 +250,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_spacing_dp16">
-                    
+
                     <include layout="@layout/layout_tls" />
-                    
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

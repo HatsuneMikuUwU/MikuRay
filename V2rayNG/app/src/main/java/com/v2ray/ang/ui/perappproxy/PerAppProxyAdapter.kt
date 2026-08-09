@@ -62,7 +62,7 @@ class PerAppProxyAdapter(
             }
 
             itemBypassBinding.packageName.text = appInfo.packageName
-            
+
             itemBypassBinding.switchButton.isChecked = viewModel.contains(appInfo.packageName)
 
             itemView.setOnClickListener(this)
@@ -71,7 +71,7 @@ class PerAppProxyAdapter(
         override fun onClick(v: View?) {
             val packageName = appInfo.packageName
             viewModel.toggle(packageName)
-            
+
             itemBypassBinding.switchButton.isChecked = viewModel.contains(packageName)
         }
     }

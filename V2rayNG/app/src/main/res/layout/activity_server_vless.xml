@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            	
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_id">
-                        
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id"
                             android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_flow">
-                        
+
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/sp_flow"
                             android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_encryption">
-                        
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_security"
                             android:layout_width="match_parent"
@@ -177,7 +177,7 @@
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -221,12 +221,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_spacing_dp16">
-                    
+
                     <include layout="@layout/layout_transport" />
-                    
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -270,9 +270,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_spacing_dp16">
-                    
+
                     <include layout="@layout/layout_tls" />
-                    
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

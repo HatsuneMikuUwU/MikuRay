@@ -43,13 +43,13 @@
                     android:layout_weight="1.0"
                     android:paddingStart="8.0dip"
                     android:paddingEnd="8.0dip">
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-                        
+
                         <TextView
                             android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:textSize="17.0sp"
@@ -60,7 +60,7 @@
                             android:layout_weight="1.0"
                             android:ellipsize="end"
                             android:maxLines="1" />
-                            
+
                         <View
                             android:id="@+id/v_status_dot"
                             android:layout_width="10dp"
@@ -69,7 +69,7 @@
                             android:layout_marginEnd="0dp"
                             android:visibility="gone" />
                     </LinearLayout>
-                    
+
                     <LinearLayout
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -120,7 +120,7 @@
                                 android:layout_width="40.0dip"
                                 android:layout_height="40.0dip"
                                 android:contentDescription="@string/title_configuration_share"
-                                android:background="@drawable/bg_icon_button" 
+                                android:background="@drawable/bg_icon_button"
                                 android:focusable="true"
                                 app:srcCompat="@drawable/ic_share_color"
                                 app:tint="@null" />
@@ -129,7 +129,7 @@
                                 android:layout_width="40.0dip"
                                 android:layout_height="40.0dip"
                                 android:contentDescription="@string/menu_item_edit_config"
-                                android:background="@drawable/bg_icon_button" 
+                                android:background="@drawable/bg_icon_button"
                                 android:focusable="true"
                                 app:srcCompat="@drawable/ic_edit_color"
                                 app:tint="@null" />
@@ -138,13 +138,13 @@
                                 android:layout_width="40.0dip"
                                 android:layout_height="40.0dip"
                                 android:contentDescription="@string/menu_item_del_config"
-                                android:background="@drawable/bg_icon_button" 
+                                android:background="@drawable/bg_icon_button"
                                 android:focusable="true"
                                 app:srcCompat="@drawable/ic_delete_empty"
                                 app:tint="?colorError" />
                         </LinearLayout>
                     </LinearLayout>
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                             android:layout_marginStart="8.0dip"
                             android:lines="1" />
                     </LinearLayout>
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -10,27 +10,11 @@ import androidx.core.app.NotificationCompat
 import com.v2ray.ang.R
 import com.v2ray.ang.enums.NotificationChannelType
 
-/**
- * Unified notification helper for different notification channels.
- * Supports both regular notifications and foreground service notifications.
- *
- * Performance: NotificationManager is cached. Builder is created once per update.
- * Safe for high-frequency updates (100+ times/second).
- */
 object NotificationHelper {
 
-    // Cached instances for performance
     private var cachedNotificationManager: NotificationManager? = null
     private val builderCache = mutableMapOf<Int, NotificationCompat.Builder>()
 
-    /**
-     * Notify with a regular notification (non-foreground).
-     *
-     * @param channelType The notification channel type (defines channelId, notificationId, etc.)
-     * @param context The context for building the notification
-     * @param title The notification title
-     * @param content The notification content text
-     */
     fun notify(
         channelType: NotificationChannelType,
         context: Context,
@@ -43,15 +27,6 @@ object NotificationHelper {
         notificationManager.notify(channelType.notificationId, builder.build())
     }
 
-    /**
-     * Update an existing notification's content.
-     * Optimized for high-frequency updates (100+/sec).
-     * Reuses cached Builder to minimize allocation overhead.
-     *
-     * @param channelType The notification channel type
-     * @param context The context
-     * @param content The new content text
-     */
     fun updateNotification(
         channelType: NotificationChannelType,
         context: Context,
@@ -60,25 +35,14 @@ object NotificationHelper {
     ) {
         val notificationManager = getNotificationManager(context)
 
-        // Get or create builder from cache
         val builder = builderCache.getOrPut(channelType.notificationId) {
             buildNotificationBuilder(channelType, context, title, content)
         }
 
-        // Update only the content text (fast operation)
         builder.setContentText(content)
         notificationManager.notify(channelType.notificationId, builder.build())
     }
 
-    /**
-     * Start a foreground service with a notification.
-     *
-     * @param service The service to set as foreground
-     * @param channelType The notification channel type
-     * @param title The notification title
-     * @param content The notification content text
-     * @param action An optional action retained when the notification is updated
-     */
     fun startForeground(
         service: Service,
         channelType: NotificationChannelType,
@@ -92,30 +56,18 @@ object NotificationHelper {
         service.startForeground(channelType.notificationId, builder.build())
     }
 
-    /**
-     * Stop the foreground notification for a service.
-     *
-     * @param service The service to stop foreground on
-     */
     fun stopForeground(service: Service) {
         service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
     }
 
-    /**
-     * Cancel a notification and clean up cached builder.
-     *
-     * @param channelType The notification channel type
-     * @param context The context
-     */
     fun cancel(
         channelType: NotificationChannelType,
         context: Context
     ) {
         getNotificationManager(context).cancel(channelType.notificationId)
-        builderCache.remove(channelType.notificationId)  // Clean up cache
+        builderCache.remove(channelType.notificationId)
     }
 
-    // ====== Private helper methods ======
 
     private fun getNotificationManager(context: Context): NotificationManager {
         if (cachedNotificationManager == null) {

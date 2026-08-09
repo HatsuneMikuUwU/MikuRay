@@ -22,7 +22,6 @@ import java.util.Collections
 
 class CoreTestService : Service() {
 
-    // manage active batch workers so each batch is independent and cancellable
     private val activeWorkers = Collections.synchronizedList(mutableListOf<RealPingWorkerService>())
     private val cancelAction by lazy {
         val intent = Intent(this, CoreTestService::class.java).putExtra(
@@ -42,29 +41,17 @@ class CoreTestService : Service() {
         ).build()
     }
 
-    /**
-     * Initializes the V2Ray environment.
-     */
     override fun onCreate() {
         super.onCreate()
         CoreNativeManager.initCoreEnv(this)
     }
 
-    /**
-     * Binds the service.
-     * @param intent The intent.
-     * @return The binder.
-     */
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
-    /**
-     * Cleans up resources when the service is destroyed.
-     */
     override fun onDestroy() {
         LogUtil.i(AppConfig.TAG, "CoreTestService is being destroyed, cancelling ${activeWorkers.size} active workers")
-        // cancel any active workers
         val snapshot = ArrayList(activeWorkers)
         snapshot.forEach { it.cancel() }
         activeWorkers.clear()
@@ -72,13 +59,6 @@ class CoreTestService : Service() {
         super.onDestroy()
     }
 
-    /**
-     * Handles the start command for the service.
-     * @param intent The intent.
-     * @param flags The flags.
-     * @param startId The start ID.
-     * @return The start mode.
-     */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationHelper.startForeground(
             this,

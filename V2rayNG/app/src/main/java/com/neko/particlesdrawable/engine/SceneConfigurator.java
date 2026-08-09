@@ -16,11 +16,11 @@ public final class SceneConfigurator {
 
     public void configureSceneFromAttributes(
             @NonNull final SceneConfiguration scene,
-            @NonNull final Context context, 
+            @NonNull final Context context,
             @NonNull final AttributeSet attrs) {
-            
+
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ParticlesView);
-        
+
         try {
             final int count = a.getIndexCount();
             float particleRadiusMax = Defaults.PARTICLE_RADIUS_MAX;

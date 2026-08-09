@@ -85,10 +85,6 @@ public class SearchPreference extends Preference implements View.OnClickListener
         getSearchConfiguration().showSearchFragment();
     }
 
-    /**
-     * Returns the search configuration object for this preference
-     * @return The search configuration
-     */
     public SearchConfiguration getSearchConfiguration() {
         return searchConfiguration;
     }

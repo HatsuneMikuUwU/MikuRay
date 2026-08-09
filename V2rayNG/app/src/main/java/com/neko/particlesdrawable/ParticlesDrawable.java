@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2017 Yaroslav Mytkalyk
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.neko.particlesdrawable;
 
 import android.content.res.Resources;
@@ -48,9 +33,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-/**
- * The Particles Drawable
- */
 @Keep
 public class ParticlesDrawable extends Drawable implements
         Animatable,
@@ -58,31 +40,15 @@ public class ParticlesDrawable extends Drawable implements
         SceneController,
         SceneScheduler {
 
-    // Fields below cannot be final because it would not allow replacing them with mocks for testing
 
-    /**
-     * @noinspection FieldMayBeFinal
-     */
     private CanvasSceneRenderer canvasRenderer = new CanvasSceneRenderer();
 
-    /**
-     * @noinspection FieldMayBeFinal
-     */
     private Scene scene = new Scene();
 
-    /**
-     * @noinspection FieldMayBeFinal
-     */
     private SceneConfigurator sceneConfigurator = new SceneConfigurator();
 
-    /**
-     * @noinspection FieldMayBeFinal
-     */
     private SceneRenderer renderer = new DefaultSceneRenderer(canvasRenderer);
 
-    /**
-     * @noinspection FieldMayBeFinal
-     */
     private Engine engine = new Engine(scene, this, renderer);
 
     @Override
@@ -92,7 +58,7 @@ public class ParticlesDrawable extends Drawable implements
             @NonNull final AttributeSet attrs,
             @Nullable final Resources.Theme theme) throws XmlPullParserException, IOException {
         super.inflate(r, parser, attrs, theme);
-        
+
         final TypedArray a;
         if (theme != null) {
             a = theme.obtainStyledAttributes(attrs, R.styleable.ParticlesView, 0, 0);
@@ -104,7 +70,7 @@ public class ParticlesDrawable extends Drawable implements
             final int count = a.getIndexCount();
             float particleRadiusMax = Defaults.PARTICLE_RADIUS_MAX;
             float particleRadiusMin = Defaults.PARTICLE_RADIUS_MIN;
-            
+
             for (int i = 0; i < count; i++) {
                 final int attr = a.getIndex(i);
                 if (attr == R.styleable.ParticlesView_density) {
@@ -201,65 +167,41 @@ public class ParticlesDrawable extends Drawable implements
         return engine.isRunning();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void nextFrame() {
         engine.nextFrame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrame() {
         engine.makeFreshFrame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void makeFreshFrameWithParticlesOffscreen() {
         engine.makeFreshFrameWithParticlesOffscreen();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setFrameDelay(@IntRange(from = 0) final int delay) {
         scene.setFrameDelay(delay);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getFrameDelay() {
         return scene.getFrameDelay();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setSpeedFactor(@FloatRange(from = 0) final float speedFactor) {
         scene.setSpeedFactor(speedFactor);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getSpeedFactor() {
         return scene.getSpeedFactor();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setParticleRadiusRange(
             @FloatRange(from = 0.5f) final float minRadius,
@@ -267,95 +209,59 @@ public class ParticlesDrawable extends Drawable implements
         scene.setParticleRadiusRange(minRadius, maxRadius);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMin() {
         return scene.getParticleRadiusMin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getParticleRadiusMax() {
         return scene.getParticleRadiusMax();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineThickness(@FloatRange(from = 1) final float lineThickness) {
         scene.setLineThickness(lineThickness);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineThickness() {
         return scene.getLineThickness();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineLength(@FloatRange(from = 0) final float lineLength) {
         scene.setLineLength(lineLength);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public float getLineLength() {
         return scene.getLineLength();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setDensity(@IntRange(from = 0) final int newNum) {
         scene.setDensity(newNum);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getDensity() {
         return scene.getDensity();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setParticleColor(@ColorInt final int color) {
         scene.setParticleColor(color);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getParticleColor() {
         return scene.getParticleColor();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setLineColor(@ColorInt final int lineColor) {
         scene.setLineColor(lineColor);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getLineColor() {
         return scene.getLineColor();

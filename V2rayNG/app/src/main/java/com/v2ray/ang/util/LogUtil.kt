@@ -66,8 +66,6 @@ object LogUtil {
             else -> Log.v(tag, message, throwable)
         }
 
-        // Feed into in-process buffer as fallback for devices (e.g. MIUI/HyperOS)
-        // where logcat exec is blocked for third-party apps.
         InProcessLogBuffer.append(priority, tag, fullMessage)
     }
 

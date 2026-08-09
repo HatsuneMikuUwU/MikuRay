@@ -37,11 +37,11 @@ class ServerCustomConfigActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(binding.root)
-        
+
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
-        
+
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.CUSTOM.toString(), subtitle = getString(R.string.subtitle_server_config))
@@ -58,9 +58,6 @@ class ServerCustomConfigActivity : BaseActivity() {
         }
     }
 
-    /**
-     * Binding selected server config
-     */
     private fun bindingServer(config: ProfileItem): Boolean {
         binding.etRemarks.text = Utils.getEditable(config.remarks)
         val raw = MmkvManager.decodeServerRaw(editGuid)
@@ -70,17 +67,11 @@ class ServerCustomConfigActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * clear or init server config
-     */
     private fun clearServer(): Boolean {
         binding.etRemarks.text = null
         return true
     }
 
-    /**
-     * save server config
-     */
     private fun saveServer(): Boolean {
         if (TextUtils.isEmpty(binding.etRemarks.text.toString())) {
             snackbarError(
@@ -115,9 +106,6 @@ class ServerCustomConfigActivity : BaseActivity() {
         return true
     }
 
-    /**
-     * delete server config
-     */
     private fun deleteServer(): Boolean {
         if (editGuid.isNotEmpty()) {
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
@@ -158,5 +146,5 @@ class ServerCustomConfigActivity : BaseActivity() {
 
         else -> super.onOptionsItemSelected(item)
     }
- 
+
 }

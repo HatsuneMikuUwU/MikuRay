@@ -12,7 +12,6 @@
         android:paddingHorizontal="8dp"
         android:paddingVertical="12dp">
 
-        <!-- Frame delay -->
         <TextView
             android:id="@+id/text_label_frame_delay"
             android:layout_width="match_parent"
@@ -27,7 +26,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Line length -->
         <TextView
             android:id="@+id/text_label_line_length"
             android:layout_width="match_parent"
@@ -43,7 +41,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Line thickness -->
         <TextView
             android:id="@+id/text_label_line_thickness"
             android:layout_width="match_parent"
@@ -59,7 +56,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Particle radius max -->
         <TextView
             android:id="@+id/text_label_radius_max"
             android:layout_width="match_parent"
@@ -75,7 +71,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Particle radius min -->
         <TextView
             android:id="@+id/text_label_radius_min"
             android:layout_width="match_parent"
@@ -91,7 +86,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Density -->
         <TextView
             android:id="@+id/text_label_density"
             android:layout_width="match_parent"
@@ -107,7 +101,6 @@
             app:labelBehavior="floating"
             app:tickVisibilityMode="hidden" />
 
-        <!-- Speed factor -->
         <TextView
             android:id="@+id/text_label_speed_factor"
             android:layout_width="match_parent"

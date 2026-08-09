@@ -67,20 +67,19 @@ class SplashActivity : BaseActivity() {
 
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
-        
+
         val options = ActivityOptionsCompat.makeCustomAnimation(
             this,
             R.anim.fade_in,
             R.anim.fade_out
         )
-        
+
         startActivity(intent, options.toBundle())
-        
+
         finish()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // block back press during splash
     }
 }
