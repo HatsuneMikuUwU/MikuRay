@@ -36,7 +36,6 @@ import libv2ray.CoreCallbackHandler
 import libv2ray.CoreController
 import libv2ray.ProcessFinder
 import java.io.File
-import java.lang.ref.SoftReference
 import java.net.InetSocketAddress
 
 object CoreServiceManager {
@@ -54,16 +53,37 @@ object CoreServiceManager {
     /** Tun descriptor the core was started with, null in the proxy only and root run modes. */
     private var currentVpnInterface: ParcelFileDescriptor? = null
 
-    var serviceControl: SoftReference<ServiceControl>? = null
+    // NOTE: this used to be a SoftReference<ServiceControl>. The daemon process
+    // (:RunSoLibV2RayDaemon) can come under enough memory pressure while a large/complex
+    // custom routing config is being built (first run especially, with cold geosite/geoip
+    // caches) that ART reclaims SoftReferences well before the Service itself is destroyed.
+    // When that happened, serviceControl?.get() silently returned null and every subsequent
+    // MSG_STATE_STOP / MSG_MEASURE_DELAY / MSG_REGISTER_CLIENT broadcast from the UI was
+    // dropped with no log and no user-visible error - the FAB and bottom status card looked
+    // "unresponsive" even though the receiver itself was alive and firing. A plain strong
+    // reference is safe here because we explicitly null it out in each service's onDestroy()
+    // via clearServiceControl(), so it never outlives the Service.
+    var serviceControl: ServiceControl? = null
         set(value) {
             field = value
-            val service = value?.get()?.getService()
+            val service = value?.getService()
             CoreNativeManager.initCoreEnv(service)
             if (service != null && processFinder == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 processFinder = XrayProcessFinder(service)
                 coreController.registerProcessFinder(processFinder)
             }
         }
+
+    /**
+     * Clears [serviceControl] from a service's onDestroy(), but only if it still points at
+     * that same instance - guards against a just-created replacement service (e.g. during a
+     * quick restart) being wiped out by the old instance's onDestroy() running afterward.
+     */
+    fun clearServiceControl(instance: ServiceControl) {
+        if (serviceControl === instance) {
+            serviceControl = null
+        }
+    }
 
     /**
      * Checks if the V2Ray service is running.
@@ -239,7 +259,7 @@ object CoreServiceManager {
         val connectivity = service.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return
         networkMonitor = NetworkMonitor(
             connectivity = connectivity,
-            onUnderlyingNetworksChanged = { networks -> serviceControl?.get()?.setUnderlyingNetworks(networks) },
+            onUnderlyingNetworksChanged = { networks -> serviceControl?.setUnderlyingNetworks(networks) },
             onHandover = { reloadCore() },
         ).also { it.register() }
     }
@@ -372,7 +392,7 @@ object CoreServiceManager {
      * @return The current service instance, or null if not available.
      */
     private fun getService(): Service? {
-        return serviceControl?.get()?.getService()
+        return serviceControl?.getService()
     }
 
     /**
@@ -393,7 +413,7 @@ object CoreServiceManager {
          * @return 0 for success, any other value for failure.
          */
         override fun shutdown(): Long {
-            val serviceControl = serviceControl?.get() ?: return -1
+            val serviceControl = serviceControl ?: return -1
             return try {
                 serviceControl.stopService()
                 0
@@ -463,7 +483,13 @@ object CoreServiceManager {
          * @param intent The intent being received.
          */
         override fun onReceive(ctx: Context?, intent: Intent?) {
-            val serviceControl = serviceControl?.get() ?: return
+            val serviceControl = serviceControl ?: run {
+                LogUtil.w(
+                    AppConfig.TAG,
+                    "StartCore-Manager: Dropped msg key=${intent?.getIntExtra("key", 0)}, serviceControl is null"
+                )
+                return
+            }
             when (intent?.getIntExtra("key", 0)) {
                 AppConfig.MSG_REGISTER_CLIENT -> {
                     if (isRunning()) {

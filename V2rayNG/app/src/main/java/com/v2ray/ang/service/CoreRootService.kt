@@ -21,7 +21,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.lang.ref.SoftReference
 
 /**
  * Foreground service for Root mode (system-wide proxy without VpnService).
@@ -42,7 +41,7 @@ class CoreRootService : Service(), ServiceControl {
     override fun onCreate() {
         super.onCreate()
         LogUtil.i(AppConfig.TAG, "StartCore-Root: Service created")
-        CoreServiceManager.serviceControl = SoftReference(this)
+        CoreServiceManager.serviceControl = this
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -54,8 +53,10 @@ class CoreRootService : Service(), ServiceControl {
         // Start core first so the SOCKS inbound is ready before hev connects to it.
         // startCoreLoop() blocks on native core startup, so it's folded into the same
         // async job as the iptables/tun/hev setup below instead of running on
-        // onStartCommand's main thread — otherwise it stalls the (same-process) app UI
-        // for however long that takes.
+        // onStartCommand's main thread — this service runs in its own :RunSoLibV2RayDaemon
+        // process (see manifest), so this doesn't block the app UI, but it would still
+        // delay this service's own broadcast receiver registration in doStartCoreLoop()
+        // if left on the main thread.
         setupJob = CoroutineScope(Dispatchers.IO).launch {
             if (!CoreServiceManager.startCoreLoop(null)) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
@@ -85,6 +86,7 @@ class CoreRootService : Service(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.i(AppConfig.TAG, "StartCore-Root: Service destroyed")
+        CoreServiceManager.clearServiceControl(this)
         if (isRunning) {
             stopAllService(isForced = false)
         }

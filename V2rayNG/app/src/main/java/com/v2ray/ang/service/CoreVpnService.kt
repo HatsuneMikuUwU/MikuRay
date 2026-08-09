@@ -33,7 +33,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.ref.SoftReference
 import java.util.concurrent.atomic.AtomicBoolean
 
 @SuppressLint("VpnServicePolicy")
@@ -57,7 +56,7 @@ class CoreVpnService : VpnService(), ServiceControl {
         LogUtil.i(AppConfig.TAG, "StartCore-VPN: Service created")
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        CoreServiceManager.serviceControl = SoftReference(this)
+        CoreServiceManager.serviceControl = this
     }
 
     override fun onRevoke() {
@@ -73,6 +72,7 @@ class CoreVpnService : VpnService(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.i(AppConfig.TAG, "StartCore-VPN: Service destroyed")
+        CoreServiceManager.clearServiceControl(this)
 
         // Ensure VPN interface is properly closed when the service is destroyed without
         // going through stopAllService() (e.g. when killed unexpectedly). isRunning is

@@ -178,6 +178,7 @@ class MainActivity : HelperBaseActivity(),
         UrlTestProgressDialogController(this) { mainViewModel.cancelRealPingTest() }
     }
     private var lastTrafficSpeedText: String = ""
+    private var lastTestResultText: String = ""
 
     private fun refreshIpStateText() {
         val showRealtimeTraffic = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)
@@ -199,6 +200,10 @@ class MainActivity : HelperBaseActivity(),
         if (SettingsChangeManager.consumeRefreshDisplayPrefs()) {
             refreshAllGroupListDisplays()
         }
+        // Self-heal: if a state broadcast from the daemon was missed while we were away
+        // (or during a slow VPN start), this re-syncs isRunning so the FAB / bottom status
+        // card don't stay stuck reflecting a stale state.
+        mainViewModel.resyncState()
     }
 
     // Rebind every already-created group tab's list (not just the one currently
@@ -649,7 +654,10 @@ class MainActivity : HelperBaseActivity(),
             }
         }
         mainViewModel.updateGroupBadgeAction.observe(this) { refreshTabBadges() }
-        mainViewModel.updateTestResultAction.observe(this) { setTestState(it) }
+        mainViewModel.updateTestResultAction.observe(this) {
+            lastTestResultText = it.orEmpty()
+            setTestState(it)
+        }
         mainViewModel.testProgressAction.observe(this) { info ->
             if (info == null) {
                 urlTestProgressDialog.finish()
@@ -861,7 +869,7 @@ class MainActivity : HelperBaseActivity(),
             binding.fab.contentDescription = getString(R.string.action_stop_service)
             binding.fabNoBlur.setImageResource(R.drawable.ic_stop_24dp)
             binding.fabNoBlur.contentDescription = getString(R.string.action_stop_service)
-            setTestState(getString(R.string.connection_connected))
+            setTestState(lastTestResultText.ifEmpty { getString(R.string.connection_connected) })
             binding.cardBottomStatus.isFocusable = true
         } else {
             binding.fab.setImageResource(R.drawable.ic_play_24dp)
@@ -869,6 +877,7 @@ class MainActivity : HelperBaseActivity(),
             binding.fabNoBlur.setImageResource(R.drawable.ic_play_24dp)
             binding.fabNoBlur.contentDescription = getString(R.string.tasker_start_service)
             setTestState(getString(R.string.connection_not_connected))
+            lastTestResultText = ""
             lastTrafficSpeedText = ""
             lastIpStateText = getString(R.string.ip_unknown)
             refreshIpStateText()

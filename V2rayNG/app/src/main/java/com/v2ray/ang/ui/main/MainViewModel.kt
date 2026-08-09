@@ -61,6 +61,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
+     * Re-queries the daemon for the current running state without resetting [isRunning]
+     * first (unlike [startListenBroadcast]). Safe to call repeatedly (e.g. from onResume) -
+     * it's a cheap one-shot request/response, not a poller. Exists so a missed
+     * MSG_STATE_RUNNING/MSG_STATE_START_SUCCESS broadcast (e.g. the daemon process was
+     * briefly unreachable) self-corrects the next time the user is back on this screen,
+     * instead of leaving the FAB/status card stuck reflecting a stale state.
+     */
+    fun resyncState() {
+        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+    }
+
+    /**
      * Called when the ViewModel is cleared.
      */
     override fun onCleared() {

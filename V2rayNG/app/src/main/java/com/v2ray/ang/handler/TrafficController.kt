@@ -122,5 +122,5 @@ object TrafficController {
     }
 
     private fun getService(): Service? =
-        CoreServiceManager.serviceControl?.get()?.getService()
+        CoreServiceManager.serviceControl?.getService()
 }

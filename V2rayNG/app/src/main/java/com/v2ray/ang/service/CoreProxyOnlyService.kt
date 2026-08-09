@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import java.lang.ref.SoftReference
 
 class CoreProxyOnlyService : Service(), ServiceControl {
     // startCoreLoop() blocks on the native core startup; keep it off onStartCommand's
@@ -28,7 +27,7 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     override fun onCreate() {
         super.onCreate()
         LogUtil.i(AppConfig.TAG, "StartCore-Proxy: Service created")
-        CoreServiceManager.serviceControl = SoftReference(this)
+        CoreServiceManager.serviceControl = this
     }
 
     /**
@@ -53,6 +52,7 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         CoreServiceManager.stopCoreLoop()
+        CoreServiceManager.clearServiceControl(this)
         serviceScope.cancel()
     }
 

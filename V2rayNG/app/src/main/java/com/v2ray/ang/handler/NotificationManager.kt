@@ -261,6 +261,6 @@ object NotificationManager : TrafficController.Listener {
     }
 
     private fun getService(): Service? {
-        return CoreServiceManager.serviceControl?.get()?.getService()
+        return CoreServiceManager.serviceControl?.getService()
     }
 }
