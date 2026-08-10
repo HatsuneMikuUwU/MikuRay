@@ -6,12 +6,18 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
+import android.provider.Settings
 import java.util.Locale
 
 /**
  * Detects OEM-specific battery/autostart managers (Xiaomi, Oppo, Samsung, Huawei, etc.) and
  * navigates the user to the relevant whitelist screen so MikuRay isn't killed in the background.
+ * On devices with no known OEM screen, falls back to the standard Doze whitelist request
+ * (ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) so this is the single entry point regardless of
+ * device/OEM — callers don't need to launch that intent themselves.
  *
  * Many OEM ROMs ship their own autostart/battery-manager whitelist that is completely separate
  * from the standard Doze API (PowerManager.isIgnoringBatteryOptimizations) — the system
@@ -88,7 +94,7 @@ object BatteryPermissionHelper {
      */
     fun getPermission(context: Context, open: Boolean = true, newTask: Boolean = false): Boolean {
         return try {
-            when (Build.BRAND.lowercase(Locale.ROOT)) {
+            val oemSuccess = when (Build.BRAND.lowercase(Locale.ROOT)) {
                 BRAND_HTC -> startForHtc(context, open, newTask)
                 BRAND_HUAWEI -> startForHuawei(context, open, newTask)
                 BRAND_MEIZU -> startForMeizu(context, open, newTask)
@@ -98,6 +104,12 @@ object BatteryPermissionHelper {
                 BRAND_ZTE -> startForZte(context, open, newTask)
                 BRAND_LETV -> startForLetv(context, open, newTask)
                 else -> false
+            }
+            
+            if (oemSuccess) {
+                true
+            } else {
+                startDefault(context, open, newTask)
             }
         } catch (_: Exception) {
             false
@@ -176,6 +188,20 @@ object BatteryPermissionHelper {
 
     private fun startForZte(context: Context, open: Boolean, newTask: Boolean): Boolean =
         start(context, listOf(PACKAGE_ZTE_MAIN), listOf(getIntent(PACKAGE_ZTE_MAIN, PACKAGE_ZTE_COMPONENT, newTask)), open)
+
+    /**
+     * Fallback for devices with no known OEM screen (stock/AOSP, or any unrecognized brand):
+     * directly requests the standard Doze whitelist via the one-tap system dialog.
+     */
+    private fun startDefault(context: Context, open: Boolean, newTask: Boolean): Boolean {
+        val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
+        if (powerManager?.isIgnoringBatteryOptimizations(context.packageName) == true) return true
+        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+            data = Uri.parse("package:${context.packageName}")
+            if (newTask) addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (open) startScreen(context, listOf(intent)) else isActivityFound(context, intent)
+    }
 
     private fun Context.applicationLabel(): String {
         val info = applicationInfo
