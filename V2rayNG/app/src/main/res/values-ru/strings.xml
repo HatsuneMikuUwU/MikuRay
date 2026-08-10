@@ -933,9 +933,4 @@
     <string name="subtitle_mux_settings">Настройка мультиплексирования соединений</string>
     <string name="subtitle_settings">Настройки и конфигурация приложения</string>
 
-    <string name="title_battery_optimization">Отключить оптимизацию батареи</string>
-    <string name="msg_battery_optimization">Оптимизация батареи может разрывать VPN-соединение в фоновом режиме. Отключите её, чтобы MikuRay сохранял стабильное соединение.</string>
-    <string name="btn_battery_optimization_disable">Отключить</string>
-    <string name="btn_battery_optimization_later">Позже</string>
-
 </resources>

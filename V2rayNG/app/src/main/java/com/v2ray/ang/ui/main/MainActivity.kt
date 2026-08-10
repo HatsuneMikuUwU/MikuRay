@@ -13,7 +13,6 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
-import android.os.PowerManager
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -80,7 +79,6 @@ import com.v2ray.ang.util.showSubUpdateDiffDialog
 import com.v2ray.ang.util.UrlTestProgressDialogController
 import com.king.camera.scan.CameraScan
 import com.v2ray.ang.ui.scanner.QrCaptureActivity
-import com.v2ray.ang.util.BatteryPermissionHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -157,22 +155,6 @@ class MainActivity : HelperBaseActivity(),
         refreshGroupTabTitles(true)
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
-        checkBatteryOptimization()
-    }
-
-    private fun checkBatteryOptimization() {
-        val powerManager = getSystemService(POWER_SERVICE) as? PowerManager ?: return
-        if (powerManager.isIgnoringBatteryOptimizations(packageName)) return
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.title_battery_optimization)
-            .setMessage(R.string.msg_battery_optimization)
-            .setCancelable(true)
-            .setPositiveButton(R.string.btn_battery_optimization_disable) { _, _ ->
-                BatteryPermissionHelper.getPermission(this, open = true, newTask = false)
-            }
-            .setNegativeButton(R.string.btn_battery_optimization_later, null)
-            .showBlur()
     }
 
     private fun weatherLocationReady(): Boolean =
