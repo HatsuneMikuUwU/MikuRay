@@ -353,6 +353,8 @@
     <string name="sub_setting_request_headers">Header Permintaan</string>
     <string name="sub_setting_request_headers_tip">Format JSON</string>
     <string name="sub_setting_filter">Filter Reguler Catatan</string>
+    <string name="sub_setting_network_filter">Filter tipe jaringan</string>
+    <string name="sub_setting_network_filter_tip">Hanya simpan konfigurasi dengan tipe jaringan ini, pisahkan dengan koma. Contoh: ws,grpc,xhttp</string>
     <string name="sub_setting_enable">Aktifin update</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
     <string name="sub_allow_insecure_url">Bolehin alamat HTTP ga aman</string>

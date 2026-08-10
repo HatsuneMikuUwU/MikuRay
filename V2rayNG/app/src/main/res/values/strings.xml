@@ -367,6 +367,8 @@
     <string name="sub_setting_request_headers">Request Headers</string>
     <string name="sub_setting_request_headers_tip">JSON format</string>
     <string name="sub_setting_filter">Remarks regular filter</string>
+    <string name="sub_setting_network_filter">Network type filter</string>
+    <string name="sub_setting_network_filter_tip">Only keep configs with these network types, comma separated. e.g. ws,grpc,xhttp</string>
     <string name="sub_setting_enable">Enable update</string>
     <plurals name="sub_setting_server_count">
         <item quantity="one">%1$d server</item>

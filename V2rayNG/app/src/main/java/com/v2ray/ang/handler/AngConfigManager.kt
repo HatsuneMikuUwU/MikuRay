@@ -376,6 +376,18 @@ object AngConfigManager {
                 if (!matched) return null
             }
 
+            if (subItem?.networkFilter.isNotNullEmpty()) {
+                val allowedNetworks = subItem?.networkFilter.orEmpty()
+                    .split(',', '，', ' ')
+                    .map { it.trim().lowercase() }
+                    .filter { it.isNotEmpty() }
+                    .toSet()
+                if (allowedNetworks.isNotEmpty()) {
+                    val configNetwork = config.network.orEmpty().lowercase().ifEmpty { "tcp" }
+                    if (configNetwork !in allowedNetworks) return null
+                }
+            }
+
             config.subscriptionId = subid
 
             if (str.startsWith(AppConfig.V2RAYNFMTS, ignoreCase = true)

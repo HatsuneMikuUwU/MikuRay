@@ -351,6 +351,8 @@
     <string name="sub_setting_request_headers">Заголовки запроса</string>
     <string name="sub_setting_request_headers_tip">Формат JSON</string>
     <string name="sub_setting_filter">Фильтр примечаний (регулярное выражение)</string>
+    <string name="sub_setting_network_filter">Фильтр по типу сети</string>
+    <string name="sub_setting_network_filter_tip">Оставить только конфигурации с этими типами сети, через запятую. Напр.: ws,grpc,xhttp</string>
     <string name="sub_setting_enable">Включить обновление</string>
     <string name="sub_auto_update">Включить автоматическое обновление</string>
     <string name="sub_allow_insecure_url">Разрешить небезопасный HTTP-адрес</string>
