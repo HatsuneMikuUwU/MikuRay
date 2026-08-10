@@ -388,6 +388,20 @@ object AngConfigManager {
                 }
             }
 
+            if (subItem?.protocolFilter.isNotNullEmpty()) {
+                val allowedProtocols = subItem?.protocolFilter.orEmpty()
+                    .split(',', '，', ' ')
+                    .map { it.trim().lowercase() }
+                    .filter { it.isNotEmpty() }
+                    .toSet()
+                if (allowedProtocols.isNotEmpty()) {
+                    val configProtocol = config.configType.protocolScheme
+                        .removeSuffix("://")
+                        .lowercase()
+                    if (configProtocol !in allowedProtocols) return null
+                }
+            }
+
             config.subscriptionId = subid
 
             if (str.startsWith(AppConfig.V2RAYNFMTS, ignoreCase = true)

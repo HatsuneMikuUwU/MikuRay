@@ -348,6 +348,8 @@
     <string name="sub_setting_filter">别名正则过滤</string>
     <string name="sub_setting_network_filter">传输协议过滤</string>
     <string name="sub_setting_network_filter_tip">只保留这些传输协议类型的节点，用逗号分隔。例如：ws,grpc,xhttp</string>
+    <string name="sub_setting_protocol_filter">节点协议过滤</string>
+    <string name="sub_setting_protocol_filter_tip">只保留这些节点协议的节点，用逗号分隔。例如：vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">启用更新</string>
     <string name="sub_auto_update">启用自动更新</string>
     <string name="sub_allow_insecure_url">允许不安全的 HTTP 地址</string>

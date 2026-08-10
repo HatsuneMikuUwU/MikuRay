@@ -355,6 +355,8 @@
     <string name="sub_setting_filter">Filter Reguler Catatan</string>
     <string name="sub_setting_network_filter">Filter tipe jaringan</string>
     <string name="sub_setting_network_filter_tip">Hanya simpan konfigurasi dengan tipe jaringan ini, pisahkan dengan koma. Contoh: ws,grpc,xhttp</string>
+    <string name="sub_setting_protocol_filter">Filter protokol</string>
+    <string name="sub_setting_protocol_filter_tip">Hanya simpan konfigurasi dengan protokol ini, pisahkan dengan koma. Contoh: vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">Aktifin update</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
     <string name="sub_allow_insecure_url">Bolehin alamat HTTP ga aman</string>

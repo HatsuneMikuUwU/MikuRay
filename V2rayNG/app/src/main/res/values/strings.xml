@@ -369,6 +369,8 @@
     <string name="sub_setting_filter">Remarks regular filter</string>
     <string name="sub_setting_network_filter">Network type filter</string>
     <string name="sub_setting_network_filter_tip">Only keep configs with these network types, comma separated. e.g. ws,grpc,xhttp</string>
+    <string name="sub_setting_protocol_filter">Protocol filter</string>
+    <string name="sub_setting_protocol_filter_tip">Only keep configs with these protocols, comma separated. e.g. vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">Enable update</string>
     <plurals name="sub_setting_server_count">
         <item quantity="one">%1$d server</item>

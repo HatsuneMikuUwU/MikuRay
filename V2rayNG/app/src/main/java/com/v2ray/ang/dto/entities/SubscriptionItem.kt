@@ -12,6 +12,7 @@ data class SubscriptionItem(
     var nextProfile: String? = null,
     var filter: String? = null,
     var networkFilter: String? = null,
+    var protocolFilter: String? = null,
     var allowInsecureUrl: Boolean = false,
     var userAgent: String? = null,
     var requestHeaders: String? = null,

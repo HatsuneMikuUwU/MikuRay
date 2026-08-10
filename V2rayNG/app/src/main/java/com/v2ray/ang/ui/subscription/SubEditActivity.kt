@@ -144,6 +144,7 @@ class SubEditActivity : BaseActivity() {
         binding.etRequestHeaders.setText(Utils.getEditable(subItem.requestHeaders))
         binding.etFilter.setText(Utils.getEditable(subItem.filter))
         binding.etNetworkFilter.setText(Utils.getEditable(subItem.networkFilter))
+        binding.etProtocolFilter.setText(Utils.getEditable(subItem.protocolFilter))
         binding.chkEnable.isChecked = subItem.enabled
         binding.autoUpdateCheck.isChecked = subItem.autoUpdate
         binding.etUpdateInterval.setText(Utils.getEditable(subItem.updateInterval.toString()))
@@ -161,6 +162,7 @@ class SubEditActivity : BaseActivity() {
         binding.etRequestHeaders.text = null
         binding.etFilter.text = null
         binding.etNetworkFilter.text = null
+        binding.etProtocolFilter.text = null
         binding.chkEnable.isChecked = true
         binding.autoUpdateCheck.isChecked = false
         binding.etUpdateInterval.text = null
@@ -209,6 +211,7 @@ class SubEditActivity : BaseActivity() {
         subItem.requestHeaders = binding.etRequestHeaders.text?.toString().orEmpty()
         subItem.filter = binding.etFilter.text?.toString().orEmpty()
         subItem.networkFilter = binding.etNetworkFilter.text?.toString().orEmpty()
+        subItem.protocolFilter = binding.etProtocolFilter.text?.toString().orEmpty()
         subItem.enabled = binding.chkEnable.isChecked
         subItem.autoUpdate = binding.autoUpdateCheck.isChecked
 
