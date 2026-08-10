@@ -81,6 +81,7 @@ import com.v2ray.ang.util.showSubUpdateDiffDialog
 import com.v2ray.ang.util.UrlTestProgressDialogController
 import com.king.camera.scan.CameraScan
 import com.v2ray.ang.ui.scanner.QrCaptureActivity
+import com.v2ray.ang.util.BatteryPermissionHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -180,6 +181,16 @@ class MainActivity : HelperBaseActivity(),
                     requestBatteryOptimization.launch(intent)
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Failed to launch battery optimization request", e)
+                }
+                // Many OEM ROMs (Xiaomi/Oppo/Samsung/Huawei/etc.) have their own separate
+                // autostart/battery-manager whitelist that isIgnoringBatteryOptimizations()
+                // doesn't reflect at all — the standard system dialog above doesn't cover it,
+                // which is why users report the dialog keeps reappearing after "disabling" it
+                // through that OEM screen. Only chain into the manufacturer-specific screen
+                // when one is actually known for this device, so stock/AOSP devices don't get
+                // a redundant second settings screen.
+                if (BatteryPermissionHelper.isBatterySaverPermissionAvailable(this, onlyIfSupported = true)) {
+                    BatteryPermissionHelper.getPermission(this, open = true, newTask = false)
                 }
             }
             .setNegativeButton(R.string.btn_battery_optimization_later, null)
