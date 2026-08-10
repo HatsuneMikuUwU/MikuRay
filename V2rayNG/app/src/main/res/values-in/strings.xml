@@ -923,4 +923,9 @@ yang kamu butuhin."</string>
     <string name="subtitle_mux_settings">Atur multiplexing koneksi</string>
     <string name="subtitle_settings">Preferensi sama konfigurasi aplikasi</string>
 
+    <string name="title_battery_optimization">Matiin Optimisasi Baterai</string>
+    <string name="msg_battery_optimization">Optimisasi baterai bisa bikin koneksi VPN kematian pas di background. Matiin biar koneksi MikuRay tetep stabil.</string>
+    <string name="btn_battery_optimization_disable">Matiin</string>
+    <string name="btn_battery_optimization_later">Nanti Aja</string>
+
 </resources>

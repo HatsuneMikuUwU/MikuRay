@@ -962,4 +962,9 @@ you need."</string>
     <string name="subtitle_mux_settings">Configure connection multiplexing</string>
     <string name="subtitle_settings">App preferences and configuration</string>
 
+    <string name="title_battery_optimization">Disable Battery Optimization</string>
+    <string name="msg_battery_optimization">Battery optimization can kill the VPN connection in the background. Disable it for MikuRay to keep the connection stable.</string>
+    <string name="btn_battery_optimization_disable">Disable</string>
+    <string name="btn_battery_optimization_later">Later</string>
+
 </resources>

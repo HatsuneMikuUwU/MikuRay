@@ -912,4 +912,9 @@
     <string name="subtitle_mux_settings">配置连接多路复用</string>
     <string name="subtitle_settings">应用偏好设置与配置</string>
 
+    <string name="title_battery_optimization">关闭电池优化</string>
+    <string name="msg_battery_optimization">电池优化可能导致 VPN 连接在后台被系统杀死。关闭它以保持 MikuRay 连接稳定。</string>
+    <string name="btn_battery_optimization_disable">关闭</string>
+    <string name="btn_battery_optimization_later">稍后再说</string>
+
 </resources>

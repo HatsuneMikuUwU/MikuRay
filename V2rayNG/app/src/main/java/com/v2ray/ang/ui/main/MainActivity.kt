@@ -13,6 +13,8 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -132,6 +134,10 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
+    private val requestBatteryOptimization = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        // Nothing to do here, isIgnoringBatteryOptimizations() will simply be checked again next cold start
+    }
+
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,6 +161,29 @@ class MainActivity : HelperBaseActivity(),
         refreshGroupTabTitles(true)
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
+        checkBatteryOptimization()
+    }
+
+    private fun checkBatteryOptimization() {
+        val powerManager = getSystemService(POWER_SERVICE) as? PowerManager ?: return
+        if (powerManager.isIgnoringBatteryOptimizations(packageName)) return
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.title_battery_optimization)
+            .setMessage(R.string.msg_battery_optimization)
+            .setCancelable(true)
+            .setPositiveButton(R.string.btn_battery_optimization_disable) { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    requestBatteryOptimization.launch(intent)
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to launch battery optimization request", e)
+                }
+            }
+            .setNegativeButton(R.string.btn_battery_optimization_later, null)
+            .showBlur()
     }
 
     private fun weatherLocationReady(): Boolean =
