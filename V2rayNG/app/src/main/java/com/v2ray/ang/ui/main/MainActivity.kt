@@ -136,7 +136,17 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private val requestBatteryOptimization = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        // Nothing to do here, isIgnoringBatteryOptimizations() will simply be checked again next cold start
+        // isIgnoringBatteryOptimizations() will simply be checked again next cold start.
+        // If it's still not granted here (declined, or the OEM ROM ignores this request
+        // entirely), fall back to the manufacturer-specific autostart/battery-manager screen
+        // — but only after the user is done with the standard system dialog, so they don't
+        // get two settings screens opened back to back.
+        val powerManager = getSystemService(POWER_SERVICE) as? PowerManager
+        if (powerManager?.isIgnoringBatteryOptimizations(packageName) == false &&
+            BatteryPermissionHelper.isBatterySaverPermissionAvailable(this, onlyIfSupported = true)
+        ) {
+            BatteryPermissionHelper.getPermission(this, open = true, newTask = false)
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -181,16 +191,11 @@ class MainActivity : HelperBaseActivity(),
                     requestBatteryOptimization.launch(intent)
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Failed to launch battery optimization request", e)
-                }
-                // Many OEM ROMs (Xiaomi/Oppo/Samsung/Huawei/etc.) have their own separate
-                // autostart/battery-manager whitelist that isIgnoringBatteryOptimizations()
-                // doesn't reflect at all — the standard system dialog above doesn't cover it,
-                // which is why users report the dialog keeps reappearing after "disabling" it
-                // through that OEM screen. Only chain into the manufacturer-specific screen
-                // when one is actually known for this device, so stock/AOSP devices don't get
-                // a redundant second settings screen.
-                if (BatteryPermissionHelper.isBatterySaverPermissionAvailable(this, onlyIfSupported = true)) {
-                    BatteryPermissionHelper.getPermission(this, open = true, newTask = false)
+                    // Standard intent isn't available at all on this device/OEM — go straight
+                    // to the manufacturer-specific screen as a fallback.
+                    if (BatteryPermissionHelper.isBatterySaverPermissionAvailable(this, onlyIfSupported = true)) {
+                        BatteryPermissionHelper.getPermission(this, open = true, newTask = false)
+                    }
                 }
             }
             .setNegativeButton(R.string.btn_battery_optimization_later, null)
