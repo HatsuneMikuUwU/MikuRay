@@ -73,6 +73,12 @@ data class ProfileItem(
 
     var browserDialerMode: String? = null,
 
+    // Only populated for EConfigType.CUSTOM: the underlying outbound protocol
+    // (vmess/vless/trojan/shadowsocks/socks/...) extracted from the raw JSON,
+    // used for protocol filtering on subscription import since configType
+    // itself is always CUSTOM for these configs.
+    var customProtocol: String? = null,
+
     ) {
     companion object {
         fun create(configType: EConfigType): ProfileItem {

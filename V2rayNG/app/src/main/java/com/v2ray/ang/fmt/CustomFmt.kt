@@ -17,6 +17,7 @@ object CustomFmt : FmtBase() {
         config.serverPort = outbound?.getServerPort()?.toString()
         config.network = outbound?.streamSettings?.network
         config.security = outbound?.streamSettings?.security
+        config.customProtocol = outbound?.protocol
 
         return config
     }

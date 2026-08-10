@@ -288,6 +288,7 @@ object AngConfigManager {
         if (server == null) {
             return 0
         }
+        val subItem = MmkvManager.decodeSubscription(subid)
         if (server.contains("inbounds")
             && server.contains("outbounds")
             && server.contains("routing")
@@ -305,6 +306,9 @@ object AngConfigManager {
                     val keyToProfile = mutableMapOf<String, ProfileItem>()
                     for (srv in serverList.reversed()) {
                         val config = CustomFmt.parse(JsonUtil.toJson(srv))
+                        if (!matchesSubscriptionFilters(config, subItem)) {
+                            continue
+                        }
                         config.subscriptionId = subid
                         val key = MmkvManager.encodeServerConfig("", config)
                         MmkvManager.encodeServerRaw(key, JsonUtil.toJsonPretty(srv) ?: "")
@@ -323,6 +327,9 @@ object AngConfigManager {
 
             try {
                 val config = CustomFmt.parse(server)
+                if (!matchesSubscriptionFilters(config, subItem)) {
+                    return 0
+                }
                 config.subscriptionId = subid
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
@@ -337,6 +344,9 @@ object AngConfigManager {
         } else if (server.startsWith("[Interface]") && server.contains("[Peer]")) {
             try {
                 val config = WireguardFmt.parseWireguardConfFile(server)
+                if (!matchesSubscriptionFilters(config, subItem)) {
+                    return 0
+                }
                 if (!append) {
                     MmkvManager.removeServerViaSubid(subid)
                 }
@@ -350,6 +360,47 @@ object AngConfigManager {
         } else {
             return 0
         }
+    }
+
+    private fun matchesSubscriptionFilters(config: ProfileItem, subItem: SubscriptionItem?): Boolean {
+        if (subItem?.filter.isNotNullEmpty() && config.remarks.isNotNullEmpty()) {
+            val matched = Regex(pattern = subItem?.filter.orEmpty())
+                .containsMatchIn(input = config.remarks)
+            if (!matched) return false
+        }
+
+        if (subItem?.networkFilter.isNotNullEmpty()) {
+            val allowedNetworks = subItem?.networkFilter.orEmpty()
+                .split(',', '，', ' ')
+                .map { it.trim().lowercase() }
+                .filter { it.isNotEmpty() }
+                .toSet()
+            if (allowedNetworks.isNotEmpty()) {
+                val configNetwork = config.network.orEmpty().lowercase().ifEmpty { "tcp" }
+                if (configNetwork !in allowedNetworks) return false
+            }
+        }
+
+        if (subItem?.protocolFilter.isNotNullEmpty()) {
+            val allowedProtocols = subItem?.protocolFilter.orEmpty()
+                .split(',', '，', ' ')
+                .map { it.trim().lowercase() }
+                .filter { it.isNotEmpty() }
+                .toSet()
+            if (allowedProtocols.isNotEmpty()) {
+                // For CUSTOM configs (raw JSON), fall back to the underlying
+                // outbound protocol extracted by CustomFmt, since configType
+                // itself is always CUSTOM for those.
+                val configProtocol = if (config.configType == EConfigType.CUSTOM) {
+                    config.customProtocol.orEmpty().lowercase()
+                } else {
+                    config.configType.protocolScheme.removeSuffix("://").lowercase()
+                }
+                if (configProtocol.isEmpty() || configProtocol !in allowedProtocols) return false
+            }
+        }
+
+        return true
     }
 
     private fun parseConfig(
@@ -370,36 +421,8 @@ object AngConfigManager {
                 return null
             }
 
-            if (subItem?.filter.isNotNullEmpty() && config.remarks.isNotNullEmpty()) {
-                val matched = Regex(pattern = subItem?.filter.orEmpty())
-                    .containsMatchIn(input = config.remarks)
-                if (!matched) return null
-            }
-
-            if (subItem?.networkFilter.isNotNullEmpty()) {
-                val allowedNetworks = subItem?.networkFilter.orEmpty()
-                    .split(',', '，', ' ')
-                    .map { it.trim().lowercase() }
-                    .filter { it.isNotEmpty() }
-                    .toSet()
-                if (allowedNetworks.isNotEmpty()) {
-                    val configNetwork = config.network.orEmpty().lowercase().ifEmpty { "tcp" }
-                    if (configNetwork !in allowedNetworks) return null
-                }
-            }
-
-            if (subItem?.protocolFilter.isNotNullEmpty()) {
-                val allowedProtocols = subItem?.protocolFilter.orEmpty()
-                    .split(',', '，', ' ')
-                    .map { it.trim().lowercase() }
-                    .filter { it.isNotEmpty() }
-                    .toSet()
-                if (allowedProtocols.isNotEmpty()) {
-                    val configProtocol = config.configType.protocolScheme
-                        .removeSuffix("://")
-                        .lowercase()
-                    if (configProtocol !in allowedProtocols) return null
-                }
+            if (!matchesSubscriptionFilters(config, subItem)) {
+                return null
             }
 
             config.subscriptionId = subid
