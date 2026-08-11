@@ -76,7 +76,7 @@ class UwuHeaderIconView @JvmOverloads constructor(
             scaleType = ScaleType.CENTER
             setImageDrawable(iconDrawable)
             imageTintList = android.content.res.ColorStateList.valueOf(
-                context.getColorAttr(R.attr.colorOnPrimary)
+                context.getColorAttr("colorOnPrimary")
             )
         } else {
             setPadding(0, 0, 0, 0)
@@ -87,8 +87,8 @@ class UwuHeaderIconView @JvmOverloads constructor(
     }
 
     private fun buildGradientBackground(): GradientDrawable {
-        val colorStart = context.getColorAttr(R.attr.colorPrimary)
-        val colorEnd = context.getColorAttr(R.attr.colorTertiary)
+        val colorStart = context.getColorAttr("colorPrimary")
+        val colorEnd = context.getColorAttr("colorTertiary")
 
         return GradientDrawable(
             GradientDrawable.Orientation.TL_BR,

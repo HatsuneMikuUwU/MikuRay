@@ -9,8 +9,8 @@
     android:padding="?attr/dialogPreferredPadding">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_traffic_total"
         app:tint="?attr/colorPrimary" />
 
@@ -146,6 +146,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="22dp"
+        android:minWidth="0dp"
+        android:paddingHorizontal="12dp"
         android:text="@android:string/ok" />
 
 </LinearLayout>

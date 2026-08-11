@@ -867,6 +867,8 @@
     </style>
 
     <style name="AppThemeSideSheetStyle" parent="@style/Widget.Material3.SideSheet.Modal">
+        <item name="android:layout_width">286dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="backgroundTint">?attr/colorBg</item>
         <item name="shapeAppearance">@style/AppThemeSideSheetShape</item>
     </style>
@@ -879,7 +881,7 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
-    <style name="AppThemeAlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog">
+    <style name="AppThemeAlertDialog" parent="@style/ThemeOverlay.Material3Expressive.MaterialAlertDialog.Centered">
         <item name="shapeAppearance">@style/AppThemeAlertDialogShape</item>
         <item name="android:colorBackground">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?attr/colorSurfaceContainer</item>
@@ -892,6 +894,13 @@
         <item name="android:listPreferredItemHeightSmall">60dp</item>
         <item name="android:windowMinWidthMajor">91%</item>
         <item name="android:windowMinWidthMinor">91%</item>
+        <item name="materialAlertDialogTitleIconStyle">@style/AppThemeAlertDialogTitleIcon</item>
+    </style>
+    
+    <style name="AppThemeAlertDialogTitleIcon" parent="@style/MaterialAlertDialog.Material3.Title.Icon.CenterStacked">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:tint">?attr/colorOnSurface</item>
     </style>
 
     <style name="CustomDialogFilledButtonPrimary" parent="Widget.Material3Expressive.Button">

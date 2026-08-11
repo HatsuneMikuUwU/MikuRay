@@ -19,12 +19,12 @@
         android:paddingStart="?dialogPreferredPadding"
         android:paddingEnd="?dialogPreferredPadding">
         <TextView
-            android:textColor="?android:textColorSecondary"
+            android:textColor="?colorOnSurfaceVariant"
             android:id="@android:id/message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16.0dip"
-            style="?android:textAppearanceSmall" />
+            android:textAppearance="?textAppearanceBodyMedium" />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,6 @@
             app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
-                android:textColor="?android:textColorPrimary"
                 android:id="@android:id/edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">

@@ -23,7 +23,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.drawable.DrawableCompat
@@ -139,8 +138,8 @@ private fun showSnackbar(
     title: CharSequence,
     message: CharSequence,
     @DrawableRes iconRes: Int,
-    @AttrRes backgroundColorAttr: Int?,
-    @AttrRes textColorAttr: Int?,
+    backgroundColorAttr: String?,
+    textColorAttr: String?,
     duration: Int
 ) {
     if (Looper.myLooper() != Looper.getMainLooper()) {
@@ -183,7 +182,7 @@ private fun showSnackbar(
         val resolvedTextColor = if (textColorAttr != null) {
             activity.getColorAttr(textColorAttr)
         } else {
-            activity.getColorAttr(R.attr.colorOnSurfaceInverse)
+            activity.getColorAttr("colorOnSurfaceInverse")
         }
 
         contentView.findViewById<ImageView>(R.id.iv_snackbar_icon)?.apply {
@@ -268,7 +267,7 @@ private fun showSnackbar(
         val backgroundColor = if (backgroundColorAttr != null) {
             activity.getColorAttr(backgroundColorAttr)
         } else {
-            activity.getColorAttr(R.attr.colorSurfaceInverse)
+            activity.getColorAttr("colorSurfaceInverse")
         }
 
         snackbarLayout.backgroundTintList = null
@@ -300,8 +299,8 @@ fun Context.snackbarDefault(message: CharSequence, title: CharSequence = "") {
 fun Context.snackbarSuccess(message: Int, title: CharSequence = "") {
     showSnackbar(
         this, title, getString(message), R.drawable.ic_check_circle,
-        R.attr.colorPrimary,
-        R.attr.colorOnPrimary,
+        "colorPrimary",
+        "colorOnPrimary",
         Snackbar.LENGTH_LONG
     )
 }
@@ -309,8 +308,8 @@ fun Context.snackbarSuccess(message: Int, title: CharSequence = "") {
 fun Context.snackbarSuccess(message: CharSequence, title: CharSequence = "") {
     showSnackbar(
         this, title, message, R.drawable.ic_check_circle,
-        R.attr.colorPrimary,
-        R.attr.colorOnPrimary,
+        "colorPrimary",
+        "colorOnPrimary",
         Snackbar.LENGTH_LONG
     )
 }
@@ -319,8 +318,8 @@ fun Context.snackbarError(message: Int, title: CharSequence = "") {
     vibrateOnError()
     showSnackbar(
         this, title, getString(message), R.drawable.ic_warning,
-        R.attr.colorError,
-        R.attr.colorOnError,
+        "colorError",
+        "colorOnError",
         Snackbar.LENGTH_LONG
     )
 }
@@ -329,8 +328,8 @@ fun Context.snackbarError(message: CharSequence, title: CharSequence = "") {
     vibrateOnError()
     showSnackbar(
         this, title, message, R.drawable.ic_warning,
-        R.attr.colorError,
-        R.attr.colorOnError,
+        "colorError",
+        "colorOnError",
         Snackbar.LENGTH_LONG
     )
 }

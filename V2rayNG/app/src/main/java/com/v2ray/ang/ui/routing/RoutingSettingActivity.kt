@@ -91,8 +91,14 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     }
 
     private fun importPredefined() {
-        AlertDialog.Builder(this).setItems(resources.getStringArray(R.array.preset_rulesets)) { _, i ->
-            AlertDialog.Builder(this).setMessage(R.string.routing_settings_import_rulesets_tip)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.routing_settings_import_predefined_rulesets_title)
+            .setIcon(R.drawable.ic_router)
+            .setItems(resources.getStringArray(R.array.preset_rulesets)) { _, i ->
+            AlertDialog.Builder(this)
+                .setTitle(R.string.routing_settings_import_predefined_rulesets_title)
+                .setIcon(R.drawable.ic_warning)
+                .setMessage(R.string.routing_settings_import_rulesets_tip)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     try {
                         lifecycleScope.launch(Dispatchers.IO) {
@@ -116,7 +122,10 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     }
 
     private fun importFromClipboard() {
-        AlertDialog.Builder(this).setMessage(R.string.routing_settings_import_rulesets_tip)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.routing_settings_import_rulesets_from_clipboard_title)
+            .setIcon(R.drawable.ic_warning)
+            .setMessage(R.string.routing_settings_import_rulesets_tip)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val clipboard = try {
                     Utils.getClipboard(this)
@@ -178,7 +187,10 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
 
     private fun importRulesetsFromQRcode(qrcode: String?): Boolean {
-        AlertDialog.Builder(this).setMessage(R.string.routing_settings_import_rulesets_tip)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.routing_settings_import_rulesets_from_qrcode_title)
+            .setIcon(R.drawable.ic_warning)
+            .setMessage(R.string.routing_settings_import_rulesets_tip)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 lifecycleScope.launch(Dispatchers.IO) {
                     val result = SettingsManager.resetRoutingRulesets(qrcode)

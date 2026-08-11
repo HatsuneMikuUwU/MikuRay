@@ -65,7 +65,7 @@ class DynamicShapeImageView @JvmOverloads constructor(
 
     private fun loadColorBitmap() {
         try {
-            val color = customBgColor ?: context.getColorAttr(R.attr.colorPrimary)
+            val color = customBgColor ?: context.getColorAttr("colorPrimary")
 
             val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)

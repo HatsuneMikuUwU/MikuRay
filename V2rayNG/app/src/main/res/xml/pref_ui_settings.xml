@@ -119,6 +119,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_translate"
+            app:dialogIcon="@drawable/ic_translate"
             app:layout="@layout/uwu_bot"
             android:defaultValue=""
             android:entries="@array/language_select"
@@ -162,6 +163,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_weather_night"
+            app:dialogIcon="@drawable/ic_weather_night"
             app:layout="@layout/uwu_mid"
             android:defaultValue="0"
             android:entries="@array/ui_mode_night"
@@ -188,6 +190,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_shape_outline"
+            app:dialogIcon="@drawable/ic_shape_outline"
             app:layout="@layout/uwu_top"
             android:defaultValue="uwu_shape_cookie"
             android:entries="@array/icon_shape_entries"
@@ -204,6 +207,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_edit_24dp"
+            app:dialogIcon="@drawable/ic_edit_24dp"
             app:layout="@layout/uwu_mid"
             android:key="pref_custom_app_name"
             android:title="@string/title_pref_custom_app_name"
@@ -220,6 +224,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_cards_variant"
+            app:dialogIcon="@drawable/ic_cards_variant"
             app:layout="@layout/uwu_mid"
             android:defaultValue="gradient"
             android:entries="@array/category_style_entries"
@@ -297,6 +302,7 @@
 
         <androidx.preference.ListPreference
             android:icon="@drawable/ic_temperature_celsius"
+            app:dialogIcon="@drawable/ic_temperature_celsius"
             app:layout="@layout/uwu_mid"
             android:defaultValue="true"
             android:entries="@array/weather_unit_entries"
@@ -307,6 +313,7 @@
 
         <androidx.preference.EditTextPreference
             android:icon="@drawable/ic_map_marker_outline"
+            app:dialogIcon="@drawable/ic_map_marker_outline"
             app:layout="@layout/uwu_mid"
             android:key="pref_weather_custom_location"
             android:title="@string/pref_weather_custom_location_title"
@@ -509,6 +516,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_edit_24dp"
+            app:dialogIcon="@drawable/ic_edit_24dp"
             app:layout="@layout/uwu_top"
             android:key="custom_profile_name"
             android:title="@string/profile_name_custom_title"
@@ -525,6 +533,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_shape_outline"
+            app:dialogIcon="@drawable/ic_shape_outline"
             app:layout="@layout/uwu_mid"
             android:key="profile_banner_shape"
             android:title="@string/title_profile_banner_shape"

@@ -12,7 +12,8 @@
     app:cardElevation="0.0dip"
     app:strokeWidth="0.0dip"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -26,7 +27,7 @@
             android:layout_marginTop="0.0dip"
             android:layout_marginRight="0.0dip"
             android:layout_marginBottom="0.0dip"
-            app:cardBackgroundColor="?colorCard"
+            app:cardBackgroundColor="?attr/colorCard"
             app:cardCornerRadius="5.0dip"
             app:cardElevation="0.0dip"
             app:strokeWidth="0.0dip"
@@ -95,7 +96,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_name_title"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_name_title_summary"
                         android:focusable="true"
@@ -121,7 +122,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_mikubox_author"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -132,7 +133,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_mikubox_author_summary"
                         android:focusable="true"
@@ -149,7 +150,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_build_date"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -160,7 +161,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_build_date_summary"
                         android:focusable="true"
@@ -176,7 +177,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_version_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -187,7 +188,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_version_name_summary"
                         android:focusable="true"
@@ -203,7 +204,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_version_code"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -214,7 +215,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_version_code_summary"
                         android:focusable="true"
@@ -230,7 +231,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textSize="17.0sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:id="@+id/uwu_package_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -241,7 +242,7 @@
                     <TextView
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textSize="14.0sp"
-                        android:textColor="?android:textColorSecondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:ellipsize="marquee"
                         android:id="@+id/uwu_package_name_summary"
                         android:focusable="true"
@@ -266,11 +267,11 @@
             android:layout_marginTop="4.0dip"
             android:layout_marginRight="0.0dip"
             android:layout_marginBottom="0.0dip"
-            app:cardBackgroundColor="?colorCard"
+            app:cardBackgroundColor="?attr/colorCard"
             app:cardCornerRadius="5.0dip"
             app:cardElevation="0.0dip"
             app:strokeWidth="0.0dip"
-            app:rippleColor="?android:colorControlHighlight">
+            app:rippleColor="?android:attr/colorControlHighlight">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -292,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8.0dip">
                             <com.neko.widget.DynamicShapeImageView
-                                app:shapeBackgroundColor="?colorPrimary"
+                                app:shapeBackgroundColor="?attr/colorPrimary"
                                 android:layout_width="45.0dip"
                                 android:layout_height="45.0dip"
                                 android:scaleType="centerCrop" />
@@ -301,7 +302,7 @@
                                 android:id="@android:id/icon"
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
-                                android:tint="?colorOnPrimary" />
+                                android:tint="?attr/colorOnPrimary" />
                         </FrameLayout>
                     </LinearLayout>
                     <RelativeLayout
@@ -319,24 +320,36 @@
                             <TextView
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:textSize="17.0sp"
-                                android:textColor="?android:textColorPrimary"
                                 android:ellipsize="marquee"
                                 android:id="@android:id/title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:singleLine="false" />
-                                <TextView
-                                    android:textAppearance="?attr/textAppearanceTitleSmall"
-                                    android:textSize="14.0sp"
-                                    android:textColor="?android:textColorSecondary"
-                                    android:ellipsize="marquee"
-                                    android:id="@android:id/summary"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:singleLine="false"
-                                    android:layout_below="@android:id/title"
-                                    android:layout_alignStart="@android:id/title"
-                                    android:marqueeRepeatLimit="marquee_forever" />
+                                android:singleLine="false">
+                                <aapt:attr name="android:textColor">
+                                    <selector>
+                                        <item android:state_enabled="false" android:color="?attr/colorOnSurface" android:alpha="0.38" />
+                                        <item android:color="?attr/colorOnSurface" />
+                                    </selector>
+                                </aapt:attr>
+                            </TextView>
+                            <TextView
+                                android:textAppearance="?attr/textAppearanceTitleSmall"
+                                android:textSize="14.0sp"
+                                android:ellipsize="marquee"
+                                android:id="@android:id/summary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="false"
+                                android:layout_below="@android:id/title"
+                                android:layout_alignStart="@android:id/title"
+                                android:marqueeRepeatLimit="marquee_forever">
+                                <aapt:attr name="android:textColor">
+                                    <selector>
+                                        <item android:state_enabled="false" android:color="?attr/colorOnSurfaceVariant" android:alpha="0.38" />
+                                        <item android:color="?attr/colorOnSurfaceVariant" />
+                                    </selector>
+                                </aapt:attr>
+                            </TextView>
                         </LinearLayout>
                     </RelativeLayout>
                     <LinearLayout
@@ -350,7 +363,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="28.0dip"
                             android:layout_height="28.0dip"
-                            app:cardBackgroundColor="?colorSurfaceContainerHighest"
+                            app:cardBackgroundColor="?attr/colorSurfaceContainerHighest"
                             app:cardCornerRadius="99.0dip"
                             app:cardElevation="0.0dip"
                             app:strokeWidth="0.0dip">
@@ -359,7 +372,7 @@
                                 android:layout_height="25.0dip"
                                 android:layout_marginTop="1.0dip"
                                 android:src="@drawable/uwu_arrow"
-                                android:tint="?colorOnSurfaceVariant"
+                                android:tint="?attr/colorOnSurfaceVariant"
                                 android:layout_marginStart="2.0dip" />
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>

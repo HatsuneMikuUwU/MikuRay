@@ -1,7 +1,6 @@
 package com.v2ray.ang.ui.routing
 
 import android.graphics.Color
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.v2ray.ang.contracts.BaseAdapterListener
 import com.v2ray.ang.databinding.ItemRecyclerRoutingSettingBinding
 import com.v2ray.ang.helper.ItemTouchHelperAdapter
 import com.v2ray.ang.helper.ItemTouchHelperViewHolder
+import com.v2ray.ang.util.getColorAttr
 
 class RoutingSettingRecyclerAdapter(
     private val viewModel: RoutingSettingsViewModel,
@@ -60,16 +60,12 @@ class RoutingSettingRecyclerAdapter(
 
         override fun onItemSelected() {
             val context = itemView.context
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.colorSurfaceVariant, typedValue, true)
-            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(typedValue.data)
+            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(context.getColorAttr("colorSurfaceVariant"))
         }
 
         override fun onItemClear() {
             val context = itemView.context
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
-            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(typedValue.data)
+            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
         }
     }
 

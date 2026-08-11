@@ -97,23 +97,23 @@ class WidgetProvider : AppWidgetProvider() {
         )
 
         val themedContext = buildThemedContext(context)
-        val cardColor = themedContext.getColorAttr(R.attr.colorSurfaceContainerHigh)
-        val nameColor = themedContext.getColorAttr(R.attr.colorOnSurface)
+        val cardColor = themedContext.getColorAttr("colorSurfaceContainerHigh")
+        val nameColor = themedContext.getColorAttr("colorOnSurface")
         val statusColor = if (isRunning) {
-            themedContext.getColorAttr(R.attr.colorPrimary)
+            themedContext.getColorAttr("colorPrimary")
         } else {
-            themedContext.getColorAttr(R.attr.colorOnSurfaceVariant)
+            themedContext.getColorAttr("colorOnSurfaceVariant")
         }
         val actionBgColor: Int
         val actionIconColor: Int
         val actionIconRes: Int
         if (isRunning) {
-            actionBgColor = themedContext.getColorAttr(R.attr.colorTertiaryContainer)
-            actionIconColor = themedContext.getColorAttr(R.attr.colorOnTertiaryContainer)
+            actionBgColor = themedContext.getColorAttr("colorTertiaryContainer")
+            actionIconColor = themedContext.getColorAttr("colorOnTertiaryContainer")
             actionIconRes = R.drawable.ic_stop_24dp
         } else {
-            actionBgColor = themedContext.getColorAttr(R.attr.colorPrimaryContainer)
-            actionIconColor = themedContext.getColorAttr(R.attr.colorOnPrimaryContainer)
+            actionBgColor = themedContext.getColorAttr("colorPrimaryContainer")
+            actionIconColor = themedContext.getColorAttr("colorOnPrimaryContainer")
             actionIconRes = R.drawable.ic_play_24dp
         }
 
@@ -122,8 +122,8 @@ class WidgetProvider : AppWidgetProvider() {
         remoteViews.setInt(R.id.widget_action_icon, "setImageResource", actionIconRes)
         remoteViews.setInt(R.id.widget_action_icon, "setColorFilter", actionIconColor)
 
-        val restartBgColor = themedContext.getColorAttr(R.attr.colorSecondaryContainer)
-        val restartIconColor = themedContext.getColorAttr(R.attr.colorOnSecondaryContainer)
+        val restartBgColor = themedContext.getColorAttr("colorSecondaryContainer")
+        val restartIconColor = themedContext.getColorAttr("colorOnSecondaryContainer")
 
         remoteViews.setInt(R.id.widget_restart_icon, "setImageResource", R.drawable.ic_restore_24dp)
         remoteViews.setInt(R.id.widget_restart_icon, "setColorFilter", restartIconColor)

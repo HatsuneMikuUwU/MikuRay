@@ -17,6 +17,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
+            app:dialogIcon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
             android:key="pref_delay_test_url"
             android:summary="@string/summary_pref_delay_test_url"
@@ -24,6 +25,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
+            app:dialogIcon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_real_ping_concurrency"
@@ -32,6 +34,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
+            app:dialogIcon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
             android:key="pref_ip_api_url"
             android:summary="@string/summary_pref_ip_api_url"
@@ -39,6 +42,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_arrow_decision"
+            app:dialogIcon="@drawable/ic_arrow_decision"
             app:layout="@layout/uwu_mid"
             android:defaultValue="AsIs"
             android:entries="@array/routing_domain_strategy"
@@ -49,6 +53,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_key"
+            app:dialogIcon="@drawable/ic_key"
             app:layout="@layout/uwu_mid"
             android:defaultValue="VPN"
             android:entries="@array/mode_entries"

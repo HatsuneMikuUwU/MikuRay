@@ -45,6 +45,7 @@ class AppIconPickerDialog @JvmOverloads constructor(
 
         dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.title_pref_app_icon)
+            .setIcon(R.drawable.ic_per_apps_24dp)
             .setView(dialogView)
             .setNegativeButton(android.R.string.cancel, null)
             .create()

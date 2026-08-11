@@ -47,11 +47,11 @@ class WeatherHourlyAdapter(
         }
 
         if (item.isNow) {
-            holder.cardTemp.setCardBackgroundColor(context.getColorAttr(R.attr.colorPrimary))
-            holder.tvTemp.setTextColor(context.getColorAttr(R.attr.colorOnPrimary))
+            holder.cardTemp.setCardBackgroundColor(context.getColorAttr("colorPrimary"))
+            holder.tvTemp.setTextColor(context.getColorAttr("colorOnPrimary"))
         } else {
-            holder.cardTemp.setCardBackgroundColor(context.getColorAttr(R.attr.colorSurfaceContainerHighest))
-            holder.tvTemp.setTextColor(context.getColorAttr(R.attr.colorOnSurface))
+            holder.cardTemp.setCardBackgroundColor(context.getColorAttr("colorSurfaceContainerHighest"))
+            holder.tvTemp.setTextColor(context.getColorAttr("colorOnSurface"))
         }
     }
 }

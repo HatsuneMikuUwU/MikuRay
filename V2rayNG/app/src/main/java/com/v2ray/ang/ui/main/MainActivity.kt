@@ -633,6 +633,7 @@ class MainActivity : HelperBaseActivity(),
 
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.title_reset_traffic)
+                    .setIcon(R.drawable.ic_refresh)
                     .setItems(options) { _, which ->
                         val msgRes: Int
                         val action: () -> Unit
@@ -995,6 +996,7 @@ class MainActivity : HelperBaseActivity(),
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.menu_item_import_config_qrcode)
+            .setIcon(R.drawable.ic_action_qr)
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> launchScan()
@@ -1439,7 +1441,10 @@ class MainActivity : HelperBaseActivity(),
                     val ivBinding = ItemQrcodeBinding.inflate(LayoutInflater.from(this))
                     ivBinding.ivQcode.setImageBitmap(AngConfigManager.share2QRCode(guid))
                     ivBinding.ivQcode.contentDescription = "QR Code"
-                    MaterialAlertDialogBuilder(this).setView(ivBinding.root).showBlur()
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.title_qr_code)
+                        .setIcon(R.drawable.ic_action_qr)
+                        .setView(ivBinding.root).showBlur()
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Error when sharing QR code", e)
                 }

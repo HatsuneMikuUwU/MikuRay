@@ -22,6 +22,7 @@ fun showMikuRayExportPasswordDialog(
 
     val dialog = MaterialAlertDialogBuilder(context)
         .setTitle(R.string.mikuray_password_export_title)
+        .setIcon(R.drawable.ic_lock_24dp)
         .setView(binding.root)
         .setPositiveButton(R.string.mikuray_password_confirm_button, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -60,6 +61,7 @@ fun showMikuRayImportPasswordDialog(
 
     val dialog = MaterialAlertDialogBuilder(context)
         .setTitle(R.string.mikuray_password_import_title)
+        .setIcon(R.drawable.ic_unlock_24dp)
         .setView(binding.root)
         .setPositiveButton(R.string.mikuray_password_confirm_button, null)
         .setNegativeButton(android.R.string.cancel, null)

@@ -54,6 +54,7 @@ class BackupActivity : HelperBaseActivity() {
         binding.layoutBackup.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.title_configuration_backup)
+                .setIcon(R.drawable.ic_backup_24dp)
                 .setItems(config_backup_options) { _, which ->
                     when (which) {
                         0 -> backupViaLocal()
@@ -89,6 +90,7 @@ class BackupActivity : HelperBaseActivity() {
         binding.layoutRestore.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.title_configuration_restore)
+                .setIcon(R.drawable.ic_restore_24dp)
                 .setItems(config_backup_options) { _, which ->
                     when (which) {
                         0 -> restoreViaLocal()
@@ -465,6 +467,7 @@ class BackupActivity : HelperBaseActivity() {
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.title_webdav_config_setting)
+            .setIcon(R.drawable.ic_cloud)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.menu_item_save_config) { _, _ ->
                 val url = dialogBinding.etWebdavUrl.text.toString().trim()

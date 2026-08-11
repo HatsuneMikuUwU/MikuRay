@@ -3,7 +3,6 @@ package com.v2ray.ang.util
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.AttrRes
@@ -74,7 +73,7 @@ object ThemeManager {
             "6"  -> R.style.AppTheme_Blue
             "7"  -> R.style.AppTheme_Cyan
             "8"  -> R.style.AppTheme_Teal
-            "9" -> R.style.AppTheme_Green
+            "9"  -> R.style.AppTheme_Green
             "10" -> R.style.AppTheme_LightGreen
             "11" -> R.style.AppTheme_Lime
             "12" -> R.style.AppTheme_Yellow
@@ -130,15 +129,15 @@ object ThemeManager {
 
 fun Context.getColorAttr(@AttrRes resId: Int): Int {
     val typedValue = TypedValue()
-    return if (theme.resolveAttribute(resId, typedValue, true)) {
-        if (typedValue.resourceId != 0) {
-            ContextCompat.getColor(this, typedValue.resourceId)
-        } else {
-            typedValue.data
-        }
+    theme.resolveAttribute(resId, typedValue, true)
+    return if (typedValue.resourceId != 0) {
+        ContextCompat.getColor(this, typedValue.resourceId)
     } else {
-        Color.TRANSPARENT
+        typedValue.data
     }
 }
 
-
+fun Context.getColorAttr(attrName: String): Int {
+    val resId = resources.getIdentifier(attrName, "attr", packageName)
+    return getColorAttr(resId)
+}

@@ -67,7 +67,7 @@ class ThemeColorDialog : DialogFragment() {
 
             val styleRes = ThemeManager.getThemeStyleRes(key)
             val wrappedContext = ContextThemeWrapper(requireContext(), styleRes)
-            val m3PrimaryColor = wrappedContext.getColorAttr(R.attr.colorPrimary)
+            val m3PrimaryColor = wrappedContext.getColorAttr("colorPrimary")
 
             applyCircleDrawable(circle, m3PrimaryColor, isSelected)
 
@@ -96,7 +96,7 @@ class ThemeColorDialog : DialogFragment() {
                 .setContentBasedSource(rawCustomColor)
                 .build()
             val wrappedCustomContext = DynamicColors.wrapContextIfAvailable(requireContext(), customOptions)
-            val m3CustomPrimary = wrappedCustomContext.getColorAttr(R.attr.colorPrimary)
+            val m3CustomPrimary = wrappedCustomContext.getColorAttr("colorPrimary")
 
             applyCircleDrawable(customCircle, m3CustomPrimary, isCustomSelected)
 
@@ -120,6 +120,7 @@ class ThemeColorDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_theme_color_title)
+            .setIcon(R.drawable.ic_baseline_color_lens_24)
             .setView(view)
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()

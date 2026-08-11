@@ -5,7 +5,8 @@
     android:width="24.0dip"
     android:viewportWidth="375.0"
     android:viewportHeight="375.0"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tint="?colorOnSurfaceVariant">
     <path
         android:name="path"
         android:fillColor="#ff000000"

@@ -49,8 +49,8 @@ object SearchChipGradientController {
     }
 
     private fun applyGradientOn(activity: AppCompatActivity, chip: ChipViews) {
-        val colorStart = activity.getColorAttr(R.attr.colorPrimary)
-        val colorEnd = activity.getColorAttr(R.attr.colorTertiary)
+        val colorStart = activity.getColorAttr("colorPrimary")
+        val colorEnd = activity.getColorAttr("colorTertiary")
         val cornerRadiusPx = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 16f, activity.resources.displayMetrics
         )
@@ -62,12 +62,12 @@ object SearchChipGradientController {
             cornerRadius = cornerRadiusPx
         }
         chip.layoutWeatherChip.background = RippleDrawable(
-            ColorStateList.valueOf(activity.getColorAttr(android.R.attr.colorControlHighlight)),
+            ColorStateList.valueOf(activity.getColorAttr("android:attr/colorControlHighlight")),
             gradient,
             null
         )
 
-        val tintList = ColorStateList.valueOf(activity.getColorAttr(R.attr.colorOnPrimary))
+        val tintList = ColorStateList.valueOf(activity.getColorAttr("colorOnPrimary"))
         ImageViewCompat.setImageTintList(chip.ivWeatherIcon, tintList)
         ImageViewCompat.setImageTintList(chip.ivTotalTrafficIcon, tintList)
         chip.tvWeatherTemp.setTextColor(tintList.defaultColor)
@@ -77,7 +77,7 @@ object SearchChipGradientController {
     private fun applyGradientOff(activity: AppCompatActivity, chip: ChipViews) {
         chip.layoutWeatherChip.setBackgroundResource(R.drawable.bg_weather_chip)
 
-        val tintList = ColorStateList.valueOf(activity.getColorAttr(R.attr.colorOnSurfaceVariant))
+        val tintList = ColorStateList.valueOf(activity.getColorAttr("colorOnSurfaceVariant"))
         ImageViewCompat.setImageTintList(chip.ivWeatherIcon, tintList)
         ImageViewCompat.setImageTintList(chip.ivTotalTrafficIcon, tintList)
         chip.tvWeatherTemp.setTextColor(tintList.defaultColor)

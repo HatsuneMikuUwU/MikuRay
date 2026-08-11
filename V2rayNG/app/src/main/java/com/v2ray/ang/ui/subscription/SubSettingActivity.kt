@@ -230,7 +230,10 @@ class SubSettingActivity : BaseActivity(),
                     ivBinding.ivQcode.setImageBitmap(
                         QRCodeDecoder.createQRCode(url)
                     )
-                    AlertDialog.Builder(this).setView(ivBinding.root).showBlur()
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.title_qr_code)
+                        .setIcon(R.drawable.ic_action_qr)
+                        .setView(ivBinding.root).showBlur()
                 }
                 R.id.share_clipboard -> {
                     Utils.setClipboard(this, url)

@@ -32,10 +32,10 @@ object BlurBottomStatusController {
         binding.blurBottomStatus.visibility = View.VISIBLE
         binding.cardBottomStatus.setCardBackgroundColor(android.graphics.Color.TRANSPARENT)
         binding.tvIpState.setTextColor(
-            activity.getColorAttr(R.attr.colorOnSurfaceVariant)
+            activity.getColorAttr("colorOnSurfaceVariant")
         )
         binding.tvTestState.setTextColor(
-            activity.getColorAttr(R.attr.colorOnSurface)
+            activity.getColorAttr("colorOnSurface")
         )
         binding.fab.visibility = View.VISIBLE
         binding.fabNoBlur.visibility = View.GONE
@@ -44,9 +44,9 @@ object BlurBottomStatusController {
     private fun applyBlurOff(activity: AppCompatActivity, binding: ActivityMainBinding) {
         binding.blurBottomStatus.visibility = View.GONE
         binding.cardBottomStatus.setCardBackgroundColor(
-            activity.getColorAttr(R.attr.colorPrimary)
+            activity.getColorAttr("colorPrimary")
         )
-        val textColorOnPrimary = activity.getColorAttr(R.attr.colorOnPrimary)
+        val textColorOnPrimary = activity.getColorAttr("colorOnPrimary")
         binding.tvIpState.setTextColor(textColorOnPrimary)
         binding.tvIpState.alpha = 0.8f
         binding.tvTestState.setTextColor(textColorOnPrimary)

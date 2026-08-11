@@ -173,6 +173,7 @@ class ParticlesSettingsDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(title)
+            .setIcon(R.drawable.ic_baseline_speed_24)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 sliders.forEach { (param, slider) ->

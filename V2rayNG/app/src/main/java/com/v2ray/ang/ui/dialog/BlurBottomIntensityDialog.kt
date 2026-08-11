@@ -41,6 +41,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_blur_bottom_intensity)
+            .setIcon(R.drawable.ic_baseline_blur_on_24)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok, null)
             .setNeutralButton(R.string.reset, null)

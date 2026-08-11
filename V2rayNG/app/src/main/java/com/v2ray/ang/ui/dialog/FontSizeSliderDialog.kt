@@ -54,6 +54,7 @@ class FontSizeSliderDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_font_size)
+            .setIcon(R.drawable.ic_format_font)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val clamped = slider.value.coerceIn(AppConfig.FONT_SIZE_MIN, AppConfig.FONT_SIZE_MAX)

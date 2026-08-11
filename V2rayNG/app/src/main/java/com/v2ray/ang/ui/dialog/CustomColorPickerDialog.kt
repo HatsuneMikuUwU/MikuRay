@@ -54,6 +54,7 @@ class CustomColorPickerDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_custom_color_title)
+            .setIcon(R.drawable.ic_palette_24)
             .setView(view)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 activity?.let { ThemeManager.saveCustomColor(it, selectedColor) }

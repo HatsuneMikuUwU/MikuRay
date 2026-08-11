@@ -4,7 +4,8 @@
     android:width="24.0dip"
     android:viewportWidth="12.0"
     android:viewportHeight="12.0"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tint="?colorOnSurfaceVariant">
     <path
         android:fillColor="#ffffffff"
         android:pathData="M8.84 2H3.16C2.58 2 2.28 2.77 2.7 3.22l0.77 0.96c0.19 0.24 0.48 0.38 0.78 0.38h3.52c0.3 0 0.6-0.14 0.78-0.38l0.77-0.96C9.71 2.77 9.42 2 8.84 2Z" />

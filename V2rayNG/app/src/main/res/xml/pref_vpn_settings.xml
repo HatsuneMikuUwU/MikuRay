@@ -58,6 +58,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
+            app:dialogIcon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_vpn_dns"
             android:summary="@string/summary_pref_remote_dns"
@@ -66,6 +67,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_lan"
+            app:dialogIcon="@drawable/ic_lan"
             app:layout="@layout/uwu_mid"
             android:defaultValue="1"
             android:entries="@array/vpn_bypass_lan"
@@ -76,6 +78,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_access_point_network"
+            app:dialogIcon="@drawable/ic_access_point_network"
             app:layout="@layout/uwu_mid"
             android:defaultValue="0"
             android:entries="@array/vpn_interface_address"
@@ -86,6 +89,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_key"
+            app:dialogIcon="@drawable/ic_key"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_vpn_mtu"
@@ -95,6 +99,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
+            app:dialogIcon="@drawable/ic_clock"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_tcp_keepalive_idle"
@@ -104,6 +109,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
+            app:dialogIcon="@drawable/ic_clock"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_ws_heartbeat_period"
@@ -136,6 +142,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_wan"
+            app:dialogIcon="@drawable/ic_wan"
             app:layout="@layout/uwu_mid"
             android:defaultValue="off"
             android:entries="@array/hev_tunnel_icmp"
@@ -146,6 +153,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_wan"
+            app:dialogIcon="@drawable/ic_wan"
             app:layout="@layout/uwu_mid"
             android:defaultValue="udp"
             android:entries="@array/hev_tunnel_udp_mode"
@@ -156,6 +164,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_wan"
+            app:dialogIcon="@drawable/ic_wan"
             app:layout="@layout/uwu_mid"
             android:key="pref_hev_tunnel_udp_address"
             android:title="@string/title_pref_hev_tunnel_udp_address"
@@ -163,6 +172,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_math_log"
+            app:dialogIcon="@drawable/ic_math_log"
             app:layout="@layout/uwu_mid"
             android:defaultValue="warn"
             android:entries="@array/hev_tunnel_loglevel"
@@ -173,6 +183,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_clock"
+            app:dialogIcon="@drawable/ic_clock"
             app:layout="@layout/uwu_mid"
             android:key="pref_hev_tunnel_rw_timeout_v2"
             android:summary="300,60"

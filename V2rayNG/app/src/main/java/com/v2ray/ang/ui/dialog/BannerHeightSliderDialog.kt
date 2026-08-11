@@ -47,6 +47,7 @@ class BannerHeightSliderDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_home_banner_height_title)
+            .setIcon(R.drawable.ic_cellphone_screenshot)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val newHeight = slider.value.toInt()

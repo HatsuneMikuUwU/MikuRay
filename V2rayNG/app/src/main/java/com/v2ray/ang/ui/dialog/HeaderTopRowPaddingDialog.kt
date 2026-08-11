@@ -47,6 +47,7 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_header_top_row_padding_title)
+            .setIcon(R.drawable.ic_cellphone_screenshot)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val newPadding = slider.value.toInt()

@@ -553,6 +553,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.sheet_banner_delete_title)
+                        .setIcon(R.drawable.ic_delete_24dp)
                         .setMessage(R.string.sheet_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -600,6 +601,7 @@ class UiSettingsActivity : BaseActivity() {
                 }
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.title_pref_app_font_custom_delete)
+                    .setIcon(R.drawable.ic_delete_24dp)
                     .setMessage(R.string.custom_font_delete_confirm)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         CustomFontManager.clearFont(requireContext())
@@ -673,6 +675,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.selected_banner_delete_title)
+                        .setIcon(R.drawable.ic_delete_24dp)
                         .setMessage(R.string.selected_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -744,6 +747,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.delete_custom_banner_profile)
+                        .setIcon(R.drawable.ic_delete_24dp)
                         .setMessage(R.string.delete_custom_banner_profile_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -804,6 +808,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.home_banner_delete_title)
+                        .setIcon(R.drawable.ic_delete_24dp)
                         .setMessage(R.string.home_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {

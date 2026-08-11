@@ -68,7 +68,7 @@ class AppIconPickerAdapter(
 
         holder.label.text = label
         holder.card.strokeColor = if (isSelected) {
-            context.getColorAttr(R.attr.colorPrimary)
+            context.getColorAttr("colorPrimary")
         } else {
             android.graphics.Color.TRANSPARENT
         }

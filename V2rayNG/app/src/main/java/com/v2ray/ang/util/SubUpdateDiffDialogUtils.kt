@@ -34,6 +34,7 @@ fun showSubUpdateDiffDialog(context: Context, result: SubscriptionUpdateResult) 
 
     MaterialAlertDialogBuilder(context)
         .setTitle(title)
+        .setIcon(R.drawable.ic_subscriptions_24dp)
         .setMessage(message)
         .setPositiveButton(android.R.string.ok, null)
         .showBlur()

@@ -80,6 +80,7 @@ class CheckUpdateActivity : BaseActivity() {
     private fun showUpdateDialog(result: CheckUpdateResult) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.update_new_version_found, result.latestVersion))
+            .setIcon(R.drawable.ic_check_update_24dp)
             .setMessage(result.releaseNotes)
             .setPositiveButton(R.string.update_now) { _, _ ->
                 result.downloadUrl?.let {

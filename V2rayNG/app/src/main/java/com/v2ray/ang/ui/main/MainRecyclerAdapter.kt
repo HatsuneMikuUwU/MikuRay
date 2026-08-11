@@ -2,7 +2,6 @@ package com.v2ray.ang.ui.main
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.ItemTouchHelperAdapter
 import com.v2ray.ang.helper.ItemTouchHelperViewHolder
-
 import java.util.Collections
 import com.v2ray.ang.util.IndicatorStyle
 import com.v2ray.ang.util.SelectedProfileBannerController
@@ -175,13 +173,12 @@ class MainRecyclerAdapter(
             if (isGridMode) {
                 selectedBannerController?.clear(holder.views.layoutIndicator)
                 holder.views.layoutIndicator.setBackgroundResource(0)
-                val typedValue = TypedValue()
-                context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
-                holder.views.layoutCard.setCardBackgroundColor(typedValue.data)
+                holder.views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
+                
                 if (isSelectedServer) {
                     val strokeWidthPx = (3 * context.resources.displayMetrics.density).toInt()
                     holder.views.layoutCard.strokeWidth = strokeWidthPx
-                    holder.views.layoutCard.setStrokeColor(context.getColorAttr(R.attr.colorPrimary))
+                    holder.views.layoutCard.setStrokeColor(context.getColorAttr("colorPrimary"))
                 } else {
                     holder.views.layoutCard.strokeWidth = 0
                 }
@@ -206,10 +203,8 @@ class MainRecyclerAdapter(
             } else {
                 selectedBannerController?.clear(holder.views.layoutIndicator)
                 holder.views.layoutIndicator.setBackgroundResource(0)
-                val typedValue = TypedValue()
-                context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
                 holder.views.layoutCard.strokeWidth = 0
-                holder.views.layoutCard.setCardBackgroundColor(typedValue.data)
+                holder.views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
             }
 
             val subRemarks = getSubscriptionRemarks(profile)
@@ -278,10 +273,7 @@ class MainRecyclerAdapter(
             val wrapped = androidx.core.graphics.drawable.DrawableCompat.wrap(d.mutate())
             androidx.core.graphics.drawable.DrawableCompat.setTint(
                 wrapped,
-                com.google.android.material.color.MaterialColors.getColor(
-                    holder.itemView,
-                    R.attr.colorOnSurfaceVariant
-                )
+                context.getColorAttr("colorOnSurfaceVariant")
             )
             wrapped.setBounds(0, 0, iconSize, iconSize)
             return wrapped
@@ -443,15 +435,11 @@ class MainRecyclerAdapter(
         BaseViewHolder(views.root) {
         override fun onItemSelected() {
             val context = itemView.context
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.colorSurfaceVariant, typedValue, true)
-            views.layoutCard.setCardBackgroundColor(typedValue.data)
+            views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorSurfaceVariant"))
         }
         override fun onItemClear() {
             val context = itemView.context
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.colorCard, typedValue, true)
-            views.layoutCard.setCardBackgroundColor(typedValue.data)
+            views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
         }
     }
 

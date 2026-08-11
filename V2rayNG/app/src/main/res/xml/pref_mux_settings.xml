@@ -17,6 +17,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
+            app:dialogIcon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_mux_concurrency"
@@ -26,6 +27,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
+            app:dialogIcon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_mux_xudp_concurrency"
@@ -35,6 +37,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_currency_eth"
+            app:dialogIcon="@drawable/ic_currency_eth"
             app:layout="@layout/uwu_bot"
             android:defaultValue="reject"
             android:entries="@array/mux_xudp_quic_entries"

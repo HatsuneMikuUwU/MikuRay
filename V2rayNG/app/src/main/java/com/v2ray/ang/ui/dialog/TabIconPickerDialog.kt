@@ -41,7 +41,7 @@ class TabIconPickerDialog(
         val noneSelected = currentIcon == null
         checkNone.visibility = if (noneSelected) View.VISIBLE else View.GONE
         checkNone.imageTintList = ColorStateList.valueOf(
-            if (noneSelected) context.getColorAttr(R.attr.colorPrimary) else 0
+            if (noneSelected) context.getColorAttr("colorPrimary") else 0
         )
 
         rowNone.setOnClickListener {
@@ -51,6 +51,7 @@ class TabIconPickerDialog(
 
         dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.sub_setting_tab_icon)
+            .setIcon(R.drawable.filter_all_solar)
             .setView(dialogView)
             .setNegativeButton(android.R.string.cancel, null)
             .create()

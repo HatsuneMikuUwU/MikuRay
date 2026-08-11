@@ -72,8 +72,8 @@ object Toasty {
     @JvmStatic @CheckResult
     fun normal(context: Context, message: CharSequence, duration: Int, icon: Drawable?, withIcon: Boolean): Toast =
         custom(context, message, icon,
-            ToastyUtils.getColorAttr(context, R.attr.colorSurfaceInverse, 0),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorSurfaceInverse", 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult
@@ -99,8 +99,8 @@ object Toasty {
     @JvmStatic @CheckResult
     fun warning(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
         custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_warning),
-            ToastyUtils.getColorAttr(context, R.attr.colorTertiary, 0),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnTertiary, 0),
+            ToastyUtils.getColorAttr(context, "colorTertiary", 0),
+            ToastyUtils.getColorAttr(context, "colorOnTertiary", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult
@@ -126,8 +126,8 @@ object Toasty {
     @JvmStatic @CheckResult
     fun info(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
         custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_about_24dp),
-            ToastyUtils.getColorAttr(context, R.attr.colorSurfaceInverse, 0),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorSurfaceInverse", 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult
@@ -153,8 +153,8 @@ object Toasty {
     @JvmStatic @CheckResult
     fun success(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
         custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_check_circle),
-            ToastyUtils.getColorAttr(context, R.attr.colorPrimary, 0),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnPrimary, 0),
+            ToastyUtils.getColorAttr(context, "colorPrimary", 0),
+            ToastyUtils.getColorAttr(context, "colorOnPrimary", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult
@@ -180,40 +180,40 @@ object Toasty {
     @JvmStatic @CheckResult
     fun error(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
         custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_warning),
-            ToastyUtils.getColorAttr(context, R.attr.colorError, 0),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnError, 0),
+            ToastyUtils.getColorAttr(context, "colorError", 0),
+            ToastyUtils.getColorAttr(context, "colorOnError", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, @StringRes message: Int, icon: Drawable?, duration: Int, withIcon: Boolean): Toast =
         custom(context, context.getString(message), icon, -1,
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, false)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, message: CharSequence, icon: Drawable?, duration: Int, withIcon: Boolean): Toast =
         custom(context, message, icon, -1,
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, false)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, @StringRes message: Int, @DrawableRes iconRes: Int, @ColorRes tintColorRes: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast =
         custom(context, context.getString(message), ToastyUtils.getDrawable(context, iconRes),
             ToastyUtils.getColor(context, tintColorRes),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, shouldTint)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, message: CharSequence, @DrawableRes iconRes: Int, @ColorRes tintColorRes: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast =
         custom(context, message, ToastyUtils.getDrawable(context, iconRes),
             ToastyUtils.getColor(context, tintColorRes),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0),
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, shouldTint)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, @StringRes message: Int, icon: Drawable?, @ColorRes tintColorRes: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast =
         custom(context, context.getString(message), icon, ToastyUtils.getColor(context, tintColorRes),
-            ToastyUtils.getColorAttr(context, R.attr.colorOnSurfaceInverse, 0), duration, withIcon, shouldTint)
+            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0), duration, withIcon, shouldTint)
 
     @JvmStatic @CheckResult
     fun custom(context: Context, @StringRes message: Int, icon: Drawable?, @ColorRes tintColorRes: Int, @ColorRes textColorRes: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast =

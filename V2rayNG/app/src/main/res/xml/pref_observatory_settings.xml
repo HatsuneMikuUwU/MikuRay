@@ -9,6 +9,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
+            app:dialogIcon="@drawable/ic_pencil"
             app:layout="@layout/uwu_top"
             android:key="pref_observatory_least_ping_interval"
             android:defaultValue="3m"
@@ -16,6 +17,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
+            app:dialogIcon="@drawable/ic_pencil"
             app:layout="@layout/uwu_mid"
             android:key="pref_observatory_least_load_interval"
             android:defaultValue="5m"
@@ -23,6 +25,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_arrow_decision"
+            app:dialogIcon="@drawable/ic_arrow_decision"
             app:layout="@layout/uwu_mid"
             android:defaultValue="HEAD"
             android:entries="@array/observatory_least_load_method"
@@ -33,6 +36,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
+            app:dialogIcon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_observatory_least_load_sampling"
@@ -41,6 +45,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_pencil"
+            app:dialogIcon="@drawable/ic_pencil"
             app:layout="@layout/uwu_bot"
             android:key="pref_observatory_least_load_timeout"
             android:defaultValue="30s"

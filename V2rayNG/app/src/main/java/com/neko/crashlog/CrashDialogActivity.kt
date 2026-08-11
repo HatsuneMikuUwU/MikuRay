@@ -17,6 +17,7 @@ class CrashDialogActivity : BaseActivity() {
 
         MaterialAlertDialogBuilder(this)
             .setTitle("Crash Log")
+            .setIcon(com.v2ray.ang.R.drawable.ic_warning)
             .setMessage(crashLog)
             .setPositiveButton("Copy") { _, _ ->
                 copyToClipboard(crashLog)

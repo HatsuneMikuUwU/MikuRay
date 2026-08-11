@@ -16,6 +16,9 @@
             android:layout_marginBottom="16dp"
             android:hint="@string/title_webdav_url"
             app:startIconDrawable="@drawable/ic_share_24dp"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -31,6 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/title_webdav_user"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -47,6 +53,9 @@
             android:layout_marginBottom="16dp"
             android:hint="@string/title_webdav_pass"
             app:endIconMode="password_toggle"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -62,6 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:hint="@string/title_webdav_remote_path"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText

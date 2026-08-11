@@ -7,7 +7,8 @@
     android:baselineAligned="false"
     android:minHeight="?android:listPreferredItemHeightSmall"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt">
     <LinearLayout
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -44,23 +45,35 @@
         <TextView
             android:textAppearance="?textAppearanceTitleMedium"
             android:textSize="17.0sp"
-            android:textColor="?android:textColorPrimary"
             android:ellipsize="marquee"
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false" />
+            android:singleLine="false">
+            <aapt:attr name="android:textColor">
+                <selector>
+                    <item android:state_enabled="false" android:color="?attr/colorOnSurface" android:alpha="0.38" />
+                    <item android:color="?attr/colorOnSurface" />
+                </selector>
+            </aapt:attr>
+        </TextView>
         <TextView
             android:textAppearance="?textAppearanceTitleSmall"
             android:textSize="14.0sp"
-            android:textColor="?android:textColorSecondary"
             android:ellipsize="marquee"
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="false"
             android:layout_below="@android:id/title"
-            android:layout_alignStart="@android:id/title" />
+            android:layout_alignStart="@android:id/title">
+            <aapt:attr name="android:textColor">
+                <selector>
+                    <item android:state_enabled="false" android:color="?attr/colorOnSurfaceVariant" android:alpha="0.38" />
+                    <item android:color="?attr/colorOnSurfaceVariant" />
+                </selector>
+            </aapt:attr>
+        </TextView>
     </RelativeLayout>
     <LinearLayout
         android:gravity="center"

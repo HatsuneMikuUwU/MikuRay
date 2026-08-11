@@ -45,6 +45,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_numeric"
+            app:dialogIcon="@drawable/ic_numeric"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_socks_port"
@@ -62,6 +63,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_account_edit"
+            app:dialogIcon="@drawable/ic_account_edit"
             app:layout="@layout/uwu_mid"
             android:key="pref_socks_username"
             android:summary="@string/summary_pref_socks_username"
@@ -70,6 +72,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_account_edit"
+            app:dialogIcon="@drawable/ic_account_edit"
             app:layout="@layout/uwu_mid"
             android:inputType="textPassword"
             android:key="pref_socks_password"
@@ -88,6 +91,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
+            app:dialogIcon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_remote_dns"
             android:summary="@string/summary_pref_remote_dns"
@@ -96,6 +100,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
+            app:dialogIcon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_domestic_dns"
             android:summary="@string/summary_pref_domestic_dns"
@@ -104,6 +109,7 @@
 
         <EditTextPreference
             android:icon="@drawable/ic_dns"
+            app:dialogIcon="@drawable/ic_dns"
             app:layout="@layout/uwu_mid"
             android:key="pref_dns_hosts"
             android:summary="@string/summary_pref_dns_hosts"
@@ -112,6 +118,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_math_log"
+            app:dialogIcon="@drawable/ic_math_log"
             app:layout="@layout/uwu_mid"
             android:defaultValue="warning"
             android:entries="@array/core_loglevel"
@@ -122,6 +129,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_domain"
+            app:dialogIcon="@drawable/ic_domain"
             app:layout="@layout/uwu_mid"
             android:defaultValue="0"
             android:entries="@array/outbound_domain_resolve_method"
@@ -132,6 +140,7 @@
 
         <ListPreference
             android:icon="@drawable/ic_cloud_download_24dp"
+            app:dialogIcon="@drawable/ic_cloud_download_24dp"
             app:layout="@layout/uwu_bot"
             android:defaultValue="Loyalsoldier/v2ray-rules-dat"
             android:entries="@array/geo_files_sources_entries"

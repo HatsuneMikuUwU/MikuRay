@@ -48,6 +48,7 @@ class SelectedBannerDimSliderDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.selected_banner_dim_title)
+            .setIcon(R.drawable.ic_baseline_blur_on_24)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val newDim = slider.value.toInt()

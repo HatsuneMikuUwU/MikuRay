@@ -14,7 +14,6 @@ import java.io.Serializable
 
 object MessageUtil {
 
-
     fun sendMsg2Service(ctx: Context, what: Int, content: Serializable) {
         sendMsg(ctx, AppConfig.BROADCAST_ACTION_SERVICE, what, content)
     }
@@ -85,7 +84,7 @@ object MessageUtil {
             intent.putExtra("key", what)
             
             if (content is String) {
-                intent.putExtra("content", content as String)
+                intent.putExtra("content", content)
             } else {
                 intent.putExtra("content", content)
             }
