@@ -83,7 +83,13 @@ object MessageUtil {
             intent.action = action
             intent.`package` = AppConfig.ANG_PACKAGE
             intent.putExtra("key", what)
-            intent.putExtra("content", content)
+            
+            if (content is String) {
+                intent.putExtra("content", content as String)
+            } else {
+                intent.putExtra("content", content)
+            }
+            
             ctx.sendBroadcast(intent)
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to send message with action: $action", e)

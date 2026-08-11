@@ -70,12 +70,20 @@ object LauncherManager {
             startContextService(context)
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "LauncherManager: ${e.message}", e)
-            showFeedback(context, e.message ?: e.javaClass.simpleName, 2)
+            val message = e.message ?: e.javaClass.simpleName
+            showFeedback(context, message, 2)
+            MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_START_FAILURE, message)
         }
     }
 
     fun stopService(context: Context) {
         MessageUtil.sendMsg2Service(context, AppConfig.MSG_STATE_STOP, "")
+        
+        context.stopService(Intent(context, CoreVpnService::class.java))
+        context.stopService(Intent(context, CoreProxyOnlyService::class.java))
+        context.stopService(Intent(context, CoreRootService::class.java))
+        
+        MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_STOP_SUCCESS, "")
     }
 
     @Throws(Exception::class)

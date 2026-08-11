@@ -108,6 +108,7 @@ class CoreVpnService : VpnService(), ServiceControl {
                 }
             } else {
                 startService()
+                unlockStart()
             }
         }
         return START_STICKY
@@ -342,4 +343,3 @@ class CoreVpnService : VpnService(), ServiceControl {
         LogUtil.w(AppConfig.TAG, "StartCore-VPN: unlockStart")
     }
 }
-

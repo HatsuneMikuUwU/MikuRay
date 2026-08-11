@@ -796,6 +796,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun handleFabAction() {
+        mainViewModel.resyncState()
         applyRunningState(isLoading = true, isRunning = false)
 
         if (mainViewModel.isRunning.value == true) {
@@ -816,6 +817,8 @@ class MainActivity : HelperBaseActivity(),
         if (mainViewModel.isRunning.value == true) {
             setTestState(getString(R.string.connection_test_testing))
             mainViewModel.testCurrentServerRealPing()
+        } else {
+            mainViewModel.resyncState()
         }
     }
 
@@ -848,11 +851,17 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
+        binding.fab.isEnabled = true
+        binding.fabNoBlur.isEnabled = true
+
         if (isLoading) {
             binding.fab.setImageResource(R.drawable.ic_fab_check)
             binding.fabNoBlur.setImageResource(R.drawable.ic_fab_check)
             return
         }
+
+        binding.cardBottomStatus.isClickable = true
+        binding.cardBottomStatus.isFocusable = true
 
         if (isRunning) {
             binding.fab.setImageResource(R.drawable.ic_stop_24dp)
@@ -860,7 +869,6 @@ class MainActivity : HelperBaseActivity(),
             binding.fabNoBlur.setImageResource(R.drawable.ic_stop_24dp)
             binding.fabNoBlur.contentDescription = getString(R.string.action_stop_service)
             setTestState(lastTestResultText.ifEmpty { getString(R.string.connection_connected) })
-            binding.cardBottomStatus.isFocusable = true
         } else {
             binding.fab.setImageResource(R.drawable.ic_play_24dp)
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
@@ -871,7 +879,6 @@ class MainActivity : HelperBaseActivity(),
             lastTrafficSpeedText = ""
             lastIpStateText = getString(R.string.ip_unknown)
             refreshIpStateText()
-            binding.cardBottomStatus.isFocusable = false
         }
     }
 
