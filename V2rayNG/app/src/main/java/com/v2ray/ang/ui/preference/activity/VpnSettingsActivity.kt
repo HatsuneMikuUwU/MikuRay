@@ -50,6 +50,11 @@ class VpnSettingsActivity : BaseActivity() {
         private val useHevTun by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_USE_HEV_TUNNEL) }
         private val hevTunLogLevel by lazy { findPreference<ListPreference>(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL) }
         private val hevTunRwTimeout by lazy { findPreference<EditTextPreference>(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT) }
+        private val hevTunIcmp by lazy { findPreference<ListPreference>(AppConfig.PREF_HEV_TUNNEL_ICMP) }
+        private val hevTunUdpMode by lazy { findPreference<ListPreference>(AppConfig.PREF_HEV_TUNNEL_UDP_MODE) }
+        private val hevTunUdpAddress by lazy { findPreference<EditTextPreference>(AppConfig.PREF_HEV_TUNNEL_UDP_ADDRESS) }
+        private val hevTunTcpFastOpen by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_HEV_TUNNEL_TCP_FASTOPEN) }
+        private val hevTunPipeline by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_HEV_TUNNEL_PIPELINE) }
         private val navigatePerAppProxy by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_PER_APP_PROXY_SETTINGS) }
         private val keepAwake by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_KEEP_AWAKE) }
         private val tcpKeepaliveIdle by lazy { findPreference<EditTextPreference>(AppConfig.PREF_TCP_KEEPALIVE_IDLE) }
@@ -187,6 +192,11 @@ class VpnSettingsActivity : BaseActivity() {
         private fun updateHevTunSettings(enabled: Boolean) {
             hevTunLogLevel?.isEnabled = enabled
             hevTunRwTimeout?.isEnabled = enabled
+            hevTunIcmp?.isEnabled = enabled
+            hevTunUdpMode?.isEnabled = enabled
+            hevTunUdpAddress?.isEnabled = enabled
+            hevTunTcpFastOpen?.isEnabled = enabled
+            hevTunPipeline?.isEnabled = enabled
         }
     }
 }

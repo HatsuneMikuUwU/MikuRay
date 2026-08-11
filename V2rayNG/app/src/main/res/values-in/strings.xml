@@ -326,9 +326,20 @@
     <string name="title_pref_ui_mode_night">Settingan Mode Gelap</string>
     <string name="title_pref_use_hev_tunnel">Aktifin Fitur Hev TUN</string>
     <string name="summary_pref_use_hev_tunnel">Kalo nyala, TUN bakal pake hev-socks5-tunnel; kalo nggak, tetep pake xray-core.</string>
+    <string name="title_category_hev_tunnel">Hev Tunnel</string>
     <string name="title_pref_hev_tunnel_loglevel">Level Log Hev Tun</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu baca/tulis Hev Tun</string>
     <string name="title_pref_hev_tunnel_rw_timeout_tip">timeout, detik, tcp,udp bawaan 300,60</string>
+    <string name="title_pref_hev_tunnel_icmp">ICMP Echo (ping)</string>
+    <string name="summary_pref_hev_tunnel_icmp">Membalas permintaan ICMP echo melalui tunnel</string>
+    <string name="title_pref_hev_tunnel_udp_mode">Mode relay UDP</string>
+    <string name="summary_pref_hev_tunnel_udp_mode">Cara paket UDP diteruskan melalui proxy SOCKS5</string>
+    <string name="title_pref_hev_tunnel_udp_address">Timpa alamat relay UDP</string>
+    <string name="title_pref_hev_tunnel_udp_address_tip">Opsional. Menimpa alamat UDP yang diberikan oleh server SOCKS5. Biarkan kosong untuk memakai nilai dari server.</string>
+    <string name="title_pref_hev_tunnel_tcp_fastopen">TCP Fast Open</string>
+    <string name="summary_pref_hev_tunnel_tcp_fastopen">Mengurangi latensi koneksi pada jaringan yang mendukung</string>
+    <string name="title_pref_hev_tunnel_pipeline">Pipelining handshake SOCKS5</string>
+    <string name="summary_pref_hev_tunnel_pipeline">Eksperimental. Menggabungkan handshake SOCKS5 untuk mengurangi round trip</string>
 
     <string name="title_category_root_mode">Mode Root</string>
     <string name="title_pref_root_mode">Mode Root (seluruh sistem)</string>

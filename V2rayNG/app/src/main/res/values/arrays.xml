@@ -148,6 +148,16 @@
         <item>debug</item>
     </string-array>
 
+    <string-array name="hev_tunnel_icmp" translatable="false">
+        <item>off</item>
+        <item>reply</item>
+    </string-array>
+
+    <string-array name="hev_tunnel_udp_mode" translatable="false">
+        <item>udp</item>
+        <item>tcp</item>
+    </string-array>
+
     <string-array name="flows" translatable="false">
         <item />
         <item>xtls-rprx-vision</item>

@@ -324,9 +324,20 @@
     <string name="title_pref_ui_mode_night">Настройки режима интерфейса</string>
     <string name="title_pref_use_hev_tunnel">Включить функцию Hev TUN</string>
     <string name="summary_pref_use_hev_tunnel">При включении TUN использует hev-socks5-tunnel; иначе — xray-core.</string>
+    <string name="title_category_hev_tunnel">Hev-туннель</string>
     <string name="title_pref_hev_tunnel_loglevel">Уровень журнала Hev TUN</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Тайм-аут чтения/записи Hev TUN</string>
     <string name="title_pref_hev_tunnel_rw_timeout_tip">Секунды, tcp/udp по умолчанию 300,60</string>
+    <string name="title_pref_hev_tunnel_icmp">Эхо ICMP (ping)</string>
+    <string name="summary_pref_hev_tunnel_icmp">Отвечать на ICMP echo-запросы через туннель</string>
+    <string name="title_pref_hev_tunnel_udp_mode">Режим ретрансляции UDP</string>
+    <string name="summary_pref_hev_tunnel_udp_mode">Способ передачи пакетов UDP через прокси SOCKS5</string>
+    <string name="title_pref_hev_tunnel_udp_address">Переопределить адрес UDP-ретрансляции</string>
+    <string name="title_pref_hev_tunnel_udp_address_tip">Необязательно. Переопределяет адрес UDP, предоставленный сервером SOCKS5. Оставьте пустым, чтобы использовать значение сервера.</string>
+    <string name="title_pref_hev_tunnel_tcp_fastopen">TCP Fast Open</string>
+    <string name="summary_pref_hev_tunnel_tcp_fastopen">Уменьшает задержку соединения в поддерживаемых сетях</string>
+    <string name="title_pref_hev_tunnel_pipeline">Конвейеризация рукопожатия SOCKS5</string>
+    <string name="summary_pref_hev_tunnel_pipeline">Экспериментально. Объединяет рукопожатие SOCKS5 для уменьшения числа round trip</string>
 
     <string name="title_category_root_mode">Root-режим</string>
     <string name="title_pref_root_mode">Root-режим (общесистемный)</string>

@@ -151,6 +151,12 @@ object RootProxyManager {
     private fun buildHevConfig(socksUsername: String?, socksPassword: String?, socksPort: Int, ipv6: Boolean): String {
         val v4 = AppConfig.ROOT_TUN_ADDR_V4.substringBefore("/")
         val v6 = AppConfig.ROOT_TUN_ADDR_V6.substringBefore("/")
+        val icmpMode = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_ICMP) ?: "off"
+        val udpMode = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_UDP_MODE) ?: "udp"
+        val udpAddress = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_UDP_ADDRESS)
+        val pipeline = MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_PIPELINE, false)
+        val tcpFastOpen = MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_TCP_FASTOPEN, true)
+        val logLevel = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL) ?: "warn"
         return buildString {
             appendLine("tunnel:")
             appendLine("  name: '$TUN'")
@@ -158,15 +164,26 @@ object RootProxyManager {
             appendLine("  multi-queue: true")
             appendLine("  ipv4: '$v4'")
             if (ipv6) appendLine("  ipv6: '$v6'")
+            appendLine("  icmp: '$icmpMode'")
             appendLine("socks5:")
             appendLine("  port: $socksPort")
             appendLine("  address: '${AppConfig.LOOPBACK}'")
-            appendLine("  udp: 'udp'")
+            appendLine("  udp: '$udpMode'")
+            if (!udpAddress.isNullOrBlank()) {
+                appendLine("  udp-address: '${udpAddress.trim()}'")
+            }
+            if (pipeline) {
+                appendLine("  pipeline: true")
+            }
             if (socksUsername != null && socksPassword != null) {
                 appendLine("  username: '$socksUsername'")
                 appendLine("  password: '$socksPassword'")
             }
-            appendLine("  tcp-fastopen: true")
+            if (tcpFastOpen) {
+                appendLine("  tcp-fastopen: true")
+            }
+            appendLine("misc:")
+            appendLine("  log-level: $logLevel")
         }
     }
 

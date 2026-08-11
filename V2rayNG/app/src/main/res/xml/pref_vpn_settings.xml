@@ -93,33 +93,6 @@
             android:title="@string/title_pref_vpn_mtu"
             android:dialogMessage="@string/title_pref_vpn_mtu_tip" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
-            app:layout="@layout/uwu_mid_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:defaultValue="true"
-            android:key="pref_use_hev_tunnel_v2"
-            android:summary="@string/summary_pref_use_hev_tunnel"
-            android:title="@string/title_pref_use_hev_tunnel" />
-
-        <ListPreference
-            android:icon="@drawable/ic_math_log"
-            app:layout="@layout/uwu_mid"
-            android:defaultValue="warn"
-            android:entries="@array/hev_tunnel_loglevel"
-            android:entryValues="@array/hev_tunnel_loglevel"
-            android:key="pref_hev_tunnel_loglevel"
-            android:summary="%s"
-            android:title="@string/title_pref_hev_tunnel_loglevel" />
-
-        <EditTextPreference
-            android:icon="@drawable/ic_clock"
-            app:layout="@layout/uwu_mid"
-            android:key="pref_hev_tunnel_rw_timeout_v2"
-            android:summary="300,60"
-            android:title="@string/title_pref_hev_tunnel_rw_timeout"
-            android:dialogMessage="@string/title_pref_hev_tunnel_rw_timeout_tip" />
-
         <EditTextPreference
             android:icon="@drawable/ic_clock"
             app:layout="@layout/uwu_mid"
@@ -144,6 +117,85 @@
             android:key="pref_navigate_per_app_proxy_settings"
             android:summary="@string/summary_navigate_per_app_proxy_settings"
             android:title="@string/per_app_proxy_settings" />
+
+    </com.neko.widget.UwuPreferenceCategory>
+
+    <com.neko.widget.UwuPreferenceCategory
+        android:key="pref_category_hev_tunnel"
+        android:title="@string/title_category_hev_tunnel"
+        app:sectionIcon="@drawable/ic_wan">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_toggle_switch"
+            app:layout="@layout/uwu_top_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="true"
+            android:key="pref_use_hev_tunnel_v2"
+            android:summary="@string/summary_pref_use_hev_tunnel"
+            android:title="@string/title_pref_use_hev_tunnel" />
+
+        <ListPreference
+            android:icon="@drawable/ic_wan"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="off"
+            android:entries="@array/hev_tunnel_icmp"
+            android:entryValues="@array/hev_tunnel_icmp"
+            android:key="pref_hev_tunnel_icmp"
+            android:summary="@string/summary_pref_hev_tunnel_icmp"
+            android:title="@string/title_pref_hev_tunnel_icmp" />
+
+        <ListPreference
+            android:icon="@drawable/ic_wan"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="udp"
+            android:entries="@array/hev_tunnel_udp_mode"
+            android:entryValues="@array/hev_tunnel_udp_mode"
+            android:key="pref_hev_tunnel_udp_mode"
+            android:summary="@string/summary_pref_hev_tunnel_udp_mode"
+            android:title="@string/title_pref_hev_tunnel_udp_mode" />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_wan"
+            app:layout="@layout/uwu_mid"
+            android:key="pref_hev_tunnel_udp_address"
+            android:title="@string/title_pref_hev_tunnel_udp_address"
+            android:dialogMessage="@string/title_pref_hev_tunnel_udp_address_tip" />
+
+        <ListPreference
+            android:icon="@drawable/ic_math_log"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="warn"
+            android:entries="@array/hev_tunnel_loglevel"
+            android:entryValues="@array/hev_tunnel_loglevel"
+            android:key="pref_hev_tunnel_loglevel"
+            android:summary="%s"
+            android:title="@string/title_pref_hev_tunnel_loglevel" />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_clock"
+            app:layout="@layout/uwu_mid"
+            android:key="pref_hev_tunnel_rw_timeout_v2"
+            android:summary="300,60"
+            android:title="@string/title_pref_hev_tunnel_rw_timeout"
+            android:dialogMessage="@string/title_pref_hev_tunnel_rw_timeout_tip" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_flash_on"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="true"
+            android:key="pref_hev_tunnel_tcp_fastopen"
+            android:summary="@string/summary_pref_hev_tunnel_tcp_fastopen"
+            android:title="@string/title_pref_hev_tunnel_tcp_fastopen" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/ic_flash_on"
+            app:layout="@layout/uwu_bot_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_hev_tunnel_pipeline"
+            android:summary="@string/summary_pref_hev_tunnel_pipeline"
+            android:title="@string/title_pref_hev_tunnel_pipeline" />
 
     </com.neko.widget.UwuPreferenceCategory>
 

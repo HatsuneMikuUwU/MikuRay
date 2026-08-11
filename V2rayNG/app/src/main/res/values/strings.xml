@@ -340,9 +340,20 @@
     <string name="title_pref_ui_mode_night">UI mode settings</string>
     <string name="title_pref_use_hev_tunnel">Enable Hev TUN Feature</string>
     <string name="summary_pref_use_hev_tunnel">When enabled, TUN will use hev-socks5-tunnel; otherwise, it will use xray-core.</string>
+    <string name="title_category_hev_tunnel">Hev Tunnel</string>
     <string name="title_pref_hev_tunnel_loglevel">Hev Tun Log Level</string>
     <string name="title_pref_hev_tunnel_rw_timeout">Hev Tun read/write timeout</string>
     <string name="title_pref_hev_tunnel_rw_timeout_tip">Seconds, tcp/udp default 300,60</string>
+    <string name="title_pref_hev_tunnel_icmp">ICMP Echo (ping)</string>
+    <string name="summary_pref_hev_tunnel_icmp">Reply to ICMP echo requests through the tunnel</string>
+    <string name="title_pref_hev_tunnel_udp_mode">UDP relay mode</string>
+    <string name="summary_pref_hev_tunnel_udp_mode">How UDP packets are relayed over the SOCKS5 proxy</string>
+    <string name="title_pref_hev_tunnel_udp_address">Override UDP relay address</string>
+    <string name="title_pref_hev_tunnel_udp_address_tip">Optional. Overrides the UDP address returned by the SOCKS5 server. Leave empty to use the server-provided value.</string>
+    <string name="title_pref_hev_tunnel_tcp_fastopen">TCP Fast Open</string>
+    <string name="summary_pref_hev_tunnel_tcp_fastopen">Reduces connection latency on supported networks</string>
+    <string name="title_pref_hev_tunnel_pipeline">SOCKS5 handshake pipelining</string>
+    <string name="summary_pref_hev_tunnel_pipeline">Experimental. Pipelines the SOCKS5 handshake to reduce round trips</string>
 
     <string name="title_category_root_mode">Root mode</string>
     <string name="title_pref_root_mode">Root mode (system-wide)</string>

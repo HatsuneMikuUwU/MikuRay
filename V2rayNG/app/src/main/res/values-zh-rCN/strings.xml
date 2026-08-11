@@ -318,9 +318,20 @@
     <string name="title_pref_ui_mode_night">界面颜色设置</string>
     <string name="title_pref_use_hev_tunnel">启用 Hev TUN 功能</string>
     <string name="summary_pref_use_hev_tunnel">选择启用后 TUN 将使用 hev-socks5-tunnel 否则使用 xray-core</string>
+    <string name="title_category_hev_tunnel">Hev 隧道</string>
     <string name="title_pref_hev_tunnel_loglevel">HevTun 日志级别</string>
     <string name="title_pref_hev_tunnel_rw_timeout">HevTun 读写超时</string>
     <string name="title_pref_hev_tunnel_rw_timeout_tip">秒, tcp,udp 默认 300,60</string>
+    <string name="title_pref_hev_tunnel_icmp">ICMP 回显 (ping)</string>
+    <string name="summary_pref_hev_tunnel_icmp">通过隧道回复 ICMP echo 请求</string>
+    <string name="title_pref_hev_tunnel_udp_mode">UDP 中继模式</string>
+    <string name="summary_pref_hev_tunnel_udp_mode">UDP 数据包通过 SOCKS5 代理转发的方式</string>
+    <string name="title_pref_hev_tunnel_udp_address">覆盖 UDP 中继地址</string>
+    <string name="title_pref_hev_tunnel_udp_address_tip">可选。覆盖 SOCKS5 服务器返回的 UDP 地址。留空则使用服务器提供的值。</string>
+    <string name="title_pref_hev_tunnel_tcp_fastopen">TCP 快速打开</string>
+    <string name="summary_pref_hev_tunnel_tcp_fastopen">在支持的网络上降低连接延迟</string>
+    <string name="title_pref_hev_tunnel_pipeline">SOCKS5 握手流水线</string>
+    <string name="summary_pref_hev_tunnel_pipeline">实验性功能。将 SOCKS5 握手流水线化以减少往返次数</string>
 
     <string name="title_category_root_mode">Root 模式</string>
     <string name="title_pref_root_mode">Root 模式（全局代理）</string>

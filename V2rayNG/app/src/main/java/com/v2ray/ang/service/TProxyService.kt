@@ -7,6 +7,14 @@ import com.v2ray.ang.contracts.Tun2SocksControl
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.util.LogUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.io.File
 
 class TProxyService(
@@ -16,6 +24,9 @@ class TProxyService(
     private val restartCallback: () -> Unit
 ) : Tun2SocksControl {
     companion object {
+        private const val WATCHDOG_INTERVAL_MS = 5_000L
+        private const val STATS_LOG_INTERVAL_TICKS = 3 // ~15s at 5s interval
+
         @JvmStatic
         @Suppress("FunctionName")
         private external fun TProxyStartService(configPath: String, fd: Int): Boolean
@@ -37,6 +48,10 @@ class TProxyService(
         }
     }
 
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var watchdogJob: Job? = null
+    private var started = false
+
     override fun startTun2Socks() {
 
         val configContent = buildConfig()
@@ -46,9 +61,55 @@ class TProxyService(
         LogUtil.d(AppConfig.TAG, "HevSocks5Tunnel Config content:\n$configContent")
 
         try {
-            TProxyStartService(configFile.absolutePath, vpnInterface.fd)
+            val ok = TProxyStartService(configFile.absolutePath, vpnInterface.fd)
+            started = ok
+            LogUtil.i(AppConfig.TAG, "HevSocks5Tunnel TProxyStartService result: $ok")
         } catch (e: Exception) {
+            started = false
             LogUtil.e(AppConfig.TAG, "HevSocks5Tunnel exception: ${e.message}")
+        }
+
+        startWatchdog()
+    }
+
+    /**
+     * Periodically polls TProxyIsRunning()/TProxyGetStats(). If the tunnel is
+     * supposed to be up (isRunningProvider() == true) but the native engine
+     * has died, triggers restartCallback() to bring it back.
+     */
+    private fun startWatchdog() {
+        watchdogJob?.cancel()
+        watchdogJob = serviceScope.launch {
+            var tick = 0
+            while (isActive) {
+                delay(WATCHDOG_INTERVAL_MS)
+
+                if (!isRunningProvider()) continue
+
+                val running = isTunnelRunning()
+                if (!running) {
+                    LogUtil.w(AppConfig.TAG, "HevSocks5Tunnel: engine not running, requesting restart")
+                    // restartCallback() builds a brand new TProxyService instance
+                    // (with its own watchdog), so this instance must stop watching now
+                    // to avoid two loops racing on the same native singleton.
+                    restartCallback()
+                    break
+                }
+
+                tick++
+                if (tick >= STATS_LOG_INTERVAL_TICKS) {
+                    tick = 0
+                    getTunnelStats()?.let { stats ->
+                        if (stats.size >= 4) {
+                            LogUtil.d(
+                                AppConfig.TAG,
+                                "HevSocks5Tunnel stats: txPackets=${stats[0]} txBytes=${stats[1]} " +
+                                    "rxPackets=${stats[2]} rxBytes=${stats[3]}"
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -68,13 +129,26 @@ class TProxyService(
                 appendLine("  ipv6: '${vpnConfig.ipv6Client}'")
             }
 
+            val icmpMode = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_ICMP) ?: "off"
+            appendLine("  icmp: '${icmpMode}'")
+
             appendLine("socks5:")
             appendLine("  port: ${socksPort}")
             appendLine("  address: ${AppConfig.LOOPBACK}")
-            appendLine("  udp: 'udp'")
+            appendLine("  udp: '${MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_UDP_MODE) ?: "udp"}'")
+            val udpAddress = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_UDP_ADDRESS)
+            if (!udpAddress.isNullOrBlank()) {
+                appendLine("  udp-address: '${udpAddress.trim()}'")
+            }
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_PIPELINE, false)) {
+                appendLine("  pipeline: true")
+            }
             if (escapedSocksUsername != null && escapedSocksPassword != null) {
                 appendLine("  username: '${escapedSocksUsername}'")
                 appendLine("  password: '${escapedSocksPassword}'")
+            }
+            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_TCP_FASTOPEN, true)) {
+                appendLine("  tcp-fastopen: true")
             }
 
             val timeoutSetting = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT) ?: AppConfig.HEVTUN_RW_TIMEOUT
@@ -92,11 +166,35 @@ class TProxyService(
     }
 
     override fun stopTun2Socks() {
+        watchdogJob?.cancel()
+        watchdogJob = null
+        serviceScope.cancel()
+
         try {
             LogUtil.i(AppConfig.TAG, "TProxyStopService...")
             TProxyStopService()
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to stop hev-socks5-tunnel", e)
+        } finally {
+            started = false
+        }
+    }
+
+    override fun isTunnelRunning(): Boolean {
+        return try {
+            TProxyIsRunning()
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "TProxyIsRunning exception: ${e.message}")
+            false
+        }
+    }
+
+    override fun getTunnelStats(): LongArray? {
+        return try {
+            TProxyGetStats()
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "TProxyGetStats exception: ${e.message}")
+            null
         }
     }
 }
