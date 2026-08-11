@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
@@ -32,10 +33,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.v2ray.ang.AppConfig
+import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.core.LauncherManager
 import com.v2ray.ang.databinding.ActivityMainBinding
 import com.v2ray.ang.databinding.ItemQrcodeBinding
+import com.v2ray.ang.dto.entities.MikuRayExportPayload
 import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.ui.server.ServerGroupActivity
 import com.v2ray.ang.ui.server.ServerHysteria2Activity
@@ -56,6 +59,7 @@ import com.v2ray.ang.extension.toastSuccess
 import com.v2ray.ang.extension.toastError
 import com.v2ray.ang.util.showTotalTrafficDetailDialog
 import com.v2ray.ang.handler.AngConfigManager
+import com.v2ray.ang.handler.MikuRayGroupFileManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
@@ -69,12 +73,15 @@ import com.v2ray.ang.util.BlurBottomStatusController
 import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.util.getColorAttr
 import com.v2ray.ang.util.LogUtil
+import com.v2ray.ang.util.MikuRayFileCrypto
 import com.v2ray.ang.util.QRCodeDecoder
 import com.v2ray.ang.util.Utils
 import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.showBlur
 import com.v2ray.ang.util.showDeleteConfirmDialog
+import com.v2ray.ang.util.showMikuRayExportPasswordDialog
+import com.v2ray.ang.util.showMikuRayImportPasswordDialog
 import com.v2ray.ang.util.showSubUpdateDiffDialog
 import com.v2ray.ang.util.UrlTestProgressDialogController
 import com.king.camera.scan.CameraScan
@@ -83,6 +90,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class MainActivity : HelperBaseActivity(),
     MainMenuBottomSheet.OnOptionClickListener,
@@ -563,6 +571,7 @@ class MainActivity : HelperBaseActivity(),
     override fun onMoreOptionClicked(viewId: Int) {
         when (viewId) {
             R.id.export_all -> exportAll()
+            R.id.export_group_file -> exportGroupAsFile()
             R.id.real_ping_all -> {
                 urlTestProgressDialog.show(mainViewModel.serversCache.count())
                 mainViewModel.testAllRealPing()
@@ -1078,6 +1087,105 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
+    private fun exportGroupAsFile() {
+        val currentGroupName = mainViewModel.getSubscriptions(this)
+            .firstOrNull { it.id == mainViewModel.subscriptionId }
+            ?.remarks
+            ?: getString(R.string.filter_config_all)
+
+        val payload = MikuRayGroupFileManager.buildGroupExportPayload(mainViewModel.subscriptionId, currentGroupName)
+        if (payload == null) {
+            snackbarError(getString(R.string.title_export_group_file), title = getString(R.string.title_alerter_error))
+            return
+        }
+        exportPayloadAndShare(payload, currentGroupName)
+    }
+
+    private fun shareProfileAsFile(guid: String) {
+        val payload = MikuRayGroupFileManager.buildProfileExportPayload(guid)
+        if (payload == null) {
+            snackbarError(getString(R.string.title_export_group_file), title = getString(R.string.title_alerter_error))
+            return
+        }
+        exportPayloadAndShare(payload, payload.name)
+    }
+
+    private fun exportPayloadAndShare(payload: MikuRayExportPayload, fileNamePrefix: String) {
+        showMikuRayExportPasswordDialog(this) { password ->
+            showLoading()
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val file = MikuRayGroupFileManager.encryptPayloadToFile(this@MainActivity, payload, password, fileNamePrefix)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        shareMikuRayFile(file)
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to export .mikuray file", e)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        snackbarError(getString(R.string.title_export_group_file), title = getString(R.string.title_alerter_error))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun shareMikuRayFile(file: File) {
+        try {
+            val uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".cache", file)
+            startActivity(
+                Intent.createChooser(
+                    Intent(Intent.ACTION_SEND).setType("application/octet-stream")
+                        .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        .putExtra(Intent.EXTRA_STREAM, uri),
+                    getString(R.string.title_configuration_share)
+                )
+            )
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to share .mikuray file", e)
+            snackbarError(getString(R.string.title_export_group_file), title = getString(R.string.title_alerter_error))
+        }
+    }
+
+    private fun importMikuRayFile(bytes: ByteArray) {
+        showMikuRayImportPasswordDialog(this) { password ->
+            showLoading()
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val payload = MikuRayGroupFileManager.decryptPayloadFromFile(bytes, password)
+                    val count = MikuRayGroupFileManager.importPayload(payload, mainViewModel.subscriptionId)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        if (count > 0) {
+                            snackbarSuccess(getString(R.string.title_import_mikuray_count, count), title = getString(R.string.title_alerter_success))
+                            if (payload.type == MikuRayExportPayload.TYPE_GROUP) {
+                                setupGroupTab()
+                            } else {
+                                mainViewModel.reloadServerList()
+                                refreshGroupTabTitles()
+                            }
+                        } else {
+                            snackbarError(getString(R.string.title_import_mikuray_error), title = getString(R.string.title_alerter_error))
+                        }
+                    }
+                } catch (e: MikuRayFileCrypto.MikuRayCryptoException) {
+                    LogUtil.e(AppConfig.TAG, "Failed to decrypt .mikuray file", e)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        snackbarError(getString(R.string.title_import_mikuray_wrong_password), title = getString(R.string.title_alerter_error))
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Failed to import .mikuray file", e)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        snackbarError(getString(R.string.title_import_mikuray_error), title = getString(R.string.title_alerter_error))
+                    }
+                }
+            }
+        }
+    }
+
     private fun delAllConfig() {
         showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
             showLoading()
@@ -1155,8 +1263,11 @@ class MainActivity : HelperBaseActivity(),
 
     private fun readContentFromUri(uri: Uri) {
         try {
-            contentResolver.openInputStream(uri)?.use { input ->
-                importBatchConfig(input.bufferedReader().readText())
+            val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
+            if (MikuRayFileCrypto.isMikuRayFile(bytes)) {
+                importMikuRayFile(bytes)
+            } else {
+                importBatchConfig(String(bytes, Charsets.UTF_8))
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to read content from URI", e)
@@ -1227,6 +1338,7 @@ class MainActivity : HelperBaseActivity(),
                     }
                 }
             }
+            R.id.share_file -> shareProfileAsFile(guid)
         }
     }
 

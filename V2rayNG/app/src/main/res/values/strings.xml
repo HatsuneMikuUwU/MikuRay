@@ -600,6 +600,22 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="share_qrcode">QRcode</string>
     <string name="export_to_clipboard">Export to clipboard</string>
     <string name="export_full_config_to_clipboard">Export full config to clipboard</string>
+    <string name="share_as_file">Share as file</string>
+
+    <string name="title_export_group_file">Export/share group as file</string>
+    <string name="title_import_mikuray_count">Imported %d configs</string>
+    <string name="title_import_mikuray_error">Failed to import .mikuray file</string>
+    <string name="title_import_mikuray_wrong_password">Wrong password or corrupted .mikuray file</string>
+
+    <string name="mikuray_password_export_title">Set a password</string>
+    <string name="mikuray_password_export_desc">This password will encrypt the .mikuray file. You\'ll need it again to import the file, so don\'t lose it.</string>
+    <string name="mikuray_password_import_title">Enter password</string>
+    <string name="mikuray_password_import_desc">This .mikuray file is encrypted. Enter the password used when it was exported.</string>
+    <string name="mikuray_password_confirm_button">Continue</string>
+    <string name="mikuray_password_hint">Password</string>
+    <string name="mikuray_password_confirm_hint">Confirm password</string>
+    <string name="mikuray_password_error_empty">Password can\'t be empty</string>
+    <string name="mikuray_password_error_mismatch">Passwords don\'t match</string>
     <string name="ruleset_management">Ruleset Management</string>
     <string name="title_pref_app_theme">App Color Theme</string>
     <string name="summary_pref_app_theme">Choose the accent color palette for the app</string>

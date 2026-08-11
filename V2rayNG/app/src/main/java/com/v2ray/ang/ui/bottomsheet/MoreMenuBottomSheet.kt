@@ -135,6 +135,7 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
             R.id.del_duplicate_config,
             R.id.del_invalid_config,
             R.id.export_all,
+            R.id.export_group_file,
             R.id.real_ping_all,
             R.id.tcping_all,
             R.id.clear_test_results,

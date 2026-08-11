@@ -579,6 +579,22 @@
     <string name="share_qrcode">QR-код</string>
     <string name="export_to_clipboard">Экспортировать в буфер обмена</string>
     <string name="export_full_config_to_clipboard">Экспортировать полную конфигурацию в буфер обмена</string>
+    <string name="share_as_file">Поделиться как файлом</string>
+
+    <string name="title_export_group_file">Экспорт/поделиться группой как файлом</string>
+    <string name="title_import_mikuray_count">Импортировано %d конфигураций</string>
+    <string name="title_import_mikuray_error">Не удалось импортировать файл .mikuray</string>
+    <string name="title_import_mikuray_wrong_password">Неверный пароль или повреждённый файл .mikuray</string>
+
+    <string name="mikuray_password_export_title">Задайте пароль</string>
+    <string name="mikuray_password_export_desc">Этот пароль зашифрует файл .mikuray. Он понадобится снова при импорте файла, не потеряйте его.</string>
+    <string name="mikuray_password_import_title">Введите пароль</string>
+    <string name="mikuray_password_import_desc">Этот файл .mikuray зашифрован. Введите пароль, использованный при экспорте.</string>
+    <string name="mikuray_password_confirm_button">Продолжить</string>
+    <string name="mikuray_password_hint">Пароль</string>
+    <string name="mikuray_password_confirm_hint">Подтвердите пароль</string>
+    <string name="mikuray_password_error_empty">Пароль не может быть пустым</string>
+    <string name="mikuray_password_error_mismatch">Пароли не совпадают</string>
     <string name="ruleset_management">Управление наборами правил</string>
     <string name="title_pref_app_theme">Цветовая тема приложения</string>
     <string name="summary_pref_app_theme">Выберите цветовую палитру акцентов для приложения</string>

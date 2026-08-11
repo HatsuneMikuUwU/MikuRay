@@ -76,6 +76,8 @@ class ShareConfigBottomSheet : BaseBottomSheetFragment() {
 
         view.findViewById<View>(R.id.share_full_clipboard)?.setOnClickListener(clickListener)
 
+        view.findViewById<View>(R.id.share_file)?.setOnClickListener(clickListener)
+
         val typeEnum = EConfigType.fromInt(configType)
         val isCustomConfig = typeEnum?.isComplexType() == true
 

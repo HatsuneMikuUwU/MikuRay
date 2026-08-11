@@ -571,6 +571,22 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="share_qrcode">Pake QR Code</string>
     <string name="export_to_clipboard">Salin ke Clipboard</string>
     <string name="export_full_config_to_clipboard">Salin mentahan full konfignya ke Clipboard</string>
+    <string name="share_as_file">Bagikan sebagai file</string>
+
+    <string name="title_export_group_file">Ekspor/bagikan grup sebagai file</string>
+    <string name="title_import_mikuray_count">%d konfig berhasil diimpor</string>
+    <string name="title_import_mikuray_error">Gagal impor file .mikuray</string>
+    <string name="title_import_mikuray_wrong_password">Password salah atau file .mikuray rusak</string>
+
+    <string name="mikuray_password_export_title">Bikin password</string>
+    <string name="mikuray_password_export_desc">Password ini bakal dipakai buat enkripsi file .mikuray-nya. Kamu butuh password yang sama buat impor filenya lagi, jadi jangan sampai lupa.</string>
+    <string name="mikuray_password_import_title">Masukkan password</string>
+    <string name="mikuray_password_import_desc">File .mikuray ini terenkripsi. Masukkan password yang dipakai waktu ngeekspor filenya.</string>
+    <string name="mikuray_password_confirm_button">Lanjut</string>
+    <string name="mikuray_password_hint">Password</string>
+    <string name="mikuray_password_confirm_hint">Konfirmasi password</string>
+    <string name="mikuray_password_error_empty">Password gak boleh kosong</string>
+    <string name="mikuray_password_error_mismatch">Password gak sama</string>
     <string name="ruleset_management">Atur Ruleset</string>
     <string name="title_pref_app_theme">Tema Warna App</string>
     <string name="summary_pref_app_theme">Pilih palet warna aksen yang pas buat app ini</string>

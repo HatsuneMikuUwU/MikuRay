@@ -552,6 +552,22 @@
     <string name="share_qrcode">二维码</string>
     <string name="export_to_clipboard">导出到剪贴板</string>
     <string name="export_full_config_to_clipboard">导出完整配置到剪贴板</string>
+    <string name="share_as_file">以文件分享</string>
+
+    <string name="title_export_group_file">导出/分享分组为文件</string>
+    <string name="title_import_mikuray_count">已导入 %d 个配置</string>
+    <string name="title_import_mikuray_error">导入 .mikuray 文件失败</string>
+    <string name="title_import_mikuray_wrong_password">密码错误或 .mikuray 文件已损坏</string>
+
+    <string name="mikuray_password_export_title">设置密码</string>
+    <string name="mikuray_password_export_desc">此密码将用于加密 .mikuray 文件。导入该文件时还需要用到它，请务必记住。</string>
+    <string name="mikuray_password_import_title">输入密码</string>
+    <string name="mikuray_password_import_desc">此 .mikuray 文件已加密，请输入导出时设置的密码。</string>
+    <string name="mikuray_password_confirm_button">继续</string>
+    <string name="mikuray_password_hint">密码</string>
+    <string name="mikuray_password_confirm_hint">确认密码</string>
+    <string name="mikuray_password_error_empty">密码不能为空</string>
+    <string name="mikuray_password_error_mismatch">两次输入的密码不一致</string>
     <string name="ruleset_management">规则集管理</string>
     <string name="server_proxy_chain_members">代理链成员</string>
     <string name="server_proxy_chain_pick_members">点此选择成员</string>
