@@ -45,8 +45,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 import com.v2ray.ang.ui.bottomsheet.ShareSubBottomSheet
+import com.v2ray.ang.ui.bottomsheet.SortSubBottomSheet
 
-class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionClickListener {
+class SubSettingActivity : BaseActivity(),
+    ShareSubBottomSheet.OnShareSubOptionClickListener,
+    SortSubBottomSheet.OnSortSubOptionClickListener {
     private val binding by lazy { ActivitySubSettingBinding.inflate(layoutInflater) }
     private val ownerActivity: SubSettingActivity
         get() = this
@@ -90,6 +93,10 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
         }
         R.id.sub_update -> {
             showSubUpdateOptionsDialog()
+            true
+        }
+        R.id.sub_sort -> {
+            SortSubBottomSheet.newInstance().show(supportFragmentManager, SortSubBottomSheet.TAG)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -206,6 +213,13 @@ class SubSettingActivity : BaseActivity(), ShareSubBottomSheet.OnShareSubOptionC
 
         val sideSheetContainer = sideSheetDialog.findViewById<View>(com.google.android.material.R.id.m3_side_sheet)
         sideSheetContainer?.clipToOutline = true
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onSortSubOptionClicked(order: Int) {
+        viewModel.applySortOrder()
+        adapter.notifyDataSetChanged()
+        com.v2ray.ang.handler.SettingsChangeManager.makeSetupGroupTab()
     }
 
     override fun onShareSubOptionClicked(optionId: Int, url: String) {

@@ -18,6 +18,7 @@ import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.dto.entities.SubscriptionCache
 import com.v2ray.ang.dto.SubscriptionUpdateResult
 import com.v2ray.ang.dto.TestProgressInfo
+import com.v2ray.ang.ui.bottomsheet.SortSubBottomSheet
 import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.extension.matchesPattern
@@ -228,7 +229,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getSubscriptions(context: Context): List<GroupMapItem> {
-        val subscriptions = MmkvManager.decodeSubscriptions()
+        val subscriptions = SortSubBottomSheet.sorted(
+            MmkvManager.decodeSubscriptions(),
+            addedTime = { it.subscription.addedTime },
+            lastUpdated = { it.subscription.lastUpdated }
+        )
         if (subscriptionId.isNotEmpty()
             && !subscriptions.map { it.guid }.contains(subscriptionId)
         ) {

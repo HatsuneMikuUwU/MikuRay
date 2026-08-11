@@ -11,17 +11,36 @@ import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.handler.SettingsManager
+import com.v2ray.ang.ui.bottomsheet.SortSubBottomSheet
 import com.v2ray.ang.util.MessageUtil
 
 class SubscriptionsViewModel : ViewModel() {
     private val subscriptions: MutableList<SubscriptionCache> =
         MmkvManager.decodeSubscriptions().toMutableList()
 
+    init {
+        applySortOrder()
+    }
+
     fun getAll(): List<SubscriptionCache> = subscriptions.toList()
 
     fun reload() {
+        applySortOrder()
+    }
+
+    fun applySortOrder() {
+        // Always start from the persisted (origin) order, since sortByDescending
+        // mutates the in-memory list in place and would otherwise permanently
+        // lose the original order once a non-origin sort has been applied.
+        val origin = MmkvManager.decodeSubscriptions()
         subscriptions.clear()
-        subscriptions.addAll(MmkvManager.decodeSubscriptions())
+        subscriptions.addAll(
+            SortSubBottomSheet.sorted(
+                origin,
+                addedTime = { it.subscription.addedTime },
+                lastUpdated = { it.subscription.lastUpdated }
+            )
+        )
     }
 
     fun remove(subId: String): Boolean {

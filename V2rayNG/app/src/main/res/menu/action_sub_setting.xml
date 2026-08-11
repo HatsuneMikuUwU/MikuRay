@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_restore_24dp"
         android:title="@string/title_sub_update"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/sub_sort"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/title_sort_sub"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -98,6 +98,7 @@ object AppConfig {
     const val PREF_NAVIGATE_OBSERVATORY_SETTINGS = "pref_navigate_observatory_settings"
     const val PREF_NAVIGATE_PER_APP_PROXY_SETTINGS = "pref_navigate_per_app_proxy_settings"
     const val PREF_SERVER_ORDER = "pref_server_order"
+    const val PREF_SUB_SORT_ORDER = "pref_sub_sort_order"
 
     const val PREF_APP_THEME = "pref_app_theme"
     const val PREF_DYNAMIC_COLOR = "pref_dynamic_color"
