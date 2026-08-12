@@ -5,6 +5,12 @@
     <string name="widget_status_connected">Connected</string>
     <string name="widget_status_disconnected">Disconnected</string>
     <string name="widget_no_server_selected">No server selected</string>
+    <string name="empty_server_list_title">No profile</string>
+    <string name="empty_server_list_message">No profile, please add a profile</string>
+    <string name="empty_subscription_list_title">No subscription</string>
+    <string name="empty_subscription_list_message">No subscription, please add a subscription</string>
+    <string name="empty_routing_list_title">No routing rule</string>
+    <string name="empty_routing_list_message">No routing rule, please add a rule</string>
     <string name="app_tile_name">Switch</string>
     <string name="app_tile_first_use">First use of this feature, please use the app to add server</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

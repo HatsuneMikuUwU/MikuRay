@@ -46,6 +46,9 @@ class MainRecyclerAdapter(
     private var data: MutableList<ServersCache> = mutableListOf()
     private var isGridMode: Boolean = false
 
+    val isServerListEmpty: Boolean
+        get() = data.isEmpty()
+
     @SuppressLint("NotifyDataSetChanged")
     fun setGridMode(gridMode: Boolean) {
         if (isGridMode != gridMode) {

@@ -4,6 +4,12 @@
     <string name="widget_status_connected">Подключено</string>
     <string name="widget_status_disconnected">Отключено</string>
     <string name="widget_no_server_selected">Сервер не выбран</string>
+    <string name="empty_server_list_title">Нет профиля</string>
+    <string name="empty_server_list_message">Нет профиля, пожалуйста, добавьте профиль</string>
+    <string name="empty_subscription_list_title">Нет подписки</string>
+    <string name="empty_subscription_list_message">Нет подписки, пожалуйста, добавьте подписку</string>
+    <string name="empty_routing_list_title">Нет правил маршрутизации</string>
+    <string name="empty_routing_list_message">Нет правил маршрутизации, пожалуйста, добавьте правило</string>
     <string name="app_tile_name">Переключатель</string>
     <string name="app_tile_first_use">Первое использование этой функции — добавьте сервер в приложении</string>
     <string name="navigation_drawer_open">Открыть боковое меню</string>

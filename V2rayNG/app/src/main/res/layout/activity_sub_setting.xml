@@ -73,4 +73,57 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_recycler_sub_setting" />
 
+    <FrameLayout
+        android:id="@+id/layout_empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:layout_marginBottom="40dp">
+
+            <FrameLayout
+                android:layout_width="152dp"
+                android:layout_height="152dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/uwu_bg_icon"
+                    app:tint="?attr/colorPrimary"
+                    android:alpha="0.30"
+                    android:importantForAccessibility="no" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cloud_download_24dp"
+                    app:tint="?attr/colorPrimary"
+                    android:importantForAccessibility="no" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/text_empty_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_subscription_list_message"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

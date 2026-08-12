@@ -4,6 +4,12 @@
     <string name="widget_status_connected">已连接</string>
     <string name="widget_status_disconnected">未连接</string>
     <string name="widget_no_server_selected">未选择服务器</string>
+    <string name="empty_server_list_title">暂无配置</string>
+    <string name="empty_server_list_message">暂无配置，请添加一个配置</string>
+    <string name="empty_subscription_list_title">暂无订阅</string>
+    <string name="empty_subscription_list_message">暂无订阅，请添加一个订阅</string>
+    <string name="empty_routing_list_title">暂无路由规则</string>
+    <string name="empty_routing_list_message">暂无路由规则，请添加一条规则</string>
     <string name="app_tile_name">开关</string>
     <string name="app_tile_first_use">初次使用此功能请先用 APP 添加配置</string>
     <string name="navigation_drawer_open">打开导航栏</string>

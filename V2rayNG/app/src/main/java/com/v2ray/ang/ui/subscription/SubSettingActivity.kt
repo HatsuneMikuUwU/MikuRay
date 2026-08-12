@@ -74,6 +74,8 @@ class SubSettingActivity : BaseActivity(),
 
         mItemTouchHelper = ItemTouchHelper(SimpleItemTouchHelperCallback(adapter))
         mItemTouchHelper?.attachToRecyclerView(binding.recyclerView)
+
+        updateEmptyState()
     }
 
     override fun onResume() {
@@ -106,6 +108,13 @@ class SubSettingActivity : BaseActivity(),
     fun refreshData() {
         viewModel.reload()
         adapter.notifyDataSetChanged()
+        updateEmptyState()
+    }
+
+    private fun updateEmptyState() {
+        val isEmpty = adapter.itemCount == 0
+        binding.layoutEmptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
 
     private fun showSubUpdateOptionsDialog() {

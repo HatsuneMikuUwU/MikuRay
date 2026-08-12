@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.v2ray.ang.util.showBlur
@@ -58,6 +59,8 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
         mItemTouchHelper = ItemTouchHelper(SimpleItemTouchHelperCallback(adapter))
         mItemTouchHelper?.attachToRecyclerView(binding.recyclerView)
+
+        updateEmptyState()
     }
 
     override fun onResume() {
@@ -220,6 +223,13 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     fun refreshData() {
         viewModel.reload()
         adapter.notifyDataSetChanged()
+        updateEmptyState()
+    }
+
+    private fun updateEmptyState() {
+        val isEmpty = adapter.itemCount == 0
+        binding.layoutEmptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.routingScrollContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
 
     private inner class ActivityAdapterListener : BaseAdapterListener {

@@ -47,6 +47,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
     private var bottomStatusCard: View? = null
     private val bottomStatusLayoutListener =
         View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> syncButtonMarginWithBottomStatus() }
+    private var hasLoadedData = false
 
     companion object {
         private const val ARG_SUB_ID = "subscriptionId"
@@ -61,6 +62,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        hasLoadedData = false
         adapter = MainRecyclerAdapter(mainViewModel, ActivityAdapterListener())
         adapter.setGridMode(isDoubleColumnEnabled())
         binding.recyclerView.setHasFixedSize(true)
@@ -83,6 +85,8 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
                 return@observe
             }
             adapter.setData(mainViewModel.serversCache, index)
+            hasLoadedData = true
+            updateEmptyState()
         }
 
         binding.btnScrollToSelected.setOnClickListener {
@@ -120,6 +124,8 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         bottomStatusCard = ownerActivity.findViewById(R.id.card_bottom_status)
         bottomStatusCard?.addOnLayoutChangeListener(bottomStatusLayoutListener)
         bottomStatusCard?.post { syncButtonMarginWithBottomStatus() }
+
+        updateEmptyState()
     }
 
     private fun syncButtonMarginWithBottomStatus() {
@@ -195,6 +201,19 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     private fun spanCount(): Int {
         return if (isDoubleColumnEnabled()) 2 else 1
+    }
+
+    private fun updateEmptyState() {
+        if (!isAdded || view == null) return
+
+        if (!hasLoadedData) {
+            binding.layoutEmptyState.isVisible = false
+            return
+        }
+
+        val isEmpty = adapter.isServerListEmpty
+        binding.layoutEmptyState.isVisible = isEmpty
+        binding.recyclerView.isVisible = !isEmpty
     }
 
     private fun applyGridEdgePadding(gridMode: Boolean) {
@@ -279,6 +298,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         mainViewModel.removeServer(guid)
         adapter.removeServerSub(guid, position)
         ownerActivity.refreshGroupTabTitles()
+        updateEmptyState()
     }
 
     private fun setSelectServer(guid: String) {

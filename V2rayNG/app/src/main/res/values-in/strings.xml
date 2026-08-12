@@ -4,6 +4,12 @@
     <string name="widget_status_connected">Konek</string>
     <string name="widget_status_disconnected">Gak konek</string>
     <string name="widget_no_server_selected">Belum ada server dipilih</string>
+    <string name="empty_server_list_title">Belum ada profil</string>
+    <string name="empty_server_list_message">Belum ada profil, yuk tambahin profil dulu</string>
+    <string name="empty_subscription_list_title">Belum ada langganan</string>
+    <string name="empty_subscription_list_message">Belum ada langganan, yuk tambahin langganan dulu</string>
+    <string name="empty_routing_list_title">Belum ada aturan routing</string>
+    <string name="empty_routing_list_message">Belum ada aturan routing, yuk tambahin aturan dulu</string>
     <string name="app_tile_name">Tombol Switch</string>
     <string name="app_tile_first_use">Baru pertama pake fitur ini ya? Tambahin server lewat aplikasi dulu gih</string>
     <string name="navigation_drawer_open">Buka menu navigasi</string>
