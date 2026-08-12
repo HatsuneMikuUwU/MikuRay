@@ -8,5 +8,13 @@ android {
 
     defaultConfig {
         minSdk = 24
+        
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
+}
+
+dependencies {
+    implementation(libs.material)
 }
