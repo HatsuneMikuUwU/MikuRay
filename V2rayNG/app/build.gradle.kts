@@ -8,8 +8,8 @@ plugins {
     alias(libs.plugins.aboutLibraries)
 }
 
-val appVersionName = "2.2.8"
-val appVersionCode = 738
+val appVersionName = "2.2.9"
+val appVersionCode = 739
 
 val jakartaTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta"))
 val appBuildDate = jakartaTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
