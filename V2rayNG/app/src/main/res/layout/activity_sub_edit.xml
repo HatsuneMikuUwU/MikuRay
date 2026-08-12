@@ -239,6 +239,9 @@
                     app:boxStrokeWidth="1.5dip"
                     app:boxStrokeWidthFocused="1.5dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconDrawable="@drawable/ic_dropdown_selector"
+                    app:endIconTint="?attr/colorOnSurfaceVariant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
@@ -248,7 +251,10 @@
                         android:id="@+id/et_pre_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -256,6 +262,9 @@
                     app:boxStrokeWidth="1.5dip"
                     app:boxStrokeWidthFocused="1.5dip"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconDrawable="@drawable/ic_dropdown_selector"
+                    app:endIconTint="?attr/colorOnSurfaceVariant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
@@ -265,7 +274,10 @@
                         android:id="@+id/et_next_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
