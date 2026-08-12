@@ -1,5 +1,7 @@
 package com.neko.crashlog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
@@ -17,7 +19,7 @@ class CrashDialogActivity : BaseActivity() {
 
         MaterialAlertDialogBuilder(this)
             .setTitle("Crash Log")
-            .setIcon(com.v2ray.ang.R.drawable.ic_warning)
+            .setIcon(RemixR.drawable.rmx_error_warning_line)
             .setMessage(crashLog)
             .setPositiveButton("Copy") { _, _ ->
                 copyToClipboard(crashLog)

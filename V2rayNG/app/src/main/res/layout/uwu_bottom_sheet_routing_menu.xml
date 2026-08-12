@@ -152,7 +152,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:sectionIcon="@drawable/ic_outline_filter_alt_24"
+                    app:sectionIcon="@drawable/rmx_filter_3_line"
                     android:layout_marginEnd="12dp" />
 
                 <TextView
@@ -211,7 +211,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25.0dip"
                                     android:layout_height="25.0dip"
-                                    android:src="@drawable/ic_file_24dp"
+                                    android:src="@drawable/rmx_file_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -254,7 +254,7 @@
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
                                 android:layout_marginTop="1.0dip"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2.0dip"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>
@@ -309,7 +309,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25.0dip"
                                     android:layout_height="25.0dip"
-                                    android:src="@drawable/ic_share_24dp"
+                                    android:src="@drawable/rmx_share_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -352,7 +352,7 @@
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
                                 android:layout_marginTop="1.0dip"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2.0dip"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>
@@ -374,7 +374,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:sectionIcon="@drawable/ic_action_file"
+                    app:sectionIcon="@drawable/rmx_file_line"
                     android:layout_marginEnd="12dp" />
 
                 <TextView
@@ -442,7 +442,7 @@
                                         android:layout_width="24.0dip"
                                         android:layout_height="24.0dip"
                                         android:layout_marginTop="7.0dip"
-                                        android:src="@drawable/ic_action_file"
+                                        android:src="@drawable/rmx_file_line"
                                         android:scaleType="centerInside"
                                         app:tint="?colorOnPrimary" />
                                     <com.google.android.material.card.MaterialCardView
@@ -527,7 +527,7 @@
                                         android:layout_width="24.0dip"
                                         android:layout_height="24.0dip"
                                         android:layout_marginTop="7.0dip"
-                                        android:src="@drawable/ic_action_clipboard"
+                                        android:src="@drawable/rmx_clipboard_line"
                                         android:scaleType="centerInside"
                                         app:tint="?colorOnPrimary" />
                                     <com.google.android.material.card.MaterialCardView
@@ -611,7 +611,7 @@
                                         android:layout_width="24.0dip"
                                         android:layout_height="24.0dip"
                                         android:layout_marginTop="7.0dip"
-                                        android:src="@drawable/ic_action_qr"
+                                        android:src="@drawable/rmx_qr_code_line"
                                         android:scaleType="centerInside"
                                         app:tint="?colorOnPrimary" />
                                     <com.google.android.material.card.MaterialCardView

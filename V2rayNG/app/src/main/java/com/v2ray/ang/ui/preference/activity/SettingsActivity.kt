@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.preference.activity
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -225,7 +227,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         if (cached != null) {
             applyWeatherToChip(cached)
         } else {
-            ivWeatherIcon.setImageResource(R.drawable.ic_cloud)
+            ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             ivWeatherIcon.isVisible = true
             tvWeatherTemp.text = getString(R.string.weather_loading)
             tvWeatherTemp.isVisible = true
@@ -250,7 +252,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         if (stale != null) {
             applyWeatherToChip(stale)
         } else {
-            ivWeatherIcon.setImageResource(R.drawable.ic_cloud)
+            ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             ivWeatherIcon.isVisible = true
             tvWeatherTemp.text = getString(R.string.weather_loading)
             tvWeatherTemp.isVisible = true
@@ -288,7 +290,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
                     context = this,
                     titleRes = R.string.dialog_reset_settings_title,
                     messageRes = R.string.dialog_reset_settings_message,
-                    iconRes = R.drawable.ic_restore_24dp,
+                    iconRes = RemixR.drawable.rmx_arrow_go_back_line,
                     positiveTextRes = R.string.dialog_reset_settings_confirm,
                 ) {
                     SettingsManager.resetAllSettings(applicationContext)

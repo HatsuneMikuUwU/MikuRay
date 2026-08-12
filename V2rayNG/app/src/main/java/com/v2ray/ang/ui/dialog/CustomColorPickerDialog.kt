@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
@@ -54,7 +56,7 @@ class CustomColorPickerDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_custom_color_title)
-            .setIcon(R.drawable.ic_palette_24)
+            .setIcon(RemixR.drawable.rmx_palette_line)
             .setView(view)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 activity?.let { ThemeManager.saveCustomColor(it, selectedColor) }

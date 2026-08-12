@@ -61,7 +61,7 @@
                 app:layout_constraintEnd_toStartOf="@id/chk_enable"
                 app:layout_constraintStart_toEndOf="@id/remarks"
                 app:layout_constraintTop_toTopOf="@id/remarks"
-                app:srcCompat="@drawable/ic_lock_24dp"
+                app:srcCompat="@drawable/rmx_lock_line"
                 app:tint="?attr/colorOnSurfaceVariant" />
 
             <TextView

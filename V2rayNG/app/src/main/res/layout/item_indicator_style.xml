@@ -94,7 +94,7 @@
                                 android:clickable="false"
                                 android:contentDescription="@string/title_configuration_share"
                                 android:focusable="false"
-                                app:srcCompat="@drawable/ic_share_24dp"
+                                app:srcCompat="@drawable/rmx_share_line"
                                 app:tint="?colorOnSurfaceVariant" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
@@ -104,7 +104,7 @@
                                 android:clickable="false"
                                 android:contentDescription="@string/menu_item_edit_config"
                                 android:focusable="false"
-                                app:srcCompat="@drawable/ic_edit_24dp"
+                                app:srcCompat="@drawable/rmx_edit_line"
                                 app:tint="?colorOnSurfaceVariant" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
@@ -114,7 +114,7 @@
                                 android:clickable="false"
                                 android:contentDescription="@string/menu_item_del_config"
                                 android:focusable="false"
-                                app:srcCompat="@drawable/ic_delete_24dp"
+                                app:srcCompat="@drawable/rmx_delete_bin_line"
                                 app:tint="?colorError" />
 
                         </LinearLayout>
@@ -169,7 +169,7 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_check_circle"
+            android:src="@drawable/rmx_checkbox_circle_line"
             android:tint="?colorPrimary"
             android:visibility="gone" />
 

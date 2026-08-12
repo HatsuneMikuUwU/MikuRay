@@ -22,7 +22,7 @@
             android:layout_height="22dp"
             android:layout_marginBottom="10dp"
             app:tint="?colorOnSurfaceVariant"
-            tools:src="@drawable/ic_weather_humidity" />
+            tools:src="@drawable/rmx_weather_water_percent_line" />
 
         <TextView
             android:id="@+id/tvDetailValue"

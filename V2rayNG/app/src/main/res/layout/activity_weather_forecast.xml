@@ -106,7 +106,7 @@
                         android:id="@+id/ivForecastCurrentIcon"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        tools:src="@drawable/ic_weather_sunny" />
+                        tools:src="@drawable/rmx_weather_sun_line" />
 
                     <TextView
                         android:id="@+id/tvForecastCurrentCondition"
@@ -192,7 +192,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginEnd="6dp"
-                            android:src="@drawable/ic_description_24dp"
+                            android:src="@drawable/rmx_file_text_line"
                             app:tint="?colorOnSurfaceVariant" />
 
                         <TextView
@@ -249,7 +249,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginEnd="6dp"
-                            android:src="@drawable/ic_weather_schedule"
+                            android:src="@drawable/rmx_time_line"
                             app:tint="?colorOnSurfaceVariant" />
 
                         <TextView
@@ -306,7 +306,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginEnd="6dp"
-                            android:src="@drawable/ic_weather_calendar"
+                            android:src="@drawable/rmx_business_calendar_line"
                             app:tint="?colorOnSurfaceVariant" />
 
                         <TextView
@@ -362,7 +362,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginEnd="6dp"
-                            android:src="@drawable/ic_weather_humidity"
+                            android:src="@drawable/rmx_weather_water_percent_line"
                             app:tint="?colorOnSurfaceVariant" />
 
                         <TextView

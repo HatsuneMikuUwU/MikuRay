@@ -76,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/title_service_restart"
                 android:padding="14dp"
-                app:srcCompat="@drawable/ic_restore_24dp" />
+                app:srcCompat="@drawable/rmx_history_line" />
         </FrameLayout>
 
         <FrameLayout
@@ -97,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:importantForAccessibility="no"
                 android:padding="17dp"
-                app:srcCompat="@drawable/ic_play_24dp" />
+                app:srcCompat="@drawable/rmx_media_play_line" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

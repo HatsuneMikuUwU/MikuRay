@@ -1,5 +1,7 @@
 package com.neko.toasty
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PorterDuff
@@ -98,7 +100,7 @@ object Toasty {
 
     @JvmStatic @CheckResult
     fun warning(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
-        custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_warning),
+        custom(context, message, ToastyUtils.getDrawable(context, RemixR.drawable.rmx_error_warning_line),
             ToastyUtils.getColorAttr(context, "colorTertiary", 0),
             ToastyUtils.getColorAttr(context, "colorOnTertiary", 0),
             duration, withIcon, true)
@@ -125,7 +127,7 @@ object Toasty {
 
     @JvmStatic @CheckResult
     fun info(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
-        custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_about_24dp),
+        custom(context, message, ToastyUtils.getDrawable(context, RemixR.drawable.rmx_information_line),
             ToastyUtils.getColorAttr(context, "colorSurfaceInverse", 0),
             ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
             duration, withIcon, true)
@@ -152,7 +154,7 @@ object Toasty {
 
     @JvmStatic @CheckResult
     fun success(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
-        custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_check_circle),
+        custom(context, message, ToastyUtils.getDrawable(context, RemixR.drawable.rmx_checkbox_circle_line),
             ToastyUtils.getColorAttr(context, "colorPrimary", 0),
             ToastyUtils.getColorAttr(context, "colorOnPrimary", 0),
             duration, withIcon, true)
@@ -179,7 +181,7 @@ object Toasty {
 
     @JvmStatic @CheckResult
     fun error(context: Context, message: CharSequence, duration: Int, withIcon: Boolean): Toast =
-        custom(context, message, ToastyUtils.getDrawable(context, R.drawable.ic_warning),
+        custom(context, message, ToastyUtils.getDrawable(context, RemixR.drawable.rmx_error_warning_line),
             ToastyUtils.getColorAttr(context, "colorError", 0),
             ToastyUtils.getColorAttr(context, "colorOnError", 0),
             duration, withIcon, true)

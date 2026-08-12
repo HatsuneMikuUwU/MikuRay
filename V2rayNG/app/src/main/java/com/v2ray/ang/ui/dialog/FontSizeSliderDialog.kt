@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -54,7 +56,7 @@ class FontSizeSliderDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_font_size)
-            .setIcon(R.drawable.ic_format_font)
+            .setIcon(RemixR.drawable.rmx_font_size)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val clamped = slider.value.coerceIn(AppConfig.FONT_SIZE_MIN, AppConfig.FONT_SIZE_MAX)

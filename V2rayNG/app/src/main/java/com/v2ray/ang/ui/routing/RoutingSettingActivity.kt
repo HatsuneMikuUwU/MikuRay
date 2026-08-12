@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.routing
 
+
+import com.miku.ray.remixicon.R as RemixR
 import com.v2ray.ang.ui.base.HelperBaseActivity
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -96,11 +98,11 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     private fun importPredefined() {
         AlertDialog.Builder(this)
             .setTitle(R.string.routing_settings_import_predefined_rulesets_title)
-            .setIcon(R.drawable.ic_router)
+            .setIcon(RemixR.drawable.rmx_device_router_line)
             .setItems(resources.getStringArray(R.array.preset_rulesets)) { _, i ->
             AlertDialog.Builder(this)
                 .setTitle(R.string.routing_settings_import_predefined_rulesets_title)
-                .setIcon(R.drawable.ic_warning)
+                .setIcon(RemixR.drawable.rmx_error_warning_line)
                 .setMessage(R.string.routing_settings_import_rulesets_tip)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     try {
@@ -127,7 +129,7 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     private fun importFromClipboard() {
         AlertDialog.Builder(this)
             .setTitle(R.string.routing_settings_import_rulesets_from_clipboard_title)
-            .setIcon(R.drawable.ic_warning)
+            .setIcon(RemixR.drawable.rmx_error_warning_line)
             .setMessage(R.string.routing_settings_import_rulesets_tip)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val clipboard = try {
@@ -192,7 +194,7 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
     private fun importRulesetsFromQRcode(qrcode: String?): Boolean {
         AlertDialog.Builder(this)
             .setTitle(R.string.routing_settings_import_rulesets_from_qrcode_title)
-            .setIcon(R.drawable.ic_warning)
+            .setIcon(RemixR.drawable.rmx_error_warning_line)
             .setMessage(R.string.routing_settings_import_rulesets_tip)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 lifecycleScope.launch(Dispatchers.IO) {

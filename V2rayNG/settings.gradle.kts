@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "V2rayNG"
 include(":app")
+include(":remixicon")

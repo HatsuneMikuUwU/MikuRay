@@ -45,7 +45,7 @@
                 android:id="@+id/check_none"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_check_circle"
+                android:src="@drawable/rmx_checkbox_circle_line"
                 android:visibility="gone" />
 
         </LinearLayout>

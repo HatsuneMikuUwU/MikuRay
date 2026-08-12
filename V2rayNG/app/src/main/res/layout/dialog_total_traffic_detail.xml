@@ -11,7 +11,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_traffic_total"
+        android:src="@drawable/rmx_arrow_up_down_line"
         app:tint="?attr/colorPrimary" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -71,7 +71,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_traffic_upload"
+                    android:src="@drawable/rmx_upload_line"
                     app:tint="?attr/colorOnPrimaryContainer" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -115,7 +115,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_traffic_download"
+                    android:src="@drawable/rmx_download_line"
                     app:tint="?attr/colorOnTertiaryContainer" />
 
                 <com.google.android.material.textview.MaterialTextView

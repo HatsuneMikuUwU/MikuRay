@@ -151,7 +151,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50.0dip"
                     android:layout_height="50.0dip"
-                    app:sectionIcon="@drawable/ic_sort"
+                    app:sectionIcon="@drawable/rmx_sort_desc"
                     android:layout_marginEnd="12.0dip" />
 
                 <TextView
@@ -209,7 +209,7 @@
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_order_numeric_ascending"
+                                android:src="@drawable/rmx_sort_number_asc"
                                 app:tint="?colorOnPrimary" />
                         </FrameLayout>
 
@@ -270,7 +270,7 @@
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_history"
+                                android:src="@drawable/rmx_history_line"
                                 app:tint="?colorOnPrimary" />
                         </FrameLayout>
 
@@ -330,7 +330,7 @@
                                 android:layout_width="25.0dip"
                                 android:layout_height="25.0dip"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_check_update_24dp"
+                                android:src="@drawable/rmx_download_cloud_line"
                                 app:tint="?colorOnPrimary" />
                         </FrameLayout>
 

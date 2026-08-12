@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/add_rule"
-        android:icon="@drawable/ic_action_note_add"
+        android:icon="@drawable/rmx_file_add_line"
         android:title="@string/routing_settings_add_rule"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_more_menu"
-        android:icon="@drawable/ic_more_vert_24dp"
+        android:icon="@drawable/rmx_more_2_line"
         android:title="More"
         app:showAsAction="always" />
 

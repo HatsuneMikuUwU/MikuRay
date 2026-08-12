@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.weather
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -108,15 +110,15 @@ object WeatherHelper {
         Unknown(R.string.weather_condition_unknown);
 
         fun iconRes(isDay: Boolean): Int = when (this) {
-            Clear -> if (isDay) R.drawable.ic_weather_sunny else R.drawable.ic_weather_night
-            PartlyCloudy -> if (isDay) R.drawable.ic_weather_partly_cloudy_day else R.drawable.ic_weather_partly_cloudy_night
-            Cloudy -> R.drawable.ic_cloud
-            Fog -> R.drawable.ic_weather_fog
-            Drizzle -> R.drawable.ic_weather_drizzle
-            Rain -> R.drawable.ic_weather_rain
-            Snow -> R.drawable.ic_weather_snow
-            Thunderstorm -> R.drawable.ic_weather_storm
-            Unknown -> R.drawable.ic_cloud
+            Clear -> if (isDay) RemixR.drawable.rmx_weather_sun_line else RemixR.drawable.rmx_weather_moon_line
+            PartlyCloudy -> if (isDay) RemixR.drawable.rmx_weather_sun_cloudy_line else RemixR.drawable.rmx_weather_moon_cloudy_line
+            Cloudy -> RemixR.drawable.rmx_cloud_line
+            Fog -> RemixR.drawable.rmx_weather_foggy_line
+            Drizzle -> RemixR.drawable.rmx_weather_drizzle_line
+            Rain -> RemixR.drawable.rmx_weather_rainy_line
+            Snow -> RemixR.drawable.rmx_weather_snowy_line
+            Thunderstorm -> RemixR.drawable.rmx_weather_thunderstorms_line
+            Unknown -> RemixR.drawable.rmx_cloud_line
         }
 
         fun emoji(isDay: Boolean): String = when (this) {

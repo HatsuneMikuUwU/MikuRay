@@ -33,7 +33,7 @@
                 android:layout_height="16dp"
                 android:layout_gravity="top|end"
                 android:layout_margin="6dp"
-                android:src="@drawable/ic_check_circle"
+                android:src="@drawable/rmx_checkbox_circle_line"
                 android:visibility="gone" />
 
         </FrameLayout>

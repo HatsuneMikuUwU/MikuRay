@@ -23,9 +23,15 @@
         <item name="android:colorEdgeEffect">@null</item>
         <item name="elevation">0.0dip</item>
         <item name="preferenceTheme">@style/AppThemePreference</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24</item>
+        <item name="android:homeAsUpIndicator">@drawable/rmx_arrows_arrow_left_double_line</item>
+        <item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButton</item>
         <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
+    </style>
+
+    <style name="AppTheme.OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/rmx_more_2_line</item>
+        <item name="srcCompat">@drawable/rmx_more_2_line</item>
     </style>
 
         <style name="AppTheme_Red" parent="AppThemeBase">

@@ -7,15 +7,15 @@
         android:layout="@layout/uwu_banner_theme"
         android:title="@string/update_check_for_update"
         android:summary="@string/uwu_update_summary"
-        app:icon="@drawable/ic_check_update_24dp" />
+        app:icon="@drawable/rmx_download_cloud_line" />
 
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_ui_general"
         android:title="@string/title_ui_general"
-        app:sectionIcon="@drawable/ic_baseline_speed_24">
+        app:sectionIcon="@drawable/rmx_speed_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_speed_24"
+            android:icon="@drawable/rmx_speed_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_speed_enabled"
@@ -23,7 +23,7 @@
             android:title="@string/title_pref_speed_enabled" />
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_speed_24"
+            android:icon="@drawable/rmx_global_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -32,7 +32,7 @@
             android:title="@string/title_pref_show_realtime_traffic_ip" />
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_speed_24"
+            android:icon="@drawable/rmx_speed_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -41,7 +41,7 @@
             android:title="@string/pref_traffic_enabled_title" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_about_24dp"
+            android:icon="@drawable/rmx_information_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -50,7 +50,7 @@
             android:title="@string/pref_disable_sensor_text_title" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_about_24dp"
+            android:icon="@drawable/rmx_system_shield_check_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -59,7 +59,7 @@
             android:title="@string/pref_network_security_enabled_title" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_router"
+            android:icon="@drawable/rmx_router_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -68,7 +68,7 @@
             android:title="@string/title_pref_show_isp_info" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -77,7 +77,7 @@
             android:title="@string/title_pref_confirm_remove" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_action_qr"
+            android:icon="@drawable/rmx_qr_code_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_start_scan_immediate"
@@ -85,7 +85,7 @@
             android:title="@string/title_pref_start_scan_immediate" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_group"
+            android:icon="@drawable/rmx_group_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_group_all_display"
@@ -93,14 +93,14 @@
             android:title="@string/title_pref_group_all_display" />
 
         <Preference
-            android:icon="@drawable/filter_all_solar"
+            android:icon="@drawable/rmx_apps_line"
             app:layout="@layout/uwu_mid"
             android:dependency="pref_group_all_display"
             android:key="pref_group_all_tab_icon"
             android:title="@string/title_pref_group_all_tab_icon" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_grid_view_24dp"
+            android:icon="@drawable/rmx_grid_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -109,7 +109,7 @@
             android:title="@string/title_pref_double_column_display" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_crosshairs"
+            android:icon="@drawable/rmx_eye_off_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -118,8 +118,8 @@
             android:title="@string/title_pref_hide_scroll_buttons" />
 
         <ListPreference
-            android:icon="@drawable/ic_translate"
-            app:dialogIcon="@drawable/ic_translate"
+            android:icon="@drawable/rmx_translate"
+            app:dialogIcon="@drawable/rmx_translate"
             app:layout="@layout/uwu_bot"
             android:defaultValue=""
             android:entries="@array/language_select"
@@ -134,17 +134,17 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_ui_theme"
         android:title="@string/title_ui_theme"
-        app:sectionIcon="@drawable/ic_baseline_color_lens_24">
+        app:sectionIcon="@drawable/rmx_palette_line">
 
         <Preference
-            android:icon="@drawable/ic_baseline_color_lens_24"
+            android:icon="@drawable/rmx_palette_line"
             app:layout="@layout/uwu_top"
             android:key="pref_app_theme"
             android:title="@string/title_pref_app_theme"
             android:summary="@string/summary_pref_app_theme" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_color_lens_24"
+            android:icon="@drawable/rmx_palette_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -153,7 +153,7 @@
             android:summary="@string/summary_pref_dynamic_color" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_image_24dp"
+            android:icon="@drawable/rmx_image_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -162,8 +162,8 @@
             android:summary="@string/summary_pref_dynamic_color_banner" />
 
         <ListPreference
-            android:icon="@drawable/ic_weather_night"
-            app:dialogIcon="@drawable/ic_weather_night"
+            android:icon="@drawable/rmx_moon_line"
+            app:dialogIcon="@drawable/rmx_moon_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="0"
             android:entries="@array/ui_mode_night"
@@ -173,7 +173,7 @@
             android:title="@string/title_pref_ui_mode_night" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_weather_night"
+            android:icon="@drawable/rmx_moon_line"
             app:layout="@layout/uwu_bot_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -186,11 +186,11 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_ui_appearance"
         android:title="@string/title_ui_appearance"
-        app:sectionIcon="@drawable/ic_palette_24">
+        app:sectionIcon="@drawable/rmx_palette_line">
 
         <ListPreference
-            android:icon="@drawable/ic_shape_outline"
-            app:dialogIcon="@drawable/ic_shape_outline"
+            android:icon="@drawable/rmx_shapes_line"
+            app:dialogIcon="@drawable/rmx_shapes_line"
             app:layout="@layout/uwu_top"
             android:defaultValue="uwu_shape_cookie"
             android:entries="@array/icon_shape_entries"
@@ -200,14 +200,14 @@
             android:title="@string/title_pref_icon_shape" />
 
         <com.v2ray.ang.ui.dialog.AppIconPickerDialog
-            android:icon="@drawable/ic_per_apps_24dp"
+            android:icon="@drawable/rmx_apps_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_app_icon"
             app:title="@string/title_pref_app_icon" />
 
         <ListPreference
-            android:icon="@drawable/ic_edit_24dp"
-            app:dialogIcon="@drawable/ic_edit_24dp"
+            android:icon="@drawable/rmx_edit_line"
+            app:dialogIcon="@drawable/rmx_edit_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_custom_app_name"
             android:title="@string/title_pref_custom_app_name"
@@ -217,14 +217,14 @@
             android:defaultValue="default" />
 
         <com.v2ray.ang.ui.dialog.DpiSliderDialog
-            android:icon="@drawable/ic_cellphone_screenshot"
+            android:icon="@drawable/rmx_smartphone_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_custom_dpi"
             app:title="@string/pref_custom_dpi" />
 
         <ListPreference
-            android:icon="@drawable/ic_cards_variant"
-            app:dialogIcon="@drawable/ic_cards_variant"
+            android:icon="@drawable/rmx_stack_line"
+            app:dialogIcon="@drawable/rmx_stack_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="gradient"
             android:entries="@array/category_style_entries"
@@ -234,7 +234,7 @@
             android:title="@string/title_pref_category_style" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
+            android:icon="@drawable/rmx_toggle_line"
             app:layout="@layout/uwu_bot_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -247,16 +247,16 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_app_font"
         android:title="@string/title_category_app_font"
-        app:sectionIcon="@drawable/ic_format_font">
+        app:sectionIcon="@drawable/rmx_font_size">
 
         <Preference
-            android:icon="@drawable/ic_format_font"
+            android:icon="@drawable/rmx_font_size"
             app:layout="@layout/uwu_top"
             android:key="pref_app_font"
             android:title="@string/title_pref_app_font" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_format_font"
+            android:icon="@drawable/rmx_font_size"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -265,21 +265,21 @@
             android:summary="@string/summary_pref_app_font_use_custom" />
 
         <Preference
-            android:icon="@drawable/ic_file_24dp"
+            android:icon="@drawable/rmx_file_line"
             app:layout="@layout/uwu_mid"
             android:key="action_pick_custom_font"
             android:title="@string/title_pref_app_font_custom_pick"
             android:summary="@string/summary_pref_app_font_custom_pick_empty" />
 
         <Preference
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_mid"
             android:key="action_delete_custom_font"
             android:title="@string/title_pref_app_font_custom_delete"
             android:summary="@string/summary_pref_app_font_custom_delete_empty" />
 
         <com.v2ray.ang.ui.dialog.FontSizeSliderDialog
-            android:icon="@drawable/ic_format_font"
+            android:icon="@drawable/rmx_font_size"
             app:layout="@layout/uwu_bot"
             app:key="pref_app_font_size"
             app:title="@string/pref_font_size" />
@@ -289,10 +289,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_search_bar_chip"
         android:title="@string/title_search_bar_chip"
-        app:sectionIcon="@drawable/ic_search_icon">
+        app:sectionIcon="@drawable/rmx_search_line">
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_weather_sunny"
+            android:icon="@drawable/rmx_sun_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -301,8 +301,8 @@
             android:title="@string/pref_show_weather_chip_title" />
 
         <androidx.preference.ListPreference
-            android:icon="@drawable/ic_temperature_celsius"
-            app:dialogIcon="@drawable/ic_temperature_celsius"
+            android:icon="@drawable/rmx_temp_cold_line"
+            app:dialogIcon="@drawable/rmx_temp_cold_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="true"
             android:entries="@array/weather_unit_entries"
@@ -312,8 +312,8 @@
             android:title="@string/pref_weather_unit_title" />
 
         <androidx.preference.EditTextPreference
-            android:icon="@drawable/ic_map_marker_outline"
-            app:dialogIcon="@drawable/ic_map_marker_outline"
+            android:icon="@drawable/rmx_map_pin_line"
+            app:dialogIcon="@drawable/rmx_map_pin_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_weather_custom_location"
             android:title="@string/pref_weather_custom_location_title"
@@ -322,7 +322,7 @@
             android:dialogMessage="@string/pref_weather_custom_location_dialog_message" />
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_traffic_total"
+            android:icon="@drawable/rmx_arrow_up_down_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -331,7 +331,7 @@
             android:title="@string/pref_show_total_traffic_chip_title" />
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_design_contrast_line"
             app:layout="@layout/uwu_bot_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -344,10 +344,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_blur_settings"
         android:title="@string/title_blur_settings"
-        app:sectionIcon="@drawable/ic_baseline_blur_on_24">
+        app:sectionIcon="@drawable/rmx_blur_line">
 
          <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -356,14 +356,14 @@
             android:summary="@string/summary_pref_enable_blur" />
 
         <com.v2ray.ang.ui.dialog.BlurIntensityDialog
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_blur_intensity"
             app:title="@string/pref_blur_intensity"
             app:dependency="pref_enable_blur" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -372,7 +372,7 @@
             android:summary="@string/summary_pref_blur_bottom_status" />
 
         <com.v2ray.ang.ui.dialog.BlurBottomIntensityDialog
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_bot"
             app:key="pref_blur_bottom_intensity"
             app:title="@string/pref_blur_bottom_intensity"
@@ -383,10 +383,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_home_banner"
         android:title="@string/home_banner_category"
-        app:sectionIcon="@drawable/ic_baseline_home_24">
+        app:sectionIcon="@drawable/rmx_home_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_home_24"
+            android:icon="@drawable/rmx_home_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -395,21 +395,21 @@
             android:summary="@string/home_banner_show_summary" />
 
         <com.v2ray.ang.ui.dialog.BannerHeightSliderDialog
-            android:icon="@drawable/ic_cellphone_screenshot"
+            android:icon="@drawable/rmx_design_ruler_2_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_home_banner_height"
             app:title="@string/pref_home_banner_height_title"
             app:dependency="pref_show_home_banner" />
 
         <com.v2ray.ang.ui.dialog.HeaderTopRowPaddingDialog
-            android:icon="@drawable/ic_cellphone_screenshot"
+            android:icon="@drawable/rmx_design_pencil_ruler_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_header_top_row_padding"
             app:title="@string/pref_header_top_row_padding_title"
             app:dependency="pref_show_home_banner" />
 
         <Preference
-            android:icon="@drawable/ic_image_edit_24dp"
+            android:icon="@drawable/rmx_image_edit_line"
             app:layout="@layout/uwu_mid"
             android:key="action_change_home_banner_image"
             app:dependency="pref_show_home_banner"
@@ -417,7 +417,7 @@
             android:summary="@string/home_banner_custom_summary" />
 
         <Preference
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_bot"
             android:key="action_delete_home_banner_image"
             app:dependency="pref_show_home_banner"
@@ -429,10 +429,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_sheet_banner"
         android:title="@string/sheet_banner_category"
-        app:sectionIcon="@drawable/ic_sparkles_24dp">
+        app:sectionIcon="@drawable/rmx_sparkling_line">
 
         <SwitchPreferenceCompat
-            android:icon="@drawable/ic_sparkles_24dp"
+            android:icon="@drawable/rmx_sparkling_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_disable_particles_sheet"
@@ -441,21 +441,21 @@
             android:defaultValue="false" />
 
         <com.v2ray.ang.ui.dialog.ParticlesSettingsDialog
-            android:icon="@drawable/ic_baseline_speed_24"
+            android:icon="@drawable/rmx_sparkling_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_particles_settings"
             android:title="@string/pref_particles_settings_title"
             android:summary="@string/pref_particles_settings_summary" />
 
         <Preference
-            android:icon="@drawable/ic_image_edit_24dp"
+            android:icon="@drawable/rmx_image_edit_line"
             app:layout="@layout/uwu_mid"
             android:key="action_change_sheet_banner_image"
             android:title="@string/sheet_banner_custom_title"
             android:summary="@string/sheet_banner_custom_summary" />
 
         <Preference
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_bot"
             android:key="action_delete_sheet_banner_image"
             android:title="@string/sheet_banner_delete_title"
@@ -466,17 +466,17 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_selected_banner"
         android:title="@string/selected_banner_category"
-        app:sectionIcon="@drawable/ic_cards_variant">
+        app:sectionIcon="@drawable/rmx_stack_line">
 
         <Preference
-            android:icon="@drawable/ic_cards_variant"
+            android:icon="@drawable/rmx_stack_line"
             app:layout="@layout/uwu_top"
             android:key="pref_indicator_style"
             android:title="@string/pref_indicator_style_title"
             android:summary="@string/pref_indicator_style_summary" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_cards_variant"
+            android:icon="@drawable/rmx_stack_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -485,14 +485,14 @@
             android:summary="@string/selected_banner_enable_summary" />
 
         <com.v2ray.ang.ui.dialog.SelectedBannerDimSliderDialog
-            android:icon="@drawable/ic_baseline_blur_on_24"
+            android:icon="@drawable/rmx_design_contrast_2_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_selected_banner_dim"
             app:title="@string/selected_banner_dim_title"
             app:dependency="pref_selected_banner_style_enabled" />
 
         <Preference
-            android:icon="@drawable/ic_image_edit_24dp"
+            android:icon="@drawable/rmx_image_edit_line"
             app:layout="@layout/uwu_mid"
             android:key="action_change_selected_banner_image"
             app:dependency="pref_selected_banner_style_enabled"
@@ -500,7 +500,7 @@
             android:summary="@string/selected_banner_custom_summary" />
 
         <Preference
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_bot"
             android:key="action_delete_selected_banner_image"
             app:dependency="pref_selected_banner_style_enabled"
@@ -512,11 +512,11 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_banner_profile"
         android:title="@string/banner_profile_category"
-        app:sectionIcon="@drawable/ic_account_heart">
+        app:sectionIcon="@drawable/rmx_user_heart_line">
 
         <EditTextPreference
-            android:icon="@drawable/ic_edit_24dp"
-            app:dialogIcon="@drawable/ic_edit_24dp"
+            android:icon="@drawable/rmx_edit_line"
+            app:dialogIcon="@drawable/rmx_edit_line"
             app:layout="@layout/uwu_top"
             android:key="custom_profile_name"
             android:title="@string/profile_name_custom_title"
@@ -525,15 +525,15 @@
             android:singleLine="true" />
 
         <Preference
-            android:icon="@drawable/ic_image_edit_24dp"
+            android:icon="@drawable/rmx_image_edit_line"
             app:layout="@layout/uwu_mid"
             android:key="action_change_profile_banner_image"
             android:title="@string/banner_profile_custom_title"
             android:summary="@string/banner_profile_custom_summary" />
 
         <ListPreference
-            android:icon="@drawable/ic_shape_outline"
-            app:dialogIcon="@drawable/ic_shape_outline"
+            android:icon="@drawable/rmx_shapes_line"
+            app:dialogIcon="@drawable/rmx_shapes_line"
             app:layout="@layout/uwu_mid"
             android:key="profile_banner_shape"
             android:title="@string/title_profile_banner_shape"
@@ -543,7 +543,7 @@
             android:summary="%s" />
 
         <Preference
-            android:icon="@drawable/ic_delete_24dp"
+            android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_bot"
             android:key="action_delete_profile_banner_image"
             android:title="@string/delete_custom_banner_profile"
@@ -554,10 +554,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_vpn_sound_settings"
         android:title="@string/title_vpn_sound_settings"
-        app:sectionIcon="@drawable/ic_audio">
+        app:sectionIcon="@drawable/rmx_volume_up_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_audio"
+            android:icon="@drawable/rmx_volume_up_line"
             app:layout="@layout/uwu_sin_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -570,10 +570,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_toolbar_style"
         android:title="@string/title_category_toolbar_style"
-        app:sectionIcon="@drawable/ic_format_align_center_24dp">
+        app:sectionIcon="@drawable/rmx_align_center">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_format_align_center_24dp"
+            android:icon="@drawable/rmx_align_center"
             app:layout="@layout/uwu_sin_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"

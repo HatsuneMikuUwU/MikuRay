@@ -5,10 +5,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_mux_settings"
         android:title="@string/title_mux_settings"
-        app:sectionIcon="@drawable/ic_account_cog_outline">
+        app:sectionIcon="@drawable/rmx_development_git_merge_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
+            android:icon="@drawable/rmx_toggle_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_mux_enabled"
@@ -16,8 +16,8 @@
             android:title="@string/title_pref_mux_enabled" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_numeric"
-            app:dialogIcon="@drawable/ic_numeric"
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_mux_concurrency"
@@ -26,8 +26,8 @@
             android:dialogMessage="@string/title_pref_mux_concurency_tip" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_numeric"
-            app:dialogIcon="@drawable/ic_numeric"
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_mux_xudp_concurrency"
@@ -36,8 +36,8 @@
             android:dialogMessage="@string/title_pref_mux_concurency_tip" />
 
         <ListPreference
-            android:icon="@drawable/ic_currency_eth"
-            app:dialogIcon="@drawable/ic_currency_eth"
+            android:icon="@drawable/rmx_eth_line"
+            app:dialogIcon="@drawable/rmx_eth_line"
             app:layout="@layout/uwu_bot"
             android:defaultValue="reject"
             android:entries="@array/mux_xudp_quic_entries"

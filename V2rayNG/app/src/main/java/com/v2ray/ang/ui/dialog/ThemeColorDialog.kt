@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -100,7 +102,7 @@ class ThemeColorDialog : DialogFragment() {
 
             applyCircleDrawable(customCircle, m3CustomPrimary, isCustomSelected)
 
-            customIcon.setImageResource(R.drawable.ic_pencil)
+            customIcon.setImageResource(RemixR.drawable.rmx_pencil_line)
             customIcon.visibility = View.VISIBLE
 
             val lum = calculateLuminance(m3CustomPrimary)
@@ -120,7 +122,7 @@ class ThemeColorDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_theme_color_title)
-            .setIcon(R.drawable.ic_baseline_color_lens_24)
+            .setIcon(RemixR.drawable.rmx_palette_line)
             .setView(view)
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()

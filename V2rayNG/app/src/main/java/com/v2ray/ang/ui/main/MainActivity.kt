@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.main
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -333,7 +335,7 @@ class MainActivity : HelperBaseActivity(),
         if (cached != null) {
             applyWeatherToChip(cached)
         } else {
-            binding.ivWeatherIcon.setImageResource(R.drawable.ic_cloud)
+            binding.ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
             binding.tvWeatherTemp.isVisible = true
@@ -358,7 +360,7 @@ class MainActivity : HelperBaseActivity(),
         if (stale != null) {
             applyWeatherToChip(stale)
         } else {
-            binding.ivWeatherIcon.setImageResource(R.drawable.ic_cloud)
+            binding.ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
             binding.tvWeatherTemp.isVisible = true
@@ -633,7 +635,7 @@ class MainActivity : HelperBaseActivity(),
 
                 MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.title_reset_traffic)
-                    .setIcon(R.drawable.ic_refresh)
+                    .setIcon(RemixR.drawable.rmx_refresh_line)
                     .setItems(options) { _, which ->
                         val msgRes: Int
                         val action: () -> Unit
@@ -914,8 +916,8 @@ class MainActivity : HelperBaseActivity(),
         binding.fabNoBlur.isEnabled = true
 
         if (isLoading) {
-            binding.fab.setImageResource(R.drawable.ic_fab_check)
-            binding.fabNoBlur.setImageResource(R.drawable.ic_fab_check)
+            binding.fab.setImageResource(RemixR.drawable.rmx_system_check_line)
+            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_system_check_line)
             return
         }
 
@@ -923,18 +925,18 @@ class MainActivity : HelperBaseActivity(),
         binding.cardBottomStatus.isFocusable = true
 
         if (isRunning) {
-            binding.fab.setImageResource(R.drawable.ic_stop_24dp)
+            binding.fab.setImageResource(RemixR.drawable.rmx_media_stop_line)
             binding.fab.contentDescription = getString(R.string.action_stop_service)
             
-            binding.fabNoBlur.setImageResource(R.drawable.ic_stop_24dp)
+            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_media_stop_line)
             binding.fabNoBlur.contentDescription = getString(R.string.action_stop_service)
             
             setTestState(lastTestResultText.ifEmpty { getString(R.string.connection_connected) })
         } else {
-            binding.fab.setImageResource(R.drawable.ic_play_24dp)
+            binding.fab.setImageResource(RemixR.drawable.rmx_media_play_line)
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
             
-            binding.fabNoBlur.setImageResource(R.drawable.ic_play_24dp)
+            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_media_play_line)
             binding.fabNoBlur.contentDescription = getString(R.string.tasker_start_service)
             
             setTestState(getString(R.string.connection_not_connected))
@@ -996,7 +998,7 @@ class MainActivity : HelperBaseActivity(),
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.menu_item_import_config_qrcode)
-            .setIcon(R.drawable.ic_action_qr)
+            .setIcon(RemixR.drawable.rmx_qr_code_line)
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> launchScan()
@@ -1443,7 +1445,7 @@ class MainActivity : HelperBaseActivity(),
                     ivBinding.ivQcode.contentDescription = "QR Code"
                     MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.title_qr_code)
-                        .setIcon(R.drawable.ic_action_qr)
+                        .setIcon(RemixR.drawable.rmx_qr_code_line)
                         .setView(ivBinding.root).showBlur()
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Error when sharing QR code", e)

@@ -39,7 +39,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginBottom="8dp"
-            tools:src="@drawable/ic_weather_sunny" />
+            tools:src="@drawable/rmx_weather_sun_line" />
 
         <TextView
             android:id="@+id/tvDailyPrecip"

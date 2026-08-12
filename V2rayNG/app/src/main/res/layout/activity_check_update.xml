@@ -123,7 +123,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_source_code_24dp"
+                                    android:src="@drawable/rmx_editor_code_view"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -213,7 +213,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_check_update_24dp"
+                                    android:src="@drawable/rmx_device_restart_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -258,7 +258,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="1dp"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2dp"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>

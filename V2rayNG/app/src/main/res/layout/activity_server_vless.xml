@@ -89,7 +89,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:sectionIcon="@drawable/ic_lan"
+                    app:sectionIcon="@drawable/rmx_device_base_station_line"
                     android:layout_marginEnd="12dp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -191,7 +191,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:sectionIcon="@drawable/ic_flash_on"
+                    app:sectionIcon="@drawable/rmx_flashlight_line"
                     android:layout_marginEnd="12dp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -240,7 +240,7 @@
                 <com.neko.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:sectionIcon="@drawable/ic_lock_24dp"
+                    app:sectionIcon="@drawable/rmx_lock_line"
                     android:layout_marginEnd="12dp" />
 
                 <com.google.android.material.textview.MaterialTextView

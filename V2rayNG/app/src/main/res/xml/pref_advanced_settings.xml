@@ -5,10 +5,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_advanced"
         android:title="@string/title_advanced"
-        app:sectionIcon="@drawable/ic_flash_on">
+        app:sectionIcon="@drawable/rmx_flashlight_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_connection"
+            android:icon="@drawable/rmx_device_restart_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:key="pref_is_booted"
@@ -16,16 +16,16 @@
             android:title="@string/title_pref_is_booted" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_pencil"
-            app:dialogIcon="@drawable/ic_pencil"
+            android:icon="@drawable/rmx_external_link_line"
+            app:dialogIcon="@drawable/rmx_external_link_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_delay_test_url"
             android:summary="@string/summary_pref_delay_test_url"
             android:title="@string/title_pref_delay_test_url" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_numeric"
-            app:dialogIcon="@drawable/ic_numeric"
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_real_ping_concurrency"
@@ -33,16 +33,16 @@
             android:title="@string/title_pref_real_ping_concurrency" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_pencil"
-            app:dialogIcon="@drawable/ic_pencil"
+            android:icon="@drawable/rmx_external_link_line"
+            app:dialogIcon="@drawable/rmx_external_link_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_ip_api_url"
             android:summary="@string/summary_pref_ip_api_url"
             android:title="@string/title_pref_ip_api_url" />
 
         <ListPreference
-            android:icon="@drawable/ic_arrow_decision"
-            app:dialogIcon="@drawable/ic_arrow_decision"
+            android:icon="@drawable/rmx_git_branch_line"
+            app:dialogIcon="@drawable/rmx_git_branch_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="AsIs"
             android:entries="@array/routing_domain_strategy"
@@ -52,8 +52,8 @@
             android:title="@string/routing_settings_domain_strategy" />
 
         <ListPreference
-            android:icon="@drawable/ic_key"
-            app:dialogIcon="@drawable/ic_key"
+            android:icon="@drawable/rmx_settings_line"
+            app:dialogIcon="@drawable/rmx_settings_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="VPN"
             android:entries="@array/mode_entries"
@@ -63,7 +63,7 @@
             android:title="@string/title_mode" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_eye_off"
+            android:icon="@drawable/rmx_eye_off_line"
             app:layout="@layout/uwu_bot_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"

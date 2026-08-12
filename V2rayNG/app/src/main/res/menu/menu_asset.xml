@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_more_menu"
-        android:icon="@drawable/ic_action_note_add"
+        android:icon="@drawable/rmx_file_add_line"
         android:title="@string/menu_item_add_asset"
         app:showAsAction="always" />
 
 
     <item
         android:id="@+id/download_file"
-        android:icon="@drawable/ic_cloud_download_24dp"
+        android:icon="@drawable/rmx_download_cloud_line"
         android:title="@string/menu_item_download_file"
         app:showAsAction="always" />
 

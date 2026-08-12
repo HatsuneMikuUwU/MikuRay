@@ -5,27 +5,27 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_observatory_settings"
         android:title="@string/title_observatory_settings"
-        app:sectionIcon="@drawable/ic_connection">
+        app:sectionIcon="@drawable/rmx_device_radar_line">
 
         <EditTextPreference
-            android:icon="@drawable/ic_pencil"
-            app:dialogIcon="@drawable/ic_pencil"
+            android:icon="@drawable/rmx_time_line"
+            app:dialogIcon="@drawable/rmx_time_line"
             app:layout="@layout/uwu_top"
             android:key="pref_observatory_least_ping_interval"
             android:defaultValue="3m"
             android:title="@string/title_pref_observatory_least_ping_interval" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_pencil"
-            app:dialogIcon="@drawable/ic_pencil"
+            android:icon="@drawable/rmx_time_line"
+            app:dialogIcon="@drawable/rmx_time_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_observatory_least_load_interval"
             android:defaultValue="5m"
             android:title="@string/title_pref_observatory_least_load_interval" />
 
         <ListPreference
-            android:icon="@drawable/ic_arrow_decision"
-            app:dialogIcon="@drawable/ic_arrow_decision"
+            android:icon="@drawable/rmx_git_branch_line"
+            app:dialogIcon="@drawable/rmx_git_branch_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="HEAD"
             android:entries="@array/observatory_least_load_method"
@@ -35,8 +35,8 @@
             android:title="@string/title_pref_observatory_least_load_method" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_numeric"
-            app:dialogIcon="@drawable/ic_numeric"
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_observatory_least_load_sampling"
@@ -44,8 +44,8 @@
             android:title="@string/title_pref_observatory_least_load_sampling" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_pencil"
-            app:dialogIcon="@drawable/ic_pencil"
+            android:icon="@drawable/rmx_time_line"
+            app:dialogIcon="@drawable/rmx_time_line"
             app:layout="@layout/uwu_bot"
             android:key="pref_observatory_least_load_timeout"
             android:defaultValue="30s"

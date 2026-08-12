@@ -13,5 +13,5 @@
         android:layout_height="336dp"
         android:contentDescription="@string/title_qr_code"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_fab_check" />
+        app:srcCompat="@drawable/rmx_system_check_line" />
 </LinearLayout>

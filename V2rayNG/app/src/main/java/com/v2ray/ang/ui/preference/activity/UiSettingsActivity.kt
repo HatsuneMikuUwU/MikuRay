@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.preference.activity
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.Manifest
 import android.content.pm.PackageManager
@@ -553,7 +555,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.sheet_banner_delete_title)
-                        .setIcon(R.drawable.ic_delete_24dp)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
                         .setMessage(R.string.sheet_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -601,7 +603,7 @@ class UiSettingsActivity : BaseActivity() {
                 }
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.title_pref_app_font_custom_delete)
-                    .setIcon(R.drawable.ic_delete_24dp)
+                    .setIcon(RemixR.drawable.rmx_delete_bin_line)
                     .setMessage(R.string.custom_font_delete_confirm)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         CustomFontManager.clearFont(requireContext())
@@ -675,7 +677,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.selected_banner_delete_title)
-                        .setIcon(R.drawable.ic_delete_24dp)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
                         .setMessage(R.string.selected_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -747,7 +749,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.delete_custom_banner_profile)
-                        .setIcon(R.drawable.ic_delete_24dp)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
                         .setMessage(R.string.delete_custom_banner_profile_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -808,7 +810,7 @@ class UiSettingsActivity : BaseActivity() {
                 if (!savedUri.isNullOrEmpty()) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.home_banner_delete_title)
-                        .setIcon(R.drawable.ic_delete_24dp)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
                         .setMessage(R.string.home_banner_delete_summary)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
@@ -1143,7 +1145,7 @@ class UiSettingsActivity : BaseActivity() {
             val iconName = MmkvManager.decodeSettingsString(AppConfig.PREF_GROUP_ALL_TAB_ICON)
             if (iconName.isNullOrEmpty()) {
                 groupAllTabIcon?.summary = getString(R.string.sub_tab_icon_none)
-                groupAllTabIcon?.setIcon(R.drawable.filter_all)
+                groupAllTabIcon?.setIcon(RemixR.drawable.rmx_apps_line)
             } else {
                 groupAllTabIcon?.summary = TabIconPickerAdapter.labelFor(iconName)
                 val resId = resources.getIdentifier(iconName, "drawable", requireContext().packageName)

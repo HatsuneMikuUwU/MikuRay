@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.subscription
 
+
+import com.miku.ray.remixicon.R as RemixR
 import com.v2ray.ang.ui.base.BaseActivity
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -241,7 +243,7 @@ class SubSettingActivity : BaseActivity(),
                     )
                     AlertDialog.Builder(this)
                         .setTitle(R.string.title_qr_code)
-                        .setIcon(R.drawable.ic_action_qr)
+                        .setIcon(RemixR.drawable.rmx_qr_code_line)
                         .setView(ivBinding.root).showBlur()
                 }
                 R.id.share_clipboard -> {

@@ -1,5 +1,7 @@
 package com.v2ray.ang.util
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.R
@@ -34,7 +36,7 @@ fun showSubUpdateDiffDialog(context: Context, result: SubscriptionUpdateResult) 
 
     MaterialAlertDialogBuilder(context)
         .setTitle(title)
-        .setIcon(R.drawable.ic_subscriptions_24dp)
+        .setIcon(RemixR.drawable.rmx_rss_line)
         .setMessage(message)
         .setPositiveButton(android.R.string.ok, null)
         .showBlur()

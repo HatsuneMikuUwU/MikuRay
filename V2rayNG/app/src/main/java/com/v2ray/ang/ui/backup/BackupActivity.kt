@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.backup
 
+
+import com.miku.ray.remixicon.R as RemixR
 import com.v2ray.ang.ui.base.HelperBaseActivity
 import android.content.Intent
 import android.net.Uri
@@ -54,7 +56,7 @@ class BackupActivity : HelperBaseActivity() {
         binding.layoutBackup.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.title_configuration_backup)
-                .setIcon(R.drawable.ic_backup_24dp)
+                .setIcon(RemixR.drawable.rmx_device_save_3_line)
                 .setItems(config_backup_options) { _, which ->
                     when (which) {
                         0 -> backupViaLocal()
@@ -90,7 +92,7 @@ class BackupActivity : HelperBaseActivity() {
         binding.layoutRestore.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.title_configuration_restore)
-                .setIcon(R.drawable.ic_restore_24dp)
+                .setIcon(RemixR.drawable.rmx_history_line)
                 .setItems(config_backup_options) { _, which ->
                     when (which) {
                         0 -> restoreViaLocal()
@@ -467,7 +469,7 @@ class BackupActivity : HelperBaseActivity() {
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.title_webdav_config_setting)
-            .setIcon(R.drawable.ic_cloud)
+            .setIcon(RemixR.drawable.rmx_cloud_line)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.menu_item_save_config) { _, _ ->
                 val url = dialogBinding.etWebdavUrl.text.toString().trim()

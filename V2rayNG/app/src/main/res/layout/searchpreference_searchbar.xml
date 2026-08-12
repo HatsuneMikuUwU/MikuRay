@@ -54,7 +54,7 @@
                 android:background="@drawable/bg_icon_button"
                 android:visibility="gone"
                 app:tint="?colorOnSurfaceVariant"
-                app:srcCompat="@drawable/ic_close" />
+                app:srcCompat="@drawable/rmx_close_line" />
 
         <ImageView
                 android:id="@+id/more"
@@ -66,7 +66,7 @@
                 android:background="@drawable/bg_icon_button"
                 android:visibility="gone"
                 app:tint="?colorOnSurfaceVariant"
-                app:srcCompat="@drawable/ic_more_vert_24dp"/>
+                app:srcCompat="@drawable/rmx_more_2_line"/>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -126,7 +126,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_backup_24dp"
+                                    android:src="@drawable/rmx_device_save_3_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -169,7 +169,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="1dp"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2dp"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>
@@ -224,7 +224,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_share_24dp"
+                                    android:src="@drawable/rmx_share_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -267,7 +267,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="1dp"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2dp"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>
@@ -322,7 +322,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_restore_24dp"
+                                    android:src="@drawable/rmx_history_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -365,7 +365,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="1dp"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2dp"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>
@@ -420,7 +420,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@drawable/ic_settings_24dp"
+                                    android:src="@drawable/rmx_settings_line"
                                     android:tint="?colorOnPrimary" />
                             </FrameLayout>
                     </LinearLayout>
@@ -463,7 +463,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="1dp"
-                                android:src="@drawable/uwu_arrow"
+                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                 android:layout_marginStart="2dp"
                                 app:tint="?colorOnSurfaceVariant" />
                         </com.google.android.material.card.MaterialCardView>

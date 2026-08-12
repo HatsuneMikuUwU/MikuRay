@@ -1,5 +1,7 @@
 package com.v2ray.ang.extension
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
@@ -157,8 +159,8 @@ private fun showSnackbar(
     fun showToastyFallback() {
         val toastDuration = Toast.LENGTH_LONG
         when (iconRes) {
-            R.drawable.ic_check_circle -> Toasty.success(context, fallbackMessage, toastDuration, true).show()
-            R.drawable.ic_warning -> Toasty.error(context, fallbackMessage, toastDuration, true).show()
+            RemixR.drawable.rmx_checkbox_circle_line -> Toasty.success(context, fallbackMessage, toastDuration, true).show()
+            RemixR.drawable.rmx_error_warning_line -> Toasty.error(context, fallbackMessage, toastDuration, true).show()
             else -> Toasty.normal(context, fallbackMessage, toastDuration).show()
         }
     }
@@ -289,16 +291,16 @@ private fun showSnackbar(
 }
 
 fun Context.snackbarDefault(message: Int, title: CharSequence = "") {
-    showSnackbar(this, title, getString(message), R.drawable.ic_about_24dp, null, null, Snackbar.LENGTH_LONG)
+    showSnackbar(this, title, getString(message), RemixR.drawable.rmx_information_line, null, null, Snackbar.LENGTH_LONG)
 }
 
 fun Context.snackbarDefault(message: CharSequence, title: CharSequence = "") {
-    showSnackbar(this, title, message, R.drawable.ic_about_24dp, null, null, Snackbar.LENGTH_LONG)
+    showSnackbar(this, title, message, RemixR.drawable.rmx_information_line, null, null, Snackbar.LENGTH_LONG)
 }
 
 fun Context.snackbarSuccess(message: Int, title: CharSequence = "") {
     showSnackbar(
-        this, title, getString(message), R.drawable.ic_check_circle,
+        this, title, getString(message), RemixR.drawable.rmx_checkbox_circle_line,
         "colorPrimary",
         "colorOnPrimary",
         Snackbar.LENGTH_LONG
@@ -307,7 +309,7 @@ fun Context.snackbarSuccess(message: Int, title: CharSequence = "") {
 
 fun Context.snackbarSuccess(message: CharSequence, title: CharSequence = "") {
     showSnackbar(
-        this, title, message, R.drawable.ic_check_circle,
+        this, title, message, RemixR.drawable.rmx_checkbox_circle_line,
         "colorPrimary",
         "colorOnPrimary",
         Snackbar.LENGTH_LONG
@@ -317,7 +319,7 @@ fun Context.snackbarSuccess(message: CharSequence, title: CharSequence = "") {
 fun Context.snackbarError(message: Int, title: CharSequence = "") {
     vibrateOnError()
     showSnackbar(
-        this, title, getString(message), R.drawable.ic_warning,
+        this, title, getString(message), RemixR.drawable.rmx_error_warning_line,
         "colorError",
         "colorOnError",
         Snackbar.LENGTH_LONG
@@ -327,7 +329,7 @@ fun Context.snackbarError(message: Int, title: CharSequence = "") {
 fun Context.snackbarError(message: CharSequence, title: CharSequence = "") {
     vibrateOnError()
     showSnackbar(
-        this, title, message, R.drawable.ic_warning,
+        this, title, message, RemixR.drawable.rmx_error_warning_line,
         "colorError",
         "colorOnError",
         Snackbar.LENGTH_LONG

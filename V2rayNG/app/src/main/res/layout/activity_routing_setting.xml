@@ -114,7 +114,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_router"
+                    android:src="@drawable/rmx_device_router_line"
                     app:tint="?attr/colorPrimary"
                     android:importantForAccessibility="no" />
 

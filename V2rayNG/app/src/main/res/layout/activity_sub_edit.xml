@@ -116,7 +116,7 @@
                     android:hint="@string/sub_setting_tab_icon"
                     app:startIconDrawable="@drawable/filter_all"
                     app:endIconMode="custom"
-                    app:endIconDrawable="@drawable/ic_arrow_drop_down"
+                    app:endIconDrawable="@drawable/rmx_arrows_arrow_drop_down_line"
                     app:helperText="@string/sub_setting_tab_icon_hint">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_tab_icon"

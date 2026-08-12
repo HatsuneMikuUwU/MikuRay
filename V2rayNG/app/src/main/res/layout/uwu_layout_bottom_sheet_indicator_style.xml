@@ -22,7 +22,7 @@
         <com.neko.widget.UwuHeaderIconView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:sectionIcon="@drawable/ic_cards_variant"
+            app:sectionIcon="@drawable/rmx_stack_line"
             android:layout_marginEnd="12dp" />
 
         <TextView

@@ -1,5 +1,7 @@
 package com.v2ray.ang.receiver
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -110,11 +112,11 @@ class WidgetProvider : AppWidgetProvider() {
         if (isRunning) {
             actionBgColor = themedContext.getColorAttr("colorTertiaryContainer")
             actionIconColor = themedContext.getColorAttr("colorOnTertiaryContainer")
-            actionIconRes = R.drawable.ic_stop_24dp
+            actionIconRes = RemixR.drawable.rmx_media_stop_line
         } else {
             actionBgColor = themedContext.getColorAttr("colorPrimaryContainer")
             actionIconColor = themedContext.getColorAttr("colorOnPrimaryContainer")
-            actionIconRes = R.drawable.ic_play_24dp
+            actionIconRes = RemixR.drawable.rmx_media_play_line
         }
 
         remoteViews.setTextColor(R.id.widget_server_name, nameColor)
@@ -125,7 +127,7 @@ class WidgetProvider : AppWidgetProvider() {
         val restartBgColor = themedContext.getColorAttr("colorSecondaryContainer")
         val restartIconColor = themedContext.getColorAttr("colorOnSecondaryContainer")
 
-        remoteViews.setInt(R.id.widget_restart_icon, "setImageResource", R.drawable.ic_restore_24dp)
+        remoteViews.setInt(R.id.widget_restart_icon, "setImageResource", RemixR.drawable.rmx_history_line)
         remoteViews.setInt(R.id.widget_restart_icon, "setColorFilter", restartIconColor)
 
         val (widthPx, heightPx) = widgetSizePx(context, appWidgetManager, appWidgetId, density)

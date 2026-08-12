@@ -7,56 +7,56 @@
         app:selectable="false" />
 
      <Preference
-        android:icon="@drawable/uwu_check"
+        android:icon="@drawable/rmx_business_verified_badge_line"
         android:layout="@layout/uwu_maintainer"
         android:title="@string/uwu_maintainer_title"
         app:selectable="false"
         android:summary="@string/uwu_maintainer_summary" />
 
     <Preference
-        android:icon="@drawable/ic_baseline_color_lens_24"
+        android:icon="@drawable/rmx_palette_line"
         android:key="pref_navigate_ui_settings"
         android:summary="@string/summary_navigate_ui_settings"
         android:title="@string/title_ui_settings"
         app:layout="@layout/uwu_top" />
 
     <Preference
-        android:icon="@drawable/ic_toggle_switch"
+        android:icon="@drawable/rmx_system_shield_line"
         android:key="pref_navigate_vpn_settings"
         android:summary="@string/summary_navigate_vpn_settings"
         android:title="@string/title_vpn_settings"
         app:layout="@layout/uwu_mid" />
 
     <Preference
-        android:icon="@drawable/ic_router"
+        android:icon="@drawable/rmx_router_line"
         android:key="pref_navigate_core_settings"
         android:summary="@string/summary_navigate_core_settings"
         android:title="@string/title_core_settings"
         app:layout="@layout/uwu_mid" />
 
     <Preference
-        android:icon="@drawable/ic_numeric"
+        android:icon="@drawable/rmx_development_git_merge_line"
         android:key="pref_navigate_mux_settings"
         android:summary="@string/summary_navigate_mux_settings"
         android:title="@string/title_mux_settings"
         app:layout="@layout/uwu_mid" />
 
     <Preference
-        android:icon="@drawable/ic_currency_eth"
+        android:icon="@drawable/rmx_design_scissors_cut_line"
         android:key="pref_navigate_fragment_settings"
         android:summary="@string/summary_navigate_fragment_settings"
         android:title="@string/title_fragment_settings"
         app:layout="@layout/uwu_mid" />
 
     <Preference
-        android:icon="@drawable/ic_connection"
+        android:icon="@drawable/rmx_device_radar_line"
         android:key="pref_navigate_observatory_settings"
         android:summary="@string/summary_navigate_observatory_settings"
         android:title="@string/title_observatory_settings"
         app:layout="@layout/uwu_mid" />
 
      <Preference
-        android:icon="@drawable/ic_pencil"
+        android:icon="@drawable/rmx_design_tools_line"
         android:key="pref_navigate_advanced_settings"
         android:summary="@string/summary_navigate_advanced_settings"
         android:title="@string/title_advanced"

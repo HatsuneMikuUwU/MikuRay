@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -47,7 +49,7 @@ class BannerHeightSliderDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_home_banner_height_title)
-            .setIcon(R.drawable.ic_cellphone_screenshot)
+            .setIcon(RemixR.drawable.rmx_design_ruler_2_line)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val newHeight = slider.value.toInt()

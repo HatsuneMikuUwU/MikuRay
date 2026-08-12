@@ -43,7 +43,7 @@
         android:layout_height="26dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="6dp"
-        tools:src="@drawable/ic_weather_sunny" />
+        tools:src="@drawable/rmx_weather_sun_line" />
 
     <TextView
         android:id="@+id/tvHourlyTime"

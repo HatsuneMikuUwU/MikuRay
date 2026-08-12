@@ -1,5 +1,7 @@
 package com.v2ray.ang.util
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,7 @@ fun showDeleteConfirmDialog(
     context: Context,
     @StringRes messageRes: Int,
     @StringRes titleRes: Int = R.string.del_config_comfirm,
-    @DrawableRes iconRes: Int = R.drawable.ic_warning,
+    @DrawableRes iconRes: Int = RemixR.drawable.rmx_system_alert_line,
     @StringRes positiveTextRes: Int = R.string.del_button_dialog_comfirm,
     @StringRes negativeTextRes: Int = android.R.string.cancel,
     onConfirm: () -> Unit

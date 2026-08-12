@@ -25,7 +25,7 @@
             android:layout_width="24.0dip"
             android:layout_height="24.0dip"
             android:layout_gravity="center"
-            android:src="@drawable/uwu_icon_skip"
+            android:src="@drawable/rmx_arrows_arrow_right_line"
             android:tint="?colorOnPrimary" />
 
     </FrameLayout>

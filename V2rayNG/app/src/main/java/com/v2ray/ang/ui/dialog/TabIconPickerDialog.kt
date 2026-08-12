@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -51,7 +53,7 @@ class TabIconPickerDialog(
 
         dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.sub_setting_tab_icon)
-            .setIcon(R.drawable.filter_all_solar)
+            .setIcon(RemixR.drawable.rmx_apps_line)
             .setView(dialogView)
             .setNegativeButton(android.R.string.cancel, null)
             .create()

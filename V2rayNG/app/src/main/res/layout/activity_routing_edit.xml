@@ -151,7 +151,7 @@
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_process"
                     app:endIconContentDescription="@string/routing_settings_process"
-                    app:endIconDrawable="@drawable/ic_per_apps_24dp"
+                    app:endIconDrawable="@drawable/rmx_apps_line"
                     app:endIconMode="custom"
                     app:helperText="@string/routing_settings_process_tip">
                     <com.google.android.material.textfield.TextInputEditText

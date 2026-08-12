@@ -1,5 +1,7 @@
 package com.v2ray.ang.service
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
@@ -35,7 +37,7 @@ class CoreTestService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         NotificationCompat.Action.Builder(
-            R.drawable.ic_stop_24dp,
+            RemixR.drawable.rmx_media_stop_line,
             getString(android.R.string.cancel),
             pendingIntent
         ).build()

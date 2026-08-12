@@ -1,5 +1,7 @@
 package com.neko.widget
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -66,7 +68,7 @@ class UwuHeaderIconView @JvmOverloads constructor(
             ).toInt()
             setPadding(pad, pad, pad, pad)
             background = buildGradientBackground()
-            val iconRes = if (sectionIconRes != 0) sectionIconRes else R.drawable.ic_sparkles_24dp
+            val iconRes = if (sectionIconRes != 0) sectionIconRes else RemixR.drawable.rmx_sparkling_line
             val iconSizePx = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics
             ).toInt()

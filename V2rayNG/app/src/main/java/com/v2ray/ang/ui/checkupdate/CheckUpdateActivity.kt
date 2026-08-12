@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.checkupdate
 
+
+import com.miku.ray.remixicon.R as RemixR
 import com.v2ray.ang.ui.base.BaseActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -80,7 +82,7 @@ class CheckUpdateActivity : BaseActivity() {
     private fun showUpdateDialog(result: CheckUpdateResult) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.update_new_version_found, result.latestVersion))
-            .setIcon(R.drawable.ic_check_update_24dp)
+            .setIcon(RemixR.drawable.rmx_device_restart_line)
             .setMessage(result.releaseNotes)
             .setPositiveButton(R.string.update_now) { _, _ ->
                 result.downloadUrl?.let {

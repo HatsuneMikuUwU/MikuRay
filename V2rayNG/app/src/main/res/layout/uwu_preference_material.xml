@@ -94,7 +94,7 @@
                 android:layout_width="25.0dip"
                 android:layout_height="25.0dip"
                 android:layout_marginTop="1.0dip"
-                android:src="@drawable/uwu_arrow"
+                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                 android:tint="?colorOnSurfaceVariant"
                 android:layout_marginStart="2.0dip" />
         </com.google.android.material.card.MaterialCardView>

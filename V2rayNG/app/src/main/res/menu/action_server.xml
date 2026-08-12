@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/del_config"
-        android:icon="@drawable/ic_delete_24dp"
+        android:icon="@drawable/rmx_delete_bin_line"
         android:title="@string/menu_item_del_config"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/save_config"
-        android:icon="@drawable/ic_action_done"
+        android:icon="@drawable/rmx_checkbox_circle_line"
         android:title="@string/menu_item_save_config"
         app:showAsAction="ifRoom" />
 </menu>

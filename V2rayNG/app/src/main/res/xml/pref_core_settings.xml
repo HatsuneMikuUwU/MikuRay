@@ -5,10 +5,10 @@
     <com.neko.widget.UwuPreferenceCategory
         android:key="pref_category_core_settings"
         android:title="@string/title_core_settings"
-        app:sectionIcon="@drawable/ic_settings_24dp">
+        app:sectionIcon="@drawable/rmx_settings_line">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
+            android:icon="@drawable/rmx_system_search_eye_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -17,7 +17,7 @@
             android:title="@string/title_pref_sniffing_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_router"
+            android:icon="@drawable/rmx_router_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -26,7 +26,7 @@
             android:title="@string/title_pref_route_only_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_arrow_decision"
+            android:icon="@drawable/rmx_router_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -35,7 +35,7 @@
             android:title="@string/title_pref_enable_local_proxy" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_lan"
+            android:icon="@drawable/rmx_share_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -44,8 +44,8 @@
             android:title="@string/title_pref_proxy_sharing_enabled" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_numeric"
-            app:dialogIcon="@drawable/ic_numeric"
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
             app:layout="@layout/uwu_mid"
             android:inputType="number"
             android:key="pref_socks_port"
@@ -53,7 +53,7 @@
             android:title="@string/title_pref_socks_port" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
+            android:icon="@drawable/rmx_toggle_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="false"
@@ -62,8 +62,8 @@
             android:title="@string/title_pref_dynamic_socks_port" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_account_edit"
-            app:dialogIcon="@drawable/ic_account_edit"
+            android:icon="@drawable/rmx_user_line"
+            app:dialogIcon="@drawable/rmx_user_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_socks_username"
             android:summary="@string/summary_pref_socks_username"
@@ -71,8 +71,8 @@
             android:dialogMessage="@string/title_pref_socks_username_tip" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_account_edit"
-            app:dialogIcon="@drawable/ic_account_edit"
+            android:icon="@drawable/rmx_lock_line"
+            app:dialogIcon="@drawable/rmx_lock_line"
             app:layout="@layout/uwu_mid"
             android:inputType="textPassword"
             android:key="pref_socks_password"
@@ -81,7 +81,7 @@
             android:dialogMessage="@string/title_pref_socks_password_tip" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_toggle_switch"
+            android:icon="@drawable/rmx_toggle_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
@@ -90,8 +90,8 @@
             android:title="@string/title_pref_socks_enable_udp" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_dns"
-            app:dialogIcon="@drawable/ic_dns"
+            android:icon="@drawable/rmx_server_line"
+            app:dialogIcon="@drawable/rmx_server_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_remote_dns"
             android:summary="@string/summary_pref_remote_dns"
@@ -99,8 +99,8 @@
             android:dialogMessage="@string/title_pref_remote_dns_tip" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_dns"
-            app:dialogIcon="@drawable/ic_dns"
+            android:icon="@drawable/rmx_server_line"
+            app:dialogIcon="@drawable/rmx_server_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_domestic_dns"
             android:summary="@string/summary_pref_domestic_dns"
@@ -108,8 +108,8 @@
             android:dialogMessage="@string/title_pref_domestic_dns_tip" />
 
         <EditTextPreference
-            android:icon="@drawable/ic_dns"
-            app:dialogIcon="@drawable/ic_dns"
+            android:icon="@drawable/rmx_server_line"
+            app:dialogIcon="@drawable/rmx_server_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_dns_hosts"
             android:summary="@string/summary_pref_dns_hosts"
@@ -117,8 +117,8 @@
             android:dialogMessage="@string/title_pref_dns_hosts_tip" />
 
         <ListPreference
-            android:icon="@drawable/ic_math_log"
-            app:dialogIcon="@drawable/ic_math_log"
+            android:icon="@drawable/rmx_file_text_line"
+            app:dialogIcon="@drawable/rmx_file_text_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="warning"
             android:entries="@array/core_loglevel"
@@ -128,8 +128,8 @@
             android:title="@string/title_core_loglevel" />
 
         <ListPreference
-            android:icon="@drawable/ic_domain"
-            app:dialogIcon="@drawable/ic_domain"
+            android:icon="@drawable/rmx_global_line"
+            app:dialogIcon="@drawable/rmx_global_line"
             app:layout="@layout/uwu_mid"
             android:defaultValue="0"
             android:entries="@array/outbound_domain_resolve_method"
@@ -139,8 +139,8 @@
             android:title="@string/title_outbound_domain_resolve_method" />
 
         <ListPreference
-            android:icon="@drawable/ic_cloud_download_24dp"
-            app:dialogIcon="@drawable/ic_cloud_download_24dp"
+            android:icon="@drawable/rmx_download_cloud_2_line"
+            app:dialogIcon="@drawable/rmx_download_cloud_2_line"
             app:layout="@layout/uwu_bot"
             android:defaultValue="Loyalsoldier/v2ray-rules-dat"
             android:entries="@array/geo_files_sources_entries"

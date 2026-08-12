@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -41,7 +43,7 @@ class BlurIntensityDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_blur_intensity)
-            .setIcon(R.drawable.ic_baseline_blur_on_24)
+            .setIcon(RemixR.drawable.rmx_blur_line)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok, null)
             .setNeutralButton(R.string.reset, null)

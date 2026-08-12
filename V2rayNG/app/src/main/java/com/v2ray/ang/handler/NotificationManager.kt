@@ -1,5 +1,7 @@
 package com.v2ray.ang.handler
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -139,12 +141,12 @@ object NotificationManager : TrafficController.Listener {
             .setOnlyAlertOnce(true)
             .setContentIntent(contentPendingIntent)
             .addAction(
-                R.drawable.ic_delete_24dp,
+                RemixR.drawable.rmx_delete_bin_line,
                 service.getString(R.string.notification_action_stop_v2ray),
                 stopV2RayPendingIntent
             )
             .addAction(
-                R.drawable.ic_restore_24dp,
+                RemixR.drawable.rmx_history_line,
                 service.getString(R.string.title_service_restart),
                 restartV2RayPendingIntent
             )

@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.main
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -309,11 +311,11 @@ class MainRecyclerAdapter(
 
         if (enabled && isPolicyGroup && policyGroupTypeLabel != null) {
             holder.views.tvNetwork.text = policyGroupTypeLabel
-            holder.views.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
+            holder.views.tvNetwork.setCompoundDrawables(makeIcon(RemixR.drawable.rmx_system_thumb_up_line), null, null, null)
             holder.views.tvNetwork.visibility = View.VISIBLE
         } else if (enabled && !isComplex && network != null) {
             holder.views.tvNetwork.text = network
-            holder.views.tvNetwork.setCompoundDrawables(makeIcon(R.drawable.ic_thumb_up_outline), null, null, null)
+            holder.views.tvNetwork.setCompoundDrawables(makeIcon(RemixR.drawable.rmx_system_thumb_up_line), null, null, null)
             holder.views.tvNetwork.visibility = View.VISIBLE
         } else {
             holder.views.tvNetwork.visibility = View.GONE
@@ -321,7 +323,7 @@ class MainRecyclerAdapter(
 
         if (enabled && !isComplex) {
             holder.views.tvSecurity.text = security
-            val iconRes = if (security == "none") R.drawable.ic_unlock_24dp else R.drawable.ic_lock_24dp
+            val iconRes = if (security == "none") RemixR.drawable.rmx_lock_unlock_line else RemixR.drawable.rmx_lock_line
             holder.views.tvSecurity.setCompoundDrawables(makeIcon(iconRes), null, null, null)
             holder.views.tvSecurity.visibility = View.VISIBLE
         } else {

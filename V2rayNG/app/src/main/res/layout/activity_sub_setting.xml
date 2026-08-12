@@ -107,7 +107,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_cloud_download_24dp"
+                    android:src="@drawable/rmx_download_cloud_line"
                     app:tint="?attr/colorPrimary"
                     android:importantForAccessibility="no" />
 

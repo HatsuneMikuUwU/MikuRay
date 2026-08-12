@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_config"
-        android:icon="@drawable/ic_action_note_add"
+        android:icon="@drawable/rmx_file_add_line"
         android:title="@string/menu_item_add_config"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/sub_update"
-        android:icon="@drawable/ic_restore_24dp"
+        android:icon="@drawable/rmx_history_line"
         android:title="@string/title_sub_update"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/sub_sort"
-        android:icon="@drawable/ic_sort"
+        android:icon="@drawable/rmx_sort_desc"
         android:title="@string/title_sort_sub"
         app:showAsAction="ifRoom" />
 </menu>

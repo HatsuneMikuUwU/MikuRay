@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.weather
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -210,17 +212,17 @@ class WeatherForecastActivity : BaseActivity() {
         val items = mutableListOf<DetailItem>()
 
         items += DetailItem(
-            R.drawable.ic_weather_humidity,
+            RemixR.drawable.rmx_weather_water_percent_line,
             getString(R.string.weather_detail_humidity),
             "${entry.relativeHumidity}%"
         )
         items += DetailItem(
-            R.drawable.ic_weather_humidity,
+            RemixR.drawable.rmx_weather_water_percent_line,
             getString(R.string.weather_detail_dew_point),
             "${Math.round(entry.dewPointCelsius)}\u00b0"
         )
         items += DetailItem(
-            R.drawable.ic_weather_wind,
+            RemixR.drawable.rmx_weather_windy_line,
             getString(R.string.weather_detail_wind),
             getString(
                 R.string.weather_wind_format,
@@ -229,49 +231,49 @@ class WeatherForecastActivity : BaseActivity() {
             )
         )
         items += DetailItem(
-            R.drawable.ic_weather_wind,
+            RemixR.drawable.rmx_weather_windy_line,
             getString(R.string.weather_detail_wind_gusts),
             getString(R.string.weather_speed_kmh_format, Math.round(entry.windGustsKmh))
         )
         items += DetailItem(
-            R.drawable.ic_weather_pressure,
+            RemixR.drawable.rmx_speed_line,
             getString(R.string.weather_detail_pressure),
             getString(R.string.weather_pressure_format, Math.round(entry.pressureMsl))
         )
         items += DetailItem(
-            R.drawable.ic_weather_visibility,
+            RemixR.drawable.rmx_system_eye_line,
             getString(R.string.weather_detail_visibility),
             formatVisibility(entry.visibilityMeters)
         )
         items += DetailItem(
-            R.drawable.ic_cloud,
+            RemixR.drawable.rmx_cloud_line,
             getString(R.string.weather_detail_cloud_cover),
             "${entry.cloudCoverPercent}%"
         )
 
         entry.dailyUvIndexMax.getOrNull(0)?.let { uv ->
             items += DetailItem(
-                R.drawable.ic_weather_sunny,
+                RemixR.drawable.rmx_weather_sun_line,
                 getString(R.string.weather_detail_uv_index),
                 String.format(Locale.getDefault(), "%.1f", uv)
             )
         }
         formatTimeOfDay(entry.dailySunriseIso.getOrNull(0))?.let { sunrise ->
-            items += DetailItem(R.drawable.ic_weather_sunrise, getString(R.string.weather_detail_sunrise), sunrise)
+            items += DetailItem(RemixR.drawable.rmx_weather_shining_2_line, getString(R.string.weather_detail_sunrise), sunrise)
         }
         formatTimeOfDay(entry.dailySunsetIso.getOrNull(0))?.let { sunset ->
-            items += DetailItem(R.drawable.ic_weather_sunset, getString(R.string.weather_detail_sunset), sunset)
+            items += DetailItem(RemixR.drawable.rmx_weather_shining_line, getString(R.string.weather_detail_sunset), sunset)
         }
         entry.dailyPrecipitationSumMm.getOrNull(0)?.let { mm ->
             items += DetailItem(
-                R.drawable.ic_weather_rain,
+                RemixR.drawable.rmx_weather_rainy_line,
                 getString(R.string.weather_detail_precipitation),
                 getString(R.string.weather_precipitation_format, mm)
             )
         }
         entry.airQualityIndex?.let { aqi ->
             items += DetailItem(
-                R.drawable.ic_weather_air_quality,
+                RemixR.drawable.rmx_weather_haze_line,
                 getString(R.string.weather_detail_air_quality),
                 "$aqi \u00b7 ${getString(WeatherHelper.airQualityLabelRes(aqi))}"
             )

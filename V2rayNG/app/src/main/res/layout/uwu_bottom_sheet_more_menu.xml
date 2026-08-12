@@ -151,7 +151,7 @@
                     <com.neko.widget.UwuHeaderIconView
                         android:layout_width="50.0dip"
                         android:layout_height="50.0dip"
-                        app:sectionIcon="@drawable/ic_more_vert_24dp"
+                        app:sectionIcon="@drawable/rmx_more_2_line"
                         android:layout_marginEnd="12.0dip" />
 
                     <TextView
@@ -238,7 +238,7 @@
                                             android:layout_width="25.0dip"
                                             android:layout_height="25.0dip"
                                             android:layout_gravity="center"
-                                            android:src="@drawable/ic_lightbulb_outline"
+                                            android:src="@drawable/rmx_lightbulb_line"
                                             android:tint="?colorOnPrimary" />
                                     </FrameLayout>
                                 </LinearLayout>
@@ -288,7 +288,7 @@
                                             android:layout_height="25.0dip"
                                             android:layout_marginStart="2.0dip"
                                             android:layout_marginTop="1.0dip"
-                                            android:src="@drawable/uwu_arrow"
+                                            android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                             android:tint="?colorOnSurfaceVariant" />
                                     </com.google.android.material.card.MaterialCardView>
                                 </LinearLayout>
@@ -360,7 +360,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_crosshairs"
+                                                android:src="@drawable/rmx_crosshair_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -409,7 +409,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -466,7 +466,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_refresh"
+                                                android:src="@drawable/rmx_refresh_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -515,7 +515,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -572,7 +572,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_cloud"
+                                                android:src="@drawable/rmx_cloud_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -621,7 +621,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -678,7 +678,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_dns"
+                                                android:src="@drawable/rmx_server_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -727,7 +727,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -784,7 +784,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_dns"
+                                                android:src="@drawable/rmx_server_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -833,7 +833,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -904,7 +904,7 @@
                                             android:layout_width="25.0dip"
                                             android:layout_height="25.0dip"
                                             android:layout_gravity="center"
-                                            android:src="@drawable/ic_account_cog_outline"
+                                            android:src="@drawable/rmx_user_settings_line"
                                             android:tint="?colorOnPrimary" />
                                     </FrameLayout>
                                 </LinearLayout>
@@ -954,7 +954,7 @@
                                             android:layout_height="25.0dip"
                                             android:layout_marginStart="2.0dip"
                                             android:layout_marginTop="1.0dip"
-                                            android:src="@drawable/uwu_arrow"
+                                            android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                             android:tint="?colorOnSurfaceVariant" />
                                     </com.google.android.material.card.MaterialCardView>
                                 </LinearLayout>
@@ -1025,7 +1025,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_share_24dp"
+                                                android:src="@drawable/rmx_share_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1074,7 +1074,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1131,7 +1131,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_file_24dp"
+                                                android:src="@drawable/rmx_file_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1180,7 +1180,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1237,7 +1237,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_restore_24dp"
+                                                android:src="@drawable/rmx_arrow_go_back_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1286,7 +1286,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1343,7 +1343,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_delete_24dp"
+                                                android:src="@drawable/rmx_delete_bin_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1392,7 +1392,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 app:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1449,7 +1449,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_delete_24dp"
+                                                android:src="@drawable/rmx_delete_bin_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1498,7 +1498,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1555,7 +1555,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_delete_24dp"
+                                                android:src="@drawable/rmx_delete_bin_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1604,7 +1604,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1661,7 +1661,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/ic_delete_24dp"
+                                                android:src="@drawable/rmx_delete_bin_line"
                                                 android:tint="?colorOnError" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -1710,7 +1710,7 @@
                                                 android:layout_height="25.0dip"
                                                 android:layout_marginStart="2.0dip"
                                                 android:layout_marginTop="1.0dip"
-                                                android:src="@drawable/uwu_arrow"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
                                                 android:tint="?colorOnSurfaceVariant" />
                                         </com.google.android.material.card.MaterialCardView>
                                     </LinearLayout>
@@ -1739,7 +1739,7 @@
                     <com.neko.widget.UwuHeaderIconView
                         android:layout_width="50.0dip"
                         android:layout_height="50.0dip"
-                        app:sectionIcon="@drawable/ic_order_alphabetical_ascending"
+                        app:sectionIcon="@drawable/rmx_sort_alphabet_asc"
                         android:layout_marginEnd="12.0dip" />
 
                     <TextView
@@ -1797,7 +1797,7 @@
                                     android:layout_width="25.0dip"
                                     android:layout_height="25.0dip"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_order_numeric_ascending"
+                                    android:src="@drawable/rmx_sort_number_asc"
                                     app:tint="?colorOnPrimary" />
                             </FrameLayout>
 
@@ -1858,7 +1858,7 @@
                                     android:layout_width="25.0dip"
                                     android:layout_height="25.0dip"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_order_alphabetical_ascending"
+                                    android:src="@drawable/rmx_sort_alphabet_asc"
                                     app:tint="?colorOnPrimary" />
                             </FrameLayout>
 
@@ -1918,7 +1918,7 @@
                                     android:layout_width="25.0dip"
                                     android:layout_height="25.0dip"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_sort"
+                                    android:src="@drawable/rmx_sort_desc"
                                     app:tint="?colorOnPrimary" />
                             </FrameLayout>
 

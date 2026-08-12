@@ -129,7 +129,7 @@
                     android:id="@+id/iv_weather_icon"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/ic_weather_sunny"
+                    android:src="@drawable/rmx_sun_line"
                     android:tint="?colorOnSurfaceVariant"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -150,7 +150,7 @@
                     android:id="@+id/iv_total_traffic_icon"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/ic_traffic_total"
+                    android:src="@drawable/rmx_business_bar_chart_line"
                     android:tint="?colorOnSurfaceVariant"
                     android:visibility="gone" />
 
@@ -180,7 +180,7 @@
             android:minHeight="50dp"
             android:visibility="gone"
             app:backgroundTint="?colorCard"
-            app:icon="@drawable/ic_history"
+            app:icon="@drawable/rmx_history_line"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconTint="?colorOnSurfaceVariant"

@@ -206,7 +206,7 @@
                                 android:id="@+id/iv_weather_icon"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
-                                android:src="@drawable/ic_weather_sunny"
+                                android:src="@drawable/rmx_weather_sun_line"
                                 android:tint="?colorOnSurfaceVariant"
                                 android:visibility="gone" />
 
@@ -226,7 +226,7 @@
                                 android:id="@+id/iv_total_traffic_icon"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
-                                android:src="@drawable/ic_traffic_total"
+                                android:src="@drawable/rmx_business_bar_chart_line"
                                 android:tint="?colorOnSurfaceVariant"
                                 android:visibility="gone" />
 
@@ -319,7 +319,7 @@
                 android:minHeight="55dp"
                 android:layout_marginStart="4dp"
                 app:backgroundTint="?colorPrimary"
-                app:icon="@drawable/ic_add_circle_fill_24px"
+                app:icon="@drawable/rmx_add_circle_line"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:iconTint="?colorOnPrimary"
@@ -412,7 +412,7 @@
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play_24dp"
+                    android:src="@drawable/rmx_media_play_line"
                     android:elevation="0dp"
                     android:outlineProvider="none"
                     app:elevation="0dp"
@@ -425,7 +425,7 @@
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play_24dp"
+                    android:src="@drawable/rmx_media_play_line"
                     android:elevation="0dp"
                     android:outlineProvider="none"
                     app:elevation="0dp"

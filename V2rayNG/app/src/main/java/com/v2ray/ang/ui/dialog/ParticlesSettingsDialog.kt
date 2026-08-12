@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -173,7 +175,7 @@ class ParticlesSettingsDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(title)
-            .setIcon(R.drawable.ic_baseline_speed_24)
+            .setIcon(RemixR.drawable.rmx_sparkling_line)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 sliders.forEach { (param, slider) ->

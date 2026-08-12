@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -45,7 +47,7 @@ class AppIconPickerDialog @JvmOverloads constructor(
 
         dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.title_pref_app_icon)
-            .setIcon(R.drawable.ic_per_apps_24dp)
+            .setIcon(RemixR.drawable.rmx_apps_line)
             .setView(dialogView)
             .setNegativeButton(android.R.string.cancel, null)
             .create()

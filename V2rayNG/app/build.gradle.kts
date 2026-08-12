@@ -162,6 +162,9 @@ dependencies {
     // Core Libraries
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
 
+    // Icons (RemixIcon vector drawables, kept as a separate module instead of app/res/drawable)
+    implementation(project(":remixicon"))
+
     // AndroidX Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -2,6 +2,7 @@ package com.v2ray.ang.ui.subscription
 
 import com.v2ray.ang.util.TabIconPickerAdapter
 import com.v2ray.ang.ui.base.BaseActivity
+import com.miku.ray.remixicon.R as RemixR
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.TextUtils
@@ -106,7 +107,7 @@ class SubEditActivity : BaseActivity() {
 
         dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.sub_setting_tab_icon)
-            .setIcon(R.drawable.filter_all_solar)
+            .setIcon(RemixR.drawable.rmx_apps_line)
             .setView(dialogView)
             .setNegativeButton(android.R.string.cancel, null)
             .create()
@@ -121,7 +122,7 @@ class SubEditActivity : BaseActivity() {
         selectedIconDrawable = iconName
         if (iconName == null) {
             binding.etTabIcon.setText(getString(R.string.sub_tab_icon_none))
-            binding.tilTabIcon.setStartIconDrawable(R.drawable.filter_all)
+            binding.tilTabIcon.setStartIconDrawable(RemixR.drawable.rmx_apps_line)
             binding.tilTabIcon.setStartIconTintList(
                 ColorStateList.valueOf(getColorAttr("colorOnSurfaceVariant"))
             )

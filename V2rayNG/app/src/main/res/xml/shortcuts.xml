@@ -2,7 +2,7 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_qu_switch_24dp"
+        android:icon="@drawable/rmx_arrows_arrow_left_right_line"
         android:shortcutDisabledMessage="@string/app_widget_name"
         android:shortcutId="shortcuts_switch"
         android:shortcutLongLabel="@string/app_widget_name"
@@ -16,7 +16,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_qu_scan_24dp"
+        android:icon="@drawable/rmx_device_qr_scan_2_line"
         android:shortcutDisabledMessage="@string/menu_item_import_config_qrcode"
         android:shortcutId="shortcuts_scan"
         android:shortcutLongLabel="@string/menu_item_import_config_qrcode"
@@ -30,7 +30,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_qu_start_24dp"
+        android:icon="@drawable/rmx_media_play_circle_line"
         android:shortcutDisabledMessage="@string/toast_services_start"
         android:shortcutId="shortcuts_start"
         android:shortcutLongLabel="@string/toast_services_start"
@@ -44,7 +44,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_qu_stop_24dp"
+        android:icon="@drawable/rmx_media_stop_circle_line"
         android:shortcutDisabledMessage="@string/toast_services_stop"
         android:shortcutId="shortcuts_stop"
         android:shortcutLongLabel="@string/toast_services_stop"

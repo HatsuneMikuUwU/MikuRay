@@ -1,5 +1,7 @@
 package com.v2ray.ang.util
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,7 @@ fun showMikuRayExportPasswordDialog(
 
     val dialog = MaterialAlertDialogBuilder(context)
         .setTitle(R.string.mikuray_password_export_title)
-        .setIcon(R.drawable.ic_lock_24dp)
+        .setIcon(RemixR.drawable.rmx_lock_line)
         .setView(binding.root)
         .setPositiveButton(R.string.mikuray_password_confirm_button, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -61,7 +63,7 @@ fun showMikuRayImportPasswordDialog(
 
     val dialog = MaterialAlertDialogBuilder(context)
         .setTitle(R.string.mikuray_password_import_title)
-        .setIcon(R.drawable.ic_unlock_24dp)
+        .setIcon(RemixR.drawable.rmx_lock_unlock_line)
         .setView(binding.root)
         .setPositiveButton(R.string.mikuray_password_confirm_button, null)
         .setNegativeButton(android.R.string.cancel, null)

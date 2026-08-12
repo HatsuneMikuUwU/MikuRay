@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.dialog
 
+
+import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -47,7 +49,7 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_header_top_row_padding_title)
-            .setIcon(R.drawable.ic_cellphone_screenshot)
+            .setIcon(RemixR.drawable.rmx_design_pencil_ruler_line)
             .setView(dialogView)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val newPadding = slider.value.toInt()
