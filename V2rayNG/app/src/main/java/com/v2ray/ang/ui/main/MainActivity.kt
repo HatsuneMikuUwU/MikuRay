@@ -602,11 +602,11 @@ class MainActivity : HelperBaseActivity(),
             R.id.export_all -> exportAll()
             R.id.export_group_file -> exportGroupAsFile()
             R.id.real_ping_all -> {
-                urlTestProgressDialog.show(mainViewModel.serversCache.count())
+                urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_real_ping_all_server)
                 mainViewModel.testAllRealPing()
             }
             R.id.tcping_all -> {
-                urlTestProgressDialog.show(mainViewModel.serversCache.count())
+                urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_ping_all_server)
                 mainViewModel.testAllRealPing(true)
             }
             R.id.service_restart -> restartV2Ray()

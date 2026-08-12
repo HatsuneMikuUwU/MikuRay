@@ -26,10 +26,11 @@ class UrlTestProgressDialogController(
     val isShowing: Boolean
         get() = dialog?.isShowing == true
 
-    fun show(total: Int) {
+    fun show(total: Int, @androidx.annotation.StringRes titleResId: Int = R.string.title_real_ping_all_server) {
         if (isShowing) {
             val b = binding ?: return
             adapter.clear()
+            b.tvTitle.setText(titleResId)
             b.progressIndicator.visibility = android.view.View.VISIBLE
             b.progressIndicator.isIndeterminate = true
             b.tvCounter.text = context.getString(R.string.test_progress_counter, 0, total)
@@ -41,6 +42,7 @@ class UrlTestProgressDialogController(
 
         val b = DialogUrlTestProgressBinding.inflate(LayoutInflater.from(context))
         binding = b
+        b.tvTitle.setText(titleResId)
         b.tvCounter.text = context.getString(R.string.test_progress_counter, 0, total)
         b.progressIndicator.isIndeterminate = true
         b.listView.layoutManager = LinearLayoutManager(context)
