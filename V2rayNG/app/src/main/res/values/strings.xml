@@ -810,6 +810,15 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Seconds, 0 = disabled</string>
 
+    <string name="title_banner_settings_character">Settings banner character</string>
+    <string name="summary_banner_settings_character">Choose which Hatsune Miku artwork appears on the settings banner</string>
+    <string name="title_banner_character_layout">Banner character size &amp; position</string>
+    <string name="summary_banner_character_layout">Fine-tune the width, height, and margins of the banner artwork</string>
+    <string name="banner_character_slider_width_label">Width</string>
+    <string name="banner_character_slider_height_label">Height</string>
+    <string name="banner_character_slider_margin_top_label">Top margin</string>
+    <string name="banner_character_slider_margin_bottom_label">Bottom margin</string>
+    <string name="banner_character_slider_margin_end_label">End margin</string>
     <string name="uwu_banner_settings_title">Hello there...</string>
     <string name="uwu_banner_settings_summary">"Welcome to the settings
 menu, please select

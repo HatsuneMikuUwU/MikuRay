@@ -767,6 +767,15 @@
     <string name="title_pref_ws_heartbeat_period">WS Ping 间隔</string>
     <string name="title_pref_ws_heartbeat_period_tip">秒，0 = 禁用</string>
 
+    <string name="title_banner_settings_character">设置横幅角色</string>
+    <string name="summary_banner_settings_character">选择显示在设置横幅上的初音未来插画</string>
+    <string name="title_banner_character_layout">横幅角色尺寸与位置</string>
+    <string name="summary_banner_character_layout">调整横幅插画的宽度、高度和边距</string>
+    <string name="banner_character_slider_width_label">宽度</string>
+    <string name="banner_character_slider_height_label">高度</string>
+    <string name="banner_character_slider_margin_top_label">上边距</string>
+    <string name="banner_character_slider_margin_bottom_label">下边距</string>
+    <string name="banner_character_slider_margin_end_label">右边距</string>
     <string name="uwu_banner_settings_title">你好呀……</string>
     <string name="uwu_banner_settings_summary">"欢迎来到设置菜单,
 请选择任何你

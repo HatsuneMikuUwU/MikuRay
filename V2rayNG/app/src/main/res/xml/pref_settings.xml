@@ -2,9 +2,29 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        android:layout="@layout/uwu_banner_settings"
-        app:selectable="false" />
+    <com.v2ray.ang.ui.preference.BannerSettingsPreference
+        android:key="pref_banner_settings_card"
+        android:layout="@layout/uwu_banner_settings" />
+
+    <ListPreference
+        android:defaultValue="uwu_banner_miku_v2"
+        android:entries="@array/banner_settings_character_entries"
+        android:entryValues="@array/banner_settings_character_values"
+        android:icon="@drawable/rmx_media_gallery_line"
+        app:dialogIcon="@drawable/rmx_media_gallery_line"
+        android:key="pref_banner_settings_character"
+        android:summary="@string/summary_banner_settings_character"
+        android:title="@string/title_banner_settings_character"
+        app:isPreferenceVisible="false"
+        app:layout="@layout/uwu_top" />
+
+    <com.v2ray.ang.ui.dialog.BannerCharacterLayoutDialog
+        android:icon="@drawable/rmx_arrows_expand_diagonal_line"
+        android:key="pref_banner_character_layout"
+        android:summary="@string/summary_banner_character_layout"
+        android:title="@string/title_banner_character_layout"
+        app:isPreferenceVisible="false"
+        app:layout="@layout/uwu_bot" />
 
      <Preference
         android:icon="@drawable/rmx_business_verified_badge_line"

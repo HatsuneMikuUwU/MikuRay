@@ -196,6 +196,33 @@ object AppConfig {
     const val PREF_CUSTOM_SHEET_BANNER_URI = "custom_sheet_banner_uri"
     const val PREF_ACTION_CHANGE_SHEET_BANNER = "action_change_sheet_banner_image"
     const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
+    const val PREF_BANNER_SETTINGS_CHARACTER = "pref_banner_settings_character"
+    const val PREF_BANNER_SETTINGS_CHARACTER_DEFAULT = "uwu_banner_miku_v2"
+
+    const val PREF_BANNER_CHARACTER_WIDTH = "pref_banner_character_width"
+    const val BANNER_CHARACTER_WIDTH_DEFAULT = 220f
+    const val BANNER_CHARACTER_WIDTH_MIN = 80f
+    const val BANNER_CHARACTER_WIDTH_MAX = 400f
+
+    const val PREF_BANNER_CHARACTER_HEIGHT = "pref_banner_character_height"
+    const val BANNER_CHARACTER_HEIGHT_DEFAULT = 250f
+    const val BANNER_CHARACTER_HEIGHT_MIN = 80f
+    const val BANNER_CHARACTER_HEIGHT_MAX = 400f
+
+    const val PREF_BANNER_CHARACTER_MARGIN_TOP = "pref_banner_character_margin_top"
+    const val BANNER_CHARACTER_MARGIN_TOP_DEFAULT = 10f
+    const val BANNER_CHARACTER_MARGIN_TOP_MIN = -150f
+    const val BANNER_CHARACTER_MARGIN_TOP_MAX = 150f
+
+    const val PREF_BANNER_CHARACTER_MARGIN_BOTTOM = "pref_banner_character_margin_bottom"
+    const val BANNER_CHARACTER_MARGIN_BOTTOM_DEFAULT = 0f
+    const val BANNER_CHARACTER_MARGIN_BOTTOM_MIN = -150f
+    const val BANNER_CHARACTER_MARGIN_BOTTOM_MAX = 150f
+
+    const val PREF_BANNER_CHARACTER_MARGIN_END = "pref_banner_character_margin_end"
+    const val BANNER_CHARACTER_MARGIN_END_DEFAULT = -70f
+    const val BANNER_CHARACTER_MARGIN_END_MIN = -250f
+    const val BANNER_CHARACTER_MARGIN_END_MAX = 150f
     const val PREF_HOME_BANNER_HEIGHT = "pref_home_banner_height"
     const val HOME_BANNER_HEIGHT_DEFAULT = 170
     const val FONT_SIZE_DEFAULT = 1.0f

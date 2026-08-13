@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchPreferenceActionView
@@ -33,6 +34,8 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.helper.MmkvPreferenceDataStore
 import com.v2ray.ang.ui.base.HelperBaseActivity
+import com.v2ray.ang.ui.dialog.BannerCharacterLayoutDialog
+import com.v2ray.ang.ui.preference.BannerSettingsPreference
 import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.ui.weather.WeatherHelper
@@ -339,6 +342,9 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             applyEdgeToEdgeListInsets()
         }
 
+        private val bannerSettingsCard by lazy { findPreference<BannerSettingsPreference>("pref_banner_settings_card") }
+        private val bannerSettingsCharacter by lazy { findPreference<ListPreference>(AppConfig.PREF_BANNER_SETTINGS_CHARACTER) }
+        private val bannerCharacterLayout by lazy { findPreference<BannerCharacterLayoutDialog>("pref_banner_character_layout") }
         private val navigateUiSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
         private val navigateVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_VPN_SETTINGS) }
         private val navigateCoreSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_CORE_SETTINGS) }
@@ -350,6 +356,21 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_settings)
+
+            bannerSettingsCharacter?.setOnPreferenceChangeListener { _, newValue ->
+                // Persist immediately so the banner reflects the new value on this same bind pass
+                // (onPreferenceChangeListener fires before the ListPreference itself persists).
+                MmkvManager.encodeSettings(AppConfig.PREF_BANNER_SETTINGS_CHARACTER, newValue as? String)
+                bannerSettingsCard?.refreshBanner()
+                true
+            }
+
+            bannerSettingsCard?.setOnPreferenceClickListener {
+                val expand = bannerSettingsCharacter?.isVisible != true
+                bannerSettingsCharacter?.isVisible = expand
+                bannerCharacterLayout?.isVisible = expand
+                true
+            }
 
             navigateUiSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), UiSettingsActivity::class.java))

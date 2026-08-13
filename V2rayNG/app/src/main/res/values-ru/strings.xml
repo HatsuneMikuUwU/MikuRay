@@ -788,6 +788,15 @@
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Секунд, 0 = отключено</string>
 
+    <string name="title_banner_settings_character">Персонаж баннера настроек</string>
+    <string name="summary_banner_settings_character">Выберите иллюстрацию Hatsune Miku для баннера настроек</string>
+    <string name="title_banner_character_layout">Размер и позиция персонажа баннера</string>
+    <string name="summary_banner_character_layout">Настройте ширину, высоту и отступы иллюстрации баннера</string>
+    <string name="banner_character_slider_width_label">Ширина</string>
+    <string name="banner_character_slider_height_label">Высота</string>
+    <string name="banner_character_slider_margin_top_label">Отступ сверху</string>
+    <string name="banner_character_slider_margin_bottom_label">Отступ снизу</string>
+    <string name="banner_character_slider_margin_end_label">Отступ справа</string>
     <string name="uwu_banner_settings_title">Привет...</string>
     <string name="uwu_banner_settings_summary">"Добро пожаловать в
 настройки, выберите

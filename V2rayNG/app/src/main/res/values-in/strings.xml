@@ -778,6 +778,15 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Detik, 0 = nonaktif</string>
 
+     <string name="title_banner_settings_character">Karakter banner pengaturan</string>
+     <string name="summary_banner_settings_character">Pilih ilustrasi Hatsune Miku yang tampil di banner pengaturan</string>
+     <string name="title_banner_character_layout">Ukuran &amp; posisi karakter banner</string>
+     <string name="summary_banner_character_layout">Atur lebar, tinggi, dan margin ilustrasi banner</string>
+     <string name="banner_character_slider_width_label">Lebar</string>
+     <string name="banner_character_slider_height_label">Tinggi</string>
+     <string name="banner_character_slider_margin_top_label">Margin atas</string>
+     <string name="banner_character_slider_margin_bottom_label">Margin bawah</string>
+     <string name="banner_character_slider_margin_end_label">Margin kanan</string>
      <string name="uwu_banner_settings_title">Halo disana…</string>
     <string name="uwu_banner_settings_summary">"Met dateng di menu
 settingan, monggo
