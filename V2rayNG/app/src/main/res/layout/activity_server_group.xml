@@ -128,7 +128,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_remarks">
+                    android:hint="@string/server_lab_remarks"
+                    app:startIconDrawable="@drawable/rmx_finance_price_tag_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_remarks"
                         android:layout_width="match_parent"
@@ -147,7 +149,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_spacing_dp16"
-                    android:hint="@string/title_policy_group_type">
+                    android:hint="@string/title_policy_group_type"
+                    app:startIconDrawable="@drawable/rmx_settings_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_type"
                         android:layout_width="match_parent"
@@ -167,7 +171,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_spacing_dp16"
-                    android:hint="@string/title_policy_group_subscription_id">
+                    android:hint="@string/title_policy_group_subscription_id"
+                    app:startIconDrawable="@drawable/rmx_rss_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_sub_id"
                         android:layout_width="match_parent"
@@ -183,7 +189,9 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/title_policy_group_subscription_filter">
+                    android:hint="@string/title_policy_group_subscription_filter"
+                    app:startIconDrawable="@drawable/rmx_system_filter_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_policy_group_filter"
                         android:layout_width="match_parent"
@@ -227,6 +235,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/title_policy_group_fallback"
+                    app:startIconDrawable="@drawable/rmx_arrow_go_back_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/title_policy_group_fallback_tip"
                     android:visibility="gone">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView

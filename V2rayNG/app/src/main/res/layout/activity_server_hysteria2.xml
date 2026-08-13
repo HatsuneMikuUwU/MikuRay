@@ -130,7 +130,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_id3">
+                        android:hint="@string/server_lab_id3"
+                        app:startIconDrawable="@drawable/rmx_system_lock_password_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id"
                             android:layout_width="match_parent"
@@ -146,7 +148,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_obfs_password">
+                        android:hint="@string/server_obfs_password"
+                        app:startIconDrawable="@drawable/rmx_system_shield_keyhole_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_obfs_password"
                             android:layout_width="match_parent"
@@ -163,6 +167,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_port_hop"
+                        app:startIconDrawable="@drawable/rmx_router_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant"
                         app:helperText="@string/server_lab_port_hop_tip">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_port_hop"
@@ -179,7 +185,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_port_hop_interval">
+                        android:hint="@string/server_lab_port_hop_interval"
+                        app:startIconDrawable="@drawable/rmx_system_timer_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_port_hop_interval"
                             android:layout_width="match_parent"
@@ -196,6 +204,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_bandwidth_down"
+                        app:startIconDrawable="@drawable/rmx_download_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant"
                         app:helperText="@string/server_lab_bandwidth_down_tip">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_bandwidth_down"
@@ -213,6 +223,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
                         android:hint="@string/server_lab_bandwidth_up"
+                        app:startIconDrawable="@drawable/rmx_system_upload_2_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant"
                         app:helperText="@string/server_lab_bandwidth_up_tip">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_bandwidth_up"

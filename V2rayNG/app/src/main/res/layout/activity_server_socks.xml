@@ -131,6 +131,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_security4"
+                    app:startIconDrawable="@drawable/rmx_user_faces_account_circle_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_security4_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_security"
@@ -148,6 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_id4"
+                    app:startIconDrawable="@drawable/rmx_system_lock_password_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_id4_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_id"

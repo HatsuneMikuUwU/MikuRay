@@ -17,6 +17,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/server_lab_stream_security"
+        app:startIconDrawable="@drawable/rmx_system_shield_check_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,6 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_sni"
+        app:startIconDrawable="@drawable/rmx_global_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_stream_security">
@@ -65,6 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_stream_fingerprint"
+        app:startIconDrawable="@drawable/rmx_device_fingerprint_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_sni">
@@ -91,6 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_stream_alpn"
+        app:startIconDrawable="@drawable/rmx_editor_list_check"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_stream_fingerprint">
@@ -117,6 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_allow_insecure"
+        app:startIconDrawable="@drawable/rmx_system_shield_cross_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_stream_alpn">
@@ -140,6 +150,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_ech_config_list"
+        app:startIconDrawable="@drawable/rmx_editor_list_check_2"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_allow_insecure">
@@ -162,6 +174,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_verify_peer_cert_by_name"
+        app:startIconDrawable="@drawable/rmx_document_certificate_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_ech_config_list">
@@ -184,6 +198,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_pinned_ca256"
+        app:startIconDrawable="@drawable/rmx_document_certificate_2_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:helperText="@string/server_lab_pinned_ca256_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -220,6 +236,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_public_key"
+        app:startIconDrawable="@drawable/rmx_key_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_pinned_ca256_action">
@@ -242,6 +260,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_short_id"
+        app:startIconDrawable="@drawable/rmx_hashtag"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_public_key">
@@ -264,6 +284,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_spider_x"
+        app:startIconDrawable="@drawable/rmx_route_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_short_id">
@@ -286,6 +308,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_mldsa65_verify"
+        app:startIconDrawable="@drawable/rmx_system_shield_check_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lay_spider_x"

@@ -130,7 +130,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_secret_key">
+                    android:hint="@string/server_lab_secret_key"
+                    app:startIconDrawable="@drawable/rmx_others_key_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_id"
                         android:layout_width="match_parent"
@@ -146,7 +148,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/server_lab_public_key">
+                    android:hint="@string/server_lab_public_key"
+                    app:startIconDrawable="@drawable/rmx_key_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_public_key"
                         android:layout_width="match_parent"
@@ -163,6 +167,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_preshared_key"
+                    app:startIconDrawable="@drawable/rmx_others_key_2_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_preshared_key_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_preshared_key"
@@ -180,6 +186,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_reserved"
+                    app:startIconDrawable="@drawable/rmx_others_reserved_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_reserved_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_reserved1"
@@ -197,6 +205,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_local_address"
+                    app:startIconDrawable="@drawable/rmx_device_router_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_local_address_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_address"
@@ -214,6 +224,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_local_mtu"
+                    app:startIconDrawable="@drawable/rmx_arrows_expand_width_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_local_mtu_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_mtu"
@@ -231,6 +243,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/server_lab_final_mask"
+                    app:startIconDrawable="@drawable/rmx_development_code_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/server_lab_final_mask_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_fm"

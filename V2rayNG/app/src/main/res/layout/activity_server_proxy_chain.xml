@@ -126,7 +126,9 @@
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/server_lab_remarks">
+                        android:hint="@string/server_lab_remarks"
+                        app:startIconDrawable="@drawable/rmx_finance_price_tag_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_remarks"

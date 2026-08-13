@@ -130,7 +130,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_id3">
+                        android:hint="@string/server_lab_id3"
+                        app:startIconDrawable="@drawable/rmx_system_lock_password_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id"
                             android:layout_width="match_parent"

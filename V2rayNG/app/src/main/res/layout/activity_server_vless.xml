@@ -130,7 +130,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_id">
+                        android:hint="@string/server_lab_id"
+                        app:startIconDrawable="@drawable/rmx_business_id_card_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id"
@@ -150,7 +152,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_flow">
+                        android:hint="@string/server_lab_flow"
+                        app:startIconDrawable="@drawable/rmx_editor_flow_chart"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
 
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/sp_flow"
@@ -168,7 +172,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_spacing_dp16"
-                        android:hint="@string/server_lab_encryption">
+                        android:hint="@string/server_lab_encryption"
+                        app:startIconDrawable="@drawable/rmx_system_shield_check_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_security"

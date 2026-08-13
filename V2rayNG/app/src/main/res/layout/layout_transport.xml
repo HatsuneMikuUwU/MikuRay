@@ -17,6 +17,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/server_lab_network"
+        app:startIconDrawable="@drawable/rmx_device_network_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,6 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_head_type"
+        app:startIconDrawable="@drawable/rmx_document_file_list_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_network">
@@ -63,6 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_request_host"
+        app:startIconDrawable="@drawable/rmx_device_server_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_header_type">
@@ -84,6 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_path"
+        app:startIconDrawable="@drawable/rmx_route_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_request_host">
@@ -113,6 +121,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/server_lab_kcp_mtu"
+            app:startIconDrawable="@drawable/rmx_arrows_expand_width_line"
+            app:startIconTint="?attr/colorOnSurfaceVariant"
             app:helperText="@string/server_lab_kcp_mtu_tip">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -131,6 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_spacing_dp16"
             android:hint="@string/server_lab_kcp_tti"
+            app:startIconDrawable="@drawable/rmx_system_timer_line"
+            app:startIconTint="?attr/colorOnSurfaceVariant"
             app:helperText="@string/server_lab_kcp_tti_tip">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -151,6 +163,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_xhttp_extra"
+        app:startIconDrawable="@drawable/rmx_development_code_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:helperText="@string/server_lab_xhttp_extra_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -176,6 +190,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_final_mask"
+        app:startIconDrawable="@drawable/rmx_development_code_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         app:helperText="@string/server_lab_final_mask_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +203,7 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:minLines="4"
+            android:minLines="1"
             android:maxLines="10" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,6 +220,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_spacing_dp16"
         android:hint="@string/server_lab_browser_dialer"
+        app:startIconDrawable="@drawable/rmx_business_window_line"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

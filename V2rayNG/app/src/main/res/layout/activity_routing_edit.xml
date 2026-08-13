@@ -96,7 +96,9 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sub_setting_remarks">
+                    android:hint="@string/sub_setting_remarks"
+                    app:startIconDrawable="@drawable/rmx_finance_price_tag_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_remarks"
                         android:layout_width="match_parent"
@@ -113,6 +115,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_domain"
+                    app:startIconDrawable="@drawable/rmx_global_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/routing_settings_tips">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_domain"
@@ -131,6 +135,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_ip"
+                    app:startIconDrawable="@drawable/rmx_device_router_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/routing_settings_tips">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_ip"
@@ -150,6 +156,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_process"
+                    app:startIconDrawable="@drawable/rmx_device_cpu_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:endIconContentDescription="@string/routing_settings_process"
                     app:endIconDrawable="@drawable/rmx_apps_line"
                     app:endIconMode="custom"
@@ -170,7 +178,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/routing_settings_port">
+                    android:hint="@string/routing_settings_port"
+                    app:startIconDrawable="@drawable/rmx_others_plug_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_port"
                         android:layout_width="match_parent"
@@ -187,6 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_protocol"
+                    app:startIconDrawable="@drawable/rmx_editor_list_check_3"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/routing_settings_protocol_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_protocol"
@@ -204,6 +216,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
                     android:hint="@string/routing_settings_network"
+                    app:startIconDrawable="@drawable/rmx_device_network_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/routing_settings_network_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_network"
@@ -223,7 +237,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_spacing_dp16"
-                    android:hint="@string/routing_settings_outbound_tag">
+                    android:hint="@string/routing_settings_outbound_tag"
+                    app:startIconDrawable="@drawable/rmx_finance_price_tag_2_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_outbound_tag"
                         android:layout_width="match_parent"
