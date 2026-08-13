@@ -132,6 +132,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_remarks"
+                            android:textColor="?attr/colorOnSurface"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"

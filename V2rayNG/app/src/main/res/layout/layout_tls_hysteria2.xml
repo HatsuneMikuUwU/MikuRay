@@ -25,6 +25,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_stream_security"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -50,6 +51,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sni"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -77,6 +79,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_allow_insecure"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -102,6 +105,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_pinned_ca256"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />

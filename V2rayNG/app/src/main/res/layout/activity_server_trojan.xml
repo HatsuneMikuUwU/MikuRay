@@ -135,6 +135,7 @@
                         app:startIconTint="?attr/colorOnSurfaceVariant">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id"
+                            android:textColor="?attr/colorOnSurface"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text" />

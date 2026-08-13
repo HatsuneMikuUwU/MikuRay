@@ -133,6 +133,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_remarks"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -154,6 +155,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_type"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -176,6 +178,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_sub_id"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -194,6 +197,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_policy_group_filter"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -241,6 +245,7 @@
                     android:visibility="gone">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_policy_group_fallback"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />

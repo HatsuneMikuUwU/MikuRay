@@ -25,6 +25,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_stream_security"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -50,6 +51,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sni"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -77,6 +79,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_stream_fingerprint"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -105,6 +108,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_stream_alpn"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -133,6 +137,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/sp_allow_insecure"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -158,6 +163,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_ech_config_list"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -182,6 +188,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_verify_peer_cert_by_name"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -207,6 +214,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_pinned_ca256"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -244,6 +252,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_public_key"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -268,6 +277,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_short_id"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -292,6 +302,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_spider_x"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -317,6 +328,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_mldsa65_verify"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />

@@ -23,6 +23,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_webdav_url"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textUri" />
@@ -41,6 +42,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_webdav_user"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -60,6 +62,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_webdav_pass"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -78,6 +81,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_webdav_remote_path"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />

@@ -101,6 +101,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_remarks"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -120,6 +121,7 @@
                     app:helperText="@string/routing_settings_tips">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_domain"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
@@ -140,6 +142,7 @@
                     app:helperText="@string/routing_settings_tips">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_ip"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
@@ -164,6 +167,7 @@
                     app:helperText="@string/routing_settings_process_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_process"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
@@ -183,6 +187,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_port"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -202,6 +207,7 @@
                     app:helperText="@string/routing_settings_protocol_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_protocol"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -221,6 +227,7 @@
                     app:helperText="@string/routing_settings_network_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_network"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -242,6 +249,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/sp_outbound_tag"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:completionThreshold="0"

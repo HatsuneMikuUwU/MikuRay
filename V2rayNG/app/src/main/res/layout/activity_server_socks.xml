@@ -136,6 +136,7 @@
                     app:helperText="@string/server_lab_security4_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_security"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -155,6 +156,7 @@
                     app:helperText="@string/server_lab_id4_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_id"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />

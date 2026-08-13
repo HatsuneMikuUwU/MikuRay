@@ -135,6 +135,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_id"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -153,6 +154,7 @@
                     app:startIconTint="?attr/colorOnSurfaceVariant">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_public_key"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -172,6 +174,7 @@
                     app:helperText="@string/server_lab_preshared_key_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_preshared_key"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -191,6 +194,7 @@
                     app:helperText="@string/server_lab_reserved_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_reserved1"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -210,6 +214,7 @@
                     app:helperText="@string/server_lab_local_address_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_address"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -229,6 +234,7 @@
                     app:helperText="@string/server_lab_local_mtu_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_local_mtu"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number" />
@@ -248,6 +254,7 @@
                     app:helperText="@string/server_lab_final_mask_tip">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_fm"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
