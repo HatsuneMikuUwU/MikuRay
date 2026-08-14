@@ -27,6 +27,7 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.root.RootLanSharing
 import com.v2ray.ang.util.InProcessLogBuffer
 import com.v2ray.ang.util.LogUtil
+import com.v2ray.ang.util.MessageUtil
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.SoundPlayer
 import com.v2ray.ang.util.Utils
@@ -112,6 +113,8 @@ class CoreVpnService : VpnService(), ServiceControl {
         NotificationManager.cancelNotification()
         TrafficController.stop()
         serviceScope.cancel()
+
+        MessageUtil.sendMsg2UI(this, AppConfig.MSG_STATE_NOT_RUNNING, "")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

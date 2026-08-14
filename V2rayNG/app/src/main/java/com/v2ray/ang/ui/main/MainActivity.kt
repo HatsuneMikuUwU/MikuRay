@@ -96,7 +96,9 @@ import com.v2ray.ang.util.showTotalTrafficDetailDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import java.io.File
 
 class MainActivity : HelperBaseActivity(),
@@ -898,13 +900,37 @@ class MainActivity : HelperBaseActivity(),
 
     fun restartV2Ray() {
         if (mainViewModel.isRunning.value == true) {
+            lifecycleScope.launch {
+                awaitServiceFullyStopped()
+                startV2Ray()
+            }
             LauncherManager.stopService(this)
-        }
-        
-        lifecycleScope.launch {
-            delay(500)
+        } else {
             startV2Ray()
         }
+    }
+
+    private suspend fun awaitServiceFullyStopped() {
+        withTimeoutOrNull(2000L) {
+            suspendCancellableCoroutine<Unit> { cont ->
+                val receiver = object : BroadcastReceiver() {
+                    override fun onReceive(ctx: Context?, intent: Intent?) {
+                        if (intent?.getIntExtra("key", 0) == AppConfig.MSG_STATE_NOT_RUNNING) {
+                            runCatching { unregisterReceiver(this) }
+                            if (cont.isActive) cont.resume(Unit)
+                        }
+                    }
+                }
+                cont.invokeOnCancellation { runCatching { unregisterReceiver(receiver) } }
+                ContextCompat.registerReceiver(
+                    this@MainActivity,
+                    receiver,
+                    IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY),
+                    Utils.receiverFlags()
+                )
+            }
+        }
+        delay(150)
     }
 
     private fun setTestState(content: String?) {
