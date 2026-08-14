@@ -36,6 +36,12 @@ class CoreRootService : Service(), ServiceControl {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationManager.ensureForeground()
         LogUtil.i(AppConfig.TAG, "StartCore-Root: Service command received")
+
+        if (CoreServiceManager.isRunning()) {
+            LogUtil.i(AppConfig.TAG, "StartCore-Root: Core is already running")
+            return START_STICKY
+        }
+
         NotificationManager.showNotification(null)
         TrafficController.start()
 
