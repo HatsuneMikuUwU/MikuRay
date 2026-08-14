@@ -28,6 +28,12 @@ class CoreProxyOnlyService : Service(), ServiceControl {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationManager.ensureForeground()
         LogUtil.i(AppConfig.TAG, "StartCore-Proxy: Service command received")
+
+        if (CoreServiceManager.isRunning()) {
+            LogUtil.i(AppConfig.TAG, "StartCore-Proxy: Core is already running")
+            return START_STICKY
+        }
+
         serviceScope.launch {
             CoreServiceManager.startCoreLoop(null)
         }
