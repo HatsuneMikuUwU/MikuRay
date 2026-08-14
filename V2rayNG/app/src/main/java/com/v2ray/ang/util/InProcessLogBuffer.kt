@@ -31,4 +31,11 @@ object InProcessLogBuffer {
 
     @Synchronized
     fun clear() = buffer.clear()
+
+    @Synchronized
+    fun trim(keep: Int = 200) {
+        while (buffer.size > keep) {
+            buffer.removeFirst()
+        }
+    }
 }

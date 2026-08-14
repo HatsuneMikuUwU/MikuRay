@@ -9,8 +9,10 @@ import android.net.Network
 import android.net.ProxyInfo
 import android.net.VpnService
 import android.os.Build
+import android.content.ComponentCallbacks2
 import android.os.ParcelFileDescriptor
 import android.os.PowerManager
+import android.os.Process
 import android.os.StrictMode
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.LOOPBACK
@@ -23,6 +25,7 @@ import com.v2ray.ang.handler.NotificationManager
 import com.v2ray.ang.handler.TrafficController
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.root.RootLanSharing
+import com.v2ray.ang.util.InProcessLogBuffer
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.SoundPlayer
@@ -51,13 +54,43 @@ class CoreVpnService : VpnService(), ServiceControl {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         CoreServiceManager.serviceControl = this
+        try {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND)
+        } catch (e: Exception) {
+            LogUtil.w(AppConfig.TAG, "StartCore-VPN: Failed to raise thread priority", e)
+        }
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        LogUtil.w(AppConfig.TAG, "StartCore-VPN: onTrimMemory level=$level")
+        when {
+            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> {
+                LogUtil.w(AppConfig.TAG, "StartCore-VPN: Critical memory pressure, trimming buffers")
+                InProcessLogBuffer.trim()
+                if (isRunning) {
+                    NotificationManager.ensureForeground()
+                }
+            }
+            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
+                InProcessLogBuffer.trim()
+            }
+        }
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        LogUtil.w(AppConfig.TAG, "StartCore-VPN: onLowMemory - system is critically low on memory")
+        InProcessLogBuffer.trim()
+        if (isRunning) {
+            NotificationManager.ensureForeground()
+        }
     }
 
     override fun onRevoke() {
         LogUtil.w(AppConfig.TAG, "StartCore-VPN: Permission revoked")
         stopAllService()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
