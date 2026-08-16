@@ -46,6 +46,7 @@ import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.net.URI
 import java.util.Locale
+import kotlin.time.Duration.Companion.milliseconds
 
 val Context.v2RayApplication: AngApplication?
     get() = applicationContext as? AngApplication
@@ -423,6 +424,21 @@ fun EConfigType.isGroupType(): Boolean {
 fun EConfigType.isComplexType(): Boolean {
     return this == EConfigType.CUSTOM || this == EConfigType.POLICYGROUP || this == EConfigType.PROXYCHAIN
 }
+
+/**
+ * Shorthand for delay with Int milliseconds using Duration to avoid legacy Long overload warning.
+ */
+suspend fun delay(millis: Int) {
+    kotlinx.coroutines.delay(millis.toLong().milliseconds)
+}
+
+/**
+ * Shorthand for delay with Long milliseconds using Duration to avoid legacy Long overload warning.
+ */
+suspend fun delay(millis: Long) {
+    kotlinx.coroutines.delay(millis.milliseconds)
+}
+
 
 fun View.applyEdgeToEdgeListInsets() {
     if (this is ViewGroup) clipToPadding = false
