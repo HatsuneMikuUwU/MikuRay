@@ -18,8 +18,25 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
+
+internal object RealPingExecutionLimiter {
+    private val customConfigMutex = Mutex()
+
+    suspend fun <T> run(configType: EConfigType, block: () -> T): T {
+        // Custom profiles bypass speed-test trimming and start complete Xray configs.
+        // Parallel teardown can abort the native probe process, so serialize their
+        // JNI measurements globally across batches.
+        return if (configType == EConfigType.CUSTOM) {
+            customConfigMutex.withLock { block() }
+        } else {
+            block()
+        }
+    }
+}
 
 class RealPingWorkerService(
     private val context: Context,
@@ -92,7 +109,7 @@ class RealPingWorkerService(
         }
     }
 
-    private fun startRealPing(guid: String): Long {
+    private suspend fun startRealPing(guid: String): Long {
         val retFailure = -1L
 
         val config = MmkvManager.decodeServerConfig(guid) ?: return retFailure
@@ -115,7 +132,9 @@ class RealPingWorkerService(
         if (!configResult.status) {
             return retFailure
         }
-        return CoreNativeManager.measureOutboundDelay(configResult.content, SettingsManager.getDelayTestUrl())
+        return RealPingExecutionLimiter.run(config.configType) {
+            CoreNativeManager.measureOutboundDelay(configResult.content, SettingsManager.getDelayTestUrl())
+        }
     }
 
     private fun startTcping(guid: String): Long {
