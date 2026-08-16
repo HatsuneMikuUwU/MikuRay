@@ -16,7 +16,9 @@ import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.util.ThemeManager
 import com.v2ray.ang.util.CustomFontManager
 import com.v2ray.ang.util.AppFontResolver
+import com.v2ray.ang.util.MikuRayLogTree
 import com.neko.crashlog.CrashHandler
+import timber.log.Timber
 
 class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
     companion object {
@@ -42,6 +44,7 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(MikuRayLogTree())
         MMKV.initialize(this)
         ForegroundActivityTracker.register(this)
         registerActivityLifecycleCallbacks(this)
