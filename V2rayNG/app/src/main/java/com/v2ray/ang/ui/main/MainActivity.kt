@@ -20,7 +20,6 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -96,10 +95,7 @@ import com.v2ray.ang.util.showTotalTrafficDetailDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeoutOrNull
-import kotlin.coroutines.resume
 import java.io.File
 
 class MainActivity : HelperBaseActivity(),
@@ -146,8 +142,8 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private val requestActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (SettingsChangeManager.consumeRestartService() && mainViewModel.isRunning.value == true) {
-            restartV2Ray()
+        if (SettingsChangeManager.consumeRestartService()) {
+            LauncherManager.restartService(this)
         }
         
         if (SettingsChangeManager.consumeSetupGroupTab()) {
@@ -614,7 +610,7 @@ class MainActivity : HelperBaseActivity(),
                 urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_ping_all_server)
                 mainViewModel.testAllRealPing(true)
             }
-            R.id.service_restart -> restartV2Ray()
+            R.id.service_restart -> LauncherManager.restartServiceOrStart(this, ::startV2Ray)
             R.id.action_scroll_to_selected -> locateSelectedServer()
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
@@ -897,41 +893,6 @@ class MainActivity : HelperBaseActivity(),
         }
 
         LauncherManager.startService(this)
-    }
-
-    fun restartV2Ray() {
-        if (mainViewModel.isRunning.value == true) {
-            lifecycleScope.launch {
-                awaitServiceFullyStopped()
-                startV2Ray()
-            }
-            LauncherManager.stopService(this)
-        } else {
-            startV2Ray()
-        }
-    }
-
-    private suspend fun awaitServiceFullyStopped() {
-        withTimeoutOrNull(2000L) {
-            suspendCancellableCoroutine<Unit> { cont ->
-                val receiver = object : BroadcastReceiver() {
-                    override fun onReceive(ctx: Context?, intent: Intent?) {
-                        if (intent?.getIntExtra("key", 0) == AppConfig.MSG_STATE_NOT_RUNNING) {
-                            runCatching { unregisterReceiver(this) }
-                            if (cont.isActive) cont.resume(Unit)
-                        }
-                    }
-                }
-                cont.invokeOnCancellation { runCatching { unregisterReceiver(receiver) } }
-                ContextCompat.registerReceiver(
-                    this@MainActivity,
-                    receiver,
-                    IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY),
-                    Utils.receiverFlags()
-                )
-            }
-        }
-        delay(150)
     }
 
     private fun setTestState(content: String?) {

@@ -86,6 +86,18 @@ object LauncherManager {
         MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_STOP_SUCCESS, "")
     }
 
+    /** Restarts the active daemon without starting a stopped service. */
+    fun restartService(context: Context) {
+        MessageUtil.sendMsg2Service(context, AppConfig.MSG_STATE_RESTART, "")
+    }
+
+    /** Restarts the active daemon, or delegates to the caller's permission-aware start flow. */
+    fun restartServiceOrStart(context: Context, startIfStopped: () -> Unit) {
+        MessageUtil.sendMsg2ServiceForResult(context, AppConfig.MSG_STATE_RESTART, "") { handled ->
+            if (!handled) startIfStopped()
+        }
+    }
+
     @Throws(Exception::class)
     private fun startContextService(context: Context) {
         val guid = MmkvManager.getSelectServer()

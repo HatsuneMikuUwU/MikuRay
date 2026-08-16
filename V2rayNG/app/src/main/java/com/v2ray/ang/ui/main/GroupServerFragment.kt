@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.contracts.MainAdapterListener
+import com.v2ray.ang.core.LauncherManager
 import com.v2ray.ang.databinding.FragmentGroupServerBinding
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
@@ -309,9 +310,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
             val toPosition = mainViewModel.getPosition(guid)
             adapter.setSelectServer(fromPosition, toPosition)
 
-            if (mainViewModel.isRunning.value == true) {
-                ownerActivity.restartV2Ray()
-            }
+            LauncherManager.restartService(ownerActivity)
         }
     }
 
