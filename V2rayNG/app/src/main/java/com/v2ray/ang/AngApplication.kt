@@ -7,7 +7,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import com.tencent.mmkv.MMKV
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.ANG_PACKAGE
 import com.v2ray.ang.extension.ForegroundActivityTracker
@@ -51,7 +50,7 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         Thread.setDefaultUncaughtExceptionHandler(CrashHandler(this))
 
         Timber.plant(MikuRayLogTree())
-        MMKV.initialize(this)
+        MmkvManager.initialize(this)
         ForegroundActivityTracker.register(this)
         registerActivityLifecycleCallbacks(this)
         WorkManager.initialize(this, workManagerConfiguration)

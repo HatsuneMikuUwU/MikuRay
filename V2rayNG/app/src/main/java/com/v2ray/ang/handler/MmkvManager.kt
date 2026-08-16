@@ -1,9 +1,16 @@
 package com.v2ray.ang.handler
 
+import android.content.Context
+import android.util.Log
 import com.tencent.mmkv.MMKV
+import com.tencent.mmkv.MMKVHandler
+import com.tencent.mmkv.MMKVLogLevel
+import com.tencent.mmkv.MMKVRecoverStrategic
 import com.v2ray.ang.AppConfig.DEFAULT_SUBSCRIPTION_ID
 import com.v2ray.ang.AppConfig.PREF_IS_BOOTED
 import com.v2ray.ang.AppConfig.PREF_ROUTING_RULESET
+import com.v2ray.ang.AppConfig.TAG
+import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.dto.entities.AssetUrlCache
 import com.v2ray.ang.dto.entities.AssetUrlItem
 import com.v2ray.ang.dto.entities.ProfileItem
@@ -31,6 +38,24 @@ object MmkvManager {
     private const val KEY_SUB_IDS = "SUB_IDS"
     private const val KEY_WEBDAV_CONFIG = "WEBDAV_CONFIG"
 
+    private val recoveryHandler = object : MMKVHandler {
+        override fun onMMKVCRCCheckFail(mmapID: String) =
+            recoverFromStorageError(mmapID, "CRC check")
+
+        override fun onMMKVFileLengthError(mmapID: String) =
+            recoverFromStorageError(mmapID, "file length check")
+
+        override fun wantLogRedirecting(): Boolean = false
+
+        override fun mmkvLog(
+            level: MMKVLogLevel,
+            file: String,
+            line: Int,
+            function: String,
+            message: String
+        ) = Unit
+    }
+
     private val mainStorage by lazy { MMKV.mmkvWithID(ID_MAIN, MMKV.MULTI_PROCESS_MODE) }
     private val profileFullStorage by lazy { MMKV.mmkvWithID(ID_PROFILE_FULL_CONFIG, MMKV.MULTI_PROCESS_MODE) }
     private val serverRawStorage by lazy { MMKV.mmkvWithID(ID_SERVER_RAW, MMKV.MULTI_PROCESS_MODE) }
@@ -38,6 +63,29 @@ object MmkvManager {
     private val subStorage by lazy { MMKV.mmkvWithID(ID_SUB, MMKV.MULTI_PROCESS_MODE) }
     private val assetStorage by lazy { MMKV.mmkvWithID(ID_ASSET, MMKV.MULTI_PROCESS_MODE) }
     private val settingsStorage by lazy { MMKV.mmkvWithID(ID_SETTING, MMKV.MULTI_PROCESS_MODE) }
+
+    /**
+     * Initializes MMKV with best-effort recovery so a damaged store is not silently discarded.
+     */
+    fun initialize(context: Context) {
+        val logLevel = if (BuildConfig.DEBUG) {
+            MMKVLogLevel.LevelDebug
+        } else {
+            MMKVLogLevel.LevelInfo
+        }
+        MMKV.initialize(
+            context,
+            context.filesDir.resolve("mmkv").absolutePath,
+            null,
+            logLevel,
+            recoveryHandler
+        )
+    }
+
+    private fun recoverFromStorageError(mmapID: String, error: String): MMKVRecoverStrategic {
+        Log.e(TAG, "MMKV $error failed for $mmapID; attempting data recovery")
+        return MMKVRecoverStrategic.OnErrorRecover
+    }
 
 
 
