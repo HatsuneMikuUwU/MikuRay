@@ -37,6 +37,7 @@ glide = "5.0.9"
 ucrop = "2.2.11"
 palette = "1.0.0"
 playServicesLocation = "21.4.0"
+timber = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -82,6 +83,7 @@ ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 palette = { module = "androidx.palette:palette-ktx", version.ref = "palette" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 aboutlibraries-view = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutLibraries" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

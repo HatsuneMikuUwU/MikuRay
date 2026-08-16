@@ -348,6 +348,7 @@ object CoreServiceManager {
         }
 
         override fun onEmitStatus(l: Long, s: String?): Long {
+            LogUtil.core(l, s)
             return 0
         }
     }

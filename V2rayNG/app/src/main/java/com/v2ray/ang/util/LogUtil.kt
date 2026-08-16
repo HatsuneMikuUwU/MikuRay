@@ -1,82 +1,48 @@
 package com.v2ray.ang.util
 
-import android.util.Log
 import com.v2ray.ang.AppConfig
-import com.v2ray.ang.handler.MmkvManager
-import java.util.Locale
+import timber.log.Timber
 
+/**
+ * MikuRay's app-wide logging facade. Deliberately does not use `android.util.Log` anywhere in
+ * this file (or in [InProcessLogBuffer] / [LogEntry]); all calls go through [Timber], and
+ * [MikuRayLogTree] is the single place that decides what reaches the in-app buffer vs. the
+ * system logcat.
+ */
 object LogUtil {
 
-    private const val DEFAULT_LEVEL = "warning"
-    private const val CACHE_UNSET = Int.MIN_VALUE
+    /** Tag used for messages forwarded from the native Xray-core (Go) engine. */
+    const val TAG_CORE = "XrayCore"
 
-    @Volatile
-    private var cachedMinPriority: Int = CACHE_UNSET
-
-    private fun parsePriority(level: String?): Int {
-        return when ((level ?: DEFAULT_LEVEL).lowercase(Locale.US)) {
-            "verbose" -> Log.VERBOSE
-            "debug" -> Log.DEBUG
-            "info" -> Log.INFO
-            "warn", "warning" -> Log.WARN
-            "error" -> Log.ERROR
-            "none", "off" -> Int.MAX_VALUE
-            else -> Log.WARN
-        }
-    }
-
+    /** Call after the user changes the log-level preference so it takes effect immediately. */
     @Suppress("unused")
-    fun refreshLogLevel() {
-        cachedMinPriority = parsePriority(MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL, DEFAULT_LEVEL))
-    }
+    fun refreshLogLevel() = MikuRayLogTree.refreshLogLevel()
 
-    private fun minPriority(): Int {
-        val cached = cachedMinPriority
-        if (cached != CACHE_UNSET) {
-            return cached
-        }
+    fun v(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).v(message)
+    fun d(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).d(message)
+    fun i(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).i(message)
+    fun w(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).w(message)
+    fun e(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).e(message)
 
-        return synchronized(this) {
-            val current = cachedMinPriority
-            if (current != CACHE_UNSET) {
-                current
-            } else {
-                parsePriority(MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL, DEFAULT_LEVEL)).also {
-                    cachedMinPriority = it
-                }
-            }
-        }
-    }
+    fun d(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).d(throwable, message)
+    fun i(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).i(throwable, message)
+    fun w(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).w(throwable, message)
+    fun e(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).e(throwable, message)
 
-    private fun isEnabled(priority: Int): Boolean {
-        return priority >= minPriority()
-    }
-
-    private fun log(priority: Int, tag: String, message: String, throwable: Throwable? = null) {
-        if (!isEnabled(priority)) return
-
-        val fullMessage = if (throwable != null) "$message\n${throwable.stackTraceToString()}" else message
-
+    /**
+     * Forwards a status/log line emitted by the native Xray-core engine (via
+     * `CoreCallbackHandler.onEmitStatus`) into the log pipeline, tagged as [TAG_CORE].
+     *
+     * The native SDK does not document a stable meaning for [levelHint], so it is used only as
+     * a best-effort hint for severity coloring; the message itself is always preserved in full.
+     */
+    fun core(levelHint: Long, message: String?) {
+        if (message.isNullOrEmpty()) return
         when {
-            throwable == null -> Log.println(priority, tag, message)
-            priority >= Log.ERROR -> Log.e(tag, message, throwable)
-            priority == Log.WARN -> Log.w(tag, message, throwable)
-            priority == Log.INFO -> Log.i(tag, message, throwable)
-            priority == Log.DEBUG -> Log.d(tag, message, throwable)
-            else -> Log.v(tag, message, throwable)
+            levelHint >= 3L -> e(TAG_CORE, message)
+            levelHint == 2L -> w(TAG_CORE, message)
+            levelHint == 0L -> d(TAG_CORE, message)
+            else -> i(TAG_CORE, message)
         }
-
-        InProcessLogBuffer.append(priority, tag, fullMessage)
     }
-
-    fun d(tag: String = AppConfig.TAG, message: String) = log(Log.DEBUG, tag, message)
-    fun i(tag: String = AppConfig.TAG, message: String) = log(Log.INFO, tag, message)
-    fun w(tag: String = AppConfig.TAG, message: String) = log(Log.WARN, tag, message)
-    fun e(tag: String = AppConfig.TAG, message: String) = log(Log.ERROR, tag, message)
-
-    fun d(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(Log.DEBUG, tag, message, throwable)
-    fun i(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(Log.INFO, tag, message, throwable)
-    fun w(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(Log.WARN, tag, message, throwable)
-    fun e(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(Log.ERROR, tag, message, throwable)
 }
-

@@ -190,6 +190,7 @@ dependencies {
 
     // Data and Storage Libraries
     implementation(libs.mmkv.static)
+    implementation(libs.timber)
     implementation(libs.gson)
     implementation(libs.okhttp)
 

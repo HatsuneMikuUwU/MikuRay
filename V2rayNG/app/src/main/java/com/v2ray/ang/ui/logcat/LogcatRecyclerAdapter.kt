@@ -1,10 +1,12 @@
 package com.v2ray.ang.ui.logcat
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.databinding.ItemRecyclerLogcatBinding
+import com.v2ray.ang.util.LogEntry
 import com.v2ray.ang.util.LogUtil
 
 class LogcatRecyclerAdapter(
@@ -17,19 +19,25 @@ class LogcatRecyclerAdapter(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         try {
             val logs = viewModel.getAll()
-            val log = logs[position]
+            val raw = logs[position]
 
-            if (log.isEmpty()) {
+            if (raw.isEmpty()) {
                 holder.itemSubSettingBinding.logTag.text = ""
                 holder.itemSubSettingBinding.logContent.text = ""
             } else {
-                val content = log.split("):", limit = 2)
-                holder.itemSubSettingBinding.logTag.text = content.first().split("(", limit = 2).first().trim()
-                holder.itemSubSettingBinding.logContent.text = if (content.count() > 1) content.last().trim() else ""
+                val entry = LogEntry.parse(raw)
+                val tagLabel = if (entry.tag.isNotEmpty()) {
+                    "${levelLabel(entry.level)} ${entry.tag}  ${entry.timestamp}".trim()
+                } else {
+                    entry.timestamp
+                }
+                holder.itemSubSettingBinding.logTag.text = tagLabel
+                holder.itemSubSettingBinding.logTag.setTextColor(colorForLevel(entry.level))
+                holder.itemSubSettingBinding.logContent.text = entry.message.ifEmpty { entry.raw }
             }
 
             holder.itemView.setOnLongClickListener {
-                onLongClick?.invoke(log) ?: false
+                onLongClick?.invoke(raw) ?: false
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Error binding log view data", e)
@@ -48,4 +56,24 @@ class LogcatRecyclerAdapter(
 
     class MainViewHolder(val itemSubSettingBinding: ItemRecyclerLogcatBinding) : RecyclerView.ViewHolder(itemSubSettingBinding.root)
 
+    companion object {
+        private fun levelLabel(level: Char): String = when (level) {
+            'V' -> "(verbose)"
+            'D' -> "(debug)"
+            'I' -> "(info)"
+            'W' -> "(warn)"
+            'E' -> "(error)"
+            'F' -> "(fatal)"
+            else -> "(log)"
+        }
+
+        private fun colorForLevel(level: Char): Int = when (level) {
+            'E', 'F' -> Color.parseColor("#F44336") // red
+            'W' -> Color.parseColor("#FFA000")      // amber
+            'I' -> Color.parseColor("#4CAF50")      // green
+            'D' -> Color.parseColor("#29B6F6")      // light blue
+            'V' -> Color.parseColor("#9E9E9E")      // grey
+            else -> Color.parseColor("#9E9E9E")
+        }
+    }
 }

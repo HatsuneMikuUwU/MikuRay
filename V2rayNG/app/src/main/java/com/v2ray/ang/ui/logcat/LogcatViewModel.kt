@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.ANG_PACKAGE
 import com.v2ray.ang.util.InProcessLogBuffer
+import com.v2ray.ang.util.LogEntry
 import com.v2ray.ang.util.LogUtil
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -19,21 +20,36 @@ class LogcatViewModel : ViewModel() {
 
     fun getAll(): List<String> = filteredLogs
 
+    private val ownTags = setOf(ANG_PACKAGE, LogUtil.TAG_CORE)
+
     fun loadLogcat() {
-        val lines = tryLogcatProcessBuilder()
-            ?: tryLogcatPidOnly()
-            ?: useInProcessBuffer()
+        val bufferLines = InProcessLogBuffer.getAll()
+
+        val systemLines = (tryLogcatProcessBuilder() ?: tryLogcatPidOnly())
+            ?.filter { line ->
+                val tag = LogEntry.parse(line).tag
+                tag.isEmpty() || tag !in ownTags
+            }
+            .orEmpty()
+
+        usedFallback = systemLines.isEmpty() && bufferLines.isNotEmpty()
 
         logsetsAll.clear()
-        logsetsAll.addAll(lines)
+        logsetsAll.addAll(mergeByTimestamp(bufferLines, systemLines))
         applyFilter()
+    }
+
+    private fun mergeByTimestamp(a: List<String>, b: List<String>): List<String> {
+        if (a.isEmpty()) return b
+        if (b.isEmpty()) return a
+        return (a + b).sortedByDescending { LogEntry.parse(it).timestamp }
     }
 
     private fun tryLogcatProcessBuilder(): List<String>? {
         return try {
             val process = ProcessBuilder(
                 "logcat", "-d", "-v", "time",
-                "-s", "GoLog,$ANG_PACKAGE,AndroidRuntime,System.err"
+                "-s", "GoLog,${LogUtil.TAG_CORE},$ANG_PACKAGE,AndroidRuntime,System.err,VpnService"
             )
                 .redirectErrorStream(true)
                 .start()
@@ -46,10 +62,7 @@ class LogcatViewModel : ViewModel() {
 
             val lines = process.inputStream.bufferedReader().readLines()
             if (lines.isEmpty()) null
-            else {
-                usedFallback = false
-                lines.reversed()
-            }
+            else lines.reversed()
         } catch (e: IOException) {
             LogUtil.w(AppConfig.TAG, "logcat ProcessBuilder failed: ${e.message}")
             null
@@ -74,19 +87,11 @@ class LogcatViewModel : ViewModel() {
 
             val lines = process.inputStream.bufferedReader().readLines()
             if (lines.isEmpty()) null
-            else {
-                usedFallback = false
-                lines.reversed()
-            }
+            else lines.reversed()
         } catch (e: Exception) {
             LogUtil.w(AppConfig.TAG, "logcat --pid fallback failed: ${e.message}")
             null
         }
-    }
-
-    private fun useInProcessBuffer(): List<String> {
-        usedFallback = true
-        return InProcessLogBuffer.getAll()
     }
 
     fun clearLogcat() {
