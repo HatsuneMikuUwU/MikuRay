@@ -411,11 +411,11 @@
     <string name="tasker_setting_confirm">Подтвердить</string>
 
     <string name="routing_settings_domain_strategy">Стратегия домена</string>
-    <string name="routing_settings_title">Настройки маршрутизации</string>
+    <string name="routing_settings_title">Маршрутизация</string>
     <string name="routing_settings_tips">Разделяйте запятыми (,), \nвыберите домен, IP или процесс</string>
     <string name="routing_settings_save">Сохранить</string>
     <string name="routing_settings_delete">Очистить</string>
-    <string name="routing_settings_rule_title">Настройки правил маршрутизации</string>
+    <string name="routing_settings_rule_title">Правило маршрутизации</string>
     <string name="routing_settings_add_rule">Добавить правило</string>
     <string name="routing_settings_import_predefined_rulesets">Импортировать предустановленные наборы правил</string>
     <string name="routing_settings_import_rulesets_tip">Существующие наборы правил будут удалены. Продолжить?</string>

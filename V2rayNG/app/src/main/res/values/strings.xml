@@ -431,11 +431,11 @@
     <string name="tasker_setting_confirm">Confirm</string>
 
     <string name="routing_settings_domain_strategy">Domain strategy</string>
-    <string name="routing_settings_title">Routing Settings</string>
+    <string name="routing_settings_title">Routing</string>
     <string name="routing_settings_tips">Separated by commas(,), \nchoose domain or ip or process</string>
     <string name="routing_settings_save">Save</string>
     <string name="routing_settings_delete">Clear</string>
-    <string name="routing_settings_rule_title">Routing Rule Settings</string>
+    <string name="routing_settings_rule_title">Routing Rule</string>
     <string name="routing_settings_add_rule">Add rule</string>
     <string name="routing_settings_import_predefined_rulesets">Import predefined rulesets</string>
     <string name="routing_settings_import_rulesets_tip">Existing rulesets will be deleted, are you sure to continue?</string>

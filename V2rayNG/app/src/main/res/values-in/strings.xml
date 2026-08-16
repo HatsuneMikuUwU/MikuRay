@@ -264,7 +264,7 @@
     <string name="title_pref_ip_api_url">URL tes info koneksi saat ini</string>
     <string name="summary_pref_ip_api_url">URL</string>
     <string name="title_pref_show_isp_info">Tampilin nama ISP</string>
-    <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi~</string>
+    <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi</string>
     <string name="title_pref_hide_scroll_buttons">Sembunyiin tombol scroll yang ngambang</string>
     <string name="summary_pref_hide_scroll_buttons">Sembunyiin tombol scroll ke atas/bawah/server terpilih yang ngambang di list server. Kalo dinyalain, pake \"Menuju profile terpilih\" di menu lainnya aja ya.</string>
 
@@ -413,11 +413,11 @@
     <string name="tasker_setting_confirm">Sip, Konfirmasi</string>
 
     <string name="routing_settings_domain_strategy">Strategi Domain</string>
-    <string name="routing_settings_title">Settingan Routing</string>
+    <string name="routing_settings_title">Routing</string>
     <string name="routing_settings_tips">Pisahin pake koma(,) yak, \ntinggal pilih mau pake domain, ip, atau proses</string>
     <string name="routing_settings_save">Simpen</string>
     <string name="routing_settings_delete">Bersihin</string>
-    <string name="routing_settings_rule_title">Settingan Aturan Routing</string>
+    <string name="routing_settings_rule_title">Aturan Routing</string>
     <string name="routing_settings_add_rule">Tambah Aturan</string>
     <string name="routing_settings_import_predefined_rulesets">Impor preset ruleset</string>
     <string name="routing_settings_import_rulesets_tip">Ruleset kamu yang sekarang bakal ludes nih, yakin mau lanjut?</string>
