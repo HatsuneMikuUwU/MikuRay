@@ -149,7 +149,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       if: github.event.inputs.release_tag != ''
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.MY_PERSONAL_TOKEN }}
         file: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk
         tag: ${{ github.event.inputs.release_tag }}
         file_glob: true
