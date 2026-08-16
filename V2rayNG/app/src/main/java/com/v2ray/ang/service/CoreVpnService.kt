@@ -62,6 +62,7 @@ class CoreVpnService : VpnService(), ServiceControl {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
         LogUtil.w(AppConfig.TAG, "StartCore-VPN: onTrimMemory level=$level")
