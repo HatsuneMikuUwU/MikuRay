@@ -118,7 +118,7 @@
     <string name="server_customize_config">Konfig kustom</string>
     <string name="toast_config_file_invalid">Konfignya ngaco / ga valid</string>
     <string name="server_lab_content">Isi</string>
-    <string name="toast_none_data_clipboard">Gak ada apa-apa di clipboard lu</string>
+    <string name="toast_none_data_clipboard">Gak ada apa-apa di clipboard kamu</string>
     <string name="toast_invalid_url">URL-nya ngaco</string>
     <string name="toast_insecure_url_protocol">Plis jangan pake alamat HTTP langganan yang ga aman</string>
     <string name="server_lab_need_inbound">Pastiin port inbound-nya udah pas sama settingan ya</string>
@@ -186,7 +186,7 @@
     <string name="subscription_updater_job_tips">Tugas bakal jalan di background, progressnya bisa dipantau lewat notifikasi.</string>
     <string name="summary_pref_update_subscription">Matiin biar cuma tes/sortir server yang udah ada, tanpa narik ulang konten langganan.</string>
     <string name="title_pref_auto_test_after_update_subscription">Auto tes abis update langganan</string>
-    <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu. Kalau diaktifin, tugasnya jalan di background; kalau enggak, jalan di halaman ini.</string>
+    <string name="summary_pref_auto_test_after_update_subscription">Testing otomatis lumayan makan waktu. Kalo diaktifin, tugasnya jalan di background; kalo enggak, jalan di halaman ini.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Auto hapus konfig ngaco abis dites</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Hasil tes belum tentu akurat 100%; konfig yang kehapus ga bisa balik lagi lho.</string>
     <string name="title_pref_auto_sort_after_test">Auto urutin abis dites</string>
@@ -206,11 +206,11 @@
     </string-array>
 
     <string name="title_pref_speed_enabled">Tampilin kecepatan</string>
-    <string name="summary_pref_speed_enabled">Biar keliatan speed sekarang di notif.\nIkon notifnya bakal berubah ngikutin pemakaian lo.</string>
+    <string name="summary_pref_speed_enabled">Biar keliatan speed sekarang di notif.\nIkon notifnya bakal berubah ngikutin pemakaian kamu.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Tampilin traffic real-time ganti IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Ganti teks IP di layar utama jadi kecepatan upload/download real-time, kayak di notifikasi.</string>
-    <string name="summary_pref_disabled_realtime_traffic_ip">Dinonaktifin selama "%1$s" lagi aktif.</string>
+    <string name="summary_pref_disabled_realtime_traffic_ip">Dimatiin selama "%1$s" lagi aktif.</string>
 
     <string name="title_pref_sniffing_enabled">Aktifin Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Cobain sniff domain dari paketnya (bawaannya nyala)</string>
@@ -218,7 +218,7 @@
     <string name="summary_pref_route_only_enabled">Pake domain hasil sniff cuma buat routing, IP targetnya dibiarin aja.</string>
 
     <string name="title_pref_local_dns_enabled">Aktifin DNS Lokal</string>
-    <string name="summary_pref_local_dns_enabled">DNS diurus sama modul DNS core (Disaranin banget kalo lo butuh routing lewatin LAN dan alamat lokal)</string>
+    <string name="summary_pref_local_dns_enabled">DNS diurus sama modul DNS core (Disaranin banget kalo kamu butuh routing lewatin LAN dan alamat lokal)</string>
 
     <string name="title_pref_fake_dns_enabled">Aktifin DNS Palsu (Fake DNS)</string>
     <string name="summary_pref_fake_dns_enabled">DNS lokal bakal ngasih IP palsu (lebih cepet, tapi kadang bikin beberapa app ngambek)</string>
@@ -266,11 +266,11 @@
     <string name="title_pref_show_isp_info">Tampilin nama ISP</string>
     <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi~</string>
     <string name="title_pref_hide_scroll_buttons">Sembunyiin tombol scroll yang ngambang</string>
-    <string name="summary_pref_hide_scroll_buttons">Sembunyiin tombol scroll ke atas/bawah/server terpilih yang ngambang di list server. Kalo dinyalain, pake \"Menuju profile terpilih\" di menu lainnya aja ya~</string>
+    <string name="summary_pref_hide_scroll_buttons">Sembunyiin tombol scroll ke atas/bawah/server terpilih yang ngambang di list server. Kalo dinyalain, pake \"Menuju profile terpilih\" di menu lainnya aja ya.</string>
 
     <string name="title_pref_proxy_sharing_enabled">Bolehin koneksi dari LAN</string>
-    <string name="summary_pref_proxy_sharing_enabled">Device lain bisa numpang proxy pake IP HP lu via proxy lokal. Nyalain pas di jaringan yang lu percaya aja ya, biar ga ada yang nebeng diam-diam</string>
-    <string name="toast_warning_pref_proxysharing_short">Ngebolehin koneksi dari LAN. Pastiin lo lagi di jaringan yang aman ya</string>
+    <string name="summary_pref_proxy_sharing_enabled">Device lain bisa numpang proxy pake IP HP kamu via proxy lokal. Nyalain pas di jaringan yang kamu percaya aja ya, biar ga ada yang nebeng diam-diam</string>
+    <string name="toast_warning_pref_proxysharing_short">Ngebolehin koneksi dari LAN. Pastiin kamu lagi di jaringan yang aman ya</string>
     <string name="title_pref_socks_port">Port proxy lokal</string>
     <string name="title_pref_enable_local_proxy">Aktifin proxy lokal</string>
     <string name="summary_pref_enable_local_proxy">Kalo dimatiin, proxy SOCKS ga ada yang jalan, jadi fungsi kayak update langganan ga bisa pake proxy</string>
@@ -278,7 +278,7 @@
     <string name="summary_pref_socks_enable_udp">Otentikasi SOCKS5 tuh kurang aman kalo pake UDP.</string>
     <string name="summary_pref_socks_port">Port proxy lokal</string>
     <string name="title_pref_dynamic_socks_port">Port proxy lokalnya acak aja (Dinamis)</string>
-    <string name="summary_pref_dynamic_socks_port">Bikin port proxy lokal secara acak tiap kali inbound dibuat</string>
+    <string name="summary_pref_dynamic_socks_port">Bikin port proxy lokal secara acak tiap kali inbound dibikin</string>
     <string name="title_pref_socks_username">Username proxy lokal</string>
     <string name="title_pref_socks_username_tip">Opsional</string>
     <string name="summary_pref_socks_username">Username</string>
@@ -290,10 +290,10 @@
     <string name="summary_pref_local_dns_port">Port DNS lokal</string>
 
     <string name="title_pref_confirm_remove">Konfirmasi pas mau hapus konfig</string>
-    <string name="summary_pref_confirm_remove">Nanya lagi pake popup gak nih kalo lu mau ngehapus konfig?</string>
+    <string name="summary_pref_confirm_remove">Nanya lagi pake popup gak nih kalo kamu mau ngehapus konfig?</string>
 
     <string name="title_pref_start_scan_immediate">Langsung mulai scan aja</string>
-    <string name="summary_pref_start_scan_immediate">Langsung buka kamera buat scan pas masuk aplikasi, kalo nggak, lu bisa milih scan atau milih foto dari menu di atas</string>
+    <string name="summary_pref_start_scan_immediate">Langsung buka kamera buat scan pas masuk aplikasi, kalo nggak, kamu bisa milih scan atau milih foto dari menu di atas</string>
 
     <string name="title_pref_append_http_proxy">Nempelin Proxy HTTP ke VPN</string>
     <string name="summary_pref_append_http_proxy">Proxy HTTP bakal dipake langsung dari (browser/ beberapa app yang dukung), tanpa kudu lewat perangkat virtual NIC (Buat Android 10+ doang)</string>
@@ -308,7 +308,7 @@
     <string name="title_pref_feedback">Kasih Masukan</string>
     <string name="summary_pref_feedback">Laporin bug atau ngasih ide ke GitHub kuy</string>
     <string name="summary_pref_tg_group">Gabung Grup Telegram Sini</string>
-    <string name="toast_tg_app_not_found">Aplikasi Telegram-nya ga ada di HP lu euy</string>
+    <string name="toast_tg_app_not_found">Aplikasi Telegram-nya ga ada di HP kamu euy</string>
     <string name="title_privacy_policy">Kebijakan Privasi</string>
     <string name="title_qr_code">QR Code</string>
     <string name="title_about">Tentang</string>
@@ -319,7 +319,7 @@
     <string name="title_pref_promotion">Promosi</string>
 
     <string name="title_pref_auto_update_subscription">Otomatis update langganan</string>
-    <string name="summary_pref_auto_update_subscription">Update langganan lu otomatis di background sesuai jadwal. Di beberapa HP, fitur ini kadang suka mandek</string>
+    <string name="summary_pref_auto_update_subscription">Update langganan kamu otomatis di background sesuai jadwal. Di beberapa HP, fitur ini kadang suka mandek</string>
     <string name="title_pref_auto_update_interval">Jeda Update Otomatis</string>
     <string name="title_pref_auto_update_interval_tip">Dalem menit, Paling cepet 15</string>
 
@@ -337,22 +337,22 @@
     <string name="title_pref_hev_tunnel_rw_timeout">Batas waktu baca/tulis Hev Tun</string>
     <string name="title_pref_hev_tunnel_rw_timeout_tip">timeout, detik, tcp,udp bawaan 300,60</string>
     <string name="title_pref_hev_tunnel_icmp">ICMP Echo (ping)</string>
-    <string name="summary_pref_hev_tunnel_icmp">Membalas permintaan ICMP echo melalui tunnel</string>
+    <string name="summary_pref_hev_tunnel_icmp">Ngebales permintaan ICMP echo lewat tunnel</string>
     <string name="title_pref_hev_tunnel_udp_mode">Mode relay UDP</string>
-    <string name="summary_pref_hev_tunnel_udp_mode">Cara paket UDP diteruskan melalui proxy SOCKS5</string>
+    <string name="summary_pref_hev_tunnel_udp_mode">Cara paket UDP diterusin lewat proxy SOCKS5</string>
     <string name="title_pref_hev_tunnel_udp_address">Timpa alamat relay UDP</string>
-    <string name="title_pref_hev_tunnel_udp_address_tip">Opsional. Menimpa alamat UDP yang diberikan oleh server SOCKS5. Biarkan kosong untuk memakai nilai dari server.</string>
+    <string name="title_pref_hev_tunnel_udp_address_tip">Opsional. Nimpa alamat UDP yang dikasih server SOCKS5. Biarin kosong aja kalo mau pake nilai dari server.</string>
     <string name="title_pref_hev_tunnel_tcp_fastopen">TCP Fast Open</string>
-    <string name="summary_pref_hev_tunnel_tcp_fastopen">Mengurangi latensi koneksi pada jaringan yang mendukung</string>
+    <string name="summary_pref_hev_tunnel_tcp_fastopen">Ngurangin latensi koneksi di jaringan yang support</string>
     <string name="title_pref_hev_tunnel_pipeline">Pipelining handshake SOCKS5</string>
-    <string name="summary_pref_hev_tunnel_pipeline">Eksperimental. Menggabungkan handshake SOCKS5 untuk mengurangi round trip</string>
+    <string name="summary_pref_hev_tunnel_pipeline">Eksperimental. Gabungin handshake SOCKS5 biar round trip-nya lebih dikit</string>
 
     <string name="title_category_root_mode">Mode Root</string>
     <string name="title_pref_root_mode">Mode Root (seluruh sistem)</string>
-    <string name="summary_pref_root_mode">Tangkap semua lalu lintas via iptables tanpa VpnService. Membutuhkan akses root.</string>
+    <string name="summary_pref_root_mode">Tangkep semua lalu lintas via iptables tanpa VpnService. Butuh akses root ya.</string>
     <string name="title_pref_root_lan_sharing">Berbagi LAN / tethering Root</string>
-    <string name="summary_pref_root_lan_sharing">Bagikan proxy ke klien USB/Wi-Fi yang tethered. Membutuhkan akses root.</string>
-    <string name="toast_root_required">Akses root diperlukan untuk Mode Root, tetapi tidak tersedia di perangkat ini.</string>
+    <string name="summary_pref_root_lan_sharing">Bagi-bagi proxy ke klien USB/Wi-Fi yang tethered. Butuh akses root ya.</string>
+    <string name="toast_root_required">Akses root dibutuhin buat Mode Root, tapi gak ada di HP ini.</string>
 
     <string name="title_logcat">Logcat</string>
     <string name="logcat_share">Bagikan log</string>
@@ -371,9 +371,9 @@
     <string name="sub_setting_request_headers_tip">Format JSON</string>
     <string name="sub_setting_filter">Filter Reguler Catatan</string>
     <string name="sub_setting_network_filter">Filter tipe jaringan</string>
-    <string name="sub_setting_network_filter_tip">Hanya simpan konfigurasi dengan tipe jaringan ini, pisahkan dengan koma. Contoh: ws,grpc,xhttp</string>
+    <string name="sub_setting_network_filter_tip">Cuma simpen konfig sama tipe jaringan ini, pisahin pake koma. Contoh: ws,grpc,xhttp</string>
     <string name="sub_setting_protocol_filter">Filter protokol</string>
-    <string name="sub_setting_protocol_filter_tip">Hanya simpan konfigurasi dengan protokol ini, pisahkan dengan koma. Contoh: vmess,vless,trojan,ss</string>
+    <string name="sub_setting_protocol_filter_tip">Cuma simpen konfig sama protokol ini, pisahin pake koma. Contoh: vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">Aktifin update</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
     <string name="sub_allow_insecure_url">Bolehin alamat HTTP ga aman</string>
@@ -402,11 +402,11 @@
     <string name="title_sub_update_diff">Perubahan langganan (%s)</string>
     <string name="sub_update_diff_added">Ditambahin:\n%s</string>
     <string name="sub_update_diff_deleted">Dihapus:\n%s</string>
-    <string name="toast_server_not_found_in_group">Server yang lu pilih ga ada di grup ini euy</string>
+    <string name="toast_server_not_found_in_group">Server yang kamu pilih ga ada di grup ini euy</string>
     <string name="btn_scroll_to_selected_server">Menuju profile terpilih</string>
     <string name="btn_scroll_to_top">Scroll ke atas</string>
     <string name="btn_scroll_to_bottom">Scroll ke bawah</string>
-    <string name="toast_fragment_not_available">Waduh, ga nemu nih tampilan yang lagi lu buka</string>
+    <string name="toast_fragment_not_available">Waduh, ga nemu nih tampilan yang lagi kamu buka</string>
     <string name="title_clear_test_results">Hapus hasil tes</string>
 
     <string name="tasker_start_service">Nyalain Servis</string>
@@ -420,17 +420,17 @@
     <string name="routing_settings_rule_title">Settingan Aturan Routing</string>
     <string name="routing_settings_add_rule">Tambah Aturan</string>
     <string name="routing_settings_import_predefined_rulesets">Impor preset ruleset</string>
-    <string name="routing_settings_import_rulesets_tip">Ruleset lu yang sekarang bakal ludes nih, yakin mau lanjut?</string>
+    <string name="routing_settings_import_rulesets_tip">Ruleset kamu yang sekarang bakal ludes nih, yakin mau lanjut?</string>
     <string name="routing_settings_import_rulesets_from_clipboard">Impor ruleset dari clipboard</string>
     <string name="routing_settings_import_rulesets_from_qrcode">Impor ruleset dari QR Code</string>
     <string name="routing_settings_export_rulesets_to_clipboard">Salin ruleset ke clipboard</string>
-    <string name="routing_settings_locked">Kunci ah, biar aturan ini tetep ada pas lu ngimpor preset</string>
+    <string name="routing_settings_locked">Kunci ah, biar aturan ini tetep ada pas kamu ngimpor preset</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">proses</string>
     <string name="routing_settings_process_tip">Pisahin pake koma(,) yak,
 tinggal pilih mau pake domain, ip, atau proses
-Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+</string>
+Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 10+</string>
     <string name="routing_settings_port">port</string>
     <string name="routing_settings_protocol">protokol</string>
     <string name="routing_settings_protocol_tip">[http,tls,bittorrent]</string>
@@ -470,8 +470,8 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="title_pref_observatory_least_load_method">Metode HTTP leastLoad</string>
     <string name="title_pref_observatory_least_load_sampling">Sampling leastLoad</string>
     <string name="title_pref_observatory_least_load_timeout">Timeout leastLoad</string>
-    <string name="toast_invalid_observatory_duration">Durasi nggak valid. Pake nilai kayak 3m atau 30s.</string>
-    <string name="toast_invalid_observatory_sampling">Sampling nggak valid. Pake angka positif.</string>
+    <string name="toast_invalid_observatory_duration">Durasinya ngaco. Pake nilai kayak 3m atau 30s ya.</string>
+    <string name="toast_invalid_observatory_sampling">Sampling-nya ngaco. Pake angka positif ya.</string>
 
     <string name="update_check_for_update">Cek Update</string>
     <string name="update_already_latest_version">Udah pake versi paling baru kok</string>
@@ -586,7 +586,7 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="tools_and_info">Alat &amp; Info Lain</string>
     <string name="desc_logcat">Cek log koneksi kalo ada error</string>
     <string name="desc_check_update">Cek &amp; Install versi paling *fresh*</string>
-    <string name="desc_backup_restore">Simpen aman konfig lu atau balikin lagi</string>
+    <string name="desc_backup_restore">Simpen aman konfig kamu atau balikin lagi</string>
     <string name="desc_about">Info versi sama lisensi sumber terbuka</string>
     <string name="share_configuration">Bagi-bagi Konfig</string>
     <string name="share_qrcode">Pake QR Code</string>
@@ -613,13 +613,13 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="summary_pref_app_theme">Pilih palet warna aksen yang pas buat app ini</string>
     <string name="pref_theme_color_title">Warna Tema</string>
     <string name="title_pref_dynamic_color">Warna Dinamis (Material You)</string>
-    <string name="summary_pref_dynamic_color">Pake warna yang nyatu sama wallpaper HP (Android 12+). Ini bakal nimpa tema warna yang lo pilih</string>
+    <string name="summary_pref_dynamic_color">Pake warna yang nyatu sama wallpaper HP (Android 12+). Ini bakal nimpa tema warna yang kamu pilih</string>
     <string name="summary_pref_dynamic_color_unavailable">Butuh Android 12 ke atas bro</string>
     <string name="title_pref_true_black">Hitam Pekat (AMOLED)</string>
     <string name="summary_pref_true_black">Bikin background bener-bener hitam biar hemat batre (AMOLED). Cuma aktif pas dark mode nyala</string>
     <string name="pref_true_black_only_in_night_mode">Cuma jalan pas dark mode doang</string>
     <string name="title_pref_icon_shape">Bentuk Ikon</string>
-    <string name="summary_pref_icon_shape">Pilih bentuk ikon profil sesuka lu</string>
+    <string name="summary_pref_icon_shape">Pilih bentuk ikon profil sesuka kamu</string>
     <string name="pref_custom_dpi">Atur DPI Aplikasi</string>
     <string name="pref_font_size">Ukuran Font</string>
     <string name="pref_font_size_preview_format">Aa · %s</string>
@@ -640,10 +640,10 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="title_ui_theme">Tema</string>
     <string name="title_ui_appearance">Tampilan</string>
     <string name="transport_layer_security">Keamanan Transport Layer</string>
-    <string name="del_config_dialog_comfirm_message">Yakin mau hapus konfigurasi ini? Kalau udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
-    <string name="del_sub_dialog_comfirm_message">Yakin mau hapus langganan ini? Kalau udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
-    <string name="del_routing_dialog_comfirm_message">Yakin mau hapus settingan routing ini? Kalau udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
-    <string name="del_file_asset_dialog_comfirm_message">Yakin mau hapus file aset ini? Kalau udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
+    <string name="del_config_dialog_comfirm_message">Yakin mau hapus konfigurasi ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
+    <string name="del_sub_dialog_comfirm_message">Yakin mau hapus langganan ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
+    <string name="del_routing_dialog_comfirm_message">Yakin mau hapus settingan routing ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
+    <string name="del_file_asset_dialog_comfirm_message">Yakin mau hapus file aset ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
     <string name="del_button_dialog_comfirm">Hapus</string>
     <string name="menu_item_search_main">Cari konfig</string>
     <string name="title_search_bar_chip">Chip Bar Pencarian</string>
@@ -656,7 +656,7 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
 
     <string name="pref_weather_unit_title">Satuan Suhu</string>
     <string name="pref_weather_custom_location_title">Lokasi Kustom</string>
-    <string name="pref_weather_custom_location_dialog_message">Masukin nama tempat (contoh: Jakarta) atau koordinat pakai format \"latitude,longitude\". Kosongin aja kalau mau pakai lokasi kamu sekarang.</string>
+    <string name="pref_weather_custom_location_dialog_message">Masukin nama tempat (contoh: Jakarta) atau koordinat pakai format \"latitude,longitude\". Kosongin aja kalo mau pakai lokasi kamu sekarang.</string>
     <string name="pref_weather_custom_location_summary_auto">Pakai lokasi kamu sekarang</string>
     <string name="pref_weather_custom_location_summary_current_coords">Pakai lokasi sekarang (%1$.2f, %2$.2f)</string>
     <string name="weather_condition_clear">Cerah</string>
@@ -667,8 +667,8 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="weather_condition_rain_heavy">Hujan lebat</string>
     <string name="weather_condition_snow">Salju</string>
     <string name="weather_condition_thunder">Badai petir</string>
-    <string name="weather_condition_thunder_hail">Badai petir dengan es</string>
-    <string name="weather_condition_unknown">Tidak diketahui</string>
+    <string name="weather_condition_thunder_hail">Badai petir sama es</string>
+    <string name="weather_condition_unknown">Gak diketahui</string>
     <string name="weather_forecast_title">Prakiraan cuaca</string>
     <string name="weather_feels_like">Terasa seperti %1$s</string>
     <string name="weather_max_min">Maks %1$s  Min %2$s</string>
@@ -678,7 +678,7 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="weather_summary_rain_likely">Hujan kemungkinan besar terjadi — bawa payung.</string>
     <string name="weather_summary_rain_possible">Hujan mungkin turun nanti.</string>
     <string name="weather_summary_rain_slight">Ada sedikit kemungkinan hujan.</string>
-    <string name="weather_summary_windy">Angin akan cukup terasa hari ini.</string>
+    <string name="weather_summary_windy">Angin bakal cukup terasa hari ini.</string>
     <string name="weather_hourly_forecast_title">Prakiraan per jam</string>
     <string name="weather_daily_forecast_title">Prakiraan harian</string>
     <string name="weather_now">Sekarang</string>
@@ -714,9 +714,9 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="weather_compass_nw">BL</string>
     <string name="weather_aqi_good">Baik</string>
     <string name="weather_aqi_moderate">Sedang</string>
-    <string name="weather_aqi_unhealthy_sensitive">Tidak sehat untuk kelompok sensitif</string>
-    <string name="weather_aqi_unhealthy">Tidak sehat</string>
-    <string name="weather_aqi_very_unhealthy">Sangat tidak sehat</string>
+    <string name="weather_aqi_unhealthy_sensitive">Gak sehat buat kelompok sensitif</string>
+    <string name="weather_aqi_unhealthy">Gak sehat</string>
+    <string name="weather_aqi_very_unhealthy">Sangat gak sehat</string>
     <string name="weather_aqi_hazardous">Berbahaya</string>
 
     <string name="title_vpn_sound_settings">Suara</string>
@@ -752,7 +752,7 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="title_pref_dynamic_color_banner">Tema Dinamis dari Banner Beranda</string>
     <string name="summary_pref_dynamic_color_banner">Skema warna tema bakal otomatis nyesuaiin sama gambar Banner Beranda kamu.</string>
     <string name="title_pref_keep_awake">Bikin HP tetep aktif</string>
-    <string name="summary_pref_keep_awake">Nahan partial wake lock pas VPN lagi nyambung. Dibutuhin buat HP Xiaomi/HyperOS; kalau di Samsung/Pixel malah bikin boros baterai — mending biarin mati aja.</string>
+    <string name="summary_pref_keep_awake">Nahan partial wake lock pas VPN lagi nyambung. Dibutuhin buat HP Xiaomi/HyperOS; kalo di Samsung/Pixel malah bikin boros baterai — mending biarin mati aja.</string>
     <string name="title_reset_traffic">Reset Penggunaan Data</string>
     <string name="reset_traffic_scope_profile">Cuma profil yang dipilih</string>
     <string name="reset_traffic_scope_group">Cuma di grup \"%1$s\"</string>
@@ -779,8 +779,8 @@ Nama Paket — cuma bisa kalo lu pake Xray TUN, routeOnly aktif, dan Android 10+
     <string name="title_pref_ws_heartbeat_period">WS Ping Interval</string>
     <string name="title_pref_ws_heartbeat_period_tip">Detik, 0 = nonaktif</string>
 
-     <string name="title_banner_settings_character">Karakter banner pengaturan</string>
-     <string name="summary_banner_settings_character">Pilih ilustrasi Hatsune Miku yang tampil di banner pengaturan</string>
+     <string name="title_banner_settings_character">Karakter banner settingan</string>
+     <string name="summary_banner_settings_character">Pilih ilustrasi Hatsune Miku yang tampil di banner settingan</string>
      <string name="title_banner_character_layout">Ukuran &amp; posisi karakter banner</string>
      <string name="summary_banner_character_layout">Atur lebar, tinggi, dan margin ilustrasi banner</string>
      <string name="banner_character_slider_width_label">Lebar</string>
@@ -804,7 +804,7 @@ yang kamu butuhin."</string>
     <string name="uwu_update_summary">Yuk update %1$s master!</string>
     <string name="uwu_about_version_title">Tentang Aplikasi</string>
     <string name="uwu_about_version_summary">Klik di sini atau ikon panah buat cari tau lebih lanjut tentang aplikasi ini.</string>
-    <string name="uwu_splash_title">Dibuat dengan ❤️\noleh HatsuneMikuUwU Development</string>
+    <string name="uwu_splash_title">Dibikin sama ❤️\noleh HatsuneMikuUwU Development</string>
     <string name="uwu_splash_summary">Versi %1$s (%2$d)</string>
 
      <string name="uwu_miku_gender_title">Jenis Kelamin</string>
@@ -871,7 +871,7 @@ yang kamu butuhin."</string>
     <string name="particles_disable_title">Matiin animasi partikel</string>
     <string name="particles_disable_summary">Sembunyiin efek partikel di bottomsheet</string>
 
-    <string name="pref_particles_settings_title">Pengaturan animasi partikel</string>
+    <string name="pref_particles_settings_title">Settingan animasi partikel</string>
     <string name="pref_particles_settings_summary">Atur kecepatan, ukuran, kepadatan, dan lainnya</string>
 
     <string name="particles_slider_frame_delay_label">Kecepatan animasi (frame delay)</string>
@@ -884,10 +884,10 @@ yang kamu butuhin."</string>
 
     <string name="selected_banner_category">Style Profil yang Dipilih</string>
     <string name="selected_banner_enable_title">Style banner buat profil yang dipilih</string>
-    <string name="selected_banner_enable_summary">Tampilin gambar banner di belakang kartu server yang aktif. Bakal pakai banner bawaan kalau kamu nggak pasang yang kustom</string>
+    <string name="selected_banner_enable_summary">Nampilin gambar banner di belakang kartu server yang aktif. Bakal pake banner bawaan kalo kamu gak pasang yang kustom</string>
     <string name="title_category_toolbar_style">Gaya toolbar</string>
     <string name="title_pref_toolbar_center_subtitle_mode">Subtitle toolbar center</string>
-    <string name="summary_pref_toolbar_center_subtitle_mode">Tampilkan subtitle center dengan animasi fade, bukan title polos standar</string>
+    <string name="summary_pref_toolbar_center_subtitle_mode">Nampilin subtitle center pake animasi fade, bukan title polos biasa</string>
     <string name="selected_banner_dim_title">Intensitas overlay banner</string>
     <string name="selected_banner_custom_title">Ganti banner profil yang dipilih</string>
     <string name="selected_banner_custom_summary">Pasang gambar kustom buat kartu server yang dipilih (opsional)</string>
@@ -909,20 +909,20 @@ yang kamu butuhin."</string>
     <string name="blur_intensity_rounds_label">Pengulangan Blur (1–15)</string>
     <string name="summary_blur_intensity_value">Radius: %1$d · Diulang: %2$d</string>
     <string name="pref_blur_bottom_intensity">Kekuatan Blur Kartu Bawah</string>
-    <string name="title_blur_settings">Pengaturan Blur</string>
-    <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja dengan radius 25-40.</string>
-    <string name="toast_allow_insecure_deprecated">Node ini menggunakan koneksi tanpa enkripsi. Komunikasi Anda berpotensi dapat dilihat langsung oleh infrastruktur jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node semacam ini tidak dapat terhubung melalui Xray core versi 26.2.6+.\nJika ini node buatan sendiri, aktifkan enkripsi keamanan seperti TLS, atau gunakan certificate pinning (pinnedCA256).\nJika ini node dari penyedia layanan, hubungi penyedia untuk melakukan pembaruan teknis. Jika penyedia menolak, disarankan untuk beralih ke penyedia yang lebih memperhatikan keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>
+    <string name="title_blur_settings">Settingan Blur</string>
+    <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja sama radius 25-40.</string>
+    <string name="toast_allow_insecure_deprecated">Node ini pake koneksi tanpa enkripsi. Komunikasi kamu bisa aja keliatan langsung sama jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node kayak gini gak bisa konek lewat Xray core versi 26.2.6+.\nKalo ini node bikinan sendiri, aktifin enkripsi keamanan kayak TLS, atau pake certificate pinning (pinnedCA256).\nKalo ini node dari penyedia layanan, hubungin penyedianya buat pembaruan teknis. Kalo penyedianya nolak, mending pindah ke penyedia yang lebih peduli keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>
 
     <string name="uwu_skip">Lewatin</string>
     <string name="uwu_next">Lanjut</string>
     <string name="uwu_start">Mulai</string>
     <string name="uwu_welcome_title">Met dateng di</string>
     <string name="uwu_welcome_summary_1">MikuRay,</string>
-    <string name="uwu_welcome_summary_2">Klien V2Ray/Xray buat Android dengan gaya UI Miku.</string>
-    <string name="uwu_welcome_summary_3">Dibuat dengan Cinta, Kotlin, kode Java, dan lainnya.</string>
-    <string name="uwu_welcome_page1_desc">Klien V2Ray/Xray Android gratis dan open source.</string>
-    <string name="uwu_welcome_page2_desc">Mendukung VLESS, VMess, Trojan, Shadowsocks, dan lainnya.</string>
-    <string name="uwu_welcome_page3_desc">Nikmatin internet cepet dan aman dengan balutan desain imut ala Miku.</string>
+    <string name="uwu_welcome_summary_2">Klien V2Ray/Xray buat Android sama gaya UI Miku.</string>
+    <string name="uwu_welcome_summary_3">Dibikin sama Cinta, Kotlin, kode Java, dan lainnya.</string>
+    <string name="uwu_welcome_page1_desc">Klien V2Ray/Xray Android gratis dan open source ya.</string>
+    <string name="uwu_welcome_page2_desc">Support VLESS, VMess, Trojan, Shadowsocks, dan lain-lain.</string>
+    <string name="uwu_welcome_page3_desc">Nikmatin internet cepet dan aman sama balutan desain imut ala Miku.</string>
 
     <string name="sub_setting_tab_icon">Ikon tab</string>
     <string name="sub_setting_tab_icon_hint">Ditampilin di sebelah nama grup di tab bar</string>
@@ -930,7 +930,7 @@ yang kamu butuhin."</string>
 
     <string name="title_pref_reset_all_settings">Reset Semua Settingan</string>
     <string name="dialog_reset_settings_title">Reset Semua Settingan?</string>
-    <string name="dialog_reset_settings_message">Ini akan mengembalikan semua settingan ke nilai default.\n\nProfil server dan langganan tidak akan dihapus.\n\nTindakan ini tidak dapat dibatalkan.</string>
+    <string name="dialog_reset_settings_message">Ini bakal balikin semua settingan ke nilai default.\n\nProfil server dan langganan gak bakal dihapus.\n\nTindakan ini gak bisa dibatalin.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
     <string name="reset_settings_success">Settingan telah direset ke default.</string>
 
@@ -941,9 +941,9 @@ yang kamu butuhin."</string>
     <string name="searchpreference_no_results">Nggak ada hasil</string>
 
     <string name="title_pref_app_icon">Ikon Aplikasi</string>
-    <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh sedikit waktu untuk muncul di layar beranda.</string>
+    <string name="app_icon_updated">Ikon aplikasi berhasil diupdate. Mungkin butuh waktu bentar biar muncul di layar beranda.</string>
     <string name="title_pref_custom_app_name">Nama Aplikasi</string>
-    <string name="summary_pref_custom_app_name">Juga mengubah nama ikon di launcher/app-drawer. Beberapa launcher menyimpan cache nama lama sampai kamu memulai ulang atau reboot.</string>
+    <string name="summary_pref_custom_app_name">Juga ngubah nama ikon di launcher/app-drawer. Beberapa launcher nyimpen cache nama lama sampe kamu restart atau reboot.</string>
 
     <string name="subtitle_server_config">Atur detail koneksi buat server ini</string>
     <string name="subtitle_routing_edit">Tambah atau edit satu aturan routing</string>
@@ -958,12 +958,12 @@ yang kamu butuhin."</string>
     <string name="subtitle_library">Library open source yang dipake app ini</string>
     <string name="subtitle_user_asset">Kelola file geo data sama asset</string>
     <string name="subtitle_user_asset_url">Tambah file asset dari URL</string>
-    <string name="subtitle_sub_edit">Edit pengaturan subscription ini</string>
-    <string name="subtitle_sub_setting">Kelola subscription kamu</string>
+    <string name="subtitle_sub_edit">Edit settingan langganan ini</string>
+    <string name="subtitle_sub_setting">Kelola langganan kamu</string>
     <string name="subtitle_fragment_settings">Atur fragmentasi traffic</string>
     <string name="subtitle_core_settings">Atur core engine proxy</string>
     <string name="subtitle_observatory_settings">Atur pengecekan latency</string>
-    <string name="subtitle_vpn_settings">Atur perilaku koneksi VPN</string>
+    <string name="subtitle_vpn_settings">Atur kelakuan koneksi VPN</string>
     <string name="subtitle_advanced_settings">Konfigurasi lanjutan aplikasi</string>
     <string name="subtitle_ui_settings">Kustomisasi tampilan aplikasi</string>
     <string name="subtitle_mux_settings">Atur multiplexing koneksi</string>
