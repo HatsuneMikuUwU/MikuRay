@@ -66,14 +66,15 @@ class CoreVpnService : VpnService(), ServiceControl {
         super.onTrimMemory(level)
         LogUtil.w(AppConfig.TAG, "StartCore-VPN: onTrimMemory level=$level")
         when {
-            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> {
-                LogUtil.w(AppConfig.TAG, "StartCore-VPN: Critical memory pressure, trimming buffers")
+            level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+                LogUtil.w(AppConfig.TAG, "StartCore-VPN: Memory is COMPLETE (critically low), trimming buffers to prevent kill")
                 InProcessLogBuffer.trim()
                 if (isRunning) {
                     NotificationManager.ensureForeground()
                 }
             }
-            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
+            level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+                LogUtil.w(AppConfig.TAG, "StartCore-VPN: App in BACKGROUND with low memory, trimming buffers")
                 InProcessLogBuffer.trim()
             }
         }
