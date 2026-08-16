@@ -5,8 +5,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -17,8 +19,28 @@ class CrashHandler(private val context: Context) : Thread.UncaughtExceptionHandl
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
         val crashLog = getStackTrace(throwable)
-        saveCrashLogToFile(crashLog)
-        showCrashNotification()
+
+        // Everything below is best-effort: a crash handler that itself throws would just
+        // silently swallow the original crash, so each step is isolated.
+        try {
+            saveCrashLogToFile(crashLog)
+        } catch (e: Exception) {
+        }
+
+        // Launch the crash dialog directly instead of relying only on a notification tap.
+        // On a fresh install POST_NOTIFICATIONS hasn't been requested/granted yet (that only
+        // happens once MainActivity is reached), so a notification-only approach means the
+        // very first crash - which is exactly when you need to see it most - is invisible.
+        try {
+            launchCrashDialog()
+        } catch (e: Exception) {
+        }
+
+        try {
+            showCrashNotification()
+        } catch (e: Exception) {
+        }
+
         Thread {
             Thread.sleep(1000)
             defaultHandler?.uncaughtException(thread, throwable)
@@ -37,7 +59,23 @@ class CrashHandler(private val context: Context) : Thread.UncaughtExceptionHandl
         file.writeText(log)
     }
 
+    private fun launchCrashDialog() {
+        val intent = Intent(context, CrashDialogActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        context.startActivity(intent)
+    }
+
     private fun showCrashNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
         val channelId = "crash_channel"
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

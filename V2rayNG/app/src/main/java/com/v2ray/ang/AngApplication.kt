@@ -44,6 +44,12 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
         super.onCreate()
+        // Install the crash handler FIRST, before anything else runs. If this is placed
+        // later, any exception thrown during early startup (Timber/MMKV/WorkManager/
+        // SettingsManager init, etc.) bypasses our handler entirely and the app just dies
+        // silently with no crash log and no visible dialog.
+        Thread.setDefaultUncaughtExceptionHandler(CrashHandler(this))
+
         Timber.plant(MikuRayLogTree())
         MMKV.initialize(this)
         ForegroundActivityTracker.register(this)
@@ -52,7 +58,6 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         SettingsManager.initApp(this)
         SettingsManager.setNightMode()
         SettingsManager.preloadAllBanners(this)
-        Thread.setDefaultUncaughtExceptionHandler(CrashHandler(this))
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

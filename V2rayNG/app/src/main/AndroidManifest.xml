@@ -1333,6 +1333,7 @@
         <activity
             android:theme="@style/AppThemeCrashLogger"
             android:name="com.neko.crashlog.CrashDialogActivity"
+            android:process=":crashlogger"
             android:exported="true"
             android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize"
