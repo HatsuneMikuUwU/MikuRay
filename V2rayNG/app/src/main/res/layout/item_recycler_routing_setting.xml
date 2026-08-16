@@ -100,6 +100,19 @@
                 app:layout_constraintTop_toBottomOf="@id/domainIp" />
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/layout_remove"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/menu_item_del_config"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="@id/outboundTag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/outboundTag"
+                app:srcCompat="@drawable/ic_delete_empty"
+                app:tint="?attr/colorError" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/layout_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -107,7 +120,7 @@
                 android:contentDescription="@string/menu_item_edit_config"
                 android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="@id/outboundTag"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/layout_remove"
                 app:layout_constraintTop_toTopOf="@id/outboundTag"
                 app:srcCompat="@drawable/ic_edit_color"
                 app:tint="@null" />

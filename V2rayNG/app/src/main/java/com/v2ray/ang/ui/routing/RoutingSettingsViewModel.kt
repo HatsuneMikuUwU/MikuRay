@@ -22,6 +22,13 @@ class RoutingSettingsViewModel : ViewModel() {
         }
     }
 
+    fun remove(position: Int) {
+        if (position in rulesets.indices) {
+            rulesets.removeAt(position)
+            SettingsManager.removeRoutingRuleset(position)
+        }
+    }
+
     fun swap(fromPosition: Int, toPosition: Int) {
         if (fromPosition in rulesets.indices && toPosition in rulesets.indices) {
             SettingsManager.swapRoutingRuleset(fromPosition, toPosition)

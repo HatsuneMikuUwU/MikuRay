@@ -38,6 +38,10 @@ class RoutingSettingRecyclerAdapter(
             adapterListener?.onEdit("", position)
         }
 
+        holder.itemRoutingSettingBinding.layoutRemove.setOnClickListener {
+            adapterListener?.onRemove("", holder.bindingAdapterPosition)
+        }
+
         holder.itemRoutingSettingBinding.chkEnable.setOnCheckedChangeListener { it, isChecked ->
             if (!it.isPressed) return@setOnCheckedChangeListener
             ruleset.enabled = isChecked

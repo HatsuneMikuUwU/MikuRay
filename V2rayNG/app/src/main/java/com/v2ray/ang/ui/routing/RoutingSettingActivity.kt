@@ -31,6 +31,7 @@ import com.v2ray.ang.ui.bottomsheet.RoutingMenuBottomSheet
 import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.Utils
+import com.v2ray.ang.util.showDeleteConfirmDialog
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -243,6 +244,16 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
         }
 
         override fun onRemove(guid: String, position: Int) {
+            if (position !in 0 until adapter.itemCount) return
+            showDeleteConfirmDialog(
+                context = ownerActivity,
+                messageRes = R.string.del_routing_dialog_comfirm_message
+            ) {
+                viewModel.remove(position)
+                adapter.notifyItemRemoved(position)
+                adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
+                updateEmptyState()
+            }
         }
 
         override fun onShare(url: String) {
