@@ -182,7 +182,7 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
             withContext(Dispatchers.Main) {
                 if (result.successCount > 0) {
                     snackbarSuccess(
-                        getString(R.string.title_update_config_count, result.successCount),
+                        getString(R.string.title_update_asset_count, result.successCount),
                         title = getString(R.string.title_alerter_success)
                     )
                 } else {

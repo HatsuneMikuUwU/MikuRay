@@ -396,6 +396,7 @@
     <string name="title_import_config_count">Masukin %d konfig</string>
     <string name="title_export_config_count">Salin %d konfig</string>
     <string name="title_update_config_count">Nge-update %d konfig</string>
+    <string name="title_update_asset_count">Berhasil update %d file asset</string>
     <string name="title_update_subscription_result">Berhasil update %1$d konfig (Sukses %2$d, Gagal %3$d, Di-skip %4$d)</string>
     <string name="title_update_subscription_no_subscription">Yah, ga ada langganan nih</string>
     <string name="title_sub_update_diff">Perubahan langganan (%s)</string>

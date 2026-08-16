@@ -394,6 +394,7 @@
     <string name="title_import_config_count">Импортировать %d конфигурации</string>
     <string name="title_export_config_count">Экспортировать %d конфигурации</string>
     <string name="title_update_config_count">Обновить %d конфигурации</string>
+    <string name="title_update_asset_count">Обновлено файлов ресурсов: %d</string>
     <string name="title_update_subscription_result">Обновлено %1$d конфигураций (%2$d успешно, %3$d ошибок, %4$d пропущено)</string>
     <string name="title_update_subscription_no_subscription">Нет подписок</string>
     <string name="title_sub_update_diff">Изменения подписки (%s)</string>
