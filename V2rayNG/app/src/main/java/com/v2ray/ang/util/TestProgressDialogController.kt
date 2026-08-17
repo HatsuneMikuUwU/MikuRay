@@ -145,6 +145,7 @@ class TestProgressDialogController(
             val code = MmkvManager.decodeServerAffiliationInfo(info.guid)?.countryCode
                 ?.trim()?.uppercase()?.takeIf { it.length == 2 }
             if (code == null) {
+                context.vibrateOnError()
                 RowContent(context.getString(R.string.toast_failure), R.color.colorPingRed)
             } else {
                 val text = listOf(Utils.countryCodeToFlag(code), code)

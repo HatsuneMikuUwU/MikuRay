@@ -364,7 +364,7 @@ object SettingsManager {
 
     fun getCountryCodeTestTimeout(): Int {
         val seconds = MmkvManager.decodeSettingsString(AppConfig.PREF_COUNTRY_CODE_TIMEOUT)?.toIntOrNull() ?: 5
-        return (seconds.coerceIn(1, 15) * 1000).toInt()
+        return seconds.coerceIn(1, 15) * 1000        
     }
 
     fun getLocale(): Locale {
