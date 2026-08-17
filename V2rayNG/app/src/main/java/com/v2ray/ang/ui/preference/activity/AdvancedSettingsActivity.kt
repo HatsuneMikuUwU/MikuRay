@@ -36,6 +36,7 @@ class AdvancedSettingsActivity : BaseActivity() {
         private val mode by lazy { findPreference<ListPreference>(AppConfig.PREF_MODE) }
         private val ipApiUrl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_IP_API_URL) }
         private val realPingConcurrency by lazy { findPreference<EditTextPreference>(AppConfig.PREF_REAL_PING_CONCURRENCY) }
+        private val countryCodeTimeout by lazy { findPreference<EditTextPreference>(AppConfig.PREF_COUNTRY_CODE_TIMEOUT) }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
@@ -48,6 +49,14 @@ class AdvancedSettingsActivity : BaseActivity() {
             realPingConcurrency?.setOnPreferenceChangeListener { pref, newValue ->
                 val concurrency = (newValue as? String)?.toIntOrNull() ?: 16
                 pref.summary = concurrency.toString()
+                true
+            }
+
+            countryCodeTimeout?.summary =
+                MmkvManager.decodeSettingsString(AppConfig.PREF_COUNTRY_CODE_TIMEOUT, "5")
+            countryCodeTimeout?.setOnPreferenceChangeListener { pref, newValue ->
+                val timeoutSeconds = (newValue as? String)?.toIntOrNull() ?: 5
+                pref.summary = timeoutSeconds.toString()
                 true
             }
 

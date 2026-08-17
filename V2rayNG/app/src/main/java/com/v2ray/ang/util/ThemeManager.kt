@@ -106,16 +106,9 @@ object ThemeManager {
         return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    /**
-     * Jam mulai & selesai mode terang untuk opsi "Auto (Siang/Malam)".
-     * Di luar rentang ini (termasuk batas akhir), aplikasi memakai mode gelap.
-     */
     const val AUTO_DAY_START_HOUR = 6
     const val AUTO_DAY_END_HOUR = 18
 
-    /**
-     * true jika waktu saat ini berada di jam siang (default 06:00–17:59).
-     */
     fun isAutoDayTime(): Boolean {
         val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
         return hour in AUTO_DAY_START_HOUR until AUTO_DAY_END_HOUR

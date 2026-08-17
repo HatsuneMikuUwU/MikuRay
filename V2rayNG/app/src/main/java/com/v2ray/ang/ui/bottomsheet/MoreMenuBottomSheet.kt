@@ -86,6 +86,8 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
 
         val hasTestResults = MmkvManager.hasAnyTestDelayResults()
         view.findViewById<View>(R.id.clear_test_results)?.visibility = if (hasTestResults) View.VISIBLE else View.GONE
+        val hasCountryCodes = MmkvManager.hasAnyCountryCodeResults()
+        view.findViewById<View>(R.id.clear_country_codes)?.visibility = if (hasCountryCodes) View.VISIBLE else View.GONE
 
         val isScrollButtonsHidden = MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_SCROLL_BUTTONS, false)
         val hasSelectedServer = !MmkvManager.getSelectServer().isNullOrEmpty()
@@ -137,8 +139,10 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
             R.id.export_all,
             R.id.export_group_file,
             R.id.real_ping_all,
+            R.id.country_code_all,
             R.id.tcping_all,
             R.id.clear_test_results,
+            R.id.clear_country_codes,
             R.id.sub_update,
             R.id.reset_traffic,
             R.id.action_scroll_to_selected

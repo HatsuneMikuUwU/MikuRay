@@ -42,6 +42,37 @@ object SpeedtestManager {
         return -1
     }
 
+    /**
+     * Reads the country of the outbound currently exposed by a temporary profile core.
+     * The request must use the profile's local HTTP inbound; httpPort == 0 is rejected
+     * to prevent accidentally querying through the device connection.
+     */
+    fun getCountryCodeThroughProxy(httpPort: Int, timeoutMs: Int = 3500): String? {
+        if (httpPort <= 0) return null
+
+        val configuredUrl = MmkvManager.decodeSettingsString(AppConfig.PREF_IP_API_URL)
+            .takeIf { !it.isNullOrBlank() } ?: AppConfig.IP_API_URL
+        val url = configuredUrl.replace("{ip}", "", ignoreCase = true)
+        val content = HttpUtil.getUrlContent(
+            UrlContentRequest(
+                url = url,
+                timeout = timeoutMs,
+                httpPort = httpPort
+            )
+        ) ?: return null
+        val ipInfo = JsonUtil.fromJsonSafe(content, IPAPIInfo::class.java) ?: return null
+
+        return listOf(
+            ipInfo.country_code,
+            ipInfo.country,
+            ipInfo.countryCode,
+            ipInfo.location?.country_code
+        ).firstOrNull { !it.isNullOrBlank() }
+            ?.trim()
+            ?.uppercase()
+            ?.takeIf { it.length == 2 }
+    }
+
     fun getRemoteIPInfo(): String? {
         val url = MmkvManager.decodeSettingsString(AppConfig.PREF_IP_API_URL)
             .takeIf { !it.isNullOrBlank() } ?: AppConfig.IP_API_URL

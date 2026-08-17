@@ -8,9 +8,11 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.v2ray.ang.AppConfig
+import com.v2ray.ang.dto.CountryCodeTestMessage
 import com.v2ray.ang.dto.SubscriptionUpdateMessage
 import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.service.CoreTestService
+import com.v2ray.ang.service.CountryCodeTestService
 import com.v2ray.ang.service.SubscriptionUpdateService
 import java.io.Serializable
 
@@ -79,6 +81,26 @@ object MessageUtil {
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to send message to test service", e)
+        }
+    }
+
+    fun sendMsg2CountryCodeTestService(ctx: Context, message: CountryCodeTestMessage) {
+        try {
+            val intent = Intent(ctx, CountryCodeTestService::class.java)
+                .putExtra("content", message)
+            when (message.key) {
+                AppConfig.MSG_COUNTRY_CODE_START -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        ContextCompat.startForegroundService(ctx, intent)
+                    } else {
+                        ctx.startService(intent)
+                    }
+                }
+                AppConfig.MSG_COUNTRY_CODE_CANCEL -> ctx.stopService(intent)
+                else -> ctx.startService(intent)
+            }
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to send message to country code service", e)
         }
     }
 

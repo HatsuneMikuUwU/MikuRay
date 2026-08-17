@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.v2ray.ang.AngApplication
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
+import com.v2ray.ang.dto.CountryCodeTestMessage
 import com.v2ray.ang.dto.GroupMapItem
 import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.dto.entities.SubscriptionCache
@@ -45,6 +46,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateListAction by lazy { MutableLiveData<Int>() }
     val updateTestResultAction by lazy { MutableLiveData<String>() }
     val testProgressAction by lazy { MutableLiveData<TestProgressInfo?>() }
+    val countryCodeProgressAction by lazy { MutableLiveData<TestProgressInfo?>() }
     val updateIpResultAction by lazy { MutableLiveData<String>() }
     val updateTrafficSpeedAction by lazy { MutableLiveData<String>() }
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
@@ -200,6 +202,41 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
         }
+    }
+
+    fun testAllCountryCodes() {
+        MessageUtil.sendMsg2CountryCodeTestService(
+            getApplication(),
+            CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
+        )
+        val guids = serversCache.map { it.guid }.toList()
+        MmkvManager.clearAllCountryCodes(guids)
+        updateListAction.value = -1
+
+        viewModelScope.launch(Dispatchers.Default) {
+            if (guids.isEmpty()) return@launch
+            MessageUtil.sendMsg2CountryCodeTestService(
+                getApplication(),
+                CountryCodeTestMessage(
+                    key = AppConfig.MSG_COUNTRY_CODE_START,
+                    subscriptionId = subscriptionId,
+                    serverGuids = if (keywordFilter.isNotEmpty()) guids else emptyList()
+                )
+            )
+        }
+    }
+
+    fun cancelCountryCodeTest() {
+        MessageUtil.sendMsg2CountryCodeTestService(
+            getApplication(),
+            CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
+        )
+    }
+
+    fun clearCountryCodes() {
+        cancelCountryCodeTest()
+        MmkvManager.clearAllCountryCodes(MmkvManager.decodeAllServerList())
+        updateListAction.postValue(-1)
     }
 
     fun testCurrentServerRealPing() {
@@ -496,6 +533,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> {
                     testProgressAction.value = null
                     onTestsFinished()
+                }
+
+                AppConfig.MSG_COUNTRY_CODE_SUCCESS -> {
+                    val content = intent.getStringExtra("content")
+                    updateListAction.value = getPosition(content ?: "")
+                }
+
+                AppConfig.MSG_COUNTRY_CODE_NOTIFY -> {
+                    countryCodeProgressAction.value = intent.serializable<TestProgressInfo>("content")
+                }
+
+                AppConfig.MSG_COUNTRY_CODE_FINISH -> {
+                    countryCodeProgressAction.value = null
                 }
 
                 AppConfig.MSG_TRAFFIC_UPDATED -> {

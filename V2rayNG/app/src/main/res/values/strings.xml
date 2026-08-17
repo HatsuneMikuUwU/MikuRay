@@ -274,6 +274,7 @@
     <string name="title_pref_delay_test_url">True delay test url </string>
     <string name="summary_pref_delay_test_url">Url</string>
     <string name="title_pref_real_ping_concurrency">True delay test concurrency</string>
+    <string name="title_pref_country_code_timeout">Country code test timeout (s)</string>
 
     <string name="title_pref_ip_api_url">Current connection info test url</string>
     <string name="summary_pref_ip_api_url">Url</string>
@@ -405,6 +406,7 @@
     <string name="group_order_by_updated">Recently Updated</string>
     <string name="title_ping_all_server">Tcping all configs</string>
     <string name="title_real_ping_all_server">Real delay config</string>
+    <string name="title_country_code_all_server">Test country code</string>
     <string name="title_user_asset_setting">Asset files</string>
     <string name="title_sort_by_test_results">Sorting by test results</string>
     <string name="title_filter_config">Filter config</string>
@@ -426,6 +428,8 @@
     <string name="btn_scroll_to_bottom">Scroll to bottom</string>
     <string name="toast_fragment_not_available">Unable to locate current view</string>
     <string name="title_clear_test_results">Clear test results</string>
+    <string name="title_clear_country_codes">Clear country codes</string>
+    <string name="country_code_unknown">—</string>
 
     <string name="tasker_start_service">Start Service</string>
     <string name="tasker_setting_confirm">Confirm</string>

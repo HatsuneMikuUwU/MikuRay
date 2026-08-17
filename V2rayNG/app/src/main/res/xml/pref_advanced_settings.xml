@@ -33,6 +33,15 @@
             android:title="@string/title_pref_real_ping_concurrency" />
 
         <EditTextPreference
+            android:icon="@drawable/rmx_hashtag"
+            app:dialogIcon="@drawable/rmx_hashtag"
+            app:layout="@layout/uwu_mid"
+            android:inputType="numberDecimal"
+            android:key="pref_country_code_timeout"
+            android:summary="3.5"
+            android:title="@string/title_pref_country_code_timeout" />
+
+        <EditTextPreference
             android:icon="@drawable/rmx_external_link_line"
             app:dialogIcon="@drawable/rmx_external_link_line"
             app:layout="@layout/uwu_mid"

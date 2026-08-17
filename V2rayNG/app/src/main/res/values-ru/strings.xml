@@ -258,6 +258,7 @@
     <string name="title_pref_delay_test_url">URL для теста реальной задержки</string>
     <string name="summary_pref_delay_test_url">URL</string>
     <string name="title_pref_real_ping_concurrency">Параллельность теста реальной задержки</string>
+    <string name="title_pref_country_code_timeout">Таймаут теста кода страны (с)</string>
 
     <string name="title_pref_ip_api_url">URL для теста информации о текущем соединении</string>
     <string name="summary_pref_ip_api_url">URL</string>
@@ -406,6 +407,9 @@
     <string name="btn_scroll_to_bottom">Прокрутить вниз</string>
     <string name="toast_fragment_not_available">Не удалось найти текущий вид</string>
     <string name="title_clear_test_results">Очистить результаты тестов</string>
+    <string name="title_country_code_all_server">Проверить коды стран всех серверов</string>
+    <string name="title_clear_country_codes">Очистить коды стран</string>
+    <string name="country_code_unknown">—</string>
 
     <string name="tasker_start_service">Запустить службу</string>
     <string name="tasker_setting_confirm">Подтвердить</string>

@@ -92,6 +92,7 @@ object AppConfig {
     const val PREF_AUTO_REMOVE_INVALID_AFTER_TEST = "pref_auto_remove_invalid_after_test"
     const val PREF_AUTO_SORT_AFTER_TEST = "pref_auto_sort_after_test"
     const val PREF_REAL_PING_CONCURRENCY = "pref_real_ping_concurrency"
+    const val PREF_COUNTRY_CODE_TIMEOUT = "pref_country_code_timeout"
 
     const val PREF_NAVIGATE_UI_SETTINGS = "pref_navigate_ui_settings"
     const val PREF_NAVIGATE_CHECK_UPDATE = "pref_navigate_check_update"
@@ -377,6 +378,11 @@ object AppConfig {
     const val MSG_MEASURE_CONFIG_SUCCESS = 72
     const val MSG_MEASURE_CONFIG_NOTIFY = 73
     const val MSG_MEASURE_CONFIG_FINISH = 74
+    const val MSG_COUNTRY_CODE_START = 90
+    const val MSG_COUNTRY_CODE_CANCEL = 91
+    const val MSG_COUNTRY_CODE_SUCCESS = 92
+    const val MSG_COUNTRY_CODE_NOTIFY = 93
+    const val MSG_COUNTRY_CODE_FINISH = 94
 
     const val MSG_SUB_UPDATE_START = 8
     const val MSG_SUB_UPDATE_CANCEL = 81

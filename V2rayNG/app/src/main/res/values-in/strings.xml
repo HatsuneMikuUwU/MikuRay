@@ -260,6 +260,7 @@
     <string name="title_pref_delay_test_url">URL buat tes ping</string>
     <string name="summary_pref_delay_test_url">URL</string>
     <string name="title_pref_real_ping_concurrency">Konkurensi tes ping</string>
+    <string name="title_pref_country_code_timeout">Timeout tes kode negara (detik)</string>
 
     <string name="title_pref_ip_api_url">URL tes info koneksi saat ini</string>
     <string name="summary_pref_ip_api_url">URL</string>
@@ -408,6 +409,9 @@
     <string name="btn_scroll_to_bottom">Scroll ke bawah</string>
     <string name="toast_fragment_not_available">Waduh, ga nemu nih tampilan yang lagi kamu buka</string>
     <string name="title_clear_test_results">Hapus hasil tes</string>
+    <string name="title_country_code_all_server">Uji kode negara semua server</string>
+    <string name="title_clear_country_codes">Hapus semua kode negara</string>
+    <string name="country_code_unknown">—</string>
 
     <string name="tasker_start_service">Nyalain Servis</string>
     <string name="tasker_setting_confirm">Sip, Konfirmasi</string>

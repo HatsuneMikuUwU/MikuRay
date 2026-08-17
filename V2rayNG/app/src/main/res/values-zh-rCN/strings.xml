@@ -402,6 +402,9 @@
     <string name="btn_scroll_to_bottom">滚动到底部</string>
     <string name="toast_fragment_not_available">无法定位当前视图</string>
     <string name="title_clear_test_results">清除测试结果</string>
+    <string name="title_country_code_all_server">测试所有服务器的国家代码</string>
+    <string name="title_clear_country_codes">清除国家代码</string>
+    <string name="country_code_unknown">—</string>
 
     <string name="tasker_start_service">启动服务</string>
     <string name="tasker_setting_confirm">确定</string>
@@ -598,6 +601,7 @@
     <string name="server_proxy_chain_members_insufficient">成员数量不足</string>
     <string name="server_proxy_chain_members_invalid">无效的链路成员: %1$s</string>
     <string name="title_pref_real_ping_concurrency">真连接延迟测试并发数量</string>
+    <string name="title_pref_country_code_timeout">国家代码测试超时（秒）</string>
     <string name="title_pref_app_theme">应用颜色主题</string>
     <string name="summary_pref_app_theme">选择应用的强调色调色板</string>
     <string name="pref_theme_color_title">主题颜色</string>

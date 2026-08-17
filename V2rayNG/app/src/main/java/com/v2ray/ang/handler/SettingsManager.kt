@@ -362,6 +362,11 @@ object SettingsManager {
         return value.coerceIn(1, 128)
     }
 
+    fun getCountryCodeTestTimeout(): Int {
+        val seconds = MmkvManager.decodeSettingsString(AppConfig.PREF_COUNTRY_CODE_TIMEOUT)?.toIntOrNull() ?: 5
+        return (seconds.coerceIn(1, 15) * 1000).toInt()
+    }
+
     fun getLocale(): Locale {
         val appLocales = AppCompatDelegate.getApplicationLocales()
         return if (!appLocales.isEmpty) appLocales[0] ?: Utils.getSysLocale() else Utils.getSysLocale()
@@ -382,11 +387,6 @@ object SettingsManager {
         }
     }
 
-    /**
-     * Dipanggil setiap Activity resume agar mode "Auto (Siang/Malam)" ikut
-     * ter-update ketika jam berpindah dari siang ke malam (atau sebaliknya)
-     * saat aplikasi masih terbuka.
-     */
     fun refreshAutoNightModeIfNeeded() {
         if (MmkvManager.decodeSettingsString(AppConfig.PREF_UI_MODE_NIGHT, "0") == "3") {
             setNightMode()

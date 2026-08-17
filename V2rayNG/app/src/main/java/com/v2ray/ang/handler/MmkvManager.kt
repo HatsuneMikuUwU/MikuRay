@@ -266,6 +266,15 @@ object MmkvManager {
         serverAffStorage.encode(guid, JsonUtil.toJson(aff))
     }
 
+    fun encodeServerCountryCode(guid: String, countryCode: String?) {
+        if (guid.isBlank()) {
+            return
+        }
+        val aff = decodeServerAffiliationInfo(guid) ?: ServerAffiliationInfo()
+        aff.countryCode = countryCode?.trim()?.uppercase()?.takeIf { it.isNotEmpty() }
+        serverAffStorage.encode(guid, JsonUtil.toJson(aff))
+    }
+
     fun addProfileTraffic(guid: String, uplink: Long, downlink: Long) {
         if (guid.isBlank() || (uplink == 0L && downlink == 0L)) return
         val aff = decodeServerAffiliationInfo(guid) ?: ServerAffiliationInfo()
@@ -335,6 +344,21 @@ object MmkvManager {
         keys?.forEach { key ->
             decodeServerAffiliationInfo(key)?.let { aff ->
                 aff.testDelayMillis = 0
+                serverAffStorage.encode(key, JsonUtil.toJson(aff))
+            }
+        }
+    }
+
+    fun hasAnyCountryCodeResults(): Boolean {
+        return decodeAllServerList().any { guid ->
+            !decodeServerAffiliationInfo(guid)?.countryCode.isNullOrBlank()
+        }
+    }
+
+    fun clearAllCountryCodes(keys: List<String>?) {
+        keys?.forEach { key ->
+            decodeServerAffiliationInfo(key)?.let { aff ->
+                aff.countryCode = null
                 serverAffStorage.encode(key, JsonUtil.toJson(aff))
             }
         }

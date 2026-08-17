@@ -27,6 +27,7 @@ import com.v2ray.ang.util.IndicatorStyle
 import com.v2ray.ang.util.SelectedProfileBannerController
 import com.v2ray.ang.util.SensorTextController
 import com.v2ray.ang.util.getColorAttr
+import com.v2ray.ang.util.Utils
 import com.v2ray.ang.AppConfig
 
 class MainRecyclerAdapter(
@@ -135,6 +136,14 @@ class MainRecyclerAdapter(
 
             val aff = MmkvManager.decodeServerAffiliationInfo(guid)
             holder.views.tvTestResult.text = aff?.getTestDelayString().orEmpty()
+            val countryCode = aff?.countryCode?.trim()?.uppercase()?.takeIf { it.length == 2 }
+            val countryFlag = Utils.countryCodeToFlag(countryCode)
+            holder.views.tvCountryCode.text = listOf(countryFlag, countryCode)
+                .filterNotNull()
+                .filter { it.isNotBlank() }
+                .joinToString(" ")
+            holder.views.tvCountryCode.visibility =
+                if (countryCode != null) View.VISIBLE else View.GONE
             if ((aff?.testDelayMillis ?: 0L) < 0L) {
                 holder.views.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPingRed))
             } else {
@@ -388,6 +397,7 @@ class MainRecyclerAdapter(
         val layoutRemove: View
         val tvStatistics: android.widget.TextView
         val tvTestResult: android.widget.TextView
+        val tvCountryCode: android.widget.TextView
         val layoutNetworkSecurity: View
         val tvNetwork: android.widget.TextView
         val tvSecurity: android.widget.TextView
@@ -409,6 +419,7 @@ class MainRecyclerAdapter(
         override val layoutRemove get() = b.layoutRemove
         override val tvStatistics get() = b.tvStatistics
         override val tvTestResult get() = b.tvTestResult
+        override val tvCountryCode get() = b.tvCountryCode
         override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
         override val tvNetwork get() = b.tvNetwork
         override val tvSecurity get() = b.tvSecurity
@@ -430,6 +441,7 @@ class MainRecyclerAdapter(
         override val layoutRemove get() = b.layoutRemove
         override val tvStatistics get() = b.tvStatistics
         override val tvTestResult get() = b.tvTestResult
+        override val tvCountryCode get() = b.tvCountryCode
         override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
         override val tvNetwork get() = b.tvNetwork
         override val tvSecurity get() = b.tvSecurity
