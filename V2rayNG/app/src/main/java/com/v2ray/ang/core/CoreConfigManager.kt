@@ -53,7 +53,10 @@ object CoreConfigManager {
                 return buildV2rayCustomConfig(configContext)
             }
             val v2rayConfig = buildUnifiedConfig(configContext)
-            postProcessForSpeedtest(v2rayConfig)
+            val primaryResolvedOutbound = configContext.resolvedOutbounds.first()
+            val isBalancer = primaryResolvedOutbound.resolvedType == CoreResolvedType.POLICYGROUP
+            val targetTag = if (isBalancer) AppConfig.TAG_BALANCER else AppConfig.TAG_PROXY
+            postProcessForSpeedtest(v2rayConfig, targetTag, isBalancer)
 
             return toConfigResult(configContext, v2rayConfig)
         } catch (e: Exception) {
@@ -376,10 +379,23 @@ object CoreConfigManager {
         policyGroupBalancerTags[resolvedOutbound.tag] = balancerTag
     }
 
-    private fun postProcessForSpeedtest(v2rayConfig: V2rayConfig) {
+    private fun postProcessForSpeedtest(v2rayConfig: V2rayConfig, targetTag: String, isBalancer: Boolean) {
         v2rayConfig.log.loglevel = MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL) ?: "warning"
         v2rayConfig.inbounds.clear()
+        // Clearing all routing rules also wipes the catch-all rule that routes into the
+        // balancer for POLICYGROUP profiles. Without it, the core falls back to the first
+        // outbound in the list (an arbitrary group member), so the tested country code can
+        // end up not matching the intended server/group. Re-add an explicit catch-all rule
+        // pointing at the correct target (plain proxy tag, or the balancer tag for groups)
+        // so the test always goes through the outbound that is actually being tested.
         v2rayConfig.routing.rules.clear()
+        v2rayConfig.routing.rules.add(
+            V2rayConfig.RoutingBean.RulesBean(
+                network = "tcp,udp",
+                outboundTag = if (isBalancer) null else targetTag,
+                balancerTag = if (isBalancer) targetTag else null,
+            )
+        )
         v2rayConfig.dns = null
         v2rayConfig.fakedns = null
         v2rayConfig.stats = null
