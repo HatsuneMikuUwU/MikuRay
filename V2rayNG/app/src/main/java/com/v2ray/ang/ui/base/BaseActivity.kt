@@ -65,6 +65,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        com.v2ray.ang.handler.SettingsManager.refreshAutoNightModeIfNeeded()
         themeStateManager.checkThemeChangedAndRecreate()
         if (collapsingToolbarRef != null) {
             applyToolbarStyle()

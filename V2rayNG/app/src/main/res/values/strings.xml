@@ -557,6 +557,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
         <item>Follow system</item>
         <item>Light</item>
         <item>Dark</item>
+        <item>Auto (day/night)</item>
     </string-array>
 
     <string-array name="preset_rulesets">

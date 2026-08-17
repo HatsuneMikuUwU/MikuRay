@@ -537,8 +537,9 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
 
     <string-array name="ui_mode_night">
         <item>Ikutin Sistem HP</item>
-        <item>Terang (Light)</item>
-        <item>Gelap (Dark)</item>
+        <item>Terang</item>
+        <item>Gelap</item>
+        <item>Otomatis (Siang/Malam)</item>
     </string-array>
 
     <string-array name="preset_rulesets">

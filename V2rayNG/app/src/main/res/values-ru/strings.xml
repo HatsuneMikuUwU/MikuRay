@@ -537,6 +537,7 @@
         <item>По умолчанию системы</item>
         <item>Светлая</item>
         <item>Тёмная</item>
+        <item>Авто (день/ночь)</item>
     </string-array>
 
     <string-array name="preset_rulesets">

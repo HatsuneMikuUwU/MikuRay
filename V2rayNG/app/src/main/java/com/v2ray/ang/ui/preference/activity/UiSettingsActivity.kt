@@ -1138,6 +1138,7 @@ class UiSettingsActivity : BaseActivity() {
         private fun isNightModeAfterChange(mode: Int): Boolean = when (mode) {
             1    -> true
             2    -> false
+            3    -> !ThemeManager.isAutoDayTime()
             else -> ThemeManager.isDarkMode(requireActivity())
         }
 

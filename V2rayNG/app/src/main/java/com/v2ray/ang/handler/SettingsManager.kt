@@ -372,6 +372,24 @@ object SettingsManager {
             "0" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "3" -> AppCompatDelegate.setDefaultNightMode(
+                if (com.v2ray.ang.util.ThemeManager.isAutoDayTime()) {
+                    AppCompatDelegate.MODE_NIGHT_NO
+                } else {
+                    AppCompatDelegate.MODE_NIGHT_YES
+                }
+            )
+        }
+    }
+
+    /**
+     * Dipanggil setiap Activity resume agar mode "Auto (Siang/Malam)" ikut
+     * ter-update ketika jam berpindah dari siang ke malam (atau sebaliknya)
+     * saat aplikasi masih terbuka.
+     */
+    fun refreshAutoNightModeIfNeeded() {
+        if (MmkvManager.decodeSettingsString(AppConfig.PREF_UI_MODE_NIGHT, "0") == "3") {
+            setNightMode()
         }
     }
 

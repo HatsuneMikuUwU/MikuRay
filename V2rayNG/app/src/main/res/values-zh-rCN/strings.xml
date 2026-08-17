@@ -520,6 +520,7 @@
         <item>跟随系统</item>
         <item>浅色</item>
         <item>深色</item>
+        <item>自动（白天/夜间）</item>
     </string-array>
 
     <string-array name="preset_rulesets">
