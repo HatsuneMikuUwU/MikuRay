@@ -120,7 +120,7 @@
                 android:contentDescription="@string/menu_item_edit_config"
                 android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="@id/outboundTag"
-                app:layout_constraintEnd_toEndOf="@id/layout_remove"
+                app:layout_constraintEnd_toStartOf="@id/layout_remove"
                 app:layout_constraintTop_toTopOf="@id/outboundTag"
                 app:srcCompat="@drawable/ic_edit_color"
                 app:tint="@null" />
