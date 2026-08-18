@@ -1,6 +1,5 @@
 package com.v2ray.ang.ui.backup
 
-
 import com.miku.ray.remixicon.R as RemixR
 import com.v2ray.ang.ui.base.HelperBaseActivity
 import android.content.Intent
@@ -138,6 +137,7 @@ class BackupActivity : HelperBaseActivity() {
             AppConfig.PREF_CUSTOM_SHEET_BANNER_URI,
             AppConfig.PREF_PROFILE_BANNER_URI,
             AppConfig.PREF_SELECTED_BANNER_URI,
+            AppConfig.PREF_CUSTOM_THEME_BANNER_URI,
         )
         val bannersDir = java.io.File(backupDir, "banners").also { it.mkdirs() }
         for (key in bannerKeys) {
