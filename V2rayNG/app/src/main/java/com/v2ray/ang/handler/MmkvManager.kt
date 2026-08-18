@@ -22,6 +22,8 @@ import com.v2ray.ang.dto.entities.WebDavConfig
 import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.Utils
 
+internal class ProfileStorageException(message: String) : IllegalStateException(message)
+
 object MmkvManager {
 
 
@@ -87,7 +89,28 @@ object MmkvManager {
         return MMKVRecoverStrategic.OnErrorRecover
     }
 
+    private inline fun <T> withProfileIndexLock(block: () -> T): T {
+        return synchronized(mainStorage) {
+            mainStorage.lock()
+            try {
+                block()
+            } finally {
+                mainStorage.unlock()
+            }
+        }
+    }
 
+    private fun requireStorageWrite(success: Boolean, message: String) {
+        if (!success) throw ProfileStorageException(message)
+    }
+
+    private fun removeProfilePayloads(guids: Collection<String>) {
+        if (guids.isEmpty()) return
+        val keys = guids.toTypedArray()
+        profileFullStorage.removeValuesForKeys(keys)
+        serverAffStorage.removeValuesForKeys(keys)
+        serverRawStorage.removeValuesForKeys(keys)
+    }
 
     fun readLegacyServerList(): String? {
         return mainStorage.decodeString(KEY_ANG_CONFIGS)
@@ -191,6 +214,94 @@ object MmkvManager {
 
     fun encodeProfileDirect(key: String, configJson: String) {
         profileFullStorage.encode(key, configJson)
+    }
+
+    /**
+     * Saves a batch of parsed profiles before publishing the group index and removing the
+     * profiles they replace, so an import that gets interrupted midway never leaves the
+     * group with zero servers (previously the group was cleared first, then repopulated).
+     *
+     * @param profiles Generated GUIDs mapped to their parsed profile, in insertion order.
+     * @param rawConfigs Optional raw configuration payloads keyed by profile GUID.
+     * @param subscriptionId The destination subscription ID.
+     * @param append Whether to append to the existing group index instead of replacing it.
+     */
+    internal fun saveServerProfiles(
+        profiles: Map<String, ProfileItem>,
+        rawConfigs: Map<String, String>,
+        subscriptionId: String,
+        append: Boolean,
+    ) {
+        if (profiles.isEmpty()) return
+
+        withProfileIndexLock {
+            val replacedServers = if (append) {
+                emptyList()
+            } else {
+                decodeServerList(subscriptionId).toList()
+            }
+
+            val previousSelection = getSelectServer()
+            val selectedProfile = if (!append &&
+                previousSelection != null &&
+                previousSelection in replacedServers
+            ) {
+                decodeServerConfig(previousSelection)
+            } else {
+                null
+            }
+            val replacementSelection = ProfileReplacement.findSelectedReplacement(
+                profiles = profiles,
+                currentSelection = previousSelection,
+                selectedProfile = selectedProfile,
+            )
+
+            // Write every new payload first; nothing old is touched yet.
+            profiles.forEach { (guid, profile) ->
+                requireStorageWrite(
+                    profileFullStorage.encode(guid, JsonUtil.toJson(profile)),
+                    "Failed to save profile payload",
+                )
+                rawConfigs[guid]?.let { raw ->
+                    requireStorageWrite(
+                        serverRawStorage.encode(guid, raw),
+                        "Failed to save raw profile payload",
+                    )
+                }
+            }
+
+            // Publish the new group index.
+            val serverList = if (append) {
+                decodeServerList(subscriptionId)
+            } else {
+                mutableListOf()
+            }
+            val indexedServers = serverList.toHashSet()
+            profiles.keys.forEach { guid ->
+                if (indexedServers.add(guid)) {
+                    serverList.add(0, guid)
+                }
+            }
+            encodeServerList(serverList, subscriptionId)
+
+            replacementSelection?.let { guid ->
+                requireStorageWrite(
+                    mainStorage.encode(KEY_SELECTED_SERVER, guid),
+                    "Failed to update selected profile",
+                )
+            }
+
+            if (replacedServers.isEmpty()) return@withProfileIndexLock
+
+            // Only now, after the replacement batch is safely published, drop the old payloads.
+            val protectedServer = replacementSelection ?: previousSelection
+            val removablePayloads = ProfileReplacement.findRemovablePayloads(
+                replacedServers = replacedServers,
+                replacementServers = profiles.keys,
+                protectedServer = protectedServer,
+            )
+            removeProfilePayloads(removablePayloads)
+        }
     }
 
     fun removeServer(guid: String) {

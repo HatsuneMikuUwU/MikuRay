@@ -34,6 +34,11 @@ import java.net.URI
 
 object AngConfigManager {
 
+    private data class ParsedProfile(
+        val profile: ProfileItem,
+        val rawConfig: String? = null,
+    )
+
     private val configFmtParsers: Map<String, (String) -> ProfileItem?> by lazy {
         mapOf(
             EConfigType.VMESS.protocolScheme to VmessFmt::parse,
@@ -138,23 +143,28 @@ object AngConfigManager {
     }
 
     fun importBatchConfig(server: String?, subid: String, append: Boolean): Pair<Int, Int> {
-        var count = parseBatchConfig(Utils.decode(server), subid, append)
-        if (count <= 0) {
-            count = parseBatchConfig(server, subid, append)
-        }
-        if (count <= 0) {
-            count = parseCustomConfigServer(server, subid, append)
-        }
+        return try {
+            var count = parseBatchConfig(Utils.decode(server), subid, append)
+            if (count <= 0) {
+                count = parseBatchConfig(server, subid, append)
+            }
+            if (count <= 0) {
+                count = parseCustomConfigServer(server, subid, append)
+            }
 
-        var countSub = parseBatchSubscription(server)
-        if (countSub <= 0) {
-            countSub = parseBatchSubscription(Utils.decode(server))
-        }
-        if (countSub > 0) {
-            updateConfigViaSubAll()
-        }
+            var countSub = parseBatchSubscription(server)
+            if (countSub <= 0) {
+                countSub = parseBatchSubscription(Utils.decode(server))
+            }
+            if (countSub > 0) {
+                updateConfigViaSubAll()
+            }
 
-        return count to countSub
+            count to countSub
+        } catch (e: ProfileStorageException) {
+            LogUtil.e(AppConfig.TAG, "Failed to store imported profiles", e)
+            0 to 0
+        }
     }
 
     private fun parseBatchSubscription(servers: String?): Int {
@@ -183,7 +193,6 @@ object AngConfigManager {
             if (servers == null) {
                 return 0
             }
-            val removedSelected = getRemovedSelectedProfile(subid, append)
 
             val subItem = MmkvManager.decodeSubscription(subid)
 
@@ -199,89 +208,43 @@ object AngConfigManager {
                 }
 
             if (configs.isNotEmpty()) {
-                if (!append) {
-                    MmkvManager.removeServerViaSubid(subid)
-                }
-                val keyToProfile = batchSaveConfigs(configs, subid)
-                val matchKey = findMatchedProfileKey(keyToProfile, removedSelected)
-                matchKey?.let { MmkvManager.setSelectServer(it) }
+                commitProfiles(
+                    configs = configs.map { ParsedProfile(it) },
+                    subid = subid,
+                    append = append,
+                )
             }
 
             return configs.size
+        } catch (e: ProfileStorageException) {
+            throw e
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to parse batch config", e)
         }
         return 0
     }
 
-    private fun batchSaveConfigs(configs: List<ProfileItem>, subid: String): Map<String, ProfileItem> {
-        val keyToProfile = mutableMapOf<String, ProfileItem>()
+    /**
+     * Commits a batch of parsed profiles: generates their GUIDs, then hands the batch to
+     * MmkvManager, which publishes the new profiles and their index before removing the
+     * profiles being replaced (see MmkvManager.saveServerProfiles for the ordering).
+     */
+    private fun commitProfiles(configs: List<ParsedProfile>, subid: String, append: Boolean) {
+        val keyToProfile = linkedMapOf<String, ProfileItem>()
+        val rawConfigs = mutableMapOf<String, String>()
 
-        val serverList = MmkvManager.decodeServerList(subid)
-
-        configs.forEach { config ->
+        configs.forEach { parsed ->
             val key = Utils.getUuid()
-            MmkvManager.encodeProfileDirect(key, JsonUtil.toJson(config))
-
-            if (!serverList.contains(key)) {
-                serverList.add(0, key)
-            }
-            keyToProfile[key] = config
+            keyToProfile[key] = parsed.profile
+            parsed.rawConfig?.let { raw -> rawConfigs[key] = raw }
         }
 
-        MmkvManager.encodeServerList(serverList, subid)
-        return keyToProfile
-    }
-
-    private fun findMatchedProfileKey(keyToProfile: Map<String, ProfileItem>, target: ProfileItem?): String? {
-        if (keyToProfile.isEmpty()) return null
-        if (target == null) return null
-
-        if (target.remarks.isNotBlank()) {
-            keyToProfile.entries.firstOrNull { (_, saved) ->
-                isSameText(saved.remarks, target.remarks) &&
-                        isSameText(saved.server, target.server) &&
-                        isSameText(saved.serverPort, target.serverPort) &&
-                        isSameText(saved.password, target.password)
-            }?.key?.let { return it }
-        }
-
-        if (target.remarks.isNotBlank()) {
-            keyToProfile.entries.firstOrNull { (_, saved) ->
-                isSameText(saved.remarks, target.remarks)
-            }?.key?.let { return it }
-        }
-
-        keyToProfile.entries.firstOrNull { (_, saved) ->
-            isSameText(saved.server, target.server) &&
-                    isSameText(saved.serverPort, target.serverPort) &&
-                    isSameText(saved.password, target.password)
-        }?.key?.let { return it }
-
-        keyToProfile.entries.firstOrNull { (_, saved) ->
-            isSameText(saved.server, target.server) &&
-                    isSameText(saved.serverPort, target.serverPort)
-        }?.key?.let { return it }
-
-        keyToProfile.entries.firstOrNull { (_, saved) ->
-            isSameText(saved.server, target.server)
-        }?.key?.let { return it }
-
-        return keyToProfile.keys.firstOrNull()
-    }
-
-    private fun getRemovedSelectedProfile(subid: String, append: Boolean): ProfileItem? {
-        if (subid.isBlank() || append) return null
-
-        return MmkvManager.getSelectServer()
-            .takeIf { it?.isNotBlank() == true }
-            ?.let { MmkvManager.decodeServerConfig(it) }
-            ?.takeIf { it.subscriptionId == subid }
-    }
-
-    private fun isSameText(left: String?, right: String?): Boolean {
-        if (left.isNullOrBlank() || right.isNullOrBlank()) return false
-        return left.trim().equals(right.trim(), ignoreCase = true)
+        MmkvManager.saveServerProfiles(
+            profiles = keyToProfile,
+            rawConfigs = rawConfigs,
+            subscriptionId = subid,
+            append = append,
+        )
     }
 
     private fun parseCustomConfigServer(server: String?, subid: String, append: Boolean): Int {
@@ -298,29 +261,22 @@ object AngConfigManager {
                     JsonUtil.fromJson(server, Array<Any>::class.java) ?: arrayOf()
 
                 if (serverList.isNotEmpty()) {
-                    val removedSelected = getRemovedSelectedProfile(subid, append)
-                    if (!append) {
-                        MmkvManager.removeServerViaSubid(subid)
-                    }
-                    var count = 0
-                    val keyToProfile = mutableMapOf<String, ProfileItem>()
+                    val configs = mutableListOf<ParsedProfile>()
                     for (srv in serverList.reversed()) {
                         val config = CustomFmt.parse(JsonUtil.toJson(srv))
                         if (!matchesSubscriptionFilters(config, subItem)) {
                             continue
                         }
                         config.subscriptionId = subid
-                        val key = MmkvManager.encodeServerConfig("", config)
-                        MmkvManager.encodeServerRaw(key, JsonUtil.toJsonPretty(srv) ?: "")
-                        keyToProfile[key] = config
-                        count += 1
+                        configs.add(ParsedProfile(config, JsonUtil.toJsonPretty(srv) ?: ""))
                     }
-                    if (count > 0) {
-                        val matchKey = findMatchedProfileKey(keyToProfile, removedSelected)
-                        matchKey?.let { MmkvManager.setSelectServer(it) }
+                    if (configs.isNotEmpty()) {
+                        commitProfiles(configs, subid, append)
                     }
-                    return count
+                    return configs.size
                 }
+            } catch (e: ProfileStorageException) {
+                throw e
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "Failed to parse custom config server JSON array", e)
             }
@@ -331,12 +287,10 @@ object AngConfigManager {
                     return 0
                 }
                 config.subscriptionId = subid
-                if (!append) {
-                    MmkvManager.removeServerViaSubid(subid)
-                }
-                val key = MmkvManager.encodeServerConfig("", config)
-                MmkvManager.encodeServerRaw(key, server)
+                commitProfiles(listOf(ParsedProfile(config, server)), subid, append)
                 return 1
+            } catch (e: ProfileStorageException) {
+                throw e
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "Failed to parse custom config server as single config", e)
             }
@@ -347,12 +301,14 @@ object AngConfigManager {
                 if (!matchesSubscriptionFilters(config, subItem)) {
                     return 0
                 }
-                if (!append) {
-                    MmkvManager.removeServerViaSubid(subid)
-                }
-                val key = MmkvManager.encodeServerConfig("", config)
-                MmkvManager.encodeServerRaw(key, server)
+                // Previously missing: without this, imported WireGuard custom configs
+                // never got tagged with their subscription, so they couldn't be matched
+                // or removed together with the rest of the group on re-import.
+                config.subscriptionId = subid
+                commitProfiles(listOf(ParsedProfile(config, server)), subid, append)
                 return 1
+            } catch (e: ProfileStorageException) {
+                throw e
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "Failed to parse WireGuard config file", e)
             }
