@@ -245,8 +245,8 @@
         <item>Hatsune Miku V3</item>
         <item>Hatsune Miku V3 English</item>
         <item>Hatsune Miku V4</item>
-        <item>Hatsune Miku V6</item>
         <item>Hatsune Miku Super Pack</item>
+        <item>Hatsune Miku V6</item>
     </string-array>
 
     <string-array name="banner_settings_character_values" translatable="false">
@@ -256,8 +256,8 @@
         <item>uwu_banner_miku_v3</item>
         <item>uwu_banner_miku_v3_english</item>
         <item>uwu_banner_miku_v4</item>
-        <item>uwu_banner_miku_v6</item>
         <item>uwu_banner_miku_super_pack</item>
+        <item>uwu_banner_miku_v6</item>
     </string-array>
 
     <string-array name="icon_shape_entries" translatable="false">

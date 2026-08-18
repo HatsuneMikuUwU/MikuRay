@@ -168,6 +168,11 @@ class UiSettingsActivity : BaseActivity() {
                 if (uri != null) startCropSelectedBannerActivity(uri)
             }
 
+        private val pickThemeBannerImage =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) startCropThemeBannerActivity(uri)
+            }
+
         private val pickCustomFontFile =
             registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
                 if (uri == null) return@registerForActivityResult
@@ -203,6 +208,28 @@ class UiSettingsActivity : BaseActivity() {
                             extractAndSaveBannerColor(savedUri)
                             broadcastHomeBannerChanged()
                             requireContext().toastSuccess(getString(R.string.home_banner_updated))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                    UCrop.getError(result.data!!)?.printStackTrace()
+                }
+            }
+
+        private val cropThemeBannerImage =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val cacheUri = UCrop.getOutput(result.data!!) ?: return@registerForActivityResult
+                    lifecycleScope.launch {
+                        try {
+                            val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_THEME_BANNER_URI)
+                            deleteOldFile(oldUri)
+                            val savedUri = saveBannerFile(cacheUri, "theme_banner_")
+                            MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_THEME_BANNER_URI, savedUri.toString())
+                            SettingsManager.preloadBanner(requireContext(), savedUri.toString())
+                            navigateCheckUpdate?.refresh()
+                            requireContext().toastSuccess(getString(R.string.theme_banner_updated))
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -287,6 +314,32 @@ class UiSettingsActivity : BaseActivity() {
             navigateCheckUpdate?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), CheckUpdateActivity::class.java))
                 true
+            }
+
+            navigateCheckUpdate?.onImageClick = {
+                pickThemeBannerImage.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }
+
+            navigateCheckUpdate?.onImageLongClick = {
+                val savedUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_THEME_BANNER_URI)
+                if (!savedUri.isNullOrEmpty()) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.theme_banner_delete_title)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
+                        .setMessage(R.string.theme_banner_delete_summary)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            lifecycleScope.launch {
+                                deleteOldFile(savedUri)
+                                MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_THEME_BANNER_URI, "")
+                                navigateCheckUpdate?.refresh()
+                                requireContext().snackbarSuccess(getString(R.string.theme_banner_delete_summary), title = getString(R.string.title_alerter_success))
+                            }
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .showBlur()
+                }
             }
 
             appTheme?.setOnPreferenceClickListener {
@@ -900,6 +953,29 @@ class UiSettingsActivity : BaseActivity() {
                 })
             } catch (e: Exception) { e.printStackTrace() }
             cropSheetBannerImage.launch(uCrop.getIntent(requireContext()))
+        }
+
+        private fun startCropThemeBannerActivity(sourceUri: Uri) {
+            val destFile = File(requireContext().cacheDir, "cropped_theme_banner_temp.jpg")
+            val destUri = Uri.fromFile(destFile)
+            
+            val displayMetrics = resources.displayMetrics
+            val screenWidthPx = displayMetrics.widthPixels.toFloat()
+            val screenHeightPx = displayMetrics.heightPixels.toFloat()
+
+            val uCrop = UCrop.of(sourceUri, destUri)
+                .withAspectRatio(screenWidthPx, screenHeightPx)
+                .withMaxResultSize(896, 1984)
+
+            try {
+                uCrop.withOptions(UCrop.Options().apply {
+                    setDimmedLayerColor(Color.parseColor("#CC000000"))
+                    setCircleDimmedLayer(false)
+                    setShowCropGrid(true)
+                    setFreeStyleCropEnabled(true)
+                })
+            } catch (e: Exception) { e.printStackTrace() }
+            cropThemeBannerImage.launch(uCrop.getIntent(requireContext()))
         }
 
         private fun startCropSelectedBannerActivity(sourceUri: Uri) {

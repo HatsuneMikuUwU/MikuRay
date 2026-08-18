@@ -7,7 +7,7 @@
         android:layout="@layout/uwu_banner_settings" />
 
     <ListPreference
-        android:defaultValue="uwu_banner_miku_v2"
+        android:defaultValue="uwu_banner_miku_v6"
         android:entries="@array/banner_settings_character_entries"
         android:entryValues="@array/banner_settings_character_values"
         android:icon="@drawable/rmx_media_gallery_line"

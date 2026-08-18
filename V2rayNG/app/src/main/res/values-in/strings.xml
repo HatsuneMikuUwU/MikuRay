@@ -864,6 +864,9 @@ yang kamu butuhin."</string>
     <string name="home_banner_delete_title">Hapus banner beranda kustom</string>
     <string name="home_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner beranda bawaan</string>
     <string name="home_banner_updated">Banner beranda berhasil diupdate.</string>
+    <string name="theme_banner_updated">Banner berhasil diupdate.</string>
+    <string name="theme_banner_delete_title">Hapus banner kustom</string>
+    <string name="theme_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner bawaan</string>
     <string name="pref_home_banner_height_title">Tinggi banner</string>
     <string name="pref_header_top_row_padding_title">Padding atas header</string>
 

@@ -897,6 +897,9 @@ you need."</string>
     <string name="home_banner_delete_title">Remove custom home banner</string>
     <string name="home_banner_delete_summary">Custom banner removed. Default home banner will be used instead</string>
     <string name="home_banner_updated">Home banner updated successfully.</string>
+    <string name="theme_banner_updated">Banner updated successfully.</string>
+    <string name="theme_banner_delete_title">Remove custom banner</string>
+    <string name="theme_banner_delete_summary">Custom banner removed. Default banner will be used instead</string>
     <string name="pref_home_banner_height_title">Banner height</string>
     <string name="pref_home_banner_height_summary_value">%1$ddp</string>
     <string name="pref_header_top_row_padding_title">Header top padding</string>

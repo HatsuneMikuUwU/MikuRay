@@ -874,6 +874,9 @@
     <string name="home_banner_delete_title">Удалить свой баннер главного экрана</string>
     <string name="home_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер главного экрана по умолчанию</string>
     <string name="home_banner_updated">Баннер главного экрана успешно обновлён.</string>
+    <string name="theme_banner_updated">Баннер успешно обновлён.</string>
+    <string name="theme_banner_delete_title">Удалить свой баннер</string>
+    <string name="theme_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер по умолчанию</string>
     <string name="pref_home_banner_height_title">Высота баннера</string>
     <string name="pref_header_top_row_padding_title">Верхний отступ заголовка</string>
 

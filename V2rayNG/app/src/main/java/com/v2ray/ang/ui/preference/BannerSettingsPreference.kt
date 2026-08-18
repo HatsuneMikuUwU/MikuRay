@@ -94,7 +94,7 @@ class BannerSettingsPreference @JvmOverloads constructor(
             "uwu_banner_miku_v4" -> R.drawable.uwu_banner_miku_v4
             "uwu_banner_miku_super_pack" -> R.drawable.uwu_banner_miku_super_pack
             "uwu_banner_miku_v6" -> R.drawable.uwu_banner_miku_v6
-            else -> R.drawable.uwu_banner_miku_v2
+            else -> R.drawable.uwu_banner_miku_v6
         }
     }
 }

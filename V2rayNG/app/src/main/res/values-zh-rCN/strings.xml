@@ -853,6 +853,9 @@
     <string name="home_banner_delete_title">移除自定义主页横幅</string>
     <string name="home_banner_delete_summary">自定义横幅已移除，将改用默认主页横幅</string>
     <string name="home_banner_updated">主页横幅更新成功。</string>
+    <string name="theme_banner_updated">横幅更新成功。</string>
+    <string name="theme_banner_delete_title">移除自定义横幅</string>
+    <string name="theme_banner_delete_summary">自定义横幅已移除，将改用默认横幅</string>
     <string name="pref_home_banner_height_title">横幅高度</string>
     <string name="pref_header_top_row_padding_title">头部顶部内边距</string>
 

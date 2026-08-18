@@ -197,6 +197,7 @@ object AppConfig {
     const val PREF_CUSTOM_SHEET_BANNER_URI = "custom_sheet_banner_uri"
     const val PREF_ACTION_CHANGE_SHEET_BANNER = "action_change_sheet_banner_image"
     const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
+    const val PREF_CUSTOM_THEME_BANNER_URI = "custom_theme_banner_uri"
     const val PREF_BANNER_SETTINGS_CHARACTER = "pref_banner_settings_character"
     const val PREF_BANNER_SETTINGS_CHARACTER_DEFAULT = "uwu_banner_miku_v2"
 

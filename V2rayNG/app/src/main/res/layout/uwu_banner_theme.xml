@@ -40,18 +40,22 @@
                 android:layout_height="wrap_content"
                 android:baselineAligned="false">
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/theme_banner_image_card"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="140.0dip"
                     android:layout_height="fill_parent"
                     app:cardBackgroundColor="#00000000"
                     app:cardCornerRadius="18.0dip"
                     app:cardElevation="0.0dip"
-                    app:strokeWidth="0.0dip">
-                    <com.neko.widget.kenburnsview.KenBurnsView
+                    app:strokeWidth="0.0dip"
+                    app:rippleColor="?android:attr/colorControlHighlight">
+                    <ImageView
                         android:id="@+id/img_banner_preference"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:src="@drawable/uwu_banner_image"
-                        android:adjustViewBounds="true" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/uwu_banner_theme" />
                     <LinearLayout
                         android:background="@android:color/black"
                         android:layout_width="fill_parent"
