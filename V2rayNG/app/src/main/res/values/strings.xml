@@ -520,6 +520,10 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_configuration_backup">Backup config</string>
     <string name="title_configuration_restore">Restore config</string>
     <string name="title_configuration_share">Share config</string>
+    <string name="title_profile_storage_cleanup">Repair profile storage</string>
+    <string name="message_profile_storage_cleanup">Delete profile data that is no longer used by any group? Selected profiles and data that cannot be safely classified will be kept.</string>
+    <string name="toast_profile_storage_cleanup">Unused profiles removed: %1$d</string>
+    <string name="toast_profile_storage_cleanup_skipped">Profile storage could not be safely classified. Nothing was removed.</string>
     <string name="title_webdav_config_setting">WebDAV Settings</string>
     <string name="title_webdav_config_setting_unknown">Please configure WebDAV first.</string>
     <string name="title_webdav_url">WebDAV server URL</string>

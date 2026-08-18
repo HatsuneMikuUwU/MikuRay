@@ -28,6 +28,7 @@ import com.v2ray.ang.handler.WebDavManager
 import com.v2ray.ang.util.BannerColorExtractor
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.ZipUtil
+import com.v2ray.ang.util.showDeleteConfirmDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -101,8 +102,49 @@ class BackupActivity : HelperBaseActivity() {
                 .showBlur()
         }
 
+        binding.layoutProfileStorageCleanup.setOnClickListener {
+            showDeleteConfirmDialog(
+                context = this,
+                titleRes = R.string.title_profile_storage_cleanup,
+                messageRes = R.string.message_profile_storage_cleanup,
+            ) {
+                cleanupProfileStorage()
+            }
+        }
+
         binding.layoutWebdavConfigSetting.setOnClickListener {
             showWebDavSettingsDialog()
+        }
+    }
+
+    private fun cleanupProfileStorage() {
+        showLoading()
+
+        lifecycleScope.launch {
+            try {
+                val removed = withContext(Dispatchers.IO) {
+                    MmkvManager.removeOrphanedServerProfiles()
+                }
+                if (removed == null) {
+                    snackbarError(
+                        getString(R.string.toast_profile_storage_cleanup_skipped),
+                        title = getString(R.string.title_alerter_error)
+                    )
+                } else {
+                    snackbarSuccess(
+                        getString(R.string.toast_profile_storage_cleanup, removed),
+                        title = getString(R.string.title_alerter_success)
+                    )
+                }
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to clean up profile storage", e)
+                snackbarError(
+                    getString(R.string.toast_failure),
+                    title = getString(R.string.title_alerter_error)
+                )
+            } finally {
+                hideLoading()
+            }
         }
     }
 
