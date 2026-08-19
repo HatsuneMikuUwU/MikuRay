@@ -764,6 +764,10 @@
     <string name="label_total_traffic_upload">上传</string>
     <string name="label_total_traffic_download">下载</string>
     <string name="label_total_traffic_combined">合计</string>
+    <string name="label_total_traffic_today">今天</string>
+    <string name="label_total_traffic_month">本月</string>
+    <string name="title_total_traffic_history">最近7天</string>
+    <string name="label_total_traffic_no_history">暂无使用数据</string>
     <string name="pref_network_security_enabled_title">显示网络和安全</string>
     <string name="pref_network_security_enabled_summary">在每个服务器上显示传输和安全信息</string>
     <string name="pref_disable_sensor_text_title">显示完整地址</string>

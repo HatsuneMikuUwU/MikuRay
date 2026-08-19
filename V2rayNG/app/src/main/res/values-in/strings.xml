@@ -775,6 +775,10 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="label_total_traffic_upload">Upload</string>
     <string name="label_total_traffic_download">Download</string>
     <string name="label_total_traffic_combined">Gabungan</string>
+    <string name="label_total_traffic_today">Hari Ini</string>
+    <string name="label_total_traffic_month">Bulan Ini</string>
+    <string name="title_total_traffic_history">7 Hari Terakhir</string>
+    <string name="label_total_traffic_no_history">Belum ada data pemakaian</string>
     <string name="pref_network_security_enabled_title">Tampilin Jaringan dan Keamanan</string>
     <string name="pref_network_security_enabled_summary">Tampilin info transport dan keamanan di tiap server</string>
     <string name="pref_disable_sensor_text_title">Tampilin Alamat Lengkap</string>

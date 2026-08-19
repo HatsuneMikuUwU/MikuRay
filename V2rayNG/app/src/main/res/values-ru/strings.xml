@@ -785,6 +785,10 @@
     <string name="label_total_traffic_upload">Отдача</string>
     <string name="label_total_traffic_download">Загрузка</string>
     <string name="label_total_traffic_combined">Всего</string>
+    <string name="label_total_traffic_today">Сегодня</string>
+    <string name="label_total_traffic_month">В этом месяце</string>
+    <string name="title_total_traffic_history">Последние 7 дней</string>
+    <string name="label_total_traffic_no_history">Данных пока нет</string>
     <string name="pref_network_security_enabled_title">Показывать сеть и безопасность</string>
     <string name="pref_network_security_enabled_summary">Показывать информацию о транспорте и безопасности на каждом сервере</string>
     <string name="pref_disable_sensor_text_title">Показывать полный адрес</string>

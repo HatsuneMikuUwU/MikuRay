@@ -807,6 +807,10 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="label_total_traffic_upload">Upload</string>
     <string name="label_total_traffic_download">Download</string>
     <string name="label_total_traffic_combined">Combined</string>
+    <string name="label_total_traffic_today">Today</string>
+    <string name="label_total_traffic_month">This Month</string>
+    <string name="title_total_traffic_history">Last 7 Days</string>
+    <string name="label_total_traffic_no_history">No usage recorded yet</string>
     <string name="pref_disable_sensor_text_title">Show Full Address</string>
     <string name="pref_disable_sensor_text_summary">Show full server IP/domain without *** masking</string>
     <string name="pref_network_security_enabled_title">Show Network and Security</string>

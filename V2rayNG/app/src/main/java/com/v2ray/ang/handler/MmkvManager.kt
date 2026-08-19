@@ -13,6 +13,7 @@ import com.v2ray.ang.AppConfig.TAG
 import com.v2ray.ang.BuildConfig
 import com.v2ray.ang.dto.entities.AssetUrlCache
 import com.v2ray.ang.dto.entities.AssetUrlItem
+import com.v2ray.ang.dto.entities.DailyTrafficInfo
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.RulesetItem
 import com.v2ray.ang.dto.entities.ServerAffiliationInfo
@@ -34,6 +35,9 @@ object MmkvManager {
     private const val ID_SUB = "SUB"
     private const val ID_ASSET = "ASSET"
     private const val ID_SETTING = "SETTING"
+    private const val ID_DAILY_TRAFFIC = "DAILY_TRAFFIC"
+    private const val KEY_DAILY_TRAFFIC_DATES = "DAILY_TRAFFIC_DATES"
+    private const val DAILY_TRAFFIC_RETENTION_DAYS = 90
     private const val KEY_SELECTED_SERVER = "SELECTED_SERVER"
     private const val KEY_ANG_CONFIGS = "ANG_CONFIGS"
     private const val KEY_SUB_SERVER_PREFIX = "SUB_SERVERS_"
@@ -65,6 +69,7 @@ object MmkvManager {
     private val subStorage by lazy { MMKV.mmkvWithID(ID_SUB, MMKV.MULTI_PROCESS_MODE) }
     private val assetStorage by lazy { MMKV.mmkvWithID(ID_ASSET, MMKV.MULTI_PROCESS_MODE) }
     private val settingsStorage by lazy { MMKV.mmkvWithID(ID_SETTING, MMKV.MULTI_PROCESS_MODE) }
+    private val dailyTrafficStorage by lazy { MMKV.mmkvWithID(ID_DAILY_TRAFFIC, MMKV.MULTI_PROCESS_MODE) }
 
     /**
      * Initializes MMKV with best-effort recovery so a damaged store is not silently discarded.
@@ -416,6 +421,7 @@ object MmkvManager {
 
     fun resetAllTraffic() {
         decodeAllServerList().forEach { guid -> resetProfileTraffic(guid) }
+        dailyTrafficStorage.clearAll()
     }
 
     fun getTotalTrafficString(): String? {
@@ -432,6 +438,91 @@ object MmkvManager {
             downlinkTotal += aff.downlinkTotal
         }
         if (uplinkTotal + downlinkTotal == 0L) return null
+        return uplinkTotal to downlinkTotal
+    }
+
+    private fun dailyTrafficDateKey(calendar: java.util.Calendar): String {
+        val fmt = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
+        fmt.timeZone = calendar.timeZone
+        return fmt.format(calendar.time)
+    }
+
+    private fun decodeDailyTrafficInfo(dateKey: String): DailyTrafficInfo? {
+        val json = dailyTrafficStorage.decodeString(dateKey) ?: return null
+        return JsonUtil.fromJsonSafe(json, DailyTrafficInfo::class.java)
+    }
+
+    private fun decodeDailyTrafficDates(): MutableList<String> {
+        val json = dailyTrafficStorage.decodeString(KEY_DAILY_TRAFFIC_DATES) ?: return mutableListOf()
+        return JsonUtil.fromJsonSafe(json, Array<String>::class.java)?.toMutableList() ?: mutableListOf()
+    }
+
+    private fun encodeDailyTrafficDates(dates: List<String>) {
+        dailyTrafficStorage.encode(KEY_DAILY_TRAFFIC_DATES, JsonUtil.toJson(dates))
+    }
+
+    /** Called from TrafficController on every traffic tick to accumulate today's usage. */
+    fun addDailyTraffic(uplink: Long, downlink: Long) {
+        if (uplink == 0L && downlink == 0L) return
+        val todayKey = dailyTrafficDateKey(java.util.Calendar.getInstance())
+        val info = decodeDailyTrafficInfo(todayKey) ?: DailyTrafficInfo()
+        info.uplinkTotal += uplink
+        info.downlinkTotal += downlink
+        dailyTrafficStorage.encode(todayKey, JsonUtil.toJson(info))
+
+        val dates = decodeDailyTrafficDates()
+        if (!dates.contains(todayKey)) {
+            dates.add(todayKey)
+            pruneOldDailyTraffic(dates)
+        }
+    }
+
+    private fun pruneOldDailyTraffic(dates: MutableList<String>) {
+        dates.sort()
+        while (dates.size > DAILY_TRAFFIC_RETENTION_DAYS) {
+            val oldest = dates.removeAt(0)
+            dailyTrafficStorage.removeValueForKey(oldest)
+        }
+        encodeDailyTrafficDates(dates)
+    }
+
+    /** Traffic for a single calendar day, N days back from today (0 = today). */
+    fun getDailyTrafficDetail(daysAgo: Int): Pair<Long, Long> {
+        val cal = java.util.Calendar.getInstance()
+        cal.add(java.util.Calendar.DAY_OF_YEAR, -daysAgo)
+        val info = decodeDailyTrafficInfo(dailyTrafficDateKey(cal)) ?: return 0L to 0L
+        return info.uplinkTotal to info.downlinkTotal
+    }
+
+    /** Last [days] days of traffic, oldest first, each as Triple(dateKey, uplink, downlink). Missing days come back as zero. */
+    fun getDailyTrafficHistory(days: Int): List<Triple<String, Long, Long>> {
+        val cal = java.util.Calendar.getInstance()
+        val result = mutableListOf<Triple<String, Long, Long>>()
+        for (i in (days - 1) downTo 0) {
+            val dayCal = cal.clone() as java.util.Calendar
+            dayCal.add(java.util.Calendar.DAY_OF_YEAR, -i)
+            val key = dailyTrafficDateKey(dayCal)
+            val info = decodeDailyTrafficInfo(key)
+            result.add(Triple(key, info?.uplinkTotal ?: 0L, info?.downlinkTotal ?: 0L))
+        }
+        return result
+    }
+
+    fun getTodayTrafficDetail(): Pair<Long, Long> = getDailyTrafficDetail(0)
+
+    /** Sum of all recorded days that fall within the current calendar month. */
+    fun getCurrentMonthTrafficDetail(): Pair<Long, Long> {
+        val monthPrefix = java.text.SimpleDateFormat("yyyy-MM", java.util.Locale.US).format(java.util.Date())
+        var uplinkTotal = 0L
+        var downlinkTotal = 0L
+        decodeDailyTrafficDates().forEach { dateKey ->
+            if (dateKey.startsWith(monthPrefix)) {
+                decodeDailyTrafficInfo(dateKey)?.let { info ->
+                    uplinkTotal += info.uplinkTotal
+                    downlinkTotal += info.downlinkTotal
+                }
+            }
+        }
         return uplinkTotal to downlinkTotal
     }
 
