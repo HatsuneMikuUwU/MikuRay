@@ -777,7 +777,6 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="confirm_reset_traffic_all">Reset penggunaan data buat semua grup? Nggak bisa dibatalin lho ya</string>
     <string name="pref_traffic_enabled_title">Tampilin Penggunaan Data</string>
     <string name="pref_traffic_enabled_summary">Tampilin jumlah upload dan download di tiap server</string>
-    <string name="title_total_traffic_detail">Penggunaan Traffic Chip</string>
     <string name="label_total_traffic_upload">Upload</string>
     <string name="label_total_traffic_download">Download</string>
     <string name="label_total_traffic_up">Up</string>

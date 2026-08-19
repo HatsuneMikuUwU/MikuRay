@@ -787,7 +787,6 @@
     <string name="confirm_reset_traffic_all">Сбросить статистику трафика для всех групп? Это действие нельзя отменить</string>
     <string name="pref_traffic_enabled_title">Показывать статистику трафика</string>
     <string name="pref_traffic_enabled_summary">Показывать объем загрузки и отдачи на каждом сервере</string>
-    <string name="title_total_traffic_detail">Трафик плашки</string>
     <string name="label_total_traffic_upload">Отдача</string>
     <string name="label_total_traffic_download">Загрузка</string>
     <string name="label_total_traffic_up">Исх</string>

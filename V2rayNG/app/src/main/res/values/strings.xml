@@ -809,7 +809,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="confirm_reset_traffic_all">Reset data usage for all groups? This cannot be undone</string>
     <string name="pref_traffic_enabled_title">Show Data Usage</string>
     <string name="pref_traffic_enabled_summary">Show upload and download traffic on each server</string>
-    <string name="title_total_traffic_detail">Traffic Chip Usage</string>
     <string name="label_total_traffic_upload">Upload</string>
     <string name="label_total_traffic_download">Download</string>
     <string name="label_total_traffic_up">Up</string>

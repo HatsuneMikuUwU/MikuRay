@@ -12,25 +12,15 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/rmx_arrow_up_down_line"
-        app:tint="?attr/colorPrimary" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_dialog_title"
-        style="?attr/textAppearanceTitleMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="@string/title_total_traffic_detail"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="17sp" />
+        android:src="@drawable/rmx_business_bar_chart_line"
+        app:tint="?attr/colorOnSurface" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_combined_value"
         style="?attr/textAppearanceTitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
         android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
