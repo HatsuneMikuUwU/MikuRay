@@ -1,6 +1,7 @@
 package com.v2ray.ang.util
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,9 +46,8 @@ class TestProgressDialogController(
             b.progressIndicator.visibility = View.VISIBLE
             b.progressIndicator.isIndeterminate = true
             b.tvCounter.text = context.getString(R.string.test_progress_counter, 0, total)
-            b.negativeButton.visibility = View.VISIBLE
-            b.positiveButton.text = context.getString(R.string.action_minimize)
-            b.positiveButton.setOnClickListener { dismiss() }
+            dialog?.getButton(DialogInterface.BUTTON_NEGATIVE)?.visibility = View.VISIBLE
+            dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.setText(R.string.action_minimize)
             return
         }
 
@@ -63,14 +63,14 @@ class TestProgressDialogController(
         val d = MaterialAlertDialogBuilder(context)
             .setView(b.root)
             .setCancelable(false)
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                onCancel()
+            }
+            .setPositiveButton(R.string.action_minimize, null)
             .create()
+
         WindowBlurUtils.applyWindowBlur(d.window)
 
-        b.negativeButton.setOnClickListener {
-            dismiss()
-            onCancel()
-        }
-        b.positiveButton.setOnClickListener { dismiss() }
         d.setOnDismissListener {
             dialog = null
             binding = null
@@ -112,9 +112,9 @@ class TestProgressDialogController(
         b.progressIndicator.isIndeterminate = false
         b.progressIndicator.setProgressCompat(100, true)
         b.progressIndicator.visibility = View.GONE
-        b.negativeButton.visibility = View.GONE
-        b.positiveButton.text = context.getString(android.R.string.ok)
-        b.positiveButton.setOnClickListener { dismiss() }
+        
+        dialog?.getButton(DialogInterface.BUTTON_NEGATIVE)?.visibility = View.GONE
+        dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.setText(android.R.string.ok)
     }
 
     fun dismiss() {

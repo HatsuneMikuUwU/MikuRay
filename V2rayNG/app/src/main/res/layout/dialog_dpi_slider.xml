@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="8dp"
-    android:paddingVertical="12dp">
+    android:paddingTop="12dp"
+    android:paddingHorizontal="8dp">
 
     <com.google.android.material.slider.Slider
         android:id="@+id/slider_dpi"

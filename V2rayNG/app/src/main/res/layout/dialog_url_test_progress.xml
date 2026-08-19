@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="?attr/dialogPreferredPadding">
+    android:paddingTop="?attr/dialogPreferredPadding"
+    android:paddingHorizontal="?attr/dialogPreferredPadding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title"
             style="?attr/textAppearanceTitleMedium"
-            android:layout_width="0.0dip"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
             android:textColor="?attr/colorOnSurface"
@@ -35,45 +36,16 @@
         android:id="@+id/progress_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12.0dip"
+        android:layout_marginTop="12dp"
         android:indeterminate="true"
-        app:trackCornerRadius="4.0dip" />
+        app:trackCornerRadius="4dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="320.0dip"
-        android:layout_marginTop="12.0dip"
+        android:layout_height="320dp"
+        android:layout_marginTop="12dp"
         android:clipToPadding="false"
         tools:listitem="@layout/item_url_test_result" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16.0dip"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/negative_button"
-            style="@style/Widget.Material3Expressive.Button.TonalButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12.0dip"
-            android:minWidth="0dp"
-            android:paddingHorizontal="12dp"
-            android:text="@android:string/cancel"
-            android:textColor="?attr/colorOnSecondaryContainer" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/positive_button"
-            style="@style/Widget.Material3Expressive.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:paddingHorizontal="12dp"
-            android:text="@string/action_minimize" />
-
-    </LinearLayout>
 
 </LinearLayout>

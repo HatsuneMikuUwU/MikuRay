@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="16dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="0dp">
 
     <com.skydoves.colorpickerview.ColorPickerView
         android:id="@+id/color_picker_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginBottom="16dp"
         app:actionMode="last" />
 
 </LinearLayout>

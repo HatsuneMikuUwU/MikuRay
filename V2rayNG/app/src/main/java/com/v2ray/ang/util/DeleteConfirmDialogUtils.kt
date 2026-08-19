@@ -1,15 +1,13 @@
 package com.v2ray.ang.util
 
-
-import com.miku.ray.remixicon.R as RemixR
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.DialogDeleteConfirmBinding
+import com.miku.ray.remixicon.R as RemixR
 
 fun showDeleteConfirmDialog(
     context: Context,
@@ -24,20 +22,15 @@ fun showDeleteConfirmDialog(
     binding.dialogIcon.setImageResource(iconRes)
     binding.dialogTitle.setText(titleRes)
     binding.dialogMessage.setText(messageRes)
-    binding.positiveButton.setText(positiveTextRes)
-    binding.negativeButton.setText(negativeTextRes)
 
     val dialog = MaterialAlertDialogBuilder(context)
         .setView(binding.root)
+        .setPositiveButton(positiveTextRes) { _, _ ->
+            onConfirm()
+        }
+        .setNegativeButton(negativeTextRes, null)
         .create()
-    WindowBlurUtils.applyWindowBlur(dialog.window)
 
-    binding.positiveButton.setOnClickListener {
-        dialog.dismiss()
-        onConfirm()
-    }
-    binding.negativeButton.setOnClickListener {
-        dialog.dismiss()
-    }
+    WindowBlurUtils.applyWindowBlur(dialog.window)
     dialog.show()
 }
