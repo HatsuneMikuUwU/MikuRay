@@ -125,7 +125,7 @@ object AppConfig {
     const val PREF_BLUR_INTENSITY = "pref_blur_intensity"
     const val PREF_BLUR_RADIUS = "pref_blur_radius"
     const val PREF_BLUR_ROUNDS = "pref_blur_rounds"
-    const val DEFAULT_BLUR_RADIUS = 12
+    const val DEFAULT_BLUR_RADIUS = 10
     const val DEFAULT_BLUR_ROUNDS = 3
     const val PREF_BLUR_BOTTOM_INTENSITY = "pref_blur_bottom_intensity"
     const val PREF_BLUR_BOTTOM_RADIUS = "pref_blur_bottom_radius"
