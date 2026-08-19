@@ -329,6 +329,13 @@
             android:key="pref_show_total_traffic_chip"
             android:summary="@string/pref_show_total_traffic_chip_summary"
             android:title="@string/pref_show_total_traffic_chip_title" />
+            
+         <Preference
+            android:icon="@drawable/rmx_delete_bin_line"
+            app:layout="@layout/uwu_mid"
+            android:key="action_clear_total_traffic"
+            android:title="@string/pref_action_clear_total_traffic_title"
+            android:summary="@string/pref_action_clear_total_traffic_summary_empty" />
 
          <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/rmx_design_contrast_line"

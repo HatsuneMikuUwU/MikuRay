@@ -123,6 +123,7 @@ class UiSettingsActivity : BaseActivity() {
         private val weatherUnit by lazy { findPreference<ListPreference>(AppConfig.PREF_WEATHER_USE_CELSIUS) }
         private val weatherCustomLocation by lazy { findPreference<EditTextPreference>(AppConfig.PREF_WEATHER_CUSTOM_LOCATION) }
         private val showTotalTrafficChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP) }
+        private val clearTotalTraffic by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_CLEAR_TOTAL_TRAFFIC) }
         private val searchChipGradient by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SEARCH_CHIP_GRADIENT) }
         private val toolbarCenterSubtitleMode by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE) }
         private val showRealtimeTrafficIp by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP) }
@@ -535,6 +536,27 @@ class UiSettingsActivity : BaseActivity() {
                 MmkvManager.encodeSettings(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, checked)
                 showWeatherChip?.isEnabled = !checked
                 searchChipGradient?.isEnabled = checked || (showWeatherChip?.isChecked == true)
+                updateClearTotalTrafficSummary(chipOnOverride = checked)
+                true
+            }
+
+            updateClearTotalTrafficSummary()
+            clearTotalTraffic?.setOnPreferenceClickListener {
+                if (MmkvManager.getTotalTrafficDetail() == null) {
+                    requireContext().toastInfo(getString(R.string.pref_action_clear_total_traffic_summary_empty))
+                    return@setOnPreferenceClickListener true
+                }
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.pref_action_clear_total_traffic_title)
+                    .setIcon(RemixR.drawable.rmx_delete_bin_line)
+                    .setMessage(R.string.confirm_clear_total_traffic)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        MmkvManager.clearTotalTrafficDataAndHistory()
+                        updateClearTotalTrafficSummary()
+                        requireContext().snackbarSuccess(getString(R.string.toast_total_traffic_cleared), title = getString(R.string.title_alerter_success))
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .showBlur()
                 true
             }
 
@@ -689,6 +711,29 @@ class UiSettingsActivity : BaseActivity() {
                     getString(R.string.summary_pref_app_font_custom_delete_set, name)
                 } else {
                     getString(R.string.summary_pref_app_font_custom_delete_empty)
+                }
+            }
+        }
+
+        private fun updateClearTotalTrafficSummary(chipOnOverride: Boolean? = null) {
+            val chipOn = chipOnOverride ?: (showTotalTrafficChip?.isChecked == true)
+            val detail = MmkvManager.getTotalTrafficDetail()
+            clearTotalTraffic?.apply {
+                if (!chipOn) {
+                    isEnabled = false
+                    summary = getString(
+                        R.string.summary_pref_action_clear_total_traffic_disabled,
+                        getString(R.string.pref_show_total_traffic_chip_title)
+                    )
+                    return@apply
+                }
+                isEnabled = detail != null
+                summary = if (detail != null) {
+                    val (uplink, downlink) = detail
+                    val totalText = MmkvManager.formatTrafficBytesPublic(uplink + downlink)
+                    getString(R.string.pref_action_clear_total_traffic_summary_set, totalText)
+                } else {
+                    getString(R.string.pref_action_clear_total_traffic_summary_empty)
                 }
             }
         }

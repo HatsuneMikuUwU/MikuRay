@@ -258,7 +258,7 @@
     <string name="title_pref_show_isp_info">显示运营商名称</string>
     <string name="summary_pref_show_isp_info">在检测到的 IP 旁显示运营商/组织名称</string>
     <string name="title_pref_hide_scroll_buttons">隐藏悬浮滚动按钮</string>
-    <string name="summary_pref_hide_scroll_buttons">隐藏服务器列表上悬浮的滚动到顶部/底部/选中项按钮。开启后，可在\"更多\"菜单中使用「前往选中的配置」代替</string>
+    <string name="summary_pref_hide_scroll_buttons">隐藏服务器列表上悬浮的滚动到顶部/底部/选中项按钮。开启后，可在 \"更多\" 菜单中使用「前往选中的配置」代替</string>
 
     <string name="title_pref_proxy_sharing_enabled">允许来自局域网的连接</string>
     <string name="summary_pref_proxy_sharing_enabled">其他设备可以使用 socks/http 协议通过您的 IP 地址连接到代理, 仅在受信任的网络中启用以避免未经授权的连接</string>
@@ -647,8 +647,14 @@
     <string name="title_search_bar_chip">搜索栏组件</string>
     <string name="pref_show_weather_chip_title">显示天气组件</string>
     <string name="pref_show_weather_chip_summary">根据您的位置在搜索栏旁显示当前温度。不能与总流量组件同时启用</string>
-    <string name="pref_show_total_traffic_chip_title">显示总流量组件</string>
-    <string name="pref_show_total_traffic_chip_summary">在搜索栏旁边显示所有配置的上传+下载总流量。不能与天气组件同时启用</string>
+    <string name="pref_show_total_traffic_chip_title">显示总流量使用组件</string>
+    <string name="pref_show_total_traffic_chip_summary">在搜索栏旁显示持续累计的上传 + 下载总流量。不能与天气信息组件同时启用</string>
+    <string name="pref_action_clear_total_traffic_title">清除流量组件数据</string>
+    <string name="pref_action_clear_total_traffic_summary_empty">尚未记录流量组件数据</string>
+    <string name="pref_action_clear_total_traffic_summary_set">当前：%1$s</string>
+    <string name="summary_pref_action_clear_total_traffic_disabled">请先启用 \"%1$s\" 以便在此处开始记录流量</string>
+    <string name="confirm_clear_total_traffic">清除流量组件数据及其每日/每月历史记录？</string>
+    <string name="toast_total_traffic_cleared">流量组件数据已清除</string>
     <string name="pref_search_chip_gradient_title">渐变组件背景</string>
     <string name="pref_search_chip_gradient_summary">当天气或总流量组件启用时，在搜索栏组件上应用主色至第三色 (primary-to-tertiary) 的渐变背景</string>
 
@@ -760,9 +766,11 @@
     <string name="confirm_reset_traffic_all">重置所有分组的数据用量？此操作无法撤销哦</string>
     <string name="pref_traffic_enabled_title">显示数据用量</string>
     <string name="pref_traffic_enabled_summary">在每个服务器上显示上传和下载流量</string>
-    <string name="title_total_traffic_detail">总流量使用情况</string>
+    <string name="title_total_traffic_detail">流量组件使用情况</string>
     <string name="label_total_traffic_upload">上传</string>
     <string name="label_total_traffic_download">下载</string>
+    <string name="label_total_traffic_up">上</string>
+    <string name="label_total_traffic_down">下</string>
     <string name="label_total_traffic_combined">合计</string>
     <string name="label_total_traffic_today">今天</string>
     <string name="label_total_traffic_month">本月</string>

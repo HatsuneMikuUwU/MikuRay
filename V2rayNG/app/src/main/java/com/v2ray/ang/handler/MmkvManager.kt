@@ -37,6 +37,8 @@ object MmkvManager {
     private const val ID_SETTING = "SETTING"
     private const val ID_DAILY_TRAFFIC = "DAILY_TRAFFIC"
     private const val KEY_DAILY_TRAFFIC_DATES = "DAILY_TRAFFIC_DATES"
+    private const val KEY_TOTAL_TRAFFIC_UPLINK = "TOTAL_TRAFFIC_UPLINK_ALL_TIME"
+    private const val KEY_TOTAL_TRAFFIC_DOWNLINK = "TOTAL_TRAFFIC_DOWNLINK_ALL_TIME"
     private const val DAILY_TRAFFIC_RETENTION_DAYS = 90
     private const val KEY_SELECTED_SERVER = "SELECTED_SERVER"
     private const val KEY_ANG_CONFIGS = "ANG_CONFIGS"
@@ -421,7 +423,7 @@ object MmkvManager {
 
     fun resetAllTraffic() {
         decodeAllServerList().forEach { guid -> resetProfileTraffic(guid) }
-        dailyTrafficStorage.clearAll()
+        clearDailyTrafficHistory()
     }
 
     fun getTotalTrafficString(): String? {
@@ -429,16 +431,53 @@ object MmkvManager {
         return formatTrafficBytes(uplinkTotal + downlinkTotal)
     }
 
+    /**
+     * All-time total traffic, kept as its own running counter (in [dailyTrafficStorage]) so it
+     * survives server deletions/imports. This is no longer derived by summing the live server
+     * list's per-profile traffic - it only grows via [addTotalTrafficAllTime]. It is untouched by
+     * [resetAllTraffic] (the server list's "Reset traffic" menu); it only shrinks via the explicit
+     * [clearTotalTrafficDataAndHistory] call wired to the "Clear total traffic data" preference.
+     */
     fun getTotalTrafficDetail(): Pair<Long, Long>? {
-        var uplinkTotal = 0L
-        var downlinkTotal = 0L
-        decodeAllServerList().forEach { guid ->
-            val aff = decodeServerAffiliationInfo(guid) ?: return@forEach
-            uplinkTotal += aff.uplinkTotal
-            downlinkTotal += aff.downlinkTotal
-        }
+        val uplinkTotal = dailyTrafficStorage.decodeLong(KEY_TOTAL_TRAFFIC_UPLINK, 0L)
+        val downlinkTotal = dailyTrafficStorage.decodeLong(KEY_TOTAL_TRAFFIC_DOWNLINK, 0L)
         if (uplinkTotal + downlinkTotal == 0L) return null
         return uplinkTotal to downlinkTotal
+    }
+
+    /**
+     * Called from TrafficController on every traffic tick to accumulate the all-time total.
+     * Only invoked while the "Show total traffic usage chip" preference is enabled, so nothing
+     * is counted here when the chip is off.
+     */
+    fun addTotalTrafficAllTime(uplink: Long, downlink: Long) {
+        if (uplink == 0L && downlink == 0L) return
+        val newUplinkTotal = dailyTrafficStorage.decodeLong(KEY_TOTAL_TRAFFIC_UPLINK, 0L) + uplink
+        val newDownlinkTotal = dailyTrafficStorage.decodeLong(KEY_TOTAL_TRAFFIC_DOWNLINK, 0L) + downlink
+        dailyTrafficStorage.encode(KEY_TOTAL_TRAFFIC_UPLINK, newUplinkTotal)
+        dailyTrafficStorage.encode(KEY_TOTAL_TRAFFIC_DOWNLINK, newDownlinkTotal)
+    }
+
+    private fun clearTotalTrafficAllTime() {
+        dailyTrafficStorage.remove(KEY_TOTAL_TRAFFIC_UPLINK)
+        dailyTrafficStorage.remove(KEY_TOTAL_TRAFFIC_DOWNLINK)
+    }
+
+    /** Wipes just the recorded daily/monthly traffic history (today, this month, history list). */
+    private fun clearDailyTrafficHistory() {
+        decodeDailyTrafficDates().forEach { dailyTrafficStorage.removeValueForKey(it) }
+        dailyTrafficStorage.remove(KEY_DAILY_TRAFFIC_DATES)
+    }
+
+    /**
+     * Clears everything backing the total traffic chip: the all-time counter shown on the chip
+     * itself, plus the daily/monthly history shown in its detail dialog. Does not touch any
+     * individual server's own traffic counter - that's reset separately via the server list's
+     * "Reset traffic" menu (resetProfileTraffic / resetGroupTraffic / resetAllTraffic).
+     */
+    fun clearTotalTrafficDataAndHistory() {
+        clearTotalTrafficAllTime()
+        clearDailyTrafficHistory()
     }
 
     private fun dailyTrafficDateKey(calendar: java.util.Calendar): String {
@@ -461,7 +500,11 @@ object MmkvManager {
         dailyTrafficStorage.encode(KEY_DAILY_TRAFFIC_DATES, JsonUtil.toJson(dates))
     }
 
-    /** Called from TrafficController on every traffic tick to accumulate today's usage. */
+    /**
+     * Called from TrafficController on every traffic tick to accumulate today's usage. Only
+     * invoked while the "Show total traffic usage chip" preference is enabled - this history
+     * backs that chip's detail dialog and is independent of any per-server traffic.
+     */
     fun addDailyTraffic(uplink: Long, downlink: Long) {
         if (uplink == 0L && downlink == 0L) return
         val todayKey = dailyTrafficDateKey(java.util.Calendar.getInstance())

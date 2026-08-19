@@ -108,7 +108,11 @@ object TrafficController {
 
         val guid = MmkvManager.getSelectServer() ?: return
         MmkvManager.addProfileTraffic(guid, proxyUplink, proxyDownlink)
-        MmkvManager.addDailyTraffic(proxyUplink, proxyDownlink)
+
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) == true) {
+            MmkvManager.addDailyTraffic(proxyUplink, proxyDownlink)
+            MmkvManager.addTotalTrafficAllTime(proxyUplink, proxyDownlink)
+        }
 
         getService()?.let { svc ->
             MessageUtil.sendMsg2UI(svc, AppConfig.MSG_TRAFFIC_UPDATED, guid)

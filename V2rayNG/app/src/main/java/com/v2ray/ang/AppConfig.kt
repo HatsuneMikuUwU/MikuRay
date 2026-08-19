@@ -180,6 +180,7 @@ object AppConfig {
     const val WEATHER_LOCATION_TIMEOUT_MS = 10_000L
     const val WEATHER_LOCATION_STALE_METERS = 5_000f
     const val PREF_SHOW_TOTAL_TRAFFIC_CHIP = "pref_show_total_traffic_chip"
+    const val PREF_ACTION_CLEAR_TOTAL_TRAFFIC = "action_clear_total_traffic"
     const val PREF_SEARCH_CHIP_GRADIENT = "pref_search_chip_gradient"
     const val PREF_SHOW_REALTIME_TRAFFIC_IP = "pref_show_realtime_traffic_ip"
 

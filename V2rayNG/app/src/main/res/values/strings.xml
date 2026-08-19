@@ -691,7 +691,13 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="pref_show_weather_chip_title">Show weather chip</string>
     <string name="pref_show_weather_chip_summary">Show current temperature next to the search bar based on your location. Can\'t be active at the same time as the total traffic chip</string>
     <string name="pref_show_total_traffic_chip_title">Show total traffic usage chip</string>
-    <string name="pref_show_total_traffic_chip_summary">Show total upload + download traffic across all profiles next to the search bar. Can\'t be active at the same time as the weather chip</string>
+    <string name="pref_show_total_traffic_chip_summary">Show accumulated upload + download traffic next to the search bar. Can\'t be active at the same time as the weather chip</string>
+    <string name="pref_action_clear_total_traffic_title">Clear traffic chip data</string>
+    <string name="pref_action_clear_total_traffic_summary_empty">No traffic chip data recorded yet</string>
+    <string name="pref_action_clear_total_traffic_summary_set">Current: %1$s</string>
+    <string name="summary_pref_action_clear_total_traffic_disabled">Enable \"%1$s\" first to start recording traffic here</string>
+    <string name="confirm_clear_total_traffic">Clear traffic chip data along with its daily/monthly history?</string>
+    <string name="toast_total_traffic_cleared">Traffic chip data cleared</string>
     <string name="pref_search_chip_gradient_title">Gradient chip background</string>
     <string name="pref_search_chip_gradient_summary">Apply a primary-to-tertiary gradient background on the search bar chip while the weather or total traffic chip is active</string>
 
@@ -803,9 +809,11 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="confirm_reset_traffic_all">Reset data usage for all groups? This cannot be undone</string>
     <string name="pref_traffic_enabled_title">Show Data Usage</string>
     <string name="pref_traffic_enabled_summary">Show upload and download traffic on each server</string>
-    <string name="title_total_traffic_detail">Total Traffic Usage</string>
+    <string name="title_total_traffic_detail">Traffic Chip Usage</string>
     <string name="label_total_traffic_upload">Upload</string>
     <string name="label_total_traffic_download">Download</string>
+    <string name="label_total_traffic_up">Up</string>
+    <string name="label_total_traffic_down">Down</string>
     <string name="label_total_traffic_combined">Combined</string>
     <string name="label_total_traffic_today">Today</string>
     <string name="label_total_traffic_month">This Month</string>

@@ -667,8 +667,14 @@
     <string name="title_search_bar_chip">Плашка строки поиска</string>
     <string name="pref_show_weather_chip_title">Показывать плашку погоды</string>
     <string name="pref_show_weather_chip_summary">Показывать текущую температуру рядом с поисковой строкой на основе вашего местоположения. Не может быть активна одновременно с плашкой общего трафика</string>
-    <string name="pref_show_total_traffic_chip_title">Показывать плашку общего объема трафика</string>
-    <string name="pref_show_total_traffic_chip_summary">Показывать общий трафик (отправка + загрузка) для всех профилей рядом со строкой поиска. Не может работать одновременно с плашкой погоды</string>
+    <string name="pref_show_total_traffic_chip_title">Показывать плашку общего использования трафика</string>
+    <string name="pref_show_total_traffic_chip_summary">Показывать суммарный исходящий и входящий трафик рядом с поисковой строкой. Не может быть активна одновременно с плашкой погоды</string>
+    <string name="pref_action_clear_total_traffic_title">Очистить данные плашки трафика</string>
+    <string name="pref_action_clear_total_traffic_summary_empty">Данные плашки трафика еще не записаны</string>
+    <string name="pref_action_clear_total_traffic_summary_set">Текущие: %1$s</string>
+    <string name="summary_pref_action_clear_total_traffic_disabled">Сначала включите \"%1$s\", чтобы здесь начала вестись запись трафика</string>
+    <string name="confirm_clear_total_traffic">Очистить данные плашки трафика вместе с дневной/месячной историей?</string>
+    <string name="toast_total_traffic_cleared">Данные плашки трафика очищены</string>
     <string name="pref_search_chip_gradient_title">Градиентный фон плашки</string>
     <string name="pref_search_chip_gradient_summary">Применить градиентный фон (от цвета primary к tertiary) на плашке строки поиска, когда активна плашка погоды или общего трафика</string>
 
@@ -781,9 +787,11 @@
     <string name="confirm_reset_traffic_all">Сбросить статистику трафика для всех групп? Это действие нельзя отменить</string>
     <string name="pref_traffic_enabled_title">Показывать статистику трафика</string>
     <string name="pref_traffic_enabled_summary">Показывать объем загрузки и отдачи на каждом сервере</string>
-    <string name="title_total_traffic_detail">Общий объем трафика</string>
+    <string name="title_total_traffic_detail">Трафик плашки</string>
     <string name="label_total_traffic_upload">Отдача</string>
     <string name="label_total_traffic_download">Загрузка</string>
+    <string name="label_total_traffic_up">Исх</string>
+    <string name="label_total_traffic_down">Вх</string>
     <string name="label_total_traffic_combined">Всего</string>
     <string name="label_total_traffic_today">Сегодня</string>
     <string name="label_total_traffic_month">В этом месяце</string>
