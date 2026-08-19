@@ -921,6 +921,9 @@
     <string name="blur_intensity_rounds_label">模糊迭代次数 (1–15)</string>
     <string name="summary_blur_intensity_value">半径: %1$d · 迭代: %2$d</string>
     <string name="pref_blur_bottom_intensity">底部卡片模糊强度</string>
+    <string name="blur_bottom_radius_label">模糊半径 (1–50)</string>
+    <string name="blur_bottom_alpha_label">背景不透明度 (0–100%)</string>
+    <string name="summary_blur_bottom_intensity_value">半径: %1$d · 不透明度: %2$d%%</string>
     <string name="title_blur_settings">模糊设置</string>
     <string name="title_blur_warning">较高的迭代次数 (10+) 可能会导致掉帧。建议：迭代 2-5 次，半径为 25-40。</string>
     <string name="toast_allow_insecure_deprecated">当前节点使用未加密连接，您的通信可能会被威权政府掌控的网络中间设施直接查看\n为了安全，此类节点无法通过 26.2.6+ 版本的 Xray 核心连接\n如果是自建节点请启用 TLS 等安全加密，或固定证书 pinnedCA256\n如果机场节点请联系服务商完成技术升级，如服务商拒绝配合，建议更换更重视用户安全的服务商\n更多的信息，请访问 https://github.com/2dust/v2rayN/discussions/9460</string>

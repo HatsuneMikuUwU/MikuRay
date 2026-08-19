@@ -1235,8 +1235,8 @@ class UiSettingsActivity : BaseActivity() {
             blurIntensity?.updateSummary(savedRadius, savedRounds)
 
             val savedBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-            val savedBottomRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
-            blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomRounds)
+            val savedBottomAlpha = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ALPHA, AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA)
+            blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomAlpha)
 
             updateSelectedBannerCategoryVisibility()
         }

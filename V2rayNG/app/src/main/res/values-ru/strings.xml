@@ -942,6 +942,9 @@
     <string name="blur_intensity_rounds_label">Итерации размытия (1–15)</string>
     <string name="summary_blur_intensity_value">Радиус: %1$d · Итерации: %2$d</string>
     <string name="pref_blur_bottom_intensity">Интенсивность размытия нижней карточки</string>
+    <string name="blur_bottom_radius_label">Радиус BlurView (1–50)</string>
+    <string name="blur_bottom_alpha_label">Непрозрачность фона (0–100%)</string>
+    <string name="summary_blur_bottom_intensity_value">Радиус: %1$d · Непрозрачность: %2$d%%</string>
     <string name="title_blur_settings">Настройки размытия</string>
     <string name="title_blur_warning">Высокое число итераций (10+) может снизить FPS. Рекомендуется: 2–5 итераций с радиусом 25–40</string>
     <string name="toast_allow_insecure_deprecated">Этот узел использует незашифрованное соединение. Ваши данные могут быть перехвачены и просмотрены государственными структурами через промежуточное сетевое оборудование.\nВ целях безопасности такие узлы больше не поддерживаются в Xray core версии 26.2.6+.\nДля исправления: включите TLS (или другое шифрование) на своем сервере или используйте Certificate Pinning (pinnedCA256).\nЕсли вы используете платный сервис, обратитесь в поддержку для обновления. Если провайдер отказывается, рекомендуем сменить его на более безопасный.\nПодробнее: https://github.com/2dust/v2rayN/discussions/9460</string>

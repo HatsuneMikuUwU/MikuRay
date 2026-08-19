@@ -2,9 +2,7 @@ package com.v2ray.ang.ui.dialog
 
 
 import com.miku.ray.remixicon.R as RemixR
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +12,7 @@ import com.google.android.material.slider.Slider
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.util.BlurBottomStatusController
 import com.v2ray.ang.util.WindowBlurUtils
 
 class BlurBottomIntensityDialog @JvmOverloads constructor(
@@ -21,25 +20,22 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : Preference(context, attrs) {
 
-    private fun Context.findActivity(): Activity? {
-        var ctx = this
-        while (ctx is ContextWrapper) {
-            if (ctx is Activity) return ctx
-            ctx = ctx.baseContext
-        }
-        return null
-    }
-
     override fun onClick() {
-        val originalRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
-        val originalRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS)
+        val originalRadius = MmkvManager.decodeSettingsInt(
+            AppConfig.PREF_BLUR_BOTTOM_RADIUS,
+            AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
+        )
+        val originalAlpha = MmkvManager.decodeSettingsInt(
+            AppConfig.PREF_BLUR_BOTTOM_ALPHA,
+            AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
+        )
 
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_blur_intensity, null)
-        val sliderRadius = dialogView.findViewById<Slider>(R.id.slider_blur_radius)
-        val sliderRounds = dialogView.findViewById<Slider>(R.id.slider_blur_rounds)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_blur_bottom_intensity, null)
+        val sliderRadius = dialogView.findViewById<Slider>(R.id.slider_blur_bottom_radius)
+        val sliderAlpha = dialogView.findViewById<Slider>(R.id.slider_blur_bottom_alpha)
 
-        sliderRadius.value = originalRadius.toFloat().coerceIn(2f, 100f)
-        sliderRounds.value = originalRounds.toFloat().coerceIn(1f, 15f)
+        sliderRadius.value = originalRadius.toFloat().coerceIn(1f, 50f)
+        sliderAlpha.value = originalAlpha.toFloat().coerceIn(0f, 100f)
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(R.string.pref_blur_bottom_intensity)
@@ -53,39 +49,49 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         WindowBlurUtils.applyWindowBlur(dialog.window)
         dialog.show()
 
+        sliderRadius.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) BlurBottomStatusController.updateRadius(value)
+        }
+        sliderAlpha.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) BlurBottomStatusController.updateAlpha(value)
+        }
+
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val radius = sliderRadius.value.toInt()
-            val rounds = sliderRounds.value.toInt()
+            val alpha = sliderAlpha.value.toInt()
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, radius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, rounds)
-            updateSummary(radius, rounds)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, alpha)
+            updateSummary(radius, alpha)
             dialog.dismiss()
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, originalRadius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, originalRounds)
-            updateSummary(originalRadius, originalRounds)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, originalAlpha)
+            BlurBottomStatusController.updateRadius(originalRadius.toFloat())
+            BlurBottomStatusController.updateAlpha(originalAlpha.toFloat())
+            updateSummary(originalRadius, originalAlpha)
             dialog.dismiss()
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             val defaultRadius = AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
-            val defaultRounds = AppConfig.DEFAULT_BLUR_BOTTOM_ROUNDS
+            val defaultAlpha = AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
 
             sliderRadius.value = defaultRadius.toFloat()
-            sliderRounds.value = defaultRounds.toFloat()
-            WindowBlurUtils.updateWindowBlur(dialog.window, defaultRadius.toFloat(), defaultRounds)
+            sliderAlpha.value = defaultAlpha.toFloat()
+            BlurBottomStatusController.updateRadius(defaultRadius.toFloat())
+            BlurBottomStatusController.updateAlpha(defaultAlpha.toFloat())
 
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, defaultRadius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ROUNDS, defaultRounds)
-            updateSummary(defaultRadius, defaultRounds)
+            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, defaultAlpha)
+            updateSummary(defaultRadius, defaultAlpha)
 
             dialog.dismiss()
         }
     }
 
-    fun updateSummary(radius: Int, rounds: Int) {
-        summary = context.getString(R.string.summary_blur_intensity_value, radius, rounds)
+    fun updateSummary(radius: Int, alpha: Int) {
+        summary = context.getString(R.string.summary_blur_bottom_intensity_value, radius, alpha)
     }
 }
