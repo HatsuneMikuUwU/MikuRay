@@ -57,7 +57,7 @@ object BlurBottomStatusController {
 
         val density = activity.resources.displayMetrics.density
         glassRadiusPx = 28f * density
-        glassFillBaseColor = activity.getColorAttr("colorSurfaceContainerHigh")
+        glassFillBaseColor = activity.getColorAttr("colorSurfaceContainerHighest")
         glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
         val glassDrawable = GradientDrawable().apply {
             setColor(glassFillColor)
@@ -67,8 +67,8 @@ object BlurBottomStatusController {
             setCornerRadius(glassRadiusPx)
             setStrokeWidthTop(1f * density)
             setStrokeWidthBottom((2f / 3f) * density)
-            setStrokeColorTop(withAlpha(activity.getColorAttr("colorOutline"), 0xA8))
-            setStrokeColorBottom(withAlpha(activity.getColorAttr("colorOutline"), 0x70))
+            setStrokeColorTop(withAlpha(activity.getColorAttr("strokeDrawable"), 0xA8))
+            setStrokeColorBottom(withAlpha(activity.getColorAttr("strokeDrawable"), 0x70))
         }
 
         binding.blurBottomStatus.apply {

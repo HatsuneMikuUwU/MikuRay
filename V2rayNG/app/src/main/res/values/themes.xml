@@ -13,6 +13,7 @@
         <item name="android:windowBackground">?colorBg</item>
         <item name="colorBg">?colorSurfaceVariant</item>
         <item name="colorCard">?colorSurfaceContainerLow</item>
+        <item name="strokeDrawable">@android:color/white</item>
         <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
         <item name="bottomSheetDialogTheme">@style/AppThemeBottomSheetDialog</item>
         <item name="sideSheetDialogTheme">@style/AppThemeSideSheetDialog</item>
