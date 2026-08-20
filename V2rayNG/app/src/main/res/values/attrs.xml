@@ -56,6 +56,10 @@
 
     <declare-styleable name="DynamicShapeImageView">
         <attr name="shapeBackgroundColor" format="color|reference" />
+        <attr name="shapeTarget" format="enum">
+            <enum name="icon" value="0" />
+            <enum name="arrow" value="1" />
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="UwuHeaderIconView">

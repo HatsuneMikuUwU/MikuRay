@@ -636,6 +636,7 @@
     <string name="summary_pref_true_black">Установить чёрный фон для экономии заряда на AMOLED-дисплеях. Активно только в тёмном режиме</string>
     <string name="pref_true_black_only_in_night_mode">Доступно только в тёмном режиме</string>
     <string name="title_pref_icon_shape">Форма значка</string>
+    <string name="title_pref_arrow_shape">Форма стрелки</string>
     <string name="summary_pref_icon_shape">Выберите форму профильных значков</string>
     <string name="pref_custom_dpi">Пользовательский DPI приложения</string>
     <string name="pref_font_size">Размер шрифта</string>

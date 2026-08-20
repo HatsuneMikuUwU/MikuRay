@@ -99,6 +99,7 @@ class UiSettingsActivity : BaseActivity() {
         private val appLanguage by lazy { findPreference<ListPreference>(AppConfig.PREF_LANGUAGE) }
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
         private val iconShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ICON_SHAPE) }
+        private val arrowShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ARROW_SHAPE) }
         private val appIcon by lazy { findPreference<com.v2ray.ang.ui.dialog.AppIconPickerDialog>(AppConfig.PREF_APP_ICON) }
         private val customAppName by lazy { findPreference<ListPreference>(AppConfig.PREF_CUSTOM_APP_NAME) }
         private val customDpi by lazy { findPreference<DpiSliderDialog>(AppConfig.PREF_CUSTOM_DPI) }
@@ -432,6 +433,20 @@ class UiSettingsActivity : BaseActivity() {
                 requireContext().sendBroadcast(
                     android.content.Intent(AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED).apply {
                         putExtra(AppConfig.PREF_ICON_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ICON_SHAPE_DEFAULT })
+                    }
+                )
+                true
+            }
+
+            arrowShape?.setOnPreferenceChangeListener { pref, newValue ->
+                val valueStr = newValue.toString()
+                (pref as? ListPreference)?.let { lp ->
+                    val idx = lp.findIndexOfValue(valueStr)
+                    lp.summary = if (idx >= 0) lp.entries[idx] else valueStr
+                }
+                requireContext().sendBroadcast(
+                    android.content.Intent(AppConfig.BROADCAST_ACTION_ARROW_SHAPE_CHANGED).apply {
+                        putExtra(AppConfig.PREF_ARROW_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ARROW_SHAPE_DEFAULT })
                     }
                 )
                 true

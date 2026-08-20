@@ -134,6 +134,8 @@ object AppConfig {
     const val DEFAULT_BLUR_BOTTOM_ALPHA = 50
     const val PREF_ICON_SHAPE = "pref_icon_shape"
     const val PREF_ICON_SHAPE_DEFAULT = "uwu_shape_cookie"
+    const val PREF_ARROW_SHAPE = "pref_arrow_shape"
+    const val PREF_ARROW_SHAPE_DEFAULT = "uwu_shape_cookie"
 
     const val PREF_APP_ICON = "pref_app_icon"
     const val APP_ICON_DEFAULT = "default"
@@ -295,6 +297,7 @@ object AppConfig {
     const val BROADCAST_ACTION_ACTIVITY = "$ANG_PACKAGE.action.activity"
     const val BROADCAST_ACTION_WIDGET_CLICK = "$ANG_PACKAGE.action.widget.click"
     const val BROADCAST_ACTION_ICON_SHAPE_CHANGED = "$ANG_PACKAGE.action.icon_shape_changed"
+    const val BROADCAST_ACTION_ARROW_SHAPE_CHANGED = "$ANG_PACKAGE.action.arrow_shape_changed"
     const val BROADCAST_ACTION_PROFILE_BANNER_CHANGED = "$ANG_PACKAGE.action.profile_banner_changed"
     const val BROADCAST_ACTION_HOME_BANNER_CHANGED = "$ANG_PACKAGE.action.home_banner_changed"
     const val BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED = "$ANG_PACKAGE.action.header_top_row_padding_changed"

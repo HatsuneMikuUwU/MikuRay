@@ -16,21 +16,42 @@ import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.getColorAttr
 
+/**
+ * Shape-aware ImageView used both for the app's icon-shape background badges
+ * and, via [R.styleable.DynamicShapeImageView_shapeTarget], for the small
+ * "arrow" background badges shown at the end of preference/menu cards.
+ *
+ * Both targets share the exact same set of SVG shapes (see [resolveShapeId]),
+ * but each target has its own MMKV pref key / broadcast action so the icon
+ * shape and arrow shape can be customized independently from UI Settings.
+ */
 class DynamicShapeImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ShaderImageView(context, attrs, defStyleAttr) {
 
-    private var currentShapeKey: String? = AppConfig.PREF_ICON_SHAPE_DEFAULT
+    private enum class ShapeTarget { ICON, ARROW }
+
+    private var shapeTarget: ShapeTarget = ShapeTarget.ICON
+
+    private val prefKey: String
+        get() = if (shapeTarget == ShapeTarget.ARROW) AppConfig.PREF_ARROW_SHAPE else AppConfig.PREF_ICON_SHAPE
+
+    private val defaultShapeKey: String
+        get() = if (shapeTarget == ShapeTarget.ARROW) AppConfig.PREF_ARROW_SHAPE_DEFAULT else AppConfig.PREF_ICON_SHAPE_DEFAULT
+
+    private val broadcastAction: String
+        get() = if (shapeTarget == ShapeTarget.ARROW) AppConfig.BROADCAST_ACTION_ARROW_SHAPE_CHANGED else AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED
+
+    private var currentShapeKey: String? = null
 
     private var customBgColor: Int? = null
 
     private val shapeChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
-            if (intent?.action == AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED) {
-                val newKey = MmkvManager.decodeSettingsString(AppConfig.PREF_ICON_SHAPE)
-                    ?: AppConfig.PREF_ICON_SHAPE_DEFAULT
+            if (intent?.action == broadcastAction) {
+                val newKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
                 applyShape(newKey)
             }
         }
@@ -56,10 +77,28 @@ class DynamicShapeImageView @JvmOverloads constructor(
                 )
             }
 
+            shapeTarget = if (typedArray.getInt(R.styleable.DynamicShapeImageView_shapeTarget, 0) == 1) {
+                ShapeTarget.ARROW
+            } else {
+                ShapeTarget.ICON
+            }
+
             typedArray.recycle()
         }
 
+        currentShapeKey = defaultShapeKey
+
         scaleType = ScaleType.CENTER_CROP
+
+        // ShaderImageView's own init block already called createImageViewHelper()
+        // during the super() constructor call above, i.e. before shapeTarget and
+        // customBgColor (parsed just above) even existed yet — so that first
+        // helper was always built with the ICON defaults. Force a rebuild now
+        // that this view's real target/color are known, so arrow badges (and any
+        // non-default color) render correctly from the very first frame instead
+        // of only after the user actively changes the shape preference.
+        reloadShape()
+
         loadColorBitmap()
     }
 
@@ -80,11 +119,10 @@ class DynamicShapeImageView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode) {
-            val savedKey = MmkvManager.decodeSettingsString(AppConfig.PREF_ICON_SHAPE)
-                ?: AppConfig.PREF_ICON_SHAPE_DEFAULT
+            val savedKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
             applyShape(savedKey)
 
-            val filter = IntentFilter(AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED)
+            val filter = IntentFilter(broadcastAction)
             ContextCompat.registerReceiver(
                 context, shapeChangeReceiver, filter,
                 ContextCompat.RECEIVER_NOT_EXPORTED
@@ -103,8 +141,7 @@ class DynamicShapeImageView @JvmOverloads constructor(
         super.onWindowFocusChanged(hasWindowFocus)
 
         if (hasWindowFocus && !isInEditMode) {
-            val savedKey = MmkvManager.decodeSettingsString(AppConfig.PREF_ICON_SHAPE)
-                ?: AppConfig.PREF_ICON_SHAPE_DEFAULT
+            val savedKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
             applyShape(savedKey)
         }
     }
@@ -117,7 +154,8 @@ class DynamicShapeImageView @JvmOverloads constructor(
         }
     }
 
-    private fun resolveShapeId(): Int = when (currentShapeKey ?: AppConfig.PREF_ICON_SHAPE_DEFAULT) {
+    private fun resolveShapeId(): Int = when (currentShapeKey ?: defaultShapeKey) {
+        "uwu_shape_cookie"         -> R.raw.uwu_shape_cookie
         "uwu_shape_clover"         -> R.raw.uwu_shape_clover
         "uwu_shape_circle"         -> R.raw.uwu_shape_circle
         "uwu_shape_diamond"        -> R.raw.uwu_shape_diamond
@@ -127,9 +165,9 @@ class DynamicShapeImageView @JvmOverloads constructor(
         "uwu_shape_rounded_square" -> R.raw.uwu_shape_rounded_square
         "uwu_shape_squircle"       -> R.raw.uwu_shape_squircle
         "uwu_shape_heart"          -> R.raw.uwu_shape_heart
-        "uwu_shape_hive"       -> R.raw.uwu_shape_hive
-        "uwu_shape_pill"       -> R.raw.uwu_shape_pill
-        "uwu_shape_scallop"       -> R.raw.uwu_shape_scallop
-        else                       -> R.raw.uwu_shape_cookie
+        "uwu_shape_hive"           -> R.raw.uwu_shape_hive
+        "uwu_shape_pill"           -> R.raw.uwu_shape_pill
+        "uwu_shape_scallop"        -> R.raw.uwu_shape_scallop
+        else                       -> if (shapeTarget == ShapeTarget.ARROW) R.raw.uwu_shape_circle else R.raw.uwu_shape_cookie
     }
 }
