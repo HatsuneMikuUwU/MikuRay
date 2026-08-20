@@ -1,6 +1,7 @@
 package com.v2ray.ang.ui.userasset
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.dto.UrlContentRequest
 import com.v2ray.ang.dto.entities.AssetUrlCache
@@ -10,23 +11,47 @@ import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.HttpUtil
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.Utils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.io.File
 
+internal data class AssetFileMetadata(val length: Long, val lastModified: Long)
+
+internal data class UserAssetUiState(
+    val assets: List<AssetUrlCache> = emptyList(),
+    val fileMetadata: Map<String, AssetFileMetadata> = emptyMap()
+)
+
 class UserAssetViewModel : ViewModel() {
-    private val assets = mutableListOf<AssetUrlCache>()
-    private val builtInGeoFiles = listOf(AppConfig.GEOSITE_DAT, AppConfig.GEOIP_DAT, AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT)
+    private val builtInGeoFiles = listOf(
+        AppConfig.GEOSITE_DAT,
+        AppConfig.GEOIP_DAT,
+        AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT
+    )
 
-    val itemCount: Int
-        get() = assets.size
+    private val _uiState = MutableStateFlow(UserAssetUiState())
+    internal val uiState: StateFlow<UserAssetUiState> = _uiState.asStateFlow()
+    private var reloadJob: Job? = null
 
-    fun getAssets(): List<AssetUrlCache> = assets.toList()
+    fun reload(geoFilesSource: String, extDir: File): Job {
+        reloadJob?.cancel()
+        return viewModelScope.launch(Dispatchers.IO) {
+            val snapshot = buildAssetList(MmkvManager.decodeAssetUrls(), geoFilesSource)
+            val files = extDir.listFiles().orEmpty().associateBy { it.name }
+            val metadata = snapshot.mapNotNull { asset ->
+                files[asset.assetUrl.remarks]?.let { file ->
+                    asset.guid to AssetFileMetadata(file.length(), file.lastModified())
+                }
+            }.toMap()
 
-    fun getAsset(position: Int): AssetUrlCache? = assets.getOrNull(position)
-
-    fun reload(geoFilesSource: String) {
-        val decoded = MmkvManager.decodeAssetUrls()
-        assets.clear()
-        assets.addAll(buildAssetList(decoded, geoFilesSource))
+            ensureActive()
+            _uiState.value = UserAssetUiState(snapshot, metadata)
+        }.also { reloadJob = it }
     }
 
     private fun buildAssetList(
@@ -46,6 +71,8 @@ class UserAssetViewModel : ViewModel() {
                     )
                 )
             }
+
+        // Force update URL for geoip-only-cn-private.dat.
         return (builtInItems + savedAssets).map { cache ->
             if (cache.assetUrl.remarks == AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT) {
                 cache.copy(
@@ -65,7 +92,7 @@ class UserAssetViewModel : ViewModel() {
         proxyUsername: String? = null,
         proxyPassword: String? = null
     ): GeoDownloadResult {
-        val snapshot = getAssets()
+        val snapshot = uiState.value.assets
         var successCount = 0
         val failures = mutableListOf<String>()
 

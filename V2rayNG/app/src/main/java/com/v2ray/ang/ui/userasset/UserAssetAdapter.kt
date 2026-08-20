@@ -9,18 +9,15 @@ import com.v2ray.ang.R
 import com.v2ray.ang.contracts.BaseAdapterListener
 import com.v2ray.ang.databinding.ItemRecyclerUserAssetBinding
 import com.v2ray.ang.extension.toTrafficString
-
-import java.io.File
 import java.text.DateFormat
 import java.util.Date
 
 class UserAssetAdapter(
     private val viewModel: UserAssetViewModel,
-    private val extDir: File,
     private val adapterListener: BaseAdapterListener?
 ) : RecyclerView.Adapter<UserAssetAdapter.UserAssetViewHolder>() {
 
-    override fun getItemCount() = viewModel.itemCount
+    override fun getItemCount() = viewModel.uiState.value.assets.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAssetViewHolder {
         return UserAssetViewHolder(
@@ -34,15 +31,17 @@ class UserAssetAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UserAssetViewHolder, position: Int) {
-        val item = viewModel.getAsset(position) ?: return
-        val file = extDir.listFiles()?.find { it.name == item.assetUrl.remarks }
+        val state = viewModel.uiState.value
+        val item = state.assets.getOrNull(position) ?: return
+        val fileMetadata = state.fileMetadata[item.guid]
 
         with(holder.binding) {
             assetName.text = item.assetUrl.remarks
 
-            if (file != null) {
+            if (fileMetadata != null) {
                 val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM)
-                assetProperties.text = "${file.length().toTrafficString()}  •  ${dateFormat.format(Date(file.lastModified()))}"
+                assetProperties.text =
+                    "${fileMetadata.length.toTrafficString()}  •  ${dateFormat.format(Date(fileMetadata.lastModified))}"
             } else {
                 assetProperties.text = root.context.getString(R.string.msg_file_not_found)
             }

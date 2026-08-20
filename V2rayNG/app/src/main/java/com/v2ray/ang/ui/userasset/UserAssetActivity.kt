@@ -41,7 +41,7 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
     private val viewModel: UserAssetViewModel by viewModels()
     private lateinit var adapter: UserAssetAdapter
 
-    val extDir by lazy { File(Utils.userAssetPath(this)) }
+    private val extDir by lazy { File(Utils.userAssetPath(this)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,7 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = UserAssetAdapter(viewModel, extDir, ActivityAdapterListener())
+        adapter = UserAssetAdapter(viewModel, ActivityAdapterListener())
         binding.recyclerView.adapter = adapter
     }
 
@@ -170,46 +170,56 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
     }
 
     private fun downloadGeoFiles() {
-        refreshData()
         showLoading()
         toastInfo(R.string.msg_downloading_content)
 
         val proxyUsername = SettingsManager.getSocksUsername()
         val proxyPassword = SettingsManager.getSocksPassword()
         val httpPort = SettingsManager.getHttpPort()
-        lifecycleScope.launch(Dispatchers.IO) {
-            val result = viewModel.downloadGeoFiles(extDir, httpPort, proxyUsername, proxyPassword)
+        lifecycleScope.launch {
+            reloadDataAndAwait()
+
+            val result = withContext(Dispatchers.IO) {
+                viewModel.downloadGeoFiles(extDir, httpPort, proxyUsername, proxyPassword)
+            }
+
+            if (result.successCount > 0) {
+                snackbarSuccess(
+                    getString(R.string.title_update_asset_count, result.successCount),
+                    title = getString(R.string.title_alerter_success)
+                )
+            } else {
+                snackbarError(
+                    getString(R.string.menu_item_download_file),
+                    title = getString(R.string.title_alerter_error)
+                )
+            }
+
+            reloadDataAndAwait()
+            hideLoading()
+        }
+    }
+
+    private fun initAssets() {
+        lifecycleScope.launch(Dispatchers.Default) {
+            SettingsManager.initAssets(this@UserAssetActivity, assets)
             withContext(Dispatchers.Main) {
-                if (result.successCount > 0) {
-                    snackbarSuccess(
-                        getString(R.string.title_update_asset_count, result.successCount),
-                        title = getString(R.string.title_alerter_success)
-                    )
-                } else {
-                    snackbarError(
-                        getString(R.string.menu_item_download_file),
-                        title = getString(R.string.title_alerter_error)
-                    )
-                }
-                refreshData()
-                hideLoading()
+                reloadDataAndAwait()
             }
         }
     }
 
-    fun initAssets() {
-        lifecycleScope.launch(Dispatchers.Default) {
-            SettingsManager.initAssets(this@UserAssetActivity, assets)
-            withContext(Dispatchers.Main) {
-                refreshData()
-            }
+    private fun refreshData() {
+        lifecycleScope.launch {
+            reloadDataAndAwait()
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshData() {
-        val geoFilesSources = MmkvManager.decodeSettingsString(AppConfig.PREF_GEO_FILES_SOURCES) ?: AppConfig.GEO_FILES_SOURCES.first()
-        viewModel.reload(geoFilesSources)
+    private suspend fun reloadDataAndAwait() {
+        val geoFilesSource = MmkvManager.decodeSettingsString(AppConfig.PREF_GEO_FILES_SOURCES)
+            ?: AppConfig.GEO_FILES_SOURCES.first()
+        viewModel.reload(geoFilesSource, extDir).join()
         adapter.notifyDataSetChanged()
     }
 
@@ -222,13 +232,13 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
         }
 
         override fun onRemove(guid: String, position: Int) {
-            val asset = viewModel.getAsset(position)?.takeIf { it.guid == guid }
-                ?: viewModel.getAssets().find { it.guid == guid }
+            val asset = viewModel.uiState.value.assets.getOrNull(position)?.takeIf { it.guid == guid }
+                ?: viewModel.uiState.value.assets.find { it.guid == guid }
                 ?: return
-            val file = extDir.listFiles()?.find { it.name == asset.assetUrl.remarks }
+            val file = File(extDir, asset.assetUrl.remarks)
 
             showDeleteConfirmDialog(context = ownerActivity, messageRes = R.string.del_file_asset_dialog_comfirm_message) {
-                file?.delete()
+                file.delete()
                 MmkvManager.removeAssetUrl(guid)
                 initAssets()
             }
