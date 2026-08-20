@@ -15,7 +15,10 @@ object BlurBottomStatusController {
 
     private var blurViewReference: WeakReference<BlurView>? = null
     private var glassDrawableReference: WeakReference<GradientDrawable>? = null
+    private var strokeDrawableReference: WeakReference<StrokeDrawable>? = null
     private var glassFillBaseColor: Int = 0
+    private var glassFillColor: Int = Color.TRANSPARENT
+    private var glassRadiusPx: Float = 28f
 
     fun isEnabled(): Boolean =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
@@ -26,17 +29,16 @@ object BlurBottomStatusController {
     }
 
     fun updateRadius(radius: Float) {
+        val blurRadius = radius.coerceIn(1f, 50f)
         blurViewReference?.get()?.apply {
-            setBlurRadius(radius.coerceIn(1f, 50f))
+            setBlurRadius(blurRadius)
             invalidate()
         }
     }
 
     fun updateAlpha(alphaPercent: Float) {
-        val alpha = alphaPercentToInt(alphaPercent)
-        glassDrawableReference?.get()?.apply {
-            setColor(withAlpha(glassFillBaseColor, alpha))
-        }
+        glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
+        glassDrawableReference?.get()?.setColor(glassFillColor)
         blurViewReference?.get()?.invalidate()
     }
 
@@ -44,7 +46,7 @@ object BlurBottomStatusController {
         (percent.coerceIn(0f, 100f) / 100f * 255f).toInt().coerceIn(0, 255)
 
     private fun applyBlurOn(activity: AppCompatActivity, binding: ActivityMainBinding) {
-        val radius = MmkvManager.decodeSettingsInt(
+        val blurRadius = MmkvManager.decodeSettingsInt(
             AppConfig.PREF_BLUR_BOTTOM_RADIUS,
             AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
         ).toFloat().coerceIn(1f, 50f)
@@ -53,28 +55,39 @@ object BlurBottomStatusController {
             AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
         ).toFloat()
 
+        val density = activity.resources.displayMetrics.density
+        glassRadiusPx = 28f * density
         glassFillBaseColor = activity.getColorAttr("colorSurfaceContainerHigh")
-        val glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
-        val glassStrokeColor = withAlpha(activity.getColorAttr("colorOutline"), 0x90)
+        glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
         val glassDrawable = GradientDrawable().apply {
             setColor(glassFillColor)
-            setCornerRadius(28f * activity.resources.displayMetrics.density)
-            setStroke(3, glassStrokeColor)
+            setCornerRadius(glassRadiusPx)
         }
+        val strokeDrawable = StrokeDrawable().apply {
+            setCornerRadius(glassRadiusPx)
+            setStrokeWidthTop(1f * density)
+            setStrokeWidthBottom((2f / 3f) * density)
+            setStrokeColorTop(withAlpha(activity.getColorAttr("colorOutline"), 0xA8))
+            setStrokeColorBottom(withAlpha(activity.getColorAttr("colorOutline"), 0x70))
+        }
+
         binding.blurBottomStatus.apply {
             background = glassDrawable
+            foreground = strokeDrawable
             outlineProvider = ViewOutlineProvider.BACKGROUND
             clipToOutline = true
             setupWith(binding.mainBlurTarget)
-                .setFrameClearDrawable(activity.window.decorView.background)
-                .setBlurRadius(radius)
+                .setBlurRadius(blurRadius)
                 .setOverlayColor(Color.TRANSPARENT)
+            visibility = View.VISIBLE
         }
-        binding.blurBottomStatus.visibility = View.VISIBLE
+
         blurViewReference = WeakReference(binding.blurBottomStatus)
         glassDrawableReference = WeakReference(glassDrawable)
+        strokeDrawableReference = WeakReference(strokeDrawable)
         binding.cardBottomStatus.setCardBackgroundColor(Color.TRANSPARENT)
         binding.tvIpState.setTextColor(activity.getColorAttr("colorOnSurfaceVariant"))
+        binding.tvIpState.alpha = 1f
         binding.tvTestState.setTextColor(activity.getColorAttr("colorOnSurface"))
         binding.fab.visibility = View.VISIBLE
         binding.fabNoBlur.visibility = View.GONE
@@ -90,10 +103,12 @@ object BlurBottomStatusController {
     private fun applyBlurOff(activity: AppCompatActivity, binding: ActivityMainBinding) {
         blurViewReference?.clear()
         glassDrawableReference?.clear()
+        strokeDrawableReference?.clear()
         binding.blurBottomStatus.apply {
             visibility = View.GONE
             clipToOutline = false
             background = null
+            foreground = null
         }
         binding.cardBottomStatus.setCardBackgroundColor(activity.getColorAttr("colorPrimary"))
         val textColorOnPrimary = activity.getColorAttr("colorOnPrimary")
