@@ -335,22 +335,17 @@ object CoreServiceManager {
 
     private class CoreCallback : CoreCallbackHandler {
         override fun startup(): Long {
+            LogUtil.i(AppConfig.TAG, "StartCore-Manager: CoreCallback startup")
             return 0
         }
 
         override fun shutdown(): Long {
-            val serviceControl = serviceControl ?: return -1
-            return try {
-                serviceControl.stopService()
-                0
-            } catch (e: Exception) {
-                LogUtil.e(AppConfig.TAG, "StartCore-Manager: Failed to stop service", e)
-                -1
-            }
+            LogUtil.i(AppConfig.TAG, "StartCore-Manager: CoreCallback shutdown")
+            return 0
         }
 
         override fun onEmitStatus(l: Long, s: String?): Long {
-            LogUtil.core(l, s)
+            LogUtil.i(AppConfig.TAG, "StartCore-Manager: CoreCallback onEmitStatus $s")
             return 0
         }
     }
