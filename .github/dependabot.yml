@@ -6,6 +6,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "gradle"
-    directory: "/V2rayNG"
+    directory: "/MikuRay"
     schedule:
       interval: "daily"

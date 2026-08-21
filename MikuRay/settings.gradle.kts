@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "V2rayNG"
+rootProject.name = "MikuRay"
 include(":app")
 include(":remixicon")

@@ -71,7 +71,7 @@ jobs:
 
     - name: Copy libhevtun
       run: |
-        cp -r ${{ github.workspace }}/libs ${{ github.workspace }}/V2rayNG/app
+        cp -r ${{ github.workspace }}/libs ${{ github.workspace }}/MikuRay/app
 
     - name: Fetch AndroidLibXrayLite tag
       run: |
@@ -87,7 +87,7 @@ jobs:
         repository: '2dust/AndroidLibXrayLite'
         tag: ${{ env.CURRENT_TAG }}
         fileName: 'libv2ray.aar'
-        out-file-path: V2rayNG/app/libs/
+        out-file-path: MikuRay/app/libs/
 
     - name: Setup Java
       uses: actions/setup-java@v5.7.0
@@ -104,7 +104,7 @@ jobs:
 
     - name: Build APK (${{ env.BUILD_TYPE }})
       run: |
-        cd ${{ github.workspace }}/V2rayNG
+        cd ${{ github.workspace }}/MikuRay
         echo "sdk.dir=${ANDROID_HOME}" > local.properties
         chmod 755 gradlew
         
@@ -129,28 +129,28 @@ jobs:
       if: ${{ success() }}
       with:
         name: arm64-v8a-${{ env.BUILD_TYPE }}
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*arm64-v8a*.apk
+        path: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*arm64-v8a*.apk
 
     - name: Upload armeabi-v7a APK
       uses: actions/upload-artifact@v7
       if: ${{ success() }}
       with:
         name: armeabi-v7a-${{ env.BUILD_TYPE }}
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*armeabi-v7a*.apk
+        path: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*armeabi-v7a*.apk
 
     - name: Upload x86 APK
       uses: actions/upload-artifact@v7
       if: ${{ success() }}
       with:
         name: x86-apk-${{ env.BUILD_TYPE }}
-        path: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*x86*.apk
+        path: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*x86*.apk
 
     - name: Upload to release
       uses: svenstaro/upload-release-action@v2
       if: github.event.inputs.release_tag != ''
       with:
         repo_token: ${{ secrets.MY_PERSONAL_TOKEN }}
-        file: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk
+        file: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*.apk
         tag: ${{ github.event.inputs.release_tag }}
         file_glob: true
         prerelease: true

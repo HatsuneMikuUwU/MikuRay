@@ -3,7 +3,7 @@
 *.jks
 
 # Ignore output JSON file
-V2rayNG/app/release/output.json
+MikuRay/app/release/output.json
 
 # Ignore IDE and build system directories
 .idea/
@@ -17,9 +17,9 @@ V2rayNG/app/release/output.json
 # Ignore build directories and captures
 /build
 /captures
-V2rayNG/app/build
-V2rayNG/build
-V2rayNG/local.properties
+MikuRay/app/build
+MikuRay/build
+MikuRay/local.properties
 
 # Ignore APK and AAR files
 *.apk
@@ -32,7 +32,7 @@ signing.properties
 *.so
 
 # Ignore Google services JSON
-V2rayNG/app/google-services.json
+MikuRay/app/google-services.json
 
 # Additional common Android/Java ignores
 *.log
@@ -66,4 +66,4 @@ Thumbs.db
 .DS_Store
 
 !gradle/wrapper/gradle-wrapper.jar
-!V2rayNG/gradle/wrapper/gradle-wrapper.jar
+!MikuRay/gradle/wrapper/gradle-wrapper.jar
