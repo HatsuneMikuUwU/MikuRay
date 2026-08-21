@@ -21,6 +21,9 @@ MikuRay/app/build
 MikuRay/build
 MikuRay/local.properties
 
+# Ignore prebuilt native libraries (built from submodules by compile-hevtun.sh / AndroidLibXrayLite)
+MikuRay/app/libs
+
 # Ignore APK and AAR files
 *.apk
 *.aar
@@ -64,6 +67,3 @@ MikuRay/app/google-services.json
 # Ignore OS-specific files
 Thumbs.db
 .DS_Store
-
-!gradle/wrapper/gradle-wrapper.jar
-!MikuRay/gradle/wrapper/gradle-wrapper.jar
