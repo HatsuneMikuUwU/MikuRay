@@ -40,6 +40,7 @@ import com.v2ray.ang.ui.weather.WeatherForecastActivity
 import com.v2ray.ang.util.SearchChipGradientController
 import com.v2ray.ang.ui.weather.WeatherHelper
 import com.v2ray.ang.util.showDeleteConfirmDialog
+import com.v2ray.ang.util.showTotalTrafficDetailDialog
 import kotlinx.coroutines.launch
 
 class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
@@ -140,8 +141,15 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         tvTotalTraffic = findViewById(R.id.tv_total_traffic)
 
         layoutWeatherChip.setOnClickListener {
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
-                startActivity(Intent(this, WeatherForecastActivity::class.java))
+            when {
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false) -> {
+                    startActivity(Intent(this, WeatherForecastActivity::class.java))
+                }
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) -> {
+                    if (MmkvManager.getTotalTrafficDetail() != null) {
+                        showTotalTrafficDetailDialog(this)
+                    }
+                }
             }
         }
     }
