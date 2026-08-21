@@ -929,6 +929,7 @@
     <string name="title_pref_toolbar_center_subtitle_mode">Центрированный подзаголовок панели</string>
     <string name="summary_pref_toolbar_center_subtitle_mode">Показывать центрированный подзаголовок с анимацией затухания вместо обычного заголовка</string>
     <string name="selected_banner_dim_title">Интенсивность затемнения баннера</string>
+    <string name="sheet_banner_dim_title">Интенсивность затемнения баннера</string>
     <string name="selected_banner_custom_title">Изменить баннер выбранного профиля</string>
     <string name="selected_banner_custom_summary">Задать свою картинку для карточки выбранного сервера (необязательно)</string>
     <string name="selected_banner_delete_title">Удалить свой баннер выбранного профиля</string>

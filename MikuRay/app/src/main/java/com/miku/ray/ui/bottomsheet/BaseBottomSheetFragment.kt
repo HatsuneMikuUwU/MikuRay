@@ -34,6 +34,14 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
     protected fun loadBannerSheet(view: View) {
         val bannerImageView = view.findViewById<ImageView>(R.id.img_banner_sheet) ?: return
         bannerImageView.setLayerType(View.LAYER_TYPE_NONE, null)
+
+        view.findViewById<View>(R.id.view_banner_sheet_dim)?.let { dimView ->
+            val dimPercent = MmkvManager.decodeSettingsInt(
+                AppConfig.PREF_SHEET_BANNER_DIM,
+                AppConfig.SHEET_BANNER_DIM_DEFAULT
+            ).coerceIn(AppConfig.SHEET_BANNER_DIM_MIN, AppConfig.SHEET_BANNER_DIM_MAX)
+            dimView.alpha = dimPercent / 100f
+        }
         val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
         val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
         if (bannerImageView.tag != targetTag) {

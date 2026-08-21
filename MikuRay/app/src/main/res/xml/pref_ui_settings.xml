@@ -465,6 +465,12 @@
             android:title="@string/pref_particles_settings_title"
             android:summary="@string/pref_particles_settings_summary" />
 
+        <com.miku.ray.ui.dialog.SheetBannerDimSliderDialog
+            android:icon="@drawable/rmx_design_contrast_2_line"
+            app:layout="@layout/uwu_mid"
+            app:key="pref_sheet_banner_dim"
+            app:title="@string/sheet_banner_dim_title" />
+
         <Preference
             android:icon="@drawable/rmx_image_edit_line"
             app:layout="@layout/uwu_mid"

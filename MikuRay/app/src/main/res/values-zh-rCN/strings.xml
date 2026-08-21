@@ -908,6 +908,7 @@
     <string name="title_pref_toolbar_center_subtitle_mode">居中工具栏副标题</string>
     <string name="summary_pref_toolbar_center_subtitle_mode">显示居中副标题和淡入淡出动画，而不是普通标准标题</string>
     <string name="selected_banner_dim_title">横幅遮罩强度</string>
+    <string name="sheet_banner_dim_title">横幅遮罩强度</string>
     <string name="selected_banner_custom_title">更改选中配置的横幅</string>
     <string name="selected_banner_custom_summary">为选中的服务器卡片设置自定义图片（可选）</string>
     <string name="selected_banner_delete_title">删除选中配置的自定义横幅</string>

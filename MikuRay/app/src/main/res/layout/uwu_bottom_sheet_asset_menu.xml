@@ -54,10 +54,10 @@
                             android:scaleType="centerCrop"
                             android:elevation="0.0dip" />
                         <View
-                            android:background="@android:color/black"
+                            android:id="@+id/view_banner_sheet_dim"
+                            android:background="?colorCard"
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:alpha="0.2" />
+                            android:layout_height="fill_parent" />
                         <com.miku.ray.particlesdrawable.ParticlesView
                             android:id="@+id/ParticlesView"
                             android:background="#00000000"
@@ -95,7 +95,7 @@
                                         android:layout_width="60.0dip"
                                         android:layout_height="60.0dip"
                                         android:src="@drawable/uwu_banner_profile"
-                                        app:siBorderColor="@android:color/white"
+                                        app:siBorderColor="?colorPrimary"
                                         app:siBorderWidth="3.0dip" />
                                 </LinearLayout>
                                 <RelativeLayout
@@ -114,7 +114,7 @@
                                             android:textAppearance="?textAppearanceTitleMedium"
                                             android:textStyle="bold"
                                             android:textSize="17.0sp"
-                                            android:textColor="@android:color/white"
+                                            android:textColor="?colorOnSurface"
                                             android:ellipsize="marquee"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                                             android:textAppearance="?textAppearanceTitleSmall"
                                             android:textStyle="bold"
                                             android:textSize="14.0sp"
-                                            android:textColor="@android:color/white"
+                                            android:textColor="?colorOnSurfaceVariant"
                                             android:ellipsize="marquee"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"

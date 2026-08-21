@@ -955,6 +955,8 @@ you need."</string>
     <string name="summary_pref_toolbar_center_subtitle_mode">Show a centered subtitle with fade animation instead of the plain standard title</string>
     <string name="selected_banner_dim_title">Banner overlay strength</string>
     <string name="selected_banner_dim_summary_value">%1$d%%</string>
+    <string name="sheet_banner_dim_title">Banner overlay strength</string>
+    <string name="sheet_banner_dim_summary_value">%1$d%%</string>
     <string name="selected_banner_custom_title">Change selected profile banner</string>
     <string name="selected_banner_custom_summary">Set a custom image for the selected server card (optional)</string>
     <string name="selected_banner_delete_title">Remove custom selected profile banner</string>
