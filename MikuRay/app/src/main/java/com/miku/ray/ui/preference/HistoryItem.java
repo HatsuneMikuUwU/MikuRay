@@ -1,4 +1,4 @@
-package com.miku.ray.preferencesearch;
+package com.miku.ray.ui.preference;
 
 class HistoryItem extends ListItem {
     static final int TYPE = 1;

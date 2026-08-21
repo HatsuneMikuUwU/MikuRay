@@ -1,4 +1,4 @@
-package com.miku.ray.preferencesearch;
+package com.miku.ray.ui.preference;
 
 public abstract class ListItem {
     public abstract int getType();

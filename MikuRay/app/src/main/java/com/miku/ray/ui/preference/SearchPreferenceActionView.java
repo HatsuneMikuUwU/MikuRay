@@ -1,4 +1,4 @@
-package com.miku.ray.preferencesearch;
+package com.miku.ray.ui.preference;
 
 import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;

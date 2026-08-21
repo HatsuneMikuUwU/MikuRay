@@ -1,4 +1,4 @@
-package com.miku.ray.preferencesearch;
+package com.miku.ray.ui.preference;
 
 import com.miku.ray.R;
 
@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import com.miku.ray.preferencesearch.ui.AnimationUtils;
-import com.miku.ray.preferencesearch.ui.RevealAnimationSetting;
+import com.miku.ray.ui.preference.AnimationUtils;
+import com.miku.ray.ui.preference.RevealAnimationSetting;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.miku.ray.preferencesearch;
+package com.miku.ray.ui.preference;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 class PreferenceParser {
     private static final int MAX_RESULTS = 10;
     private static final String NS_ANDROID = "http://schemas.android.com/apk/res/android";
-    private static final String NS_SEARCH = "http://schemas.android.com/apk/com.miku.ray.preferencesearch";
+    private static final String NS_SEARCH = "http://schemas.android.com/apk/com.miku.ray.ui.preference";
     private static final List<String> BLACKLIST = Arrays.asList(SearchPreference.class.getName());
     private static final List<String> CONTAINERS = Arrays.asList("PreferenceCategory", "PreferenceScreen");
     private Context context;
