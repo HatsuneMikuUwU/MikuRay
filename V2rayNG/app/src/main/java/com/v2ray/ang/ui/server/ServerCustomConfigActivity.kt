@@ -108,6 +108,10 @@ class ServerCustomConfigActivity : BaseActivity() {
 
     private fun deleteServer(): Boolean {
         if (editGuid.isNotEmpty()) {
+            if (MmkvManager.isServerPinned(editGuid)) {
+                snackbarError(getString(R.string.toast_pinned_server_delete_blocked), title = getString(R.string.title_alerter_error))
+                return true
+            }
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
                 MmkvManager.removeServer(editGuid)
                 finish()

@@ -290,6 +290,11 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
             return
         }
 
+        if (MmkvManager.isServerPinned(guid)) {
+            ownerActivity.snackbarDefault(getString(R.string.toast_pinned_server_delete_blocked), title = getString(R.string.title_alerter_info))
+            return
+        }
+
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
             showDeleteConfirmDialog(context = ownerActivity, messageRes = R.string.del_config_dialog_comfirm_message) {
                 removeServerSub(guid, position)

@@ -408,8 +408,10 @@ object AngConfigManager {
     }
 
     fun removeInvalidServer(subId: String) {
+        val pinnedServers = MmkvManager.decodePinnedServers()
         val serverList = MmkvManager.decodeServerList(subId)
         val invalidServers = serverList.filter {
+            if (pinnedServers.contains(it)) return@filter false
             val aff = MmkvManager.decodeServerAffiliationInfo(it)
             aff != null && aff.testDelayMillis < 0L
         }

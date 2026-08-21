@@ -61,15 +61,17 @@ internal object ProfileReplacement {
      *
      * @param replacedServers GUIDs that were indexed under the group before this replacement.
      * @param replacementServers GUIDs of the newly published batch.
-     * @param protectedServer The currently selected GUID (new or old), never removed.
+     * @param protectedServers GUIDs that are never removed: the currently selected server
+     * (new or old) plus any pinned server. Pinned servers survive subscription updates the
+     * same way the selected server does.
      */
     fun findRemovablePayloads(
         replacedServers: Collection<String>,
         replacementServers: Set<String>,
-        protectedServer: String?,
+        protectedServers: Set<String>,
     ): Set<String> {
         return replacedServers.filterTo(linkedSetOf()) { guid ->
-            guid != protectedServer && guid !in replacementServers
+            guid !in protectedServers && guid !in replacementServers
         }
     }
 

@@ -107,7 +107,7 @@ class ProfileReplacementTest {
         val result = ProfileReplacement.findRemovablePayloads(
             replacedServers = listOf("orphan", "selected", "replacement"),
             replacementServers = setOf("replacement"),
-            protectedServer = "selected",
+            protectedServers = setOf("selected"),
         )
 
         assertEquals(setOf("orphan"), result)
@@ -118,10 +118,21 @@ class ProfileReplacementTest {
         val result = ProfileReplacement.findRemovablePayloads(
             replacedServers = emptyList(),
             replacementServers = emptySet(),
-            protectedServer = null,
+            protectedServers = emptySet(),
         )
 
         assertEquals(emptySet<String>(), result)
+    }
+
+    @Test
+    fun `keeps pinned servers even when they are not the selected server`() {
+        val result = ProfileReplacement.findRemovablePayloads(
+            replacedServers = listOf("orphan", "pinned", "selected", "replacement"),
+            replacementServers = setOf("replacement"),
+            protectedServers = setOf("selected", "pinned"),
+        )
+
+        assertEquals(setOf("orphan"), result)
     }
 
     private fun profile(

@@ -278,6 +278,16 @@ object MmkvManager {
                 }
             }
 
+            // Pinned servers among the ones being replaced must survive the update, the
+            // same way the selected server does: neither their payload nor their spot in
+            // the group index should be dropped just because a subscription refresh happened.
+            val pinnedServers = decodePinnedServers()
+            val pinnedReplacedServers = if (append) {
+                emptyList()
+            } else {
+                replacedServers.filter { pinnedServers.contains(it) }
+            }
+
             // Publish the new group index.
             val serverList = if (append) {
                 decodeServerList(subscriptionId)
@@ -288,6 +298,13 @@ object MmkvManager {
             profiles.keys.forEach { guid ->
                 if (indexedServers.add(guid)) {
                     serverList.add(0, guid)
+                }
+            }
+            // Re-append pinned servers that were dropped by the replacement so they keep
+            // showing up in this group after the subscription update.
+            pinnedReplacedServers.forEach { guid ->
+                if (indexedServers.add(guid)) {
+                    serverList.add(guid)
                 }
             }
             encodeServerList(serverList, subscriptionId)
@@ -302,11 +319,11 @@ object MmkvManager {
             if (replacedServers.isEmpty()) return@withProfileIndexLock
 
             // Only now, after the replacement batch is safely published, drop the old payloads.
-            val protectedServer = replacementSelection ?: previousSelection
+            val protectedServers = setOfNotNull(replacementSelection ?: previousSelection) + pinnedReplacedServers
             val removablePayloads = ProfileReplacement.findRemovablePayloads(
                 replacedServers = replacedServers,
                 replacementServers = profiles.keys,
-                protectedServer = protectedServer,
+                protectedServers = protectedServers,
             )
             removeProfilePayloads(removablePayloads)
         }
@@ -615,21 +632,45 @@ object MmkvManager {
         }
     }
 
+    /**
+     * Removes every server, except pinned ones, which are always kept regardless of
+     * which group/subscription they belong to.
+     */
     fun removeAllServer(): Int {
-        val count = profileFullStorage.allKeys()?.count() ?: 0
-        profileFullStorage.clearAll()
-        serverAffStorage.clearAll()
-        serverRawStorage.clearAll()
-
-        decodeSubscriptions().forEach { sub ->
-            encodeServerList(mutableListOf(), sub.guid)
+        val pinnedServers = decodePinnedServers()
+        val subsList = decodeSubsList().toMutableList()
+        if (!subsList.contains(DEFAULT_SUBSCRIPTION_ID)) {
+            subsList.add(DEFAULT_SUBSCRIPTION_ID)
         }
-        return count
+
+        var removedCount = 0
+        subsList.forEach { subId ->
+            val serverList = decodeServerList(subId)
+            val (kept, removed) = serverList.partition { pinnedServers.contains(it) }
+            if (removed.isNotEmpty()) {
+                removed.forEach { guid ->
+                    if (getSelectServer() == guid) {
+                        mainStorage.remove(KEY_SELECTED_SERVER)
+                    }
+                }
+                removeProfilePayloads(removed)
+                removedCount += removed.size
+                encodeServerList(kept.toMutableList(), subId)
+            }
+        }
+        return removedCount
     }
 
+    /**
+     * Removes servers with a failed (negative) test delay. Pinned servers are always
+     * kept, even if their last test result was invalid.
+     */
     fun removeInvalidServer(guid: String): Int {
         var count = 0
         if (guid.isNotEmpty()) {
+            if (isServerPinned(guid)) {
+                return 0
+            }
             decodeServerAffiliationInfo(guid)?.let { aff ->
                 if (aff.testDelayMillis < 0L) {
                     removeServer(guid)
@@ -637,7 +678,11 @@ object MmkvManager {
                 }
             }
         } else {
+            val pinnedServers = decodePinnedServers()
             serverAffStorage.allKeys()?.forEach { key ->
+                if (pinnedServers.contains(key)) {
+                    return@forEach
+                }
                 decodeServerAffiliationInfo(key)?.let { aff ->
                     if (aff.testDelayMillis < 0L) {
                         removeServer(key)

@@ -505,6 +505,7 @@
     <string name="action_unpin_server">Открепить</string>
     <string name="toast_server_pinned">Сервер закреплён вверху</string>
     <string name="toast_server_unpinned">Сервер откреплён</string>
+    <string name="toast_pinned_server_delete_blocked">Сначала открепите сервер, чтобы удалить его</string>
     <string name="title_profile_storage_cleanup">Исправить хранилище профилей</string>
     <string name="message_profile_storage_cleanup">Удалить данные профилей, которые больше не используются ни в одной группе? Выбранный профиль и данные, которые нельзя с уверенностью отнести к неиспользуемым, будут сохранены.</string>
     <string name="toast_profile_storage_cleanup">Удалено неиспользуемых профилей: %1$d</string>

@@ -332,6 +332,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun removeDuplicateServer(): Int {
         val serversCacheCopy = serversCache.toList().toMutableList()
         val deleteServer = mutableListOf<String>()
+        val pinnedServers = MmkvManager.decodePinnedServers()
 
         serversCacheCopy.forEachIndexed { index, sc ->
             val profile = sc.profile
@@ -346,7 +347,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         return@forEachIndexed
                     }
 
-                    if (profile == profile2 && !deleteServer.contains(sc2.guid)) {
+                    // Pinned servers are never treated as the removable duplicate, so
+                    // pinning a server is enough to keep it even if an identical
+                    // config exists elsewhere in the list.
+                    if (profile == profile2 && !deleteServer.contains(sc2.guid) && !pinnedServers.contains(sc2.guid)) {
                         deleteServer.add(sc2.guid)
                     }
                 }
@@ -364,11 +368,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             if (subscriptionId.isEmpty() && keywordFilter.isEmpty()) {
                 MmkvManager.removeAllServer()
             } else {
-                val serversCopy = serversCache.toList()
+                val pinnedServers = MmkvManager.decodePinnedServers()
+                val serversCopy = serversCache.toList().filterNot { pinnedServers.contains(it.guid) }
                 for (item in serversCopy) {
                     MmkvManager.removeServer(item.guid)
                 }
-                serversCache.toList().count()
+                serversCopy.count()
             }
         return count
     }
@@ -380,6 +385,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             val serversCopy = serversCache.toList()
             for (item in serversCopy) {
+                // MmkvManager.removeInvalidServer already skips pinned servers.
                 count += MmkvManager.removeInvalidServer(item.guid)
             }
         }

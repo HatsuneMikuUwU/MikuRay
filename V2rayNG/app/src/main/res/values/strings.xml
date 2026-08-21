@@ -525,6 +525,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="action_unpin_server">Unpin</string>
     <string name="toast_server_pinned">Server pinned to top</string>
     <string name="toast_server_unpinned">Server unpinned</string>
+    <string name="toast_pinned_server_delete_blocked">Unpin the server first before deleting it</string>
     <string name="title_profile_storage_cleanup">Repair profile storage</string>
     <string name="message_profile_storage_cleanup">Delete profile data that is no longer used by any group? Selected profiles and data that cannot be safely classified will be kept.</string>
     <string name="toast_profile_storage_cleanup">Unused profiles removed: %1$d</string>

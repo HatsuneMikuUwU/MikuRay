@@ -493,6 +493,7 @@
     <string name="action_unpin_server">取消置顶</string>
     <string name="toast_server_pinned">服务器已置顶</string>
     <string name="toast_server_unpinned">已取消置顶</string>
+    <string name="toast_pinned_server_delete_blocked">请先取消置顶再删除该服务器</string>
     <string name="title_profile_storage_cleanup">修复配置存储</string>
     <string name="message_profile_storage_cleanup">要删除已不再被任何分组使用的配置数据吗？当前选中的配置以及无法安全判定为未使用的数据将会保留。</string>
     <string name="toast_profile_storage_cleanup">已删除未使用的配置：%1$d</string>

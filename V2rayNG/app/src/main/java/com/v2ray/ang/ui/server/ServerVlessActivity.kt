@@ -204,7 +204,7 @@ class ServerVlessActivity : BaseActivity() {
 
     private fun deleteServer(): Boolean {
         if (editGuid.isNotEmpty()) {
-            if (editGuid != MmkvManager.getSelectServer()) {
+            if (editGuid != MmkvManager.getSelectServer() && !MmkvManager.isServerPinned(editGuid)) {
                 if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
                     showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
                         MmkvManager.removeServer(editGuid)
@@ -214,6 +214,8 @@ class ServerVlessActivity : BaseActivity() {
                     MmkvManager.removeServer(editGuid)
                     finish()
                 }
+            } else if (MmkvManager.isServerPinned(editGuid)) {
+                snackbarError(getString(R.string.toast_pinned_server_delete_blocked), title = getString(R.string.title_alerter_error))
             } else {
                 snackbarError(getString(R.string.toast_action_not_allowed), title = getString(R.string.title_alerter_error))
             }
