@@ -2,14 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.v2ray.ang.ui.preference.CustomBannerPreference
+    <com.miku.ray.ui.preference.CustomBannerPreference
         android:key="pref_navigate_check_update"
         android:layout="@layout/uwu_banner_theme"
         android:title="@string/update_check_for_update"
         android:summary="@string/uwu_update_summary"
         app:icon="@drawable/rmx_download_cloud_line" />
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_ui_general"
         android:title="@string/title_ui_general"
         app:sectionIcon="@drawable/rmx_speed_line">
@@ -129,9 +129,9 @@
             android:summary="%s"
             android:title="@string/title_language" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_ui_theme"
         android:title="@string/title_ui_theme"
         app:sectionIcon="@drawable/rmx_palette_line">
@@ -181,9 +181,9 @@
             android:title="@string/title_pref_true_black"
             android:summary="@string/summary_pref_true_black" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_ui_appearance"
         android:title="@string/title_ui_appearance"
         app:sectionIcon="@drawable/rmx_palette_line">
@@ -210,7 +210,7 @@
             android:summary="%s"
             android:title="@string/title_pref_arrow_shape" />
 
-        <com.v2ray.ang.ui.dialog.AppIconPickerDialog
+        <com.miku.ray.ui.dialog.AppIconPickerDialog
             android:icon="@drawable/rmx_apps_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_app_icon"
@@ -227,7 +227,7 @@
             android:entryValues="@array/app_name_values"
             android:defaultValue="default" />
 
-        <com.v2ray.ang.ui.dialog.DpiSliderDialog
+        <com.miku.ray.ui.dialog.DpiSliderDialog
             android:icon="@drawable/rmx_smartphone_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_custom_dpi"
@@ -253,9 +253,9 @@
             android:title="@string/pref_show_splash_title"
             android:summary="@string/pref_show_splash_summary" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_app_font"
         android:title="@string/title_category_app_font"
         app:sectionIcon="@drawable/rmx_font_size">
@@ -289,15 +289,15 @@
             android:title="@string/title_pref_app_font_custom_delete"
             android:summary="@string/summary_pref_app_font_custom_delete_empty" />
 
-        <com.v2ray.ang.ui.dialog.FontSizeSliderDialog
+        <com.miku.ray.ui.dialog.FontSizeSliderDialog
             android:icon="@drawable/rmx_font_size"
             app:layout="@layout/uwu_bot"
             app:key="pref_app_font_size"
             app:title="@string/pref_font_size" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_search_bar_chip"
         android:title="@string/title_search_bar_chip"
         app:sectionIcon="@drawable/rmx_search_line">
@@ -357,9 +357,9 @@
             android:summary="@string/pref_search_chip_gradient_summary"
             android:title="@string/pref_search_chip_gradient_title" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_blur_settings"
         android:title="@string/title_blur_settings"
         app:sectionIcon="@drawable/rmx_blur_line">
@@ -373,7 +373,7 @@
             android:title="@string/title_pref_enable_blur"
             android:summary="@string/summary_pref_enable_blur" />
 
-        <com.v2ray.ang.ui.dialog.BlurIntensityDialog
+        <com.miku.ray.ui.dialog.BlurIntensityDialog
             android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_blur_intensity"
@@ -389,16 +389,16 @@
             android:title="@string/title_pref_blur_bottom_status"
             android:summary="@string/summary_pref_blur_bottom_status" />
 
-        <com.v2ray.ang.ui.dialog.BlurBottomIntensityDialog
+        <com.miku.ray.ui.dialog.BlurBottomIntensityDialog
             android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_bot"
             app:key="pref_blur_bottom_intensity"
             app:title="@string/pref_blur_bottom_intensity"
             app:dependency="pref_blur_bottom_status" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_home_banner"
         android:title="@string/home_banner_category"
         app:sectionIcon="@drawable/rmx_home_line">
@@ -412,14 +412,14 @@
             android:title="@string/home_banner_show_title"
             android:summary="@string/home_banner_show_summary" />
 
-        <com.v2ray.ang.ui.dialog.BannerHeightSliderDialog
+        <com.miku.ray.ui.dialog.BannerHeightSliderDialog
             android:icon="@drawable/rmx_design_ruler_2_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_home_banner_height"
             app:title="@string/pref_home_banner_height_title"
             app:dependency="pref_show_home_banner" />
 
-        <com.v2ray.ang.ui.dialog.HeaderTopRowPaddingDialog
+        <com.miku.ray.ui.dialog.HeaderTopRowPaddingDialog
             android:icon="@drawable/rmx_design_pencil_ruler_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_header_top_row_padding"
@@ -442,9 +442,9 @@
             android:title="@string/home_banner_delete_title"
             android:summary="@string/home_banner_delete_summary" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_sheet_banner"
         android:title="@string/sheet_banner_category"
         app:sectionIcon="@drawable/rmx_sparkling_line">
@@ -458,7 +458,7 @@
             android:summary="@string/particles_disable_summary"
             android:defaultValue="false" />
 
-        <com.v2ray.ang.ui.dialog.ParticlesSettingsDialog
+        <com.miku.ray.ui.dialog.ParticlesSettingsDialog
             android:icon="@drawable/rmx_sparkling_line"
             app:layout="@layout/uwu_mid"
             android:key="pref_particles_settings"
@@ -479,9 +479,9 @@
             android:title="@string/sheet_banner_delete_title"
             android:summary="@string/sheet_banner_delete_summary" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_selected_banner"
         android:title="@string/selected_banner_category"
         app:sectionIcon="@drawable/rmx_stack_line">
@@ -502,7 +502,7 @@
             android:title="@string/selected_banner_enable_title"
             android:summary="@string/selected_banner_enable_summary" />
 
-        <com.v2ray.ang.ui.dialog.SelectedBannerDimSliderDialog
+        <com.miku.ray.ui.dialog.SelectedBannerDimSliderDialog
             android:icon="@drawable/rmx_design_contrast_2_line"
             app:layout="@layout/uwu_mid"
             app:key="pref_selected_banner_dim"
@@ -525,9 +525,9 @@
             android:title="@string/selected_banner_delete_title"
             android:summary="@string/selected_banner_delete_summary" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_banner_profile"
         android:title="@string/banner_profile_category"
         app:sectionIcon="@drawable/rmx_user_heart_line">
@@ -567,9 +567,9 @@
             android:title="@string/delete_custom_banner_profile"
             android:summary="@string/delete_custom_banner_profile_summary" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_vpn_sound_settings"
         android:title="@string/title_vpn_sound_settings"
         app:sectionIcon="@drawable/rmx_volume_up_line">
@@ -583,9 +583,9 @@
             android:summary="@string/summary_pref_sound_on_connect"
             android:title="@string/title_pref_sound_on_connect" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_toolbar_style"
         android:title="@string/title_category_toolbar_style"
         app:sectionIcon="@drawable/rmx_align_center">
@@ -599,6 +599,6 @@
             android:title="@string/title_pref_toolbar_center_subtitle_mode"
             android:summary="@string/summary_pref_toolbar_center_subtitle_mode" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
 </PreferenceScreen>

@@ -1,6 +1,6 @@
 -repackageclasses
 -allowaccessmodification
--keep class com.v2ray.ang.** { *; }
+-keep class com.miku.ray.** { *; }
 -keep class com.yalantis.ucrop.** { *; }
 
 # Removed Kotlin's built-in Null and Exception checks

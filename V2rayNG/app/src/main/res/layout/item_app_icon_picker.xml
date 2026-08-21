@@ -31,7 +31,7 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.neko.marquee.text.AutoMarqueeTextView
+    <com.miku.ray.marquee.text.AutoMarqueeTextView
         android:id="@+id/icon_label"
         android:layout_width="72dp"
         android:layout_height="wrap_content"

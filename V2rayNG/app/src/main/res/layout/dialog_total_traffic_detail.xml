@@ -266,7 +266,7 @@
                     android:textColor="?attr/colorOnSurfaceVariant" />
             </LinearLayout>
 
-            <com.v2ray.ang.widget.TrafficBarChartView
+            <com.miku.ray.widget.TrafficBarChartView
                 android:id="@+id/chart_daily_traffic"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"

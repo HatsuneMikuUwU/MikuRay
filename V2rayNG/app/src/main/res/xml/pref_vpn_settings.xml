@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_vpn_settings"
         android:title="@string/title_vpn_settings"
         app:sectionIcon="@drawable/rmx_node_tree">
@@ -124,9 +124,9 @@
             android:summary="@string/summary_navigate_per_app_proxy_settings"
             android:title="@string/per_app_proxy_settings" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_hev_tunnel"
         android:title="@string/title_category_hev_tunnel"
         app:sectionIcon="@drawable/rmx_global_line">
@@ -208,9 +208,9 @@
             android:summary="@string/summary_pref_hev_tunnel_pipeline"
             android:title="@string/title_pref_hev_tunnel_pipeline" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_root_mode"
         android:title="@string/title_category_root_mode">
 
@@ -232,6 +232,6 @@
             android:summary="@string/summary_pref_root_lan_sharing"
             android:defaultValue="false" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
 </PreferenceScreen>

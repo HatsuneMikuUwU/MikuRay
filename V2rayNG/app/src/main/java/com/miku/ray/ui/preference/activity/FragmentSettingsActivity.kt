@@ -1,0 +1,100 @@
+package com.miku.ray.ui.preference.activity
+
+import android.os.Bundle
+import android.view.View
+import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.appbar.MaterialToolbar
+import com.miku.ray.AppConfig
+import com.miku.ray.R
+import com.miku.ray.extension.applyEdgeToEdgeListInsets
+import com.miku.ray.handler.MmkvManager
+import com.miku.ray.helper.MmkvPreferenceDataStore
+import com.miku.ray.ui.base.BaseActivity
+import com.miku.ray.ui.preference.SearchPreferenceHighlighter
+import com.miku.ray.ui.preference.CategoryStyleHelper
+
+class FragmentSettingsActivity : BaseActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.title_fragment_settings), subtitle = getString(R.string.subtitle_fragment_settings))
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.settings_container, FragmentSettingsFragment())
+                .commit()
+        }
+    }
+
+    class FragmentSettingsFragment : PreferenceFragmentCompat() {
+
+        private val fragment by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_FRAGMENT_ENABLED) }
+        private val fragmentPackets by lazy { findPreference<ListPreference>(AppConfig.PREF_FRAGMENT_PACKETS) }
+        private val fragmentLength by lazy { findPreference<EditTextPreference>(AppConfig.PREF_FRAGMENT_LENGTH) }
+        private val fragmentInterval by lazy { findPreference<EditTextPreference>(AppConfig.PREF_FRAGMENT_INTERVAL) }
+        private val fragmentMaxSplit by lazy { findPreference<EditTextPreference>(AppConfig.PREF_FRAGMENT_MAXSPLIT) }
+
+        override fun onCreatePreferences(bundle: Bundle?, s: String?) {
+            preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
+            addPreferencesFromResource(R.xml.pref_fragment_settings)
+            initPreferenceSummaries()
+            CategoryStyleHelper.applyToFragment(this)
+
+            fragment?.setOnPreferenceChangeListener { _, newValue ->
+                updateFragment(newValue as Boolean)
+                true
+            }
+        }
+
+        override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            SearchPreferenceHighlighter.applyFromIntent(this)
+            applyEdgeToEdgeListInsets()
+        }
+
+        private fun initPreferenceSummaries() {
+            fun traverse(group: androidx.preference.PreferenceGroup) {
+                for (i in 0 until group.preferenceCount) {
+                    when (val p = group.getPreference(i)) {
+                        is androidx.preference.PreferenceGroup -> traverse(p)
+                        is EditTextPreference -> {
+                            p.summary = p.text.orEmpty()
+                            p.setOnPreferenceChangeListener { pref, newValue ->
+                                pref.summary = (newValue as? String).orEmpty()
+                                true
+                            }
+                        }
+                        is ListPreference -> {
+                            p.summary = p.entry ?: ""
+                            p.setOnPreferenceChangeListener { pref, newValue ->
+                                val lp = pref as ListPreference
+                                val idx = lp.findIndexOfValue(newValue as? String)
+                                lp.summary = (if (idx >= 0) lp.entries[idx] else newValue) as CharSequence?
+                                true
+                            }
+                        }
+                        else -> {}
+                    }
+                }
+            }
+            preferenceScreen?.let { traverse(it) }
+        }
+
+        override fun onStart() {
+            super.onStart()
+            updateFragment(MmkvManager.decodeSettingsBool(AppConfig.PREF_FRAGMENT_ENABLED, false))
+        }
+
+        private fun updateFragment(enabled: Boolean) {
+            fragmentPackets?.isEnabled = enabled
+            fragmentLength?.isEnabled = enabled
+            fragmentInterval?.isEnabled = enabled
+            fragmentMaxSplit?.isEnabled = enabled
+        }
+    }
+}

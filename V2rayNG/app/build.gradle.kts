@@ -20,7 +20,7 @@ base {
 }
 
 android {
-    namespace = "com.v2ray.ang"
+    namespace = "com.miku.ray"
     compileSdk = 37
     
     ndkVersion = "29.0.14206865"

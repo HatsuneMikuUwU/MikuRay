@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8.0dip">
-            <com.neko.widget.DynamicShapeImageView
+            <com.miku.ray.widget.DynamicShapeImageView
                 app:shapeTarget="icon"
                 app:shapeBackgroundColor="?colorPrimary"
                 android:layout_width="45.0dip"
@@ -88,7 +88,7 @@
             android:layout_width="28.0dip"
             android:layout_height="28.0dip">
 
-            <com.neko.widget.DynamicShapeImageView
+            <com.miku.ray.widget.DynamicShapeImageView
                 app:shapeTarget="arrow"
                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                 android:layout_width="28.0dip"

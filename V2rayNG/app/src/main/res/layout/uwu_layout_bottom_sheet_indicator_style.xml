@@ -19,7 +19,7 @@
         android:paddingHorizontal="24dp"
         android:gravity="center_vertical">
 
-        <com.neko.widget.UwuHeaderIconView
+        <com.miku.ray.widget.UwuHeaderIconView
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:sectionIcon="@drawable/rmx_stack_line"

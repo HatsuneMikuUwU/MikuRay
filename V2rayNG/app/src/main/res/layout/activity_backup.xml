@@ -117,7 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45dp"
@@ -163,7 +163,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28dp"
@@ -219,7 +219,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45dp"
@@ -265,7 +265,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28dp"
@@ -321,7 +321,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45dp"
@@ -367,7 +367,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28dp"
@@ -423,7 +423,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45dp"
@@ -469,7 +469,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28dp"
@@ -525,7 +525,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45dp"
@@ -571,7 +571,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28dp"

@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.v2ray.ang.ui.preference.BannerSettingsPreference
+    <com.miku.ray.ui.preference.BannerSettingsPreference
         android:key="pref_banner_settings_card"
         android:layout="@layout/uwu_banner_settings" />
 
@@ -18,7 +18,7 @@
         app:isPreferenceVisible="false"
         app:layout="@layout/uwu_top" />
 
-    <com.v2ray.ang.ui.dialog.BannerCharacterLayoutDialog
+    <com.miku.ray.ui.dialog.BannerCharacterLayoutDialog
         android:icon="@drawable/rmx_arrows_expand_diagonal_line"
         android:key="pref_banner_character_layout"
         android:summary="@string/summary_banner_character_layout"

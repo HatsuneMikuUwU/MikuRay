@@ -86,7 +86,7 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="5dp">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:sectionIcon="@drawable/rmx_device_base_station_line"
@@ -177,7 +177,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:sectionIcon="@drawable/rmx_flashlight_line"
@@ -226,7 +226,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:sectionIcon="@drawable/rmx_lock_line"

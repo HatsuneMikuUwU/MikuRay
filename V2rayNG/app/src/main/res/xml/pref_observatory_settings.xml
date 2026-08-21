@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_observatory_settings"
         android:title="@string/title_observatory_settings"
         app:sectionIcon="@drawable/rmx_device_radar_line">
@@ -51,6 +51,6 @@
             android:defaultValue="30s"
             android:title="@string/title_pref_observatory_least_load_timeout" />
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
 </PreferenceScreen>

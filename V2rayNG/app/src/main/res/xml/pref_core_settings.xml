@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.neko.widget.UwuPreferenceCategory
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_core_settings"
         android:title="@string/title_core_settings"
         app:sectionIcon="@drawable/rmx_settings_line">
@@ -149,6 +149,6 @@
             android:summary="%s"
             android:title="@string/asset_geo_files_sources"/>
 
-    </com.neko.widget.UwuPreferenceCategory>
+    </com.miku.ray.widget.UwuPreferenceCategory>
 
 </PreferenceScreen>

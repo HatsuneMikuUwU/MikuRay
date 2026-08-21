@@ -57,7 +57,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:alpha="0.2" />
-                        <com.neko.particlesdrawable.ParticlesView
+                        <com.miku.ray.particlesdrawable.ParticlesView
                             android:id="@+id/ParticlesView"
                             android:background="#00000000"
                             android:layout_width="fill_parent"
@@ -90,7 +90,7 @@
                                     android:layout_marginBottom="16.0dip"
                                     android:layout_marginStart="16.0dip"
                                     android:layout_marginEnd="5.0dip">
-                                    <com.neko.widget.ProfileBannerImageView
+                                    <com.miku.ray.widget.ProfileBannerImageView
                                         android:layout_width="60.0dip"
                                         android:layout_height="60.0dip"
                                         android:src="@drawable/uwu_banner_profile"
@@ -109,7 +109,7 @@
                                         android:orientation="vertical"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content">
-                                        <com.neko.marquee.text.UserNameTextView
+                                        <com.miku.ray.marquee.text.UserNameTextView
                                             android:textAppearance="?textAppearanceTitleMedium"
                                             android:textStyle="bold"
                                             android:textSize="17.0sp"
@@ -119,7 +119,7 @@
                                             android:layout_height="wrap_content"
                                             android:singleLine="true"
                                             android:marqueeRepeatLimit="marquee_forever" />
-                                        <com.neko.marquee.text.RandomText
+                                        <com.miku.ray.marquee.text.RandomText
                                             android:textAppearance="?textAppearanceTitleSmall"
                                             android:textStyle="bold"
                                             android:textSize="14.0sp"
@@ -149,7 +149,7 @@
                 android:paddingHorizontal="24.0dip"
                 android:gravity="center_vertical">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:sectionIcon="@drawable/rmx_file_line"
@@ -205,7 +205,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8.0dip">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45.0dip"
@@ -247,7 +247,7 @@
                             android:layout_width="28.0dip"
                             android:layout_height="28.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28.0dip"
@@ -305,7 +305,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8.0dip">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45.0dip"
@@ -347,7 +347,7 @@
                             android:layout_width="28.0dip"
                             android:layout_height="28.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28.0dip"
@@ -405,7 +405,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8.0dip">
-                                <com.neko.widget.DynamicShapeImageView
+                                <com.miku.ray.widget.DynamicShapeImageView
                                     app:shapeTarget="icon"
                                     app:shapeBackgroundColor="?colorPrimary"
                                     android:layout_width="45.0dip"
@@ -447,7 +447,7 @@
                             android:layout_width="28.0dip"
                             android:layout_height="28.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeTarget="arrow"
                                 app:shapeBackgroundColor="?colorSurfaceContainerHighest"
                                 android:layout_width="28.0dip"
@@ -476,7 +476,7 @@
                 android:paddingHorizontal="24.0dip"
                 android:gravity="center_vertical">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:sectionIcon="@drawable/rmx_add_circle_line"
@@ -573,7 +573,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_vmess"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -656,7 +656,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_vless"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -739,7 +739,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_trojan"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -822,7 +822,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_shadowsocks"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -905,7 +905,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_socks"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -988,7 +988,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_http"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -1071,7 +1071,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_hysteria2"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -1154,7 +1154,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_wireguard"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -1237,7 +1237,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_policy_group"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"
@@ -1319,7 +1319,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/protocol_proxy_chain"
                                     android:maxLines="2" />
-                                <com.neko.marquee.text.AutoMarqueeTextView
+                                <com.miku.ray.marquee.text.AutoMarqueeTextView
                                     android:textAppearance="?textAppearanceTitleSmall"
                                     android:textSize="14.0sp"
                                     android:textColor="?colorOnSurfaceVariant"

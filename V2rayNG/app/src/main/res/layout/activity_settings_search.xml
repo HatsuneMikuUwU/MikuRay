@@ -97,7 +97,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/ic_aim_color" />
 
-            <com.bytehamster.lib.preferencesearch.SearchPreferenceActionView
+            <com.miku.ray.preferencesearch.SearchPreferenceActionView
                 android:id="@+id/search_action_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

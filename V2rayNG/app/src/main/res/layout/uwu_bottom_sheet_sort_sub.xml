@@ -56,7 +56,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:alpha="0.2" />
-                        <com.neko.particlesdrawable.ParticlesView
+                        <com.miku.ray.particlesdrawable.ParticlesView
                             android:id="@+id/ParticlesView"
                             android:background="#00000000"
                             android:layout_width="fill_parent"
@@ -89,7 +89,7 @@
                                     android:layout_marginBottom="16.0dip"
                                     android:layout_marginStart="16.0dip"
                                     android:layout_marginEnd="5.0dip">
-                                    <com.neko.widget.ProfileBannerImageView
+                                    <com.miku.ray.widget.ProfileBannerImageView
                                         android:layout_width="60.0dip"
                                         android:layout_height="60.0dip"
                                         android:src="@drawable/uwu_banner_profile"
@@ -108,7 +108,7 @@
                                         android:orientation="vertical"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content">
-                                        <com.neko.marquee.text.UserNameTextView
+                                        <com.miku.ray.marquee.text.UserNameTextView
                                             android:textAppearance="?textAppearanceTitleMedium"
                                             android:textStyle="bold"
                                             android:textSize="17.0sp"
@@ -118,7 +118,7 @@
                                             android:layout_height="wrap_content"
                                             android:singleLine="true"
                                             android:marqueeRepeatLimit="marquee_forever" />
-                                        <com.neko.marquee.text.RandomText
+                                        <com.miku.ray.marquee.text.RandomText
                                             android:textAppearance="?textAppearanceTitleSmall"
                                             android:textStyle="bold"
                                             android:textSize="14.0sp"
@@ -148,7 +148,7 @@
                 android:paddingBottom="5.0dip"
                 android:paddingHorizontal="24.0dip">
 
-                <com.neko.widget.UwuHeaderIconView
+                <com.miku.ray.widget.UwuHeaderIconView
                     android:layout_width="50.0dip"
                     android:layout_height="50.0dip"
                     app:sectionIcon="@drawable/rmx_sort_desc"
@@ -199,7 +199,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="16.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeBackgroundColor="?colorPrimary"
                                 android:layout_width="45.0dip"
                                 android:layout_height="45.0dip"
@@ -260,7 +260,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="16.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeBackgroundColor="?colorPrimary"
                                 android:layout_width="45.0dip"
                                 android:layout_height="45.0dip"
@@ -320,7 +320,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="16.0dip">
 
-                            <com.neko.widget.DynamicShapeImageView
+                            <com.miku.ray.widget.DynamicShapeImageView
                                 app:shapeBackgroundColor="?colorPrimary"
                                 android:layout_width="45.0dip"
                                 android:layout_height="45.0dip"

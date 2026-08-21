@@ -103,7 +103,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp">
 
-                    <com.neko.marquee.text.Greetings
+                    <com.miku.ray.marquee.text.Greetings
                         android:id="@+id/tv_greeting_sub"
                         android:textAppearance="?textAppearanceBodySmall"
                         android:textStyle="bold"
@@ -114,7 +114,7 @@
                         android:singleLine="true"
                         android:marqueeRepeatLimit="marquee_forever" />
 
-                    <com.neko.marquee.text.UserNameTextView
+                    <com.miku.ray.marquee.text.UserNameTextView
                         android:id="@+id/tv_username"
                         android:textAppearance="?textAppearanceTitleMedium"
                         android:textStyle="bold"
@@ -128,7 +128,7 @@
                         android:marqueeRepeatLimit="marquee_forever" />
                 </LinearLayout>
 
-                <com.neko.widget.ProfileBannerImageView
+                <com.miku.ray.widget.ProfileBannerImageView
                     android:id="@+id/iv_profile"
                     android:background="@android:color/transparent"
                     android:layout_width="50dp"
@@ -384,7 +384,7 @@
                 android:layout_toStartOf="@+id/fab_container"
                 android:layout_alignParentStart="true">
 
-                <com.neko.marquee.text.AutoMarqueeTextView
+                <com.miku.ray.marquee.text.AutoMarqueeTextView
                     android:id="@+id/tv_ip_state"
                     android:textAppearance="?textAppearanceTitleSmall"
                     android:textSize="12sp"
@@ -395,7 +395,7 @@
                     android:singleLine="true"
                     android:marqueeRepeatLimit="marquee_forever" />
 
-                <com.neko.marquee.text.AutoMarqueeTextView
+                <com.miku.ray.marquee.text.AutoMarqueeTextView
                     android:id="@+id/tv_test_state"
                     android:textAppearance="?textAppearanceTitleMedium"
                     android:textSize="17sp"

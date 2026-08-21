@@ -1,0 +1,138 @@
+package com.miku.ray.ui.bottomsheet
+
+import android.content.Context
+import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.miku.ray.AppConfig
+import com.miku.ray.R
+import com.miku.ray.enums.EConfigType
+import com.miku.ray.extension.isComplexType
+import com.miku.ray.handler.MmkvManager
+import com.miku.ray.util.ParticlesController
+import com.miku.ray.particlesdrawable.ParticlesView
+
+class ShareConfigBottomSheet : BaseBottomSheetFragment() {
+
+    interface OnShareOptionClickListener {
+        fun onShareOptionClicked(optionId: Int, guid: String)
+    }
+
+    private var mListener: OnShareOptionClickListener? = null
+    private var configGuid: String = ""
+    private var configType: Int = 0
+    private val TAG_SHEET_DEFAULT = "DEFAULT_BANNER_SHEET"
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnShareOptionClickListener) {
+            mListener = context
+        } else {
+            throw RuntimeException("$context must implement OnShareOptionClickListener")
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        configGuid = arguments?.getString(ARG_GUID) ?: ""
+        configType = arguments?.getInt(ARG_CONFIG_TYPE) ?: 0
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.uwu_bottom_sheet_share_config, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
+        if (particlesView != null) {
+            val disabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
+            particlesView.visibility = if (disabled) View.GONE else View.VISIBLE
+            if (!disabled) {
+                ParticlesController.applyTo(particlesView)
+            }
+        }
+        loadBanner(view)
+
+        val clickListener = View.OnClickListener {
+            mListener?.onShareOptionClicked(it.id, configGuid)
+            dismiss()
+        }
+
+        view.findViewById<View>(R.id.share_qrcode)?.setOnClickListener(clickListener)
+
+        val shareClipboardView = view.findViewById<View>(R.id.share_clipboard)
+        shareClipboardView?.setOnClickListener(clickListener)
+
+        view.findViewById<View>(R.id.share_full_clipboard)?.setOnClickListener(clickListener)
+
+        view.findViewById<View>(R.id.share_file)?.setOnClickListener(clickListener)
+
+        val typeEnum = EConfigType.fromInt(configType)
+        val isCustomConfig = typeEnum?.isComplexType() == true
+
+        if (isCustomConfig) {
+            shareClipboardView?.visibility = View.GONE
+        }
+    }
+
+    private fun loadBanner(view: View) {
+        val bannerImageView = view.findViewById<ImageView>(R.id.img_banner_sheet) ?: return
+        bannerImageView.setLayerType(View.LAYER_TYPE_NONE, null)
+        val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
+        val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
+        if (bannerImageView.tag != targetTag) {
+            if (!uriString.isNullOrBlank()) {
+                val isGif = uriString.lowercase().endsWith(".gif")
+                if (isGif) {
+                    Glide.with(this)
+                        .asGif()
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                } else {
+                    Glide.with(this)
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                }
+            } else {
+                Glide.with(this).clear(bannerImageView)
+                bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)
+            }
+            bannerImageView.tag = targetTag
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mListener = null
+    }
+
+    companion object {
+        const val TAG = "ShareConfigBottomSheet"
+        private const val ARG_GUID = "arg_guid"
+        private const val ARG_CONFIG_TYPE = "arg_config_type"
+
+        fun newInstance(guid: String, configType: Int): ShareConfigBottomSheet {
+            return ShareConfigBottomSheet().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_GUID, guid)
+                    putInt(ARG_CONFIG_TYPE, configType)
+                }
+            }
+        }
+    }
+}
