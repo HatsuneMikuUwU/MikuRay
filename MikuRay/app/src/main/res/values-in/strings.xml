@@ -899,7 +899,7 @@ yang kamu butuhin."</string>
     <string name="sheet_banner_delete_summary">Banner kustom dihapus. Bakal balik pakai banner sheet bawaan</string>
     <string name="sheet_banner_updated">Banner sheet berhasil diupdate.</string>
     <string name="particles_enable_title">Nyalain animasi partikel</string>
-    <string name="particles_enable_summary">Nampilin efek partikel di bottomsheet (nonaktif secara default)</string>
+    <string name="particles_enable_summary">Nampilin efek partikel di bottomsheet</string>
 
     <string name="pref_particles_settings_title">Settingan animasi partikel</string>
     <string name="pref_particles_settings_summary">Atur kecepatan, ukuran, kepadatan, dan lainnya</string>

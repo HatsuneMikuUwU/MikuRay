@@ -1,19 +1,13 @@
 package com.miku.ray.ui.bottomsheet
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
-import com.miku.ray.util.ParticlesController
-import com.miku.ray.particlesdrawable.ParticlesView
 
 class AssetMenuBottomSheet : BaseBottomSheetFragment() {
 
@@ -22,7 +16,6 @@ class AssetMenuBottomSheet : BaseBottomSheetFragment() {
     }
 
     private var mListener: OnAssetMenuOptionClickListener? = null
-    private val TAG_SHEET_DEFAULT = "DEFAULT_BANNER_SHEET"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,15 +37,8 @@ class AssetMenuBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
-        if (particlesView != null) {
-            val enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_PARTICLES_SHEET, false)
-            particlesView.visibility = if (enabled) View.VISIBLE else View.GONE
-            if (enabled) {
-                ParticlesController.applyTo(particlesView)
-            }
-        }
-        loadBanner(view)
+        setupParticles(view)
+        loadBannerSheet(view)
 
         val clickListener = View.OnClickListener {
             mListener?.onAssetMenuOptionClicked(it.id)
@@ -67,36 +53,6 @@ class AssetMenuBottomSheet : BaseBottomSheetFragment() {
 
         actionIds.forEach { id ->
             view.findViewById<View>(id)?.setOnClickListener(clickListener)
-        }
-    }
-
-    private fun loadBanner(view: View) {
-        val bannerImageView = view.findViewById<ImageView>(R.id.img_banner_sheet) ?: return
-        bannerImageView.setLayerType(View.LAYER_TYPE_NONE, null)
-        val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
-        val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
-        if (bannerImageView.tag != targetTag) {
-            if (!uriString.isNullOrBlank()) {
-                val isGif = uriString.lowercase().endsWith(".gif")
-                if (isGif) {
-                    Glide.with(this)
-                        .asGif()
-                        .load(Uri.parse(uriString))
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .error(R.drawable.uwu_banner_sheet)
-                        .into(bannerImageView)
-                } else {
-                    Glide.with(this)
-                        .load(Uri.parse(uriString))
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .error(R.drawable.uwu_banner_sheet)
-                        .into(bannerImageView)
-                }
-            } else {
-                Glide.with(this).clear(bannerImageView)
-                bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)
-            }
-            bannerImageView.tag = targetTag
         }
     }
 

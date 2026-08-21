@@ -1,5 +1,7 @@
 package com.miku.ray.ui.bottomsheet
 
+import android.net.Uri
+import android.view.View
 import androidx.core.view.ViewCompat
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
@@ -9,11 +11,55 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.miku.ray.util.WindowBlurUtils
+import com.miku.ray.AppConfig
 import com.miku.ray.R
+import com.miku.ray.handler.MmkvManager
+import com.miku.ray.particlesdrawable.ParticlesView
+import com.miku.ray.util.ParticlesController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import android.widget.ImageView
 
 abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
+
+    protected fun setupParticles(view: View) {
+        val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView) ?: return
+        val enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_PARTICLES_SHEET, false)
+        particlesView.visibility = if (enabled) View.VISIBLE else View.GONE
+        if (enabled) {
+            ParticlesController.applyTo(particlesView)
+        }
+    }
+
+    protected fun loadBannerSheet(view: View) {
+        val bannerImageView = view.findViewById<ImageView>(R.id.img_banner_sheet) ?: return
+        bannerImageView.setLayerType(View.LAYER_TYPE_NONE, null)
+        val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
+        val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
+        if (bannerImageView.tag != targetTag) {
+            if (!uriString.isNullOrBlank()) {
+                val isGif = uriString.lowercase().endsWith(".gif")
+                if (isGif) {
+                    Glide.with(this)
+                        .asGif()
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                } else {
+                    Glide.with(this)
+                        .load(Uri.parse(uriString))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_sheet)
+                        .into(bannerImageView)
+                }
+            } else {
+                Glide.with(this).clear(bannerImageView)
+                bannerImageView.setImageResource(R.drawable.uwu_banner_sheet)
+            }
+            bannerImageView.tag = targetTag
+        }
+    }
 
     override fun onDestroyView() {
         view?.findViewById<ImageView>(R.id.img_banner_sheet)?.let { bannerImageView ->
@@ -59,5 +105,9 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
             insets
         }
+    }
+
+    companion object {
+        private const val TAG_SHEET_DEFAULT = "DEFAULT_BANNER_SHEET"
     }
 }
