@@ -393,6 +393,7 @@ object AppConfig {
     const val MSG_SUB_UPDATE_CANCEL = 81
         const val MSG_TRAFFIC_UPDATED = 81
     const val MSG_TRAFFIC_SPEED_UPDATED = 82
+    const val MSG_SUB_UPDATE_FINISH = 83
 
     const val RAY_NG_CHANNEL_ID = "CORE_M_CH_ID_V2"
     const val RAY_NG_CHANNEL_NAME = "Core Background Service"

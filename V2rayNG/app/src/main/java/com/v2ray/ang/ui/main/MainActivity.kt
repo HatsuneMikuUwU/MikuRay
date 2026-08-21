@@ -697,6 +697,11 @@ class MainActivity : HelperBaseActivity(),
         }
 
         mainViewModel.updateGroupBadgeAction.observe(this) { refreshTabBadges() }
+
+        mainViewModel.updateGroupOrderAction.observe(this) {
+            mainViewModel.reloadServerList()
+            refreshGroupTabTitles()
+        }
         
         mainViewModel.updateTestResultAction.observe(this) {
             lastTestResultText = it.orEmpty()

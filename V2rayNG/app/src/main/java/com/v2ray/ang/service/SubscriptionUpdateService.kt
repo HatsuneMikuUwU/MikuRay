@@ -15,6 +15,7 @@ import com.v2ray.ang.extension.serializable
 import com.v2ray.ang.handler.AngConfigManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.LogUtil
+import com.v2ray.ang.util.MessageUtil
 import com.v2ray.ang.helper.NotificationHelper
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -97,6 +98,10 @@ class SubscriptionUpdateService : Service() {
                     LogUtil.e(AppConfig.TAG, "SubscriptionUpdateService update failed", e)
                 } finally {
                     if (runningTasks.decrementAndGet() == 0 && activeWorkers.isEmpty()) {
+                        // Runs in a separate process from the UI, so the UI never
+                        // otherwise learns this batch finished (order/lastUpdated may
+                        // have changed) — notify it so group tabs can re-sync.
+                        MessageUtil.sendMsg2UI(this@SubscriptionUpdateService, AppConfig.MSG_SUB_UPDATE_FINISH, "")
                         NotificationHelper.stopForeground(this@SubscriptionUpdateService)
                         stopSelf()
                     }

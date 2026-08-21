@@ -51,6 +51,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateTrafficSpeedAction by lazy { MutableLiveData<String>() }
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
+    val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
 
     fun startListenBroadcast() {
         isRunning.value = false
@@ -578,6 +579,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 AppConfig.MSG_TRAFFIC_SPEED_UPDATED -> {
                     val speedText = intent.getStringExtra("content") ?: return
                     updateTrafficSpeedAction.postValue(speedText)
+                }
+
+                AppConfig.MSG_SUB_UPDATE_FINISH -> {
+                    updateGroupOrderAction.postValue(Unit)
                 }
             }
         }
