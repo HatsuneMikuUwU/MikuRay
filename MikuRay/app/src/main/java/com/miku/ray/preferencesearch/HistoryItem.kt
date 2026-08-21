@@ -1,6 +1,6 @@
 package com.miku.ray.preferencesearch
 
-class HistoryItem(private val term: String) : ListItem() {
+class HistoryItem(val term: String) : ListItem() {
 
     companion object {
         const val TYPE = 1

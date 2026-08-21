@@ -75,7 +75,7 @@ class PreferenceItem() : ListItem(), Parcelable {
     }
 
     fun withSummary(summary: String?): PreferenceItem {
-        this.summary = summary
+        this.summary = summary ?: ""
         return this
     }
 

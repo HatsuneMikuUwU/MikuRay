@@ -14,7 +14,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class SearchPreferenceResult(private val key: String, private val file: Int, private val screen: String) {
+class SearchPreferenceResult(val key: String, private val file: Int, private val screen: String) {
 
     fun getKey(): String = key
     fun getResourceFile(): Int = file

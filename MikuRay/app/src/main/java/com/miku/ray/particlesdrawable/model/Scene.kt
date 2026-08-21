@@ -18,25 +18,25 @@ class Scene : SceneConfiguration {
 
     private var alpha: Int = 255
 
-    private var density: Int = Defaults.DENSITY
+    var density: Int = Defaults.DENSITY
 
-    private var frameDelay: Int = Defaults.FRAME_DELAY
-
-    @ColorInt
-    private var lineColor: Int = Defaults.LINE_COLOR
-
-    private var lineLength: Float = Defaults.LINE_LENGTH
-
-    private var lineThickness: Float = Defaults.LINE_THICKNESS
+    var frameDelay: Int = Defaults.FRAME_DELAY
 
     @ColorInt
-    private var particleColor: Int = Defaults.PARTICLE_COLOR
+    var lineColor: Int = Defaults.LINE_COLOR
 
-    private var particleRadiusMax: Float = Defaults.PARTICLE_RADIUS_MAX
+    var lineLength: Float = Defaults.LINE_LENGTH
 
-    private var particleRadiusMin: Float = Defaults.PARTICLE_RADIUS_MIN
+    var lineThickness: Float = Defaults.LINE_THICKNESS
 
-    private var speedFactor: Float = Defaults.SPEED_FACTOR
+    @ColorInt
+    var particleColor: Int = Defaults.PARTICLE_COLOR
+
+    var particleRadiusMax: Float = Defaults.PARTICLE_RADIUS_MAX
+
+    var particleRadiusMin: Float = Defaults.PARTICLE_RADIUS_MIN
+
+    var speedFactor: Float = Defaults.SPEED_FACTOR
 
     private var width: Int = 0
     private var height: Int = 0

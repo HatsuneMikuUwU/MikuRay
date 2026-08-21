@@ -82,7 +82,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.speedFactor
     }
 
-    fun setParticleRadiusRange(
+    override fun setParticleRadiusRange(
         @FloatRange(from = 0.5) minRadius: Float,
         @FloatRange(from = 0.5) maxRadius: Float
     ) {
@@ -97,7 +97,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.particleRadiusMax
     }
 
-    fun setLineThickness(@FloatRange(from = 1.0) lineThickness: Float) {
+    override fun setLineThickness(@FloatRange(from = 1.0) lineThickness: Float) {
         scene.setLineThickness(lineThickness)
     }
 
@@ -105,7 +105,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.lineThickness
     }
 
-    fun setLineLength(@FloatRange(from = 0.0) lineLength: Float) {
+    override fun setLineLength(@FloatRange(from = 0.0) lineLength: Float) {
         scene.setLineLength(lineLength)
     }
 
@@ -113,7 +113,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.lineLength
     }
 
-    fun setDensity(@IntRange(from = 0) newNum: Int) {
+    override fun setDensity(@IntRange(from = 0) newNum: Int) {
         scene.setDensity(newNum)
     }
 
@@ -121,7 +121,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.density
     }
 
-    fun setParticleColor(@ColorInt color: Int) {
+    override fun setParticleColor(@ColorInt color: Int) {
         scene.setParticleColor(color)
     }
 
@@ -129,7 +129,7 @@ class ParticlesView @JvmOverloads constructor(
         return scene.particleColor
     }
 
-    fun setLineColor(@ColorInt lineColor: Int) {
+    override fun setLineColor(@ColorInt lineColor: Int) {
         scene.setLineColor(lineColor)
     }
 

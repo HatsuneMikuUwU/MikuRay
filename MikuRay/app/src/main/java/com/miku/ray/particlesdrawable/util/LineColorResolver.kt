@@ -20,10 +20,10 @@ object LineColorResolver {
 
     fun resolveLineColorWithAlpha(
         @IntRange(from = 0, to = 255) sceneAlpha: Int,
-        @ColorInt lineColor: Int,
+         lineColor: Int,
         maxDistance: Float,
         distance: Float
-    ): @ColorInt Int {
+    ):  Int {
         val alpha = resolveLineAlpha(sceneAlpha, maxDistance, distance)
         return (lineColor and 0x00FFFFFF) or (alpha shl 24)
     }

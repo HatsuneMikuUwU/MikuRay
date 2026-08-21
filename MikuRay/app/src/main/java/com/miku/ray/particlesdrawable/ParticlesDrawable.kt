@@ -179,13 +179,13 @@ class ParticlesDrawable : Drawable(), Animatable, SceneConfiguration, SceneContr
 
     override fun getLineLength(): Float = scene.getLineLength()
 
-    fun setDensity(@IntRange(from = 0) newNum: Int) {
+    override fun setDensity(@IntRange(from = 0) newNum: Int) {
         scene.setDensity(newNum)
     }
 
     override fun getDensity(): Int = scene.getDensity()
 
-    fun setParticleColor(@ColorInt color: Int) {
+    override fun setParticleColor(@ColorInt color: Int) {
         scene.setParticleColor(color)
     }
 

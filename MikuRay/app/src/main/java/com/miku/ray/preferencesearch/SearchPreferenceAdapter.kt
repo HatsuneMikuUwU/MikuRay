@@ -15,7 +15,7 @@ import com.miku.ray.util.ThemeManagerKt
 import java.util.ArrayList
 import java.util.Locale
 
-class SearchPreferenceAdapter : RecyclerView.Adapter<SearchPreferenceAdapter.ViewHolder>() {
+open class SearchPreferenceAdapter : RecyclerView.Adapter<SearchPreferenceAdapter.ViewHolder>() {
     private var dataset: MutableList<ListItem> = ArrayList()
     private lateinit var searchConfiguration: SearchConfiguration
     private var onItemClickListener: SearchClickListener? = null
@@ -44,7 +44,7 @@ class SearchPreferenceAdapter : RecyclerView.Adapter<SearchPreferenceAdapter.Vie
     override fun onBindViewHolder(h: ViewHolder, position: Int) {
         val listItem = dataset[position]
 
-        val highlightColor = ThemeManagerKt.getColorAttr(h.root.context, "colorPrimary")
+        val highlightColor = getColorAttr(h.root.context, "colorPrimary")
 
         when (getItemViewType(position)) {
             HistoryItem.TYPE -> {

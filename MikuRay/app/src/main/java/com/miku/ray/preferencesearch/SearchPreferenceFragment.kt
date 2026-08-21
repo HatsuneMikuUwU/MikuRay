@@ -43,7 +43,7 @@ class SearchPreferenceFragment : Fragment(), SearchPreferenceAdapter.SearchClick
     private var historyClickListener: HistoryClickListener? = null
     private var searchTermPreset: CharSequence? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle??) {
         super.onCreate(savedInstanceState)
         prefs = requireContext().getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_PRIVATE)
         searcher = PreferenceParser(requireContext())
@@ -58,7 +58,7 @@ class SearchPreferenceFragment : Fragment(), SearchPreferenceAdapter.SearchClick
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle??): View {
         val rootView = inflater.inflate(R.layout.searchpreference_fragment, container, false)
         viewHolder = SearchViewHolder(rootView)
 
@@ -115,7 +115,7 @@ class SearchPreferenceFragment : Fragment(), SearchPreferenceAdapter.SearchClick
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle??) {
         super.onViewCreated(view, savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

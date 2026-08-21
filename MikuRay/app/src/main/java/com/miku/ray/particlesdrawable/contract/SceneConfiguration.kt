@@ -16,9 +16,9 @@ interface SceneConfiguration {
 
     fun getFrameDelay(): Int
 
-    fun setLineColor(@ColorInt lineColor: Int)
+    fun setLineColor( lineColor: Int)
 
-    fun getLineColor(): @ColorInt Int
+    fun getLineColor():  Int
 
     fun setLineLength(@FloatRange(from = 0.0) lineLength: Float)
 
@@ -28,9 +28,9 @@ interface SceneConfiguration {
 
     fun getLineThickness(): Float
 
-    fun setParticleColor(@ColorInt color: Int)
+    fun setParticleColor( color: Int)
 
-    fun getParticleColor(): @ColorInt Int
+    fun getParticleColor():  Int
 
     fun setParticleRadiusRange(
         @FloatRange(from = 0.5) minRadius: Float,
