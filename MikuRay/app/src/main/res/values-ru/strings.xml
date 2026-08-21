@@ -908,8 +908,8 @@
     <string name="sheet_banner_delete_title">Удалить свой баннер нижней панели</string>
     <string name="sheet_banner_delete_summary">Свой баннер удалён. Вместо него будет использоваться баннер по умолчанию</string>
     <string name="sheet_banner_updated">Баннер панели успешно обновлен.</string>
-    <string name="particles_disable_title">Отключить анимацию частиц</string>
-    <string name="particles_disable_summary">Скрыть эффект частиц на нижней панели</string>
+    <string name="particles_enable_title">Включить анимацию частиц</string>
+    <string name="particles_enable_summary">Показать эффект частиц на нижней панели (отключено по умолчанию)</string>
 
     <string name="pref_particles_settings_title">Настройки анимации частиц</string>
     <string name="pref_particles_settings_summary">Настройте скорость, размер, плотность и другое</string>

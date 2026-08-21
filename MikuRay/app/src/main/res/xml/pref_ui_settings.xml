@@ -453,9 +453,9 @@
             android:icon="@drawable/rmx_sparkling_line"
             app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:key="pref_disable_particles_sheet"
-            android:title="@string/particles_disable_title"
-            android:summary="@string/particles_disable_summary"
+            android:key="pref_enable_particles_sheet"
+            android:title="@string/particles_enable_title"
+            android:summary="@string/particles_enable_summary"
             android:defaultValue="false" />
 
         <com.miku.ray.ui.dialog.ParticlesSettingsDialog

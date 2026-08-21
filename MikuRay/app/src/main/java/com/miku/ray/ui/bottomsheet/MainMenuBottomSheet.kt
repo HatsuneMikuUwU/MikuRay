@@ -46,9 +46,9 @@ class MainMenuBottomSheet : BaseBottomSheetFragment() {
 
         val particlesView = view.findViewById<ParticlesView>(R.id.ParticlesView)
         if (particlesView != null) {
-            val disabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
-            particlesView.visibility = if (disabled) View.GONE else View.VISIBLE
-            if (!disabled) {
+            val enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_PARTICLES_SHEET, false)
+            particlesView.visibility = if (enabled) View.VISIBLE else View.GONE
+            if (enabled) {
                 ParticlesController.applyTo(particlesView)
             }
         }

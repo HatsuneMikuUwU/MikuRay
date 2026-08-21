@@ -933,8 +933,8 @@ you need."</string>
     <string name="sheet_banner_delete_title">Remove custom sheet banner</string>
     <string name="sheet_banner_delete_summary">Custom banner removed. Default sheet banner will be used instead</string>
     <string name="sheet_banner_updated">Sheet banner updated successfully.</string>
-    <string name="particles_disable_title">Disable particles animation</string>
-    <string name="particles_disable_summary">Hide the particles effect in bottomsheet</string>
+    <string name="particles_enable_title">Enable particles animation</string>
+    <string name="particles_enable_summary">Show the particles effect in bottomsheet (off by default)</string>
 
     <string name="pref_particles_settings_title">Particle animation settings</string>
     <string name="pref_particles_settings_summary">Adjust speed, size, density and more</string>

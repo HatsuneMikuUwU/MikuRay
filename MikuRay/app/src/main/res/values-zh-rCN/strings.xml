@@ -887,8 +887,8 @@
     <string name="sheet_banner_delete_title">移除自定义底部横幅</string>
     <string name="sheet_banner_delete_summary">自定义横幅已移除，将改用默认底部横幅</string>
     <string name="sheet_banner_updated">底部横幅更新成功。</string>
-    <string name="particles_disable_title">禁用粒子动画</string>
-    <string name="particles_disable_summary">隐藏底部面板中的粒子效果</string>
+    <string name="particles_enable_title">启用粒子动画</string>
+    <string name="particles_enable_summary">显示底部面板中的粒子效果（默认关闭）</string>
 
     <string name="pref_particles_settings_title">粒子动画设置</string>
     <string name="pref_particles_settings_summary">调整速度、大小、密度等参数</string>

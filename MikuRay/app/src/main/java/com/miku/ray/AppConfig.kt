@@ -192,7 +192,7 @@ object AppConfig {
     const val PREF_PROFILE_BANNER_SHAPE_DEFAULT = "uwu_shape_cookie"
     const val PREF_ACTION_CHANGE_PROFILE_BANNER = "action_change_profile_banner_image"
     const val PREF_ACTION_DELETE_PROFILE_BANNER = "action_delete_profile_banner_image"
-    const val PREF_DISABLE_PARTICLES_SHEET = "pref_disable_particles_sheet"
+    const val PREF_ENABLE_PARTICLES_SHEET = "pref_enable_particles_sheet"
     const val PREF_SHOW_HOME_BANNER = "pref_show_home_banner"
     const val PREF_CUSTOM_HOME_BANNER_URI = "custom_home_banner_uri"
     const val PREF_ACTION_CHANGE_HOME_BANNER = "action_change_home_banner_image"

@@ -977,17 +977,17 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         private fun setupParticlesPreferences() {
-            fun applySettingsEnabled(disabled: Boolean) {
-                findPreference<Preference>(AppConfig.PREF_PARTICLES_SETTINGS)?.isEnabled = !disabled
+            fun applySettingsEnabled(enabled: Boolean) {
+                findPreference<Preference>(AppConfig.PREF_PARTICLES_SETTINGS)?.isEnabled = enabled
             }
 
-            findPreference<SwitchPreferenceCompat>(AppConfig.PREF_DISABLE_PARTICLES_SHEET)?.apply {
-                isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_PARTICLES_SHEET, false)
+            findPreference<SwitchPreferenceCompat>(AppConfig.PREF_ENABLE_PARTICLES_SHEET)?.apply {
+                isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_PARTICLES_SHEET, false)
                 applySettingsEnabled(isChecked)
                 setOnPreferenceChangeListener { _, newValue ->
-                    val disabled = newValue as Boolean
-                    MmkvManager.encodeSettings(AppConfig.PREF_DISABLE_PARTICLES_SHEET, disabled)
-                    applySettingsEnabled(disabled)
+                    val enabled = newValue as Boolean
+                    MmkvManager.encodeSettings(AppConfig.PREF_ENABLE_PARTICLES_SHEET, enabled)
+                    applySettingsEnabled(enabled)
                     true
                 }
             }
