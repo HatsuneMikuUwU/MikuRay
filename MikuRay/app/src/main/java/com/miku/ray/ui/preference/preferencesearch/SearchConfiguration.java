@@ -1,4 +1,4 @@
-package com.miku.ray.ui.preference;
+package com.miku.ray.ui.preference.preferencesearch;
 
 import com.miku.ray.R;
 
@@ -13,7 +13,7 @@ import androidx.annotation.XmlRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import com.miku.ray.ui.preference.RevealAnimationSetting;
+import com.miku.ray.ui.preference.preferencesearch.RevealAnimationSetting;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -20,10 +20,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.miku.ray.ui.preference.SearchPreferenceActionView
-import com.miku.ray.ui.preference.SearchPreferenceFragment
-import com.miku.ray.ui.preference.SearchPreferenceResult
-import com.miku.ray.ui.preference.SearchPreferenceResultListener
+import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceActionView
+import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceFragment
+import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResult
+import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
 import com.miku.ray.R

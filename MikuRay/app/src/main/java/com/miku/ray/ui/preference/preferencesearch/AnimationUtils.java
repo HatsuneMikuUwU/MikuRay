@@ -1,4 +1,4 @@
-package com.miku.ray.ui.preference;
+package com.miku.ray.ui.preference.preferencesearch;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

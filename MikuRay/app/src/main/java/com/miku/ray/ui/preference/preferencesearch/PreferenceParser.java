@@ -1,4 +1,4 @@
-package com.miku.ray.ui.preference;
+package com.miku.ray.ui.preference.preferencesearch;
 
 import android.content.Context;
 import android.text.TextUtils;
