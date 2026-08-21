@@ -190,6 +190,7 @@ class SubSettingActivity : BaseActivity(),
                                     showSubUpdateDiffDialog(this@SubSettingActivity, result)
                                 }
                                 refreshData()
+                                com.v2ray.ang.handler.SettingsChangeManager.makeSetupGroupTab()
                                 hideLoading()
                             }
                         } catch (e: Exception) {
