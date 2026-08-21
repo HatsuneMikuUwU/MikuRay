@@ -502,6 +502,11 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_configuration_backup">Backup Konfig</string>
     <string name="title_configuration_restore">Balikin Konfig (Restore)</string>
     <string name="title_configuration_share">Bagi-bagi Konfig</string>
+    <string name="title_pin_server">Pin Server</string>
+    <string name="action_pin_server">Pin ke atas</string>
+    <string name="action_unpin_server">Lepas pin</string>
+    <string name="toast_server_pinned">Server dipin ke atas</string>
+    <string name="toast_server_unpinned">Pin server dilepas</string>
     <string name="title_profile_storage_cleanup">Beresin Penyimpanan Konfig</string>
     <string name="message_profile_storage_cleanup">Hapus data konfig yang udah gak dipake sama grup manapun? Konfig yang lagi dipilih dan data yang gak bisa dipastikan aman bakal tetap disimpan.</string>
     <string name="toast_profile_storage_cleanup">Konfig nganggur yang dihapus: %1$d</string>

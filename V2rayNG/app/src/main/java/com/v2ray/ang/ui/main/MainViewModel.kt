@@ -154,6 +154,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 if (delay <= 0L) Long.MAX_VALUE else delay
             })
         }
+
+        // Pinned servers float to the top regardless of the active order above.
+        // sortByDescending is stable, so it only reshuffles the pinned/unpinned
+        // partitions without disturbing the relative order within each.
+        val pinnedServers = MmkvManager.decodePinnedServers()
+        if (pinnedServers.isNotEmpty()) {
+            serversCache.sortByDescending { pinnedServers.contains(it.guid) }
+        }
+    }
+
+    /**
+     * Toggles the pinned state of [guid], re-sorts the cache so pinned
+     * servers float to the top immediately, and returns the new state.
+     */
+    fun togglePinServer(guid: String): Boolean {
+        val nowPinned = MmkvManager.togglePinnedServer(guid)
+        updateCache()
+        updateListAction.postValue(-1)
+        return nowPinned
     }
 
     fun updateConfigViaSubAll(): SubscriptionUpdateResult {
@@ -475,6 +494,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
         )
         MmkvManager.clearAllTestDelayResults(MmkvManager.decodeAllServerList())
+        // Re-sort serversCache immediately so order=by-delay drops back to its
+        // tie-break order right away, instead of waiting for a reload/restart.
+        updateCache()
         updateListAction.postValue(-1)
     }
 

@@ -10,4 +10,6 @@ interface MainAdapterListener : BaseAdapterListener {
 
     fun onShare(guid: String, profile: ProfileItem, position: Int, more: Boolean)
 
+    fun onPinToggle(guid: String, position: Int, isPinned: Boolean)
+
 }

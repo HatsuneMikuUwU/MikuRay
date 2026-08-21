@@ -61,6 +61,16 @@
                             android:ellipsize="end"
                             android:maxLines="1" />
 
+                        <ImageView
+                            android:id="@+id/iv_pin_indicator"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="6dp"
+                            android:contentDescription="@string/title_pin_server"
+                            app:srcCompat="@drawable/rmx_map_pushpin_line"
+                            app:tint="?colorPrimary"
+                            android:visibility="gone" />
+
                         <View
                             android:id="@+id/v_status_dot"
                             android:layout_width="10dp"

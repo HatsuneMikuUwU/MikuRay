@@ -160,6 +160,9 @@ class MainRecyclerAdapter(
                 holder.views.tvTraffic.visibility = View.GONE
             }
 
+            val isPinned = MmkvManager.isServerPinned(guid)
+            holder.views.ivPinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
+
             val isSelectedServer = (guid == MmkvManager.getSelectServer())
             val isVpnConnected = mainViewModel.isRunning.value == true
 
@@ -244,8 +247,34 @@ class MainRecyclerAdapter(
                 adapterListener?.onRemove(guid, position)
             }
 
-            holder.views.infoContainer.setOnClickListener {
-                adapterListener?.onSelectServer(guid)
+            val gestureDetector = android.view.GestureDetector(
+                context,
+                object : android.view.GestureDetector.SimpleOnGestureListener() {
+                    // onSingleTapUp fires immediately on finger-up instead of
+                    // waiting out the double-tap timeout, so selecting a server
+                    // stays instant. Re-tapping the already-selected server here
+                    // is a no-op (setSelectServer only acts when guid changes),
+                    // so it's safe to let this fire before onDoubleTap resolves.
+                    override fun onSingleTapUp(e: android.view.MotionEvent): Boolean {
+                        adapterListener?.onSelectServer(guid)
+                        return true
+                    }
+
+                    override fun onDoubleTap(e: android.view.MotionEvent): Boolean {
+                        if (isSelectedServer) {
+                            // Double-tapping the currently selected server opens
+                            // the pin/unpin dialog instead of re-selecting it.
+                            adapterListener?.onPinToggle(guid, position, isPinned)
+                        } else {
+                            adapterListener?.onSelectServer(guid)
+                        }
+                        return true
+                    }
+                }
+            )
+            holder.views.infoContainer.setOnTouchListener { _, event ->
+                gestureDetector.onTouchEvent(event)
+                true
             }
         }
     }
@@ -389,6 +418,7 @@ class MainRecyclerAdapter(
         val infoContainer: View
         val tvName: android.widget.TextView
         val vStatusDot: View
+        val ivPinIndicator: android.widget.ImageView
         val tvType: com.google.android.material.chip.Chip
         val layoutSubscription: View
         val tvSubscription: com.google.android.material.chip.Chip
@@ -411,6 +441,7 @@ class MainRecyclerAdapter(
         override val infoContainer get() = b.infoContainer
         override val tvName get() = b.tvName
         override val vStatusDot get() = b.vStatusDot
+        override val ivPinIndicator get() = b.ivPinIndicator
         override val tvType get() = b.tvType
         override val layoutSubscription get() = b.layoutSubscription
         override val tvSubscription get() = b.tvSubscription
@@ -433,6 +464,7 @@ class MainRecyclerAdapter(
         override val infoContainer get() = b.infoContainer
         override val tvName get() = b.tvName
         override val vStatusDot get() = b.vStatusDot
+        override val ivPinIndicator get() = b.ivPinIndicator
         override val tvType get() = b.tvType
         override val layoutSubscription get() = b.layoutSubscription
         override val tvSubscription get() = b.tvSubscription

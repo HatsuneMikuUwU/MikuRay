@@ -32,8 +32,12 @@ import com.v2ray.ang.ui.server.ServerVlessActivity
 import com.v2ray.ang.ui.server.ServerVmessActivity
 import com.v2ray.ang.ui.server.ServerWireguardActivity
 import com.v2ray.ang.extension.snackbarDefault
+import com.v2ray.ang.extension.snackbarSuccess
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.helper.SimpleItemTouchHelperCallback
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.v2ray.ang.util.showBlur
+import com.miku.ray.remixicon.R as RemixR
 
 class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
     private val ownerActivity: MainActivity
@@ -302,6 +306,24 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         updateEmptyState()
     }
 
+    private fun togglePinServer(guid: String, currentlyPinned: Boolean) {
+        val actionLabel = getString(
+            if (currentlyPinned) R.string.action_unpin_server else R.string.action_pin_server
+        )
+        MaterialAlertDialogBuilder(ownerActivity)
+            .setTitle(R.string.title_pin_server)
+            .setIcon(RemixR.drawable.rmx_map_pushpin_line)
+            .setItems(arrayOf(actionLabel)) { _, _ ->
+                val nowPinned = mainViewModel.togglePinServer(guid)
+                ownerActivity.snackbarSuccess(
+                    getString(if (nowPinned) R.string.toast_server_pinned else R.string.toast_server_unpinned),
+                    title = getString(R.string.title_alerter_success)
+                )
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .showBlur()
+    }
+
     private fun setSelectServer(guid: String) {
         val selected = MmkvManager.getSelectServer()
         if (guid != selected) {
@@ -338,6 +360,10 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
         override fun onShare(guid: String, profile: ProfileItem, position: Int, more: Boolean) {
             ownerActivity.showShareBottomSheet(guid, profile.configType.value)
+        }
+
+        override fun onPinToggle(guid: String, position: Int, isPinned: Boolean) {
+            togglePinServer(guid, isPinned)
         }
     }
 

@@ -488,6 +488,11 @@
     <string name="title_configuration_backup">备份配置</string>
     <string name="title_configuration_restore">还原配置</string>
     <string name="title_configuration_share">分享配置</string>
+    <string name="title_pin_server">置顶服务器</string>
+    <string name="action_pin_server">置顶</string>
+    <string name="action_unpin_server">取消置顶</string>
+    <string name="toast_server_pinned">服务器已置顶</string>
+    <string name="toast_server_unpinned">已取消置顶</string>
     <string name="title_profile_storage_cleanup">修复配置存储</string>
     <string name="message_profile_storage_cleanup">要删除已不再被任何分组使用的配置数据吗？当前选中的配置以及无法安全判定为未使用的数据将会保留。</string>
     <string name="toast_profile_storage_cleanup">已删除未使用的配置：%1$d</string>

@@ -52,6 +52,17 @@
                         android:layout_weight="1.0"
                         android:ellipsize="end"
                         android:maxLines="1" />
+                    <ImageView
+                        android:id="@+id/iv_pin_indicator"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:contentDescription="@string/title_pin_server"
+                        app:srcCompat="@drawable/rmx_map_pushpin_line"
+                        app:tint="?colorPrimary"
+                        android:visibility="gone" />
+
                     <View
                         android:id="@+id/v_status_dot"
                         android:layout_width="8dp"
@@ -200,6 +211,7 @@
                         android:id="@+id/layout_share"
                         android:layout_width="32.0dip"
                         android:layout_height="32.0dip"
+                        android:layout_marginStart="4.0dip"
                         android:contentDescription="@string/title_configuration_share"
                         android:background="@drawable/bg_icon_button"
                         android:focusable="true"

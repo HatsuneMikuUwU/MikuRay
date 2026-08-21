@@ -45,6 +45,7 @@ object MmkvManager {
     private const val KEY_SUB_SERVER_PREFIX = "SUB_SERVERS_"
     private const val KEY_SUB_IDS = "SUB_IDS"
     private const val KEY_WEBDAV_CONFIG = "WEBDAV_CONFIG"
+    private const val KEY_PINNED_SERVERS = "PINNED_SERVERS"
 
     private val recoveryHandler = object : MMKVHandler {
         override fun onMMKVCRCCheckFail(mmapID: String) =
@@ -328,6 +329,7 @@ object MmkvManager {
         }
         profileFullStorage.remove(guid)
         serverAffStorage.remove(guid)
+        unpinServer(guid)
     }
 
     fun removeServers(guids: List<String>, subscriptionId: String) {
@@ -336,6 +338,10 @@ object MmkvManager {
         val serverList = decodeServerList(subId)
         if (serverList.removeAll(guids)) {
             encodeServerList(serverList, subId)
+        }
+        val pinnedServers = decodePinnedServers()
+        if (pinnedServers.removeAll(guids.toSet())) {
+            settingsStorage.encode(KEY_PINNED_SERVERS, pinnedServers)
         }
 
         val selectedServer = getSelectServer()
@@ -866,6 +872,43 @@ object MmkvManager {
 
     fun decodeSettingsStringSet(key: String): MutableSet<String>? {
         return settingsStorage.decodeStringSet(key)
+    }
+
+    /**
+     * Pinned servers always float to the top of the list regardless of the
+     * active PREF_SERVER_ORDER (origin/name/delay), across all subscriptions.
+     */
+    fun decodePinnedServers(): MutableSet<String> {
+        return settingsStorage.decodeStringSet(KEY_PINNED_SERVERS) ?: mutableSetOf()
+    }
+
+    fun isServerPinned(guid: String): Boolean {
+        if (guid.isBlank()) return false
+        return decodePinnedServers().contains(guid)
+    }
+
+    /**
+     * Toggles the pinned state of [guid] and returns the resulting state.
+     */
+    fun togglePinnedServer(guid: String): Boolean {
+        if (guid.isBlank()) return false
+        val pinnedServers = decodePinnedServers()
+        val nowPinned = if (pinnedServers.contains(guid)) {
+            pinnedServers.remove(guid)
+            false
+        } else {
+            pinnedServers.add(guid)
+            true
+        }
+        settingsStorage.encode(KEY_PINNED_SERVERS, pinnedServers)
+        return nowPinned
+    }
+
+    private fun unpinServer(guid: String) {
+        val pinnedServers = decodePinnedServers()
+        if (pinnedServers.remove(guid)) {
+            settingsStorage.encode(KEY_PINNED_SERVERS, pinnedServers)
+        }
     }
 
     fun clearAllSettings() {
