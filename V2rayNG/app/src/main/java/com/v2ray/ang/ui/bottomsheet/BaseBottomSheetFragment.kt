@@ -10,8 +10,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.v2ray.ang.util.WindowBlurUtils
 import com.v2ray.ang.R
+import com.bumptech.glide.Glide
+import android.widget.ImageView
 
 abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
+
+    override fun onDestroyView() {
+        view?.findViewById<ImageView>(R.id.img_banner_sheet)?.let { bannerImageView ->
+            Glide.with(bannerImageView).clear(bannerImageView)
+            bannerImageView.setImageDrawable(null)
+            bannerImageView.tag = null
+        }
+        super.onDestroyView()
+    }
 
     override fun onStart() {
         super.onStart()

@@ -6,33 +6,44 @@ import com.v2ray.ang.handler.MmkvManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 object RootLanSharing {
 
     private var lanSharingStarted = false
     private var lanShareJob: Job? = null
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    @Synchronized
     fun startClientSharing(context: Context): Boolean {
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_ROOT_LAN_SHARING) && RootManager.cachedRoot()) {
-            if (lanShareJob != null) return false
-
-            lanSharingStarted = true
-            lanShareJob = CoroutineScope(Dispatchers.IO).launch { RootProxyManager.startClientSharing(context) }
+        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_ROOT_LAN_SHARING) || !RootManager.cachedRoot()) {
+            return true
         }
+        if (lanShareJob?.isActive == true) return false
 
+        val appContext = context.applicationContext
+        lanSharingStarted = true
+        lanShareJob = scope.launch {
+            runCatching { RootProxyManager.startClientSharing(appContext) }
+                .onFailure { lanSharingStarted = false }
+        }
         return true
     }
 
+    @Synchronized
     fun stopClientSharing(context: Context) {
-        if (!lanSharingStarted) return
+        if (!lanSharingStarted && lanShareJob == null) return
 
         lanSharingStarted = false
-        runBlocking { lanShareJob?.cancelAndJoin() }
+        val setupJob = lanShareJob
+        setupJob?.cancel()
         lanShareJob = null
-        RootProxyManager.stop(context)
+        val appContext = context.applicationContext
+        scope.launch {
+            setupJob?.join()
+            runCatching { RootProxyManager.stop(appContext) }
+        }
     }
 }

@@ -5,10 +5,15 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.util.LogUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProcessService {
     private var process: Process? = null
+    private var watcherJob: Job? = null
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun runProcess(context: Context, cmd: MutableList<String>) {
         LogUtil.i(AppConfig.TAG, cmd.toString())
@@ -16,14 +21,19 @@ class ProcessService {
         try {
             val proBuilder = ProcessBuilder(cmd)
             proBuilder.redirectErrorStream(true)
-            process = proBuilder
+            watcherJob?.cancel()
+            val startedProcess = proBuilder
                 .directory(context.filesDir)
                 .start()
+            process = startedProcess
 
-            CoroutineScope(Dispatchers.IO).launch {
-                Thread.sleep(50L)
+            watcherJob = scope.launch {
+                delay(50L)
                 LogUtil.i(AppConfig.TAG, "runProcess check")
-                process?.waitFor()
+                startedProcess.waitFor()
+                if (process === startedProcess) {
+                    process = null
+                }
                 LogUtil.i(AppConfig.TAG, "runProcess exited")
             }
             LogUtil.i(AppConfig.TAG, process.toString())
@@ -36,7 +46,10 @@ class ProcessService {
     fun stopProcess() {
         try {
             LogUtil.i(AppConfig.TAG, "runProcess destroy")
+            watcherJob?.cancel()
+            watcherJob = null
             process?.destroy()
+            process = null
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to destroy process", e)
         }

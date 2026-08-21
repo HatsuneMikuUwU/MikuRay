@@ -126,6 +126,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private val TAG_HOME_BANNER_DEFAULT = "DEFAULT_HOME_BANNER"
+    private val TAG_HOME_BANNER_HIDDEN = "HIDDEN_HOME_BANNER"
 
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab) {
@@ -446,6 +447,14 @@ class MainActivity : HelperBaseActivity(),
 
         fun loadBannerImage() {
             if (isDestroyed || isFinishing) return
+
+            val showBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
+            if (!showBanner) {
+                Glide.with(headerImage).clear(headerImage)
+                headerImage.setImageDrawable(null)
+                headerImage.tag = TAG_HOME_BANNER_HIDDEN
+                return
+            }
 
             val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
             val targetTag = if (uriString.isNullOrBlank()) TAG_HOME_BANNER_DEFAULT else uriString
@@ -1516,7 +1525,11 @@ class MainActivity : HelperBaseActivity(),
         hideLoading()
         urlTestProgressDialog.dismiss()
         tabMediator?.detach()
-
+        runCatching {
+            Glide.with(binding.headerImage).clear(binding.headerImage)
+            binding.headerImage.setImageDrawable(null)
+            binding.headerImage.tag = null
+        }
         try {
             bannerReceiver?.let { unregisterReceiver(it) }
         } catch (e: Exception) {

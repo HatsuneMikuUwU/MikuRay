@@ -18,14 +18,16 @@ import com.v2ray.ang.util.SoundPlayer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class CoreRootService : Service(), ServiceControl {
 
     private var isRunning = false
     private var setupJob: Job? = null
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val teardownScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()
@@ -45,7 +47,8 @@ class CoreRootService : Service(), ServiceControl {
         NotificationManager.showNotification(null)
         TrafficController.start()
 
-        setupJob = CoroutineScope(Dispatchers.IO).launch {
+        setupJob?.cancel()
+        setupJob = serviceScope.launch {
             if (!CoreServiceManager.startCoreLoop(null)) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
                 stopAllService()
@@ -73,10 +76,11 @@ class CoreRootService : Service(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.i(AppConfig.TAG, "StartCore-Root: Service destroyed")
-        CoreServiceManager.clearServiceControl(this)
-        if (isRunning) {
+        if (isRunning || setupJob != null) {
             stopAllService(isForced = false)
         }
+        CoreServiceManager.clearServiceControl(this)
+        serviceScope.cancel()
     }
 
     override fun getService(): Service = this
@@ -107,14 +111,12 @@ class CoreRootService : Service(), ServiceControl {
             SoundPlayer.playDisconnect(this)
         }
 
-        runBlocking {
-            setupJob?.cancelAndJoin()
-        }
+        setupJob?.cancel()
         setupJob = null
 
-        CoroutineScope(Dispatchers.IO).launch {
+        teardownScope.launch {
             try {
-                RootProxyManager.stopFull(this@CoreRootService)
+                RootProxyManager.stopFull(applicationContext)
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: teardown error", e)
             }

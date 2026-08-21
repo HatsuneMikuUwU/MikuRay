@@ -8,6 +8,7 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.ANG_PACKAGE
 import com.v2ray.ang.AppConfig.DEFAULT_SUBSCRIPTION_ID
@@ -62,13 +63,18 @@ object SettingsManager {
         }
     }
 
+    private const val MAX_BANNER_PRELOAD_SIZE = 1600
+
     fun preloadBanner(context: Context, uriString: String?) {
         if (uriString.isNullOrBlank()) return
         try {
             val appContext = context.applicationContext
             Glide.with(appContext)
                 .load(Uri.parse(uriString))
+                .downsample(DownsampleStrategy.CENTER_INSIDE)
+                .override(MAX_BANNER_PRELOAD_SIZE, MAX_BANNER_PRELOAD_SIZE)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .skipMemoryCache(true)
                 .preload()
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to preload banner $uriString", e)

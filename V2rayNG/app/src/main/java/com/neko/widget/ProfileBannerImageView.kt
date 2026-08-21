@@ -67,10 +67,13 @@ class ProfileBannerImageView @JvmOverloads constructor(
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
+        Glide.with(this).clear(this)
+        setImageDrawable(null)
+        tag = null
         if (!isInEditMode) {
             try { context.unregisterReceiver(shapeChangeReceiver) } catch (_: Exception) {}
         }
+        super.onDetachedFromWindow()
     }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
@@ -118,6 +121,7 @@ class ProfileBannerImageView @JvmOverloads constructor(
             if (this.tag != targetTag) {
                 if (!uriString.isNullOrEmpty()) {
                     val savedUri = Uri.parse(uriString)
+                    Glide.with(this).clear(this)
                     Glide.with(this)
                         .asBitmap()
                         .load(savedUri)

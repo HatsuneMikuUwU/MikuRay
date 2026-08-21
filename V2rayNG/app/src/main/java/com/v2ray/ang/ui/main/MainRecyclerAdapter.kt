@@ -115,6 +115,21 @@ class MainRecyclerAdapter(
 
     override fun getItemCount() = data.size + 1
 
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        if (holder is MainViewHolder) {
+            val statusDrawable = holder.views.vStatusDot.background
+            if (statusDrawable is android.graphics.drawable.AnimationDrawable) {
+                statusDrawable.stop()
+            }
+            selectedBannerController?.clear(holder.views.layoutIndicator)
+            holder.views.infoContainer.setOnTouchListener(null)
+            holder.views.layoutShare.setOnClickListener(null)
+            holder.views.layoutEdit.setOnClickListener(null)
+            holder.views.layoutRemove.setOnClickListener(null)
+        }
+        super.onViewRecycled(holder)
+    }
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (holder is MainViewHolder) {
             val context = holder.views.root.context

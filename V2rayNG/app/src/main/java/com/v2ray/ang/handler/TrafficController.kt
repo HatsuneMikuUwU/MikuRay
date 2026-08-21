@@ -9,6 +9,7 @@ import com.v2ray.ang.util.MessageUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ object TrafficController {
     @Volatile private var listener: Listener? = null
     @Volatile private var lastTickTime: Long = 0L
 
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var job: Job? = null
 
     fun setListener(listener: Listener?) {
@@ -37,9 +39,10 @@ object TrafficController {
     }
 
     fun start() {
-        if (job != null) return
+        if (job?.isActive == true) return
+        job = null
         lastTickTime = System.currentTimeMillis()
-        job = CoroutineScope(Dispatchers.IO).launch {
+        job = scope.launch {
             while (isActive) {
                 tick()
                 delay(QUERY_INTERVAL_MS)
@@ -51,6 +54,7 @@ object TrafficController {
     fun stop() {
         job?.cancel()
         job = null
+        listener = null
         lastTickTime = 0L
         LogUtil.i(AppConfig.TAG, "TrafficController: stopped")
     }

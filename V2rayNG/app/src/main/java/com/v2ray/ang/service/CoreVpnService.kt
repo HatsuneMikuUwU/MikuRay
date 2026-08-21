@@ -98,6 +98,9 @@ class CoreVpnService : VpnService(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.i(AppConfig.TAG, "StartCore-VPN: Service destroyed")
+        if (CoreServiceManager.isRunning()) {
+            CoreServiceManager.stopCoreLoop()
+        }
         CoreServiceManager.clearServiceControl(this)
 
         if (isRunning) {
@@ -353,12 +356,6 @@ class CoreVpnService : VpnService(), ServiceControl {
 
         if (isForced) {
             stopSelf()
-
-            try {
-                Thread.sleep(100)
-            } catch (e: InterruptedException) {
-                LogUtil.w(AppConfig.TAG, "StartCore-VPN: Sleep interrupted", e)
-            }
 
             try {
                 if (::mInterface.isInitialized) {

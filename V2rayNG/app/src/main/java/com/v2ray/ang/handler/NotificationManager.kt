@@ -22,6 +22,7 @@ import com.v2ray.ang.ui.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import com.v2ray.ang.extension.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ object NotificationManager : TrafficController.Listener {
     fun getConnectStartTime() = connectStartTime
     private var mBuilder: NotificationCompat.Builder? = null
     private var timerNotificationJob: Job? = null
+    private val notificationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var mNotificationManager: NotificationManager? = null
 
     @Volatile private var lastSpeedText: String = ""
@@ -50,10 +52,12 @@ object NotificationManager : TrafficController.Listener {
     fun startSpeedNotification() {
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) != true) return
         if (CoreServiceManager.isRunning() == false) return
+        if (timerNotificationJob?.isActive == true) return
 
+        timerNotificationJob?.cancel()
         TrafficController.setListener(this)
 
-        timerNotificationJob = CoroutineScope(Dispatchers.IO).launch {
+        timerNotificationJob = notificationScope.launch {
             while (isActive) {
                 updateTimerNotification()
                 delay(1000L)
@@ -174,10 +178,8 @@ object NotificationManager : TrafficController.Listener {
 
     fun stopSpeedNotification() {
         TrafficController.setListener(null)
-        timerNotificationJob?.let {
-            it.cancel()
-            timerNotificationJob = null
-        }
+        timerNotificationJob?.cancel()
+        timerNotificationJob = null
         updateNotification("", 0, 0)
     }
 

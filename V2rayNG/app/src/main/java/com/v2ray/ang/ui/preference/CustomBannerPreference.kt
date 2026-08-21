@@ -22,6 +22,7 @@ class CustomBannerPreference @JvmOverloads constructor(
 
     var onImageClick: (() -> Unit)? = null
     var onImageLongClick: (() -> Unit)? = null
+    private val defaultBannerTag = "DEFAULT_THEME_BANNER"
 
     init {
         layoutResource = R.layout.uwu_banner_theme
@@ -33,8 +34,6 @@ class CustomBannerPreference @JvmOverloads constructor(
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
-
-        holder.setIsRecyclable(false)
 
         holder.itemView.isClickable = false
         holder.itemView.isFocusable = false
@@ -48,15 +47,19 @@ class CustomBannerPreference @JvmOverloads constructor(
         val imageView = holder.findViewById(R.id.img_banner_preference) as? ImageView
         if (imageView != null) {
             val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_THEME_BANNER_URI)
-            if (!uriString.isNullOrBlank()) {
-                Glide.with(context)
-                    .load(Uri.parse(uriString))
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .error(R.drawable.uwu_banner_theme)
-                    .into(imageView)
-            } else {
-                Glide.with(context).clear(imageView)
-                imageView.setImageResource(R.drawable.uwu_banner_theme)
+            val targetTag = uriString?.takeUnless { it.isBlank() } ?: defaultBannerTag
+            if (imageView.tag != targetTag) {
+                Glide.with(imageView).clear(imageView)
+                if (targetTag == defaultBannerTag) {
+                    imageView.setImageResource(R.drawable.uwu_banner_theme)
+                } else {
+                    Glide.with(imageView)
+                        .load(Uri.parse(targetTag))
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .error(R.drawable.uwu_banner_theme)
+                        .into(imageView)
+                }
+                imageView.tag = targetTag
             }
         }
 

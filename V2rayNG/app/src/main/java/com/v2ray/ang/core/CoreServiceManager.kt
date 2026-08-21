@@ -31,6 +31,7 @@ import com.v2ray.ang.util.MessageUtil
 import com.v2ray.ang.util.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import com.v2ray.ang.extension.delay
 import kotlinx.coroutines.launch
 import kotlin.jvm.Volatile
@@ -48,6 +49,7 @@ object CoreServiceManager {
     private var processFinder: XrayProcessFinder? = null
     private var browserDialer: IDialerService? = null
     private var networkMonitor: NetworkMonitor? = null
+    private val backgroundScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     @Volatile
     private var isReloading = false
@@ -187,7 +189,7 @@ object CoreServiceManager {
         currentVpnInterface = null
 
         if (isRunning()) {
-            CoroutineScope(Dispatchers.IO).launch {
+            backgroundScope.launch {
                 try {
                     coreController.stopLoop()
                 } catch (e: Exception) {
@@ -283,7 +285,7 @@ object CoreServiceManager {
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        backgroundScope.launch {
             val service = getService() ?: return@launch
             var time = -1L
             var errorStr = ""
@@ -322,7 +324,7 @@ object CoreServiceManager {
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        backgroundScope.launch {
             val service = getService() ?: return@launch
             val ip = SpeedtestManager.getRemoteIPInfo()
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_IP_SUCCESS, ip.orEmpty())
@@ -418,7 +420,7 @@ object CoreServiceManager {
                     if (isOrderedBroadcast) resultCode = Activity.RESULT_OK
 
                     val pendingResult = goAsync()
-                    CoroutineScope(Dispatchers.Default).launch {
+                    backgroundScope.launch {
                         try {
                             serviceControl.stopService()
                             delay(500L)

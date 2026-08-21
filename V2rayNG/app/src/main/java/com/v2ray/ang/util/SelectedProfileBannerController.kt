@@ -9,17 +9,22 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.LruCache
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.MmkvManager
 
-class SelectedProfileBannerController(private val context: Context) {
+class SelectedProfileBannerController(context: Context) {
+
+    private val context: Context = context.applicationContext
 
     private var changeReceiver: BroadcastReceiver? = null
 
@@ -34,6 +39,7 @@ class SelectedProfileBannerController(private val context: Context) {
     fun applyTo(target: View, cornerRadiusDp: Float = 16f) {
         val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_SELECTED_BANNER_URI)
         if (uriString.isNullOrEmpty()) {
+            clearPendingRequest(target)
             applyDefaultBanner(target, cornerRadiusDp)
             return
         }
@@ -46,9 +52,11 @@ class SelectedProfileBannerController(private val context: Context) {
         val bitmapKey = "selected_banner::$uriString"
         val tagKey = "$bitmapKey::dim=$dimPercent::r=$cornerRadiusPx"
         if (target.getTag(TAG_KEY) == tagKey) return
+        clearPendingRequest(target)
 
-        bitmapCache[bitmapKey]?.let { cached ->
+        bitmapCache.get(bitmapKey)?.let { cached ->
             target.setLayerType(View.LAYER_TYPE_NONE, null)
+            target.setTag(REQUEST_TAG, null)
 
             target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
             target.setTag(TAG_KEY, tagKey)
@@ -57,34 +65,48 @@ class SelectedProfileBannerController(private val context: Context) {
 
         try {
             val uri = Uri.parse(uriString)
-            Glide.with(context)
+            val requestTarget = object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    if (target.getTag(TAG_KEY) != tagKey) return
+
+                    val safeCopy = try {
+                        resource.copy(resource.config ?: Bitmap.Config.ARGB_8888, false)
+                    } catch (e: Exception) {
+                        resource
+                    }
+                    bitmapCache.put(bitmapKey, safeCopy)
+                    target.setTag(REQUEST_TAG, null)
+                    target.setLayerType(View.LAYER_TYPE_NONE, null)
+                    target.background = CenterCropDimDrawable(safeCopy, dimColorFor(dimPercent), cornerRadiusPx)
+                    target.setTag(TAG_KEY, tagKey)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    if (target.getTag(TAG_KEY) == tagKey) {
+                        target.setTag(TAG_KEY, null)
+                        target.setTag(REQUEST_TAG, null)
+                    }
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    if (target.getTag(TAG_KEY) == tagKey) {
+                        target.setTag(TAG_KEY, null)
+                        target.setTag(REQUEST_TAG, null)
+                    }
+                }
+            }
+            target.setTag(TAG_KEY, tagKey)
+            target.setTag(REQUEST_TAG, requestTarget)
+            Glide.with(target)
                 .asBitmap()
                 .load(uri)
+                .downsample(DownsampleStrategy.CENTER_INSIDE)
+                .override(MAX_BANNER_DECODE_SIZE, MAX_BANNER_DECODE_SIZE)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        val safeCopy = try {
-                            resource.copy(resource.config ?: Bitmap.Config.ARGB_8888, false)
-                        } catch (e: Exception) {
-                            resource
-                        }
-                        bitmapCache[bitmapKey] = safeCopy
-
-                        target.setLayerType(View.LAYER_TYPE_NONE, null)
-
-                        target.background = CenterCropDimDrawable(safeCopy, dimColorFor(dimPercent), cornerRadiusPx)
-                        target.setTag(TAG_KEY, tagKey)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-
-                    override fun onLoadFailed(errorDrawable: Drawable?) {
-                        target.setTag(TAG_KEY, null)
-                    }
-                })
+                .into(requestTarget)
         } catch (e: Exception) {
             e.printStackTrace()
+            target.setTag(REQUEST_TAG, null)
             target.setTag(TAG_KEY, null)
         }
     }
@@ -99,9 +121,10 @@ class SelectedProfileBannerController(private val context: Context) {
         if (target.getTag(TAG_KEY) == tagKey) return
 
         val cacheKey = "selected_banner::default"
-        val cached = bitmapCache[cacheKey]
+        val cached = bitmapCache.get(cacheKey)
         if (cached != null) {
             target.setLayerType(View.LAYER_TYPE_NONE, null)
+            target.setTag(REQUEST_TAG, null)
             target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
             target.setTag(TAG_KEY, tagKey)
             return
@@ -110,7 +133,7 @@ class SelectedProfileBannerController(private val context: Context) {
         try {
             val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.uwu_banner_selected)
             if (bitmap != null) {
-                bitmapCache[cacheKey] = bitmap
+                bitmapCache.put(cacheKey, bitmap)
                 target.setLayerType(View.LAYER_TYPE_NONE, null)
                 target.background = CenterCropDimDrawable(bitmap, dimColorFor(dimPercent), cornerRadiusPx)
                 target.setTag(TAG_KEY, tagKey)
@@ -120,13 +143,18 @@ class SelectedProfileBannerController(private val context: Context) {
         }
     }
 
+    private fun clearPendingRequest(target: View) {
+        (target.getTag(REQUEST_TAG) as? Target<*>)?.let { requestTarget ->
+            Glide.with(target).clear(requestTarget)
+        }
+        target.setTag(REQUEST_TAG, null)
+    }
+
     fun clear(target: View) {
-        if (target.getTag(TAG_KEY) == null) return
+        clearPendingRequest(target)
         target.setTag(TAG_KEY, null)
-
         target.setLayerType(View.LAYER_TYPE_NONE, null)
-
-        Glide.with(context).clear(target)
+        target.background = null
     }
 
     private fun dimColorFor(dimPercent: Int): Int {
@@ -229,11 +257,17 @@ class SelectedProfileBannerController(private val context: Context) {
 
     companion object {
         private val TAG_KEY = "selected_profile_banner_tag".hashCode()
+        private val REQUEST_TAG = "selected_profile_banner_request".hashCode()
 
-        private val bitmapCache = mutableMapOf<String, Bitmap>()
+        private const val MAX_CACHE_KB = 12 * 1024
+        private const val MAX_BANNER_DECODE_SIZE = 1600
+        private val bitmapCache = object : LruCache<String, Bitmap>(MAX_CACHE_KB) {
+            override fun sizeOf(key: String, value: Bitmap): Int =
+                (value.byteCount / 1024).coerceAtLeast(1)
+        }
 
         fun broadcastChanged(context: Context) {
-            bitmapCache.clear()
+            bitmapCache.evictAll()
             context.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_SELECTED_BANNER_CHANGED))
         }
     }

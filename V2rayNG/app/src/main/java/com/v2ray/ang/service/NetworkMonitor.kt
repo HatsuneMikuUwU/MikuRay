@@ -10,6 +10,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import com.v2ray.ang.extension.delay
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,7 @@ class NetworkMonitor(
     private var upstream: Network? = null
     private var handoverJob: Job? = null
     private var registered = false
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private val request by lazy {
         NetworkRequest.Builder()
@@ -35,6 +37,7 @@ class NetworkMonitor(
 
     private val callback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
+            if (!registered) return
             val previous = upstream
             upstream = network
             onUnderlyingNetworksChanged(arrayOf(network))
@@ -44,11 +47,14 @@ class NetworkMonitor(
         }
 
         override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
-            onUnderlyingNetworksChanged(arrayOf(network))
+            if (registered) onUnderlyingNetworksChanged(arrayOf(network))
         }
 
         override fun onLost(network: Network) {
-            onUnderlyingNetworksChanged(null)
+            if (registered && upstream == network) {
+                upstream = null
+                onUnderlyingNetworksChanged(null)
+            }
         }
     }
 
@@ -78,7 +84,7 @@ class NetworkMonitor(
     private fun scheduleHandover(network: Network) {
         LogUtil.i(AppConfig.TAG, "NetworkMonitor: Upstream is now $network")
         handoverJob?.cancel()
-        handoverJob = CoroutineScope(Dispatchers.IO).launch {
+        handoverJob = scope.launch {
             try {
                 delay(HANDOVER_DEBOUNCE_MS)
                 onHandover()
