@@ -201,7 +201,7 @@ object AppConfig {
     const val PREF_ACTION_CHANGE_SHEET_BANNER = "action_change_sheet_banner_image"
     const val PREF_ACTION_DELETE_SHEET_BANNER = "action_delete_sheet_banner_image"
     const val PREF_SHEET_BANNER_DIM = "pref_sheet_banner_dim"
-    const val SHEET_BANNER_DIM_DEFAULT = 20
+    const val SHEET_BANNER_DIM_DEFAULT = 50
     const val SHEET_BANNER_DIM_MIN = 0
     const val SHEET_BANNER_DIM_MAX = 90
     const val PREF_CUSTOM_THEME_BANNER_URI = "custom_theme_banner_uri"
