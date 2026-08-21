@@ -67,7 +67,7 @@ class ProfileBannerImageView @JvmOverloads constructor(
     }
 
     override fun onDetachedFromWindow() {
-        Glide.with(this).clear(this)
+        Glide.with(context.applicationContext).clear(this)
         setImageDrawable(null)
         tag = null
         if (!isInEditMode) {

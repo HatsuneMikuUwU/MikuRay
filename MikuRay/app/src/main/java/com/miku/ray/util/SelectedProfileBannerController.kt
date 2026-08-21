@@ -145,7 +145,7 @@ class SelectedProfileBannerController(context: Context) {
 
     private fun clearPendingRequest(target: View) {
         (target.getTag(REQUEST_TAG) as? Target<*>)?.let { requestTarget ->
-            Glide.with(target).clear(requestTarget)
+            Glide.with(context.applicationContext).clear(requestTarget)
         }
         target.setTag(REQUEST_TAG, null)
     }

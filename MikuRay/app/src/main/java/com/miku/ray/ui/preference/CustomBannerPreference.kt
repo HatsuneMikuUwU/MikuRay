@@ -49,7 +49,7 @@ class CustomBannerPreference @JvmOverloads constructor(
             val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_THEME_BANNER_URI)
             val targetTag = uriString?.takeUnless { it.isBlank() } ?: defaultBannerTag
             if (imageView.tag != targetTag) {
-                Glide.with(imageView).clear(imageView)
+                Glide.with(context.applicationContext).clear(imageView)
                 if (targetTag == defaultBannerTag) {
                     imageView.setImageResource(R.drawable.uwu_banner_theme)
                 } else {

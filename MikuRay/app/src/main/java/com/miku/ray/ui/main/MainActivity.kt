@@ -1526,7 +1526,7 @@ class MainActivity : HelperBaseActivity(),
         urlTestProgressDialog.dismiss()
         tabMediator?.detach()
         runCatching {
-            Glide.with(binding.headerImage).clear(binding.headerImage)
+            Glide.with(applicationContext).clear(binding.headerImage)
             binding.headerImage.setImageDrawable(null)
             binding.headerImage.tag = null
         }

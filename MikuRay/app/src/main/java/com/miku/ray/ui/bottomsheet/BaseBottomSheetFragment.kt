@@ -71,7 +71,8 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         view?.findViewById<ImageView>(R.id.img_banner_sheet)?.let { bannerImageView ->
-            Glide.with(bannerImageView).clear(bannerImageView)
+            val context = bannerImageView.context.applicationContext
+            Glide.with(context).clear(bannerImageView)
             bannerImageView.setImageDrawable(null)
             bannerImageView.tag = null
         }
