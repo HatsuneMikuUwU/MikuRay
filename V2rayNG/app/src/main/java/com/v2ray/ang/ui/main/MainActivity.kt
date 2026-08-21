@@ -852,7 +852,12 @@ class MainActivity : HelperBaseActivity(),
     }
 
     fun refreshGroupTabTitles(refreshAll: Boolean = false) {
-        refreshTabBadges()
+        // setupGroupTab() already diffs tab ids/icons/remarks against the current
+        // TabLayout state and only rebuilds when the structure actually changed
+        // (e.g. sort-by-updated order shifting after a subscription update),
+        // otherwise it just falls back to a badge refresh. This keeps tab order
+        // in sync live without needing to restart the activity.
+        setupGroupTab()
     }
 
     private fun refreshTabBadges() {
