@@ -24,7 +24,7 @@ pushd "$TMPDIR"
 ln -s "$__dir/hev-socks5-tunnel" jni/hev-socks5-tunnel
 
 # 1) JNI shared library (libhev-socks5-tunnel.so) — loaded in-process by
-#    com.v2ray.ang.service.TProxyService for the VpnService hev tun mode.
+#    com.miku.ray.service.TProxyService for the VpnService hev tun mode.
 echo 'include $(call all-subdir-makefiles)' > jni/Android.mk
 
 "$NDK_HOME/ndk-build" \
@@ -34,7 +34,7 @@ echo 'include $(call all-subdir-makefiles)' > jni/Android.mk
     APP_PLATFORM=android-24 \
     NDK_LIBS_OUT="$TMPDIR/libs" \
     NDK_OUT="$TMPDIR/obj" \
-    "APP_CFLAGS=-O3 -DPKGNAME=com/v2ray/ang/service" \
+    "APP_CFLAGS=-O3 -DPKGNAME=com/miku/ray/service" \
     "APP_LDFLAGS=-Wl,--build-id=none -Wl,--hash-style=gnu" \
 
 # 2) Standalone executable (libhevsockstun.so) — run as a separate root
