@@ -30,17 +30,32 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
             ParticlesController.applyTo(particlesView)
         }
     }
+    
+    private fun computeDimColor(context: android.content.Context): Int {
+        val dimPercent = MmkvManager.decodeSettingsInt(
+            AppConfig.PREF_SHEET_BANNER_DIM,
+            AppConfig.SHEET_BANNER_DIM_DEFAULT
+        ).coerceIn(AppConfig.SHEET_BANNER_DIM_MIN, AppConfig.SHEET_BANNER_DIM_MAX)
+
+        val alpha = (dimPercent * 255 / 100).coerceIn(0, 255)
+        val baseColor = context.getColorAttr("colorCard")
+
+        return android.graphics.Color.argb(
+            alpha,
+            android.graphics.Color.red(baseColor),
+            android.graphics.Color.green(baseColor),
+            android.graphics.Color.blue(baseColor)
+        )
+    }
 
     protected fun loadBannerSheet(view: View) {
         val bannerImageView = view.findViewById<ImageView>(R.id.img_banner_sheet) ?: return
         bannerImageView.setLayerType(View.LAYER_TYPE_NONE, null)
 
+        val dimColor = computeDimColor(bannerImageView.context)
+
         view.findViewById<View>(R.id.view_banner_sheet_dim)?.let { dimView ->
-            val dimPercent = MmkvManager.decodeSettingsInt(
-                AppConfig.PREF_SHEET_BANNER_DIM,
-                AppConfig.SHEET_BANNER_DIM_DEFAULT
-            ).coerceIn(AppConfig.SHEET_BANNER_DIM_MIN, AppConfig.SHEET_BANNER_DIM_MAX)
-            dimView.alpha = dimPercent / 100f
+            dimView.setBackgroundColor(dimColor)
         }
         val uriString = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_SHEET_BANNER_URI)
         val targetTag = if (uriString.isNullOrBlank()) TAG_SHEET_DEFAULT else uriString
