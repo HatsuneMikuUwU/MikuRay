@@ -912,8 +912,8 @@ you need."</string>
     <string name="custom_banner_profile_set">Profile banner updated successfully.</string>
 
     <string name="home_banner_category">Home Banner</string>
-    <string name="home_banner_show_title">Show home banner</string>
-    <string name="home_banner_show_summary">Display the banner image at the top of the home screen</string>
+    <string name="home_banner_disable_title">Disable home banner</string>
+    <string name="home_banner_disable_summary">Hide the banner image at the top of the home screen</string>
     <string name="home_banner_custom_title">Change home banner</string>
     <string name="home_banner_custom_summary">Set a custom image for the home header (optional)</string>
     <string name="home_banner_delete_title">Remove custom home banner</string>

@@ -868,8 +868,8 @@
    <string name="custom_banner_profile_set">个人资料横幅更新成功。</string>
 
     <string name="home_banner_category">主页横幅</string>
-    <string name="home_banner_show_title">显示主页横幅</string>
-    <string name="home_banner_show_summary">在主屏幕顶部显示横幅图片</string>
+    <string name="home_banner_disable_title">禁用主页横幅</string>
+    <string name="home_banner_disable_summary">隐藏主屏幕顶部的横幅图片</string>
     <string name="home_banner_custom_title">更改主页横幅</string>
     <string name="home_banner_custom_summary">为主页头部设置自定义图片（可选）</string>
     <string name="home_banner_delete_title">移除自定义主页横幅</string>

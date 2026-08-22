@@ -879,8 +879,8 @@ yang kamu butuhin."</string>
     <string name="custom_banner_profile_set">Banner profil berhasil diupdate.</string>
 
     <string name="home_banner_category">Banner Beranda</string>
-    <string name="home_banner_show_title">Tampilin banner beranda</string>
-    <string name="home_banner_show_summary">Tampilin gambar banner di bagian paling atas layar beranda</string>
+    <string name="home_banner_disable_title">Nonaktifin banner beranda</string>
+    <string name="home_banner_disable_summary">Sembunyiin gambar banner di bagian paling atas layar beranda</string>
     <string name="home_banner_custom_title">Ganti banner beranda</string>
     <string name="home_banner_custom_summary">Pasang gambar kustom buat header beranda (opsional)</string>
     <string name="home_banner_delete_title">Hapus banner beranda kustom</string>

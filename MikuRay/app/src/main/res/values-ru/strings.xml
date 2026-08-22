@@ -889,8 +889,8 @@
     <string name="custom_banner_profile_set">Баннер профиля успешно обновлён.</string>
 
     <string name="home_banner_category">Баннер главного экрана</string>
-    <string name="home_banner_show_title">Показывать баннер главного экрана</string>
-    <string name="home_banner_show_summary">Отображать баннер вверху главного экрана</string>
+    <string name="home_banner_disable_title">Отключить баннер главного экрана</string>
+    <string name="home_banner_disable_summary">Скрыть баннер вверху главного экрана</string>
     <string name="home_banner_custom_title">Изменить баннер главного экрана</string>
     <string name="home_banner_custom_summary">Задайте своё изображение для заголовка главного экрана (необязательно)</string>
     <string name="home_banner_delete_title">Удалить свой баннер главного экрана</string>

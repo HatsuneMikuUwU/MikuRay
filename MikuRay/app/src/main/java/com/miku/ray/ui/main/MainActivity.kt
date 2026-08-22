@@ -427,8 +427,8 @@ class MainActivity : HelperBaseActivity(),
         }
 
         fun applyHeaderTopRowPadding() {
-            val showBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-            val paddingDp = if (showBanner) {
+            val disableBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_HOME_BANNER, false)
+            val paddingDp = if (!disableBanner) {
                 MmkvManager.decodeSettingsInt(
                     AppConfig.PREF_HEADER_TOP_ROW_PADDING,
                     AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT
@@ -448,8 +448,8 @@ class MainActivity : HelperBaseActivity(),
         fun loadBannerImage() {
             if (isDestroyed || isFinishing) return
 
-            val showBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-            if (!showBanner) {
+            val disableBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_HOME_BANNER, false)
+            if (disableBanner) {
                 Glide.with(headerImage).clear(headerImage)
                 headerImage.setImageDrawable(null)
                 headerImage.tag = TAG_HOME_BANNER_HIDDEN
@@ -485,8 +485,8 @@ class MainActivity : HelperBaseActivity(),
             headerImage.tag = targetTag
         }
 
-        val show = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-        applyBannerVisibility(show)
+        val disableBanner = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_HOME_BANNER, false)
+        applyBannerVisibility(!disableBanner)
         applyBannerHeight()
         applyHeaderTopRowPadding()
         loadBannerImage()
@@ -495,8 +495,8 @@ class MainActivity : HelperBaseActivity(),
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent?.action) {
                     AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED -> {
-                        val showNow = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_HOME_BANNER, true)
-                        applyBannerVisibility(showNow)
+                        val disableBannerNow = MmkvManager.decodeSettingsBool(AppConfig.PREF_DISABLE_HOME_BANNER, false)
+                        applyBannerVisibility(!disableBannerNow)
                         applyBannerHeight()
                         applyHeaderTopRowPadding()
                         loadBannerImage()
