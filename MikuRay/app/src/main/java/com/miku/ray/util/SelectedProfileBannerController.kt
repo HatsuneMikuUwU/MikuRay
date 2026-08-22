@@ -48,9 +48,10 @@ class SelectedProfileBannerController(context: Context) {
             AppConfig.PREF_SELECTED_BANNER_DIM,
             AppConfig.SELECTED_BANNER_DIM_DEFAULT
         ).coerceIn(AppConfig.SELECTED_BANNER_DIM_MIN, AppConfig.SELECTED_BANNER_DIM_MAX)
-        val cornerRadiusPx = cornerRadiusDp * context.resources.displayMetrics.density
+        val cornerRadiusPx = cornerRadiusDp * target.context.resources.displayMetrics.density
+        val dimColor = dimColorFor(target.context, dimPercent)
         val bitmapKey = "selected_banner::$uriString"
-        val tagKey = "$bitmapKey::dim=$dimPercent::r=$cornerRadiusPx"
+        val tagKey = "$bitmapKey::dim=$dimPercent::color=$dimColor::r=$cornerRadiusPx"
         if (target.getTag(TAG_KEY) == tagKey) return
         clearPendingRequest(target)
 
@@ -58,7 +59,7 @@ class SelectedProfileBannerController(context: Context) {
             target.setLayerType(View.LAYER_TYPE_NONE, null)
             target.setTag(REQUEST_TAG, null)
 
-            target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
+            target.background = CenterCropDimDrawable(cached, dimColor, cornerRadiusPx)
             target.setTag(TAG_KEY, tagKey)
             return
         }
@@ -77,7 +78,7 @@ class SelectedProfileBannerController(context: Context) {
                     bitmapCache.put(bitmapKey, safeCopy)
                     target.setTag(REQUEST_TAG, null)
                     target.setLayerType(View.LAYER_TYPE_NONE, null)
-                    target.background = CenterCropDimDrawable(safeCopy, dimColorFor(dimPercent), cornerRadiusPx)
+                    target.background = CenterCropDimDrawable(safeCopy, dimColor, cornerRadiusPx)
                     target.setTag(TAG_KEY, tagKey)
                 }
 
@@ -116,8 +117,9 @@ class SelectedProfileBannerController(context: Context) {
             AppConfig.PREF_SELECTED_BANNER_DIM,
             AppConfig.SELECTED_BANNER_DIM_DEFAULT
         ).coerceIn(AppConfig.SELECTED_BANNER_DIM_MIN, AppConfig.SELECTED_BANNER_DIM_MAX)
-        val cornerRadiusPx = cornerRadiusDp * context.resources.displayMetrics.density
-        val tagKey = "selected_banner::default::dim=$dimPercent::r=$cornerRadiusPx"
+        val cornerRadiusPx = cornerRadiusDp * target.context.resources.displayMetrics.density
+        val dimColor = dimColorFor(target.context, dimPercent)
+        val tagKey = "selected_banner::default::dim=$dimPercent::color=$dimColor::r=$cornerRadiusPx"
         if (target.getTag(TAG_KEY) == tagKey) return
 
         val cacheKey = "selected_banner::default"
@@ -125,17 +127,17 @@ class SelectedProfileBannerController(context: Context) {
         if (cached != null) {
             target.setLayerType(View.LAYER_TYPE_NONE, null)
             target.setTag(REQUEST_TAG, null)
-            target.background = CenterCropDimDrawable(cached, dimColorFor(dimPercent), cornerRadiusPx)
+            target.background = CenterCropDimDrawable(cached, dimColor, cornerRadiusPx)
             target.setTag(TAG_KEY, tagKey)
             return
         }
 
         try {
-            val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.uwu_banner_selected)
+            val bitmap = BitmapFactory.decodeResource(target.context.resources, R.drawable.uwu_banner_selected)
             if (bitmap != null) {
                 bitmapCache.put(cacheKey, bitmap)
                 target.setLayerType(View.LAYER_TYPE_NONE, null)
-                target.background = CenterCropDimDrawable(bitmap, dimColorFor(dimPercent), cornerRadiusPx)
+                target.background = CenterCropDimDrawable(bitmap, dimColor, cornerRadiusPx)
                 target.setTag(TAG_KEY, tagKey)
             }
         } catch (e: Exception) {
@@ -157,9 +159,9 @@ class SelectedProfileBannerController(context: Context) {
         target.background = null
     }
 
-    private fun dimColorFor(dimPercent: Int): Int {
+    private fun dimColorFor(viewContext: Context, dimPercent: Int): Int {
         val alpha = (dimPercent * 255 / 100).coerceIn(0, 255)
-        val baseColor = context.getColorAttr("colorCard")
+        val baseColor = viewContext.getColorAttr("colorCard")
         return Color.argb(alpha, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor))
     }
 
