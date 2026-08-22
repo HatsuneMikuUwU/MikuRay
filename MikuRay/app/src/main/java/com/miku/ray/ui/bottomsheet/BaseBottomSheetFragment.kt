@@ -19,6 +19,7 @@ import com.miku.ray.util.ParticlesController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import android.widget.ImageView
+import com.miku.ray.util.getColorAttr
 
 abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
