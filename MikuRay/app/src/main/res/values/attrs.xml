@@ -3,6 +3,7 @@
     <attr name="colorBg" format="color" />
     <attr name="colorCard" format="color" />
     <attr name="strokeDrawable" format="color" />
+    <attr name="strokeDrawableBg" format="color" />
 
     <attr name="siArrowPosition">
         <enum name="left" value="0" />
