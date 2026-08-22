@@ -28,7 +28,7 @@
         <item name="preferenceTheme">@style/AppThemePreference</item>
         <item name="android:homeAsUpIndicator">@drawable/rmx_arrows_arrow_left_double_line</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButton</item>
-        <!-- Keep typography overrides active in night mode as well. -->
+        <!-- Material 3 typography hooks: every textAppearance resolves through the selected font. -->
         <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
         <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
         <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
@@ -46,6 +46,7 @@
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
         <item name="textAppearanceLabelMedium">@style/TextAppearance.Material3.LabelMedium</item>
         <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
+        <!-- Legacy platform aliases used by framework and AppCompat widgets. -->
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.Material3.BodyMedium</item>
