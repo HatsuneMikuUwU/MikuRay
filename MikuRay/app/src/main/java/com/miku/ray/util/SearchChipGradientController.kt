@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.databinding.ActivityMainBinding
 import com.miku.ray.handler.MmkvManager
@@ -26,9 +27,8 @@ object SearchChipGradientController {
 
     fun isEnabled(): Boolean {
         val gradientSwitchOn = MmkvManager.decodeSettingsBool(AppConfig.PREF_SEARCH_CHIP_GRADIENT, false)
-        val weatherEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)
-        val totalTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false)
-        return gradientSwitchOn && (weatherEnabled || totalTrafficEnabled)
+        val chipMode = SearchBarChipMode.current()
+        return gradientSwitchOn && chipMode != SearchBarChipMode.DISABLED
     }
 
     fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding) {

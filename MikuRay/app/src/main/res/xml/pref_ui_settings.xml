@@ -302,14 +302,16 @@
         android:title="@string/title_search_bar_chip"
         app:sectionIcon="@drawable/rmx_search_line">
 
-         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/rmx_sun_line"
-            app:layout="@layout/uwu_top_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:defaultValue="false"
-            android:key="pref_show_weather_chip"
-            android:summary="@string/pref_show_weather_chip_summary"
-            android:title="@string/pref_show_weather_chip_title" />
+        <androidx.preference.ListPreference
+            android:icon="@drawable/rmx_editor_list_check_3"
+            app:dialogIcon="@drawable/rmx_editor_list_check_3"
+            app:layout="@layout/uwu_top"
+            android:defaultValue="disabled"
+            android:entries="@array/search_bar_chip_entries"
+            android:entryValues="@array/search_bar_chip_values"
+            android:key="pref_search_bar_chip"
+            android:summary="%s"
+            android:title="@string/pref_search_bar_chip_title" />
 
         <androidx.preference.ListPreference
             android:icon="@drawable/rmx_temp_cold_line"
@@ -332,15 +334,6 @@
             android:dialogTitle="@string/pref_weather_custom_location_title"
             android:dialogMessage="@string/pref_weather_custom_location_dialog_message" />
 
-         <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/rmx_arrow_up_down_line"
-            app:layout="@layout/uwu_mid_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:defaultValue="false"
-            android:key="pref_show_total_traffic_chip"
-            android:summary="@string/pref_show_total_traffic_chip_summary"
-            android:title="@string/pref_show_total_traffic_chip_title" />
-            
          <Preference
             android:icon="@drawable/rmx_delete_bin_line"
             app:layout="@layout/uwu_mid"

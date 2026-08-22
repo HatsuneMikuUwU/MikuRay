@@ -26,6 +26,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.extension.snackbarSuccess
@@ -84,7 +85,7 @@ class UiSettingsActivity : BaseActivity() {
 
         private val locationPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
+                if (SearchBarChipMode.current() == SearchBarChipMode.WEATHER) {
                     WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
                 }
             }
@@ -119,13 +120,12 @@ class UiSettingsActivity : BaseActivity() {
         private val changeHomeBannerImageAction by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_CHANGE_HOME_BANNER) }
         private val deleteHomeBannerImageAction by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_DELETE_HOME_BANNER) }
         private val groupAllTabIcon by lazy { findPreference<Preference>(AppConfig.PREF_GROUP_ALL_TAB_ICON) }
-        private val showWeatherChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_WEATHER_CHIP) }
+        private val searchBarChip by lazy { findPreference<ListPreference>(AppConfig.PREF_SEARCH_BAR_CHIP) }
         private val selectedBannerStyleEnabled by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED) }
         private val selectedBannerCategory by lazy { findPreference<PreferenceCategory>("pref_category_selected_banner") }
 
         private val weatherUnit by lazy { findPreference<ListPreference>(AppConfig.PREF_WEATHER_USE_CELSIUS) }
         private val weatherCustomLocation by lazy { findPreference<EditTextPreference>(AppConfig.PREF_WEATHER_CUSTOM_LOCATION) }
-        private val showTotalTrafficChip by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP) }
         private val clearTotalTraffic by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_CLEAR_TOTAL_TRAFFIC) }
         private val searchChipGradient by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SEARCH_CHIP_GRADIENT) }
         private val toolbarCenterSubtitleMode by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE) }
@@ -312,6 +312,7 @@ class UiSettingsActivity : BaseActivity() {
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_ui_settings)
+            SearchBarChipMode.current()
             initPreferenceSummaries()
             updateCheckUpdateSummary()
 
@@ -505,25 +506,29 @@ class UiSettingsActivity : BaseActivity() {
                 true
             }
 
-            showWeatherChip?.setOnPreferenceChangeListener { _, newValue ->
-                val checked = newValue as Boolean
-                MmkvManager.encodeSettings(AppConfig.PREF_SHOW_WEATHER_CHIP, checked)
-                if (checked) {
-                    val hasForegroundPermission = ContextCompat.checkSelfPermission(
-                        requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                    if (!hasForegroundPermission && !WeatherHelper.hasCustomLocation()) {
-                        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+            searchBarChip?.apply {
+                value = SearchBarChipMode.current()
+                setOnPreferenceChangeListener { _, newValue ->
+                    val mode = SearchBarChipMode.save(newValue.toString())
+                    value = mode
+                    val selectedIndex = findIndexOfValue(mode)
+                    summary = if (selectedIndex >= 0) entries[selectedIndex] else mode
+                    if (mode == SearchBarChipMode.WEATHER) {
+                        val hasForegroundPermission = ContextCompat.checkSelfPermission(
+                            requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED
+                        if (!hasForegroundPermission && !WeatherHelper.hasCustomLocation()) {
+                            locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        } else {
+                            WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
+                        }
                     } else {
-                        WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
+                        WeatherHelper.cancelBackgroundUpdates(requireContext())
                     }
-                } else {
-                    WeatherHelper.cancelBackgroundUpdates(requireContext())
+                    updateChipPreferenceEnabledState()
+                    updateClearTotalTrafficSummary()
+                    true
                 }
-                showTotalTrafficChip?.isEnabled = !checked
-                updateWeatherSubPrefsEnabled(checked)
-                searchChipGradient?.isEnabled = checked || (showTotalTrafficChip?.isChecked == true)
-                true
             }
 
             weatherUnit?.setOnPreferenceChangeListener { pref, newValue ->
@@ -542,18 +547,9 @@ class UiSettingsActivity : BaseActivity() {
                 MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CUSTOM_LOCATION, raw)
                 WeatherHelper.clearCustomLocationCache()
                 updateWeatherCustomLocationSummary(raw)
-                if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
+                if (SearchBarChipMode.current() == SearchBarChipMode.WEATHER) {
                     WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
                 }
-                true
-            }
-
-            showTotalTrafficChip?.setOnPreferenceChangeListener { _, newValue ->
-                val checked = newValue as Boolean
-                MmkvManager.encodeSettings(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, checked)
-                showWeatherChip?.isEnabled = !checked
-                searchChipGradient?.isEnabled = checked || (showWeatherChip?.isChecked == true)
-                updateClearTotalTrafficSummary(chipOnOverride = checked)
                 true
             }
 
@@ -732,15 +728,15 @@ class UiSettingsActivity : BaseActivity() {
             }
         }
 
-        private fun updateClearTotalTrafficSummary(chipOnOverride: Boolean? = null) {
-            val chipOn = chipOnOverride ?: (showTotalTrafficChip?.isChecked == true)
+        private fun updateClearTotalTrafficSummary() {
+            val chipOn = SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC
             val detail = MmkvManager.getTotalTrafficDetail()
             clearTotalTraffic?.apply {
                 if (!chipOn) {
                     isEnabled = false
                     summary = getString(
                         R.string.summary_pref_action_clear_total_traffic_disabled,
-                        getString(R.string.pref_show_total_traffic_chip_title)
+                        getString(R.string.pref_search_bar_chip_total_traffic)
                     )
                     return@apply
                 }
@@ -1321,12 +1317,10 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         private fun updateChipPreferenceEnabledState() {
-            val weatherOn = showWeatherChip?.isChecked == true
-            val trafficOn = showTotalTrafficChip?.isChecked == true
-            showWeatherChip?.isEnabled = !trafficOn
-            showTotalTrafficChip?.isEnabled = !weatherOn
-            searchChipGradient?.isEnabled = weatherOn || trafficOn
-            updateWeatherSubPrefsEnabled(weatherOn)
+            val mode = SearchBarChipMode.current()
+            searchBarChip?.value = mode
+            searchChipGradient?.isEnabled = mode != SearchBarChipMode.DISABLED
+            updateWeatherSubPrefsEnabled(mode == SearchBarChipMode.WEATHER)
         }
 
         private fun updateShowIspInfoEnabledState() {

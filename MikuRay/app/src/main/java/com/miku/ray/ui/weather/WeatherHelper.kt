@@ -20,6 +20,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.multiprocess.RemoteWorkManager
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.BuildConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
@@ -591,7 +592,7 @@ object WeatherHelper {
     class UpdateWorker(context: Context, params: WorkerParameters) :
         CoroutineWorker(context, params) {
         override suspend fun doWork(): Result {
-            if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false))
+            if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER)
                 return Result.success()
 
             if (!hasCustomLocation() && !hasBackgroundLocationPermission(applicationContext))

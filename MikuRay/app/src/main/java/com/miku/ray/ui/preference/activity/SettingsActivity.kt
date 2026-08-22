@@ -26,6 +26,7 @@ import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResult
 import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.enums.PermissionType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
@@ -142,10 +143,10 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
         layoutWeatherChip.setOnClickListener {
             when {
-                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false) -> {
+                SearchBarChipMode.current() == SearchBarChipMode.WEATHER -> {
                     startActivity(Intent(this, WeatherForecastActivity::class.java))
                 }
-                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) -> {
+                SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC -> {
                     if (MmkvManager.getTotalTrafficDetail() != null) {
                         showTotalTrafficDetailDialog(this)
                     }
@@ -166,8 +167,8 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         WeatherHelper.hasCustomLocation() || WeatherHelper.hasLocationPermission(this)
 
     private fun refreshSearchBarChip() {
-        val weatherEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)
-        val totalTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false)
+        val weatherEnabled = SearchBarChipMode.current() == SearchBarChipMode.WEATHER
+        val totalTrafficEnabled = SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC
 
         SearchChipGradientController.applyState(this, chipViews())
 
@@ -209,7 +210,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
     }
 
     private fun refreshWeatherChip() {
-        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
+        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) {
             layoutWeatherChip.isVisible = false
             return
         }
@@ -224,7 +225,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
     }
 
     private fun forceRefreshWeatherChip() {
-        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) return
+        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) return
 
         if (!weatherLocationReady()) {
             checkAndRequestPermission(PermissionType.LOCATION) {

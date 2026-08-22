@@ -2,6 +2,7 @@ package com.miku.ray.handler
 
 import android.app.Service
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.core.CoreServiceManager
 import com.miku.ray.extension.toSpeedString
 import com.miku.ray.util.LogUtil
@@ -113,7 +114,7 @@ object TrafficController {
         val guid = MmkvManager.getSelectServer() ?: return
         MmkvManager.addProfileTraffic(guid, proxyUplink, proxyDownlink)
 
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) == true) {
+        if (SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC) {
             MmkvManager.addDailyTraffic(proxyUplink, proxyDownlink)
             MmkvManager.addTotalTrafficAllTime(proxyUplink, proxyDownlink)
         }

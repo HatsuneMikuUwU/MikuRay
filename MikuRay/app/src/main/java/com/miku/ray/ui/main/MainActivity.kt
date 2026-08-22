@@ -33,6 +33,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.king.camera.scan.CameraScan
 import com.miku.ray.AppConfig
+import com.miku.ray.SearchBarChipMode
 import com.miku.ray.BuildConfig
 import com.miku.ray.R
 import com.miku.ray.core.LauncherManager
@@ -230,7 +231,7 @@ class MainActivity : HelperBaseActivity(),
         WeatherHelper.hasCustomLocation() || WeatherHelper.hasLocationPermission(this)
 
     private fun syncWeatherBackgroundUpdates() {
-        val weatherEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)
+        val weatherEnabled = SearchBarChipMode.current() == SearchBarChipMode.WEATHER
         val canRunInBackground = WeatherHelper.hasCustomLocation() || WeatherHelper.hasBackgroundLocationPermission(this)
 
         if (weatherEnabled && canRunInBackground) {
@@ -263,8 +264,8 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun refreshSearchBarChip() {
-        val weatherEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)
-        val totalTrafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false)
+        val weatherEnabled = SearchBarChipMode.current() == SearchBarChipMode.WEATHER
+        val totalTrafficEnabled = SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC
 
         SearchChipGradientController.applyState(this, binding)
 
@@ -307,7 +308,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun refreshWeatherChip() {
-        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) {
+        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) {
             binding.layoutWeatherChip.isVisible = false
             return
         }
@@ -324,7 +325,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun forceRefreshWeatherChip() {
-        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)) return
+        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) return
 
         if (!weatherLocationReady()) {
             checkAndRequestPermission(PermissionType.LOCATION) {
@@ -554,10 +555,10 @@ class MainActivity : HelperBaseActivity(),
 
         binding.layoutWeatherChip.setOnClickListener {
             when {
-                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false) -> {
+                SearchBarChipMode.current() == SearchBarChipMode.WEATHER -> {
                     startActivity(Intent(this, WeatherForecastActivity::class.java))
                 }
-                MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) -> {
+                SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC -> {
                     if (MmkvManager.getTotalTrafficDetail() != null) {
                         showTotalTrafficDetailDialog(this)
                     }
@@ -697,9 +698,7 @@ class MainActivity : HelperBaseActivity(),
     private fun setupViewModel() {
         mainViewModel.updateListAction.observe(this) {
             refreshTabBadges()
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_TOTAL_TRAFFIC_CHIP, false) &&
-                !MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_WEATHER_CHIP, false)
-            ) {
+            if (SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC) {
                 SearchChipGradientController.applyState(this, binding)
                 refreshTotalTrafficChip()
             }
