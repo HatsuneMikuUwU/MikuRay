@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/switch_start_service"
             android:text="@string/tasker_start_service"
-            android:textAppearance="?attr/textAppearanceBodyMedium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </RelativeLayout>
 

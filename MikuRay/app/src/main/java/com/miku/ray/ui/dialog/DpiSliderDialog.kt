@@ -15,7 +15,6 @@ import com.google.android.material.slider.Slider
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
-import com.miku.ray.util.DPIController
 import com.miku.ray.util.WindowBlurUtils
 
 class DpiSliderDialog @JvmOverloads constructor(
@@ -56,8 +55,6 @@ class DpiSliderDialog @JvmOverloads constructor(
                 MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_DPI, valueToSave)
                 summary = if (valueToSave == 0) systemDpi.toString() else clamped.toString()
 
-                DPIController.applyDpi(activity.applicationContext, clamped)
-
                 activity.recreate()
             }
             .setNeutralButton(R.string.reset, null)
@@ -72,8 +69,6 @@ class DpiSliderDialog @JvmOverloads constructor(
 
             MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_DPI, 0)
             summary = systemDpi.toString()
-
-            DPIController.applyDpi(activity.applicationContext, systemDpi)
 
             dialog.dismiss()
             activity.recreate()

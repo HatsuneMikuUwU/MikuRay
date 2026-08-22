@@ -32,7 +32,6 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.helper.CustomDividerItemDecoration
 import com.miku.ray.util.DPIController
 import com.miku.ray.util.FontSizeController
-import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.WindowBlurUtils
 import com.qmdeve.blurview.widget.BlurView
 import com.miku.ray.util.ThemeStateManager
@@ -46,8 +45,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private var collapsingToolbarRef: CollapsingToolbarLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // onActivityPreCreated is unavailable before API 29; prepare the theme
-        // before AppCompat inflates any layout on those devices.
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
             AngApplication.application.applyActivityTheme(this)
         }
@@ -80,13 +77,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-
-        val useCustomFont = MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
-        if (useCustomFont) {
-            // Covers explicit XML appearances and third-party widgets that do not
-            // consume the theme-level textAppearance contract.
-            CustomFontManager.applyToViewTree(this, window.decorView)
-        }
 
         val fontName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
         if (!fontName.isNullOrEmpty() && fontName != "default") {

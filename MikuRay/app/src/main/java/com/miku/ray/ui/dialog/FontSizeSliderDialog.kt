@@ -15,7 +15,6 @@ import com.google.android.material.slider.Slider
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
-import com.miku.ray.util.FontSizeController
 import com.miku.ray.util.WindowBlurUtils
 import kotlin.math.roundToInt
 
@@ -65,8 +64,6 @@ class FontSizeSliderDialog @JvmOverloads constructor(
                 MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_SIZE, valueToSave)
                 summary = formatPercent(valueToSave)
 
-                FontSizeController.applyFontScale(activity.applicationContext, valueToSave)
-
                 activity.recreate()
             }
             .setNeutralButton(R.string.reset, null)
@@ -84,8 +81,6 @@ class FontSizeSliderDialog @JvmOverloads constructor(
 
             MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_SIZE, default)
             summary = formatPercent(default)
-
-            FontSizeController.applyFontScale(activity.applicationContext, default)
 
             dialog.dismiss()
             activity.recreate()
