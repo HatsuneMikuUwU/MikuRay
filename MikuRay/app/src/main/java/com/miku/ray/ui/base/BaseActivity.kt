@@ -49,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
         // onActivityPreCreated is unavailable before API 29; prepare the theme
         // before AppCompat inflates any layout on those devices.
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
-            AngApplication.applyActivityTheme(this)
+            AngApplication.application.applyActivityTheme(this)
         }
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
