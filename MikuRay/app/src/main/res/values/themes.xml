@@ -27,29 +27,29 @@
         <item name="preferenceTheme">@style/AppThemePreference</item>
         <item name="android:homeAsUpIndicator">@drawable/rmx_arrows_arrow_left_double_line</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButton</item>
-        <!-- Material 3 typography hooks: every textAppearance resolves through the selected font. -->
-        <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
-        <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
-        <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
-        <item name="textAppearanceDisplaySmallEmphasized">@style/TextAppearance.Material3.DisplaySmall.Emphasized</item>
-        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Material3.HeadlineLarge</item>
-        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Material3.HeadlineMedium</item>
-        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Material3.HeadlineSmall</item>
-        <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
-        <item name="textAppearanceTitleLargeEmphasized">@style/TextAppearance.Material3.TitleLarge.Emphasized</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
-        <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
-        <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
-        <item name="textAppearanceBodySmall">@style/TextAppearance.Material3.BodySmall</item>
-        <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
-        <item name="textAppearanceLabelMedium">@style/TextAppearance.Material3.LabelMedium</item>
-        <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
-        <!-- Legacy platform aliases used by framework and AppCompat widgets. -->
-        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
-        <item name="android:textAppearanceLarge">@style/TextAppearance.Material3.BodyLarge</item>
-        <item name="android:textAppearanceMedium">@style/TextAppearance.Material3.BodyMedium</item>
-        <item name="android:textAppearanceSmall">@style/TextAppearance.Material3.BodySmall</item>
+        
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.App.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.App.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.App.DisplaySmall</item>
+        <item name="textAppearanceDisplaySmallEmphasized">@style/TextAppearance.App.DisplaySmall.Emphasized</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.App.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.App.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.App.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.App.TitleLarge</item>
+        <item name="textAppearanceTitleLargeEmphasized">@style/TextAppearance.App.TitleLarge.Emphasized</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.App.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.App.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.App.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.App.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.App.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.App.LabelSmall</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.BodyMedium</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.App.BodyLarge</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.App.BodyMedium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.App.BodySmall</item>
+
     </style>
 
     <style name="AppTheme.OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -996,9 +996,6 @@
     </style>
 
     <style name="StyleFontBase">
-    	<item name="helperTextTextAppearance">@style/Text.Font.BodySmall</item>
-        <item name="hintTextAppearance">@style/Text.Font.BodySmall</item>
-    	<item name="chipTextAppearance">@style/Text.Font.Small</item>
         <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
         <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
         <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
@@ -1022,17 +1019,87 @@
         <item name="android:textAppearanceSmall">@style/TextAppearance.Material3.BodySmall</item>
     </style>
     
-    <style name="Text.Font.Medium" parent="@style/TextAppearance.Material3.TitleMedium">
+    <style name="TextAppearance.App.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
         <item name="android:fontFamily">?attr/fontFamily</item>
         <item name="fontFamily">?attr/fontFamily</item>
     </style>
-    
-    <style name="Text.Font.Small" parent="@style/TextAppearance.Material3.TitleSmall">
+
+    <style name="TextAppearance.App.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
         <item name="android:fontFamily">?attr/fontFamily</item>
         <item name="fontFamily">?attr/fontFamily</item>
     </style>
-    
-    <style name="Text.Font.BodySmall" parent="@style/TextAppearance.Material3.BodySmall">
+
+    <style name="TextAppearance.App.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.DisplaySmall.Emphasized" parent="TextAppearance.Material3.DisplaySmall.Emphasized">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.TitleLarge.Emphasized" parent="TextAppearance.Material3.TitleLarge.Emphasized">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
+    </style>
+
+    <style name="TextAppearance.App.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:fontFamily">?attr/fontFamily</item>
         <item name="fontFamily">?attr/fontFamily</item>
     </style>
