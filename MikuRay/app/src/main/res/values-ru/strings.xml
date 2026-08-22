@@ -796,6 +796,10 @@
     <string name="confirm_reset_traffic_profile">Сбросить статистику трафика для этого профиля?</string>
     <string name="confirm_reset_traffic_group">Сбросить статистику трафика всех серверов в этой группе?</string>
     <string name="confirm_reset_traffic_all">Сбросить статистику трафика для всех групп? Это действие нельзя отменить</string>
+    <string name="confirm_clear_test_results_group">Очистить результаты тестов для всех серверов в этой группе?</string>
+    <string name="confirm_clear_test_results_all">Очистить результаты тестов для всех групп?</string>
+    <string name="confirm_clear_country_codes_group">Очистить коды стран для всех серверов в этой группе?</string>
+    <string name="confirm_clear_country_codes_all">Очистить коды стран для всех групп?</string>
     <string name="pref_traffic_enabled_title">Показывать статистику трафика</string>
     <string name="pref_traffic_enabled_summary">Показывать объем загрузки и отдачи на каждом сервере</string>
     <string name="label_total_traffic_upload">Отдача</string>

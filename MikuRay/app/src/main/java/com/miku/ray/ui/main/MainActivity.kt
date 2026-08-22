@@ -707,22 +707,87 @@ class MainActivity : HelperBaseActivity(),
             R.id.del_invalid_config -> delInvalidConfig()
             R.id.sub_update -> importConfigViaSub()
             R.id.clear_test_results -> {
-                mainViewModel.clearTestResults()
-                refreshAllGroupListDisplays()
+                val options = arrayOf(
+                    getString(R.string.reset_traffic_scope_group, currentGroupDisplayName()),
+                    getString(R.string.reset_traffic_scope_all)
+                )
+
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.title_clear_test_results)
+                    .setIcon(RemixR.drawable.rmx_refresh_line)
+                    .setItems(options) { _, which ->
+                        val msgRes: Int
+                        val action: () -> Unit
+
+                        when (which) {
+                            0 -> {
+                                msgRes = R.string.confirm_clear_test_results_group
+                                action = {
+                                    mainViewModel.clearTestResultsForGroup()
+                                    refreshAllGroupListDisplays()
+                                }
+                            }
+                            else -> {
+                                msgRes = R.string.confirm_clear_test_results_all
+                                action = {
+                                    mainViewModel.clearTestResults()
+                                    refreshAllGroupListDisplays()
+                                }
+                            }
+                        }
+
+                        showDeleteConfirmDialog(
+                            context = this,
+                            titleRes = R.string.title_clear_test_results,
+                            messageRes = msgRes
+                        ) { action() }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .showBlur()
             }
             R.id.clear_country_codes -> {
-                mainViewModel.clearCountryCodes()
-                refreshAllGroupListDisplays()
+                val options = arrayOf(
+                    getString(R.string.reset_traffic_scope_group, currentGroupDisplayName()),
+                    getString(R.string.reset_traffic_scope_all)
+                )
+
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.title_clear_country_codes)
+                    .setIcon(RemixR.drawable.rmx_refresh_line)
+                    .setItems(options) { _, which ->
+                        val msgRes: Int
+                        val action: () -> Unit
+
+                        when (which) {
+                            0 -> {
+                                msgRes = R.string.confirm_clear_country_codes_group
+                                action = {
+                                    mainViewModel.clearCountryCodesForGroup()
+                                    refreshAllGroupListDisplays()
+                                }
+                            }
+                            else -> {
+                                msgRes = R.string.confirm_clear_country_codes_all
+                                action = {
+                                    mainViewModel.clearCountryCodes()
+                                    refreshAllGroupListDisplays()
+                                }
+                            }
+                        }
+
+                        showDeleteConfirmDialog(
+                            context = this,
+                            titleRes = R.string.title_clear_country_codes,
+                            messageRes = msgRes
+                        ) { action() }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .showBlur()
             }
             R.id.reset_traffic -> {
-                val currentGroupName = mainViewModel.getSubscriptions(this)
-                    .firstOrNull { it.id == mainViewModel.subscriptionId }
-                    ?.remarks
-                    ?: getString(R.string.filter_config_all)
-
                 val options = arrayOf(
                     getString(R.string.reset_traffic_scope_profile),
-                    getString(R.string.reset_traffic_scope_group, currentGroupName),
+                    getString(R.string.reset_traffic_scope_group, currentGroupDisplayName()),
                     getString(R.string.reset_traffic_scope_all)
                 )
 
@@ -757,6 +822,7 @@ class MainActivity : HelperBaseActivity(),
                             messageRes = msgRes
                         ) { action() }
                     }
+                    .setNegativeButton(android.R.string.cancel, null)
                     .showBlur()
             }
             R.id.action_order_origin,
@@ -1272,11 +1338,14 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
-    private fun exportGroupAsFile() {
-        val currentGroupName = mainViewModel.getSubscriptions(this)
+    private fun currentGroupDisplayName(): String =
+        mainViewModel.getSubscriptions(this)
             .firstOrNull { it.id == mainViewModel.subscriptionId }
             ?.remarks
             ?: getString(R.string.filter_config_all)
+
+    private fun exportGroupAsFile() {
+        val currentGroupName = currentGroupDisplayName()
 
         val payload = MikuRayGroupFileManager.buildGroupExportPayload(mainViewModel.subscriptionId, currentGroupName)
         if (payload == null) {

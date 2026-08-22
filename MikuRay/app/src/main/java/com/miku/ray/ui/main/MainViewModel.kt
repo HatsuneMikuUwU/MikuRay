@@ -259,6 +259,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         updateListAction.postValue(-1)
     }
 
+    fun clearCountryCodesForGroup() {
+        cancelCountryCodeTest()
+        MmkvManager.clearAllCountryCodes(MmkvManager.decodeServerList(subscriptionId))
+        updateListAction.postValue(-1)
+    }
+
     fun testCurrentServerRealPing() {
         MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_MEASURE_DELAY, "")
     }
@@ -501,6 +507,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
         )
         MmkvManager.clearAllTestDelayResults(MmkvManager.decodeAllServerList())
+        // Re-sort serversCache immediately so order=by-delay drops back to its
+        // tie-break order right away, instead of waiting for a reload/restart.
+        updateCache()
+        updateListAction.postValue(-1)
+    }
+
+    fun clearTestResultsForGroup() {
+        MessageUtil.sendMsg2TestService(
+            getApplication(),
+            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
+        )
+        MmkvManager.clearAllTestDelayResults(MmkvManager.decodeServerList(subscriptionId))
         // Re-sort serversCache immediately so order=by-delay drops back to its
         // tie-break order right away, instead of waiting for a reload/restart.
         updateCache()
