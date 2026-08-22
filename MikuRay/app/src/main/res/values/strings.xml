@@ -705,6 +705,10 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="pref_search_bar_chip_disabled">Disabled</string>
     <string name="pref_search_bar_chip_weather">Weather</string>
     <string name="pref_search_bar_chip_total_traffic">Total traffic usage</string>
+    <string name="pref_search_bar_chip_dual_swipe">Dual (swipe)</string>
+    <string name="pref_search_bar_chip_info_weather">Weather chip can be clicked to open forecast details</string>
+    <string name="pref_search_bar_chip_info_traffic">Traffic chip can be clicked to open data usage details</string>
+    <string name="pref_search_bar_chip_info_dual">Swipe vertically on the chip to switch content. Tap to open details</string>
     <string name="pref_search_chip_gradient_title">Gradient chip background</string>
     <string name="pref_search_chip_gradient_summary">Apply a primary-to-tertiary gradient background on the search bar chip while the weather or total traffic chip is active</string>
 

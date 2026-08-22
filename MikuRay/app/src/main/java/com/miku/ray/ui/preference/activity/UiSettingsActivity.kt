@@ -29,6 +29,7 @@ import com.miku.ray.AppConfig
 import com.miku.ray.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
+import com.miku.ray.extension.snackbarDefault
 import com.miku.ray.extension.snackbarSuccess
 import com.miku.ray.extension.toastError
 import com.miku.ray.extension.toastInfo
@@ -85,7 +86,10 @@ class UiSettingsActivity : BaseActivity() {
 
         private val locationPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                if (SearchBarChipMode.current() == SearchBarChipMode.WEATHER) {
+                if (SearchBarChipMode.current() in setOf(
+                        SearchBarChipMode.WEATHER,
+                        SearchBarChipMode.DUAL_SWIPE
+                    )) {
                     WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
                 }
             }
@@ -513,11 +517,13 @@ class UiSettingsActivity : BaseActivity() {
                     value = mode
                     val selectedIndex = findIndexOfValue(mode)
                     summary = if (selectedIndex >= 0) entries[selectedIndex] else mode
-                    if (mode == SearchBarChipMode.WEATHER) {
+                    if (mode == SearchBarChipMode.WEATHER || mode == SearchBarChipMode.DUAL_SWIPE) {
                         val hasForegroundPermission = ContextCompat.checkSelfPermission(
                             requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED
-                        if (!hasForegroundPermission && !WeatherHelper.hasCustomLocation()) {
+                        val shouldRequestLocation = mode == SearchBarChipMode.DUAL_SWIPE ||
+                            (!hasForegroundPermission && !WeatherHelper.hasCustomLocation())
+                        if (!hasForegroundPermission && shouldRequestLocation) {
                             locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
                         } else {
                             WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
@@ -527,6 +533,11 @@ class UiSettingsActivity : BaseActivity() {
                     }
                     updateChipPreferenceEnabledState()
                     updateClearTotalTrafficSummary()
+                    when (mode) {
+                        SearchBarChipMode.WEATHER -> requireContext().snackbarDefault(R.string.pref_search_bar_chip_info_weather, title = getString(R.string.title_alerter_info))
+                        SearchBarChipMode.TOTAL_TRAFFIC -> requireContext().snackbarDefault(R.string.pref_search_bar_chip_info_traffic, title = getString(R.string.title_alerter_info))
+                        SearchBarChipMode.DUAL_SWIPE -> requireContext().snackbarDefault(R.string.pref_search_bar_chip_info_dual, title = getString(R.string.title_alerter_info))
+                    }
                     true
                 }
             }
@@ -547,7 +558,10 @@ class UiSettingsActivity : BaseActivity() {
                 MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CUSTOM_LOCATION, raw)
                 WeatherHelper.clearCustomLocationCache()
                 updateWeatherCustomLocationSummary(raw)
-                if (SearchBarChipMode.current() == SearchBarChipMode.WEATHER) {
+                if (SearchBarChipMode.current() in setOf(
+                        SearchBarChipMode.WEATHER,
+                        SearchBarChipMode.DUAL_SWIPE
+                    )) {
                     WeatherHelper.scheduleBackgroundUpdates(requireContext(), forceReschedule = true)
                 }
                 true
@@ -729,7 +743,8 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         private fun updateClearTotalTrafficSummary() {
-            val chipOn = SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC
+            val mode = SearchBarChipMode.current()
+            val chipOn = mode == SearchBarChipMode.TOTAL_TRAFFIC || mode == SearchBarChipMode.DUAL_SWIPE
             val detail = MmkvManager.getTotalTrafficDetail()
             clearTotalTraffic?.apply {
                 if (!chipOn) {
@@ -1320,7 +1335,9 @@ class UiSettingsActivity : BaseActivity() {
             val mode = SearchBarChipMode.current()
             searchBarChip?.value = mode
             searchChipGradient?.isEnabled = mode != SearchBarChipMode.DISABLED
-            updateWeatherSubPrefsEnabled(mode == SearchBarChipMode.WEATHER)
+            updateWeatherSubPrefsEnabled(
+                mode == SearchBarChipMode.WEATHER || mode == SearchBarChipMode.DUAL_SWIPE
+            )
         }
 
         private fun updateShowIspInfoEnabledState() {

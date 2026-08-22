@@ -114,7 +114,10 @@ object TrafficController {
         val guid = MmkvManager.getSelectServer() ?: return
         MmkvManager.addProfileTraffic(guid, proxyUplink, proxyDownlink)
 
-        if (SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC) {
+        if (SearchBarChipMode.current() in setOf(
+                SearchBarChipMode.TOTAL_TRAFFIC,
+                SearchBarChipMode.DUAL_SWIPE
+            )) {
             MmkvManager.addDailyTraffic(proxyUplink, proxyDownlink)
             MmkvManager.addTotalTrafficAllTime(proxyUplink, proxyDownlink)
         }

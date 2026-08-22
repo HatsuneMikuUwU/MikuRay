@@ -662,6 +662,10 @@
     <string name="pref_search_bar_chip_disabled">关闭</string>
     <string name="pref_search_bar_chip_weather">天气</string>
     <string name="pref_search_bar_chip_total_traffic">总流量使用</string>
+    <string name="pref_search_bar_chip_dual_swipe">双模式（滑动）</string>
+    <string name="pref_search_bar_chip_info_weather">点击天气组件可打开天气预报详情</string>
+    <string name="pref_search_bar_chip_info_traffic">点击流量组件可打开流量使用详情</string>
+    <string name="pref_search_bar_chip_info_dual">在组件上向上或向下滑动以切换内容。点击可打开详情</string>
     <string name="pref_search_chip_gradient_title">渐变组件背景</string>
     <string name="pref_search_chip_gradient_summary">当天气或总流量组件启用时，在搜索栏组件上应用主色至第三色 (primary-to-tertiary) 的渐变背景</string>
 

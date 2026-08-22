@@ -592,8 +592,12 @@ object WeatherHelper {
     class UpdateWorker(context: Context, params: WorkerParameters) :
         CoroutineWorker(context, params) {
         override suspend fun doWork(): Result {
-            if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER)
+            if (SearchBarChipMode.current() !in setOf(
+                    SearchBarChipMode.WEATHER,
+                    SearchBarChipMode.DUAL_SWIPE
+                )) {
                 return Result.success()
+            }
 
             if (!hasCustomLocation() && !hasBackgroundLocationPermission(applicationContext))
                 return Result.success()

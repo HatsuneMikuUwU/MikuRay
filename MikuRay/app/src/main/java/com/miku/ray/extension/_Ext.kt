@@ -42,6 +42,7 @@ import com.miku.ray.R
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.util.getColorAttr
 import com.miku.ray.toasty.Toasty
+import com.miku.ray.toasty.ToastyUtils
 import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.net.URI
@@ -157,14 +158,18 @@ private fun showSnackbar(
 
     val fallbackMessage = if (title.isNotNullEmpty()) "$title: $message" else message
 
-    fun showToastyFallback() {
-        val toastDuration = Toast.LENGTH_LONG
-        when (iconRes) {
-            RemixR.drawable.rmx_checkbox_circle_line -> Toasty.success(context, fallbackMessage, toastDuration, true).show()
-            RemixR.drawable.rmx_error_warning_line -> Toasty.error(context, fallbackMessage, toastDuration, true).show()
-            else -> Toasty.normal(context, fallbackMessage, toastDuration).show()
+        fun showToastyFallback() {
+            val toastDuration = Toast.LENGTH_LONG
+            when (iconRes) {
+                RemixR.drawable.rmx_checkbox_circle_line -> Toasty.success(context, fallbackMessage, toastDuration, true).show()
+                RemixR.drawable.rmx_error_warning_line -> Toasty.error(context, fallbackMessage, toastDuration, true).show()
+                RemixR.drawable.rmx_information_line -> Toasty.custom(context, fallbackMessage, ToastyUtils.getDrawable(context, iconRes),
+                    ToastyUtils.getColorAttr(context, "colorTertiary", 0),
+                    ToastyUtils.getColorAttr(context, "colorOnTertiary", 0),
+                    toastDuration, true, true).show()
+                else -> Toasty.normal(context, fallbackMessage, toastDuration).show()
+            }
         }
-    }
 
     if (activity == null || parent == null) {
         showToastyFallback()
@@ -292,11 +297,21 @@ private fun showSnackbar(
 }
 
 fun Context.snackbarDefault(message: Int, title: CharSequence = "") {
-    showSnackbar(this, title, getString(message), RemixR.drawable.rmx_information_line, null, null, Snackbar.LENGTH_LONG)
+    showSnackbar(
+        this, title, getString(message), RemixR.drawable.rmx_information_line,
+        "colorTertiary",
+        "colorOnTertiary",
+        Snackbar.LENGTH_LONG
+    )
 }
 
 fun Context.snackbarDefault(message: CharSequence, title: CharSequence = "") {
-    showSnackbar(this, title, message, RemixR.drawable.rmx_information_line, null, null, Snackbar.LENGTH_LONG)
+    showSnackbar(
+        this, title, message, RemixR.drawable.rmx_information_line,
+        "colorTertiary",
+        "colorOnTertiary",
+        Snackbar.LENGTH_LONG
+    )
 }
 
 fun Context.snackbarSuccess(message: Int, title: CharSequence = "") {

@@ -11,7 +11,7 @@ import com.miku.ray.widget.TrafficBarChartView
 private const val HISTORY_DAYS = 7
 
 fun showTotalTrafficDetailDialog(context: Context) {
-    val (uploadBytes, downloadBytes) = MmkvManager.getTotalTrafficDetail() ?: return
+    val (uploadBytes, downloadBytes) = MmkvManager.getTotalTrafficDetail() ?: (0L to 0L)
 
     val binding = DialogTotalTrafficDetailBinding.inflate(LayoutInflater.from(context))
     binding.tvUploadValue.text = MmkvManager.formatTrafficBytesPublic(uploadBytes)

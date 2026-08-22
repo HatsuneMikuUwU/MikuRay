@@ -682,6 +682,10 @@
     <string name="pref_search_bar_chip_disabled">Отключено</string>
     <string name="pref_search_bar_chip_weather">Погода</string>
     <string name="pref_search_bar_chip_total_traffic">Общий трафик</string>
+    <string name="pref_search_bar_chip_dual_swipe">Двойной режим (свайп)</string>
+    <string name="pref_search_bar_chip_info_weather">Нажмите на плашку погоды, чтобы открыть подробности прогноза</string>
+    <string name="pref_search_bar_chip_info_traffic">Нажмите на плашку трафика, чтобы открыть подробности использования данных</string>
+    <string name="pref_search_bar_chip_info_dual">Проведите по плашке вверх или вниз, чтобы сменить содержимое. Нажмите, чтобы открыть подробности</string>
     <string name="pref_search_chip_gradient_title">Градиентный фон плашки</string>
     <string name="pref_search_chip_gradient_summary">Применить градиентный фон (от цвета primary к tertiary) на плашке строки поиска, когда активна плашка погоды или общего трафика</string>
 

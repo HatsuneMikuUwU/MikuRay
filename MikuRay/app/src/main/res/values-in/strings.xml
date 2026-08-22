@@ -673,6 +673,10 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="pref_search_bar_chip_disabled">Nonaktif</string>
     <string name="pref_search_bar_chip_weather">Cuaca</string>
     <string name="pref_search_bar_chip_total_traffic">Total penggunaan traffic</string>
+    <string name="pref_search_bar_chip_dual_swipe">Dual (swipe)</string>
+    <string name="pref_search_bar_chip_info_weather">Chip cuaca bisa diklik untuk buka detail prakiraan</string>
+    <string name="pref_search_bar_chip_info_traffic">Chip traffic bisa diklik untuk buka detail pemakaian data</string>
+    <string name="pref_search_bar_chip_info_dual">Swipe atas/bawah di chip untuk ganti konten. Tap untuk buka detail</string>
     <string name="pref_search_chip_gradient_title">Background chip gradasi</string>
     <string name="pref_search_chip_gradient_summary">Terapin background gradasi (warna primary ke tertiary) di chip bar pencarian pas chip cuaca atau chip total pemakaian lagi aktif</string>
 

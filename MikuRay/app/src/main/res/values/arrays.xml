@@ -417,11 +417,13 @@
         <item>@string/pref_search_bar_chip_disabled</item>
         <item>@string/pref_search_bar_chip_weather</item>
         <item>@string/pref_search_bar_chip_total_traffic</item>
+        <item>@string/pref_search_bar_chip_dual_swipe</item>
     </string-array>
     <string-array name="search_bar_chip_values" translatable="false">
         <item>disabled</item>
         <item>weather</item>
         <item>total_traffic</item>
+        <item>dual_swipe</item>
     </string-array>
     <string-array name="weather_unit_entries">
         <item>Celsius (°C)</item>

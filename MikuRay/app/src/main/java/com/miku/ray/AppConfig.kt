@@ -169,6 +169,7 @@ object AppConfig {
     const val PREF_SHOW_SPLASH = "pref_show_splash_screen"
     const val PREF_KEEP_AWAKE = "pref_keep_awake"
     const val PREF_SEARCH_BAR_CHIP = "pref_search_bar_chip"
+    const val PREF_SEARCH_BAR_CHIP_DUAL_SELECTION = "pref_search_bar_chip_dual_selection"
     const val PREF_WEATHER_CACHE_ENTRY = "pref_weather_cache_entry"
     const val PREF_WEATHER_USE_CELSIUS = "pref_weather_use_celsius"
     const val PREF_WEATHER_CUSTOM_LOCATION = "pref_weather_custom_location"

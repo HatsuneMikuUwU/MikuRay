@@ -74,8 +74,8 @@ object Toasty {
     @JvmStatic @CheckResult
     fun normal(context: Context, message: CharSequence, duration: Int, icon: Drawable?, withIcon: Boolean): Toast =
         custom(context, message, icon,
-            ToastyUtils.getColorAttr(context, "colorSurfaceInverse", 0),
-            ToastyUtils.getColorAttr(context, "colorOnSurfaceInverse", 0),
+            ToastyUtils.getColorAttr(context, "colorTertiary", 0),
+            ToastyUtils.getColorAttr(context, "colorOnTertiary", 0),
             duration, withIcon, true)
 
     @JvmStatic @CheckResult

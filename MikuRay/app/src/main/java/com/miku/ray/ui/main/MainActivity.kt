@@ -12,8 +12,10 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -98,6 +100,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.math.abs
 
 class MainActivity : HelperBaseActivity(),
     MainMenuBottomSheet.OnOptionClickListener,
@@ -113,6 +116,7 @@ class MainActivity : HelperBaseActivity(),
     private var bannerReceiver: BroadcastReceiver? = null
     
     private var isColdStart = true
+    private var dualSwipeChipSelection = SearchBarChipMode.WEATHER
     private var pendingConnectionTest = false
     private var lastIpStateText: String = ""
     private var lastTrafficSpeedText: String = ""
@@ -174,6 +178,7 @@ class MainActivity : HelperBaseActivity(),
         setupViewPager()
         setupListeners()
         setupInlineSearchView()
+        setupSearchBarChipSwipe()
         setupGroupTab()
         setupViewModel()
         setupBannerHome()
@@ -231,7 +236,10 @@ class MainActivity : HelperBaseActivity(),
         WeatherHelper.hasCustomLocation() || WeatherHelper.hasLocationPermission(this)
 
     private fun syncWeatherBackgroundUpdates() {
-        val weatherEnabled = SearchBarChipMode.current() == SearchBarChipMode.WEATHER
+        val weatherEnabled = SearchBarChipMode.current() in setOf(
+            SearchBarChipMode.WEATHER,
+            SearchBarChipMode.DUAL_SWIPE
+        )
         val canRunInBackground = WeatherHelper.hasCustomLocation() || WeatherHelper.hasBackgroundLocationPermission(this)
 
         if (weatherEnabled && canRunInBackground) {
@@ -263,9 +271,74 @@ class MainActivity : HelperBaseActivity(),
         }
     }
 
+    private fun setupSearchBarChipSwipe() {
+        val swipeThreshold = 64 * resources.displayMetrics.density
+        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDown(event: MotionEvent): Boolean = true
+
+            override fun onSingleTapUp(event: MotionEvent): Boolean {
+                binding.layoutWeatherChip.performClick()
+                return true
+            }
+
+            override fun onFling(
+                firstEvent: MotionEvent?,
+                lastEvent: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                if (firstEvent == null) return false
+                val distanceX = lastEvent.x - firstEvent.x
+                val distanceY = lastEvent.y - firstEvent.y
+                if (abs(distanceY) <= abs(distanceX) || abs(distanceY) < swipeThreshold) return false
+
+                // With two items, both vertical directions advance the carousel with wrap-around.
+                dualSwipeChipSelection = if (dualSwipeChipSelection == SearchBarChipMode.WEATHER) {
+                    SearchBarChipMode.TOTAL_TRAFFIC
+                } else {
+                    SearchBarChipMode.WEATHER
+                }
+                SearchBarChipMode.saveDualSelection(dualSwipeChipSelection)
+                refreshSearchBarChip()
+                return true
+            }
+        })
+
+        binding.layoutWeatherChip.setOnTouchListener { view, event ->
+            if (SearchBarChipMode.current() == SearchBarChipMode.DUAL_SWIPE) {
+                when (event.actionMasked) {
+                    MotionEvent.ACTION_DOWN -> view.parent?.requestDisallowInterceptTouchEvent(true)
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> view.parent?.requestDisallowInterceptTouchEvent(false)
+                }
+                gestureDetector.onTouchEvent(event)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun isWeatherChipSelected(): Boolean {
+        val mode = SearchBarChipMode.current()
+        return mode == SearchBarChipMode.WEATHER ||
+            (mode == SearchBarChipMode.DUAL_SWIPE && dualSwipeChipSelection == SearchBarChipMode.WEATHER)
+    }
+
+    private fun isTotalTrafficChipSelected(): Boolean {
+        val mode = SearchBarChipMode.current()
+        return mode == SearchBarChipMode.TOTAL_TRAFFIC ||
+            (mode == SearchBarChipMode.DUAL_SWIPE && dualSwipeChipSelection == SearchBarChipMode.TOTAL_TRAFFIC)
+    }
+
     private fun refreshSearchBarChip() {
-        val weatherEnabled = SearchBarChipMode.current() == SearchBarChipMode.WEATHER
-        val totalTrafficEnabled = SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC
+        val mode = SearchBarChipMode.current()
+        if (mode == SearchBarChipMode.DUAL_SWIPE) {
+            dualSwipeChipSelection = SearchBarChipMode.currentDualSelection()
+        } else {
+            dualSwipeChipSelection = SearchBarChipMode.WEATHER
+        }
+        val weatherEnabled = isWeatherChipSelected()
+        val totalTrafficEnabled = isTotalTrafficChipSelected()
 
         SearchChipGradientController.applyState(this, binding)
 
@@ -296,19 +369,17 @@ class MainActivity : HelperBaseActivity(),
 
     private fun refreshTotalTrafficChip() {
         val totalTraffic = MmkvManager.getTotalTrafficString()
-        if (totalTraffic == null) {
-            binding.layoutWeatherChip.isVisible = false
-            return
-        }
         
         binding.tvTotalTraffic.text = totalTraffic
-        binding.ivTotalTrafficIcon.isVisible = true
-        binding.tvTotalTraffic.isVisible = true
-        binding.layoutWeatherChip.isVisible = true
+        if (isTotalTrafficChipSelected()) {
+            binding.ivTotalTrafficIcon.isVisible = true
+            binding.tvTotalTraffic.isVisible = true
+            binding.layoutWeatherChip.isVisible = true
+        }
     }
 
     private fun refreshWeatherChip() {
-        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) {
+        if (!isWeatherChipSelected()) {
             binding.layoutWeatherChip.isVisible = false
             return
         }
@@ -325,7 +396,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun forceRefreshWeatherChip() {
-        if (SearchBarChipMode.current() != SearchBarChipMode.WEATHER) return
+        if (!isWeatherChipSelected()) return
 
         if (!weatherLocationReady()) {
             checkAndRequestPermission(PermissionType.LOCATION) {
@@ -349,7 +420,7 @@ class MainActivity : HelperBaseActivity(),
         lifecycleScope.launch {
             val weather = WeatherHelper.fetchCurrentWeather(this@MainActivity, force = true)
             if (weather == null) {
-                if (cached == null) binding.layoutWeatherChip.isVisible = false
+                if (cached == null && isWeatherChipSelected()) binding.layoutWeatherChip.isVisible = false
                 return@launch
             }
             applyWeatherToChip(weather)
@@ -357,6 +428,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun loadWeatherChip() {
+        if (!isWeatherChipSelected()) return
         binding.layoutWeatherChip.isVisible = true
 
         val fresh = WeatherHelper.getCachedWeather()
@@ -376,7 +448,7 @@ class MainActivity : HelperBaseActivity(),
         lifecycleScope.launch {
             val weather = WeatherHelper.fetchCurrentWeather(this@MainActivity)
             if (weather == null) {
-                if (stale == null) binding.layoutWeatherChip.isVisible = false
+                if (stale == null && isWeatherChipSelected()) binding.layoutWeatherChip.isVisible = false
                 return@launch
             }
             applyWeatherToChip(weather)
@@ -386,10 +458,12 @@ class MainActivity : HelperBaseActivity(),
     private fun applyWeatherToChip(weather: WeatherHelper.WeatherResult) {
         binding.ivWeatherIcon.setImageResource(weather.iconRes)
         binding.tvWeatherTemp.text = weather.getTemperatureString(WeatherHelper.isCelsius())
-        
-        binding.ivWeatherIcon.isVisible = true
-        binding.tvWeatherTemp.isVisible = true
-        binding.layoutWeatherChip.isVisible = true
+
+        if (isWeatherChipSelected()) {
+            binding.ivWeatherIcon.isVisible = true
+            binding.tvWeatherTemp.isVisible = true
+            binding.layoutWeatherChip.isVisible = true
+        }
     }
 
     private fun setupBannerHome() {
@@ -555,13 +629,11 @@ class MainActivity : HelperBaseActivity(),
 
         binding.layoutWeatherChip.setOnClickListener {
             when {
-                SearchBarChipMode.current() == SearchBarChipMode.WEATHER -> {
+                isWeatherChipSelected() -> {
                     startActivity(Intent(this, WeatherForecastActivity::class.java))
                 }
-                SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC -> {
-                    if (MmkvManager.getTotalTrafficDetail() != null) {
-                        showTotalTrafficDetailDialog(this)
-                    }
+                isTotalTrafficChipSelected() -> {
+                    showTotalTrafficDetailDialog(this)
                 }
             }
         }
@@ -698,9 +770,12 @@ class MainActivity : HelperBaseActivity(),
     private fun setupViewModel() {
         mainViewModel.updateListAction.observe(this) {
             refreshTabBadges()
-            if (SearchBarChipMode.current() == SearchBarChipMode.TOTAL_TRAFFIC) {
+            if (SearchBarChipMode.current() in setOf(
+                    SearchBarChipMode.TOTAL_TRAFFIC,
+                    SearchBarChipMode.DUAL_SWIPE
+                )) {
                 SearchChipGradientController.applyState(this, binding)
-                refreshTotalTrafficChip()
+                if (isTotalTrafficChipSelected()) refreshTotalTrafficChip()
             }
         }
 

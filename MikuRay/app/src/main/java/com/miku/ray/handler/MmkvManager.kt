@@ -449,8 +449,8 @@ object MmkvManager {
         clearDailyTrafficHistory()
     }
 
-    fun getTotalTrafficString(): String? {
-        val (uplinkTotal, downlinkTotal) = getTotalTrafficDetail() ?: return null
+    fun getTotalTrafficString(): String {
+        val (uplinkTotal, downlinkTotal) = getTotalTrafficDetail() ?: (0L to 0L)
         return formatTrafficBytes(uplinkTotal + downlinkTotal)
     }
 
@@ -595,6 +595,7 @@ object MmkvManager {
     fun formatTrafficBytesPublic(bytes: Long): String = formatTrafficBytes(bytes)
 
     private fun formatTrafficBytes(bytes: Long): String {
+        if (bytes == 0L) return "0.00 KB"
         val units = arrayOf("B", "KB", "MB", "GB", "TB")
         var size = bytes.toDouble()
         var i = 0
