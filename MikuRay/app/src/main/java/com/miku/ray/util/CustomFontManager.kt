@@ -3,6 +3,9 @@ package com.miku.ray.util
 import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
 import java.io.File
@@ -145,6 +148,28 @@ object CustomFontManager {
         replaceStaticField("DEFAULT_BOLD", Typeface.create(typeface, Typeface.BOLD))
         replaceStaticField("SANS_SERIF", typeface)
         replaceSystemFontMapEntries(typeface)
+    }
+
+    /**
+     * Applies the selected file font after inflation as a safety net for views that
+     * specify a concrete TextAppearance or are inflated by a third-party widget.
+     */
+    fun applyToViewTree(context: Context, root: View) {
+        val typeface = getTypeface(context) ?: return
+
+        fun apply(view: View) {
+            if (view is TextView) {
+                val style = view.typeface?.style ?: Typeface.NORMAL
+                view.typeface = Typeface.create(typeface, style)
+            }
+            if (view is ViewGroup) {
+                for (index in 0 until view.childCount) {
+                    apply(view.getChildAt(index))
+                }
+            }
+        }
+
+        apply(root)
     }
 
     fun restoreGlobalOverride() {

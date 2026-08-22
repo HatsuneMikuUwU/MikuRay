@@ -54,14 +54,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_title"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_1"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page1_desc"
-                android:fontFamily="@font/googlesansregular" />
+                />
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
@@ -148,14 +148,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_2"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page2_desc"
-                android:fontFamily="@font/googlesansregular" />
+                />
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
@@ -242,14 +242,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="32.0sp"
                 android:textColor="?colorPrimary"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uwu_welcome_summary_3"
-                android:fontFamily="@font/googlesansregular" />
+                />
             <TextView
                 android:textSize="14.0sp"
                 android:textColor="?colorOnSurfaceVariant"
@@ -257,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16.0dip"
                 android:text="@string/uwu_welcome_page3_desc"
-                android:fontFamily="@font/googlesansregular" />
+                />
         </LinearLayout>
         <LinearLayout
             android:gravity="center"

@@ -27,8 +27,29 @@
         <item name="preferenceTheme">@style/AppThemePreference</item>
         <item name="android:homeAsUpIndicator">@drawable/rmx_arrows_arrow_left_double_line</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButton</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
+        <!-- Material 3 typography hooks: every textAppearance resolves through the selected font. -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
+        <item name="textAppearanceDisplaySmallEmphasized">@style/TextAppearance.Material3.DisplaySmall.Emphasized</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Material3.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Material3.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="textAppearanceTitleLargeEmphasized">@style/TextAppearance.Material3.TitleLarge.Emphasized</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Material3.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
+        <!-- Legacy platform aliases used by framework and AppCompat widgets. -->
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Material3.BodySmall</item>
     </style>
 
     <style name="AppTheme.OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -825,15 +846,6 @@
         <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
     </style>
 
-    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:fontFamily">?attr/fontFamily</item>
-        <item name="fontFamily">?attr/fontFamily</item>
-    </style>
-
-    <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
-        <item name="android:fontFamily">?attr/fontFamily</item>
-        <item name="fontFamily">?attr/fontFamily</item>
-    </style>
 
     <style name="AppThemePreference" parent="@style/PreferenceThemeOverlay">
         <item name="editTextPreferenceStyle">@style/AppThemeEditTextPreference</item>
@@ -903,6 +915,28 @@
         <item name="android:windowMinWidthMajor">91%</item>
         <item name="android:windowMinWidthMinor">91%</item>
         <item name="materialAlertDialogTitleIconStyle">@style/AppThemeAlertDialogTitleIcon</item>
+        <!-- Dialogs use their own context, so repeat the full typography contract here. -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
+        <item name="textAppearanceDisplaySmallEmphasized">@style/TextAppearance.Material3.DisplaySmall.Emphasized</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Material3.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Material3.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="textAppearanceTitleLargeEmphasized">@style/TextAppearance.Material3.TitleLarge.Emphasized</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Material3.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Material3.BodySmall</item>
     </style>
     
     <style name="AppThemeAlertDialogTitleIcon" parent="@style/MaterialAlertDialog.Material3.Title.Icon.CenterStacked">
@@ -965,7 +999,8 @@
 
     <style name="TabLayoutTextStyle" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textSize">13sp</item>
-        <item name="android:fontFamily">@font/montserrat_thin</item>
+        <item name="android:fontFamily">?attr/fontFamily</item>
+        <item name="fontFamily">?attr/fontFamily</item>
     </style>
 
     <style name="AppThemeFabSquare" parent="@style/AppThemeBase">
@@ -982,12 +1017,34 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="StyleFontDefault">
-    	<item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
+    <!-- Shared overlay contract used by every selectable built-in font. -->
+    <style name="StyleFontBase">
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.Material3.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.Material3.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.Material3.DisplaySmall</item>
+        <item name="textAppearanceDisplaySmallEmphasized">@style/TextAppearance.Material3.DisplaySmall.Emphasized</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Material3.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Material3.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="textAppearanceTitleLargeEmphasized">@style/TextAppearance.Material3.TitleLarge.Emphasized</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Material3.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Material3.BodyLarge</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Material3.BodySmall</item>
     </style>
 
-    <style name="StyleFontIos15">
+    <style name="StyleFontDefault" parent="StyleFontBase">
+    </style>
+    <style name="StyleFontIos15" parent="StyleFontBase">
         <item name="android:fontFamily">@font/ios15</item>
         <item name="fontFamily">@font/ios15</item>
         <item name="titleTextAppearance">@style/Text.Font.Ios15</item>
@@ -995,7 +1052,7 @@
         <item name="alertDialogTheme">@style/DialogFontIos15</item>
     </style>
 
-    <style name="StyleFontGoogle">
+    <style name="StyleFontGoogle" parent="StyleFontBase">
         <item name="android:fontFamily">@font/googlesansregular</item>
         <item name="fontFamily">@font/googlesansregular</item>
         <item name="titleTextAppearance">@style/Text.Font.Google</item>
@@ -1003,7 +1060,7 @@
         <item name="alertDialogTheme">@style/DialogFontGoogle</item>
     </style>
 
-    <style name="StyleFontRoboto">
+    <style name="StyleFontRoboto" parent="StyleFontBase">
         <item name="android:fontFamily">@font/robotoregular</item>
         <item name="fontFamily">@font/robotoregular</item>
         <item name="titleTextAppearance">@style/Text.Font.Roboto</item>
@@ -1011,7 +1068,7 @@
         <item name="alertDialogTheme">@style/DialogFontRoboto</item>
     </style>
 
-    <style name="StyleFontPoppins">
+    <style name="StyleFontPoppins" parent="StyleFontBase">
         <item name="android:fontFamily">@font/poppinsregular</item>
         <item name="fontFamily">@font/poppinsregular</item>
         <item name="titleTextAppearance">@style/Text.Font.Poppins</item>
@@ -1019,7 +1076,7 @@
         <item name="alertDialogTheme">@style/DialogFontPoppins</item>
     </style>
 
-    <style name="StyleFontChocoCooky">
+    <style name="StyleFontChocoCooky" parent="StyleFontBase">
         <item name="android:fontFamily">@font/chococookyregular</item>
         <item name="fontFamily">@font/chococookyregular</item>
         <item name="titleTextAppearance">@style/Text.Font.ChocoCooky</item>
@@ -1027,7 +1084,7 @@
         <item name="alertDialogTheme">@style/DialogFontChocoCooky</item>
     </style>
 
-    <style name="StyleFontSimpleDay">
+    <style name="StyleFontSimpleDay" parent="StyleFontBase">
         <item name="android:fontFamily">@font/simpleday</item>
         <item name="fontFamily">@font/simpleday</item>
         <item name="titleTextAppearance">@style/Text.Font.SimpleDay</item>
@@ -1035,7 +1092,7 @@
         <item name="alertDialogTheme">@style/DialogFontSimpleDay</item>
     </style>
 
-    <style name="StyleFontFucek">
+    <style name="StyleFontFucek" parent="StyleFontBase">
         <item name="android:fontFamily">@font/fucek</item>
         <item name="fontFamily">@font/fucek</item>
         <item name="titleTextAppearance">@style/Text.Font.Fucek</item>
@@ -1043,7 +1100,7 @@
         <item name="alertDialogTheme">@style/DialogFontFucek</item>
     </style>
 
-    <style name="StyleFontSFProDisplay">
+    <style name="StyleFontSFProDisplay" parent="StyleFontBase">
         <item name="android:fontFamily">@font/sfprodisplay</item>
         <item name="fontFamily">@font/sfprodisplay</item>
         <item name="titleTextAppearance">@style/Text.Font.SFProDisplay</item>
@@ -1051,7 +1108,7 @@
         <item name="alertDialogTheme">@style/DialogFontSFProDisplay</item>
     </style>
 
-    <style name="StyleFontDancingScript">
+    <style name="StyleFontDancingScript" parent="StyleFontBase">
         <item name="android:fontFamily">@font/dancingscript</item>
         <item name="fontFamily">@font/dancingscript</item>
         <item name="titleTextAppearance">@style/Text.Font.DancingScript</item>
@@ -1059,7 +1116,7 @@
         <item name="alertDialogTheme">@style/DialogFontDancingScript</item>
     </style>
 
-    <style name="StyleFontCream">
+    <style name="StyleFontCream" parent="StyleFontBase">
         <item name="android:fontFamily">@font/cream</item>
         <item name="fontFamily">@font/cream</item>
         <item name="titleTextAppearance">@style/Text.Font.Cream</item>
@@ -1067,7 +1124,7 @@
         <item name="alertDialogTheme">@style/DialogFontCream</item>
     </style>
 
-    <style name="StyleFontOneUI">
+    <style name="StyleFontOneUI" parent="StyleFontBase">
         <item name="android:fontFamily">@font/oneui</item>
         <item name="fontFamily">@font/oneui</item>
         <item name="titleTextAppearance">@style/Text.Font.OneUI</item>
@@ -1075,7 +1132,7 @@
         <item name="alertDialogTheme">@style/DialogFontOneUI</item>
     </style>
 
-    <style name="StyleFontInconsolata">
+    <style name="StyleFontInconsolata" parent="StyleFontBase">
         <item name="android:fontFamily">@font/incosolata</item>
         <item name="fontFamily">@font/incosolata</item>
         <item name="titleTextAppearance">@style/Text.Font.Inconsolata</item>
@@ -1083,7 +1140,7 @@
         <item name="alertDialogTheme">@style/DialogFontInconsolata</item>
     </style>
 
-    <style name="StyleFontEmilysCandy">
+    <style name="StyleFontEmilysCandy" parent="StyleFontBase">
         <item name="android:fontFamily">@font/emilyscandy</item>
         <item name="fontFamily">@font/emilyscandy</item>
         <item name="titleTextAppearance">@style/Text.Font.EmilysCandy</item>
@@ -1091,7 +1148,7 @@
         <item name="alertDialogTheme">@style/DialogFontEmilysCandy</item>
     </style>
 
-    <style name="StyleFontSummerDream">
+    <style name="StyleFontSummerDream" parent="StyleFontBase">
         <item name="android:fontFamily">@font/summerdream</item>
         <item name="fontFamily">@font/summerdream</item>
         <item name="titleTextAppearance">@style/Text.Font.SummerDream</item>
@@ -1099,7 +1156,7 @@
         <item name="alertDialogTheme">@style/DialogFontSummerDream</item>
     </style>
 
-    <style name="StyleFontRine">
+    <style name="StyleFontRine" parent="StyleFontBase">
         <item name="android:fontFamily">@font/rine</item>
         <item name="fontFamily">@font/rine</item>
         <item name="titleTextAppearance">@style/Text.Font.Rine</item>
@@ -1107,7 +1164,7 @@
         <item name="alertDialogTheme">@style/DialogFontRine</item>
     </style>
 
-    <style name="StyleFontEvolve">
+    <style name="StyleFontEvolve" parent="StyleFontBase">
         <item name="android:fontFamily">@font/evolvesans</item>
         <item name="fontFamily">@font/evolvesans</item>
         <item name="titleTextAppearance">@style/Text.Font.Evolve</item>
@@ -1197,114 +1254,66 @@
 
     <style name="DialogFontIos15" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/ios15</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Ios15</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Ios15</item>
-        <item name="android:textAppearance">@style/Text.Font.Ios15</item>
     </style>
 
     <style name="DialogFontGoogle" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/googlesansregular</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Google</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Google</item>
-        <item name="android:textAppearance">@style/Text.Font.Google</item>
     </style>
 
     <style name="DialogFontRoboto" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/robotoregular</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Roboto</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Roboto</item>
-        <item name="android:textAppearance">@style/Text.Font.Roboto</item>
     </style>
 
     <style name="DialogFontPoppins" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/poppinsregular</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Poppins</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Poppins</item>
-        <item name="android:textAppearance">@style/Text.Font.Poppins</item>
     </style>
 
     <style name="DialogFontChocoCooky" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/chococookyregular</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.ChocoCooky</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.ChocoCooky</item>
-        <item name="android:textAppearance">@style/Text.Font.ChocoCooky</item>
     </style>
 
     <style name="DialogFontSimpleDay" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/simpleday</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.SimpleDay</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.SimpleDay</item>
-        <item name="android:textAppearance">@style/Text.Font.SimpleDay</item>
     </style>
 
     <style name="DialogFontFucek" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/fucek</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Fucek</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Fucek</item>
-        <item name="android:textAppearance">@style/Text.Font.Fucek</item>
     </style>
 
     <style name="DialogFontSFProDisplay" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/sfprodisplay</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.SFProDisplay</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.SFProDisplay</item>
-        <item name="android:textAppearance">@style/Text.Font.SFProDisplay</item>
     </style>
 
     <style name="DialogFontDancingScript" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/dancingscript</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.DancingScript</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.DancingScript</item>
-        <item name="android:textAppearance">@style/Text.Font.DancingScript</item>
     </style>
 
     <style name="DialogFontCream" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/cream</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Cream</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Cream</item>
-        <item name="android:textAppearance">@style/Text.Font.Cream</item>
     </style>
 
     <style name="DialogFontOneUI" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/oneui</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.OneUI</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.OneUI</item>
-        <item name="android:textAppearance">@style/Text.Font.OneUI</item>
     </style>
 
     <style name="DialogFontInconsolata" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/incosolata</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Inconsolata</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Inconsolata</item>
-        <item name="android:textAppearance">@style/Text.Font.Inconsolata</item>
     </style>
 
     <style name="DialogFontEmilysCandy" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/emilyscandy</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.EmilysCandy</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.EmilysCandy</item>
-        <item name="android:textAppearance">@style/Text.Font.EmilysCandy</item>
     </style>
 
     <style name="DialogFontSummerDream" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/summerdream</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.SummerDream</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.SummerDream</item>
-        <item name="android:textAppearance">@style/Text.Font.SummerDream</item>
     </style>
 
     <style name="DialogFontRine" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/rine</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Rine</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Rine</item>
-        <item name="android:textAppearance">@style/Text.Font.Rine</item>
     </style>
 
     <style name="DialogFontEvolve" parent="@style/AppThemeAlertDialog">
         <item name="android:fontFamily">@font/evolvesans</item>
-        <item name="android:textAppearanceMedium">@style/Text.Font.Evolve</item>
-        <item name="android:textAppearanceSmall">@style/Text.Font.Evolve</item>
-        <item name="android:textAppearance">@style/Text.Font.Evolve</item>
     </style>
 
     <style name="ThemeOverlay.App.TrueBlack.DialogFix">

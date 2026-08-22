@@ -18,14 +18,14 @@
             android:id="@+id/log_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="?attr/textAppearanceBodySmall" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/log_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/padding_spacing_dp8"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="?attr/textAppearanceBodySmall" />
 
     </LinearLayout>
 

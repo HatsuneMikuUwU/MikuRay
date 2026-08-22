@@ -68,25 +68,21 @@
                         android:layout_height="wrap_content">
                         <TextClock
                             android:textSize="56.0sp"
-                            android:typeface="monospace"
                             android:textColor="@android:color/white"
                             android:gravity="center"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="-12.0dip"
-                            android:fontFamily="sans-serif"
                             android:format12Hour="hh"
                             android:format24Hour="kk"
                             android:fontFeatureSettings="tnum, cv03, cv04" />
                         <TextClock
                             android:textSize="56.0sp"
-                            android:typeface="monospace"
                             android:textColor="@android:color/white"
                             android:gravity="center"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-12.0dip"
-                            android:fontFamily="sans-serif"
                             android:format12Hour="mm"
                             android:format24Hour="mm"
                             android:fontFeatureSettings="tnum, cv03, cv04" />

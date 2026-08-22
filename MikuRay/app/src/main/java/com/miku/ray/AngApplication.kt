@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Build
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.miku.ray.AppConfig
@@ -54,7 +55,11 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         SettingsManager.setNightMode()
     }
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+    /**
+     * Applies all activity-level themes before AppCompat/material widgets inflate.
+     * Applying a textAppearance after setContentView is too late for many widgets.
+     */
+    fun applyActivityTheme(activity: Activity) {
         ThemeManager.applyTheme(activity)
 
         val useCustomFont = MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
@@ -72,6 +77,17 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         val isTrueBlack = ThemeManager.isDarkMode(activity) && MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
         if (isTrueBlack) {
             activity.theme.applyStyle(R.style.ThemeOverlay_App_TrueBlack_DialogFix, true)
+        }
+    }
+
+    override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
+        applyActivityTheme(activity)
+    }
+
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        // Fallback for pre-Q devices, where onActivityPreCreated is not dispatched.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            applyActivityTheme(activity)
         }
     }
 
