@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import com.miku.ray.util.showDeleteConfirmDialog
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig.BUILTIN_OUTBOUND_TAGS
 import com.miku.ray.AppConfig.TAG_PROXY
 import com.miku.ray.R
@@ -44,8 +43,7 @@ class RoutingEditActivity : BaseActivity() {
         binding.editScrollContent.applyEdgeToEdgeListInsets()
 
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.routing_settings_rule_title), subtitle = getString(R.string.subtitle_routing_edit))
+        setupToolbar(binding.toolbar, showHomeAsUp = true, title = getString(R.string.routing_settings_rule_title), subtitle = getString(R.string.subtitle_routing_edit))
 
         setupOutboundTagInput()
         setupProcessPicker()
