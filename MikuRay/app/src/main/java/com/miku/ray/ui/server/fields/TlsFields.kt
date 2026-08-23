@@ -1,6 +1,5 @@
 package com.miku.ray.ui.server.fields
 
-import android.app.Activity
 import android.text.TextUtils
 import android.view.View
 import android.widget.AutoCompleteTextView
@@ -12,38 +11,38 @@ import com.miku.ray.R
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.util.Utils
 
-class TlsFields(activity: Activity) {
+class TlsFields(view: View) {
 
-    private val streamSecuritys: Array<out String> = activity.resources.getStringArray(R.array.streamsecurityxs)
-    private val allowinsecures: Array<out String> = activity.resources.getStringArray(R.array.allowinsecures)
-    private val uTlsItems: Array<out String> = activity.resources.getStringArray(R.array.streamsecurity_utls)
-    private val alpns: Array<out String> = activity.resources.getStringArray(R.array.streamsecurity_alpn)
+    private val streamSecuritys: Array<out String> = view.resources.getStringArray(R.array.streamsecurityxs)
+    private val allowinsecures: Array<out String> = view.resources.getStringArray(R.array.allowinsecures)
+    private val uTlsItems: Array<out String> = view.resources.getStringArray(R.array.streamsecurity_utls)
+    private val alpns: Array<out String> = view.resources.getStringArray(R.array.streamsecurity_alpn)
 
-    private val spStreamSecurity: AutoCompleteTextView? = activity.findViewById(R.id.sp_stream_security)
-    private val spAllowInsecure: AutoCompleteTextView? = activity.findViewById(R.id.sp_allow_insecure)
-    private val spStreamFingerprint: AutoCompleteTextView? = activity.findViewById(R.id.sp_stream_fingerprint)
-    private val spStreamAlpn: AutoCompleteTextView? = activity.findViewById(R.id.sp_stream_alpn)
-    private val etSni: EditText? = activity.findViewById(R.id.et_sni)
-    private val etPublicKey: EditText? = activity.findViewById(R.id.et_public_key)
-    private val etShortId: EditText? = activity.findViewById(R.id.et_short_id)
-    private val etSpiderX: EditText? = activity.findViewById(R.id.et_spider_x)
-    private val etMldsa65Verify: EditText? = activity.findViewById(R.id.et_mldsa65_verify)
-    private val etEchConfigList: EditText? = activity.findViewById(R.id.et_ech_config_list)
-    private val etVerifyPeerCertByName: EditText? = activity.findViewById(R.id.et_verify_peer_cert_by_name)
-    private val etPinnedCa256: EditText? = activity.findViewById(R.id.et_pinned_ca256)
-    private val btnPinnedCa256Action: Button? = activity.findViewById(R.id.btn_pinned_ca256_action)
+    private val spStreamSecurity: AutoCompleteTextView? = view.findViewById(R.id.sp_stream_security)
+    private val spAllowInsecure: AutoCompleteTextView? = view.findViewById(R.id.sp_allow_insecure)
+    private val spStreamFingerprint: AutoCompleteTextView? = view.findViewById(R.id.sp_stream_fingerprint)
+    private val spStreamAlpn: AutoCompleteTextView? = view.findViewById(R.id.sp_stream_alpn)
+    private val etSni: EditText? = view.findViewById(R.id.et_sni)
+    private val etPublicKey: EditText? = view.findViewById(R.id.et_public_key)
+    private val etShortId: EditText? = view.findViewById(R.id.et_short_id)
+    private val etSpiderX: EditText? = view.findViewById(R.id.et_spider_x)
+    private val etMldsa65Verify: EditText? = view.findViewById(R.id.et_mldsa65_verify)
+    private val etEchConfigList: EditText? = view.findViewById(R.id.et_ech_config_list)
+    private val etVerifyPeerCertByName: EditText? = view.findViewById(R.id.et_verify_peer_cert_by_name)
+    private val etPinnedCa256: EditText? = view.findViewById(R.id.et_pinned_ca256)
+    private val btnPinnedCa256Action: Button? = view.findViewById(R.id.btn_pinned_ca256_action)
 
-    private val containerAllowInsecure: View? = activity.findViewById(R.id.lay_allow_insecure)
-    private val containerSni: View? = activity.findViewById(R.id.lay_sni)
-    private val containerFingerprint: View? = activity.findViewById(R.id.lay_stream_fingerprint)
-    private val containerAlpn: View? = activity.findViewById(R.id.lay_stream_alpn)
-    private val containerPublicKey: View? = activity.findViewById(R.id.lay_public_key)
-    private val containerShortId: View? = activity.findViewById(R.id.lay_short_id)
-    private val containerSpiderX: View? = activity.findViewById(R.id.lay_spider_x)
-    private val containerMldsa65Verify: View? = activity.findViewById(R.id.lay_mldsa65_verify)
-    private val containerEchConfigList: View? = activity.findViewById(R.id.lay_ech_config_list)
-    private val containerVerifyPeerCertByName: View? = activity.findViewById(R.id.lay_verify_peer_cert_by_name)
-    private val containerPinnedCa256: View? = activity.findViewById(R.id.lay_pinned_ca256)
+    private val containerAllowInsecure: View? = view.findViewById(R.id.lay_allow_insecure)
+    private val containerSni: View? = view.findViewById(R.id.lay_sni)
+    private val containerFingerprint: View? = view.findViewById(R.id.lay_stream_fingerprint)
+    private val containerAlpn: View? = view.findViewById(R.id.lay_stream_alpn)
+    private val containerPublicKey: View? = view.findViewById(R.id.lay_public_key)
+    private val containerShortId: View? = view.findViewById(R.id.lay_short_id)
+    private val containerSpiderX: View? = view.findViewById(R.id.lay_spider_x)
+    private val containerMldsa65Verify: View? = view.findViewById(R.id.lay_mldsa65_verify)
+    private val containerEchConfigList: View? = view.findViewById(R.id.lay_ech_config_list)
+    private val containerVerifyPeerCertByName: View? = view.findViewById(R.id.lay_verify_peer_cert_by_name)
+    private val containerPinnedCa256: View? = view.findViewById(R.id.lay_pinned_ca256)
 
     val selectedSecurityText: String get() = spStreamSecurity?.text?.toString().orEmpty()
     val pinnedCa256Text: String? get() = etPinnedCa256?.text?.toString()

@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
 import com.miku.ray.R
+import com.miku.ray.databinding.ActivityServerTrojanBinding
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
@@ -31,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ServerTrojanActivity : BaseActivity() {
+    private val binding by lazy { ActivityServerTrojanBinding.inflate(layoutInflater) }
 
     private val editGuid by lazy { intent.getStringExtra("guid").orEmpty() }
     private val isRunning by lazy {
@@ -43,8 +43,6 @@ class ServerTrojanActivity : BaseActivity() {
     }
     private val subscriptionId by lazy { intent.getStringExtra("subscriptionId") }
 
-    private val et_id: EditText by lazy { findViewById(R.id.et_id) }
-
     private lateinit var addressPortFields: AddressPortFields
     private lateinit var transportFields: TransportFields
     private lateinit var tlsFields: TlsFields
@@ -54,16 +52,15 @@ class ServerTrojanActivity : BaseActivity() {
 
         val config = MmkvManager.decodeServerConfig(editGuid)
 
-        setContentView(R.layout.activity_server_trojan)
+        setContentView(binding.root)
 
-        findViewById<androidx.core.widget.NestedScrollView>(R.id.server_scroll_content).applyEdgeToEdgeListInsets()
+        binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
-        addressPortFields = AddressPortFields(this)
-        transportFields = TransportFields(this)
-        tlsFields = TlsFields(this)
+        addressPortFields = AddressPortFields(binding.root)
+        transportFields = TransportFields(binding.root)
+        tlsFields = TlsFields(binding.root)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
+        setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         transportFields.setOnNetworkChanged { network -> transportFields.updateForNetwork(network, config) }
         tlsFields.setOnSecurityChanged { security -> tlsFields.updateForSecurity(security) }
@@ -78,7 +75,7 @@ class ServerTrojanActivity : BaseActivity() {
 
     private fun bindingServer(config: ProfileItem): Boolean {
         addressPortFields.bind(config)
-        et_id.text = Utils.getEditable(config.password.orEmpty())
+        binding.etId.text = Utils.getEditable(config.password.orEmpty())
 
         tlsFields.bind(config)
         transportFields.bind(config)
@@ -87,7 +84,7 @@ class ServerTrojanActivity : BaseActivity() {
 
     private fun clearServer(): Boolean {
         addressPortFields.clear()
-        et_id.text = null
+        binding.etId.text = null
 
         transportFields.clear()
         tlsFields.clear()
@@ -109,7 +106,7 @@ class ServerTrojanActivity : BaseActivity() {
         }
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
-        if (TextUtils.isEmpty(et_id.text.toString())) {
+        if (TextUtils.isEmpty(binding.etId.text.toString())) {
             snackbarError(getString(R.string.server_lab_id3), title = getString(R.string.title_alerter_error))
             return false
         }
@@ -143,7 +140,7 @@ class ServerTrojanActivity : BaseActivity() {
 
     private fun saveCommon(config: ProfileItem) {
         addressPortFields.save(config)
-        config.password = et_id.text.toString().trim()
+        config.password = binding.etId.text.toString().trim()
     }
 
     private fun fetchPinnedCA256ForCurrentConfig() {

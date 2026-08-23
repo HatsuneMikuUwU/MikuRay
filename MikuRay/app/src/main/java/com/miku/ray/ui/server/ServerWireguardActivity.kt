@@ -5,12 +5,11 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_MTU
 import com.miku.ray.R
+import com.miku.ray.databinding.ActivityServerWireguardBinding
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
@@ -25,6 +24,7 @@ import com.miku.ray.util.Utils
 import com.miku.ray.util.showDeleteConfirmDialog
 
 class ServerWireguardActivity : BaseActivity() {
+    private val binding by lazy { ActivityServerWireguardBinding.inflate(layoutInflater) }
 
     private val editGuid by lazy { intent.getStringExtra("guid").orEmpty() }
     private val isRunning by lazy {
@@ -37,14 +37,6 @@ class ServerWireguardActivity : BaseActivity() {
     }
     private val subscriptionId by lazy { intent.getStringExtra("subscriptionId") }
 
-    private val et_id: EditText by lazy { findViewById(R.id.et_id) }
-    private val et_public_key: EditText? by lazy { findViewById(R.id.et_public_key) }
-    private val et_preshared_key: EditText? by lazy { findViewById(R.id.et_preshared_key) }
-    private val et_reserved1: EditText? by lazy { findViewById(R.id.et_reserved1) }
-    private val et_local_address: EditText? by lazy { findViewById(R.id.et_local_address) }
-    private val et_local_mtu: EditText? by lazy { findViewById(R.id.et_local_mtu) }
-    private val et_fm: EditText? by lazy { findViewById(R.id.et_fm) }
-
     private lateinit var addressPortFields: AddressPortFields
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,14 +44,13 @@ class ServerWireguardActivity : BaseActivity() {
 
         val config = MmkvManager.decodeServerConfig(editGuid)
 
-        setContentView(R.layout.activity_server_wireguard)
+        setContentView(binding.root)
 
-        findViewById<androidx.core.widget.NestedScrollView>(R.id.server_scroll_content).applyEdgeToEdgeListInsets()
+        binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
-        addressPortFields = AddressPortFields(this)
+        addressPortFields = AddressPortFields(binding.root)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
+        setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         if (config != null) {
             bindingServer(config)
@@ -71,25 +62,25 @@ class ServerWireguardActivity : BaseActivity() {
     private fun bindingServer(config: ProfileItem): Boolean {
         addressPortFields.bind(config)
 
-        et_id.text = Utils.getEditable(config.secretKey.orEmpty())
-        et_public_key?.text = Utils.getEditable(config.publicKey.orEmpty())
-        et_preshared_key?.visibility = View.VISIBLE
-        et_preshared_key?.text = Utils.getEditable(config.preSharedKey.orEmpty())
-        et_reserved1?.text = Utils.getEditable(config.reserved ?: "0,0,0")
-        et_local_address?.text = Utils.getEditable(config.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4)
-        et_local_mtu?.text = Utils.getEditable(config.mtu?.toString() ?: WIREGUARD_LOCAL_MTU)
-        et_fm?.text = Utils.getEditable(config.finalMask)
+        binding.etId.text = Utils.getEditable(config.secretKey.orEmpty())
+        binding.etPublicKey.text = Utils.getEditable(config.publicKey.orEmpty())
+        binding.etPresharedKey.visibility = View.VISIBLE
+        binding.etPresharedKey.text = Utils.getEditable(config.preSharedKey.orEmpty())
+        binding.etReserved1.text = Utils.getEditable(config.reserved ?: "0,0,0")
+        binding.etLocalAddress.text = Utils.getEditable(config.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4)
+        binding.etLocalMtu.text = Utils.getEditable(config.mtu?.toString() ?: WIREGUARD_LOCAL_MTU)
+        binding.etFm.text = Utils.getEditable(config.finalMask)
         return true
     }
 
     private fun clearServer(): Boolean {
         addressPortFields.clear()
-        et_id.text = null
-        et_public_key?.text = null
-        et_reserved1?.text = Utils.getEditable("0,0,0")
-        et_local_address?.text = Utils.getEditable(WIREGUARD_LOCAL_ADDRESS_V4)
-        et_local_mtu?.text = Utils.getEditable(WIREGUARD_LOCAL_MTU)
-        et_fm?.text = null
+        binding.etId.text = null
+        binding.etPublicKey.text = null
+        binding.etReserved1.text = Utils.getEditable("0,0,0")
+        binding.etLocalAddress.text = Utils.getEditable(WIREGUARD_LOCAL_ADDRESS_V4)
+        binding.etLocalMtu.text = Utils.getEditable(WIREGUARD_LOCAL_MTU)
+        binding.etFm.text = null
         return true
     }
 
@@ -108,7 +99,7 @@ class ServerWireguardActivity : BaseActivity() {
         }
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
-        if (TextUtils.isEmpty(et_id.text.toString())) {
+        if (TextUtils.isEmpty(binding.etId.text.toString())) {
             snackbarError(getString(R.string.server_lab_id), title = getString(R.string.title_alerter_error))
             return false
         }
@@ -129,13 +120,13 @@ class ServerWireguardActivity : BaseActivity() {
     private fun saveCommon(config: ProfileItem) {
         addressPortFields.save(config)
 
-        config.secretKey = et_id.text.toString().trim()
-        config.publicKey = et_public_key?.text.toString().trim()
-        config.preSharedKey = et_preshared_key?.text.toString().trim()
-        config.reserved = et_reserved1?.text.toString().trim()
-        config.localAddress = et_local_address?.text.toString().trim()
-        config.mtu = Utils.parseInt(et_local_mtu?.text.toString())
-        config.finalMask = et_fm?.text?.toString()?.trim()?.nullIfBlank()
+        config.secretKey = binding.etId.text.toString().trim()
+        config.publicKey = binding.etPublicKey.text.toString().trim()
+        config.preSharedKey = binding.etPresharedKey.text.toString().trim()
+        config.reserved = binding.etReserved1.text.toString().trim()
+        config.localAddress = binding.etLocalAddress.text.toString().trim()
+        config.mtu = Utils.parseInt(binding.etLocalMtu.text.toString())
+        config.finalMask = binding.etFm.text?.toString()?.trim()?.nullIfBlank()
     }
 
     private fun deleteServer(): Boolean {

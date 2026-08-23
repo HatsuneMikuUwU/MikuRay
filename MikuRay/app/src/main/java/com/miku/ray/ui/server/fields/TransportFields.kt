@@ -1,6 +1,5 @@
 package com.miku.ray.ui.server.fields
 
-import android.app.Activity
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -12,30 +11,30 @@ import com.miku.ray.enums.NetworkType
 import com.miku.ray.extension.nullIfBlank
 import com.miku.ray.util.Utils
 
-class TransportFields(private val activity: Activity) {
+class TransportFields(private val view: View) {
 
-    private val networks: Array<out String> = activity.resources.getStringArray(R.array.networks)
-    private val tcpTypes: Array<out String> = activity.resources.getStringArray(R.array.header_type_tcp)
-    private val kcpAndQuicTypes: Array<out String> = activity.resources.getStringArray(R.array.header_type_kcp_and_quic)
-    private val grpcModes: Array<out String> = activity.resources.getStringArray(R.array.mode_type_grpc)
-    private val xhttpMode: Array<out String> = activity.resources.getStringArray(R.array.xhttp_mode)
-    private val browserDialerModes: Array<out String> = activity.resources.getStringArray(R.array.browser_dialer_mode)
+    private val networks: Array<out String> = view.resources.getStringArray(R.array.networks)
+    private val tcpTypes: Array<out String> = view.resources.getStringArray(R.array.header_type_tcp)
+    private val kcpAndQuicTypes: Array<out String> = view.resources.getStringArray(R.array.header_type_kcp_and_quic)
+    private val grpcModes: Array<out String> = view.resources.getStringArray(R.array.mode_type_grpc)
+    private val xhttpMode: Array<out String> = view.resources.getStringArray(R.array.xhttp_mode)
+    private val browserDialerModes: Array<out String> = view.resources.getStringArray(R.array.browser_dialer_mode)
 
-    private val spNetwork: AutoCompleteTextView? = activity.findViewById(R.id.sp_network)
-    private val spHeaderType: AutoCompleteTextView? = activity.findViewById(R.id.sp_header_type)
-    private val tilHeaderType: TextInputLayout? = activity.findViewById(R.id.til_header_type)
-    private val tilRequestHost: TextInputLayout? = activity.findViewById(R.id.til_request_host)
-    private val tilPath: TextInputLayout? = activity.findViewById(R.id.til_path)
-    private val etRequestHost: EditText? = activity.findViewById(R.id.et_request_host)
-    private val etPath: EditText? = activity.findViewById(R.id.et_path)
-    private val layoutKcp: View? = activity.findViewById(R.id.layout_kcp)
-    private val etKcpMtu: EditText? = activity.findViewById(R.id.et_kcp_mtu)
-    private val etKcpTti: EditText? = activity.findViewById(R.id.et_kcp_tti)
-    private val layoutExtra: View? = activity.findViewById(R.id.layout_extra)
-    private val etExtra: EditText? = activity.findViewById(R.id.et_extra)
-    private val etFm: EditText? = activity.findViewById(R.id.et_fm)
-    private val layoutBrowserDialer: TextInputLayout? = activity.findViewById(R.id.layout_browser_dialer)
-    private val spBrowserDialerMode: AutoCompleteTextView? = activity.findViewById(R.id.sp_browser_dialer_mode)
+    private val spNetwork: AutoCompleteTextView? = view.findViewById(R.id.sp_network)
+    private val spHeaderType: AutoCompleteTextView? = view.findViewById(R.id.sp_header_type)
+    private val tilHeaderType: TextInputLayout? = view.findViewById(R.id.til_header_type)
+    private val tilRequestHost: TextInputLayout? = view.findViewById(R.id.til_request_host)
+    private val tilPath: TextInputLayout? = view.findViewById(R.id.til_path)
+    private val etRequestHost: EditText? = view.findViewById(R.id.et_request_host)
+    private val etPath: EditText? = view.findViewById(R.id.et_path)
+    private val layoutKcp: View? = view.findViewById(R.id.layout_kcp)
+    private val etKcpMtu: EditText? = view.findViewById(R.id.et_kcp_mtu)
+    private val etKcpTti: EditText? = view.findViewById(R.id.et_kcp_tti)
+    private val layoutExtra: View? = view.findViewById(R.id.layout_extra)
+    private val etExtra: EditText? = view.findViewById(R.id.et_extra)
+    private val etFm: EditText? = view.findViewById(R.id.et_fm)
+    private val layoutBrowserDialer: TextInputLayout? = view.findViewById(R.id.layout_browser_dialer)
+    private val spBrowserDialerMode: AutoCompleteTextView? = view.findViewById(R.id.sp_browser_dialer_mode)
 
     val extraText: String? get() = etExtra?.text?.toString()
     val finalMaskText: String? get() = etFm?.text?.toString()
@@ -58,13 +57,13 @@ class TransportFields(private val activity: Activity) {
         val types = transportTypes(network)
         spHeaderType?.isEnabled = types.size > 1
 
-        val adapter = ArrayAdapter(activity, android.R.layout.simple_dropdown_item_1line, types)
+        val adapter = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, types)
         spHeaderType?.setAdapter(adapter)
 
         tilHeaderType?.hint = when (network) {
-            NetworkType.GRPC.type -> activity.getString(R.string.server_lab_mode_type)
-            NetworkType.XHTTP.type -> activity.getString(R.string.server_lab_xhttp_mode)
-            else -> activity.getString(R.string.server_lab_head_type)
+            NetworkType.GRPC.type -> view.context.getString(R.string.server_lab_mode_type)
+            NetworkType.XHTTP.type -> view.context.getString(R.string.server_lab_xhttp_mode)
+            else -> view.context.getString(R.string.server_lab_head_type)
         }
 
         val headerTypeStr = when (network) {
@@ -91,7 +90,7 @@ class TransportFields(private val activity: Activity) {
             }.orEmpty()
         )
 
-        tilRequestHost?.hint = activity.getString(
+        tilRequestHost?.hint = view.context.getString(
             when (network) {
                 NetworkType.TCP.type -> R.string.server_lab_request_host_http
                 NetworkType.WS.type -> R.string.server_lab_request_host_ws
@@ -103,7 +102,7 @@ class TransportFields(private val activity: Activity) {
             }
         )
 
-        tilPath?.hint = activity.getString(
+        tilPath?.hint = view.context.getString(
             when (network) {
                 NetworkType.KCP.type -> R.string.server_lab_path_kcp
                 NetworkType.WS.type -> R.string.server_lab_path_ws

@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
 import com.miku.ray.R
+import com.miku.ray.databinding.ActivityServerHysteria2Binding
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
@@ -28,6 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ServerHysteria2Activity : BaseActivity() {
+    private val binding by lazy { ActivityServerHysteria2Binding.inflate(layoutInflater) }
 
     private val editGuid by lazy { intent.getStringExtra("guid").orEmpty() }
     private val isRunning by lazy {
@@ -40,13 +40,6 @@ class ServerHysteria2Activity : BaseActivity() {
     }
     private val subscriptionId by lazy { intent.getStringExtra("subscriptionId") }
 
-    private val et_id: EditText by lazy { findViewById(R.id.et_id) }
-    private val et_obfs_password: EditText? by lazy { findViewById(R.id.et_obfs_password) }
-    private val et_port_hop: EditText? by lazy { findViewById(R.id.et_port_hop) }
-    private val et_port_hop_interval: EditText? by lazy { findViewById(R.id.et_port_hop_interval) }
-    private val et_bandwidth_down: EditText? by lazy { findViewById(R.id.et_bandwidth_down) }
-    private val et_bandwidth_up: EditText? by lazy { findViewById(R.id.et_bandwidth_up) }
-
     private lateinit var addressPortFields: AddressPortFields
     private lateinit var tlsFields: TlsFields
 
@@ -55,15 +48,14 @@ class ServerHysteria2Activity : BaseActivity() {
 
         val config = MmkvManager.decodeServerConfig(editGuid)
 
-        setContentView(R.layout.activity_server_hysteria2)
+        setContentView(binding.root)
 
-        findViewById<androidx.core.widget.NestedScrollView>(R.id.server_scroll_content).applyEdgeToEdgeListInsets()
+        binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
-        addressPortFields = AddressPortFields(this)
-        tlsFields = TlsFields(this)
+        addressPortFields = AddressPortFields(binding.root)
+        tlsFields = TlsFields(binding.root)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
+        setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         tlsFields.setOnSecurityChanged { security -> tlsFields.updateForSecurity(security) }
         tlsFields.setOnFetchCertClick { fetchPinnedCA256ForCurrentConfig() }
@@ -77,13 +69,13 @@ class ServerHysteria2Activity : BaseActivity() {
 
     private fun bindingServer(config: ProfileItem): Boolean {
         addressPortFields.bind(config)
-        et_id.text = Utils.getEditable(config.password.orEmpty())
+        binding.etId.text = Utils.getEditable(config.password.orEmpty())
 
-        et_obfs_password?.text = Utils.getEditable(config.obfsPassword)
-        et_port_hop?.text = Utils.getEditable(config.portHopping)
-        et_port_hop_interval?.text = Utils.getEditable(config.portHoppingInterval)
-        et_bandwidth_down?.text = Utils.getEditable(config.bandwidthDown)
-        et_bandwidth_up?.text = Utils.getEditable(config.bandwidthUp)
+        binding.etObfsPassword.text = Utils.getEditable(config.obfsPassword)
+        binding.etPortHop.text = Utils.getEditable(config.portHopping)
+        binding.etPortHopInterval.text = Utils.getEditable(config.portHoppingInterval)
+        binding.etBandwidthDown.text = Utils.getEditable(config.bandwidthDown)
+        binding.etBandwidthUp.text = Utils.getEditable(config.bandwidthUp)
 
         tlsFields.bind(config)
         return true
@@ -91,7 +83,7 @@ class ServerHysteria2Activity : BaseActivity() {
 
     private fun clearServer(): Boolean {
         addressPortFields.clear()
-        et_id.text = null
+        binding.etId.text = null
 
         tlsFields.clear()
         return true
@@ -108,7 +100,7 @@ class ServerHysteria2Activity : BaseActivity() {
         }
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
-        if (TextUtils.isEmpty(et_id.text.toString())) {
+        if (TextUtils.isEmpty(binding.etId.text.toString())) {
             snackbarError(getString(R.string.server_lab_id3), title = getString(R.string.title_alerter_error))
             return false
         }
@@ -129,13 +121,13 @@ class ServerHysteria2Activity : BaseActivity() {
 
     private fun saveCommon(config: ProfileItem) {
         addressPortFields.save(config)
-        config.password = et_id.text.toString().trim()
+        config.password = binding.etId.text.toString().trim()
 
-        config.obfsPassword = et_obfs_password?.text?.toString()
-        config.portHopping = et_port_hop?.text?.toString()
-        config.portHoppingInterval = et_port_hop_interval?.text?.toString()?.trim()
-        config.bandwidthDown = et_bandwidth_down?.text?.toString()
-        config.bandwidthUp = et_bandwidth_up?.text?.toString()
+        config.obfsPassword = binding.etObfsPassword.text?.toString()
+        config.portHopping = binding.etPortHop.text?.toString()
+        config.portHoppingInterval = binding.etPortHopInterval.text?.toString()?.trim()
+        config.bandwidthDown = binding.etBandwidthDown.text?.toString()
+        config.bandwidthUp = binding.etBandwidthUp.text?.toString()
     }
 
     private fun fetchPinnedCA256ForCurrentConfig() {
