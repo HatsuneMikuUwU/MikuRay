@@ -356,12 +356,12 @@ object SettingsManager {
     }
 
     fun getDelayTestUrl(second: Boolean = false): String {
-        return if (second) {
-            AppConfig.DELAY_TEST_URL2
-        } else {
-            MmkvManager.decodeSettingsString(AppConfig.PREF_DELAY_TEST_URL)
-                ?: AppConfig.DELAY_TEST_URL
-        }
+        if (second) return AppConfig.DELAY_TEST_URL2
+
+        return MmkvManager.decodeSettingsString(AppConfig.PREF_DELAY_TEST_URL)
+            ?.trim()
+            ?.takeIf { it.isNotEmpty() }
+            ?: AppConfig.DELAY_TEST_URL
     }
 
     fun getRealPingConcurrency(): Int {

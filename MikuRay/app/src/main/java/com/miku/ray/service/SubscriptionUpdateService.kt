@@ -3,7 +3,10 @@ package com.miku.ray.service
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.Process
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.core.CoreNativeManager
@@ -15,7 +18,6 @@ import com.miku.ray.extension.serializable
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.util.LogUtil
-import com.miku.ray.util.MessageUtil
 import com.miku.ray.helper.NotificationHelper
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +26,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
-import java.util.Collections
 import java.util.concurrent.atomic.AtomicInteger
 
 class SubscriptionUpdateService : Service() {
@@ -34,9 +35,12 @@ class SubscriptionUpdateService : Service() {
 
     private val runningTasks = AtomicInteger(0)
 
-    private val activeWorkers = Collections.synchronizedList(mutableListOf<RealPingWorkerService>())
+    @Volatile
+    private var activeWorker: RealPingWorkerService? = null
 
-    private val updateSemaphore = Semaphore(1)
+    // Downloads may overlap, but native probe batches in this process may not.
+    private val updateSemaphore = Semaphore(2)
+    private val probeSemaphore = Semaphore(1)
 
     override fun onCreate() {
         super.onCreate()
@@ -47,13 +51,14 @@ class SubscriptionUpdateService : Service() {
 
     override fun onDestroy() {
         LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService is being destroyed")
-        val snapshot = ArrayList(activeWorkers)
-        snapshot.forEach { it.cancel() }
-        activeWorkers.clear()
+        activeWorker?.cancel()
+        activeWorker = null
         serviceJob.cancel()
         NotificationHelper.stopForeground(this)
         NotificationHelper.cancel(NotificationChannelType.SUBSCRIPTION_UPDATE, this)
         super.onDestroy()
+        // Auto-test cores share process-wide Xray state, so discard it after the run.
+        Handler(Looper.getMainLooper()).post { Process.killProcess(Process.myPid()) }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -61,7 +66,7 @@ class SubscriptionUpdateService : Service() {
             this,
             NotificationChannelType.SUBSCRIPTION_UPDATE,
             getString(R.string.title_pref_auto_update_subscription),
-            getString(R.string.app_name)
+            getString(R.string.subscription_update_background_start)
         )
         val message = intent?.serializable<SubscriptionUpdateMessage>("content")
         if (message == null) {
@@ -97,11 +102,7 @@ class SubscriptionUpdateService : Service() {
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "SubscriptionUpdateService update failed", e)
                 } finally {
-                    if (runningTasks.decrementAndGet() == 0 && activeWorkers.isEmpty()) {
-                        // Runs in a separate process from the UI, so the UI never
-                        // otherwise learns this batch finished (order/lastUpdated may
-                        // have changed) — notify it so group tabs can re-sync.
-                        MessageUtil.sendMsg2UI(this@SubscriptionUpdateService, AppConfig.MSG_SUB_UPDATE_FINISH, "")
+                    if (runningTasks.decrementAndGet() == 0) {
                         NotificationHelper.stopForeground(this@SubscriptionUpdateService)
                         stopSelf()
                     }
@@ -112,9 +113,7 @@ class SubscriptionUpdateService : Service() {
 
     private suspend fun updateSingle(subId: String, forcedUpdate: Boolean) {
         val subItem = MmkvManager.decodeSubscription(subId) ?: return
-        if (!subItem.enabled || subItem.url.isEmpty()) {
-            return
-        }
+        if (!subItem.enabled || subItem.url.isEmpty()) return
 
         val sub = SubscriptionCache(subId, subItem)
 
@@ -122,7 +121,7 @@ class SubscriptionUpdateService : Service() {
         showNotification(
             context = this,
             titleResId = R.string.title_pref_auto_update_subscription,
-            content = "Updating ${subItem.remarks}"
+            content = getString(R.string.subscription_update_updating, subItem.remarks)
         )
 
         if (forcedUpdate || MmkvManager.decodeSettingsBool(AppConfig.PREF_UPDATE_SUBSCRIPTION, false)) {
@@ -130,9 +129,13 @@ class SubscriptionUpdateService : Service() {
         }
 
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION, false)) {
-            testSubscriptionServers(sub)
+            val testCompleted = probeSemaphore.withPermit {
+                testSubscriptionServers(sub)
+            }
 
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)) {
+            if (testCompleted &&
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)
+            ) {
                 LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: removing invalid servers for ${subItem.remarks}")
                 showNotification(
                     context = this,
@@ -141,7 +144,9 @@ class SubscriptionUpdateService : Service() {
                 )
                 AngConfigManager.removeInvalidServer(subId)
             }
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)) {
+            if (testCompleted &&
+                MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
+            ) {
                 LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: sorting servers for ${subItem.remarks}")
                 showNotification(
                     context = this,
@@ -155,7 +160,7 @@ class SubscriptionUpdateService : Service() {
         LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: Finished ${subItem.remarks}")
     }
 
-    private suspend fun testSubscriptionServers(sub: SubscriptionCache) {
+    private suspend fun testSubscriptionServers(sub: SubscriptionCache): Boolean {
         val subId = sub.guid
         LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: starting test phase for ${sub.subscription.remarks}")
         showNotification(
@@ -165,36 +170,47 @@ class SubscriptionUpdateService : Service() {
         )
 
         val guids = MmkvManager.decodeServerList(subId)
-        if (guids.isNotEmpty()) {
-            val deferred = CompletableDeferred<Unit>()
-            lateinit var worker: RealPingWorkerService
-            worker = RealPingWorkerService(
-                context = this,
-                guids = guids,
-                onEvent = { event ->
-                    handleWorkerEvent(event, sub.subscription.remarks) {
-                        activeWorkers.remove(worker)
-                        deferred.complete(Unit)
-                    }
+        if (guids.isEmpty()) return true
+
+        val deferred = CompletableDeferred<Boolean>()
+        val worker = RealPingWorkerService(
+            context = this,
+            guids = guids,
+            onEvent = { event ->
+                handleWorkerEvent(event, sub.subscription.remarks) { completed ->
+                    deferred.complete(completed)
                 }
-            )
-            activeWorkers.add(worker)
+            },
+        )
+        activeWorker = worker
+        return try {
             worker.start()
-            deferred.await()
-            LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: test phase finished for ${sub.subscription.remarks}")
+            val completed = deferred.await()
+            LogUtil.i(
+                AppConfig.TAG,
+                "SubscriptionUpdateService: test phase finished for ${sub.subscription.remarks}",
+            )
+            completed
+        } finally {
+            activeWorker = null
         }
     }
 
-    private fun handleWorkerEvent(event: RealPingEvent, remarks: String, onWorkerDone: () -> Unit) {
+    private fun handleWorkerEvent(event: RealPingEvent, remarks: String, onWorkerDone: (Boolean) -> Unit) {
         when (event) {
             is RealPingEvent.Progress -> {
-                val text = "${event.text} in $remarks"
+                val progressText = "${event.completed} / ${event.total}"
+                val notificationText = getString(
+                    R.string.subscription_update_progress,
+                    progressText,
+                    remarks,
+                )
                 showNotification(
                     context = this,
                     titleResId = R.string.title_real_ping_all_server,
-                    content = text
+                    content = notificationText
                 )
-                LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: $text")
+                LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: $notificationText")
             }
 
             is RealPingEvent.Result -> {
@@ -202,7 +218,7 @@ class SubscriptionUpdateService : Service() {
             }
 
             is RealPingEvent.Finish -> {
-                onWorkerDone()
+                onWorkerDone(event.completed == event.total)
             }
         }
     }

@@ -334,6 +334,9 @@
     <string name="title_pref_promotion">Promotion</string>
 
     <string name="title_pref_auto_update_subscription">Automatic update subscriptions</string>
+    <string name="subscription_update_background_start">Updating subscriptions in background</string>
+    <string name="subscription_update_updating">Updating subscription: %s</string>
+    <string name="subscription_update_progress">Real delay: %1$s — %2$s</string>
     <string name="summary_pref_auto_update_subscription">Update your subscriptions automatically at set intervals in the background. Depending on the device, this feature may not always work</string>
     <string name="title_pref_auto_update_interval">Auto Update Interval</string>
     <string name="title_pref_auto_update_interval_tip">Minutes, Min value 15</string>
@@ -471,6 +474,8 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="connection_connected">Connected. Tap to test</string>
     <string name="connection_not_connected">Disconnected</string>
     <string name="connection_runing_task_left">Running tests: %s</string>
+    <string name="connection_runing_tcping_task_left">TCPing: %s</string>
+    <string name="connection_runing_real_delay_task_left">Real delay: %s</string>
     <string name="action_minimize">Minimize</string>
     <string name="test_progress_counter">%1$d / %2$d</string>
     <string name="test_progress_ping_ms">%dms</string>

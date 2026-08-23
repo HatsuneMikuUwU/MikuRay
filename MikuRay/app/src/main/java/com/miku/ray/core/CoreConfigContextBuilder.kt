@@ -116,13 +116,21 @@ object CoreConfigContextBuilder {
         return resolvedOutbounds
     }
 
-    private fun resolvePolicyGroupProfiles(config: ProfileItem): List<ProfileItem> {
+    internal fun resolvePolicyGroupGuids(config: ProfileItem): List<String> =
+        resolvePolicyGroupMembers(config)?.map { it.first }?.distinct().orEmpty()
+
+    private fun resolvePolicyGroupProfiles(config: ProfileItem): List<ProfileItem> =
+        resolvePolicyGroupMembers(config)?.map { it.second } ?: listOf(config)
+
+    private fun resolvePolicyGroupMembers(config: ProfileItem): List<Pair<String, ProfileItem>>? {
         try {
             val serverList = MmkvManager.decodeAllServerList()
             return serverList
                 .asSequence()
-                .mapNotNull { id -> MmkvManager.decodeServerConfig(id) }
-                .filter { profile ->
+                .mapNotNull { guid ->
+                    MmkvManager.decodeServerConfig(guid)?.let { profile -> guid to profile }
+                }
+                .filter { (_, profile) ->
                     val subscriptionId = config.policyGroupSubscriptionId
                     if (subscriptionId.isNullOrBlank()) {
                         true
@@ -130,7 +138,7 @@ object CoreConfigContextBuilder {
                         profile.subscriptionId == subscriptionId
                     }
                 }
-                .filter { profile ->
+                .filter { (_, profile) ->
                     val filter = config.policyGroupFilter
                     if (filter.isNullOrBlank()) {
                         true
@@ -142,13 +150,15 @@ object CoreConfigContextBuilder {
                         }
                     }
                 }
-                .filter { it.server.isNotNullEmpty() }
-                .filter { Utils.isPureIpAddress(it.server!!) || Utils.isValidUrl(it.server!!) }
-                .filter { !it.configType.isComplexType() }
+                .filter { (_, profile) -> profile.server.isNotNullEmpty() }
+                .filter { (_, profile) ->
+                    Utils.isPureIpAddress(profile.server!!) || Utils.isValidUrl(profile.server!!)
+                }
+                .filter { (_, profile) -> !profile.configType.isComplexType() }
                 .toList()
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to resolve policy group profiles for '${config.remarks}'", e)
-            return listOf(config)
+            return null
         }
     }
 

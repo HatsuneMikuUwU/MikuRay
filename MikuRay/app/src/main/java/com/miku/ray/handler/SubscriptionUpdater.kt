@@ -12,7 +12,10 @@ import androidx.work.multiprocess.RemoteWorkManager
 import androidx.work.workDataOf
 import com.miku.ray.AngApplication
 import com.miku.ray.AppConfig
+import com.miku.ray.R
 import com.miku.ray.dto.SubscriptionUpdateMessage
+import com.miku.ray.enums.NotificationChannelType
+import com.miku.ray.helper.NotificationHelper
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import java.util.concurrent.TimeUnit
@@ -144,6 +147,16 @@ object SubscriptionUpdater {
                 LogUtil.w(AppConfig.TAG, "SubscriptionUpdater: missing subId in worker input")
                 return Result.success()
             }
+
+            val subItem = MmkvManager.decodeSubscription(subId)
+            NotificationHelper.notify(
+                channelType = NotificationChannelType.SUBSCRIPTION_UPDATE,
+                context = applicationContext,
+                title = applicationContext.getString(R.string.title_pref_auto_update_subscription),
+                content = applicationContext.getString(
+                    R.string.subscription_update_background_start,
+                ) + if (subItem?.remarks.isNullOrBlank()) "" else ": ${subItem?.remarks}",
+            )
 
             updateLastUpdatedAndReschedule(applicationContext, subId)
 

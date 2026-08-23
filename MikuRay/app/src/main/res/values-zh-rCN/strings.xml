@@ -311,6 +311,9 @@
     <string name="title_pref_promotion">推广</string>
 
     <string name="title_pref_auto_update_subscription">自动更新订阅</string>
+    <string name="subscription_update_background_start">正在后台更新订阅</string>
+    <string name="subscription_update_updating">正在更新订阅：%s</string>
+    <string name="subscription_update_progress">真实延迟：%1$s — %2$s</string>
     <string name="summary_pref_auto_update_subscription">在后台按一定时间间隔自动更新您的订阅。受设备影响，此功能不一定总是有效</string>
     <string name="title_pref_auto_update_interval">自动更新间隔</string>
     <string name="title_pref_auto_update_interval_tip">分钟，最小值 15</string>
@@ -444,6 +447,8 @@
     <string name="connection_connected">已连接。点击测试</string>
     <string name="connection_not_connected">未连接</string>
     <string name="connection_runing_task_left">运行测试：%s</string>
+    <string name="connection_runing_tcping_task_left">TCPing：%s</string>
+    <string name="connection_runing_real_delay_task_left">真实延迟：%s</string>
     <string name="action_minimize">最小化</string>
     <string name="test_progress_counter">%1$d / %2$d</string>
     <string name="test_progress_ping_ms">%dms</string>

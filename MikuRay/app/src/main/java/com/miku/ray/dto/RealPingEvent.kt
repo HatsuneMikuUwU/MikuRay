@@ -2,16 +2,16 @@ package com.miku.ray.dto
 
 sealed class RealPingEvent {
 
-    data class Progress(
-        val text: String,
-        val guid: String = "",
-        val delayMillis: Long = -1L,
-        val current: Int = 0,
-        val total: Int = 0
-    ) : RealPingEvent()
+    /** Periodic progress update while the batch is still running. */
+    data class Progress(val completed: Int, val total: Int) : RealPingEvent()
 
+    /** A single server result is available. */
     data class Result(val guid: String, val delayMillis: Long) : RealPingEvent()
 
-    data class Finish(val status: String) : RealPingEvent()
+    /** Terminal counts for the batch. */
+    data class Finish(
+        val live: Int,
+        val completed: Int,
+        val total: Int,
+    ) : RealPingEvent()
 }
-
