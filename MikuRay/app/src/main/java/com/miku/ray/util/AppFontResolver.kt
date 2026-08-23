@@ -2,38 +2,44 @@ package com.miku.ray.util
 
 import android.content.Context
 import android.graphics.Typeface
-import androidx.core.content.res.ResourcesCompat
-import com.miku.ray.R
 
 object AppFontResolver {
 
-    private fun fontResId(value: String?): Int = when (value) {
-    	"ios15"        -> R.font.ios15
-        "google"        -> R.font.googlesansregular
-        "roboto"        -> R.font.robotoregular
-        "poppins"       -> R.font.poppinsregular
-        "chococooky"    -> R.font.chococookyregular
-        "simpleday"     -> R.font.simpleday
-        "fucek"         -> R.font.fucek
-        "sfprodisplay"  -> R.font.sfprodisplay
-        "dancingscript" -> R.font.dancingscript
-        "cream"         -> R.font.cream
-        "oneui"         -> R.font.oneui
-        "inconsolata"   -> R.font.incosolata
-        "emilyscandy"   -> R.font.emilyscandy
-        "summerdream"   -> R.font.summerdream
-        "rine"          -> R.font.rine
-        "evolve"        -> R.font.evolvesans
-        else            -> 0
-    }
+    private val assetPaths = mapOf(
+        "ios15" to "fonts/ios15.ttf",
+        "google" to "fonts/googlesansregular.ttf",
+        "roboto" to "fonts/robotoregular.ttf",
+        "poppins" to "fonts/poppinsregular.ttf",
+        "chococooky" to "fonts/chococookyregular.ttf",
+        "simpleday" to "fonts/simpleday.ttf",
+        "fucek" to "fonts/fucek.ttf",
+        "sfprodisplay" to "fonts/sfprodisplay.ttf",
+        "dancingscript" to "fonts/dancingscript.ttf",
+        "cream" to "fonts/cream.ttf",
+        "oneui" to "fonts/oneui.ttf",
+        "inconsolata" to "fonts/incosolata.ttf",
+        "emilyscandy" to "fonts/emilyscandy.ttf",
+        "summerdream" to "fonts/summerdream.ttf",
+        "rine" to "fonts/rine.ttf",
+        "evolve" to "fonts/evolvesans.ttf"
+    )
+
+    private val typefaceCache = mutableMapOf<String, Typeface>()
 
     fun getTypeface(context: Context, value: String?): Typeface? {
-        val resId = fontResId(value)
-        if (resId == 0) return null
+        val assetPath = assetPaths[value] ?: return null
+
+        synchronized(typefaceCache) {
+            typefaceCache[assetPath]?.let { return it }
+        }
 
         return try {
-            ResourcesCompat.getFont(context, resId)
-        } catch (e: Exception) {
+            Typeface.createFromAsset(context.assets, assetPath).also { typeface ->
+                synchronized(typefaceCache) {
+                    typefaceCache[assetPath] = typeface
+                }
+            }
+        } catch (_: Exception) {
             null
         }
     }

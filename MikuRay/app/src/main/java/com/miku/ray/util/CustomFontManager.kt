@@ -142,7 +142,10 @@ object CustomFontManager {
     }
 
     fun applyGlobalOverride(context: Context) {
-        val typeface = getTypeface(context) ?: return
+        getTypeface(context)?.let { applyGlobalOverride(it) }
+    }
+
+    fun applyGlobalOverride(typeface: Typeface) {
         cacheOriginalFonts()
         replaceStaticField("DEFAULT", typeface)
         replaceStaticField("DEFAULT_BOLD", Typeface.create(typeface, Typeface.BOLD))
@@ -155,8 +158,10 @@ object CustomFontManager {
      * specify a concrete TextAppearance or are inflated by a third-party widget.
      */
     fun applyToViewTree(context: Context, root: View) {
-        val typeface = getTypeface(context) ?: return
+        getTypeface(context)?.let { applyToViewTree(it, root) }
+    }
 
+    fun applyToViewTree(typeface: Typeface, root: View) {
         fun apply(view: View) {
             if (view is TextView) {
                 val style = view.typeface?.style ?: Typeface.NORMAL

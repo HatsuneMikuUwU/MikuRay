@@ -26,7 +26,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miku.ray.AppConfig
-import com.miku.ray.SearchBarChipMode
+import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.extension.snackbarDefault

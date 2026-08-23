@@ -1,5 +1,6 @@
-package com.miku.ray
+package com.miku.ray.util
 
+import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
 
 object SearchBarChipMode {

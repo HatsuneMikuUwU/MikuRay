@@ -2,7 +2,7 @@ package com.miku.ray.handler
 
 import android.app.Service
 import com.miku.ray.AppConfig
-import com.miku.ray.SearchBarChipMode
+import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.core.CoreServiceManager
 import com.miku.ray.extension.toSpeedString
 import com.miku.ray.util.LogUtil

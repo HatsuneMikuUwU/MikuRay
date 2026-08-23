@@ -35,7 +35,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.king.camera.scan.CameraScan
 import com.miku.ray.AppConfig
-import com.miku.ray.SearchBarChipMode
+import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.BuildConfig
 import com.miku.ray.R
 import com.miku.ray.core.LauncherManager

@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
 import com.miku.ray.AppConfig
-import com.miku.ray.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.databinding.ActivityMainBinding
 import com.miku.ray.handler.MmkvManager

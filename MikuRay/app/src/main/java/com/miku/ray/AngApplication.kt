@@ -62,17 +62,16 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
     fun applyActivityTheme(activity: Activity) {
         ThemeManager.applyTheme(activity)
 
+        CustomFontManager.restoreGlobalOverride()
+
         val useCustomFont = MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
-        if (useCustomFont) {
-            CustomFontManager.applyGlobalOverride(activity)
+        val typeface = if (useCustomFont) {
+            CustomFontManager.getTypeface(activity)
         } else {
-            CustomFontManager.restoreGlobalOverride()
             val fontName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
-            val fontOverlayId = getFontStyleResId(fontName)
-            if (fontOverlayId != 0) {
-                activity.theme.applyStyle(fontOverlayId, true)
-            }
+            AppFontResolver.getTypeface(activity, fontName)
         }
+        typeface?.let { CustomFontManager.applyGlobalOverride(it) }
 
         val isTrueBlack = ThemeManager.isDarkMode(activity) && MmkvManager.decodeSettingsBool(AppConfig.PREF_TRUE_BLACK, false)
         if (isTrueBlack) {
@@ -103,27 +102,7 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         }
     }
 
-    private fun getFontStyleResId(fontName: String?): Int {
-        return when (fontName) {
-        	"ios15"       -> R.style.StyleFontIos15
-            "google"       -> R.style.StyleFontGoogle
-            "roboto"       -> R.style.StyleFontRoboto
-            "poppins"      -> R.style.StyleFontPoppins
-            "chococooky"   -> R.style.StyleFontChocoCooky
-            "simpleday"    -> R.style.StyleFontSimpleDay
-            "fucek"        -> R.style.StyleFontFucek
-            "sfprodisplay" -> R.style.StyleFontSFProDisplay
-            "dancingscript"-> R.style.StyleFontDancingScript
-            "cream"        -> R.style.StyleFontCream
-            "oneui"        -> R.style.StyleFontOneUI
-            "inconsolata"  -> R.style.StyleFontInconsolata
-            "emilyscandy"  -> R.style.StyleFontEmilysCandy
-            "summerdream"  -> R.style.StyleFontSummerDream
-            "rine"         -> R.style.StyleFontRine
-            "evolve"       -> R.style.StyleFontEvolve
-            else           -> 0
-        }
-    }
+    
 
     override fun onActivityStarted(activity: Activity) {}
     override fun onActivityPaused(activity: Activity) {}

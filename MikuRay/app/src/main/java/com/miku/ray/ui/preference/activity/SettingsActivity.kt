@@ -28,7 +28,7 @@ import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResult
 import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
-import com.miku.ray.SearchBarChipMode
+import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.enums.PermissionType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets

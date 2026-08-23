@@ -32,6 +32,7 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.helper.CustomDividerItemDecoration
 import com.miku.ray.util.DPIController
 import com.miku.ray.util.FontSizeController
+import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.WindowBlurUtils
 import com.qmdeve.blurview.widget.BlurView
 import com.miku.ray.util.ThemeStateManager
@@ -78,20 +79,24 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        val fontName = MmkvManager.decodeSettingsString(AppConfig.PREF_APP_FONT)
-        if (!fontName.isNullOrEmpty() && fontName != "default") {
-            val typeface = AngApplication.getCustomTypeface(this, fontName)
+        AngApplication.getCustomTypeface(this)?.let { typeface ->
             findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)?.apply {
                 setExpandedTitleTypeface(typeface)
                 setCollapsedTitleTypeface(typeface)
                 setExpandedSubtitleTypeface(typeface)
                 setCollapsedSubtitleTypeface(typeface)
             }
+            CustomFontManager.applyToViewTree(typeface, window.decorView)
         }
     }
 
     override fun onContentChanged() {
         super.onContentChanged()
+
+        AngApplication.getCustomTypeface(this)?.let { typeface ->
+            CustomFontManager.applyToViewTree(typeface, window.decorView)
+        }
+
         val root = findViewById<android.view.View>(R.id.main_content) ?: return
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
