@@ -20,7 +20,6 @@ import com.miku.ray.AppConfig.LOOPBACK
 import com.miku.ray.BuildConfig
 import java.io.File
 import java.io.IOException
-import java.net.InetAddress
 import java.net.ServerSocket
 import java.net.URI
 import java.net.URLDecoder
@@ -152,8 +151,10 @@ object Utils {
 
     private fun isIpv6Address(value: String): Boolean {
         var addr = value
-        if (addr.startsWith("[") && addr.endsWith("]")) {
-            addr = addr.drop(1).dropLast(1)
+        if (addr.startsWith("[")) {
+            val closingBracket = addr.lastIndexOf(']')
+            if (closingBracket <= 1) return false
+            addr = addr.substring(1, closingBracket)
         }
         return IPV6_REGEX.matches(addr)
     }
@@ -348,32 +349,23 @@ object Utils {
 
     fun isGoogleFlavor(): Boolean = true
 
-    private fun inetAddressToLong(ip: InetAddress): Long {
-        val bytes = ip.address
-        var result: Long = 0
-        for (i in bytes.indices) {
-            result = result shl 8 or (bytes[i].toInt() and 0xff).toLong()
-        }
-        return result
+    /**
+     * Check if an IPv4 address is within an IPv4 CIDR range
+     *
+     * @param ip The IPv4 address to check
+     * @param cidr The IPv4 CIDR range (e.g., "192.168.1.0/24")
+     * @return True if the IP is within the CIDR range, false otherwise
+     */
+    fun isIpInCidr(ip: String, cidr: String): Boolean {
+        val parts = cidr.split('/')
+        if (parts.size != 2 || !isIpv4Address(ip) || !isIpv4Address(parts[0])) return false
+        val prefixLength = parts[1].toIntOrNull()?.takeIf { it in 0..32 } ?: return false
+        val mask = if (prefixLength == 0) 0L else (-1L shl (32 - prefixLength))
+        return (ipv4ToLong(ip) and mask) == (ipv4ToLong(parts[0]) and mask)
     }
 
-    fun isIpInCidr(ip: String, cidr: String): Boolean {
-        try {
-            if (!isIpAddress(ip)) return false
-
-            val (cidrIp, prefixLen) = cidr.split("/")
-            val prefixLength = prefixLen.toInt()
-
-            val ipLong = inetAddressToLong(InetAddress.getByName(ip))
-            val cidrIpLong = inetAddressToLong(InetAddress.getByName(cidrIp))
-
-            val mask = if (prefixLength == 0) 0L else (-1L shl (32 - prefixLength))
-
-            return (ipLong and mask) == (cidrIpLong and mask)
-        } catch (e: Exception) {
-            LogUtil.e(AppConfig.TAG, "Failed to check if IP is in CIDR", e)
-            return false
-        }
+    private fun ipv4ToLong(ip: String): Long {
+        return ip.split('.').fold(0L) { result, octet -> (result shl 8) or octet.toLong() }
     }
 
     fun formatTimestamp(ts: Long?, pattern: String = "yyyy-MM-dd HH:mm", locale: Locale = Locale.getDefault()): String {
