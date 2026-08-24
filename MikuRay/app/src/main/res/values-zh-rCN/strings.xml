@@ -113,6 +113,7 @@
     <string name="server_lab_kcp_tti">mKCP TTI</string>
     <string name="server_lab_kcp_tti_tip">可选, 默认 50</string>
     <string name="toast_success">成功</string>
+    <string name="toast_delete_success">删除成功</string>
     <string name="toast_failure">失败</string>
     <string name="toast_none_data">没有数据</string>
     <string name="toast_incorrect_protocol">不正确的协议</string>

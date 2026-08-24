@@ -113,6 +113,7 @@
     <string name="server_lab_kcp_tti">TTI mKCP</string>
     <string name="server_lab_kcp_tti_tip">Opsional, core bawaan 50</string>
     <string name="toast_success">Mantap Berhasil</string>
+    <string name="toast_delete_success">Berhasil dihapus</string>
     <string name="toast_failure">Yah Gagal</string>
     <string name="toast_none_data">Kosong melompong nih</string>
     <string name="toast_incorrect_protocol">Protokolnya salah woi</string>

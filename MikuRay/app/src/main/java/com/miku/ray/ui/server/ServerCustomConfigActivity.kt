@@ -114,6 +114,7 @@ class ServerCustomConfigActivity : BaseActivity() {
             }
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
                 MmkvManager.removeServer(editGuid)
+                toastSuccess(R.string.toast_delete_success)
                 finish()
             }
         }

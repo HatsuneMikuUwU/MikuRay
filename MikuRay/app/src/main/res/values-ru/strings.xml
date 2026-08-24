@@ -113,6 +113,7 @@
     <string name="server_lab_kcp_tti">mKCP TTI</string>
     <string name="server_lab_kcp_tti_tip">Необязательно, по умолчанию ядра 50</string>
     <string name="toast_success">Успешно</string>
+    <string name="toast_delete_success">Успешно удалено</string>
     <string name="toast_failure">Ошибка</string>
     <string name="toast_none_data">Ничего нет</string>
     <string name="toast_incorrect_protocol">Неверный протокол</string>

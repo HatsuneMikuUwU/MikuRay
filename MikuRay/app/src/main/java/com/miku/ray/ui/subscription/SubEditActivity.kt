@@ -278,13 +278,19 @@ class SubEditActivity : BaseActivity() {
                 showDeleteConfirmDialog(context = this, messageRes = R.string.del_sub_dialog_comfirm_message) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         SettingsManager.removeSubscriptionWithDefault(editSubId)
-                        launch(Dispatchers.Main) { finish() }
+                        launch(Dispatchers.Main) {
+                            toastSuccess(R.string.toast_delete_success)
+                            finish()
+                        }
                     }
                 }
             } else {
                 lifecycleScope.launch(Dispatchers.IO) {
                     SettingsManager.removeSubscriptionWithDefault(editSubId)
-                    launch(Dispatchers.Main) { finish() }
+                    launch(Dispatchers.Main) {
+                        toastSuccess(R.string.toast_delete_success)
+                        finish()
+                    }
                 }
             }
         }

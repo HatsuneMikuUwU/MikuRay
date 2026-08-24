@@ -150,6 +150,7 @@ class RoutingEditActivity : BaseActivity() {
                 lifecycleScope.launch(Dispatchers.IO) {
                     SettingsManager.removeRoutingRuleset(position)
                     launch(Dispatchers.Main) {
+                        toastSuccess(R.string.toast_delete_success)
                         finish()
                     }
                 }
