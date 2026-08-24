@@ -249,10 +249,15 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                 context = ownerActivity,
                 messageRes = R.string.del_routing_dialog_comfirm_message
             ) {
+                val remarks = viewModel.getAll().getOrNull(position)?.remarks.orEmpty()
                 viewModel.remove(position)
                 adapter.notifyItemRemoved(position)
                 adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
                 updateEmptyState()
+                snackbarSuccess(
+                    message = remarks,
+                    title = getString(R.string.title_alerter_success)
+                )
             }
         }
 

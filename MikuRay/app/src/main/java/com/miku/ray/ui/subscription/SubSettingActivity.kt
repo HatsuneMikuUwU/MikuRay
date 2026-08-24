@@ -273,14 +273,23 @@ class SubSettingActivity : BaseActivity(),
         }
 
         override fun onRemove(guid: String, position: Int) {
+            val remarks = viewModel.getAll().find { it.guid == guid }?.subscription?.remarks.orEmpty()
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
                 showDeleteConfirmDialog(context = ownerActivity, messageRes = R.string.del_sub_dialog_comfirm_message) {
                     viewModel.remove(guid)
                     refreshData()
+                    snackbarSuccess(
+                        message = remarks,
+                        title = getString(R.string.title_alerter_success)
+                    )
                 }
             } else {
                 viewModel.remove(guid)
                 refreshData()
+                snackbarSuccess(
+                    message = remarks,
+                    title = getString(R.string.title_alerter_success)
+                )
             }
         }
 
