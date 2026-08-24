@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">MikuRay</string>
+    <string name="test_build_info_title">Test build</string>
+    <string name="test_build_info_message">This is a test build of MikuRay. If you find a bug, please notify the owner or report it in the Telegram group by tagging the owner.\n\nTelegram channel: %1$s</string>
+    <string name="test_build_info_channel">@uwuowoumuchannel</string>
+    <string name="test_build_info_dont_show_again">Don’t show again</string>
     <string name="app_widget_name">Switch</string>
     <string name="widget_status_connected">Connected</string>
     <string name="widget_status_disconnected">Disconnected</string>

@@ -10,10 +10,10 @@ on:
       build_type:
         description: 'Build Type'
         required: true
-        default: 'debug'
+        default: 'test'
         type: choice
         options:
-          - debug
+          - test
           - release
   push:
     branches:
@@ -27,7 +27,7 @@ jobs:
       contents: write
 
     env:
-      BUILD_TYPE: ${{ github.event.inputs.build_type == 'release' && 'release' || 'debug' }}
+      BUILD_TYPE: ${{ github.event.inputs.build_type == 'release' && 'release' || 'releaseTesting' }}
 
     steps:
     - name: Checkout code
@@ -35,6 +35,13 @@ jobs:
       with:
         submodules: 'recursive'
         fetch-depth: '0'
+
+    - name: Prepare commit metadata
+      id: commit_metadata
+      shell: bash
+      run: |
+        echo "message=$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
+        echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v4
@@ -108,15 +115,15 @@ jobs:
         echo "sdk.dir=${ANDROID_HOME}" > local.properties
         chmod 755 gradlew
         
-        if [ "${{ env.BUILD_TYPE }}" == "debug" ]; then
-          echo "Starting DEBUG build process..."
-          ./gradlew assembleDebug --console=plain \
+        if [ "${{ env.BUILD_TYPE }}" == "releaseTesting" ]; then
+          echo "Starting TEST build process with R8..."
+          ./gradlew assembleReleaseTesting --console=plain \
             -PKS_PATH="${{ steps.android_keystore.outputs.filePath }}" \
             -PKS_PASS="${{ secrets.APP_KEYSTORE_PASSWORD }}" \
             -PKS_ALIAS="${{ secrets.APP_KEYSTORE_ALIAS }}" \
             -PKEY_PASS="${{ secrets.APP_KEY_PASSWORD }}"
         else
-          echo "Starting RELEASE build process..."
+          echo "Starting RELEASE build process with R8..."
           ./gradlew assembleRelease --console=plain \
             -PKS_PATH="${{ steps.android_keystore.outputs.filePath }}" \
             -PKS_PASS="${{ secrets.APP_KEYSTORE_PASSWORD }}" \
@@ -144,6 +151,34 @@ jobs:
       with:
         name: x86-apk-${{ env.BUILD_TYPE }}
         path: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}/*x86*.apk
+
+    - name: Check Telegram configuration
+      id: telegram-config
+      if: ${{ success() && env.BUILD_TYPE == 'releaseTesting' }}
+      shell: bash
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
+          echo "configured=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "configured=false" >> "$GITHUB_OUTPUT"
+          echo "Telegram upload skipped: Telegram secrets are not configured."
+        fi
+
+    - name: Upload APKs to Telegram
+      if: ${{ env.BUILD_TYPE == 'releaseTesting' && steps.telegram-config.outputs.configured == 'true' }}
+      shell: bash
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        APK_DIR: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}
+        BUILD_TYPE: ${{ env.BUILD_TYPE }}
+        TELEGRAM_COMMIT_MESSAGE: ${{ steps.commit_metadata.outputs.message }}
+        TELEGRAM_COMMIT_SHA: ${{ steps.commit_metadata.outputs.sha }}
+        TELEGRAM_COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+      run: bash ./scripts/upload-apks-to-telegram.sh
 
     - name: Upload to release
       uses: svenstaro/upload-release-action@v2

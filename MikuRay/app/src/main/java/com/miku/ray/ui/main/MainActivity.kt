@@ -1,6 +1,5 @@
 package com.miku.ray.ui.main
 
-
 import com.miku.ray.remixicon.R as RemixR
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,6 +9,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.net.VpnService
+import android.text.style.ClickableSpan
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -171,6 +175,7 @@ class MainActivity : HelperBaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        showTestBuildInfoIfNeeded()
 
         hideLoading()
         window.statusBarColor = Color.TRANSPARENT
@@ -191,6 +196,51 @@ class MainActivity : HelperBaseActivity(),
         refreshGroupTabTitles(true)
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
+    }
+
+    private fun showTestBuildInfoIfNeeded() {
+        if (BuildConfig.BUILD_TYPE != "releaseTesting") return
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DISMISS_TEST_BUILD_INFO, false)) return
+
+        val channelLabel = getString(R.string.test_build_info_channel)
+        val message = getString(R.string.test_build_info_message, channelLabel)
+        val styledMessage = SpannableString(message)
+        val channelStart = message.indexOf(channelLabel)
+        if (channelStart >= 0) {
+            styledMessage.setSpan(
+                object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://t.me/uwuowoumuchannel")
+                            )
+                        )
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        ds.color = getColorAttr("colorPrimary")
+                        ds.isUnderlineText = false
+                    }
+                },
+                channelStart,
+                channelStart + channelLabel.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.test_build_info_title)
+            .setIcon(RemixR.drawable.rmx_system_alarm_warning_line)
+            .setMessage(styledMessage)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNegativeButton(R.string.test_build_info_dont_show_again) { _, _ ->
+                MmkvManager.encodeSettings(AppConfig.PREF_DISMISS_TEST_BUILD_INFO, true)
+            }
+            .showBlur()
+
+        dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onResume() {

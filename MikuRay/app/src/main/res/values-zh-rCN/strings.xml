@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="test_build_info_title">测试版本</string>
+    <string name="test_build_info_message">这是 MikuRay 的测试构建版。如果发现错误，请通知群主或在 Telegram 群组中通过@群主进行反馈。\n\nTelegram 频道：%1$s</string>
+    <string name="test_build_info_channel">@uwuowoumuchannel</string>
+    <string name="test_build_info_dont_show_again">不再显示</string>
     <string name="app_widget_name">开关</string>
     <string name="widget_status_connected">已连接</string>
     <string name="widget_status_disconnected">未连接</string>

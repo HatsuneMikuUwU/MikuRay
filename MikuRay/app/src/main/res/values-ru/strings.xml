@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="test_build_info_title">Тестовая сборка</string>
+    <string name="test_build_info_message">Это тестовая сборка MikuRay. Если вы нашли баг, пожалуйста, сообщите владельцу или напишите в группе Telegram, отметив владельца.\n\nTelegram-канал: %1$s</string>
+    <string name="test_build_info_channel">@uwuowoumuchannel</string>
+    <string name="test_build_info_dont_show_again">Больше не показывать</string>
     <string name="app_widget_name">Переключатель</string>
     <string name="widget_status_connected">Подключено</string>
     <string name="widget_status_disconnected">Отключено</string>

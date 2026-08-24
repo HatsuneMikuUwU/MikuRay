@@ -1,5 +1,6 @@
 -repackageclasses
 -allowaccessmodification
+-dontobfuscate
 -keep class com.miku.ray.** { *; }
 -keep class com.yalantis.ucrop.** { *; }
 

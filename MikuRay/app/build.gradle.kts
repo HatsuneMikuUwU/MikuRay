@@ -8,6 +8,13 @@ plugins {
     alias(libs.plugins.aboutLibraries)
 }
 
+aboutLibraries {
+    collect {
+        includeTestVariants.set(true)
+        filterVariants.addAll("debug", "release", "releaseTesting")
+    }
+}
+
 val appVersionName = "2.3.0"
 val appVersionCode = 740
 
@@ -98,6 +105,17 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
         }
+
+        create("releaseTesting") {
+            initWith(getByName("release"))
+            matchingFallbacks += listOf("release")
+            if (project.hasProperty("KS_PATH")) {
+                signingConfig = signingConfigs.getByName("appSigning")
+            }
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+        }
     }
 
     sourceSets {
@@ -150,9 +168,10 @@ androidComponents {
                 output.versionCode.set((1000000 * multiplier) + appVersionCode)
             }
 
-            if (variant.buildType == "debug") {
+            if (variant.buildType == "debug" || variant.buildType == "releaseTesting") {
                 val abiSuffix = if (abi != "universal") "-$abi" else ""
-                output.outputFileName.set("MikuRay_$appVersionName$abiSuffix-debug-$apkBuildDate.apk")
+                val buildLabel = if (variant.buildType == "releaseTesting") "test" else variant.buildType
+                output.outputFileName.set("MikuRay_$appVersionName$abiSuffix-$buildLabel-$apkBuildDate.apk")
             }
         }
     }

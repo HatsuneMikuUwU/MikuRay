@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="test_build_info_title">Build pengujian</string>
+    <string name="test_build_info_message">Ini adalah build pengujian MikuRay. Kalau menemukan bug, kabari owner atau laporkan di Telegram grup dengan men-tag owner.\n\nTelegram channel: %1$s</string>
+    <string name="test_build_info_channel">@uwuowoumuchannel</string>
+    <string name="test_build_info_dont_show_again">Jangan tampilkan lagi</string>
     <string name="app_widget_name">Tombol Switch</string>
     <string name="widget_status_connected">Konek</string>
     <string name="widget_status_disconnected">Gak konek</string>

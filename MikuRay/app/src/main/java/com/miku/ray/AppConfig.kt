@@ -185,6 +185,7 @@ object AppConfig {
     const val PREF_ACTION_CLEAR_TOTAL_TRAFFIC = "action_clear_total_traffic"
     const val PREF_SEARCH_CHIP_GRADIENT = "pref_search_chip_gradient"
     const val PREF_SHOW_REALTIME_TRAFFIC_IP = "pref_show_realtime_traffic_ip"
+    const val PREF_DISMISS_TEST_BUILD_INFO = "pref_dismiss_test_build_info"
 
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"
     const val PREF_PROFILE_BANNER_URI = "profile_banner_uri"
