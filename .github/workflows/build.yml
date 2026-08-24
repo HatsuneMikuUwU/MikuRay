@@ -15,6 +15,16 @@ on:
         options:
           - test
           - release
+      upload_telegram:
+        description: 'Upload APK to Telegram?'
+        required: true
+        default: false
+        type: boolean
+      commit_shas:
+        description: 'Commit SHAs to upload (one per line or comma-separated; empty sends all history)'
+        required: false
+        default: ''
+        type: string
   push:
     branches:
       - master
@@ -39,9 +49,26 @@ jobs:
     - name: Prepare commit metadata
       id: commit_metadata
       shell: bash
+      env:
+        EVENT_BEFORE: ${{ github.event.before }}
+        SELECTED_COMMIT_SHAS: ${{ inputs.commit_shas }}
+        CURRENT_SHA: ${{ github.sha }}
       run: |
         echo "message=$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
         echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
+
+        if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+          if [[ -n "${EVENT_BEFORE}" \
+            && "${EVENT_BEFORE}" != "0000000000000000000000000000000000000000" \
+            && "${EVENT_BEFORE}" != "${CURRENT_SHA}" ]] \
+            && git cat-file -e "${EVENT_BEFORE}^{commit}" 2>/dev/null; then
+            echo "range=${EVENT_BEFORE}..${CURRENT_SHA}" >> "$GITHUB_OUTPUT"
+          else
+            echo "range=${CURRENT_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+        else
+          echo "range=${CURRENT_SHA}" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v4
@@ -154,7 +181,7 @@ jobs:
 
     - name: Check Telegram configuration
       id: telegram-config
-      if: ${{ success() && env.BUILD_TYPE == 'releaseTesting' }}
+      if: ${{ success() && env.BUILD_TYPE == 'releaseTesting' && github.event_name == 'workflow_dispatch' && inputs.upload_telegram == true }}
       shell: bash
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -168,7 +195,7 @@ jobs:
         fi
 
     - name: Upload APKs to Telegram
-      if: ${{ env.BUILD_TYPE == 'releaseTesting' && steps.telegram-config.outputs.configured == 'true' }}
+      if: ${{ env.BUILD_TYPE == 'releaseTesting' && github.event_name == 'workflow_dispatch' && inputs.upload_telegram == true && steps.telegram-config.outputs.configured == 'true' }}
       shell: bash
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -178,6 +205,9 @@ jobs:
         TELEGRAM_COMMIT_MESSAGE: ${{ steps.commit_metadata.outputs.message }}
         TELEGRAM_COMMIT_SHA: ${{ steps.commit_metadata.outputs.sha }}
         TELEGRAM_COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        TELEGRAM_COMMIT_RANGE: ${{ steps.commit_metadata.outputs.range }}
+        TELEGRAM_COMMIT_SHAS: ${{ inputs.commit_shas }}
+        TELEGRAM_REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
       run: bash ./scripts/upload-apks-to-telegram.sh
 
     - name: Upload to release
