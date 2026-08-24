@@ -253,6 +253,10 @@ class MainActivity : HelperBaseActivity(),
             refreshAllGroupListDisplays()
         }
         
+        if (SettingsChangeManager.consumeSetupGroupTab()) {
+            refreshGroupTabTitles()
+        }
+        
         mainViewModel.resyncState()
     }
 

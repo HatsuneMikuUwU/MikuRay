@@ -18,6 +18,7 @@ import com.miku.ray.extension.toastSuccess
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.CertificateFingerprintManager
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.ui.server.fields.AddressPortFields
 import com.miku.ray.ui.server.fields.TlsFields
@@ -200,11 +201,13 @@ class ServerShadowsocksActivity : BaseActivity() {
                 if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
                     showDeleteConfirmDialog(context = this, messageRes = R.string.del_config_dialog_comfirm_message) {
                         MmkvManager.removeServer(editGuid)
+                        SettingsChangeManager.makeSetupGroupTab()
                         toastSuccess(R.string.toast_delete_success)
                         finish()
                     }
                 } else {
                     MmkvManager.removeServer(editGuid)
+                    SettingsChangeManager.makeSetupGroupTab()
                     toastSuccess(R.string.toast_delete_success)
                     finish()
                 }
