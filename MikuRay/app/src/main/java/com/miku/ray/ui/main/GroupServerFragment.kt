@@ -305,10 +305,15 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
     }
 
     private fun removeServerSub(guid: String, position: Int) {
+        val remarks = MmkvManager.decodeServerConfig(guid)?.remarks.orEmpty()
         mainViewModel.removeServer(guid)
         adapter.removeServerSub(guid, position)
         ownerActivity.refreshGroupTabTitles()
         updateEmptyState()
+        ownerActivity.snackbarSuccess(
+            message = remarks,
+            title = getString(R.string.title_alerter_success)
+        )
     }
 
     private fun togglePinServer(guid: String, currentlyPinned: Boolean) {
