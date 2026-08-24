@@ -20,8 +20,13 @@ on:
         required: true
         default: false
         type: boolean
+      commit_count:
+        description: 'Number of latest commits to send to Telegram when manual SHAs are empty'
+        required: false
+        default: 1
+        type: number
       commit_shas:
-        description: 'Commit SHAs to upload (one per line or comma-separated; empty sends all history)'
+        description: 'Manual commit SHA(s), one per line or comma-separated; takes priority over commit_count'
         required: false
         default: ''
         type: string
@@ -51,12 +56,8 @@ jobs:
       shell: bash
       env:
         EVENT_BEFORE: ${{ github.event.before }}
-        SELECTED_COMMIT_SHAS: ${{ inputs.commit_shas }}
         CURRENT_SHA: ${{ github.sha }}
       run: |
-        echo "message=$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
-        echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
-
         if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
           if [[ -n "${EVENT_BEFORE}" \
             && "${EVENT_BEFORE}" != "0000000000000000000000000000000000000000" \
@@ -67,7 +68,9 @@ jobs:
             echo "range=${CURRENT_SHA}" >> "$GITHUB_OUTPUT"
           fi
         else
-          echo "range=${CURRENT_SHA}" >> "$GITHUB_OUTPUT"
+          # For manual runs, commit_count controls how many latest commits are selected.
+          # Leave the range empty so the upload script selects from HEAD.
+          echo "range=" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Setup Android SDK
@@ -202,11 +205,9 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         APK_DIR: ${{ github.workspace }}/MikuRay/app/build/outputs/apk/${{ env.BUILD_TYPE }}
         BUILD_TYPE: ${{ env.BUILD_TYPE }}
-        TELEGRAM_COMMIT_MESSAGE: ${{ steps.commit_metadata.outputs.message }}
-        TELEGRAM_COMMIT_SHA: ${{ steps.commit_metadata.outputs.sha }}
-        TELEGRAM_COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
-        TELEGRAM_COMMIT_RANGE: ${{ steps.commit_metadata.outputs.range }}
+        TELEGRAM_COMMIT_COUNT: ${{ inputs.commit_count }}
         TELEGRAM_COMMIT_SHAS: ${{ inputs.commit_shas }}
+        TELEGRAM_COMMIT_RANGE: ${{ steps.commit_metadata.outputs.range }}
         TELEGRAM_REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
       run: bash ./scripts/upload-apks-to-telegram.sh
 

@@ -5,11 +5,9 @@ set -euo pipefail
 : "${TELEGRAM_CHAT_ID:?TELEGRAM_CHAT_ID is required}"
 
 APK_DIR="${APK_DIR:-MikuRay/app/build/outputs/apk/${BUILD_TYPE:-debug}}"
-COMMIT_MESSAGE="${TELEGRAM_COMMIT_MESSAGE:-${TELEGRAM_CAPTION:-MikuRay APK build}}"
-COMMIT_SHA="${TELEGRAM_COMMIT_SHA:-}"
-COMMIT_URL="${TELEGRAM_COMMIT_URL:-}"
-COMMIT_RANGE="${TELEGRAM_COMMIT_RANGE:-}"
+REQUESTED_COMMIT_COUNT="${TELEGRAM_COMMIT_COUNT:-1}"
 COMMIT_SHAS="${TELEGRAM_COMMIT_SHAS:-}"
+COMMIT_RANGE="${TELEGRAM_COMMIT_RANGE:-}"
 REPOSITORY_URL="${TELEGRAM_REPOSITORY_URL:-}"
 MAX_FILE_BYTES="${MAX_FILE_BYTES:-50000000}"
 MAX_CAPTION_CHARS="${TELEGRAM_MAX_CAPTION_CHARS:-900}"
@@ -32,7 +30,6 @@ html_length() {
 COMMIT_LINES_HTML=""
 COMMIT_LINES_PLAIN=""
 COMMIT_COUNT=0
-COMMIT_RANGE_MODE=false
 COMMIT_SHA_MODE=false
 
 declare -A SEEN_COMMIT_SHAS=()
@@ -59,6 +56,7 @@ append_commit_line() {
 }
 
 if [[ -n "${COMMIT_SHAS}" ]]; then
+  # Manual SHA input has priority over the automatic commit count.
   COMMIT_SHA_MODE=true
   while IFS= read -r selected_sha; do
     selected_sha="${selected_sha#"${selected_sha%%[![:space:]]*}"}"
@@ -75,46 +73,40 @@ if [[ -n "${COMMIT_SHAS}" ]]; then
     SEEN_COMMIT_SHAS["${resolved_sha}"]=1
     append_commit_line "${resolved_sha}" "$(git log -1 --format='%s' "${resolved_sha}")"
   done < <(printf '%s\n' "${COMMIT_SHAS//,/$'\n'}")
-elif [[ -n "${COMMIT_RANGE}" ]]; then
-  COMMIT_RANGE_MODE=true
-  if ! git rev-list --count "${COMMIT_RANGE}" >/dev/null 2>&1; then
-    echo "Invalid commit range or commit '${COMMIT_RANGE}'." >&2
+
+  if (( COMMIT_COUNT == 0 )); then
+    echo "No valid commit SHA was provided." >&2
+    exit 1
+  fi
+else
+  if ! [[ "${REQUESTED_COMMIT_COUNT}" =~ ^[1-9][0-9]*$ ]]; then
+    echo "TELEGRAM_COMMIT_COUNT must be a positive integer; received '${REQUESTED_COMMIT_COUNT}'." >&2
     exit 1
   fi
 
+  if [[ -n "${COMMIT_RANGE}" ]]; then
+    if ! git rev-list --count "${COMMIT_RANGE}" >/dev/null 2>&1; then
+      echo "Invalid commit range or commit '${COMMIT_RANGE}'." >&2
+      exit 1
+    fi
+    COMMIT_REFS=("${COMMIT_RANGE}")
+  else
+    COMMIT_REFS=(HEAD)
+  fi
+
+  # Select only the requested number of newest commits, newest first.
   while IFS= read -r -d '' commit_sha && IFS= read -r -d '' subject; do
     append_commit_line "${commit_sha}" "${subject}"
-  done < <(git log -z --reverse --format='%H%x00%s' "${COMMIT_RANGE}")
-fi
+  done < <(git log -z -n "${REQUESTED_COMMIT_COUNT}" --format='%H%x00%s' "${COMMIT_REFS[@]}")
 
-if [[ "${COMMIT_SHA_MODE}" == "true" && "${COMMIT_COUNT}" -eq 0 ]]; then
-  echo "No valid commit SHA was provided." >&2
-  exit 1
-fi
-
-if [[ "${COMMIT_RANGE_MODE}" == "true" && "${COMMIT_COUNT}" -eq 0 ]]; then
-  echo "No new commits found in '${COMMIT_RANGE}'; Telegram upload skipped."
-  exit 0
-fi
-
-if (( COMMIT_COUNT == 0 )); then
-  escaped_commit_message="$(escape_html "${COMMIT_MESSAGE}")"
-  if [[ -n "${COMMIT_SHA}" ]]; then
-    commit_label="${escaped_commit_message} (${COMMIT_SHA})"
-    plain_commit_label="${COMMIT_MESSAGE} (${COMMIT_SHA})"
-  else
-    commit_label="${escaped_commit_message}"
-    plain_commit_label="${COMMIT_MESSAGE}"
+  if (( COMMIT_COUNT == 0 )); then
+    if [[ -n "${COMMIT_RANGE}" ]]; then
+      echo "No new commits found in '${COMMIT_RANGE}'; Telegram upload skipped."
+      exit 0
+    fi
+    echo "No commits found in the repository." >&2
+    exit 1
   fi
-
-  if [[ -n "${COMMIT_URL}" ]]; then
-    COMMIT_LINES_HTML="<a href=\"${COMMIT_URL}\">${commit_label}</a>"$'\n'
-    COMMIT_LINES_PLAIN="${plain_commit_label} ${COMMIT_URL}"$'\n'
-  else
-    COMMIT_LINES_HTML="${commit_label}"$'\n'
-    COMMIT_LINES_PLAIN="${plain_commit_label}"$'\n'
-  fi
-  COMMIT_COUNT=1
 fi
 
 trim_trailing_newline() {
