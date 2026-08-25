@@ -196,6 +196,20 @@ class MainActivity : HelperBaseActivity(),
         refreshGroupTabTitles(true)
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
+        maybeShowTrafficDetailFromIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        maybeShowTrafficDetailFromIntent(intent)
+    }
+
+    private fun maybeShowTrafficDetailFromIntent(intent: Intent?) {
+        val launchIntent = intent ?: return
+        if (!launchIntent.getBooleanExtra(AppConfig.EXTRA_SHOW_TOTAL_TRAFFIC_DETAIL, false)) return
+        launchIntent.removeExtra(AppConfig.EXTRA_SHOW_TOTAL_TRAFFIC_DETAIL)
+        window.decorView.post { showTotalTrafficDetailDialog(this) }
     }
 
     private fun showTestBuildInfoIfNeeded() {

@@ -1579,6 +1579,19 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name=".receiver.TrafficDetailWidgetProvider"
+            android:exported="true"
+            android:label="@string/app_widget_traffic_detail_name">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_traffic_detail_provider" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="${applicationId}.action.activity" />
+                <action android:name="${applicationId}.action.traffic_widget_refresh" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name=".receiver.BootReceiver"
             android:exported="true"
             android:label="BootReceiver">

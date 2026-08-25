@@ -4,6 +4,7 @@ package com.miku.ray.ui.preference.activity
 import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
@@ -939,6 +940,10 @@ class UiSettingsActivity : BaseActivity() {
                     AppCompatDelegate.setApplicationLocales(
                         if (newTag.isEmpty()) LocaleListCompat.getEmptyLocaleList()
                         else LocaleListCompat.forLanguageTags(newTag)
+                    )
+                    requireContext().sendBroadcast(
+                        Intent(AppConfig.BROADCAST_ACTION_TRAFFIC_WIDGET_REFRESH)
+                            .setPackage(requireContext().packageName)
                     )
                     summary = labelFor(newTag)
                     value = newTag

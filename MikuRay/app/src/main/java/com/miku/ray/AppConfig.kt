@@ -300,6 +300,8 @@ object AppConfig {
     const val BROADCAST_ACTION_SERVICE = "$ANG_PACKAGE.action.service"
     const val BROADCAST_ACTION_ACTIVITY = "$ANG_PACKAGE.action.activity"
     const val BROADCAST_ACTION_WIDGET_CLICK = "$ANG_PACKAGE.action.widget.click"
+    const val BROADCAST_ACTION_TRAFFIC_WIDGET_REFRESH = "$ANG_PACKAGE.action.traffic_widget_refresh"
+    const val EXTRA_SHOW_TOTAL_TRAFFIC_DETAIL = "extra_show_total_traffic_detail"
     const val BROADCAST_ACTION_ICON_SHAPE_CHANGED = "$ANG_PACKAGE.action.icon_shape_changed"
     const val BROADCAST_ACTION_ARROW_SHAPE_CHANGED = "$ANG_PACKAGE.action.arrow_shape_changed"
     const val BROADCAST_ACTION_PROFILE_BANNER_CHANGED = "$ANG_PACKAGE.action.profile_banner_changed"

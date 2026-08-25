@@ -6,6 +6,7 @@
     <string name="test_build_info_channel">@uwuowoumuchannel</string>
     <string name="test_build_info_dont_show_again">Don’t show again</string>
     <string name="app_widget_name">Switch</string>
+    <string name="app_widget_traffic_detail_name">Traffic Detail</string>
     <string name="widget_status_connected">Connected</string>
     <string name="widget_status_disconnected">Disconnected</string>
     <string name="widget_no_server_selected">No server selected</string>

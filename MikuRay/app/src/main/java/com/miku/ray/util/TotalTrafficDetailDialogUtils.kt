@@ -2,9 +2,11 @@ package com.miku.ray.util
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.databinding.DialogTotalTrafficDetailBinding
 import com.miku.ray.extension.snackbarSuccess
@@ -63,6 +65,9 @@ private fun showClearTotalTrafficConfirmDialog(context: Context, onCleared: () -
         .setMessage(R.string.confirm_clear_total_traffic)
         .setPositiveButton(android.R.string.ok) { _, _ ->
             MmkvManager.clearTotalTrafficDataAndHistory()
+            context.sendBroadcast(
+                Intent(AppConfig.BROADCAST_ACTION_TRAFFIC_WIDGET_REFRESH).setPackage(context.packageName)
+            )
             onCleared()
             context.snackbarSuccess(
                 context.getString(R.string.toast_total_traffic_cleared),
