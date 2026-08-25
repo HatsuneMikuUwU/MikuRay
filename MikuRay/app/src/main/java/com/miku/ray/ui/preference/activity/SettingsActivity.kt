@@ -152,7 +152,7 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
                     startActivity(Intent(this, WeatherForecastActivity::class.java))
                 }
                 isTotalTrafficChipSelected() -> {
-                    showTotalTrafficDetailDialog(this)
+                    showTotalTrafficDetailDialog(this) { refreshTotalTrafficChip() }
                 }
             }
         }

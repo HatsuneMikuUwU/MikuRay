@@ -687,7 +687,7 @@ class MainActivity : HelperBaseActivity(),
                     startActivity(Intent(this, WeatherForecastActivity::class.java))
                 }
                 isTotalTrafficChipSelected() -> {
-                    showTotalTrafficDetailDialog(this)
+                    showTotalTrafficDetailDialog(this) { refreshTotalTrafficChip() }
                 }
             }
         }

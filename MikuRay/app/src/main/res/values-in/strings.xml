@@ -674,9 +674,7 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="menu_item_search_main">Cari konfig</string>
     <string name="title_search_bar_chip">Chip Bar Pencarian</string>
     <string name="pref_action_clear_total_traffic_title">Hapus data traffic</string>
-    <string name="pref_action_clear_total_traffic_summary_empty">Belum ada data traffic yang tercatat</string>    
-    <string name="pref_action_clear_total_traffic_summary_set">Sekarang: %1$s</string>
-    <string name="summary_pref_action_clear_total_traffic_disabled">Aktifin \"%1$s\" dulu biar traffic-nya mulai kecatat di sini</string>
+    <string name="action_clear_total_traffic_button">Hapus</string>
     <string name="confirm_clear_total_traffic">Hapus data traffic chip beserta riwayat harian/bulanannya?</string>
     <string name="toast_total_traffic_cleared">Data traffic chip udah dihapus</string>
     <string name="pref_search_bar_chip_title">Chip bar pencarian</string>

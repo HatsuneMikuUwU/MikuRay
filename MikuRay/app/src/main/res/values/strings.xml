@@ -706,9 +706,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="weather_temp_format">%d°C</string>
     <string name="title_search_bar_chip">Search Bar Chip</string>
     <string name="pref_action_clear_total_traffic_title">Clear traffic data</string>
-    <string name="pref_action_clear_total_traffic_summary_empty">No traffic data recorded yet</string>
-    <string name="pref_action_clear_total_traffic_summary_set">Current: %1$s</string>
-    <string name="summary_pref_action_clear_total_traffic_disabled">Enable \"%1$s\" first to start recording traffic here</string>
+    <string name="action_clear_total_traffic_button">Clear</string>
     <string name="confirm_clear_total_traffic">Clear traffic chip data along with its daily/monthly history?</string>
     <string name="toast_total_traffic_cleared">Traffic chip data cleared</string>
     <string name="pref_search_bar_chip_title">Search bar chip</string>

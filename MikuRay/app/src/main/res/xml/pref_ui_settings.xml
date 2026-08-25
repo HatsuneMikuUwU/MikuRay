@@ -334,13 +334,6 @@
             android:dialogTitle="@string/pref_weather_custom_location_title"
             android:dialogMessage="@string/pref_weather_custom_location_dialog_message" />
 
-         <Preference
-            android:icon="@drawable/rmx_delete_bin_line"
-            app:layout="@layout/uwu_mid"
-            android:key="action_clear_total_traffic"
-            android:title="@string/pref_action_clear_total_traffic_title"
-            android:summary="@string/pref_action_clear_total_traffic_summary_empty" />
-
          <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/rmx_design_contrast_line"
             app:layout="@layout/uwu_bot_switch"

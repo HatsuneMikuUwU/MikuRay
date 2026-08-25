@@ -683,9 +683,7 @@
     <string name="menu_item_search_main">Поиск конфига</string>
     <string name="title_search_bar_chip">Плашка строки поиска</string>
     <string name="pref_action_clear_total_traffic_title">Очистить данные трафика</string>
-    <string name="pref_action_clear_total_traffic_summary_empty">Данные трафика еще не записаны</string>
-    <string name="pref_action_clear_total_traffic_summary_set">Текущие: %1$s</string>
-    <string name="summary_pref_action_clear_total_traffic_disabled">Сначала включите \"%1$s\", чтобы здесь начала вестись запись трафика</string>
+    <string name="action_clear_total_traffic_button">Очистить</string>
     <string name="confirm_clear_total_traffic">Очистить данные плашки трафика вместе с дневной/месячной историей?</string>
     <string name="toast_total_traffic_cleared">Данные плашки трафика очищены</string>
     <string name="pref_search_bar_chip_title">Компонент строки поиска</string>
