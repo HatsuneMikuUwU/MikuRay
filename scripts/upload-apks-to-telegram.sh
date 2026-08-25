@@ -10,7 +10,7 @@ COMMIT_SHAS="${TELEGRAM_COMMIT_SHAS:-}"
 COMMIT_RANGE="${TELEGRAM_COMMIT_RANGE:-}"
 REPOSITORY_URL="${TELEGRAM_REPOSITORY_URL:-}"
 MAX_FILE_BYTES="${MAX_FILE_BYTES:-50000000}"
-MAX_CAPTION_CHARS="${TELEGRAM_MAX_CAPTION_CHARS:-900}"
+MAX_CAPTION_CHARS="${TELEGRAM_MAX_CAPTION_CHARS:-1000}"
 MAX_MESSAGE_CHARS="${TELEGRAM_MAX_MESSAGE_CHARS:-3800}"
 
 escape_html() {
@@ -114,24 +114,39 @@ trim_trailing_newline() {
   printf '%s' "${value%$'\n'}"
 }
 
+wrap_expandable_quote() {
+  local value="$1"
+  printf '<blockquote expandable>%s</blockquote>' "${value}"
+}
+
 COMMIT_LINES_HTML="$(trim_trailing_newline "${COMMIT_LINES_HTML}")"
 COMMIT_LINES_PLAIN="$(trim_trailing_newline "${COMMIT_LINES_PLAIN}")"
 
-HTML_CAPTION="${COMMIT_LINES_HTML}"
+HTML_CAPTION_QUOTED="$(wrap_expandable_quote "${COMMIT_LINES_HTML}")"
 PLAIN_CAPTION="${COMMIT_LINES_PLAIN}"
 
 SEND_COMMIT_SUMMARY=false
-if (( $(html_length "${HTML_CAPTION}") > MAX_CAPTION_CHARS )); then
+if (( $(html_length "${HTML_CAPTION_QUOTED}") > MAX_CAPTION_CHARS )); then
   SEND_COMMIT_SUMMARY=true
   CAPTION="MikuRay APK build"
   PLAIN_CAPTION="${CAPTION}"
 else
-  CAPTION="${HTML_CAPTION}"
+  CAPTION="${HTML_CAPTION_QUOTED}"
   PLAIN_CAPTION="${PLAIN_CAPTION}"
 fi
 
 LAST_RESPONSE=""
 LAST_CURL_EXIT=0
+LAST_DOCUMENT_MESSAGE_ID=""
+LAST_MESSAGE_ID=""
+
+extract_message_id() {
+  local response="$1"
+  # Telegram replies with {"ok":true,"result":{"message_id":123,...}}; pull the first message_id.
+  grep -oE '"message_id"[[:space:]]*:[[:space:]]*[0-9]+' <<<"${response}" \
+    | head -n 1 \
+    | grep -oE '[0-9]+'
+}
 
 send_document() {
   local apk_file="$1"
@@ -167,6 +182,7 @@ send_document() {
   LAST_CURL_EXIT="${curl_exit}"
 
   if [[ "${curl_exit}" -eq 0 ]] && grep -Eq '"ok"[[:space:]]*:[[:space:]]*true' <<<"${response}"; then
+    LAST_DOCUMENT_MESSAGE_ID="$(extract_message_id "${response}")"
     return 0
   fi
   return 1
@@ -175,6 +191,7 @@ send_document() {
 send_message() {
   local text="$1"
   local use_html="$2"
+  local reply_to_message_id="${3:-}"
   local response
   local curl_exit
   local -a curl_args
@@ -193,6 +210,10 @@ send_message() {
   if [[ "${use_html}" == "html" ]]; then
     curl_args+=(--form-string "parse_mode=HTML")
   fi
+  if [[ -n "${reply_to_message_id}" ]]; then
+    curl_args+=(--form-string "reply_to_message_id=${reply_to_message_id}")
+    curl_args+=(--form-string "allow_sending_without_reply=true")
+  fi
 
   if response="$(curl "${curl_args[@]}" 2>&1)"; then
     curl_exit=0
@@ -203,6 +224,7 @@ send_message() {
   LAST_CURL_EXIT="${curl_exit}"
 
   if [[ "${curl_exit}" -eq 0 ]] && grep -Eq '"ok"[[:space:]]*:[[:space:]]*true' <<<"${response}"; then
+    LAST_MESSAGE_ID="$(extract_message_id "${response}")"
     return 0
   fi
   return 1
@@ -224,13 +246,14 @@ send_with_html_fallback() {
   local kind="$1"
   local html_text="$2"
   local plain_text="$3"
+  local reply_to_message_id="${4:-}"
 
   if [[ "${kind}" == "document" ]]; then
     if send_document "${CURRENT_APK_FILE}" "${html_text}" html; then
       return 0
     fi
   else
-    if send_message "${html_text}" html; then
+    if send_message "${html_text}" html "${reply_to_message_id}"; then
       return 0
     fi
   fi
@@ -240,7 +263,7 @@ send_with_html_fallback() {
     if [[ "${kind}" == "document" ]]; then
       send_document "${CURRENT_APK_FILE}" "${plain_text}" plain
     else
-      send_message "${plain_text}" plain
+      send_message "${plain_text}" plain "${reply_to_message_id}"
     fi
     return $?
   fi
@@ -250,13 +273,17 @@ send_with_html_fallback() {
 send_summary_chunks() {
   local html_text="$1"
   local plain_text="$2"
+  local reply_to_message_id="${3:-}"
   local html_chunk=""
   local plain_chunk=""
   local html_candidate
   local plain_candidate
+  local wrapped_candidate
+  local wrapped_chunk
   local i
   local -a html_lines
   local -a plain_lines
+  local current_reply_id="${reply_to_message_id}"
 
   mapfile -t html_lines < <(printf '%s\n' "${html_text}")
   mapfile -t plain_lines < <(printf '%s\n' "${plain_text}")
@@ -270,10 +297,13 @@ send_summary_chunks() {
       plain_candidate="${plain_chunk}"$'\n'"${plain_lines[i]}"
     fi
 
-    if [[ -n "${html_chunk}" ]] && (( ${#html_candidate} > MAX_MESSAGE_CHARS )); then
-      if ! send_with_html_fallback "message" "${html_chunk}" "${plain_chunk}"; then
+    wrapped_candidate="$(wrap_expandable_quote "${html_candidate}")"
+    if [[ -n "${html_chunk}" ]] && (( ${#wrapped_candidate} > MAX_MESSAGE_CHARS )); then
+      wrapped_chunk="$(wrap_expandable_quote "${html_chunk}")"
+      if ! send_with_html_fallback "message" "${wrapped_chunk}" "${plain_chunk}" "${current_reply_id}"; then
         return 1
       fi
+      current_reply_id="${LAST_MESSAGE_ID:-${current_reply_id}}"
       html_chunk="${html_lines[i]}"
       plain_chunk="${plain_lines[i]}"
     else
@@ -283,7 +313,8 @@ send_summary_chunks() {
   done
 
   if [[ -n "${html_chunk}" ]]; then
-    send_with_html_fallback "message" "${html_chunk}" "${plain_chunk}"
+    wrapped_chunk="$(wrap_expandable_quote "${html_chunk}")"
+    send_with_html_fallback "message" "${wrapped_chunk}" "${plain_chunk}" "${current_reply_id}"
   fi
 }
 
@@ -319,7 +350,7 @@ if [[ "${SEND_COMMIT_SUMMARY}" == "true" ]]; then
   SUMMARY_HTML="${COMMIT_LINES_HTML}"
   SUMMARY_PLAIN="${COMMIT_LINES_PLAIN}"
   echo "Sending the complete commit list in Telegram message(s)..."
-  if ! send_summary_chunks "${SUMMARY_HTML}" "${SUMMARY_PLAIN}"; then
+  if ! send_summary_chunks "${SUMMARY_HTML}" "${SUMMARY_PLAIN}" "${LAST_DOCUMENT_MESSAGE_ID}"; then
     echo "Telegram commit summary failed (curl exit ${LAST_CURL_EXIT})." >&2
     echo "Telegram response: ${LAST_RESPONSE}" >&2
     exit "$(failure_exit_code)"
