@@ -311,8 +311,8 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         ownerActivity.refreshGroupTabTitles()
         updateEmptyState()
         ownerActivity.snackbarSuccess(
-            message = remarks,
-            title = getString(R.string.title_alerter_success)
+            message = getString(R.string.toast_delete_success),
+            title = remarks
         )
     }
 

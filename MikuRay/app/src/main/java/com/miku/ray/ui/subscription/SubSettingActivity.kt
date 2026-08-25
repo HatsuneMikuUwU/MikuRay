@@ -279,16 +279,16 @@ class SubSettingActivity : BaseActivity(),
                     viewModel.remove(guid)
                     refreshData()
                     snackbarSuccess(
-                        message = remarks,
-                        title = getString(R.string.title_alerter_success)
+                        message = getString(R.string.toast_delete_success),
+                        title = remarks
                     )
                 }
             } else {
                 viewModel.remove(guid)
                 refreshData()
                 snackbarSuccess(
-                    message = remarks,
-                    title = getString(R.string.title_alerter_success)
+                    message = getString(R.string.toast_delete_success),
+                    title = remarks
                 )
             }
         }

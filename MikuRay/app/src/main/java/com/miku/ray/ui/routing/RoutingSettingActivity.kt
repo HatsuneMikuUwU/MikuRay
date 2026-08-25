@@ -255,8 +255,8 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                 adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
                 updateEmptyState()
                 snackbarSuccess(
-                    message = remarks,
-                    title = getString(R.string.title_alerter_success)
+                    message = getString(R.string.toast_delete_success),
+                    title = remarks
                 )
             }
         }

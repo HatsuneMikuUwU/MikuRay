@@ -241,6 +241,10 @@ class UserAssetActivity : HelperBaseActivity(), AssetMenuBottomSheet.OnAssetMenu
                 file.delete()
                 MmkvManager.removeAssetUrl(guid)
                 initAssets()
+                snackbarSuccess(
+                    message = getString(R.string.toast_delete_success),
+                    title = asset.assetUrl.remarks
+                )
             }
         }
 
