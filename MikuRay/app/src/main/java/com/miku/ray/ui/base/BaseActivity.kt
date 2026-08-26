@@ -33,6 +33,7 @@ import com.miku.ray.helper.CustomDividerItemDecoration
 import com.miku.ray.util.DPIController
 import com.miku.ray.util.FontSizeController
 import com.miku.ray.util.CustomFontManager
+import com.miku.ray.util.GoogleSansFlexManager
 import com.miku.ray.util.WindowBlurUtils
 import com.qmdeve.blurview.widget.BlurView
 import com.miku.ray.util.ThemeStateManager
@@ -88,6 +89,15 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             CustomFontManager.applyToViewTree(typeface, window.decorView)
         }
+        GoogleSansFlexManager.getBoldTypeface()?.let { typeface ->
+            findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)?.apply {
+                setExpandedTitleTypeface(typeface)
+                setCollapsedTitleTypeface(typeface)
+                setExpandedSubtitleTypeface(typeface)
+                setCollapsedSubtitleTypeface(typeface)
+            }
+        }
+        GoogleSansFlexManager.applyToBoldText(window.decorView)
     }
 
     override fun onContentChanged() {
@@ -96,6 +106,7 @@ abstract class BaseActivity : AppCompatActivity() {
         AngApplication.getCustomTypeface(this)?.let { typeface ->
             CustomFontManager.applyToViewTree(typeface, window.decorView)
         }
+        GoogleSansFlexManager.applyToBoldText(window.decorView)
 
         val root = findViewById<android.view.View>(R.id.main_content) ?: return
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->

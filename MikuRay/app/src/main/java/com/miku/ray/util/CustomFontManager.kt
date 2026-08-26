@@ -148,7 +148,10 @@ object CustomFontManager {
     fun applyGlobalOverride(typeface: Typeface) {
         cacheOriginalFonts()
         replaceStaticField("DEFAULT", typeface)
-        replaceStaticField("DEFAULT_BOLD", Typeface.create(typeface, Typeface.BOLD))
+        replaceStaticField(
+            "DEFAULT_BOLD",
+            GoogleSansFlexManager.getBoldTypeface() ?: Typeface.create(typeface, Typeface.BOLD)
+        )
         replaceStaticField("SANS_SERIF", typeface)
         replaceSystemFontMapEntries(typeface)
     }
