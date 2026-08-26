@@ -10,11 +10,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
+import androidx.appcompat.app.AlertDialog
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -28,6 +31,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.miku.ray.AppConfig
 import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.R
@@ -114,7 +118,7 @@ class UiSettingsActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_export_ui_theme -> {
-            exportUiTheme.launch("MikuRay-theme${ThemeShareManager.FILE_EXTENSION}")
+            showThemeExportNameDialog()
             true
         }
         R.id.action_import_ui_theme -> {
@@ -122,6 +126,69 @@ class UiSettingsActivity : BaseActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun showThemeExportNameDialog() {
+        val inputView = layoutInflater.inflate(R.layout.uwu_dialog_edittext, null)
+        val messageView = inputView.findViewById<TextView>(android.R.id.message)
+        val nameInput = inputView.findViewById<TextInputEditText>(android.R.id.edit)
+
+        messageView.setText(R.string.ui_theme_export_name_message)
+        nameInput.hint = getString(R.string.ui_theme_export_name_hint)
+        nameInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+        nameInput.imeOptions = EditorInfo.IME_ACTION_DONE
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setIcon(RemixR.drawable.rmx_design_palette_line)
+            .setTitle(R.string.ui_theme_export_name_title)
+            .setView(inputView)
+            .setPositiveButton(R.string.action_export_ui_theme, null)
+            .setNegativeButton(android.R.string.cancel, null)
+            .showBlur()
+
+        fun submitName() {
+            val name = nameInput.text?.toString()?.trim().orEmpty()
+            if (name.isEmpty()) {
+                nameInput.error = getString(R.string.ui_theme_export_name_error_empty)
+                return
+            }
+
+            dialog.dismiss()
+            exportUiTheme.launch(buildThemeExportFileName(name))
+        }
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            submitName()
+        }
+        nameInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                submitName()
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun buildThemeExportFileName(themeName: String): String {
+        val extension = ThemeShareManager.FILE_EXTENSION
+        val baseName = themeName
+            .trim()
+            .removeSuffix(extension)
+            .trim()
+            .map { character ->
+                when {
+                    character.isLetterOrDigit() || character == ' ' || character == '-' ||
+                        character == '_' || character == '.' -> character
+                    else -> '_'
+                }
+            }
+            .joinToString("")
+            .trim()
+            .trim('.')
+            .ifBlank { "MikuRay-theme" }
+
+        return "$baseName$extension"
     }
 
     private fun confirmThemeImport(uri: Uri) {

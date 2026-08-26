@@ -1065,6 +1065,10 @@ you need."</string>
     <string name="subtitle_mux_settings">Configure connection multiplexing</string>
         <string name="subtitle_settings">App preferences and configuration</string>
     <string name="action_export_ui_theme">Export theme</string>
+    <string name="ui_theme_export_name_title">Name your theme</string>
+    <string name="ui_theme_export_name_message">Enter a name for the theme file you want to export.</string>
+    <string name="ui_theme_export_name_hint">Theme name</string>
+    <string name="ui_theme_export_name_error_empty">Enter a theme name.</string>
     <string name="action_import_ui_theme">Import theme</string>
     <string name="ui_theme_exported">Theme exported successfully.</string>
     <string name="ui_theme_export_failed">Unable to export the theme.</string>

@@ -1035,6 +1035,10 @@
     <string name="subtitle_settings">Настройки и конфигурация приложения</string>
 
     <string name="action_export_ui_theme">Экспорт темы</string>
+    <string name="ui_theme_export_name_title">Назовите тему</string>
+    <string name="ui_theme_export_name_message">Введите имя файла темы, который хотите экспортировать.</string>
+    <string name="ui_theme_export_name_hint">Название темы</string>
+    <string name="ui_theme_export_name_error_empty">Введите название темы.</string>
     <string name="action_import_ui_theme">Импорт темы</string>
     <string name="ui_theme_exported">Тема успешно экспортирована.</string>
     <string name="ui_theme_export_failed">Не удалось экспортировать тему.</string>

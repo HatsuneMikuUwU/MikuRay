@@ -1025,6 +1025,10 @@ yang kamu butuhin."</string>
     <string name="subtitle_settings">Preferensi sama konfigurasi aplikasi</string>
 
     <string name="action_export_ui_theme">Ekspor tema</string>
+    <string name="ui_theme_export_name_title">Kasih nama temanya</string>
+    <string name="ui_theme_export_name_message">Masukkan nama buat file tema yang mau diekspor.</string>
+    <string name="ui_theme_export_name_hint">Nama tema</string>
+    <string name="ui_theme_export_name_error_empty">Isi nama tema dulu.</string>
     <string name="action_import_ui_theme">Impor tema</string>
     <string name="ui_theme_exported">Tema berhasil diekspor.</string>
     <string name="ui_theme_export_failed">Tema tidak dapat diekspor.</string>

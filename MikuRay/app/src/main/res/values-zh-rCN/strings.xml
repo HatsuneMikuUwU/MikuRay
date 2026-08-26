@@ -1014,6 +1014,10 @@
     <string name="subtitle_settings">应用偏好设置与配置</string>
 
     <string name="action_export_ui_theme">导出主题</string>
+    <string name="ui_theme_export_name_title">为主题命名</string>
+    <string name="ui_theme_export_name_message">请输入要导出的主题文件名称。</string>
+    <string name="ui_theme_export_name_hint">主题名称</string>
+    <string name="ui_theme_export_name_error_empty">请输入主题名称。</string>
     <string name="action_import_ui_theme">导入主题</string>
     <string name="ui_theme_exported">主题已成功导出。</string>
     <string name="ui_theme_export_failed">无法导出主题。</string>
