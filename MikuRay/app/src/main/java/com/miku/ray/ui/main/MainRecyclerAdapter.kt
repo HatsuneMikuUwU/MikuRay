@@ -1,12 +1,12 @@
 package com.miku.ray.ui.main
 
-
 import com.miku.ray.remixicon.R as RemixR
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
@@ -73,9 +73,18 @@ class MainRecyclerAdapter(
         data = newData?.toMutableList() ?: mutableListOf()
 
         if (position >= 0 && position in data.indices) {
-            notifyItemChanged(position)
+            notifyServerItemChanged(position)
         } else {
             notifyDataSetChanged()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun notifyServerItemChanged(position: Int) {
+        if (isGridMode || position !in data.indices) {
+            notifyDataSetChanged()
+        } else {
+            notifyItemChanged(position)
         }
     }
 
@@ -87,7 +96,7 @@ class MainRecyclerAdapter(
                 val selectedGuid = MmkvManager.getSelectServer()
                 val position = data.indexOfFirst { it.guid == selectedGuid }
                 if (position >= 0) {
-                    notifyItemChanged(position)
+                    notifyServerItemChanged(position)
                 }
             }
             mainViewModel.isRunning.observe(lifecycleOwner, isRunningObserver!!)
@@ -99,7 +108,7 @@ class MainRecyclerAdapter(
             val selectedGuid = MmkvManager.getSelectServer()
             val position = data.indexOfFirst { it.guid == selectedGuid }
             if (position >= 0) {
-                notifyItemChanged(position)
+                notifyServerItemChanged(position)
             }
         }
     }
@@ -121,11 +130,12 @@ class MainRecyclerAdapter(
             if (statusDrawable is android.graphics.drawable.AnimationDrawable) {
                 statusDrawable.stop()
             }
-            selectedBannerController?.clear(holder.views.layoutIndicator)
+            holder.views.layoutIndicator?.let { selectedBannerController?.clear(it) }
             holder.views.infoContainer.setOnTouchListener(null)
-            holder.views.layoutShare.setOnClickListener(null)
-            holder.views.layoutEdit.setOnClickListener(null)
-            holder.views.layoutRemove.setOnClickListener(null)
+            holder.views.layoutMore?.setOnClickListener(null)
+            holder.views.layoutShare?.setOnClickListener(null)
+            holder.views.layoutEdit?.setOnClickListener(null)
+            holder.views.layoutRemove?.setOnClickListener(null)
         }
         super.onViewRecycled(holder)
     }
@@ -150,7 +160,8 @@ class MainRecyclerAdapter(
             bindNetworkSecurity(holder, profile, isNetSecEnabled)
 
             val aff = MmkvManager.decodeServerAffiliationInfo(guid)
-            holder.views.tvTestResult.text = aff?.getTestDelayString().orEmpty()
+            val testResult = aff?.getTestDelayString().orEmpty()
+            holder.views.tvTestResult.text = testResult
             val countryCode = aff?.countryCode?.trim()?.uppercase()?.takeIf { it.length == 2 }
             val countryFlag = Utils.countryCodeToFlag(countryCode)
             holder.views.tvCountryCode.text = listOf(countryFlag, countryCode)
@@ -159,6 +170,8 @@ class MainRecyclerAdapter(
                 .joinToString(" ")
             holder.views.tvCountryCode.visibility =
                 if (countryCode != null) View.VISIBLE else View.GONE
+            holder.views.layoutTestMetadata?.visibility =
+                if (testResult.isNotEmpty() || countryCode != null) View.VISIBLE else View.GONE
             if ((aff?.testDelayMillis ?: 0L) < 0L) {
                 holder.views.tvTestResult.setTextColor(ContextCompat.getColor(context, R.color.colorPingRed))
             } else {
@@ -203,8 +216,10 @@ class MainRecyclerAdapter(
             }
 
             if (isGridMode) {
-                selectedBannerController?.clear(holder.views.layoutIndicator)
-                holder.views.layoutIndicator.setBackgroundResource(0)
+                holder.views.layoutIndicator?.let { indicator ->
+                    selectedBannerController?.clear(indicator)
+                    indicator.setBackgroundResource(0)
+                }
                 holder.views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
                 
                 if (isSelectedServer) {
@@ -224,17 +239,21 @@ class MainRecyclerAdapter(
                 }.getOrDefault(IndicatorStyle.STYLE_0)
 
                 val bannerController = selectedBannerController
-                if (bannerController != null && bannerController.isEnabled() && bannerController.hasBanner()) {
-                    bannerController.applyTo(holder.views.layoutIndicator)
-                } else {
-                    bannerController?.clear(holder.views.layoutIndicator)
-                    holder.views.layoutIndicator.setBackgroundResource(indicatorStyle.drawableRes)
+                holder.views.layoutIndicator?.let { indicator ->
+                    if (bannerController != null && bannerController.isEnabled() && bannerController.hasBanner()) {
+                        bannerController.applyTo(indicator)
+                    } else {
+                        bannerController?.clear(indicator)
+                        indicator.setBackgroundResource(indicatorStyle.drawableRes)
+                    }
                 }
                 holder.views.layoutCard.strokeWidth = 0
                 holder.views.layoutCard.setCardBackgroundColor(Color.TRANSPARENT)
             } else {
-                selectedBannerController?.clear(holder.views.layoutIndicator)
-                holder.views.layoutIndicator.setBackgroundResource(0)
+                holder.views.layoutIndicator?.let { indicator ->
+                    selectedBannerController?.clear(indicator)
+                    indicator.setBackgroundResource(0)
+                }
                 holder.views.layoutCard.strokeWidth = 0
                 holder.views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
             }
@@ -246,30 +265,37 @@ class MainRecyclerAdapter(
             holder.views.tvSubscription.visibility = isSubVisible
             holder.views.layoutSubscription.visibility = isSubVisible
 
-            holder.views.layoutShare.visibility = View.VISIBLE
-            holder.views.layoutEdit.visibility = View.VISIBLE
-            holder.views.layoutRemove.visibility = View.VISIBLE
-
-            holder.views.layoutShare.setOnClickListener {
-                adapterListener?.onShare(guid, profile, position, false)
-            }
-
-            holder.views.layoutEdit.setOnClickListener {
-                adapterListener?.onEdit(guid, position, profile)
-            }
-
-            holder.views.layoutRemove.setOnClickListener {
-                adapterListener?.onRemove(guid, position)
+            if (holder.views.isGridItem) {
+                holder.views.layoutMore?.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener { anchor ->
+                        showServerActionsMenu(anchor, guid, profile, position)
+                    }
+                }
+            } else {
+                holder.views.layoutShare?.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        adapterListener?.onShare(guid, profile, position, false)
+                    }
+                }
+                holder.views.layoutEdit?.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        adapterListener?.onEdit(guid, position, profile)
+                    }
+                }
+                holder.views.layoutRemove?.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        adapterListener?.onRemove(guid, position)
+                    }
+                }
             }
 
             val gestureDetector = android.view.GestureDetector(
                 context,
                 object : android.view.GestureDetector.SimpleOnGestureListener() {
-                    // onSingleTapUp fires immediately on finger-up instead of
-                    // waiting out the double-tap timeout, so selecting a server
-                    // stays instant. Re-tapping the already-selected server here
-                    // is a no-op (setSelectServer only acts when guid changes),
-                    // so it's safe to let this fire before onDoubleTap resolves.
                     override fun onSingleTapUp(e: android.view.MotionEvent): Boolean {
                         adapterListener?.onSelectServer(guid)
                         return true
@@ -277,8 +303,6 @@ class MainRecyclerAdapter(
 
                     override fun onDoubleTap(e: android.view.MotionEvent): Boolean {
                         if (isSelectedServer) {
-                            // Double-tapping the currently selected server opens
-                            // the pin/unpin dialog instead of re-selecting it.
                             adapterListener?.onPinToggle(guid, position, isPinned)
                         } else {
                             adapterListener?.onSelectServer(guid)
@@ -306,6 +330,39 @@ class MainRecyclerAdapter(
 
     private fun getProtocolName(profile: ProfileItem): String {
         return profile.configType.name
+    }
+
+    private fun showServerActionsMenu(
+        anchor: View,
+        guid: String,
+        profile: ProfileItem,
+        position: Int
+    ) {
+        PopupMenu(anchor.context, anchor).apply {
+            menuInflater.inflate(R.menu.menu_server_item_overflow, menu)
+            setForceShowIcon(true)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_share_server -> {
+                        adapterListener?.onShare(guid, profile, position, false)
+                        true
+                    }
+
+                    R.id.action_edit_server -> {
+                        adapterListener?.onEdit(guid, position, profile)
+                        true
+                    }
+
+                    R.id.action_remove_server -> {
+                        adapterListener?.onRemove(guid, position)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            show()
+        }
     }
 
     private fun getPolicyGroupSubText(context: android.content.Context, profile: ProfileItem): String {
@@ -384,18 +441,28 @@ class MainRecyclerAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun removeServerSub(guid: String, position: Int) {
         val idx = data.indexOfFirst { it.guid == guid }
         if (idx >= 0) {
             data.removeAt(idx)
-            notifyItemRemoved(idx)
-            notifyItemRangeChanged(idx, data.size - idx)
+            if (isGridMode) {
+                notifyDataSetChanged()
+            } else {
+                notifyItemRemoved(idx)
+                notifyItemRangeChanged(idx, data.size - idx)
+            }
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectServer(fromPosition: Int, toPosition: Int) {
-        notifyItemChanged(fromPosition)
-        notifyItemChanged(toPosition)
+        if (isGridMode) {
+            notifyDataSetChanged()
+        } else {
+            if (fromPosition in data.indices) notifyItemChanged(fromPosition)
+            if (toPosition in data.indices) notifyItemChanged(toPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -428,8 +495,9 @@ class MainRecyclerAdapter(
 
     interface MainItemViews {
         val root: View
+        val isGridItem: Boolean
         val layoutCard: com.google.android.material.card.MaterialCardView
-        val layoutIndicator: View
+        val layoutIndicator: View?
         val infoContainer: View
         val tvName: android.widget.TextView
         val vStatusDot: View
@@ -437,12 +505,14 @@ class MainRecyclerAdapter(
         val tvType: com.google.android.material.chip.Chip
         val layoutSubscription: View
         val tvSubscription: com.google.android.material.chip.Chip
-        val layoutShare: View
-        val layoutEdit: View
-        val layoutRemove: View
+        val layoutMore: View?
+        val layoutShare: View?
+        val layoutEdit: View?
+        val layoutRemove: View?
         val tvStatistics: android.widget.TextView
         val tvTestResult: android.widget.TextView
         val tvCountryCode: android.widget.TextView
+        val layoutTestMetadata: View?
         val layoutNetworkSecurity: View
         val tvNetwork: android.widget.TextView
         val tvSecurity: android.widget.TextView
@@ -451,6 +521,7 @@ class MainRecyclerAdapter(
 
     private class ListItemViews(private val b: ItemRecyclerMainBinding) : MainItemViews {
         override val root get() = b.root
+        override val isGridItem = false
         override val layoutCard get() = b.layoutCard
         override val layoutIndicator get() = b.layoutIndicator
         override val infoContainer get() = b.infoContainer
@@ -460,12 +531,14 @@ class MainRecyclerAdapter(
         override val tvType get() = b.tvType
         override val layoutSubscription get() = b.layoutSubscription
         override val tvSubscription get() = b.tvSubscription
+        override val layoutMore: View? = null
         override val layoutShare get() = b.layoutShare
         override val layoutEdit get() = b.layoutEdit
         override val layoutRemove get() = b.layoutRemove
         override val tvStatistics get() = b.tvStatistics
         override val tvTestResult get() = b.tvTestResult
         override val tvCountryCode get() = b.tvCountryCode
+        override val layoutTestMetadata: View? = null
         override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
         override val tvNetwork get() = b.tvNetwork
         override val tvSecurity get() = b.tvSecurity
@@ -474,8 +547,9 @@ class MainRecyclerAdapter(
 
     private class GridItemViews(private val b: ItemRecyclerMainGridBinding) : MainItemViews {
         override val root get() = b.root
+        override val isGridItem = true
         override val layoutCard get() = b.layoutCard
-        override val layoutIndicator get() = b.layoutIndicator
+        override val layoutIndicator: View? = null
         override val infoContainer get() = b.infoContainer
         override val tvName get() = b.tvName
         override val vStatusDot get() = b.vStatusDot
@@ -483,12 +557,14 @@ class MainRecyclerAdapter(
         override val tvType get() = b.tvType
         override val layoutSubscription get() = b.layoutSubscription
         override val tvSubscription get() = b.tvSubscription
-        override val layoutShare get() = b.layoutShare
-        override val layoutEdit get() = b.layoutEdit
-        override val layoutRemove get() = b.layoutRemove
+        override val layoutMore get() = b.layoutMore
+        override val layoutShare: View? = null
+        override val layoutEdit: View? = null
+        override val layoutRemove: View? = null
         override val tvStatistics get() = b.tvStatistics
         override val tvTestResult get() = b.tvTestResult
         override val tvCountryCode get() = b.tvCountryCode
+        override val layoutTestMetadata get() = b.layoutTestMetadata
         override val layoutNetworkSecurity get() = b.layoutNetworkSecurity
         override val tvNetwork get() = b.tvNetwork
         override val tvSecurity get() = b.tvSecurity
@@ -515,7 +591,11 @@ class MainRecyclerAdapter(
         if (fromPosition < data.size && toPosition < data.size) {
             Collections.swap(data, fromPosition, toPosition)
         }
-        notifyItemMoved(fromPosition, toPosition)
+        if (isGridMode) {
+            notifyDataSetChanged()
+        } else {
+            notifyItemMoved(fromPosition, toPosition)
+        }
         return true
     }
 

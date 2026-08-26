@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.core.view.isVisible
 import com.miku.ray.util.showDeleteConfirmDialog
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -57,6 +58,8 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
     companion object {
         private const val ARG_SUB_ID = "subscriptionId"
         private const val SCROLL_BUTTON_AUTO_HIDE_DELAY_MS = 1500L
+        private const val GRID_SPAN_COUNT = 2
+        private const val LIST_SPAN_COUNT = 1
         fun newInstance(subId: String) = GroupServerFragment().apply {
             arguments = Bundle().apply { putString(ARG_SUB_ID, subId) }
         }
@@ -70,9 +73,10 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         hasLoadedData = false
         adapter = MainRecyclerAdapter(mainViewModel, ActivityAdapterListener())
         adapter.setGridMode(isDoubleColumnEnabled())
-        binding.recyclerView.setHasFixedSize(true)
+        // Tinggi item grid dapat berubah ketika metadata opsional disembunyikan.
+        binding.recyclerView.setHasFixedSize(false)
 
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount())
+        binding.recyclerView.layoutManager = createServerLayoutManager(isDoubleColumnEnabled())
         applyGridEdgePadding(isDoubleColumnEnabled())
 
         binding.recyclerView.adapter = adapter
@@ -187,13 +191,30 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     private fun applyGridModeState() {
         val doubleColumnEnabled = isDoubleColumnEnabled()
-        val layoutManager = binding.recyclerView.layoutManager as? GridLayoutManager
-        val desiredSpanCount = if (doubleColumnEnabled) 2 else 1
-        if (layoutManager != null && layoutManager.spanCount != desiredSpanCount) {
-            layoutManager.spanCount = desiredSpanCount
+        val currentLayoutManager = binding.recyclerView.layoutManager
+        val needsLayoutManagerChange = when {
+            doubleColumnEnabled -> currentLayoutManager !is StaggeredGridLayoutManager ||
+                currentLayoutManager.spanCount != GRID_SPAN_COUNT
+            else -> currentLayoutManager !is GridLayoutManager ||
+                currentLayoutManager.spanCount != LIST_SPAN_COUNT
         }
+
+        if (needsLayoutManagerChange) {
+            binding.recyclerView.layoutManager = createServerLayoutManager(doubleColumnEnabled)
+        }
+
         adapter.setGridMode(doubleColumnEnabled)
         applyGridEdgePadding(doubleColumnEnabled)
+    }
+
+    private fun createServerLayoutManager(gridMode: Boolean): RecyclerView.LayoutManager {
+        return if (gridMode) {
+            StaggeredGridLayoutManager(GRID_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            }
+        } else {
+            GridLayoutManager(requireContext(), LIST_SPAN_COUNT)
+        }
     }
 
     private fun isDoubleColumnEnabled(): Boolean {
@@ -202,10 +223,6 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     private fun isHideScrollButtonsEnabled(): Boolean {
         return MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_SCROLL_BUTTONS, false)
-    }
-
-    private fun spanCount(): Int {
-        return if (isDoubleColumnEnabled()) 2 else 1
     }
 
     private fun updateEmptyState() {
@@ -395,14 +412,16 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         val recyclerView = binding.recyclerView
 
         if (position >= 0) {
-            val layoutManager = recyclerView.layoutManager as? GridLayoutManager
-
-            if (layoutManager != null) {
-                recyclerView.post {
+            when (val layoutManager = recyclerView.layoutManager) {
+                is GridLayoutManager -> recyclerView.post {
                     layoutManager.scrollToPositionWithOffset(position, recyclerView.height / 3)
                 }
-            } else {
-                recyclerView.smoothScrollToPosition(position)
+
+                is StaggeredGridLayoutManager -> recyclerView.post {
+                    layoutManager.scrollToPositionWithOffset(position, recyclerView.height / 3)
+                }
+
+                else -> recyclerView.smoothScrollToPosition(position)
             }
         } else {
             ownerActivity.snackbarDefault(getString(R.string.toast_server_not_found_in_group), title = getString(R.string.title_alerter_info))
