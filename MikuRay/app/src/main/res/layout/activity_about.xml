@@ -1563,6 +1563,50 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/layout_character_license"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="?colorCard"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="0.0dip"
+                app:strokeWidth="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="@string/title_character_license"
+                        android:textAppearance="?textAppearanceTitleMedium"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:text="@string/summary_character_license"
+                        android:textAppearance="?textAppearanceTitleSmall"
+                        android:textColor="?colorOnSurfaceVariant"
+                        android:textColorLink="?colorPrimary"
+                        android:lineSpacingExtra="4dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

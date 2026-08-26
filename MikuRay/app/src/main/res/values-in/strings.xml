@@ -865,6 +865,9 @@ yang kamu butuhin."</string>
     <string name="uwu_about_miku_title">Siapa itu Hatsune Miku?</string>
     <string name="uwu_about_miku_summary">Hatsune Miku itu penyanyi virtual berbasis Vocaloid yang dirilis sama Crypton Future Media, kode namanya CV01. Dikenal gara-gara rambut twintail panjang warna biru kehijauan sama suaranya yang jernih, dia itu cewek 16 tahun dan idola virtual yang terkenal sedunia. Dia aktif di musik, konser, dan anime, plus disayang banget sama fans-fansnya.</string>
 
+    <string name="title_character_license">Lisensi Karakter</string>
+    <string name="summary_character_license">Hatsune Miku sama karakter Vocaloid lainnya itu punya Crypton Future Media, Inc. Aplikasi ini make mereka berdasarkan Piapro Character License (PCL), yang ngebolehin fan pake gratis buat karya non-komersial. Kalo mau dipake buat komersial, harus minta izin sendiri ke Crypton.\n\nhttps://piapro.net/en_for_creators.html</string>
+
     <string name="uwu_random_text_1">Hari yang pas buat nyanyi!</string>
     <string name="uwu_random_text_2">Semangat terus hari ini, Master!</string>
     <string name="uwu_random_text_3">"Ayo berjuang! 39!"</string>

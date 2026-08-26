@@ -874,6 +874,9 @@
     <string name="uwu_about_miku_title">Кто такая Хацунэ Мику?</string>
     <string name="uwu_about_miku_summary">Хацунэ Мику — виртуальная певица на основе Vocaloid, выпущенная компанией Crypton Future Media под кодовым названием CV01. Известна своими длинными бирюзовыми хвостиками и чистым голосом — 16-летняя девушка и всемирно известный виртуальный идол. Она активна в музыке, концертах и аниме, и горячо любима своими фанатами.</string>
 
+    <string name="title_character_license">Лицензия персонажа</string>
+    <string name="summary_character_license">Хацунэ Мику и другие персонажи Vocaloid принадлежат компании Crypton Future Media, Inc. Приложение использует их по лицензии Piapro Character License (PCL), которая разрешает бесплатное некоммерческое использование фанатами. Для коммерческого использования нужно отдельное разрешение Crypton.\n\nhttps://piapro.net/en_for_creators.html</string>
+
     <string name="uwu_random_text_1">Прекрасный день для песни!</string>
     <string name="uwu_random_text_2">Хорошего дня, мастер!</string>
     <string name="uwu_random_text_3">"Давай постараемся! 39!"</string>

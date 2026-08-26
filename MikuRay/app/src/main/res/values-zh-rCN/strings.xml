@@ -854,6 +854,9 @@
     <string name="uwu_about_miku_title">谁是 Hatsune Miku？</string>
     <string name="uwu_about_miku_summary">初音未来(Hatsune Miku) 是 Crypton Future Media 发布的基于 Vocaloid 制作的虚拟歌手, 代号CV01. 以青绿色的长双马尾和清亮嗓音著称, 人设为16岁少女, 是全球知名虚拟偶像, 广泛活跃于音乐、演唱会及动画, 深受粉丝们喜爱.</string>
 
+    <string name="title_character_license">角色授权</string>
+    <string name="summary_character_license">初音未来及其他 Vocaloid 角色的版权归 Crypton Future Media, Inc. 所有。本应用依据 Piapro 角色授权协议(PCL)使用这些角色，该协议允许粉丝免费用于非商业用途。商业用途需另行获得 Crypton 的许可。\n\nhttps://piapro.net/en_for_creators.html</string>
+
     <string name="uwu_random_text_1">适合唱歌的好天气！</string>
     <string name="uwu_random_text_2">今天也要开心哦，Master！</string>
     <string name="uwu_random_text_3">"一起加油吧！39！"</string>

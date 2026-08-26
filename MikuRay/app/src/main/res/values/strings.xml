@@ -898,6 +898,9 @@ you need."</string>
     <string name="uwu_about_miku_title">Who is Hatsune Miku?</string>
     <string name="uwu_about_miku_summary">Hatsune Miku is a Vocaloid-based virtual singer released by Crypton Future Media, code-named CV01. Known for her long turquoise twintails and clear voice, she is a 16-year-old girl and a globally renowned virtual idol. She is active in music, concerts, and anime, and is deeply loved by her fans.</string>
 
+    <string name="title_character_license">Character License</string>
+    <string name="summary_character_license">Hatsune Miku and other Vocaloid characters are the property of Crypton Future Media, Inc. This app uses them under the Piapro Character License (PCL), which permits free, non-commercial fan use. Commercial use requires separate permission from Crypton.\n\nhttps://piapro.net/en_for_creators.html</string>
+
     <string name="uwu_random_text_1">Beautiful day for a song!</string>
     <string name="uwu_random_text_2">Have a great day, Master!</string>
     <string name="uwu_random_text_3">"Let\'s do our best! 39!"</string>
