@@ -183,6 +183,7 @@ class UiSettingsActivity : BaseActivity() {
         private val disableHomeBanner by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_DISABLE_HOME_BANNER) }
         private val trueBlack by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_TRUE_BLACK) }
         private val enableBlur by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_ENABLE_BLUR) }
+        private val useSystemBlur by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_USE_SYSTEM_BLUR) }
         private val blurBottomStatus by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_BLUR_BOTTOM_STATUS) }
         private val appLanguage by lazy { findPreference<ListPreference>(AppConfig.PREF_LANGUAGE) }
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
@@ -493,6 +494,14 @@ class UiSettingsActivity : BaseActivity() {
 
             enableBlur?.setOnPreferenceChangeListener { _, newValue ->
                 MmkvManager.encodeSettings(AppConfig.PREF_ENABLE_BLUR, newValue as Boolean)
+                true
+            }
+
+            useSystemBlur?.setOnPreferenceChangeListener { _, newValue ->
+                MmkvManager.encodeSettings(AppConfig.PREF_USE_SYSTEM_BLUR, newValue as Boolean)
+                val savedRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS)
+                val savedRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
+                blurIntensity?.updateSummary(savedRadius, savedRounds)
                 true
             }
 
