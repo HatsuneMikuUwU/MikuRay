@@ -1572,11 +1572,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="?colorCard"
-                app:cardCornerRadius="19dp"
+                app:cardCornerRadius="28dp"
                 app:cardElevation="0.0dip"
                 app:strokeWidth="0dp"
                 app:cardPreventCornerOverlap="false"
-                app:contentPadding="16dp">
+                app:contentPadding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
