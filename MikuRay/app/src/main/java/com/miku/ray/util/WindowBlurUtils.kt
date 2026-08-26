@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -17,6 +18,7 @@ import com.miku.ray.handler.MmkvManager
 object WindowBlurUtils {
 
     private const val BLUR_OVERLAY_ID = 2100000000
+    const val SYSTEM_BLUR_DIM_AMOUNT = 0.24f
 
     fun applyWindowBlur(window: Window?) {
         if (window == null) return
@@ -30,6 +32,15 @@ object WindowBlurUtils {
 
         try {
             val context = window.context
+            val blurRadius = MmkvManager.decodeSettingsInt(
+                AppConfig.PREF_BLUR_RADIUS,
+                AppConfig.DEFAULT_BLUR_RADIUS
+            ).toFloat()
+            if (shouldUseSystemBlur() && tryApplyNativeWindowBlur(window, blurRadius)) {
+                removeFallbackBlurOverlay(window)
+                return
+            }
+
             val activity = context.getActivity() ?: return
             val decorView = activity.window?.decorView as? ViewGroup ?: return
 
@@ -44,7 +55,6 @@ object WindowBlurUtils {
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
 
-                val blurRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS).toFloat()
                 val blurRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
                 setBlurRadius(blurRadius)
                 setBlurRounds(blurRounds)
@@ -76,6 +86,10 @@ object WindowBlurUtils {
 
     fun updateWindowBlur(window: Window?, radius: Float, rounds: Int) {
         if (window == null) return
+        if (shouldUseSystemBlur() && tryApplyNativeWindowBlur(window, radius)) {
+            removeFallbackBlurOverlay(window)
+            return
+        }
         try {
             val activity = window.context.getActivity() ?: return
             val decorView = activity.window?.decorView as? ViewGroup ?: return
@@ -89,6 +103,48 @@ object WindowBlurUtils {
 
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    /** Returns true only when the user selected native blur and Android can apply it now. */
+    fun isSystemBlurAvailable(context: Context): Boolean {
+        if (!shouldUseSystemBlur() || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return false
+        return try {
+            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+                ?: return false
+            windowManager.isCrossWindowBlurEnabled
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun shouldUseSystemBlur(): Boolean =
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_SYSTEM_BLUR, true)
+
+    /**
+     * Uses Android 12+ cross-window blur when the system exposes it. This mirrors the adaptive
+     * strategy used by Smartspacer while retaining the existing BlurView path for older devices
+     * and systems that disable cross-window blur.
+     */
+    private fun tryApplyNativeWindowBlur(window: Window, radius: Float): Boolean {
+        if (!isSystemBlurAvailable(window.context)) return false
+        return try {
+            window.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+            window.attributes = window.attributes.apply {
+                blurBehindRadius = radius.toInt().coerceAtLeast(0)
+                dimAmount = SYSTEM_BLUR_DIM_AMOUNT
+            }
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun removeFallbackBlurOverlay(window: Window) {
+        try {
+            val decorView = window.context.getActivity()?.window?.decorView as? ViewGroup ?: return
+            decorView.findViewById<View>(BLUR_OVERLAY_ID)?.let(decorView::removeView)
+        } catch (_: Exception) {
         }
     }
 }

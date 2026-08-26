@@ -1,14 +1,17 @@
 package com.miku.ray.ui.base
 
+import android.app.Dialog
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +43,10 @@ import com.miku.ray.util.ThemeStateManager
 
 abstract class BaseActivity : AppCompatActivity() {
     private var loadingOverlay: FrameLayout? = null
+    private var loadingBlurMode: LoadingBlurMode? = null
+    private var systemLoadingDialog: Dialog? = null
+
+    private enum class LoadingBlurMode { BLUR_VIEW, DIM }
 
     private lateinit var themeStateManager: ThemeStateManager
 
@@ -251,7 +258,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun getOrCreateLoadingOverlay(): FrameLayout {
-        loadingOverlay?.let { return it }
+        val blurMode = resolveFallbackLoadingBlurMode()
+        loadingOverlay?.let { existingOverlay ->
+            if (loadingBlurMode == blurMode) return existingOverlay
+            (existingOverlay.parent as? ViewGroup)?.removeView(existingOverlay)
+            loadingOverlay = null
+        }
 
         val overlay = FrameLayout(this@BaseActivity).apply {
             layoutParams = ViewGroup.LayoutParams(
@@ -262,71 +274,143 @@ abstract class BaseActivity : AppCompatActivity() {
             isFocusable = true
             elevation = 0f
 
-            val isBlurEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_BLUR, false)
-
-            if (isBlurEnabled) {
-                val blurView = BlurView(this@BaseActivity, null).apply {
-                    layoutParams = FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    )
-                    setBlurRadius(MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_RADIUS, AppConfig.DEFAULT_BLUR_RADIUS).toFloat())
-                    setBlurRounds(MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS))
-                    setOverlayColor(Color.argb(120, 0, 0, 0))
+            when (blurMode) {
+                LoadingBlurMode.BLUR_VIEW -> {
+                    val blurView = BlurView(this@BaseActivity, null).apply {
+                        layoutParams = FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.MATCH_PARENT
+                        )
+                        setBlurRadius(
+                            MmkvManager.decodeSettingsInt(
+                                AppConfig.PREF_BLUR_RADIUS,
+                                AppConfig.DEFAULT_BLUR_RADIUS
+                            ).toFloat()
+                        )
+                        setBlurRounds(
+                            MmkvManager.decodeSettingsInt(
+                                AppConfig.PREF_BLUR_ROUNDS,
+                                AppConfig.DEFAULT_BLUR_ROUNDS
+                            )
+                        )
+                        setOverlayColor(Color.argb(120, 0, 0, 0))
+                    }
+                    addView(blurView)
                 }
-                addView(blurView)
-            } else {
-                setBackgroundColor(Color.argb(120, 0, 0, 0))
+                LoadingBlurMode.DIM -> setBackgroundColor(Color.argb(120, 0, 0, 0))
             }
 
-            val customLoadingView = LayoutInflater.from(this@BaseActivity)
-                .inflate(R.layout.layout_custom_loading, this, false)
-
-            val params = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                gravity = Gravity.CENTER
-            }
-            addView(customLoadingView, params)
+            addLoadingIndicator(this)
             visibility = View.GONE
         }
 
         val decorView = window.decorView as ViewGroup
         decorView.addView(overlay)
         loadingOverlay = overlay
-
+        loadingBlurMode = blurMode
         return overlay
+    }
+
+    private fun resolveFallbackLoadingBlurMode(): LoadingBlurMode =
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_BLUR, false)) {
+            LoadingBlurMode.BLUR_VIEW
+        } else {
+            LoadingBlurMode.DIM
+        }
+
+    private fun addLoadingIndicator(container: FrameLayout) {
+        val customLoadingView = LayoutInflater.from(this@BaseActivity)
+            .inflate(R.layout.layout_custom_loading, container, false)
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+        container.addView(customLoadingView, params)
+    }
+
+    private fun showSystemLoadingDialog() {
+        if (systemLoadingDialog?.isShowing == true) return
+        dismissFallbackLoadingOverlay()
+        systemLoadingDialog?.dismiss()
+
+        val content = FrameLayout(this@BaseActivity).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+            isFocusable = true
+            addLoadingIndicator(this)
+        }
+        val dialog = Dialog(this@BaseActivity).apply {
+            setCancelable(false)
+            setCanceledOnTouchOutside(false)
+            setContentView(content)
+            show()
+            window?.apply {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+                )
+                WindowBlurUtils.applyWindowBlur(this)
+            }
+        }
+        systemLoadingDialog = dialog
+    }
+
+    private fun dismissSystemLoadingDialog() {
+        systemLoadingDialog?.let { dialog ->
+            try {
+                if (dialog.isShowing) dialog.dismiss()
+            } catch (_: Exception) {
+            }
+        }
+        systemLoadingDialog = null
+    }
+
+    private fun dismissFallbackLoadingOverlay() {
+        loadingOverlay?.let { overlay ->
+            (overlay.parent as? ViewGroup)?.removeView(overlay)
+        }
+        loadingOverlay = null
+        loadingBlurMode = null
     }
 
     protected fun showLoading() {
         runOnUiThread {
-            val overlay = getOrCreateLoadingOverlay()
-            if (overlay.visibility != View.VISIBLE) {
-                overlay.visibility = View.VISIBLE
+            if (WindowBlurUtils.isSystemBlurAvailable(this@BaseActivity)) {
+                showSystemLoadingDialog()
+            } else {
+                dismissSystemLoadingDialog()
+                val overlay = getOrCreateLoadingOverlay()
+                if (overlay.visibility != View.VISIBLE) {
+                    overlay.visibility = View.VISIBLE
+                }
             }
         }
     }
 
     protected fun hideLoading() {
         runOnUiThread {
-            loadingOverlay?.let {
-                if (it.visibility == View.VISIBLE) {
-                    it.visibility = View.GONE
+            dismissSystemLoadingDialog()
+            loadingOverlay?.let { overlay ->
+                if (overlay.visibility == View.VISIBLE) {
+                    overlay.visibility = View.GONE
                 }
             }
         }
     }
 
     protected fun isLoadingVisible(): Boolean {
-        return loadingOverlay?.visibility == View.VISIBLE
+        return systemLoadingDialog?.isShowing == true || loadingOverlay?.visibility == View.VISIBLE
     }
 
     override fun onDestroy() {
+        dismissSystemLoadingDialog()
+        dismissFallbackLoadingOverlay()
         super.onDestroy()
-        loadingOverlay?.let {
-            (it.parent as? ViewGroup)?.removeView(it)
-        }
-        loadingOverlay = null
     }
 }

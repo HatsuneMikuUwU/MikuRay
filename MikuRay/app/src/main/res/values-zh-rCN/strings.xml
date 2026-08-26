@@ -944,6 +944,7 @@
     <string name="blur_intensity_radius_label">模糊半径 (2–100)</string>
     <string name="blur_intensity_rounds_label">模糊迭代次数 (1–15)</string>
     <string name="summary_blur_intensity_value">半径: %1$d · 迭代: %2$d</string>
+    <string name="summary_blur_intensity_system_value">半径: %1$d · 系统模糊</string>
     <string name="pref_blur_bottom_intensity">底部卡片模糊强度</string>
     <string name="blur_bottom_radius_label">模糊半径 (1–50)</string>
     <string name="blur_bottom_alpha_label">背景不透明度 (0–100%)</string>
@@ -1016,4 +1017,6 @@
     <string name="ui_theme_import_message">此设备上的所有界面设置、横幅和自定义字体都将被所选主题替换。</string>
     <string name="ui_theme_imported">主题已成功导入。正在更新外观。</string>
     <string name="ui_theme_import_failed">无法导入主题：%1$s</string>
+    <string name="title_pref_use_system_blur">使用系统模糊</string>
+    <string name="summary_pref_use_system_blur">可用时使用原生 Android 窗口模糊；关闭此选项以改用 MikuRay BlurView。</string>
 </resources>

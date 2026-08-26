@@ -993,6 +993,7 @@ you need."</string>
     <string name="blur_intensity_radius_label">Blur Radius (2–100)</string>
     <string name="blur_intensity_rounds_label">Blur Iterations (1–15)</string>
     <string name="summary_blur_intensity_value">Radius: %1$d · Iterations: %2$d</string>
+    <string name="summary_blur_intensity_system_value">Radius: %1$d · System blur</string>
     <string name="pref_blur_bottom_intensity">Bottom Card Blur Intensity</string>
     <string name="blur_bottom_radius_label">BlurView Radius (1–50)</string>
     <string name="blur_bottom_alpha_label">Background Opacity (0–100%)</string>
@@ -1067,4 +1068,6 @@ you need."</string>
     <string name="ui_theme_import_message">All UI settings, banners, and custom fonts on this device will be replaced by the selected theme.</string>
     <string name="ui_theme_imported">Theme imported successfully. Updating the appearance.</string>
     <string name="ui_theme_import_failed">Unable to import the theme: %1$s</string>
+    <string name="title_pref_use_system_blur">Use system blur</string>
+    <string name="summary_pref_use_system_blur">Use native Android window blur when available; turn off to use MikuRay BlurView instead.</string>
 </resources>

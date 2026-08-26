@@ -26,6 +26,7 @@
         app:tickVisibilityMode="hidden" />
 
     <TextView
+        android:id="@+id/label_blur_rounds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -45,6 +46,7 @@
         app:tickVisibilityMode="hidden" />
 
      <TextView
+        android:id="@+id/blur_rounds_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

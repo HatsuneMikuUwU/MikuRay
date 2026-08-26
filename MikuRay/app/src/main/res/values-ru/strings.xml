@@ -965,6 +965,7 @@
     <string name="blur_intensity_radius_label">Радиус размытия (2–100)</string>
     <string name="blur_intensity_rounds_label">Итерации размытия (1–15)</string>
     <string name="summary_blur_intensity_value">Радиус: %1$d · Итерации: %2$d</string>
+    <string name="summary_blur_intensity_system_value">Радиус: %1$d · Системное размытие</string>
     <string name="pref_blur_bottom_intensity">Интенсивность размытия нижней карточки</string>
     <string name="blur_bottom_radius_label">Радиус BlurView (1–50)</string>
     <string name="blur_bottom_alpha_label">Непрозрачность фона (0–100%)</string>
@@ -1037,4 +1038,6 @@
     <string name="ui_theme_import_message">Все настройки интерфейса, баннеры и пользовательские шрифты на этом устройстве будут заменены выбранной темой.</string>
     <string name="ui_theme_imported">Тема успешно импортирована. Обновление оформления.</string>
     <string name="ui_theme_import_failed">Не удалось импортировать тему: %1$s</string>
+    <string name="title_pref_use_system_blur">Использовать системное размытие</string>
+    <string name="summary_pref_use_system_blur">Использовать нативное размытие окон Android, если оно доступно; выключите, чтобы использовать BlurView MikuRay.</string>
 </resources>

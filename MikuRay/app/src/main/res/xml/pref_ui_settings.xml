@@ -359,6 +359,16 @@
             android:title="@string/title_pref_enable_blur"
             android:summary="@string/summary_pref_enable_blur" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/rmx_blur_line"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="true"
+            android:dependency="pref_enable_blur"
+            android:key="pref_use_system_blur"
+            android:title="@string/title_pref_use_system_blur"
+            android:summary="@string/summary_pref_use_system_blur" />
+
         <com.miku.ray.ui.dialog.BlurIntensityDialog
             android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_mid"

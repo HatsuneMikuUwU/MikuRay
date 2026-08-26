@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -37,6 +38,14 @@ class BlurIntensityDialog @JvmOverloads constructor(
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_blur_intensity, null)
         val sliderRadius = dialogView.findViewById<Slider>(R.id.slider_blur_radius)
         val sliderRounds = dialogView.findViewById<Slider>(R.id.slider_blur_rounds)
+        val roundsLabel = dialogView.findViewById<View>(R.id.label_blur_rounds)
+        val roundsWarning = dialogView.findViewById<View>(R.id.blur_rounds_warning)
+        val isUsingSystemBlur = WindowBlurUtils.isSystemBlurAvailable(context)
+        if (isUsingSystemBlur) {
+            roundsLabel.visibility = View.GONE
+            sliderRounds.visibility = View.GONE
+            roundsWarning.visibility = View.GONE
+        }
 
         sliderRadius.value = originalRadius.toFloat().coerceIn(2f, 100f)
         sliderRounds.value = originalRounds.toFloat().coerceIn(1f, 15f)
@@ -58,9 +67,11 @@ class BlurIntensityDialog @JvmOverloads constructor(
                 WindowBlurUtils.updateWindowBlur(dialog.window, value, sliderRounds.value.toInt())
             }
         }
-        sliderRounds.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) {
-                WindowBlurUtils.updateWindowBlur(dialog.window, sliderRadius.value, value.toInt())
+        if (!isUsingSystemBlur) {
+            sliderRounds.addOnChangeListener { _, value, fromUser ->
+                if (fromUser) {
+                    WindowBlurUtils.updateWindowBlur(dialog.window, sliderRadius.value, value.toInt())
+                }
             }
         }
 
@@ -98,6 +109,10 @@ class BlurIntensityDialog @JvmOverloads constructor(
     }
 
     fun updateSummary(radius: Int, rounds: Int) {
-        summary = context.getString(R.string.summary_blur_intensity_value, radius, rounds)
+        summary = if (WindowBlurUtils.isSystemBlurAvailable(context)) {
+            context.getString(R.string.summary_blur_intensity_system_value, radius)
+        } else {
+            context.getString(R.string.summary_blur_intensity_value, radius, rounds)
+        }
     }
 }

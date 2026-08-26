@@ -57,6 +57,7 @@ object ThemeShareManager {
         AppConfig.PREF_APP_FONT_USE_CUSTOM,
         AppConfig.PREF_SEARCH_CHIP_GRADIENT,
         AppConfig.PREF_ENABLE_BLUR,
+        AppConfig.PREF_USE_SYSTEM_BLUR,
         AppConfig.PREF_BLUR_BOTTOM_STATUS,
         AppConfig.PREF_DISABLE_HOME_BANNER,
         AppConfig.PREF_ENABLE_PARTICLES_SHEET,
@@ -166,12 +167,19 @@ object ThemeShareManager {
     }
 
     private fun exportSettings(): JSONObject = JSONObject().apply {
-        booleanKeys.forEach { key -> putTyped(key, "boolean", MmkvManager.decodeSettingsBool(key, false)) }
+        booleanKeys.forEach { key ->
+            putTyped(key, "boolean", MmkvManager.decodeSettingsBool(key, defaultBooleanValue(key)))
+        }
         intKeys.forEach { key -> putTyped(key, "int", MmkvManager.decodeSettingsInt(key, 0)) }
         floatKeys.forEach { key -> putTyped(key, "float", MmkvManager.decodeSettingsFloat(key, 0f)) }
         stringKeys.forEach { key ->
             MmkvManager.decodeSettingsString(key)?.let { putTyped(key, "string", it) }
         }
+    }
+
+    private fun defaultBooleanValue(key: String): Boolean = when (key) {
+        AppConfig.PREF_USE_SYSTEM_BLUR -> true
+        else -> false
     }
 
     private fun JSONObject.putTyped(key: String, type: String, value: Any) {

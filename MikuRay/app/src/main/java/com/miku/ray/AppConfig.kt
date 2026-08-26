@@ -121,6 +121,7 @@ object AppConfig {
     const val PREF_CUSTOM_COLOR = "pref_custom_color"
     const val PREF_USE_CUSTOM_COLOR = "pref_use_custom_color"
     const val PREF_ENABLE_BLUR = "pref_enable_blur"
+    const val PREF_USE_SYSTEM_BLUR = "pref_use_system_blur"
     const val PREF_BLUR_BOTTOM_STATUS = "pref_blur_bottom_status"
     const val PREF_BLUR_INTENSITY = "pref_blur_intensity"
     const val PREF_BLUR_RADIUS = "pref_blur_radius"
