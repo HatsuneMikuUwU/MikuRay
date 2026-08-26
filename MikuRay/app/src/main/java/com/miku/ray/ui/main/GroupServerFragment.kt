@@ -353,13 +353,14 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     private fun setSelectServer(guid: String) {
         val selected = MmkvManager.getSelectServer()
-        if (guid != selected) {
-            MmkvManager.setSelectServer(guid)
-            val fromPosition = mainViewModel.getPosition(selected.orEmpty())
-            val toPosition = mainViewModel.getPosition(guid)
-            adapter.setSelectServer(fromPosition, toPosition)
+        if (!mainViewModel.beginServerRestart(guid)) return
 
-            LauncherManager.restartService(ownerActivity)
+        val fromPosition = mainViewModel.getPosition(selected.orEmpty())
+        val toPosition = mainViewModel.getPosition(guid)
+        adapter.setSelectServer(fromPosition, toPosition)
+
+        LauncherManager.restartService(ownerActivity) { handled ->
+            mainViewModel.onServerRestartRequestResult(guid, handled)
         }
     }
 

@@ -17,6 +17,7 @@ import com.miku.ray.contracts.ServiceControl
 import com.miku.ray.dto.OutboundTrafficStat
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.BrowserDialerMode
+import com.miku.ray.extension.delay
 import com.miku.ray.extension.isNotNullEmpty
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.NotificationManager
@@ -29,10 +30,10 @@ import com.miku.ray.service.NetworkMonitor
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.Utils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import com.miku.ray.extension.delay
 import kotlinx.coroutines.launch
 import kotlin.jvm.Volatile
 import libv2ray.CoreCallbackHandler
@@ -42,6 +43,9 @@ import java.io.File
 import java.net.InetSocketAddress
 
 object CoreServiceManager {
+
+    private const val RESTART_STOP_TIMEOUT_MS = 5_000
+    private const val RESTART_STOP_POLL_INTERVAL_MS = 50
 
     private val coreController: CoreController = CoreNativeManager.newCoreController(CoreCallback())
     private val mMsgReceive = ReceiveMessageHandler()
@@ -53,6 +57,8 @@ object CoreServiceManager {
 
     @Volatile
     private var isReloading = false
+
+    private val serviceRestartLifecycle = ServiceRestartLifecycle()
 
     private var currentVpnInterface: ParcelFileDescriptor? = null
 
@@ -95,7 +101,7 @@ object CoreServiceManager {
         } catch (e: Exception) {
             val message = e.message?.takeUnless { it.isBlank() } ?: e.javaClass.simpleName
             LogUtil.e(AppConfig.TAG, "StartCore-Manager: $message", e)
-            MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_FAILURE, message)
+            reportStartFailure(service, message)
             NotificationManager.cancelNotification()
             return false
         }
@@ -175,7 +181,8 @@ object CoreServiceManager {
         }
 
         if (!isReload) {
-            MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_SUCCESS, "")
+            val restarted = serviceRestartLifecycle.completeCurrent()
+            MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_SUCCESS, restarted)
         }
         NotificationManager.startSpeedNotification()
         LogUtil.i(AppConfig.TAG, "StartCore-Manager: Core started successfully")
@@ -204,7 +211,9 @@ object CoreServiceManager {
             browserDialer = null
         }
 
-        MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_STOP_SUCCESS, "")
+        if (!serviceRestartLifecycle.isActive()) {
+            MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_STOP_SUCCESS, "")
+        }
         NotificationManager.cancelNotification()
 
         try {
@@ -335,6 +344,33 @@ object CoreServiceManager {
         return serviceControl?.getService()
     }
 
+    /** Completes a pending restart and reports a terminal start failure to the UI. */
+    internal fun reportStartFailure(service: Service, message: String) {
+        serviceRestartLifecycle.completeCurrent()
+        MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_FAILURE, message)
+    }
+
+    /** Reports a failure only when it belongs to the restart operation that is still active. */
+    private fun reportRestartFailure(
+        service: Service,
+        token: ServiceRestartLifecycle.Token,
+        message: String,
+    ) {
+        if (serviceRestartLifecycle.complete(token)) {
+            MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_FAILURE, message)
+        }
+    }
+
+    /** Waits for the asynchronous native-core shutdown before starting its replacement. */
+    private suspend fun waitForCoreToStop(): Boolean {
+        var waitedMs = 0
+        while (isRunning() && waitedMs < RESTART_STOP_TIMEOUT_MS) {
+            delay(RESTART_STOP_POLL_INTERVAL_MS)
+            waitedMs += RESTART_STOP_POLL_INTERVAL_MS
+        }
+        return !isRunning()
+    }
+
     private class CoreCallback : CoreCallbackHandler {
         override fun startup(): Long {
             LogUtil.i(AppConfig.TAG, "StartCore-Manager: CoreCallback startup")
@@ -410,6 +446,7 @@ object CoreServiceManager {
 
                 AppConfig.MSG_STATE_STOP -> {
                     LogUtil.i(AppConfig.TAG, "StartCore-Manager: Stop service")
+                    serviceRestartLifecycle.cancel()
                     serviceControl.stopService()
                 }
 
@@ -420,14 +457,54 @@ object CoreServiceManager {
                     if (isOrderedBroadcast) resultCode = Activity.RESULT_OK
 
                     val pendingResult = goAsync()
-                    backgroundScope.launch {
-                        try {
-                            serviceControl.stopService()
-                            delay(500L)
-                            LauncherManager.startService(serviceControl.getService())
-                        } finally {
-                            pendingResult.finish()
+                    val launched = try {
+                        serviceRestartLifecycle.launch(
+                            onStarting = {
+                                MessageUtil.sendMsg2UI(
+                                    serviceControl.getService(),
+                                    AppConfig.MSG_STATE_RESTART,
+                                    "",
+                                )
+                            },
+                        ) { token ->
+                            try {
+                                serviceControl.stopService()
+                                if (!waitForCoreToStop()) {
+                                    val message = "Timed out waiting for core to stop"
+                                    LogUtil.e(AppConfig.TAG, "StartCore-Manager: $message")
+                                    reportRestartFailure(serviceControl.getService(), token, message)
+                                    return@launch
+                                }
+                                if (!serviceRestartLifecycle.isCurrent(token)) return@launch
+                                val startRequested = LauncherManager.startServiceAfterRestart(
+                                    serviceControl.getService(),
+                                )
+                                if (!startRequested) {
+                                    reportRestartFailure(serviceControl.getService(), token, "")
+                                }
+                            } catch (e: CancellationException) {
+                                LogUtil.i(AppConfig.TAG, "StartCore-Manager: Restart canceled")
+                                throw e
+                            } catch (e: Exception) {
+                                val message = e.message?.takeUnless { it.isBlank() }
+                                    ?: e.javaClass.simpleName
+                                LogUtil.e(AppConfig.TAG, "StartCore-Manager: Restart failed: $message", e)
+                                reportRestartFailure(serviceControl.getService(), token, message)
+                            } finally {
+                                pendingResult.finish()
+                            }
                         }
+                    } catch (e: Exception) {
+                        val message = e.message?.takeUnless { it.isBlank() }
+                            ?: e.javaClass.simpleName
+                        LogUtil.e(AppConfig.TAG, "StartCore-Manager: Failed to schedule restart: $message", e)
+                        pendingResult.finish()
+                        reportStartFailure(serviceControl.getService(), message)
+                        return
+                    }
+                    if (!launched) {
+                        LogUtil.i(AppConfig.TAG, "StartCore-Manager: Restart already in progress")
+                        pendingResult.finish()
                     }
                 }
 

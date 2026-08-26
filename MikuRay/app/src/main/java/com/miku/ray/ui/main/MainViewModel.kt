@@ -47,6 +47,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var activeTestId: String? = null
     private var activeTestCompleted = 0
     private var activeTestTotal = 0
+    private var isRestarting = false
+    private var pendingServerRestartGuid: String? = null
     val serversCache = mutableListOf<ServersCache>()
 
     val isRunning by lazy { MutableLiveData<Boolean>() }
@@ -452,6 +454,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         reloadServerList()
     }
 
+    /** Persists a new selection while waiting for the active daemon to accept restart. */
+    fun beginServerRestart(guid: String): Boolean {
+        if (guid == MmkvManager.getSelectServer() || pendingServerRestartGuid != null) return false
+
+        MmkvManager.setSelectServer(guid)
+        pendingServerRestartGuid = guid
+        isRestarting = true
+        return true
+    }
+
+    /** Clears the optimistic restart state when no active daemon accepted the request. */
+    fun onServerRestartRequestResult(guid: String, handled: Boolean) {
+        if (handled || pendingServerRestartGuid != guid) return
+
+        pendingServerRestartGuid = null
+        isRestarting = false
+        isRunning.value = false
+    }
+
     fun findSubscriptionIdBySelect(): String? {
         val selectedGuid = MmkvManager.getSelectServer()
         if (selectedGuid.isNullOrEmpty()) {
@@ -554,16 +575,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         override fun onReceive(ctx: Context?, intent: Intent?) {
             when (intent?.getIntExtra("key", 0)) {
                 AppConfig.MSG_STATE_RUNNING -> {
-                    isRunning.value = true
+                    if (!isRestarting) {
+                        isRunning.value = true
+                    }
                 }
 
                 AppConfig.MSG_STATE_NOT_RUNNING -> {
-                    isRunning.value = false
+                    if (!isRestarting) {
+                        isRunning.value = false
+                    }
+                }
+
+                AppConfig.MSG_STATE_RESTART -> {
+                    isRestarting = true
                 }
 
                 AppConfig.MSG_STATE_START_SUCCESS -> {
                     val app = getApplication<AngApplication>()
-                    alertAction.value = Pair(true, app.getString(R.string.toast_services_success))
+                    val restarted = intent.serializable<Boolean>("content") == true
+                    pendingServerRestartGuid = null
+                    isRestarting = false
+                    alertAction.value = Pair(
+                        true,
+                        app.getString(
+                            if (restarted) R.string.toast_services_restart_success
+                            else R.string.toast_services_success,
+                        ),
+                    )
                     isRunning.value = true
                 }
 
@@ -576,11 +614,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         app.getString(R.string.toast_services_failure)
                     }
 
+                    pendingServerRestartGuid = null
+                    isRestarting = false
                     alertAction.value = Pair(false, msg)
                     isRunning.value = false
                 }
 
                 AppConfig.MSG_STATE_STOP_SUCCESS -> {
+                    pendingServerRestartGuid = null
+                    isRestarting = false
                     isRunning.value = false
                 }
 

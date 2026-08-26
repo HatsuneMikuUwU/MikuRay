@@ -32,6 +32,7 @@
     <string name="toast_services_start">Запуск служб</string>
     <string name="toast_services_stop">Остановка служб</string>
     <string name="toast_services_success">Службы успешно запущены</string>
+    <string name="toast_services_restart_success">Службы успешно перезапущены</string>
     <string name="toast_services_failure">Ошибка запуска служб</string>
 
     <string name="title_server">Конфигурация</string>

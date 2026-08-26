@@ -32,6 +32,7 @@
     <string name="toast_services_start">Nyalain Servis</string>
     <string name="toast_services_stop">Matiin Servis</string>
     <string name="toast_services_success">Asik, Servis Berhasil Jalan</string>
+    <string name="toast_services_restart_success">Asik, Servis Berhasil Dinyalain Ulang</string>
     <string name="toast_services_failure">Waduh, Servis Gagal Jalan</string>
 
     <string name="title_server">Konfig</string>

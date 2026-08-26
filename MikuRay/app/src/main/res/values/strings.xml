@@ -34,6 +34,7 @@
     <string name="toast_services_start">Start Services</string>
     <string name="toast_services_stop">Stop Services</string>
     <string name="toast_services_success">Start Services Success</string>
+    <string name="toast_services_restart_success">Service restarted successfully</string>
     <string name="toast_services_failure">Start Services Failure</string>
 
     <string name="title_server">Config</string>

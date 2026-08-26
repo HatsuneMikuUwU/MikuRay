@@ -44,22 +44,22 @@ object LauncherManager {
         }
     }
 
-    fun startServiceFromToggle(context: Context): Boolean {
-        if (MmkvManager.getSelectServer().isNullOrEmpty()) {
-            showFeedback(context, context.getString(R.string.app_tile_first_use), 2)
-            return false
-        }
-        try {
-            startContextService(context)
-        } catch (e: Exception) {
-            LogUtil.e(AppConfig.TAG, "LauncherManager: ${e.message}", e)
-            showFeedback(context, e.message ?: e.javaClass.simpleName, 2)
-            return false
-        }
-        return true
-    }
+    fun startServiceFromToggle(context: Context): Boolean =
+        requestServiceStart(context, guid = null, showLifecycleFeedback = true)
 
     fun startService(context: Context, guid: String? = null) {
+        requestServiceStart(context, guid, showLifecycleFeedback = true)
+    }
+
+    /** Starts a replacement service after a daemon-managed restart. */
+    internal fun startServiceAfterRestart(context: Context): Boolean =
+        requestServiceStart(context, guid = null, showLifecycleFeedback = false)
+
+    private fun requestServiceStart(
+        context: Context,
+        guid: String?,
+        showLifecycleFeedback: Boolean,
+    ): Boolean {
         LogUtil.i(AppConfig.TAG, "LauncherManager: startService from ${context::class.java.simpleName}")
 
         if (guid != null) {
@@ -67,12 +67,16 @@ object LauncherManager {
         }
 
         try {
-            startContextService(context)
+            startContextService(context, showLifecycleFeedback)
+            return true
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "LauncherManager: ${e.message}", e)
             val message = e.message ?: e.javaClass.simpleName
-            showFeedback(context, message, 2)
-            MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_START_FAILURE, message)
+            if (showLifecycleFeedback) {
+                showFeedback(context, message, 2)
+                MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_START_FAILURE, message)
+            }
+            return false
         }
     }
 
@@ -88,18 +92,28 @@ object LauncherManager {
 
     /** Restarts the active daemon without starting a stopped service. */
     fun restartService(context: Context) {
-        MessageUtil.sendMsg2Service(context, AppConfig.MSG_STATE_RESTART, "")
+        restartService(context) { }
+    }
+
+    /** Restarts the active daemon and reports whether a daemon accepted the request. */
+    fun restartService(context: Context, onResult: (handled: Boolean) -> Unit) {
+        MessageUtil.sendMsg2ServiceForResult(
+            context,
+            AppConfig.MSG_STATE_RESTART,
+            "",
+            onResult,
+        )
     }
 
     /** Restarts the active daemon, or delegates to the caller's permission-aware start flow. */
     fun restartServiceOrStart(context: Context, startIfStopped: () -> Unit) {
-        MessageUtil.sendMsg2ServiceForResult(context, AppConfig.MSG_STATE_RESTART, "") { handled ->
+        restartService(context) { handled ->
             if (!handled) startIfStopped()
         }
     }
 
     @Throws(Exception::class)
-    private fun startContextService(context: Context) {
+    private fun startContextService(context: Context, showLifecycleFeedback: Boolean) {
         val guid = MmkvManager.getSelectServer()
             ?: run {
                 LogUtil.e(AppConfig.TAG, "LauncherManager: No server selected")
@@ -127,7 +141,7 @@ object LauncherManager {
             Utils.setClipboard(context, context.getString(R.string.toast_allow_insecure_deprecated))
         }
 
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_PROXY_SHARING)) {
+        if (showLifecycleFeedback && MmkvManager.decodeSettingsBool(AppConfig.PREF_PROXY_SHARING)) {
             showFeedback(context, context.getString(R.string.toast_warning_pref_proxysharing_short), 0)
         }
 

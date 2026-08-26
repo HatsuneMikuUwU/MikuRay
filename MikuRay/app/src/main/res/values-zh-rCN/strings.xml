@@ -32,6 +32,7 @@
     <string name="toast_services_start">启动服务</string>
     <string name="toast_services_stop">关闭服务</string>
     <string name="toast_services_success">启动服务成功</string>
+    <string name="toast_services_restart_success">服务重启成功</string>
     <string name="toast_services_failure">启动服务失败</string>
 
     <string name="title_server">配置项</string>
