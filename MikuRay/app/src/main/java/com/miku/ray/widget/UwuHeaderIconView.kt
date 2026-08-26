@@ -106,6 +106,18 @@ class UwuHeaderIconView @JvmOverloads constructor(
             "teto"   -> R.drawable.uwu_icon_teto
             "teto2"  -> R.drawable.uwu_icon_teto_2
             "neru"   -> R.drawable.uwu_icon_neru
+            "basic" -> R.drawable.uwu_icon_basic
+            "cherry_pop" -> R.drawable.uwu_icon_cherry_pop
+            "rabbit_hole" -> R.drawable.uwu_icon_rabbit_hole
+            "mesmerizer" -> R.drawable.uwu_icon_mesmerizer
+            "sakura" -> R.drawable.uwu_icon_sakura
+            "magical_mirai_2024" -> R.drawable.uwu_icon_magical_mirai_2024
+            "deep_sea_girl" -> R.drawable.uwu_icon_deep_sea_girl
+            "snow_miku_2025" -> R.drawable.uwu_icon_snow_miku_2025
+            "symphony_2022" -> R.drawable.uwu_icon_symphony_2022
+            "racing_miku_2025" -> R.drawable.uwu_icon_racing_miku_2025
+            "cinnamiku" -> R.drawable.uwu_icon_cinnamiku
+            "retry_now" -> R.drawable.uwu_icon_retry_now
             else     -> R.drawable.uwu_icon_miku
         }
     }
