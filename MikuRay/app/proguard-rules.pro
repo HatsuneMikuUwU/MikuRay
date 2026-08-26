@@ -40,17 +40,6 @@
     static void require(boolean, kotlin.jvm.functions.Function0);
 }
 
-# Delete all Android built-in Log calls to save size and memory
--assumenosideeffects class android.util.Log {
-    public static boolean isLoggable(java.lang.String, int);
-    public static int v(...);
-    public static int i(...);
-    public static int w(...);
-    public static int d(...);
-    public static int e(...);
-    public static int wtf(...);
-}
-
 # Remove print stack trace call
 -assumenosideeffects class java.lang.Throwable {
     public void printStackTrace();
