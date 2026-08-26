@@ -170,16 +170,46 @@ object ThemeShareManager {
         booleanKeys.forEach { key ->
             putTyped(key, "boolean", MmkvManager.decodeSettingsBool(key, defaultBooleanValue(key)))
         }
-        intKeys.forEach { key -> putTyped(key, "int", MmkvManager.decodeSettingsInt(key, 0)) }
-        floatKeys.forEach { key -> putTyped(key, "float", MmkvManager.decodeSettingsFloat(key, 0f)) }
+        intKeys.forEach { key -> putTyped(key, "int", MmkvManager.decodeSettingsInt(key, defaultIntValue(key))) }
+        floatKeys.forEach { key -> putTyped(key, "float", MmkvManager.decodeSettingsFloat(key, defaultFloatValue(key))) }
         stringKeys.forEach { key ->
             MmkvManager.decodeSettingsString(key)?.let { putTyped(key, "string", it) }
         }
     }
 
     private fun defaultBooleanValue(key: String): Boolean = when (key) {
-        AppConfig.PREF_USE_SYSTEM_BLUR -> false
+        AppConfig.PREF_CONFIRM_REMOVE -> true
+        AppConfig.PREF_SOUND_ON_CONNECT -> true
         else -> false
+    }
+
+    private fun defaultIntValue(key: String): Int = when (key) {
+        AppConfig.PREF_BLUR_RADIUS -> AppConfig.DEFAULT_BLUR_RADIUS
+        AppConfig.PREF_BLUR_ROUNDS -> AppConfig.DEFAULT_BLUR_ROUNDS
+        AppConfig.PREF_BLUR_BOTTOM_RADIUS -> AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
+        AppConfig.PREF_BLUR_BOTTOM_ALPHA -> AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
+        AppConfig.PREF_HOME_BANNER_HEIGHT -> AppConfig.HOME_BANNER_HEIGHT_DEFAULT
+        AppConfig.PREF_HEADER_TOP_ROW_PADDING -> AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT
+        AppConfig.PREF_SHEET_BANNER_DIM -> AppConfig.SHEET_BANNER_DIM_DEFAULT
+        AppConfig.PREF_SELECTED_BANNER_DIM -> AppConfig.SELECTED_BANNER_DIM_DEFAULT
+        else -> 0
+    }
+
+    private fun defaultFloatValue(key: String): Float = when (key) {
+        AppConfig.PREF_APP_FONT_SIZE -> AppConfig.FONT_SIZE_DEFAULT
+        AppConfig.PREF_PARTICLES_FRAME_DELAY -> AppConfig.PARTICLES_FRAME_DELAY_DEFAULT
+        AppConfig.PREF_PARTICLES_LINE_LENGTH -> AppConfig.PARTICLES_LINE_LENGTH_DEFAULT
+        AppConfig.PREF_PARTICLES_LINE_THICKNESS -> AppConfig.PARTICLES_LINE_THICKNESS_DEFAULT
+        AppConfig.PREF_PARTICLES_RADIUS_MAX -> AppConfig.PARTICLES_RADIUS_MAX_DEFAULT
+        AppConfig.PREF_PARTICLES_RADIUS_MIN -> AppConfig.PARTICLES_RADIUS_MIN_DEFAULT
+        AppConfig.PREF_PARTICLES_DENSITY -> AppConfig.PARTICLES_DENSITY_DEFAULT
+        AppConfig.PREF_PARTICLES_SPEED_FACTOR -> AppConfig.PARTICLES_SPEED_FACTOR_DEFAULT
+        AppConfig.PREF_BANNER_CHARACTER_WIDTH -> AppConfig.BANNER_CHARACTER_WIDTH_DEFAULT
+        AppConfig.PREF_BANNER_CHARACTER_HEIGHT -> AppConfig.BANNER_CHARACTER_HEIGHT_DEFAULT
+        AppConfig.PREF_BANNER_CHARACTER_MARGIN_TOP -> AppConfig.BANNER_CHARACTER_MARGIN_TOP_DEFAULT
+        AppConfig.PREF_BANNER_CHARACTER_MARGIN_BOTTOM -> AppConfig.BANNER_CHARACTER_MARGIN_BOTTOM_DEFAULT
+        AppConfig.PREF_BANNER_CHARACTER_MARGIN_END -> AppConfig.BANNER_CHARACTER_MARGIN_END_DEFAULT
+        else -> 0f
     }
 
     private fun JSONObject.putTyped(key: String, type: String, value: Any) {
