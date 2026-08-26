@@ -1008,4 +1008,12 @@
     <string name="subtitle_mux_settings">配置连接多路复用</string>
     <string name="subtitle_settings">应用偏好设置与配置</string>
 
+    <string name="action_export_ui_theme">导出主题</string>
+    <string name="action_import_ui_theme">导入主题</string>
+    <string name="ui_theme_exported">主题已成功导出。</string>
+    <string name="ui_theme_export_failed">无法导出主题。</string>
+    <string name="ui_theme_import_title">导入界面主题</string>
+    <string name="ui_theme_import_message">此设备上的所有界面设置、横幅和自定义字体都将被所选主题替换。</string>
+    <string name="ui_theme_imported">主题已成功导入。正在更新外观。</string>
+    <string name="ui_theme_import_failed">无法导入主题：%1$s</string>
 </resources>

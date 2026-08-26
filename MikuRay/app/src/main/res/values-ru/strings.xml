@@ -1029,4 +1029,12 @@
     <string name="subtitle_mux_settings">Настройка мультиплексирования соединений</string>
     <string name="subtitle_settings">Настройки и конфигурация приложения</string>
 
+    <string name="action_export_ui_theme">Экспорт темы</string>
+    <string name="action_import_ui_theme">Импорт темы</string>
+    <string name="ui_theme_exported">Тема успешно экспортирована.</string>
+    <string name="ui_theme_export_failed">Не удалось экспортировать тему.</string>
+    <string name="ui_theme_import_title">Импорт темы интерфейса</string>
+    <string name="ui_theme_import_message">Все настройки интерфейса, баннеры и пользовательские шрифты на этом устройстве будут заменены выбранной темой.</string>
+    <string name="ui_theme_imported">Тема успешно импортирована. Обновление оформления.</string>
+    <string name="ui_theme_import_failed">Не удалось импортировать тему: %1$s</string>
 </resources>

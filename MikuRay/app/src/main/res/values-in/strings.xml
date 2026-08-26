@@ -1019,4 +1019,12 @@ yang kamu butuhin."</string>
     <string name="subtitle_mux_settings">Atur multiplexing koneksi</string>
     <string name="subtitle_settings">Preferensi sama konfigurasi aplikasi</string>
 
+    <string name="action_export_ui_theme">Ekspor tema</string>
+    <string name="action_import_ui_theme">Impor tema</string>
+    <string name="ui_theme_exported">Tema berhasil diekspor.</string>
+    <string name="ui_theme_export_failed">Tema tidak dapat diekspor.</string>
+    <string name="ui_theme_import_title">Impor tema UI</string>
+    <string name="ui_theme_import_message">Seluruh pengaturan UI, banner, dan font kustom pada perangkat ini akan diganti oleh tema yang dipilih.</string>
+    <string name="ui_theme_imported">Tema berhasil diimpor. Tampilan sedang diperbarui.</string>
+    <string name="ui_theme_import_failed">Tema tidak dapat diimpor: %1$s</string>
 </resources>

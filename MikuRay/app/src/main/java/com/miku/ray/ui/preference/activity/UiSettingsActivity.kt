@@ -10,6 +10,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.result.PickVisualMediaRequest
@@ -59,6 +61,7 @@ import com.miku.ray.util.AppNameHelper
 import com.miku.ray.util.BannerColorExtractor
 import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.ThemeManager
+import com.miku.ray.util.ThemeShareManager
 import com.miku.ray.ui.weather.WeatherHelper
 import com.miku.ray.util.showBlur
 import com.yalantis.ucrop.UCrop
@@ -69,6 +72,27 @@ import java.io.File
 import java.io.IOException
 
 class UiSettingsActivity : BaseActivity() {
+    private val exportUiTheme = registerForActivityResult(
+        ActivityResultContracts.CreateDocument(ThemeShareManager.MIME_TYPE)
+    ) { uri ->
+        uri ?: return@registerForActivityResult
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching { ThemeShareManager.exportTo(this@UiSettingsActivity, uri) }
+            }
+            if (result.isSuccess) {
+                toastSuccess(getString(R.string.ui_theme_exported))
+            } else {
+                toastError(getString(R.string.ui_theme_export_failed))
+            }
+        }
+    }
+
+    private val importUiTheme = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let(::confirmThemeImport)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +105,64 @@ class UiSettingsActivity : BaseActivity() {
                 .replace(R.id.settings_container, UiSettingsFragment())
                 .commit()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_ui_settings, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_export_ui_theme -> {
+            exportUiTheme.launch("MikuRay-theme${ThemeShareManager.FILE_EXTENSION}")
+            true
+        }
+        R.id.action_import_ui_theme -> {
+            importUiTheme.launch(arrayOf(ThemeShareManager.MIME_TYPE, "application/json", "text/plain"))
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun confirmThemeImport(uri: Uri) {
+        MaterialAlertDialogBuilder(this)
+            .setIcon(RemixR.drawable.rmx_system_import_line)
+            .setTitle(R.string.ui_theme_import_title)
+            .setMessage(R.string.ui_theme_import_message)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                lifecycleScope.launch {
+                    showLoading()
+                    val result = withContext(Dispatchers.IO) {
+                        ThemeShareManager.importFrom(this@UiSettingsActivity, uri)
+                    }
+                    hideLoading()
+                    when (result) {
+                        is ThemeShareManager.ImportResult.Success -> {
+                            SettingsChangeManager.makeRestartService()
+                            SettingsChangeManager.makeSetupGroupTab()
+                            SettingsChangeManager.makeRefreshDisplayPrefs()
+                            SettingsManager.setNightMode()
+                            restartApplication()
+                        }
+                        is ThemeShareManager.ImportResult.Error -> {
+                            toastError(getString(R.string.ui_theme_import_failed, result.message))
+                        }
+                    }
+                }
+            }
+            .showBlur()
+    }
+
+    private fun restartApplication() {
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+        if (launchIntent == null) {
+            recreate()
+            return
+        }
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(launchIntent)
+        finishAffinity()
     }
 
     class UiSettingsFragment : PreferenceFragmentCompat() {
