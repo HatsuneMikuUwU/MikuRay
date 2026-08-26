@@ -119,7 +119,7 @@ object WindowBlurUtils {
     }
 
     private fun shouldUseSystemBlur(): Boolean =
-        MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_SYSTEM_BLUR, true)
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_USE_SYSTEM_BLUR, false)
 
     /**
      * Uses Android 12+ cross-window blur when the system exposes it. This mirrors the adaptive

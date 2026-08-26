@@ -1069,5 +1069,5 @@ you need."</string>
     <string name="ui_theme_imported">Theme imported successfully. Updating the appearance.</string>
     <string name="ui_theme_import_failed">Unable to import the theme: %1$s</string>
     <string name="title_pref_use_system_blur">Use system blur</string>
-    <string name="summary_pref_use_system_blur">Use native Android window blur when available; turn off to use MikuRay BlurView instead.</string>
+    <string name="summary_pref_use_system_blur">Use native Android window blur when available</string>
 </resources>

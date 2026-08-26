@@ -1018,5 +1018,5 @@
     <string name="ui_theme_imported">主题已成功导入。正在更新外观。</string>
     <string name="ui_theme_import_failed">无法导入主题：%1$s</string>
     <string name="title_pref_use_system_blur">使用系统模糊</string>
-    <string name="summary_pref_use_system_blur">可用时使用原生 Android 窗口模糊；关闭此选项以改用 MikuRay BlurView。</string>
+    <string name="summary_pref_use_system_blur">可用时使用原生 Android 窗口模糊</string>
 </resources>

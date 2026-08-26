@@ -1039,5 +1039,5 @@
     <string name="ui_theme_imported">Тема успешно импортирована. Обновление оформления.</string>
     <string name="ui_theme_import_failed">Не удалось импортировать тему: %1$s</string>
     <string name="title_pref_use_system_blur">Использовать системное размытие</string>
-    <string name="summary_pref_use_system_blur">Использовать нативное размытие окон Android, если оно доступно; выключите, чтобы использовать BlurView MikuRay.</string>
+    <string name="summary_pref_use_system_blur">Использовать нативное размытие окон Android, если оно доступно</string>
 </resources>

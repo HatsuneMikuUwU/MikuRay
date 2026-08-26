@@ -363,7 +363,7 @@
             android:icon="@drawable/rmx_blur_line"
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:dependency="pref_enable_blur"
             android:key="pref_use_system_blur"
             android:title="@string/title_pref_use_system_blur"

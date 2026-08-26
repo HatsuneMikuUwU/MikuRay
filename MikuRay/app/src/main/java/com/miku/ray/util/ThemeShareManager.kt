@@ -178,7 +178,7 @@ object ThemeShareManager {
     }
 
     private fun defaultBooleanValue(key: String): Boolean = when (key) {
-        AppConfig.PREF_USE_SYSTEM_BLUR -> true
+        AppConfig.PREF_USE_SYSTEM_BLUR -> false
         else -> false
     }
 

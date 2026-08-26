@@ -1029,5 +1029,5 @@ yang kamu butuhin."</string>
     <string name="ui_theme_imported">Tema berhasil diimpor. Tampilan sedang diperbarui.</string>
     <string name="ui_theme_import_failed">Tema tidak dapat diimpor: %1$s</string>
     <string name="title_pref_use_system_blur">Gunakan blur sistem</string>
-    <string name="summary_pref_use_system_blur">Gunakan blur jendela Android bawaan jika tersedia; nonaktifkan untuk memakai BlurView MikuRay.</string>
+    <string name="summary_pref_use_system_blur">Gunakan blur jendela Android bawaan jika tersedia</string>
 </resources>
