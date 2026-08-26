@@ -12,11 +12,19 @@ object LauncherAliasSwitcher {
 
     private val ICON_KEYS = listOf(
         AppConfig.APP_ICON_DEFAULT,
-        AppConfig.APP_ICON_ALT1,
-        AppConfig.APP_ICON_ALT2,
-        AppConfig.APP_ICON_ALT3,
-        AppConfig.APP_ICON_ALT4,
-        AppConfig.APP_ICON_ALT5,
+        AppConfig.APP_ICON_MIKU_TEAL,
+        AppConfig.APP_ICON_BASIC,
+        AppConfig.APP_ICON_CHERRY_POP,
+        AppConfig.APP_ICON_RABBIT_HOLE,
+        AppConfig.APP_ICON_MESMERIZER,
+        AppConfig.APP_ICON_SAKURA,
+        AppConfig.APP_ICON_MAGICAL_MIRAI_2024,
+        AppConfig.APP_ICON_DEEP_SEA_GIRL,
+        AppConfig.APP_ICON_SNOW_MIKU_2025,
+        AppConfig.APP_ICON_SYMPHONY_2022,
+        AppConfig.APP_ICON_RACING_MIKU_2025,
+        AppConfig.APP_ICON_CINNAMIKU,
+        AppConfig.APP_ICON_RETRY_NOW,
     )
 
     private val NAME_KEYS = listOf(

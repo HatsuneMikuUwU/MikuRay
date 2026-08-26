@@ -293,21 +293,37 @@
     </string-array>
 
     <string-array name="app_icon_entries" translatable="false">
-        <item>Miku (Project SEKAI)</item>
-        <item>Miku (Teal)</item>
-        <item>Miku (LowRes)</item>
-        <item>Miku (Chibi)</item>
-        <item>Miku (Gradient)</item>
-        <item>Miku (Colorful)</item>
+        <item>Project SEKAI</item>
+        <item>Teal</item>
+        <item>Basic</item>
+        <item>Cherry Pop</item>
+        <item>Rabbit Hole</item>
+        <item>Mesmerizer</item>
+        <item>Sakura</item>
+        <item>Magical Mirai 2024</item>
+        <item>Deep Sea Girl</item>
+        <item>Snow Miku 2025</item>
+        <item>Symphony 2022</item>
+        <item>Racing Miku 2025</item>
+        <item>Cinnamiku</item>
+        <item>Retry Now</item>
     </string-array>
 
     <string-array name="app_icon_values" translatable="false">
         <item>default</item>
-        <item>alt1</item>
-        <item>alt2</item>
-        <item>alt3</item>
-        <item>alt4</item>
-        <item>alt5</item>
+        <item>mikuTeal</item>
+        <item>basic</item>
+        <item>cherryPop</item>
+        <item>rabbitHole</item>
+        <item>mesmerizer</item>
+        <item>sakura</item>
+        <item>magicalMirai2024</item>
+        <item>deepSeaGirl</item>
+        <item>snowMiku2025</item>
+        <item>symphony2022</item>
+        <item>racingMiku2025</item>
+        <item>cinnamiku</item>
+        <item>retryNow</item>
     </string-array>
 
     <string-array name="app_name_entries">
@@ -397,7 +413,7 @@
 
     <string-array name="category_style_entries" translatable="false">
         <item>Gradient</item>
-        <item>Hatsune Miku (Modern)</item>
+        <item>Hatsune Miku (Teal)</item>
         <item>Hatsune Miku (Project SEKAI)</item>
         <item>Kasane Teto (UTAU)</item>
         <item>Kasane Teto (Synthesizer)</item>

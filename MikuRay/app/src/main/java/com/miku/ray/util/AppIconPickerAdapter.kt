@@ -20,11 +20,19 @@ class AppIconPickerAdapter(
     companion object {
         private val MIPMAP_NAMES: Map<String, String> = mapOf(
             AppConfig.APP_ICON_DEFAULT to "ic_launcher",
-            AppConfig.APP_ICON_ALT1 to "ic_launcher_alt1",
-            AppConfig.APP_ICON_ALT2 to "ic_launcher_alt2",
-            AppConfig.APP_ICON_ALT3 to "ic_launcher_alt3",
-            AppConfig.APP_ICON_ALT4 to "ic_launcher_alt4",
-            AppConfig.APP_ICON_ALT5 to "ic_launcher_alt5",
+            AppConfig.APP_ICON_MIKU_TEAL to "ic_launcher_miku_teal",
+            AppConfig.APP_ICON_BASIC to "ic_launcher_basic",
+            AppConfig.APP_ICON_CHERRY_POP to "ic_launcher_cherry_pop",
+            AppConfig.APP_ICON_RABBIT_HOLE to "ic_launcher_rabbit_hole",
+            AppConfig.APP_ICON_MESMERIZER to "ic_launcher_mesmerizer",
+            AppConfig.APP_ICON_SAKURA to "ic_launcher_sakura",
+            AppConfig.APP_ICON_MAGICAL_MIRAI_2024 to "ic_launcher_magical_mirai_2024",
+            AppConfig.APP_ICON_DEEP_SEA_GIRL to "ic_launcher_deep_sea_girl",
+            AppConfig.APP_ICON_SNOW_MIKU_2025 to "ic_launcher_snow_miku_2025",
+            AppConfig.APP_ICON_SYMPHONY_2022 to "ic_launcher_symphony_2022",
+            AppConfig.APP_ICON_RACING_MIKU_2025 to "ic_launcher_racing_miku_2025",
+            AppConfig.APP_ICON_CINNAMIKU to "ic_launcher_cinnamiku",
+            AppConfig.APP_ICON_RETRY_NOW to "ic_launcher_retry_now",
         )
 
         fun icons(context: Context): List<Triple<String, String, String>> {
