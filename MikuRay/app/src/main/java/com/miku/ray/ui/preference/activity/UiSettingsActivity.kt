@@ -118,7 +118,7 @@ class UiSettingsActivity : BaseActivity() {
             true
         }
         R.id.action_import_ui_theme -> {
-            importUiTheme.launch(arrayOf(ThemeShareManager.MIME_TYPE, "application/json", "text/plain"))
+            importUiTheme.launch(arrayOf("*/*"))
             true
         }
         else -> super.onOptionsItemSelected(item)
