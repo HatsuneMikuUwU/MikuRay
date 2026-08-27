@@ -225,6 +225,9 @@
 
     <string name="title_pref_fake_dns_enabled">启用虚拟 DNS</string>
     <string name="summary_pref_fake_dns_enabled">本地返回虚构解析结果 (减低延时 但个别应用可能无法使用)</string>
+    <string name="title_pref_fake_dns_ip_pool">FakeIP 地址范围</string>
+    <string name="summary_pref_fake_dns_ip_pool">用于虚拟 DNS 地址的 IPv4 CIDR。请使用私有基准测试范围，例如 198.18.0.0/15。</string>
+    <string name="error_invalid_fake_dns_ip_pool">请输入从 /1 到 /30 的有效 IPv4 CIDR，例如 198.18.0.0/15。</string>
 
     <string name="title_pref_ipv6_enabled">启用 IPv6</string>
     <string name="summary_pref_ipv6_enabled">为 VPN 接口添加 IPv6 地址和路由</string>

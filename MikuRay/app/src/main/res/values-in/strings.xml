@@ -228,6 +228,9 @@
 
     <string name="title_pref_fake_dns_enabled">Aktifin DNS Palsu (Fake DNS)</string>
     <string name="summary_pref_fake_dns_enabled">DNS lokal bakal ngasih IP palsu (lebih cepet, tapi kadang bikin beberapa app ngambek)</string>
+    <string name="title_pref_fake_dns_ip_pool">Rentang alamat FakeIP</string>
+    <string name="summary_pref_fake_dns_ip_pool">CIDR IPv4 buat alamat DNS palsu. Gunakan rentang benchmark privat kayak 198.18.0.0/15.</string>
+    <string name="error_invalid_fake_dns_ip_pool">Masukin CIDR IPv4 yang valid dari /1 sampai /30, misalnya 198.18.0.0/15.</string>
 
     <string name="title_pref_ipv6_enabled">Aktifin IPv6</string>
     <string name="summary_pref_ipv6_enabled">Tambahin alamat dan rute IPv6 ke antarmuka VPN</string>

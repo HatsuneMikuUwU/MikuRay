@@ -16,6 +16,7 @@ import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.isNotNullEmpty
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
+import com.miku.ray.util.FakeDnsIpPool
 import com.miku.ray.util.HttpUtil
 import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.LogUtil
@@ -512,7 +513,15 @@ object CoreConfigManager {
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_LOCAL_DNS_ENABLED) == true
             && MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED) == true
         ) {
-            v2rayConfig.fakedns = listOf(V2rayConfig.FakednsBean())
+            val fakeDnsConfig = FakeDnsIpPool.parseOrDefault(
+                MmkvManager.decodeSettingsString(AppConfig.PREF_FAKE_DNS_IP_POOL)
+            )
+            v2rayConfig.fakedns = listOf(
+                V2rayConfig.FakednsBean(
+                    ipPool = fakeDnsConfig.cidr,
+                    poolSize = fakeDnsConfig.poolSize,
+                )
+            )
         }
     }
 

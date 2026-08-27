@@ -243,6 +243,9 @@
 
     <string name="title_pref_fake_dns_enabled">Enable fake DNS</string>
     <string name="summary_pref_fake_dns_enabled">Local DNS returns fake IP addresses (faster, but it may not work for some apps)</string>
+    <string name="title_pref_fake_dns_ip_pool">FakeIP address range</string>
+    <string name="summary_pref_fake_dns_ip_pool">IPv4 CIDR used for fake DNS addresses. Use a private benchmark range such as 198.18.0.0/15.</string>
+    <string name="error_invalid_fake_dns_ip_pool">Enter a valid IPv4 CIDR range from /1 to /30, for example 198.18.0.0/15.</string>
 
     <string name="title_pref_ipv6_enabled">Enable IPv6</string>
     <string name="summary_pref_ipv6_enabled">Add IPv6 address and routes to the VPN interface</string>

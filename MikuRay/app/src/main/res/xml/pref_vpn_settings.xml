@@ -48,6 +48,16 @@
             android:summary="@string/summary_pref_fake_dns_enabled"
             android:title="@string/title_pref_fake_dns_enabled" />
 
+        <EditTextPreference
+            android:icon="@drawable/rmx_global_line"
+            app:dialogIcon="@drawable/rmx_global_line"
+            app:layout="@layout/uwu_mid"
+            android:defaultValue="198.18.0.0/15"
+            android:key="pref_fake_dns_ip_pool"
+            android:summary="198.18.0.0/15"
+            android:title="@string/title_pref_fake_dns_ip_pool"
+            android:dialogMessage="@string/summary_pref_fake_dns_ip_pool" />
+
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/rmx_global_line"
             app:layout="@layout/uwu_mid_switch"

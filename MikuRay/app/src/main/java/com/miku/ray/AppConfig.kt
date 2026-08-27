@@ -21,6 +21,7 @@ object AppConfig {
     const val PREF_BYPASS_APPS = "pref_bypass_apps"
     const val PREF_LOCAL_DNS_ENABLED = "pref_local_dns_enabled"
     const val PREF_FAKE_DNS_ENABLED = "pref_fake_dns_enabled"
+    const val PREF_FAKE_DNS_IP_POOL = "pref_fake_dns_ip_pool"
     const val PREF_APPEND_HTTP_PROXY = "pref_append_http_proxy"
     const val PREF_LOCAL_DNS_PORT = "pref_local_dns_port"
     const val PREF_VPN_DNS = "pref_vpn_dns"
@@ -358,6 +359,9 @@ object AppConfig {
     const val OBSERVATORY_LEAST_LOAD_TIMEOUT = "30s"
 
     const val IP_API_URL = "https://api.ip.sb/geoip"
+
+    const val DEFAULT_FAKE_DNS_IP_POOL = "198.18.0.0/15"
+    const val FAKE_DNS_MAX_POOL_SIZE = 65_535
 
     const val DNS_PROXY = "https://cloudflare-dns.com/dns-query"
     const val DNS_DIRECT = "223.5.5.5"

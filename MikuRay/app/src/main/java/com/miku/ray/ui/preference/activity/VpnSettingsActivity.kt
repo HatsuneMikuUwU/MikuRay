@@ -2,6 +2,7 @@ package com.miku.ray.ui.preference.activity
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -21,6 +22,7 @@ import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.ui.preference.SearchPreferenceHighlighter
 import com.miku.ray.ui.perappproxy.PerAppProxyActivity
 import com.miku.ray.ui.preference.CategoryStyleHelper
+import com.miku.ray.util.FakeDnsIpPool
 import kotlinx.coroutines.launch
 
 class VpnSettingsActivity : BaseActivity() {
@@ -42,6 +44,7 @@ class VpnSettingsActivity : BaseActivity() {
 
         private val localDns by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_LOCAL_DNS_ENABLED) }
         private val fakeDns by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_FAKE_DNS_ENABLED) }
+        private val fakeDnsIpPool by lazy { findPreference<EditTextPreference>(AppConfig.PREF_FAKE_DNS_IP_POOL) }
         private val appendHttpProxy by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_APPEND_HTTP_PROXY) }
         private val vpnDns by lazy { findPreference<EditTextPreference>(AppConfig.PREF_VPN_DNS) }
         private val vpnBypassLan by lazy { findPreference<ListPreference>(AppConfig.PREF_VPN_BYPASS_LAN) }
@@ -70,6 +73,11 @@ class VpnSettingsActivity : BaseActivity() {
 
             localDns?.setOnPreferenceChangeListener { _, any ->
                 updateLocalDns(any as Boolean)
+                true
+            }
+
+            fakeDns?.setOnPreferenceChangeListener { _, newValue ->
+                updateFakeDnsIpPool(fakeDnsEnabled = newValue as Boolean)
                 true
             }
 
@@ -136,14 +144,24 @@ class VpnSettingsActivity : BaseActivity() {
                         is EditTextPreference -> {
                             val defaults = mapOf(
                                 AppConfig.PREF_TCP_KEEPALIVE_IDLE to "30",
-                                AppConfig.PREF_WS_HEARTBEAT_PERIOD to "60"
+                                AppConfig.PREF_WS_HEARTBEAT_PERIOD to "60",
+                                AppConfig.PREF_FAKE_DNS_IP_POOL to AppConfig.DEFAULT_FAKE_DNS_IP_POOL,
                             )
                             p.summary = p.text.takeUnless { it.isNullOrEmpty() }
                                 ?: defaults[p.key]
                                 ?: ""
                             p.setOnPreferenceChangeListener { pref, newValue ->
-                                pref.summary = (newValue as? String).orEmpty()
-                                true
+                                val value = (newValue as? String).orEmpty().trim()
+                                if (pref.key == AppConfig.PREF_FAKE_DNS_IP_POOL && !FakeDnsIpPool.isValid(value)) {
+                                    requireContext().snackbarError(
+                                        getString(R.string.error_invalid_fake_dns_ip_pool),
+                                        title = getString(R.string.title_alerter_error)
+                                    )
+                                    false
+                                } else {
+                                    pref.summary = value
+                                    true
+                                }
                             }
                         }
                         is ListPreference -> {
@@ -175,6 +193,7 @@ class VpnSettingsActivity : BaseActivity() {
         private fun updateModeDependent(vpn: Boolean) {
             localDns?.isEnabled = vpn
             fakeDns?.isEnabled = vpn
+            fakeDnsIpPool?.isEnabled = vpn && localDns?.isChecked == true && fakeDns?.isChecked == true
             appendHttpProxy?.isEnabled = vpn
             vpnDns?.isEnabled = vpn
             vpnBypassLan?.isEnabled = vpn
@@ -187,7 +206,19 @@ class VpnSettingsActivity : BaseActivity() {
         private fun updateLocalDns(enabled: Boolean) {
             fakeDns?.isEnabled = enabled
             vpnDns?.isEnabled = !enabled
+            updateFakeDnsIpPool(localDnsEnabled = enabled)
         }
+
+        private fun updateFakeDnsIpPool(
+            localDnsEnabled: Boolean = localDns?.isChecked == true,
+            fakeDnsEnabled: Boolean = fakeDns?.isChecked == true,
+        ) {
+            fakeDnsIpPool?.isEnabled =
+                isVpnMode() && localDnsEnabled && fakeDnsEnabled
+        }
+
+        private fun isVpnMode(): Boolean =
+            MmkvManager.decodeSettingsString(AppConfig.PREF_MODE, VPN) == VPN
 
         private fun updateHevTunSettings(enabled: Boolean) {
             hevTunLogLevel?.isEnabled = enabled

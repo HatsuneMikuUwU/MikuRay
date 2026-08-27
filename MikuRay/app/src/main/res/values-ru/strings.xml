@@ -228,6 +228,9 @@
 
     <string name="title_pref_fake_dns_enabled">Включить Fake DNS</string>
     <string name="summary_pref_fake_dns_enabled">Локальный DNS возвращает поддельные IP-адреса (быстрее, но может не работать для некоторых приложений)</string>
+    <string name="title_pref_fake_dns_ip_pool">Диапазон адресов FakeIP</string>
+    <string name="summary_pref_fake_dns_ip_pool">IPv4 CIDR для поддельных DNS-адресов. Используйте частный диапазон для тестирования, например 198.18.0.0/15.</string>
+    <string name="error_invalid_fake_dns_ip_pool">Введите корректный IPv4 CIDR от /1 до /30, например 198.18.0.0/15.</string>
 
     <string name="title_pref_ipv6_enabled">Включить IPv6</string>
     <string name="summary_pref_ipv6_enabled">Добавить IPv6-адрес и маршруты к VPN-интерфейсу</string>
