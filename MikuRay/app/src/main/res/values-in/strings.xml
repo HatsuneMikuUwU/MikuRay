@@ -708,15 +708,15 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="weather_condition_thunder_hail">Badai petir sama es</string>
     <string name="weather_condition_unknown">Gak diketahui</string>
     <string name="weather_forecast_title">Prakiraan cuaca</string>
-    <string name="weather_feels_like">Terasa seperti %1$s</string>
+    <string name="weather_feels_like">Kerasanya kayak %1$s</string>
     <string name="weather_max_min">Maks %1$s  Min %2$s</string>
     <string name="weather_summary_title">Ringkasan</string>
-    <string name="weather_summary_condition">Diperkirakan %1$s sepanjang hari.</string>
-    <string name="weather_summary_high_low">Tertinggi %1$s, terendah %2$s.</string>
-    <string name="weather_summary_rain_likely">Hujan kemungkinan besar terjadi — bawa payung.</string>
-    <string name="weather_summary_rain_possible">Hujan mungkin turun nanti.</string>
-    <string name="weather_summary_rain_slight">Ada sedikit kemungkinan hujan.</string>
-    <string name="weather_summary_windy">Angin bakal cukup terasa hari ini.</string>
+    <string name="weather_summary_condition">Bakal %1$s sepanjang hari nih.</string>
+    <string name="weather_summary_high_low">Paling tinggi %1$s, paling rendah %2$s.</string>
+    <string name="weather_summary_rain_likely">Kayaknya bakal hujan deres — bawa payung ya.</string>
+    <string name="weather_summary_rain_possible">Kayaknya bakal hujan deh.</string>
+    <string name="weather_summary_rain_slight">Ada dikit-dikit kemungkinan hujan.</string>
+    <string name="weather_summary_windy">Anginnya bakal lumayan kenceng hari ini.</string>
     <string name="weather_hourly_forecast_title">Prakiraan per jam</string>
     <string name="weather_daily_forecast_title">Prakiraan harian</string>
     <string name="weather_now">Sekarang</string>
@@ -870,7 +870,7 @@ yang kamu butuhin."</string>
     <string name="uwu_about_miku_summary">Hatsune Miku itu penyanyi virtual berbasis Vocaloid yang dirilis sama Crypton Future Media, kode namanya CV01. Dikenal gara-gara rambut twintail panjang warna biru kehijauan sama suaranya yang jernih, dia itu cewek 16 tahun dan idola virtual yang terkenal sedunia. Dia aktif di musik, konser, dan anime, plus disayang banget sama fans-fansnya.</string>
 
     <string name="title_character_license">Lisensi Karakter</string>
-    <string name="summary_character_license">Hatsune Miku sama karakter Vocaloid lainnya itu punya Crypton Future Media, Inc. Aplikasi ini make mereka berdasarkan Piapro Character License (PCL), yang ngebolehin fan pake gratis buat karya non-komersial. Kalo mau dipake buat komersial, harus minta izin sendiri ke Crypton.\n\nhttps://piapro.net/en_for_creators.html</string>
+    <string name="summary_character_license">Hatsune Miku sama karakter Vocaloid lainnya itu punya Crypton Future Media, Inc. Aplikasi ini make mereka berdasarkan Piapro Character License (PCL), yang ngebolehin fan pake gratis buat karya non-komersial. Kalo mau dipake buat komersial, kudu minta izin sendiri ke Crypton.\n\nhttps://piapro.net/en_for_creators.html</string>
 
     <string name="uwu_random_text_1">Hari yang pas buat nyanyi!</string>
     <string name="uwu_random_text_2">Semangat terus hari ini, Master!</string>
@@ -968,7 +968,7 @@ yang kamu butuhin."</string>
     <string name="blur_bottom_alpha_label">Opasitas Background (0–100%)</string>
     <string name="summary_blur_bottom_intensity_value">Radius: %1$d · Opasitas: %2$d%%</string>
     <string name="title_blur_settings">Settingan Blur</string>
-    <string name="title_blur_warning">Pengulangan yang tinggi (10+) bisa bikin FPS ngedrop. Mending pakai 2-5 kali pengulangan aja sama radius 25-40.</string>
+    <string name="title_blur_warning">Pengulangan yang kegedean (10+) bisa bikin FPS-nya ngedrop lho. Mending 2-5 kali pengulangan aja sama radius 25-40.</string>
     <string name="toast_allow_insecure_deprecated">Node ini pake koneksi tanpa enkripsi. Komunikasi kamu bisa aja keliatan langsung sama jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node kayak gini gak bisa konek lewat Xray core versi 26.2.6+.\nKalo ini node bikinan sendiri, aktifin enkripsi keamanan kayak TLS, atau pake certificate pinning (pinnedCA256).\nKalo ini node dari penyedia layanan, hubungin penyedianya buat pembaruan teknis. Kalo penyedianya nolak, mending pindah ke penyedia yang lebih peduli keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>
 
     <string name="uwu_skip">Lewatin</string>
@@ -990,7 +990,7 @@ yang kamu butuhin."</string>
     <string name="dialog_reset_settings_title">Reset Semua Settingan?</string>
     <string name="dialog_reset_settings_message">Ini bakal balikin semua settingan ke nilai default.\n\nProfil server dan langganan gak bakal dihapus.\n\nTindakan ini gak bisa dibatalin.</string>
     <string name="dialog_reset_settings_confirm">Reset</string>
-    <string name="reset_settings_success">Settingan telah direset ke default.</string>
+    <string name="reset_settings_success">Settingan udah direset ke default.</string>
 
     <string name="searchpreference_search">Cari…</string>
     <string name="searchpreference_clear">Hapus</string>
@@ -1033,12 +1033,12 @@ yang kamu butuhin."</string>
     <string name="ui_theme_export_name_hint">Nama tema</string>
     <string name="ui_theme_export_name_error_empty">Isi nama tema dulu.</string>
     <string name="action_import_ui_theme">Impor tema</string>
-    <string name="ui_theme_exported">Tema berhasil diekspor.</string>
-    <string name="ui_theme_export_failed">Tema tidak dapat diekspor.</string>
+    <string name="ui_theme_exported">Asik, tema berhasil diekspor.</string>
+    <string name="ui_theme_export_failed">Yah, temanya gagal diekspor.</string>
     <string name="ui_theme_import_title">Impor tema UI</string>
-    <string name="ui_theme_import_message">Seluruh pengaturan UI, banner, dan font kustom pada perangkat ini akan diganti oleh tema yang dipilih.</string>
-    <string name="ui_theme_imported">Tema berhasil diimpor. Tampilan sedang diperbarui.</string>
-    <string name="ui_theme_import_failed">Tema tidak dapat diimpor: %1$s</string>
-    <string name="title_pref_use_system_blur">Gunakan blur sistem</string>
-    <string name="summary_pref_use_system_blur">Gunakan blur jendela Android bawaan jika tersedia</string>
+    <string name="ui_theme_import_message">Semua settingan UI, banner, sama font kustom di HP ini bakal diganti sama tema yang kamu pilih lho.</string>
+    <string name="ui_theme_imported">Asik, tema berhasil diimpor. Tampilannya lagi diperbarui nih.</string>
+    <string name="ui_theme_import_failed">Yah, temanya gagal diimpor: %1$s</string>
+    <string name="title_pref_use_system_blur">Pake blur sistem</string>
+    <string name="summary_pref_use_system_blur">Pake blur jendela bawaan Android kalo ada</string>
 </resources>
