@@ -1,10 +1,14 @@
 package com.miku.ray.service
 
+import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.drawable.Icon
+import android.net.VpnService
+import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import androidx.core.content.ContextCompat
@@ -12,11 +16,19 @@ import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.core.CoreServiceManager
 import com.miku.ray.core.LauncherManager
+import com.miku.ray.handler.SettingsManager
+import com.miku.ray.ui.shortcut.ScStartActivity
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.Utils
 import java.lang.ref.SoftReference
 
+/*
+ * Starting a foreground VPN service directly from a Quick Settings tile is blocked on
+ * some Android 12+ and Android 15 builds. When that happens, the tile collapses the panel
+ * into [ScStartActivity], allowing the already existing activity-based start path to obtain
+ * VPN consent (when required) and start the foreground service from a visible context.
+ */
 class QSTileService : TileService() {
 
     fun setState(state: Int) {
@@ -62,12 +74,52 @@ class QSTileService : TileService() {
         super.onClick()
         when (qsTile.state) {
             Tile.STATE_INACTIVE -> {
-                LauncherManager.startServiceFromToggle(this)
+                if (isLocked) {
+                    unlockAndRun { startServiceWithActivityFallback() }
+                } else {
+                    startServiceWithActivityFallback()
+                }
             }
 
             Tile.STATE_ACTIVE -> {
                 LauncherManager.stopService(this)
             }
+        }
+    }
+
+    /**
+     * Starts directly where Android permits it, but switches to the transparent existing
+     * shortcut activity when VPN permission must be requested or a background FGS start is
+     * rejected by the system.
+     */
+    private fun startServiceWithActivityFallback() {
+        val needsVpnConsent = SettingsManager.isVpnMode() && VpnService.prepare(this) != null
+        if (needsVpnConsent || !LauncherManager.startServiceFromToggle(this)) {
+            startViaShortcutActivity()
+        }
+    }
+
+    /**
+     * Collapses the Quick Settings panel and brings the activity-based start path to the
+     * foreground. Android 14+ requires the PendingIntent overload for this operation.
+     */
+    private fun startViaShortcutActivity() {
+        val intent = Intent(this, ScStartActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startActivityAndCollapse(
+                PendingIntent.getActivity(
+                    this,
+                    REQUEST_CODE_START_FROM_TILE,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+                ),
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            @SuppressLint("StartActivityAndCollapseDeprecated")
+            startActivityAndCollapse(intent)
         }
     }
 
@@ -99,5 +151,9 @@ class QSTileService : TileService() {
                 }
             }
         }
+    }
+
+    private companion object {
+        const val REQUEST_CODE_START_FROM_TILE = 4_104
     }
 }
