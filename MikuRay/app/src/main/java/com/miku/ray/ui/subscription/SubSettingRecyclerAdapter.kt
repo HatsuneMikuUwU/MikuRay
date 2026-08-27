@@ -1,5 +1,6 @@
 package com.miku.ray.ui.subscription
 
+import android.content.Context
 import android.graphics.Color
 import android.text.TextUtils
 import android.util.TypedValue
@@ -10,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miku.ray.contracts.BaseAdapterListener
 import com.miku.ray.R
 import com.miku.ray.databinding.ItemRecyclerSubSettingBinding
+import com.miku.ray.dto.entities.SubscriptionItem
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.helper.ItemTouchHelperAdapter
 import com.miku.ray.helper.ItemTouchHelperViewHolder
 import com.miku.ray.util.Utils
+import java.text.DateFormat
+import java.util.Date
 
 class SubSettingRecyclerAdapter(
     private val viewModel: SubscriptionsViewModel,
@@ -34,6 +38,14 @@ class SubSettingRecyclerAdapter(
             R.plurals.sub_setting_server_count, serverCount, serverCount
         )
         holder.itemSubSettingBinding.tvLastUpdated.text = Utils.formatTimestamp(subItem.lastUpdated)
+        val usageText = formatSubscriptionUsage(holder.itemView.context, subItem)
+        val expiryText = formatSubscriptionExpiry(holder.itemView.context, subItem)
+        holder.itemSubSettingBinding.tvSubscriptionUsage.text = usageText
+        holder.itemSubSettingBinding.tvSubscriptionExpire.text = expiryText
+        holder.itemSubSettingBinding.tvSubscriptionUsage.visibility =
+            if (usageText == null) View.GONE else View.VISIBLE
+        holder.itemSubSettingBinding.tvSubscriptionExpire.visibility =
+            if (expiryText == null) View.GONE else View.VISIBLE
         holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
         holder.itemSubSettingBinding.layoutEdit.setOnClickListener {
@@ -56,16 +68,52 @@ class SubSettingRecyclerAdapter(
             holder.itemSubSettingBinding.chkEnable.visibility = View.GONE
             holder.itemSubSettingBinding.tvLastUpdated.visibility = View.GONE
             holder.itemSubSettingBinding.tvServerCount.visibility = View.GONE
+            holder.itemSubSettingBinding.tvSubscriptionUsage.visibility = View.GONE
+            holder.itemSubSettingBinding.tvSubscriptionExpire.visibility = View.GONE
         } else {
             holder.itemSubSettingBinding.tvUrl.visibility = View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.visibility = View.VISIBLE
             holder.itemSubSettingBinding.chkEnable.visibility = View.VISIBLE
             holder.itemSubSettingBinding.tvLastUpdated.visibility = View.VISIBLE
             holder.itemSubSettingBinding.tvServerCount.visibility = View.VISIBLE
+            holder.itemSubSettingBinding.tvSubscriptionUsage.visibility =
+                if (usageText == null) View.GONE else View.VISIBLE
+            holder.itemSubSettingBinding.tvSubscriptionExpire.visibility =
+                if (expiryText == null) View.GONE else View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.setOnClickListener {
                 adapterListener?.onShare(subItem.url)
             }
         }
+    }
+
+    private fun formatSubscriptionUsage(context: Context, subscription: SubscriptionItem): String? {
+        return when {
+            subscription.bytesUsed >= 0L && subscription.bytesRemaining >= 0L -> {
+                context.getString(
+                    R.string.sub_setting_usage,
+                    MmkvManager.formatTrafficBytesPublic(subscription.bytesUsed),
+                    MmkvManager.formatTrafficBytesPublic(subscription.bytesRemaining),
+                )
+            }
+            subscription.bytesUsed >= 0L -> {
+                context.getString(
+                    R.string.sub_setting_usage_used,
+                    MmkvManager.formatTrafficBytesPublic(subscription.bytesUsed),
+                )
+            }
+            else -> null
+        }
+    }
+
+    private fun formatSubscriptionExpiry(context: Context, subscription: SubscriptionItem): String? {
+        return subscription.expiresAt
+            .takeIf { it in 1L..(Long.MAX_VALUE / 1000L) }
+            ?.let { seconds ->
+                context.getString(
+                    R.string.sub_setting_expire,
+                    DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(seconds * 1000L)),
+                )
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

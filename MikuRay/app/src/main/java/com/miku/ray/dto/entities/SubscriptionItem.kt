@@ -17,5 +17,11 @@ data class SubscriptionItem(
     var userAgent: String? = null,
     var requestHeaders: String? = null,
     var tabIcon: String? = null,
+    /** Byte terpakai dari header Subscription-Userinfo; -1 berarti tidak tersedia. */
+    var bytesUsed: Long = -1L,
+    /** Byte tersisa dari header Subscription-Userinfo; -1 berarti tidak tersedia. */
+    var bytesRemaining: Long = -1L,
+    /** Waktu kedaluwarsa Unix dalam detik; -1 berarti tidak tersedia. */
+    var expiresAt: Long = -1L,
 )
 

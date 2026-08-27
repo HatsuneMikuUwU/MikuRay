@@ -383,6 +383,9 @@
     <string name="sub_setting_protocol_filter">Фильтр по протоколу</string>
     <string name="sub_setting_protocol_filter_tip">Оставить только конфигурации с этими протоколами, через запятую. Напр.: vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">Включить обновление</string>
+    <string name="sub_setting_usage">Использовано %1$s • Осталось %2$s</string>
+    <string name="sub_setting_usage_used">Использовано %1$s</string>
+    <string name="sub_setting_expire">Истекает %1$s</string>
     <string name="sub_auto_update">Включить автоматическое обновление</string>
     <string name="sub_allow_insecure_url">Разрешить небезопасный HTTP-адрес</string>
     <string name="sub_setting_pre_profile">Примечания предыдущей прокси-конфигурации</string>

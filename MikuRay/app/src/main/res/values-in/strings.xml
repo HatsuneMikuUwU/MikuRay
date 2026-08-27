@@ -385,6 +385,9 @@
     <string name="sub_setting_protocol_filter">Filter protokol</string>
     <string name="sub_setting_protocol_filter_tip">Cuma simpen konfig sama protokol ini, pisahin pake koma. Contoh: vmess,vless,trojan,ss</string>
     <string name="sub_setting_enable">Aktifin update</string>
+    <string name="sub_setting_usage">Dipakai %1$s • Sisa %2$s</string>
+    <string name="sub_setting_usage_used">Dipakai %1$s</string>
+    <string name="sub_setting_expire">Kedaluwarsa %1$s</string>
     <string name="sub_auto_update">Biarin otomatis update</string>
     <string name="sub_allow_insecure_url">Bolehin alamat HTTP ga aman</string>
     <string name="sub_setting_pre_profile">Catatan konfig proxy sebelumnya</string>

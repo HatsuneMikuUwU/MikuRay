@@ -19,6 +19,7 @@ import com.miku.ray.extension.isNotNullEmpty
 import com.miku.ray.fmt.CustomFmt
 import com.miku.ray.fmt.Hysteria2Fmt
 import com.miku.ray.fmt.ShadowsocksFmt
+import com.miku.ray.fmt.SIP008Fmt
 import com.miku.ray.fmt.SocksFmt
 import com.miku.ray.fmt.TrojanFmt
 import com.miku.ray.fmt.V2rayNFmt
@@ -29,6 +30,7 @@ import com.miku.ray.util.HttpUtil
 import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.QRCodeDecoder
+import com.miku.ray.util.SubscriptionUserinfoParser
 import com.miku.ray.util.Utils
 import java.net.URI
 
@@ -144,7 +146,13 @@ object AngConfigManager {
 
     fun importBatchConfig(server: String?, subid: String, append: Boolean): Pair<Int, Int> {
         return try {
-            var count = parseBatchConfig(Utils.decode(server), subid, append)
+            var count = parseSIP008Config(Utils.decode(server), subid, append)
+            if (count <= 0) {
+                count = parseSIP008Config(server, subid, append)
+            }
+            if (count <= 0) {
+                count = parseBatchConfig(Utils.decode(server), subid, append)
+            }
             if (count <= 0) {
                 count = parseBatchConfig(server, subid, append)
             }
@@ -188,6 +196,31 @@ object AngConfigManager {
         return 0
     }
 
+    /**
+     * Imports SIP008 JSON subscriptions. The parser emits only Shadowsocks
+     * profiles that MikuRay can represent and run with its current core.
+     */
+    private fun parseSIP008Config(content: String?, subid: String, append: Boolean): Int {
+        try {
+            val subItem = MmkvManager.decodeSubscription(subid)
+            val configs = SIP008Fmt.parse(content)
+                .filter { config -> matchesSubscriptionFilters(config, subItem) }
+                .onEach { config -> config.subscriptionId = subid }
+            if (configs.isNotEmpty()) {
+                commitProfiles(
+                    configs = configs.map { ParsedProfile(it) },
+                    subid = subid,
+                    append = append,
+                )
+            }
+            return configs.size
+        } catch (e: ProfileStorageException) {
+            throw e
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to parse SIP008 subscription", e)
+        }
+        return 0
+    }
     private fun parseBatchConfig(servers: String?, subid: String, append: Boolean): Int {
         try {
             if (servers == null) {
@@ -470,9 +503,9 @@ object AngConfigManager {
                 )
             } else null
 
-            var configText = try {
+            var subscriptionResponse = try {
                 val httpPort = SettingsManager.getHttpPort()
-                HttpUtil.getUrlContentWithUserAgent(
+                HttpUtil.getUrlContentResponseWithUserAgent(
                     UrlContentRequest(
                         url = url,
                         userAgent = userAgent,
@@ -486,11 +519,11 @@ object AngConfigManager {
                 )
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.ANG_PACKAGE, "Update subscription: proxy not ready or other error", e)
-                ""
+                null
             }
-            if (configText.isEmpty()) {
-                configText = try {
-                    HttpUtil.getUrlContentWithUserAgent(
+            if (subscriptionResponse?.content.isNullOrEmpty()) {
+                subscriptionResponse = try {
+                    HttpUtil.getUrlContentResponseWithUserAgent(
                         UrlContentRequest(
                             url = url,
                             userAgent = userAgent,
@@ -500,15 +533,20 @@ object AngConfigManager {
                     )
                 } catch (e: Exception) {
                     LogUtil.e(AppConfig.TAG, "Update subscription: Failed to get URL content with user agent", e)
-                    ""
+                    null
                 }
             }
+            val configText = subscriptionResponse?.content.orEmpty()
             if (configText.isEmpty()) {
                 return SubscriptionUpdateResult(failureCount = 1)
             }
 
             val count = parseConfigViaSub(configText, it.guid, false)
             if (count > 0) {
+                val usage = SubscriptionUserinfoParser.parse(subscriptionResponse?.headers.orEmpty())
+                it.subscription.bytesUsed = usage.bytesUsed
+                it.subscription.bytesRemaining = usage.bytesRemaining
+                it.subscription.expiresAt = usage.expiresAt
                 it.subscription.lastUpdated = System.currentTimeMillis()
                 MmkvManager.encodeSubscription(it.guid, it.subscription)
                 LogUtil.i(AppConfig.TAG, "Subscription updated: ${it.subscription.remarks}, $count configs")
@@ -548,7 +586,13 @@ object AngConfigManager {
     }
 
     private fun parseConfigViaSub(server: String?, subid: String, append: Boolean): Int {
-        var count = parseBatchConfig(Utils.decode(server), subid, append)
+        var count = parseSIP008Config(Utils.decode(server), subid, append)
+        if (count <= 0) {
+            count = parseSIP008Config(server, subid, append)
+        }
+        if (count <= 0) {
+            count = parseBatchConfig(Utils.decode(server), subid, append)
+        }
         if (count <= 0) {
             count = parseBatchConfig(server, subid, append)
         }

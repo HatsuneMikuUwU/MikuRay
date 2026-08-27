@@ -4,6 +4,7 @@ import com.miku.ray.AppConfig
 import com.miku.ray.AppConfig.LOOPBACK
 import com.miku.ray.BuildConfig
 import com.miku.ray.dto.UrlContentRequest
+import com.miku.ray.dto.UrlContentResponse
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -99,6 +100,11 @@ object HttpUtil {
 
     @Throws(IOException::class)
     fun getUrlContentWithUserAgent(request: UrlContentRequest): String {
+        return getUrlContentResponseWithUserAgent(request).content
+    }
+
+    @Throws(IOException::class)
+    fun getUrlContentResponseWithUserAgent(request: UrlContentRequest): UrlContentResponse {
         var currentUrl = request.url
         var redirects = 0
         val maxRedirects = 3
@@ -151,7 +157,12 @@ object HttpUtil {
                     }
 
                     response.isSuccessful -> {
-                        return response.body.string()
+                        return UrlContentResponse(
+                            content = response.body.string(),
+                            headers = response.headers.names().associateWith { name ->
+                                response.header(name).orEmpty()
+                            },
+                        )
                     }
 
                     else -> {
