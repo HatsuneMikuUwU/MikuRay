@@ -78,17 +78,22 @@ object CoreConfigManager {
 
         val json = JsonUtil.parseString(raw)?.takeIf { it.isJsonObject }?.asJsonObject ?: return result
 
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) == true) {
+        val speedEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) == true
+        val trafficEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_TRAFFIC_ENABLED) == true
+        val statisticsEnabled = speedEnabled || trafficEnabled
+        if (statisticsEnabled) {
             if (!json.has("stats")) {
                 json.add("stats", JsonObject())
             }
-            if (!json.has("policy")) {
-                val policyObj = JsonObject()
-                val systemObj = JsonObject()
+            val policyObj = json.get("policy")?.takeIf { it.isJsonObject }?.asJsonObject
+                ?: JsonObject().also { json.add("policy", it) }
+            val systemObj = policyObj.get("system")?.takeIf { it.isJsonObject }?.asJsonObject
+                ?: JsonObject().also { policyObj.add("system", it) }
+            if (!systemObj.has("statsOutboundUplink")) {
                 systemObj.addProperty("statsOutboundUplink", true)
+            }
+            if (!systemObj.has("statsOutboundDownlink")) {
                 systemObj.addProperty("statsOutboundDownlink", true)
-                policyObj.add("system", systemObj)
-                json.add("policy", policyObj)
             }
         } else {
             json.remove("stats")
