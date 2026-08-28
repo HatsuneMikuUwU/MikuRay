@@ -92,7 +92,13 @@ object CoreConfigManager {
             }
         } else {
             json.remove("stats")
-            json.remove("policy")
+            // Keep user-defined policy levels; only remove the traffic-statistics policy block.
+            json.get("policy")?.takeIf { it.isJsonObject }?.asJsonObject?.let { policy ->
+                policy.remove("system")
+                if (policy.entrySet().isEmpty()) {
+                    json.remove("policy")
+                }
+            }
         }
 
         if (!needTun()) {
@@ -645,7 +651,8 @@ object CoreConfigManager {
 
         if (!speedEnabled && !trafficEnabled) {
             v2rayConfig.stats = null
-            v2rayConfig.policy = null
+            // Preserve policy.levels (handshake, connIdle, uplinkOnly, downlinkOnly).
+            v2rayConfig.policy?.system = null
         }
     }
 
