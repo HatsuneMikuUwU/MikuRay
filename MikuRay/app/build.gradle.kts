@@ -204,7 +204,6 @@ dependencies {
     implementation(libs.flexbox)
     implementation(libs.skydoves.colorpickerview)
     implementation(libs.qmdeve.blurview)
-    implementation(libs.dimezis.blurview)
     implementation(libs.com.airbnb.android.lottie)
     implementation(libs.aboutlibraries.view)
 

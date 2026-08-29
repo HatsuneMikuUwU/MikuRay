@@ -7,11 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <eightbitlab.com.blurview.BlurTarget
-        android:id="@+id/main_blur_target"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -344,10 +339,18 @@
         android:background="@drawable/uwu_bg_fade_bottom" />
 
         </RelativeLayout>
-    </eightbitlab.com.blurview.BlurTarget>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_bottom_status"
+    <com.miku.ray.widget.SnowflakesView
+        android:id="@+id/snowflakes_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
+
+    <com.miku.ray.blurview.BlurView
+        android:id="@+id/blur_bottom_status"
         android:focusable="true"
         android:clickable="true"
         android:layout_width="match_parent"
@@ -356,16 +359,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp">
-
-        <eightbitlab.com.blurview.BlurView
-            android:id="@+id/blur_bottom_status"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:blurOverlayColor="@android:color/transparent" />
+        android:background="@android:color/transparent">
 
         <RelativeLayout
             android:gravity="center_vertical"
@@ -444,6 +438,6 @@
                     style="?floatingActionButtonStyle" />
             </FrameLayout>
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </com.miku.ray.blurview.BlurView>
 
 </FrameLayout>

@@ -926,6 +926,19 @@ yang kamu butuhin."</string>
     <string name="sheet_banner_updated">Banner sheet berhasil diupdate.</string>
     <string name="particles_enable_title">Nyalain animasi partikel</string>
     <string name="particles_enable_summary">Nampilin efek partikel di bottomsheet</string>
+    <string name="snowflakes_enable_title">Nyalain animasi salju</string>
+    <string name="snowflakes_enable_summary">Nampilin efek salju yang turun di layar Home</string>
+    <string name="snowflakes_speed_title">Kecepatan salju</string>
+    <string name="snowflakes_speed_value">Kecepatan: %1$s</string>
+    <string name="snowflakes_speed_summary_value">Kecepatan animasi: %1$s</string>
+    <string name="snowflakes_count_title">Jumlah snowflake</string>
+    <string name="snowflakes_count_value">Jumlah snowflake: %1$d</string>
+    <string name="snowflakes_count_summary_value">Jumlah snowflake: %1$d</string>
+    <string name="snowflakes_settings_title">Atur animasi salju</string>
+    <string name="snowflakes_size_value">Ukuran snowflake: %1$s×</string>
+    <string name="snowflakes_opacity_value">Transparansi: %1$s</string>
+    <string name="snowflakes_wind_value">Kekuatan angin: %1$s×</string>
+    <string name="snowflakes_settings_summary_value">Kecepatan: %1$s · Snowflake: %2$d · Ukuran: %3$s× · Transparansi: %4$s · Angin: %5$s×</string>
 
     <string name="pref_particles_settings_title">Settingan animasi partikel</string>
     <string name="pref_particles_settings_summary">Atur kecepatan, ukuran, kepadatan, dan lainnya</string>
@@ -967,9 +980,9 @@ yang kamu butuhin."</string>
     <string name="summary_blur_intensity_value">Radius: %1$d · Diulang: %2$d</string>
     <string name="summary_blur_intensity_system_value">Radius: %1$d · Blur sistem</string>
     <string name="pref_blur_bottom_intensity">Kekuatan Blur Kartu Bawah</string>
-    <string name="blur_bottom_radius_label">Radius BlurView (1–50)</string>
+    <string name="blur_bottom_radius_label">Radius BlurView (0–25)</string>
     <string name="blur_bottom_alpha_label">Opasitas Background (0–100%)</string>
-    <string name="summary_blur_bottom_intensity_value">Radius: %1$d · Opasitas: %2$d%%</string>
+    <string name="summary_blur_bottom_intensity_value">Radius: %1$.1f · Opasitas: %2$d%%</string>
     <string name="title_blur_settings">Settingan Blur</string>
     <string name="title_blur_warning">Pengulangan yang kegedean (10+) bisa bikin FPS-nya ngedrop lho. Mending 2-5 kali pengulangan aja sama radius 25-40.</string>
     <string name="toast_allow_insecure_deprecated">Node ini pake koneksi tanpa enkripsi. Komunikasi kamu bisa aja keliatan langsung sama jaringan perantara yang dikuasai pemerintah otoriter.\nDemi keamanan, node kayak gini gak bisa konek lewat Xray core versi 26.2.6+.\nKalo ini node bikinan sendiri, aktifin enkripsi keamanan kayak TLS, atau pake certificate pinning (pinnedCA256).\nKalo ini node dari penyedia layanan, hubungin penyedianya buat pembaruan teknis. Kalo penyedianya nolak, mending pindah ke penyedia yang lebih peduli keamanan pengguna.\nInfo lebih lanjut: https://github.com/2dust/v2rayN/discussions/9460</string>

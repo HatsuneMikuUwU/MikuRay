@@ -14,8 +14,6 @@
         <item name="android:windowBackground">?colorBg</item>
         <item name="colorBg">?colorSurface</item>
         <item name="colorCard">?colorSurfaceContainerLow</item>
-        <item name="strokeDrawable">?colorOutline</item>
-        <item name="strokeDrawableBg">?colorSurfaceContainerHighest</item>
         <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
         <item name="bottomSheetDialogTheme">@style/AppThemeBottomSheetDialog</item>
         <item name="sideSheetDialogTheme">@style/AppThemeSideSheetDialog</item>
@@ -53,8 +51,6 @@
         
         <item name="colorBg">#ff000000</item>
         <item name="colorCard">#ff131313</item>
-        <item name="strokeDrawable">?attr/colorOutline</item>
-        <item name="strokeDrawableBg">?attr/colorSurfaceContainerHighest</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>

@@ -915,6 +915,19 @@
     <string name="sheet_banner_updated">底部横幅更新成功。</string>
     <string name="particles_enable_title">启用粒子动画</string>
     <string name="particles_enable_summary">显示底部面板中的粒子效果</string>
+    <string name="snowflakes_enable_title">启用降雪动画</string>
+    <string name="snowflakes_enable_summary">在主屏幕显示飘落的雪花</string>
+    <string name="snowflakes_speed_title">降雪速度</string>
+    <string name="snowflakes_speed_value">速度：%1$s</string>
+    <string name="snowflakes_speed_summary_value">动画速度：%1$s</string>
+    <string name="snowflakes_count_title">雪花数量</string>
+    <string name="snowflakes_count_value">雪花：%1$d</string>
+    <string name="snowflakes_count_summary_value">雪花数量：%1$d</string>
+    <string name="snowflakes_settings_title">降雪设置</string>
+    <string name="snowflakes_size_value">大小：%1$s×</string>
+    <string name="snowflakes_opacity_value">不透明度：%1$s</string>
+    <string name="snowflakes_wind_value">风力：%1$s×</string>
+    <string name="snowflakes_settings_summary_value">速度：%1$s · 雪花：%2$d · 大小：%3$s× · 不透明度：%4$s · 风力：%5$s×</string>
 
     <string name="pref_particles_settings_title">粒子动画设置</string>
     <string name="pref_particles_settings_summary">调整速度、大小、密度等参数</string>
@@ -956,9 +969,9 @@
     <string name="summary_blur_intensity_value">半径: %1$d · 迭代: %2$d</string>
     <string name="summary_blur_intensity_system_value">半径: %1$d · 系统模糊</string>
     <string name="pref_blur_bottom_intensity">底部卡片模糊强度</string>
-    <string name="blur_bottom_radius_label">模糊半径 (1–50)</string>
+    <string name="blur_bottom_radius_label">模糊半径 (0–25)</string>
     <string name="blur_bottom_alpha_label">背景不透明度 (0–100%)</string>
-    <string name="summary_blur_bottom_intensity_value">半径: %1$d · 不透明度: %2$d%%</string>
+    <string name="summary_blur_bottom_intensity_value">半径: %1$.1f · 不透明度: %2$d%%</string>
     <string name="title_blur_settings">模糊设置</string>
     <string name="title_blur_warning">较高的迭代次数 (10+) 可能会导致掉帧。建议：迭代 2-5 次，半径为 25-40。</string>
     <string name="toast_allow_insecure_deprecated">当前节点使用未加密连接，您的通信可能会被威权政府掌控的网络中间设施直接查看\n为了安全，此类节点无法通过 26.2.6+ 版本的 Xray 核心连接\n如果是自建节点请启用 TLS 等安全加密，或固定证书 pinnedCA256\n如果机场节点请联系服务商完成技术升级，如服务商拒绝配合，建议更换更重视用户安全的服务商\n更多的信息，请访问 https://github.com/2dust/v2rayN/discussions/9460</string>

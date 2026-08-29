@@ -130,7 +130,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
             }
         })
 
-        bottomStatusCard = ownerActivity.findViewById(R.id.card_bottom_status)
+        bottomStatusCard = ownerActivity.findViewById(R.id.blur_bottom_status)
         bottomStatusCard?.addOnLayoutChangeListener(bottomStatusLayoutListener)
         bottomStatusCard?.post { syncButtonMarginWithBottomStatus() }
 

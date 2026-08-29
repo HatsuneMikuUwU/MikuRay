@@ -408,6 +408,21 @@
             android:title="@string/home_banner_disable_title"
             android:summary="@string/home_banner_disable_summary" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/rmx_sparkling_line"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:key="pref_enable_snowflakes"
+            android:title="@string/snowflakes_enable_title"
+            android:summary="@string/snowflakes_enable_summary"
+            android:defaultValue="false" />
+
+        <com.miku.ray.ui.dialog.SnowflakesSettingsDialog
+            android:icon="@drawable/rmx_sparkling_line"
+            app:layout="@layout/uwu_mid"
+            app:key="pref_snowflakes_settings"
+            app:title="@string/snowflakes_settings_title" />
+
         <com.miku.ray.ui.dialog.BannerHeightSliderDialog
             android:icon="@drawable/rmx_design_ruler_2_line"
             app:layout="@layout/uwu_mid"

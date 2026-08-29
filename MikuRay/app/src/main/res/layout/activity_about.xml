@@ -891,7 +891,7 @@
                         android:layout_marginRight="75dp"
                         android:layout_marginTop="-30dp"
                         android:background="@drawable/uwu_bg_sin"
-                        android:backgroundTint="?colorSurfaceContainerLow"
+                        android:backgroundTint="?colorCard"
                         android:clickable="false"
                         android:gravity="center_horizontal" />
 
@@ -959,7 +959,7 @@
                         android:layout_marginLeft="75dp"
                         android:layout_marginRight="75dp"
                         android:background="@drawable/uwu_bg_sin"
-                        android:backgroundTint="?colorSurfaceContainerLow"
+                        android:backgroundTint="?colorCard"
                         android:clickable="false"
                         android:gravity="center_horizontal" />
 

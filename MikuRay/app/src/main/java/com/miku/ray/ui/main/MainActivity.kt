@@ -188,7 +188,8 @@ class MainActivity : HelperBaseActivity(),
         setupViewModel()
         setupBannerHome()
         
-        BlurBottomStatusController.applyState(this, binding)
+        BlurBottomStatusController.applyState(this, binding) { handleLayoutTestClick() }
+        updateSnowflakesVisibility()
         SubscriptionUpdater.sync()
         syncWeatherBackgroundUpdates()
         
@@ -262,6 +263,7 @@ class MainActivity : HelperBaseActivity(),
         
         refreshSearchBarChip()
         refreshIpStateText()
+        updateSnowflakesVisibility()
         
         if (SettingsChangeManager.consumeRefreshDisplayPrefs()) {
             refreshAllGroupListDisplays()
@@ -290,14 +292,39 @@ class MainActivity : HelperBaseActivity(),
                 bottom = maxOf(systemBars.bottom, displayCutout.bottom)
             )
 
-            val bottomInset = maxOf(systemBars.bottom, displayCutout.bottom)
-            binding.cardBottomStatus.updatePadding(bottom = bottomInset)
-
             val headerContent = view.findViewById<View>(R.id.header_content)
             headerContent?.updatePadding(top = systemBars.top)
 
             insets
         }
+    }
+
+    private fun updateSnowflakesVisibility() {
+        binding.snowflakesView.configure(
+            speed = MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_SNOWFLAKES_SPEED,
+                AppConfig.SNOWFLAKES_SPEED_DEFAULT
+            ),
+            count = MmkvManager.decodeSettingsInt(
+                AppConfig.PREF_SNOWFLAKES_COUNT,
+                AppConfig.SNOWFLAKES_COUNT_DEFAULT
+            ),
+            size = MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_SNOWFLAKES_SIZE,
+                AppConfig.SNOWFLAKES_SIZE_DEFAULT
+            ),
+            opacity = MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_SNOWFLAKES_OPACITY,
+                AppConfig.SNOWFLAKES_OPACITY_DEFAULT
+            ),
+            wind = MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_SNOWFLAKES_WIND,
+                AppConfig.SNOWFLAKES_WIND_DEFAULT
+            )
+        )
+        binding.snowflakesView.visibility = if (
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_ENABLE_SNOWFLAKES, false)
+        ) View.VISIBLE else View.GONE
     }
 
     private fun weatherLocationReady(): Boolean =
@@ -676,7 +703,7 @@ class MainActivity : HelperBaseActivity(),
         binding.fab.setOnClickListener { handleFabAction() }
         binding.fabNoBlur.setOnClickListener { handleFabAction() }
 
-        binding.cardBottomStatus.setOnClickListener { handleLayoutTestClick() }
+        binding.blurBottomStatus.setOnClickListener { handleLayoutTestClick() }
         
         binding.btnHome.setOnClickListener {
             MainMenuBottomSheet().show(supportFragmentManager, MainMenuBottomSheet.TAG)
@@ -1156,8 +1183,8 @@ class MainActivity : HelperBaseActivity(),
             return
         }
 
-        binding.cardBottomStatus.isClickable = true
-        binding.cardBottomStatus.isFocusable = true
+        binding.blurBottomStatus.isClickable = true
+        binding.blurBottomStatus.isFocusable = true
 
         if (isRunning) {
             binding.fab.setImageResource(RemixR.drawable.rmx_media_stop_line)

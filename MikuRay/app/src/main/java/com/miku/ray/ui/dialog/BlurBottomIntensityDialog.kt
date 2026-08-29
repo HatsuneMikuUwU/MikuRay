@@ -21,7 +21,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
 ) : Preference(context, attrs) {
 
     override fun onClick() {
-        val originalRadius = MmkvManager.decodeSettingsInt(
+        val originalRadius = MmkvManager.decodeSettingsFloat(
             AppConfig.PREF_BLUR_BOTTOM_RADIUS,
             AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
         )
@@ -34,7 +34,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         val sliderRadius = dialogView.findViewById<Slider>(R.id.slider_blur_bottom_radius)
         val sliderAlpha = dialogView.findViewById<Slider>(R.id.slider_blur_bottom_alpha)
 
-        sliderRadius.value = originalRadius.toFloat().coerceIn(1f, 50f)
+        sliderRadius.value = originalRadius.coerceIn(0f, 25f)
         sliderAlpha.value = originalAlpha.toFloat().coerceIn(0f, 100f)
 
         val dialog = MaterialAlertDialogBuilder(context)
@@ -57,7 +57,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val radius = sliderRadius.value.toInt()
+            val radius = sliderRadius.value
             val alpha = sliderAlpha.value.toInt()
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, radius)
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, alpha)
@@ -68,7 +68,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, originalRadius)
             MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, originalAlpha)
-            BlurBottomStatusController.updateRadius(originalRadius.toFloat())
+            BlurBottomStatusController.updateRadius(originalRadius)
             BlurBottomStatusController.updateAlpha(originalAlpha.toFloat())
             updateSummary(originalRadius, originalAlpha)
             dialog.dismiss()
@@ -91,7 +91,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         }
     }
 
-    fun updateSummary(radius: Int, alpha: Int) {
+    fun updateSummary(radius: Float, alpha: Int) {
         summary = context.getString(R.string.summary_blur_bottom_intensity_value, radius, alpha)
     }
 }

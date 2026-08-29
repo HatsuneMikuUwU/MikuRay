@@ -936,6 +936,19 @@
     <string name="sheet_banner_updated">Баннер панели успешно обновлен.</string>
     <string name="particles_enable_title">Включить анимацию частиц</string>
     <string name="particles_enable_summary">Показать эффект частиц на нижней панели</string>
+    <string name="snowflakes_enable_title">Включить анимацию снегопада</string>
+    <string name="snowflakes_enable_summary">Показывать падающие снежинки на главном экране</string>
+    <string name="snowflakes_speed_title">Скорость снегопада</string>
+    <string name="snowflakes_speed_value">Скорость: %1$s</string>
+    <string name="snowflakes_speed_summary_value">Скорость анимации: %1$s</string>
+    <string name="snowflakes_count_title">Количество снежинок</string>
+    <string name="snowflakes_count_value">Снежинки: %1$d</string>
+    <string name="snowflakes_count_summary_value">Количество снежинок: %1$d</string>
+    <string name="snowflakes_settings_title">Настройки снегопада</string>
+    <string name="snowflakes_size_value">Размер: %1$s×</string>
+    <string name="snowflakes_opacity_value">Прозрачность: %1$s</string>
+    <string name="snowflakes_wind_value">Ветер: %1$s×</string>
+    <string name="snowflakes_settings_summary_value">Скорость: %1$s · Снежинки: %2$d · Размер: %3$s× · Прозрачность: %4$s · Ветер: %5$s×</string>
 
     <string name="pref_particles_settings_title">Настройки анимации частиц</string>
     <string name="pref_particles_settings_summary">Настройте скорость, размер, плотность и другое</string>
@@ -977,9 +990,9 @@
     <string name="summary_blur_intensity_value">Радиус: %1$d · Итерации: %2$d</string>
     <string name="summary_blur_intensity_system_value">Радиус: %1$d · Системное размытие</string>
     <string name="pref_blur_bottom_intensity">Интенсивность размытия нижней карточки</string>
-    <string name="blur_bottom_radius_label">Радиус BlurView (1–50)</string>
+    <string name="blur_bottom_radius_label">Радиус BlurView (0–25)</string>
     <string name="blur_bottom_alpha_label">Непрозрачность фона (0–100%)</string>
-    <string name="summary_blur_bottom_intensity_value">Радиус: %1$d · Непрозрачность: %2$d%%</string>
+    <string name="summary_blur_bottom_intensity_value">Радиус: %1$.1f · Непрозрачность: %2$d%%</string>
     <string name="title_blur_settings">Настройки размытия</string>
     <string name="title_blur_warning">Высокое число итераций (10+) может снизить FPS. Рекомендуется: 2–5 итераций с радиусом 25–40</string>
     <string name="toast_allow_insecure_deprecated">Этот узел использует незашифрованное соединение. Ваши данные могут быть перехвачены и просмотрены государственными структурами через промежуточное сетевое оборудование.\nВ целях безопасности такие узлы больше не поддерживаются в Xray core версии 26.2.6+.\nДля исправления: включите TLS (или другое шифрование) на своем сервере или используйте Certificate Pinning (pinnedCA256).\nЕсли вы используете платный сервис, обратитесь в поддержку для обновления. Если провайдер отказывается, рекомендуем сменить его на более безопасный.\nПодробнее: https://github.com/2dust/v2rayN/discussions/9460</string>

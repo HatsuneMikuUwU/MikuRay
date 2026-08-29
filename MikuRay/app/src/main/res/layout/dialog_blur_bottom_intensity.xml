@@ -19,9 +19,9 @@
         android:id="@+id/slider_blur_bottom_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stepSize="1.0"
-        android:valueFrom="1"
-        android:valueTo="50"
+        android:stepSize="0.5"
+        android:valueFrom="0"
+        android:valueTo="25"
         app:labelBehavior="floating"
         app:tickVisibilityMode="hidden" />
 

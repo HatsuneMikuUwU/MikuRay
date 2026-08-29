@@ -962,6 +962,19 @@ you need."</string>
     <string name="sheet_banner_updated">Sheet banner updated successfully.</string>
     <string name="particles_enable_title">Enable particles animation</string>
     <string name="particles_enable_summary">Show the particles effect in bottomsheet</string>
+    <string name="snowflakes_enable_title">Enable snowfall animation</string>
+    <string name="snowflakes_enable_summary">Show falling snowflakes on the Home screen</string>
+    <string name="snowflakes_speed_title">Snowfall speed</string>
+    <string name="snowflakes_speed_value">Speed: %1$s</string>
+    <string name="snowflakes_speed_summary_value">Animation speed: %1$s</string>
+    <string name="snowflakes_count_title">Snowflake amount</string>
+    <string name="snowflakes_count_value">Snowflakes: %1$d</string>
+    <string name="snowflakes_count_summary_value">Snowflake amount: %1$d</string>
+    <string name="snowflakes_settings_title">Snowfall settings</string>
+    <string name="snowflakes_size_value">Size: %1$s×</string>
+    <string name="snowflakes_opacity_value">Opacity: %1$s</string>
+    <string name="snowflakes_wind_value">Wind: %1$s×</string>
+    <string name="snowflakes_settings_summary_value">Speed: %1$s · Snowflakes: %2$d · Size: %3$s× · Opacity: %4$s · Wind: %5$s×</string>
 
     <string name="pref_particles_settings_title">Particle animation settings</string>
     <string name="pref_particles_settings_summary">Adjust speed, size, density and more</string>
@@ -1005,9 +1018,9 @@ you need."</string>
     <string name="summary_blur_intensity_value">Radius: %1$d · Iterations: %2$d</string>
     <string name="summary_blur_intensity_system_value">Radius: %1$d · System blur</string>
     <string name="pref_blur_bottom_intensity">Bottom Card Blur Intensity</string>
-    <string name="blur_bottom_radius_label">BlurView Radius (1–50)</string>
+    <string name="blur_bottom_radius_label">BlurView Radius (0–25)</string>
     <string name="blur_bottom_alpha_label">Background Opacity (0–100%)</string>
-    <string name="summary_blur_bottom_intensity_value">Radius: %1$d · Opacity: %2$d%%</string>
+    <string name="summary_blur_bottom_intensity_value">Radius: %1$.1f · Opacity: %2$d%%</string>
     <string name="title_blur_settings">Blur Settings</string>
     <string name="title_blur_warning">High iterations (10+) may cause FPS drops. Recommended: 2-5 iterations with radius 25-40</string>
 

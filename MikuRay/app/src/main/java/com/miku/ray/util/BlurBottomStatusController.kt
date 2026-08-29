@@ -1,121 +1,234 @@
 package com.miku.ray.util
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import eightbitlab.com.blurview.BlurView
 import com.miku.ray.AppConfig
 import com.miku.ray.databinding.ActivityMainBinding
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.blurview.BlurView
 import java.lang.ref.WeakReference
+import kotlin.math.abs
 
 object BlurBottomStatusController {
 
     private var blurViewReference: WeakReference<BlurView>? = null
     private var glassDrawableReference: WeakReference<GradientDrawable>? = null
-    private var strokeDrawableReference: WeakReference<StrokeDrawable>? = null
     private var glassFillBaseColor: Int = 0
     private var glassFillColor: Int = Color.TRANSPARENT
-    private var glassRadiusPx: Float = 28f
+
+    private const val MIN_BLUR_RADIUS = 0f
+    private const val MAX_BLUR_RADIUS = 25f
+
+    private fun toBlurViewRadius(userRadius: Float): Float =
+        userRadius.coerceIn(MIN_BLUR_RADIUS, MAX_BLUR_RADIUS)
 
     fun isEnabled(): Boolean =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
 
-    fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding) {
-        if (isEnabled()) applyBlurOn(activity, binding)
-        else applyBlurOff(activity, binding)
+    fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding, onTestClick: () -> Unit) {
+        val density = activity.resources.displayMetrics.density
+        val radiusPx = 28f * density
+
+        binding.blurBottomStatus.apply {
+            visibility = View.VISIBLE
+            outlineProvider = ViewOutlineProvider.BACKGROUND
+            clipToOutline = true
+        }
+
+        if (isEnabled()) {
+            applyBlurOn(activity, binding, radiusPx, density, onTestClick)
+        } else {
+            applyBlurOff(activity, binding, radiusPx, onTestClick)
+        }
     }
 
     fun updateRadius(radius: Float) {
-        val blurRadius = radius.coerceIn(1f, 50f)
-        blurViewReference?.get()?.apply {
-            setBlurRadius(blurRadius)
-            invalidate()
+        val blurView = blurViewReference?.get() ?: return
+        val blurRadius = toBlurViewRadius(radius)
+        if (blurRadius > MIN_BLUR_RADIUS) {
+            blurView.setBlurRadius(blurRadius)
         }
+        blurView.setBlurEnabled(blurRadius > MIN_BLUR_RADIUS)
     }
 
     fun updateAlpha(alphaPercent: Float) {
         glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
         glassDrawableReference?.get()?.setColor(glassFillColor)
+        blurViewReference?.get()?.setOverlayColor(glassFillColor)
         blurViewReference?.get()?.invalidate()
     }
 
     private fun alphaPercentToInt(percent: Float): Int =
         (percent.coerceIn(0f, 100f) / 100f * 255f).toInt().coerceIn(0, 255)
 
-    private fun applyBlurOn(activity: AppCompatActivity, binding: ActivityMainBinding) {
-        val blurRadius = MmkvManager.decodeSettingsInt(
-            AppConfig.PREF_BLUR_BOTTOM_RADIUS,
-            AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
-        ).toFloat().coerceIn(1f, 50f)
-        val alphaPercent = MmkvManager.decodeSettingsInt(
-            AppConfig.PREF_BLUR_BOTTOM_ALPHA,
-            AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
-        ).toFloat()
+    private fun withAlpha(color: Int, alpha: Int): Int = Color.argb(
+        alpha, Color.red(color), Color.green(color), Color.blue(color)
+    )
 
-        val density = activity.resources.displayMetrics.density
-        glassRadiusPx = 28f * density
-        glassFillBaseColor = activity.getColorAttr("strokeDrawableBg")
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun applyBounceTouchAnimation(
+        view: View,
+        glowDrawable: GradientDrawable? = null,
+        onClick: () -> Unit
+    ) {
+        view.isClickable = true
+        view.setOnClickListener { onClick() }
+
+        var touchStartX = 0f
+        var touchStartY = 0f
+
+        view.setOnTouchListener { v, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    touchStartX = event.rawX
+                    touchStartY = event.rawY
+                    v.isPressed = true
+                    glowDrawable?.alpha = 255
+                    v.animate().scaleX(1.06f).scaleY(1.06f).setDuration(110).start()
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val deltaX = event.rawX - touchStartX
+                    val deltaY = event.rawY - touchStartY
+                    val stretchX = 1.06f + (abs(deltaX) / v.width.toFloat() * 0.15f).coerceAtMost(0.09f)
+                    val stretchY = 1.06f + (abs(deltaY) / v.height.toFloat() * 0.15f).coerceAtMost(0.09f)
+                    v.scaleX = stretchX
+                    v.scaleY = stretchY
+                    v.translationX = deltaX * 0.18f
+                    v.translationY = deltaY * 0.18f
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    v.isPressed = false
+                    glowDrawable?.alpha = 0
+                    v.animate().scaleX(1f).scaleY(1f).translationX(0f).translationY(0f)
+                        .setDuration(380)
+                        .setInterpolator(OvershootInterpolator(1.8f))
+                        .start()
+                    if (event.actionMasked == MotionEvent.ACTION_UP) v.performClick()
+                }
+            }
+            true
+        }
+    }
+
+    private fun applyBlurOn(
+        activity: AppCompatActivity,
+        binding: ActivityMainBinding,
+        radiusPx: Float,
+        density: Float,
+        onTestClick: () -> Unit
+    ) {
+        val blurRadius = toBlurViewRadius(
+            MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS
+            )
+        )
+        val alphaPercent = MmkvManager.decodeSettingsInt(
+            AppConfig.PREF_BLUR_BOTTOM_ALPHA, AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA
+        ).toFloat().coerceIn(0f, 100f)
+
+        val isDark = ThemeManager.isDarkMode(activity)
+        glassFillBaseColor = activity.getColorAttr("colorSurfaceContainer")
         glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
+
         val glassDrawable = GradientDrawable().apply {
             setColor(glassFillColor)
-            setCornerRadius(glassRadiusPx)
+            cornerRadius = radiusPx
         }
         val strokeDrawable = StrokeDrawable().apply {
-            setCornerRadius(glassRadiusPx)
-            setStrokeWidthTop(1f * density)
-            setStrokeWidthBottom((2f / 3f) * density)
-            setStrokeColorTop(withAlpha(activity.getColorAttr("strokeDrawable"), 0xA8))
-            setStrokeColorBottom(withAlpha(activity.getColorAttr("strokeDrawable"), 0x70))
+            setCornerRadius(radiusPx)
+            setStrokeWidthTop(0.5f * density)
+            setStrokeWidthBottom(0.5f * density)
+            setStrokeColorTop(if (isDark) Color.argb(0x28, 255, 255, 255) else Color.WHITE)
+            setStrokeColorBottom(if (isDark) Color.argb(0x14, 255, 255, 255) else Color.WHITE)
         }
+        val glowColor = if (isDark) Color.argb(0x30, 255, 255, 255) else Color.argb(0x65, 255, 255, 255)
+        val glowDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            gradientType = GradientDrawable.RADIAL_GRADIENT
+            gradientRadius = 220f * density
+            colors = intArrayOf(glowColor, Color.TRANSPARENT)
+            cornerRadius = radiusPx
+            alpha = 0
+        }
+        
+        val combinedForeground = LayerDrawable(arrayOf(strokeDrawable, glowDrawable))
 
         binding.blurBottomStatus.apply {
+            setupWith(binding.mainContent)
+                .setFrameClearDrawable(activity.window.decorView.background)
+                .setBlurAutoUpdate(true)
             background = glassDrawable
-            foreground = strokeDrawable
-            outlineProvider = ViewOutlineProvider.BACKGROUND
             clipToOutline = true
-            setupWith(binding.mainBlurTarget)
-                .setBlurRadius(blurRadius)
-                .setOverlayColor(Color.TRANSPARENT)
-            visibility = View.VISIBLE
+            foreground = combinedForeground
+            if (blurRadius > MIN_BLUR_RADIUS) {
+                setBlurRadius(blurRadius)
+            }
+            setBlurEnabled(blurRadius > MIN_BLUR_RADIUS)
+            setOverlayColor(glassFillColor)
+            applyBounceTouchAnimation(this, glowDrawable, onTestClick)
         }
 
         blurViewReference = WeakReference(binding.blurBottomStatus)
         glassDrawableReference = WeakReference(glassDrawable)
-        strokeDrawableReference = WeakReference(strokeDrawable)
-        binding.cardBottomStatus.setCardBackgroundColor(Color.TRANSPARENT)
-        binding.tvIpState.setTextColor(activity.getColorAttr("colorOnSurfaceVariant"))
-        binding.tvIpState.alpha = 1f
-        binding.tvTestState.setTextColor(activity.getColorAttr("colorOnSurface"))
-        binding.fab.visibility = View.VISIBLE
-        binding.fabNoBlur.visibility = View.GONE
+
+        updateChildViews(activity, binding, isBlurOn = true)
     }
 
-    private fun withAlpha(color: Int, alpha: Int): Int = Color.argb(
-        alpha,
-        Color.red(color),
-        Color.green(color),
-        Color.blue(color)
-    )
-
-    private fun applyBlurOff(activity: AppCompatActivity, binding: ActivityMainBinding) {
+    private fun applyBlurOff(
+        activity: AppCompatActivity,
+        binding: ActivityMainBinding,
+        radiusPx: Float,
+        onTestClick: () -> Unit
+    ) {
         blurViewReference?.clear()
         glassDrawableReference?.clear()
-        strokeDrawableReference?.clear()
-        binding.blurBottomStatus.apply {
-            visibility = View.GONE
-            clipToOutline = false
-            background = null
-            foreground = null
+
+        val solidDrawable = GradientDrawable().apply {
+            setColor(activity.getColorAttr("colorPrimary"))
+            cornerRadius = radiusPx
         }
-        binding.cardBottomStatus.setCardBackgroundColor(activity.getColorAttr("colorPrimary"))
-        val textColorOnPrimary = activity.getColorAttr("colorOnPrimary")
-        binding.tvIpState.setTextColor(textColorOnPrimary)
-        binding.tvIpState.alpha = 0.8f
-        binding.tvTestState.setTextColor(textColorOnPrimary)
-        binding.fab.visibility = View.GONE
-        binding.fabNoBlur.visibility = View.VISIBLE
+
+        binding.blurBottomStatus.apply {
+            setBlurAutoUpdate(false)
+            setBlurEnabled(false)
+            setOverlayColor(Color.TRANSPARENT)
+            background = solidDrawable
+            clipToOutline = true
+            foreground = null
+            animate().cancel()
+            scaleX = 1f
+            scaleY = 1f
+            translationX = 0f
+            translationY = 0f
+            applyBounceTouchAnimation(this, null, onTestClick)
+        }
+
+        updateChildViews(activity, binding, isBlurOn = false)
+    }
+
+    private fun updateChildViews(
+        activity: AppCompatActivity,
+        binding: ActivityMainBinding,
+        isBlurOn: Boolean
+    ) {
+        val ipStateColor = activity.getColorAttr(if (isBlurOn) "colorOnSurfaceVariant" else "colorOnPrimary")
+        val testStateColor = activity.getColorAttr(if (isBlurOn) "colorOnSurface" else "colorOnPrimary")
+
+        binding.tvIpState.apply {
+            setTextColor(ipStateColor)
+            alpha = if (isBlurOn) 1f else 0.8f
+        }
+        
+        binding.tvTestState.setTextColor(testStateColor)
+        binding.fab.visibility = if (isBlurOn) View.VISIBLE else View.GONE
+        binding.fabNoBlur.visibility = if (isBlurOn) View.GONE else View.VISIBLE
     }
 }

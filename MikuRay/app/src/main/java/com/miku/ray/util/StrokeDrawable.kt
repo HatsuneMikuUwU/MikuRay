@@ -27,6 +27,10 @@ class StrokeDrawable : Drawable() {
     private var bottomColor = Color.TRANSPARENT
     private var drawableAlpha = 255
     private var cornerRadius = 0f
+    private var padding = 0
+    /** NagramXF-compatible mode: false draws a circle, true draws a rounded rectangle. */
+    var nonRound = true
+    var radius = 0f
     private var topStrokeWidth = 1f
     private var bottomStrokeWidth = 1f
 
@@ -36,7 +40,13 @@ class StrokeDrawable : Drawable() {
     }
 
     fun setCornerRadius(radius: Float) {
-        cornerRadius = radius.coerceAtLeast(0f)
+        this.radius = radius.coerceAtLeast(0f)
+        cornerRadius = this.radius
+        invalidateSelf()
+    }
+
+    fun setPadding(padding: Int) {
+        this.padding = padding.coerceAtLeast(0)
         invalidateSelf()
     }
 
@@ -79,40 +89,61 @@ class StrokeDrawable : Drawable() {
         val bounds = bounds
         if (bounds.isEmpty) return
 
-        val left = bounds.left.toFloat()
-        val top = bounds.top.toFloat()
-        val right = bounds.right.toFloat()
-        val bottom = bounds.bottom.toFloat()
-        val radius = min(cornerRadius, min(bounds.width(), bounds.height()) / 2f)
-        val strokeHalfTop = topStrokeWidth / 2f
-        val strokeHalfBottom = bottomStrokeWidth / 2f
-
+        val cx = bounds.centerX().toFloat()
+        val cy = bounds.centerY().toFloat()
+        var drawRadius = min(bounds.width(), bounds.height()) / 2f - padding
+        val left: Float
+        val top: Float
+        val right: Float
+        val bottom: Float
+        if (nonRound) {
+            left = bounds.left.toFloat()
+            top = bounds.top.toFloat()
+            right = bounds.right.toFloat()
+            bottom = bounds.bottom.toFloat()
+            drawRadius = min(radius.coerceAtLeast(cornerRadius), min(bounds.width(), bounds.height()) / 2f)
+        } else {
+            left = cx - drawRadius
+            top = cy - drawRadius
+            right = cx + drawRadius
+            bottom = cy + drawRadius
+        }
         if (Color.alpha(fillPaint.color) > 0) {
-            canvas.drawRoundRect(RectF(left, top, right, bottom), radius, radius, fillPaint)
+            canvas.drawRoundRect(RectF(left, top, right, bottom), drawRadius, drawRadius, fillPaint)
         }
         if (Color.alpha(topStrokePaint.color) > 0 && topStrokeWidth > 0f) {
-            drawEdgeStroke(canvas, left, top, right, bottom, radius, strokeHalfTop, true, topStrokePaint)
+            drawStroke(canvas, left, top, right, bottom, drawRadius, topStrokeWidth, true, topStrokePaint)
         }
         if (Color.alpha(bottomStrokePaint.color) > 0 && bottomStrokeWidth > 0f) {
-            drawEdgeStroke(canvas, left, top, right, bottom, radius, strokeHalfBottom, false, bottomStrokePaint)
+            drawStroke(canvas, left, top, right, bottom, drawRadius, bottomStrokeWidth, false, bottomStrokePaint)
         }
     }
 
-    private fun drawEdgeStroke(
+    /**
+     * Draws one rounded edge as a clipped expanded rounded rectangle.
+     * This mirrors NagramXF's BlurredBackgroundDrawable.drawStroke implementation
+     * and avoids the uneven corner joins produced by a full-border approximation.
+     */
+    private fun drawStroke(
         canvas: Canvas,
         left: Float,
         top: Float,
         right: Float,
         bottom: Float,
         radius: Float,
-        strokeHalf: Float,
+        strokeWidth: Float,
         isTop: Boolean,
         paint: Paint
     ) {
+        val strokeHalf = strokeWidth / 2f
         canvas.save()
         if (isTop) {
-            val clipBottom = min(top + radius * 2f, bottom)
-            if (canvas.clipRect(left - strokeHalf, top, right + strokeHalf, clipBottom)) {
+            if (canvas.clipRect(
+                    left - strokeHalf,
+                    top,
+                    right + strokeHalf,
+                    min(top + radius * 2f, bottom)
+                )) {
                 canvas.drawRoundRect(
                     left - strokeHalf,
                     top + strokeHalf,
@@ -124,8 +155,12 @@ class StrokeDrawable : Drawable() {
                 )
             }
         } else {
-            val clipTop = max(bottom - radius * 2f, top)
-            if (canvas.clipRect(left - strokeHalf, clipTop, right + strokeHalf, bottom)) {
+            if (canvas.clipRect(
+                    left - strokeHalf,
+                    max(bottom - radius * 2f, top),
+                    right + strokeHalf,
+                    bottom
+                )) {
                 canvas.drawRoundRect(
                     left - strokeHalf,
                     top - strokeHalf,

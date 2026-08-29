@@ -1385,7 +1385,7 @@ class UiSettingsActivity : BaseActivity() {
             val savedRounds = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_ROUNDS, AppConfig.DEFAULT_BLUR_ROUNDS)
             blurIntensity?.updateSummary(savedRadius, savedRounds)
 
-            val savedBottomRadius = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
+            val savedBottomRadius = MmkvManager.decodeSettingsFloat(AppConfig.PREF_BLUR_BOTTOM_RADIUS, AppConfig.DEFAULT_BLUR_BOTTOM_RADIUS)
             val savedBottomAlpha = MmkvManager.decodeSettingsInt(AppConfig.PREF_BLUR_BOTTOM_ALPHA, AppConfig.DEFAULT_BLUR_BOTTOM_ALPHA)
             blurBottomIntensity?.updateSummary(savedBottomRadius, savedBottomAlpha)
 
