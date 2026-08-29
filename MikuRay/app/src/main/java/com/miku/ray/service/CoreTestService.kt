@@ -73,7 +73,11 @@ class CoreTestService : Service() {
         NotificationHelper.stopForeground(this)
         super.onDestroy()
         // Xray owns process-wide dialer state. Do not reuse this disposable process.
-        disposeProcess()
+        // Keep the process alive briefly so the terminal FINISH broadcast can be
+        // delivered to MainViewModel before the disposable process is killed.
+        Handler(Looper.getMainLooper()).postDelayed({
+            disposeProcess()
+        }, FINISH_BROADCAST_GRACE_MS)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -253,5 +257,9 @@ class CoreTestService : Service() {
 
     private fun disposeProcess() {
         Handler(Looper.getMainLooper()).post { Process.killProcess(Process.myPid()) }
+    }
+
+    private companion object {
+        const val FINISH_BROADCAST_GRACE_MS = 500L
     }
 }
