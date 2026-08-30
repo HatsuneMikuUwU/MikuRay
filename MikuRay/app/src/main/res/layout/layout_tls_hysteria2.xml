@@ -83,7 +83,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
+            android:nextFocusDown="@+id/et_ech_config_list"
             app:simpleItems="@array/allowinsecures" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lay_ech_config_list"
+        app:shapeAppearance="?shapeAppearanceCornerMedium"
+        app:boxStrokeWidth="1.5dip"
+        app:boxStrokeWidthFocused="1.5dip"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_spacing_dp16"
+        android:hint="@string/server_lab_ech_config_list"
+        app:startIconDrawable="@drawable/rmx_editor_list_check_2"
+        app:startIconTint="?attr/colorOnSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lay_allow_insecure">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_ech_config_list"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:nextFocusDown="@+id/et_pinned_ca256" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +127,7 @@
         app:helperText="@string/server_lab_pinned_ca256_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lay_allow_insecure">
+        app:layout_constraintTop_toBottomOf="@id/lay_ech_config_list">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_pinned_ca256"
