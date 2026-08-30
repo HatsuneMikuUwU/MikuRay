@@ -1090,6 +1090,10 @@ class MainActivity : HelperBaseActivity(),
 
                 if (targetIndex >= 0) {
                     binding.viewPager.setCurrentItem(targetIndex, false)
+                    // Reveal the selected group after rebuilding the scrollable tabs.
+                    binding.tabGroup.post {
+                        binding.tabGroup.setScrollPosition(targetIndex, 0f, true)
+                    }
                 }
 
                 val hasAnyGroup = groups.isNotEmpty()

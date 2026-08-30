@@ -314,6 +314,9 @@ object CoreServiceManager {
                 }
             }
 
+            // Resolve endpoint information once so both UI indicators describe the
+            // same successful test instead of issuing independent lookups.
+            val ip = if (time >= 0) SpeedtestManager.getRemoteIPInfo() else null
             val result = if (time >= 0) {
                 service.getString(R.string.connection_test_available, time)
             } else {
@@ -322,7 +325,6 @@ object CoreServiceManager {
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_DELAY_SUCCESS, result)
 
             if (time >= 0) {
-                val ip = SpeedtestManager.getRemoteIPInfo()
                 MessageUtil.sendMsg2UI(service, AppConfig.MSG_MEASURE_IP_SUCCESS, ip.orEmpty())
             }
         }
