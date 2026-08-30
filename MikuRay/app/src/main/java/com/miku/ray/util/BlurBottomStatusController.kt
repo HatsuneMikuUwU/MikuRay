@@ -3,6 +3,7 @@ package com.miku.ray.util
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.content.res.ColorStateList
 import android.graphics.drawable.LayerDrawable
 import android.view.MotionEvent
 import android.view.View
@@ -228,7 +229,14 @@ object BlurBottomStatusController {
         }
         
         binding.tvTestState.setTextColor(testStateColor)
-        binding.fab.visibility = if (isBlurOn) View.VISIBLE else View.GONE
-        binding.fabNoBlur.visibility = if (isBlurOn) View.GONE else View.VISIBLE
+        binding.fab.apply {
+            visibility = View.VISIBLE
+            backgroundTintList = ColorStateList.valueOf(
+                activity.getColorAttr(if (isBlurOn) "colorPrimary" else "colorOnPrimary")
+            )
+            imageTintList = ColorStateList.valueOf(
+                activity.getColorAttr(if (isBlurOn) "colorOnPrimary" else "colorPrimary")
+            )
+        }
     }
 }

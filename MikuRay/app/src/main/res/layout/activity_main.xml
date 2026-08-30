@@ -420,21 +420,6 @@
                     android:elevation="0dp"
                     android:outlineProvider="none"
                     app:elevation="0dp"
-                    app:backgroundTint="?colorPrimary"
-                    app:tint="?colorOnPrimary"
-                    style="?floatingActionButtonStyle" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_no_blur"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/rmx_media_play_line"
-                    android:elevation="0dp"
-                    android:outlineProvider="none"
-                    app:elevation="0dp"
-                    app:backgroundTint="?colorOnPrimary"
-                    app:tint="?colorPrimary"
                     style="?floatingActionButtonStyle" />
             </FrameLayout>
         </RelativeLayout>

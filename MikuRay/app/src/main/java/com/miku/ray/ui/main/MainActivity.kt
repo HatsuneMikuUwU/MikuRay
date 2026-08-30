@@ -709,7 +709,6 @@ class MainActivity : HelperBaseActivity(),
 
     private fun setupListeners() {
         binding.fab.setOnClickListener { handleFabAction() }
-        binding.fabNoBlur.setOnClickListener { handleFabAction() }
 
         binding.blurBottomStatus.setOnClickListener { handleLayoutTestClick() }
         
@@ -1187,11 +1186,9 @@ class MainActivity : HelperBaseActivity(),
 
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
         binding.fab.isEnabled = true
-        binding.fabNoBlur.isEnabled = true
 
         if (isLoading) {
             binding.fab.setImageResource(RemixR.drawable.rmx_system_check_line)
-            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_system_check_line)
             return
         }
 
@@ -1202,16 +1199,10 @@ class MainActivity : HelperBaseActivity(),
             binding.fab.setImageResource(RemixR.drawable.rmx_media_stop_line)
             binding.fab.contentDescription = getString(R.string.action_stop_service)
             
-            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_media_stop_line)
-            binding.fabNoBlur.contentDescription = getString(R.string.action_stop_service)
-            
             setTestState(lastTestResultText.ifEmpty { getString(R.string.connection_connected) })
         } else {
             binding.fab.setImageResource(RemixR.drawable.rmx_media_play_line)
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
-            
-            binding.fabNoBlur.setImageResource(RemixR.drawable.rmx_media_play_line)
-            binding.fabNoBlur.contentDescription = getString(R.string.tasker_start_service)
             
             setTestState(getString(R.string.connection_not_connected))
             lastTestResultText = ""
