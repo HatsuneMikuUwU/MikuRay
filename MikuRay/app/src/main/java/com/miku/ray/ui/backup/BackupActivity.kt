@@ -215,31 +215,33 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
-    private fun restoreConfiguration(zipFile: File): Boolean {
-        val backupDir = this.cacheDir.absolutePath + "/${System.currentTimeMillis()}"
-
-        if (!ZipUtil.unzipToFolder(zipFile, backupDir)) {
-            return false
-        }
-
-        val count = MMKV.restoreAllFromDirectory(backupDir)
-        SettingsChangeManager.makeSetupGroupTab()
-        SettingsChangeManager.makeRestartService()
-
-        restoreBannerImages(backupDir)
-        SettingsManager.preloadAllBanners(this)
-
-        restoreCustomFont(backupDir)
-
-        val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
-        if (!restoredHomeBannerUri.isNullOrBlank()) {
-            lifecycleScope.launch {
-                BannerColorExtractor.extractAndSave(this@BackupActivity, Uri.parse(restoredHomeBannerUri))
+    private suspend fun restoreConfiguration(zipFile: File): Boolean = withContext(Dispatchers.IO) {
+        val backupDir = File(cacheDir, "restore_${System.nanoTime()}")
+        try {
+            if (!ZipUtil.unzipToFolder(zipFile, backupDir.absolutePath)) {
+                return@withContext false
             }
-        }
 
-        SettingsManager.initApp(this)
-        return count > 0
+            val count = MMKV.restoreAllFromDirectory(backupDir.absolutePath)
+            SettingsChangeManager.makeSetupGroupTab()
+            SettingsChangeManager.makeRestartService()
+
+            restoreBannerImages(backupDir.absolutePath)
+            SettingsManager.preloadAllBanners(this@BackupActivity)
+            restoreCustomFont(backupDir.absolutePath)
+
+            val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
+            if (!restoredHomeBannerUri.isNullOrBlank()) {
+                lifecycleScope.launch {
+                    BannerColorExtractor.extractAndSave(this@BackupActivity, Uri.parse(restoredHomeBannerUri))
+                }
+            }
+
+            SettingsManager.initApp(this@BackupActivity)
+            count > 0
+        } finally {
+            backupDir.deleteRecursively()
+        }
     }
 
     private fun restoreCustomFont(backupDir: String) {
@@ -296,31 +298,39 @@ class BackupActivity : HelperBaseActivity() {
             if (uri == null) {
                 return@launchFileChooser
             }
-            try {
-                val targetFile =
-                    File(this.cacheDir.absolutePath, "${System.currentTimeMillis()}.zip")
-                contentResolver.openInputStream(uri).use { input ->
-                    targetFile.outputStream().use { fileOut ->
-                        input?.copyTo(fileOut)
+            lifecycleScope.launch(Dispatchers.IO) {
+                val targetFile = File(cacheDir, "restore_download_${System.nanoTime()}.zip")
+                try {
+                    contentResolver.openInputStream(uri).use { input ->
+                        targetFile.outputStream().use { fileOut ->
+                            input?.copyTo(fileOut)
+                        }
                     }
+                    val restored = restoreConfiguration(targetFile)
+                    withContext(Dispatchers.Main) {
+                        if (restored) {
+                            snackbarSuccess(
+                                getString(R.string.title_configuration_restore),
+                                title = getString(R.string.title_alerter_success)
+                            )
+                        } else {
+                            snackbarError(
+                                getString(R.string.title_configuration_restore),
+                                title = getString(R.string.title_alerter_error)
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "Error during file restore", e)
+                    withContext(Dispatchers.Main) {
+                        snackbarError(
+                            getString(R.string.title_configuration_restore),
+                            title = getString(R.string.title_alerter_error)
+                        )
+                    }
+                } finally {
+                    targetFile.delete()
                 }
-                if (restoreConfiguration(targetFile)) {
-                    snackbarSuccess(
-                        getString(R.string.title_configuration_restore),
-                        title = getString(R.string.title_alerter_success)
-                    )
-                } else {
-                    snackbarError(
-                        getString(R.string.title_configuration_restore),
-                        title = getString(R.string.title_alerter_error)
-                    )
-                }
-            } catch (e: Exception) {
-                LogUtil.e(AppConfig.TAG, "Error during file restore", e)
-                snackbarError(
-                    getString(R.string.title_configuration_restore),
-                    title = getString(R.string.title_alerter_error)
-                )
             }
         }
     }
