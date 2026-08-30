@@ -146,6 +146,21 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         val cardMarginBottom = (statusCard.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
         val gap = (16 * resources.displayMetrics.density).toInt()
         val desiredMargin = statusCard.height + cardMarginBottom + gap
+        val recyclerView = binding.recyclerView
+        val listModeReduction = (32 * resources.displayMetrics.density).toInt()
+        val desiredBottomPadding = if (isDoubleColumnEnabled()) {
+            statusCard.height + cardMarginBottom + gap
+        } else {
+            maxOf(0, statusCard.height + cardMarginBottom - listModeReduction)
+        }
+        if (recyclerView.paddingBottom != desiredBottomPadding) {
+            recyclerView.setPadding(
+                recyclerView.paddingLeft,
+                recyclerView.paddingTop,
+                recyclerView.paddingRight,
+                desiredBottomPadding
+            )
+        }
 
         val containerParams = container.layoutParams as? ViewGroup.MarginLayoutParams ?: return
         if (containerParams.bottomMargin != desiredMargin) {

@@ -21,6 +21,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -289,8 +290,15 @@ class MainActivity : HelperBaseActivity(),
                 top = 0,
                 left = maxOf(systemBars.left, displayCutout.left),
                 right = maxOf(systemBars.right, displayCutout.right),
-                bottom = maxOf(systemBars.bottom, displayCutout.bottom)
+                bottom = 0
             )
+
+            val bottomStatus = view.findViewById<View>(R.id.blur_bottom_status)
+            val bottomStatusParams = bottomStatus?.layoutParams as? ViewGroup.MarginLayoutParams
+            bottomStatusParams?.let {
+                it.bottomMargin = (16 * resources.displayMetrics.density).toInt() + systemBars.bottom
+                bottomStatus.layoutParams = it
+            }
 
             val headerContent = view.findViewById<View>(R.id.header_content)
             headerContent?.updatePadding(top = systemBars.top)

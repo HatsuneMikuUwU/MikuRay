@@ -6,7 +6,6 @@
 
     <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/recycler_view"
-        android:paddingBottom="60dp"
         android:paddingTop="62dp"
         android:clipToPadding="false"
         android:layout_width="match_parent"
