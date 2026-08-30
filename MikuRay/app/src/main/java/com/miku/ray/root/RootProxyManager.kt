@@ -2,6 +2,7 @@ package com.miku.ray.root
 
 import android.content.Context
 import android.os.Process
+import android.util.AtomicFile
 import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
@@ -89,14 +90,21 @@ object RootProxyManager {
         val socksUsername = SettingsManager.getSocksUsername()
         val socksPassword = SettingsManager.getSocksPassword()
         val port = SettingsManager.getSocksPort()
-        val runDir = File(context.filesDir, AppConfig.ROOT_RUNTIME_DIR).apply { mkdirs() }
+        val runDir = File(context.filesDir, AppConfig.ROOT_RUNTIME_DIR)
+        if (!runDir.isDirectory && !runDir.mkdirs()) {
+            LogUtil.e(TAG, "RootProxyManager: failed to create runtime directory at ${runDir.absolutePath}")
+            return null
+        }
         val pidFile = File(runDir, "tun2socks.pid").absolutePath
         val logFile = File(runDir, "tun2socks.log").absolutePath
-        val cfgFile = File(runDir, "tun2socks.yml").absolutePath
+        val cfgFile = File(runDir, "tun2socks.yml")
         val oomGuardPid = File(runDir, "oomguard.pid").absolutePath
         val ipv6 = MmkvManager.decodeSettingsBool(AppConfig.PREF_IPV6_ENABLED)
         val lanShare = forceLanShare || MmkvManager.decodeSettingsBool(AppConfig.PREF_ROOT_LAN_SHARING)
         val corePid = Process.myPid()
+        val config = buildHevConfig(socksUsername, socksPassword, port, ipv6)
+        if (!writeHevConfig(cfgFile, config)) return null
+        val cfgPath = cfgFile.absolutePath
 
         val perAppEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_PER_APP_PROXY)
         val bypassApps = MmkvManager.decodeSettingsBool(AppConfig.PREF_BYPASS_APPS)
@@ -113,10 +121,8 @@ object RootProxyManager {
             appendLine("nohup sh -c 'while true; do echo ${AppConfig.ROOT_OOM_SCORE} > /proc/$corePid/oom_score_adj 2>/dev/null; sleep 5; done' >/dev/null 2>&1 &")
             appendLine("echo \$! > '$oomGuardPid'")
             appendLine("if [ ! -e /dev/net/tun ]; then mkdir -p /dev/net; mknod /dev/net/tun c 10 200; chmod 666 /dev/net/tun; fi")
-            appendLine("cat > '$cfgFile' <<'HEVCFG'")
-            append(buildHevConfig(socksUsername = socksUsername, socksPassword = socksPassword, socksPort = port, ipv6 = ipv6))
-            appendLine("HEVCFG")
-            appendLine("nohup \"\$BIN\" '$cfgFile' >'$logFile' 2>&1 &")
+            // HEV credentials are written by the app process, never embedded in this root script.
+            appendLine("nohup \"\$BIN\" '$cfgPath' >'$logFile' 2>&1 &")
             appendLine("T2S_PID=\$!")
             appendLine("echo \$T2S_PID > '$pidFile'")
             appendLine("echo ${AppConfig.ROOT_OOM_SCORE} > /proc/\$T2S_PID/oom_score_adj 2>/dev/null || true")
@@ -176,8 +182,8 @@ object RootProxyManager {
                 appendLine("  pipeline: true")
             }
             if (socksUsername != null && socksPassword != null) {
-                appendLine("  username: '$socksUsername'")
-                appendLine("  password: '$socksPassword'")
+                appendLine("  username: ${socksUsername.toSingleQuotedYamlScalar()}")
+                appendLine("  password: ${socksPassword.toSingleQuotedYamlScalar()}")
             }
             if (tcpFastOpen) {
                 appendLine("  tcp-fastopen: true")
@@ -315,6 +321,26 @@ object RootProxyManager {
     }
 
 
+    private fun writeHevConfig(file: File, config: String): Boolean {
+        val atomicFile = AtomicFile(file)
+        val output = try {
+            atomicFile.startWrite()
+        } catch (e: Exception) {
+            LogUtil.e(TAG, "RootProxyManager: failed to open HEV config at ${file.absolutePath}", e)
+            return false
+        }
+
+        return try {
+            output.write(config.toByteArray(Charsets.UTF_8))
+            atomicFile.finishWrite(output)
+            true
+        } catch (e: Exception) {
+            atomicFile.failWrite(output)
+            LogUtil.e(TAG, "RootProxyManager: failed to write HEV config at ${file.absolutePath}", e)
+            false
+        }
+    }
+
     private fun buildTeardown(context: Context): String {
         val runDir = File(context.filesDir, AppConfig.ROOT_RUNTIME_DIR)
         val pidFile = File(runDir, "tun2socks.pid").absolutePath
@@ -358,3 +384,5 @@ object RootProxyManager {
         }
     }
 }
+
+internal fun String.toSingleQuotedYamlScalar(): String = "'${replace("'", "''")}'"
