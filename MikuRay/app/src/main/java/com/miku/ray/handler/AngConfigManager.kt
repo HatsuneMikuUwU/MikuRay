@@ -52,8 +52,7 @@ object AngConfigManager {
             EConfigType.VLESS.protocolScheme to VlessFmt::parse,
             EConfigType.WIREGUARD.protocolScheme to WireguardFmt::parse,
             EConfigType.HYSTERIA2.protocolScheme to Hysteria2Fmt::parse,
-            AppConfig.HY2 to Hysteria2Fmt::parse,
-            AppConfig.V2RAYNFMTS to V2rayNFmt::parse
+            AppConfig.HY2 to Hysteria2Fmt::parse
         )
     }
 
@@ -230,25 +229,33 @@ object AngConfigManager {
             val subItem = MmkvManager.decodeSubscription(subid)
 
             val configs = mutableListOf<ProfileItem>()
+            val v2raynLines = mutableListOf<String>()
+
             servers.lines()
                 .distinct()
                 .reversed()
-                .forEach {
-                    val config = parseConfig(it, subid, subItem)
-                    if (config != null) {
-                        configs.add(config)
+                .forEach { line ->
+                    if (line.startsWith(AppConfig.V2RAYNFMTS, ignoreCase = true)) {
+                        v2raynLines.add(line)
+                    } else {
+                        parseConfig(line, subid, subItem)?.let { configs.add(it) }
                     }
                 }
 
-            if (configs.isNotEmpty()) {
+            val v2raynConfigs = V2rayNFmt.parse(v2raynLines, subid)
+                .filter { matchesSubscriptionFilters(it, subItem) }
+                .onEach { it.subscriptionId = subid }
+            val allConfigs = v2raynConfigs + configs
+
+            if (allConfigs.isNotEmpty()) {
                 commitProfiles(
-                    configs = configs.map { ParsedProfile(it) },
+                    configs = allConfigs.map(::ParsedProfile),
                     subid = subid,
                     append = append,
                 )
             }
 
-            return configs.size
+            return allConfigs.size
         } catch (e: ProfileStorageException) {
             throw e
         } catch (e: Exception) {
@@ -415,11 +422,6 @@ object AngConfigManager {
             }
 
             config.subscriptionId = subid
-
-            if (str.startsWith(AppConfig.V2RAYNFMTS, ignoreCase = true)
-                && config.policyGroupSubscriptionId == "self") {
-                config.policyGroupSubscriptionId = subid
-            }
 
             return config
         } catch (e: Exception) {

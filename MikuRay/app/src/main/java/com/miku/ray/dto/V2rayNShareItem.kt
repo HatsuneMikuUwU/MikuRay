@@ -7,6 +7,7 @@ import com.miku.ray.enums.NetworkType
 
 @Suppress("PropertyName")
 data class V2rayNShareItem(
+    val IndexId: String?,
     val ConfigType: Int?,
     val ConfigVersion: Int?,
     val Subid: String?,
