@@ -938,7 +938,8 @@ yang kamu butuhin."</string>
     <string name="snowflakes_size_value">Ukuran snowflake: %1$s×</string>
     <string name="snowflakes_opacity_value">Transparansi: %1$s</string>
     <string name="snowflakes_wind_value">Kekuatan angin: %1$s×</string>
-    <string name="snowflakes_settings_summary_value">Kecepatan: %1$s · Snowflake: %2$d · Ukuran: %3$s× · Transparansi: %4$s · Angin: %5$s×</string>
+    <string name="snowflakes_life_value">Masa hidup: %1$s dtk</string>
+    <string name="snowflakes_settings_summary_value">Kecepatan: %1$s · Snowflake: %2$d · Ukuran: %3$s× · Transparansi: %4$s · Angin: %5$s× · Masa hidup: %6$s dtk</string>
 
     <string name="pref_particles_settings_title">Settingan animasi partikel</string>
     <string name="pref_particles_settings_summary">Atur kecepatan, ukuran, kepadatan, dan lainnya</string>

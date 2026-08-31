@@ -948,7 +948,8 @@
     <string name="snowflakes_size_value">Размер: %1$s×</string>
     <string name="snowflakes_opacity_value">Прозрачность: %1$s</string>
     <string name="snowflakes_wind_value">Ветер: %1$s×</string>
-    <string name="snowflakes_settings_summary_value">Скорость: %1$s · Снежинки: %2$d · Размер: %3$s× · Прозрачность: %4$s · Ветер: %5$s×</string>
+    <string name="snowflakes_life_value">Время жизни: %1$s с</string>
+    <string name="snowflakes_settings_summary_value">Скорость: %1$s · Снежинки: %2$d · Размер: %3$s× · Прозрачность: %4$s · Ветер: %5$s× · Время жизни: %6$s с</string>
 
     <string name="pref_particles_settings_title">Настройки анимации частиц</string>
     <string name="pref_particles_settings_summary">Настройте скорость, размер, плотность и другое</string>

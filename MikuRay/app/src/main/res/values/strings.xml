@@ -974,7 +974,8 @@ you need."</string>
     <string name="snowflakes_size_value">Size: %1$s×</string>
     <string name="snowflakes_opacity_value">Opacity: %1$s</string>
     <string name="snowflakes_wind_value">Wind: %1$s×</string>
-    <string name="snowflakes_settings_summary_value">Speed: %1$s · Snowflakes: %2$d · Size: %3$s× · Opacity: %4$s · Wind: %5$s×</string>
+    <string name="snowflakes_life_value">Lifetime: %1$s s</string>
+    <string name="snowflakes_settings_summary_value">Speed: %1$s · Snowflakes: %2$d · Size: %3$s× · Opacity: %4$s · Wind: %5$s× · Lifetime: %6$s s</string>
 
     <string name="pref_particles_settings_title">Particle animation settings</string>
     <string name="pref_particles_settings_summary">Adjust speed, size, density and more</string>

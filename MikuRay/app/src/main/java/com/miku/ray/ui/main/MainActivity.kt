@@ -328,6 +328,10 @@ class MainActivity : HelperBaseActivity(),
             wind = MmkvManager.decodeSettingsFloat(
                 AppConfig.PREF_SNOWFLAKES_WIND,
                 AppConfig.SNOWFLAKES_WIND_DEFAULT
+            ),
+            life = MmkvManager.decodeSettingsFloat(
+                AppConfig.PREF_SNOWFLAKES_LIFE,
+                AppConfig.SNOWFLAKES_LIFE_DEFAULT
             )
         )
         binding.snowflakesView.visibility = if (

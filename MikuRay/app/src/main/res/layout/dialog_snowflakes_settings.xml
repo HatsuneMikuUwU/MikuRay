@@ -84,6 +84,24 @@
             app:tickVisibilityMode="hidden" />
 
         <TextView
+            android:id="@+id/text_snowflakes_life_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textAppearance="?textAppearanceBodyLarge"
+            android:textColor="?android:textColorPrimary" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_snowflakes_life"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="0.5"
+            android:valueFrom="1.0"
+            android:valueTo="30.0"
+            app:labelBehavior="floating"
+            app:tickVisibilityMode="hidden" />
+
+        <TextView
             android:id="@+id/text_snowflakes_wind_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

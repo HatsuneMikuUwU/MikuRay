@@ -215,6 +215,7 @@ object AppConfig {
     const val PREF_SNOWFLAKES_SIZE = "pref_snowflakes_size"
     const val PREF_SNOWFLAKES_OPACITY = "pref_snowflakes_opacity"
     const val PREF_SNOWFLAKES_WIND = "pref_snowflakes_wind"
+    const val PREF_SNOWFLAKES_LIFE = "pref_snowflakes_life"
     const val SNOWFLAKES_SIZE_DEFAULT = 1.0f
     const val SNOWFLAKES_SIZE_MIN = 0.5f
     const val SNOWFLAKES_SIZE_MAX = 2.0f
@@ -224,6 +225,9 @@ object AppConfig {
     const val SNOWFLAKES_WIND_DEFAULT = 1.0f
     const val SNOWFLAKES_WIND_MIN = 0.0f
     const val SNOWFLAKES_WIND_MAX = 3.0f
+    const val SNOWFLAKES_LIFE_DEFAULT = 15.0f
+    const val SNOWFLAKES_LIFE_MIN = 1.0f
+    const val SNOWFLAKES_LIFE_MAX = 30.0f
     const val PREF_DISABLE_HOME_BANNER = "pref_disable_home_banner"
     const val PREF_CUSTOM_HOME_BANNER_URI = "custom_home_banner_uri"
     const val PREF_ACTION_CHANGE_HOME_BANNER = "action_change_home_banner_image"

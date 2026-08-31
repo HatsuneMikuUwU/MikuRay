@@ -927,7 +927,8 @@
     <string name="snowflakes_size_value">大小：%1$s×</string>
     <string name="snowflakes_opacity_value">不透明度：%1$s</string>
     <string name="snowflakes_wind_value">风力：%1$s×</string>
-    <string name="snowflakes_settings_summary_value">速度：%1$s · 雪花：%2$d · 大小：%3$s× · 不透明度：%4$s · 风力：%5$s×</string>
+    <string name="snowflakes_life_value">生命周期：%1$s 秒</string>
+    <string name="snowflakes_settings_summary_value">速度：%1$s · 雪花：%2$d · 大小：%3$s× · 不透明度：%4$s · 风力：%5$s× · 生命周期：%6$s 秒</string>
 
     <string name="pref_particles_settings_title">粒子动画设置</string>
     <string name="pref_particles_settings_summary">调整速度、大小、密度等参数</string>

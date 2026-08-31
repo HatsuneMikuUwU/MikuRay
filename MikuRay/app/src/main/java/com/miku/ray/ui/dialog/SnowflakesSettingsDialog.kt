@@ -44,14 +44,16 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
         MmkvManager.decodeSettingsFloat(AppConfig.PREF_SNOWFLAKES_OPACITY, AppConfig.SNOWFLAKES_OPACITY_DEFAULT)
             .coerceIn(AppConfig.SNOWFLAKES_OPACITY_MIN, AppConfig.SNOWFLAKES_OPACITY_MAX),
         MmkvManager.decodeSettingsFloat(AppConfig.PREF_SNOWFLAKES_WIND, AppConfig.SNOWFLAKES_WIND_DEFAULT)
-            .coerceIn(AppConfig.SNOWFLAKES_WIND_MIN, AppConfig.SNOWFLAKES_WIND_MAX)
+            .coerceIn(AppConfig.SNOWFLAKES_WIND_MIN, AppConfig.SNOWFLAKES_WIND_MAX),
+        MmkvManager.decodeSettingsFloat(AppConfig.PREF_SNOWFLAKES_LIFE, AppConfig.SNOWFLAKES_LIFE_DEFAULT)
+            .coerceIn(AppConfig.SNOWFLAKES_LIFE_MIN, AppConfig.SNOWFLAKES_LIFE_MAX)
     )
 
     private fun updateSummary() {
         val v = values()
         summary = context.getString(
             R.string.snowflakes_settings_summary_value,
-            format(v[0]), v[1].toInt(), format(v[2]), formatPercent(v[3]), format(v[4])
+            format(v[0]), v[1].toInt(), format(v[2]), formatPercent(v[3]), format(v[4]), format(v[5])
         )
     }
 
@@ -65,17 +67,20 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
         val sizeSlider = dialogView.findViewById<Slider>(R.id.slider_snowflakes_size)
         val opacitySlider = dialogView.findViewById<Slider>(R.id.slider_snowflakes_opacity)
         val windSlider = dialogView.findViewById<Slider>(R.id.slider_snowflakes_wind)
+        val lifeSlider = dialogView.findViewById<Slider>(R.id.slider_snowflakes_life)
         val speedValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_speed_value)
         val countValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_count_value)
         val sizeValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_size_value)
         val opacityValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_opacity_value)
         val windValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_wind_value)
+        val lifeValue = dialogView.findViewById<TextView>(R.id.text_snowflakes_life_value)
 
         speedSlider.value = current[0]
         countSlider.value = current[1]
         sizeSlider.value = current[2]
         opacitySlider.value = current[3]
         windSlider.value = current[4]
+        lifeSlider.value = current[5]
 
         fun refreshValues() {
             speedValue.text = context.getString(R.string.snowflakes_speed_value, format(speedSlider.value))
@@ -83,9 +88,10 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
             sizeValue.text = context.getString(R.string.snowflakes_size_value, format(sizeSlider.value))
             opacityValue.text = context.getString(R.string.snowflakes_opacity_value, formatPercent(opacitySlider.value))
             windValue.text = context.getString(R.string.snowflakes_wind_value, format(windSlider.value))
+            lifeValue.text = context.getString(R.string.snowflakes_life_value, format(lifeSlider.value))
         }
         refreshValues()
-        listOf(speedSlider, countSlider, sizeSlider, opacitySlider, windSlider).forEach { slider ->
+        listOf(speedSlider, countSlider, sizeSlider, opacitySlider, windSlider, lifeSlider).forEach { slider ->
             slider.addOnChangeListener { _, _, _ -> refreshValues() }
         }
 
@@ -99,6 +105,7 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
                 MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_SIZE, sizeSlider.value)
                 MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_OPACITY, opacitySlider.value)
                 MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_WIND, windSlider.value)
+                MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_LIFE, lifeSlider.value)
                 updateSummary()
                 activity.recreate()
             }
@@ -113,6 +120,7 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_SIZE, AppConfig.SNOWFLAKES_SIZE_DEFAULT)
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_OPACITY, AppConfig.SNOWFLAKES_OPACITY_DEFAULT)
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_WIND, AppConfig.SNOWFLAKES_WIND_DEFAULT)
+            MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_LIFE, AppConfig.SNOWFLAKES_LIFE_DEFAULT)
             updateSummary()
             dialog.dismiss()
             activity.recreate()
