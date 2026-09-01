@@ -126,9 +126,22 @@ class MainActivity : HelperBaseActivity(),
     private var dualSwipeChipSelection = SearchBarChipMode.WEATHER
     private var pendingConnectionTest = false
     private var lastIpStateText: String = ""
+        set(value) {
+            field = value
+            MmkvManager.encodeSettings(AppConfig.PREF_LAST_IP_STATE_TEXT, value)
+        }
     private var lastTrafficSpeedText: String = ""
     private var lastTestResultText: String = ""
+        set(value) {
+            field = value
+            MmkvManager.encodeSettings(AppConfig.PREF_LAST_TEST_RESULT_TEXT, value)
+        }
     private var fabTimerJob: Job? = null
+
+    init {
+        lastIpStateText = MmkvManager.decodeSettingsString(AppConfig.PREF_LAST_IP_STATE_TEXT).orEmpty()
+        lastTestResultText = MmkvManager.decodeSettingsString(AppConfig.PREF_LAST_TEST_RESULT_TEXT).orEmpty()
+    }
 
     private val urlTestProgressDialog: TestProgressDialogController by lazy {
         TestProgressDialogController(this, TestProgressDialogController.Mode.URL_TEST) { mainViewModel.cancelRealPingTest() }
@@ -180,6 +193,11 @@ class MainActivity : HelperBaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         showTestBuildInfoIfNeeded()
+
+        refreshIpStateText()
+        if (lastTestResultText.isNotEmpty()) {
+            setTestState(lastTestResultText)
+        }
 
         hideLoading()
         window.statusBarColor = Color.TRANSPARENT

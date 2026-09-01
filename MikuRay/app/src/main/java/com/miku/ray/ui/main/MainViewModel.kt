@@ -64,7 +64,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
 
     fun startListenBroadcast() {
-        isRunning.value = false
         val mFilter = IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY)
         ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
         MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
