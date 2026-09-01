@@ -15,21 +15,6 @@ class CrashReporterConfiguration : Serializable {
     var emailIds: Array<String> = arrayOf()
 
 
-    /* Theme */
-    var alertDialogThemeId : Int? = null
-
-    var alertDialogTitle : String? = null
-    var alertDialogMessage : String? = null
-    var alertDialogPositiveButton : String? = null
-    var alertDialogNegativeButton : String? = null
-
-
-    fun setAlertDialogTheme(alertThemeId: Int): CrashReporterConfiguration {
-        this.alertDialogThemeId = alertThemeId
-        return this
-    }
-
-
     fun setCrashReportStoragePath(path : String) : CrashReporterConfiguration{
         this.crashReportStoragePath  = path
         return this
@@ -57,26 +42,6 @@ class CrashReporterConfiguration : Serializable {
 
     fun setIncludeDeviceInformation(allow : Boolean) : CrashReporterConfiguration {
         this.includeDeviceInformation = allow
-        return this
-    }
-
-    fun setAlertDialogTitle(title : String) : CrashReporterConfiguration {
-        this.alertDialogTitle = title
-        return this
-    }
-
-    fun setAlertDialogMessage(message : String) : CrashReporterConfiguration {
-        this.alertDialogMessage = message
-        return this
-    }
-
-    fun setAlertDialogPositiveButton(positiveButtonText : String) : CrashReporterConfiguration {
-        this.alertDialogPositiveButton = positiveButtonText
-        return this
-    }
-
-    fun setAlertDialogNegativeButton(negativeButtonText : String) : CrashReporterConfiguration {
-        this.alertDialogNegativeButton = negativeButtonText
         return this
     }
 

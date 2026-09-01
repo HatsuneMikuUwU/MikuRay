@@ -52,7 +52,6 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
                 .setMaxNumberOfCrashToBeReport(5)
                 .setCrashReportSubjectForEmail("MikuRay Crash Report")
                 .setExtraInformation("MikuRay ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-                .setAlertDialogTheme(R.style.AppThemeCrashLogger)
         )
 
         Timber.plant(MikuRayLogTree())
