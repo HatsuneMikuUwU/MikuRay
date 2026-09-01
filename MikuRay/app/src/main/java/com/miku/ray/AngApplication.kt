@@ -18,7 +18,8 @@ import com.miku.ray.util.ThemeManager
 import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.AppFontResolver
 import com.miku.ray.util.MikuRayLogTree
-import com.miku.ray.crashlog.CrashHandler
+import com.miku.ray.crashreporter.CrashReporter
+import com.miku.ray.crashreporter.CrashReporterConfiguration
 import timber.log.Timber
 
 class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
@@ -45,7 +46,14 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
         super.onCreate()
-        Thread.setDefaultUncaughtExceptionHandler(CrashHandler(this))
+        CrashReporter.initialize(
+            this,
+            CrashReporterConfiguration()
+                .setMaxNumberOfCrashToBeReport(5)
+                .setCrashReportSubjectForEmail("MikuRay Crash Report")
+                .setExtraInformation("MikuRay ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+                .setAlertDialogTheme(R.style.AppThemeCrashLogger)
+        )
 
         Timber.plant(MikuRayLogTree())
         MmkvManager.initialize(this)

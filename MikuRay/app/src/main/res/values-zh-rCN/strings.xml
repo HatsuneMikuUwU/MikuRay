@@ -1047,4 +1047,14 @@
     <string name="ui_theme_import_failed">无法导入主题：%1$s</string>
     <string name="title_pref_use_system_blur">使用系统模糊</string>
     <string name="summary_pref_use_system_blur">可用时使用原生 Android 窗口模糊</string>
+    <string name="crash_log_title">错误日志</string>
+    <string name="subtitle_crash_log">查看、复制或分享收集到的崩溃报告</string>
+    <string name="crash_log_clear_all">清除全部</string>
+    <string name="crash_log_copy">复制</string>
+    <string name="crash_log_share">分享</string>
+    <string name="crash_log_close">关闭错误日志</string>
+    <string name="crash_log_empty">暂无崩溃日志记录。</string>
+    <string name="crash_log_cleared">崩溃日志已清除</string>
+    <string name="crash_log_copied">崩溃日志已复制</string>
+    <string name="crash_log_share_telegram_hint">崩溃日志已复制，请在打开的聊天中粘贴。</string>
 </resources>

@@ -2992,13 +2992,9 @@
         </activity>
 
         <activity
-            android:theme="@style/AppThemeCrashLogger"
-            android:name="com.miku.ray.crashlog.CrashDialogActivity"
-            android:process=":crashlogger"
-            android:exported="true"
-            android:excludeFromRecents="true"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:name=".ui.crashlog.CrashLogActivity"
+            android:exported="false"
+            android:theme="@style/AppThemeBase" />
 
         <activity
             android:name=".ui.server.ServerVmessActivity"

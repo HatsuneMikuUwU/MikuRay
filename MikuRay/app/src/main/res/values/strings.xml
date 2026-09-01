@@ -1098,4 +1098,14 @@ you need."</string>
     <string name="ui_theme_import_failed">Unable to import the theme: %1$s</string>
     <string name="title_pref_use_system_blur">Use system blur</string>
     <string name="summary_pref_use_system_blur">Use native Android window blur when available</string>
+    <string name="crash_log_title">Error Log</string>
+    <string name="subtitle_crash_log">Review, copy, or share the collected crash report</string>
+    <string name="crash_log_clear_all">Clear all</string>
+    <string name="crash_log_copy">Copy</string>
+    <string name="crash_log_share">Share</string>
+    <string name="crash_log_close">Close error log</string>
+    <string name="crash_log_empty">No crash logs collected.</string>
+    <string name="crash_log_cleared">Crash logs cleared</string>
+    <string name="crash_log_copied">Crash log copied</string>
+    <string name="crash_log_share_telegram_hint">Crash log copied. Paste it in the chat that just opened.</string>
 </resources>

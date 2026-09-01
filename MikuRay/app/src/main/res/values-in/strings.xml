@@ -1058,4 +1058,14 @@ yang kamu butuhin."</string>
     <string name="ui_theme_import_failed">Yah, temanya gagal diimpor: %1$s</string>
     <string name="title_pref_use_system_blur">Pake blur sistem</string>
     <string name="summary_pref_use_system_blur">Pake blur jendela bawaan Android kalo ada</string>
+    <string name="crash_log_title">Log Error</string>
+    <string name="subtitle_crash_log">Liat, salin, atau bagikan laporan crash yang kekumpul</string>
+    <string name="crash_log_clear_all">Hapus semua</string>
+    <string name="crash_log_copy">Salin</string>
+    <string name="crash_log_share">Bagikan</string>
+    <string name="crash_log_close">Tutup log error</string>
+    <string name="crash_log_empty">Belum ada log crash yang kekumpul.</string>
+    <string name="crash_log_cleared">Log crash udah dihapus</string>
+    <string name="crash_log_copied">Log crash udah disalin</string>
+    <string name="crash_log_share_telegram_hint">Log crash udah disalin. Tinggal paste di chat yang baru kebuka.</string>
 </resources>

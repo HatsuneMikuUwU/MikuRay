@@ -1068,4 +1068,14 @@
     <string name="ui_theme_import_failed">Не удалось импортировать тему: %1$s</string>
     <string name="title_pref_use_system_blur">Использовать системное размытие</string>
     <string name="summary_pref_use_system_blur">Использовать нативное размытие окон Android, если оно доступно</string>
+    <string name="crash_log_title">Журнал ошибок</string>
+    <string name="subtitle_crash_log">Просмотр, копирование или отправка собранного отчёта о сбое</string>
+    <string name="crash_log_clear_all">Очистить всё</string>
+    <string name="crash_log_copy">Копировать</string>
+    <string name="crash_log_share">Поделиться</string>
+    <string name="crash_log_close">Закрыть журнал ошибок</string>
+    <string name="crash_log_empty">Журналы сбоев не собраны.</string>
+    <string name="crash_log_cleared">Журналы сбоев очищены</string>
+    <string name="crash_log_copied">Журнал сбоя скопирован</string>
+    <string name="crash_log_share_telegram_hint">Журнал сбоя скопирован. Вставьте его в открывшемся чате.</string>
 </resources>
