@@ -15,29 +15,32 @@ import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.util.LogUtil
 
+private data class TaskerItem(
+    val label: String,
+    val guid: String,
+)
+
 class TaskerActivity : BaseActivity() {
     private val binding by lazy { ActivityTaskerBinding.inflate(layoutInflater) }
 
     private var listview: ListView? = null
-    private var lstData: ArrayList<String> = ArrayList()
-    private var lstGuid: ArrayList<String> = ArrayList()
+    private val items = mutableListOf<TaskerItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = "")
 
-        lstData.add("Default")
-        lstGuid.add(AppConfig.TASKER_DEFAULT_GUID)
+        items.add(TaskerItem(label = "Default", guid = AppConfig.TASKER_DEFAULT_GUID))
 
         MmkvManager.decodeAllServerList().forEach { key ->
             MmkvManager.decodeServerConfig(key)?.let { config ->
-                lstData.add(config.remarks)
-                lstGuid.add(key)
+                items.add(TaskerItem(label = config.remarks, guid = key))
             }
         }
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_single_choice, lstData
+            android.R.layout.simple_list_item_single_choice,
+            items.map { it.label }
         )
         listview = findViewById<View>(R.id.listview) as ListView
         listview?.adapter = adapter
@@ -56,7 +59,7 @@ class TaskerActivity : BaseActivity() {
                 return
             } else {
                 binding.switchStartService.isChecked = switch
-                val pos = lstGuid.indexOf(guid.toString())
+                val pos = items.indexOfFirst { it.guid == guid.toString() }
                 if (pos >= 0) {
                     listview?.setItemChecked(pos, true)
                 }
@@ -75,14 +78,14 @@ class TaskerActivity : BaseActivity() {
 
         val extraBundle = Bundle()
         extraBundle.putBoolean(AppConfig.TASKER_EXTRA_BUNDLE_SWITCH, binding.switchStartService.isChecked)
-        extraBundle.putString(AppConfig.TASKER_EXTRA_BUNDLE_GUID, lstGuid[position])
+        extraBundle.putString(AppConfig.TASKER_EXTRA_BUNDLE_GUID, items[position].guid)
         val intent = Intent()
 
-        val remarks = lstData[position]
+        val label = items[position].label
         val blurb = if (binding.switchStartService.isChecked) {
-            "Start $remarks"
+            "Start $label"
         } else {
-            "Stop $remarks"
+            "Stop $label"
         }
 
         intent.putExtra(AppConfig.TASKER_EXTRA_BUNDLE, extraBundle)
