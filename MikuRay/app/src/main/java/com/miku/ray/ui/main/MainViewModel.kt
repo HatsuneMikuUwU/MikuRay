@@ -606,6 +606,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 AppConfig.MSG_STATE_RESTART -> {
+                    // A service restart is a new connection lifecycle. Clear the
+                    // previous start time before the replacement service starts.
+                    markConnectionStopped()
                     isRestarting = true
                     serviceRestartAction.value = Unit
                 }
