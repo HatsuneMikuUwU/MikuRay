@@ -1204,13 +1204,8 @@ class MainActivity : HelperBaseActivity(),
 
     private fun startFabTimer() {
         if (!isFabExtended()) return
-        // Source of truth lives in MMKV (set by MainViewModel the moment the VPN
-        // actually connects), not in this Activity/ViewModel instance - so a
-        // reopened app or a fresh process after being killed in the background
-        // still shows the real elapsed time instead of resetting to 00:00.
-        if (MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L) == 0L) {
-            MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, System.currentTimeMillis())
-        }
+        // NotificationManager owns and persists the connection start time. Read
+        // that same value so the FAB and notification always show one session timer.
         updateFabTimerText()
         binding.fab.extend()
         if (fabTimerJob?.isActive == true) return
@@ -1230,8 +1225,11 @@ class MainActivity : HelperBaseActivity(),
 
     private fun updateFabTimerText() {
         val startTime = MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
-        if (startTime == 0L) return
-        val elapsed = (System.currentTimeMillis() - startTime) / 1000
+        if (startTime == 0L) {
+            binding.fab.text = "00:00"
+            return
+        }
+        val elapsed = ((System.currentTimeMillis() - startTime) / 1000).coerceAtLeast(0L)
         val h = elapsed / 3600
         val m = (elapsed % 3600) / 60
         val s = elapsed % 60

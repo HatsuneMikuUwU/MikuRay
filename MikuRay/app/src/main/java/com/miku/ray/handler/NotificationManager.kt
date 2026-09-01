@@ -35,8 +35,6 @@ object NotificationManager : TrafficController.Listener {
     private const val NOTIFICATION_PENDING_INTENT_RESTART_V2RAY = 2
     private const val NOTIFICATION_ICON_THRESHOLD = 3000
 
-    private var connectStartTime = 0L
-    fun getConnectStartTime() = connectStartTime
     private var mBuilder: NotificationCompat.Builder? = null
     private var timerNotificationJob: Job? = null
     private val notificationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -106,7 +104,12 @@ object NotificationManager : TrafficController.Listener {
     fun showNotification(currentConfig: ProfileItem?) {
         val service = getService() ?: return
 
-        connectStartTime = System.currentTimeMillis()
+        // The notification owns the connection lifecycle. Persist the exact same
+        // timestamp that drives its timer so the FAB cannot drift or reuse stale time.
+        MmkvManager.encodeSettings(
+            AppConfig.PREF_VPN_CONNECT_START_TIME,
+            System.currentTimeMillis(),
+        )
         lastSpeedText = ""
         lastProxyTraffic = 0L
         lastDirectTraffic = 0L
@@ -169,7 +172,7 @@ object NotificationManager : TrafficController.Listener {
         service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
 
         mBuilder = null
-        connectStartTime = 0L
+        MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
         TrafficController.setListener(null)
         timerNotificationJob?.cancel()
         timerNotificationJob = null
@@ -230,9 +233,10 @@ object NotificationManager : TrafficController.Listener {
     }
 
     private fun updateTimerNotification() {
-        if (connectStartTime == 0L) return
+        val startTime = MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
+        if (startTime == 0L) return
         val service = getService() ?: return
-        val elapsed = (System.currentTimeMillis() - connectStartTime) / 1000
+        val elapsed = ((System.currentTimeMillis() - startTime) / 1000).coerceAtLeast(0L)
         val h = elapsed / 3600
         val m = (elapsed % 3600) / 60
         val s = elapsed % 60
