@@ -471,7 +471,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         pendingServerRestartGuid = null
         isRestarting = false
+        markConnectionStopped()
         isRunning.value = false
+    }
+
+    /**
+     * Persists the moment the VPN actually connects (survives process death and
+     * app restarts), but only on the genuine transition - a re-bind/re-sync while
+     * already connected (e.g. reopening the app) must not stamp a new "now".
+     */
+    private fun markConnectionStarted() {
+        if (MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L) == 0L) {
+            MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, System.currentTimeMillis())
+        }
+    }
+
+    private fun markConnectionStopped() {
+        MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
     }
 
     fun findSubscriptionIdBySelect(): String? {
@@ -577,12 +593,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             when (intent?.getIntExtra("key", 0)) {
                 AppConfig.MSG_STATE_RUNNING -> {
                     if (!isRestarting) {
+                        markConnectionStarted()
                         isRunning.value = true
                     }
                 }
 
                 AppConfig.MSG_STATE_NOT_RUNNING -> {
                     if (!isRestarting) {
+                        markConnectionStopped()
                         isRunning.value = false
                     }
                 }
@@ -604,6 +622,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             else R.string.toast_services_success,
                         ),
                     )
+                    markConnectionStarted()
                     isRunning.value = true
                 }
 
@@ -619,12 +638,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     pendingServerRestartGuid = null
                     isRestarting = false
                     alertAction.value = Pair(false, msg)
+                    markConnectionStopped()
                     isRunning.value = false
                 }
 
                 AppConfig.MSG_STATE_STOP_SUCCESS -> {
                     pendingServerRestartGuid = null
                     isRestarting = false
+                    markConnectionStopped()
                     isRunning.value = false
                 }
 

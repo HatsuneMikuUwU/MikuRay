@@ -19,7 +19,6 @@ import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.BrowserDialerMode
 import com.miku.ray.extension.delay
 import com.miku.ray.extension.isNotNullEmpty
-import com.miku.ray.handler.ConnectionTimeTracker
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.SettingsManager
@@ -104,7 +103,6 @@ object CoreServiceManager {
             LogUtil.e(AppConfig.TAG, "StartCore-Manager: $message", e)
             reportStartFailure(service, message)
             NotificationManager.cancelNotification()
-            ConnectionTimeTracker.stop()
             return false
         }
     }
@@ -155,7 +153,6 @@ object CoreServiceManager {
         }
 
         NotificationManager.showNotification(currentConfig)
-        ConnectionTimeTracker.start()
         if (dialerAddr.isNotNullEmpty()) {
             CoreNativeManager.reconcileBrowserDialer(dialerAddr)
         }
@@ -218,7 +215,6 @@ object CoreServiceManager {
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_STOP_SUCCESS, "")
         }
         NotificationManager.cancelNotification()
-        ConnectionTimeTracker.stop()
 
         try {
             service.unregisterReceiver(mMsgReceive)

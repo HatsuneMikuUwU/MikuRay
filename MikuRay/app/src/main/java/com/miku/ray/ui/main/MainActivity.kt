@@ -58,7 +58,6 @@ import com.miku.ray.extension.toastInfo
 import com.miku.ray.extension.toastSuccess
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MikuRayGroupFileManager
-import com.miku.ray.handler.ConnectionTimeTracker
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
@@ -1205,16 +1204,16 @@ class MainActivity : HelperBaseActivity(),
 
     private fun startFabTimer() {
         if (!isFabExtended()) return
-        if (fabTimerJob?.isActive == true) return
-        // Source of truth is ConnectionTimeTracker, a singleton set/cleared by
-        // CoreServiceManager at the same points the connection actually
-        // starts/stops. It lives as long as the connection service is alive,
-        // so it survives the Activity/ViewModel being destroyed and
-        // recreated (app backgrounded/closed and reopened) instead of
-        // resetting - independent of NotificationManager.
-        if (ConnectionTimeTracker.getConnectStartTime() == 0L) return
+        // Source of truth lives in MMKV (set by MainViewModel the moment the VPN
+        // actually connects), not in this Activity/ViewModel instance - so a
+        // reopened app or a fresh process after being killed in the background
+        // still shows the real elapsed time instead of resetting to 00:00.
+        if (MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L) == 0L) {
+            MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, System.currentTimeMillis())
+        }
         updateFabTimerText()
         binding.fab.extend()
+        if (fabTimerJob?.isActive == true) return
         fabTimerJob = lifecycleScope.launch {
             while (isActive) {
                 delay(1000L)
@@ -1230,7 +1229,7 @@ class MainActivity : HelperBaseActivity(),
     }
 
     private fun updateFabTimerText() {
-        val startTime = ConnectionTimeTracker.getConnectStartTime()
+        val startTime = MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
         if (startTime == 0L) return
         val elapsed = (System.currentTimeMillis() - startTime) / 1000
         val h = elapsed / 3600

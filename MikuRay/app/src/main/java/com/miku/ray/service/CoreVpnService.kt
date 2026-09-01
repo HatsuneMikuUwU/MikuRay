@@ -20,7 +20,6 @@ import com.miku.ray.BuildConfig
 import com.miku.ray.contracts.ServiceControl
 import com.miku.ray.contracts.Tun2SocksControl
 import com.miku.ray.core.CoreServiceManager
-import com.miku.ray.handler.ConnectionTimeTracker
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.TrafficController
@@ -117,7 +116,6 @@ class CoreVpnService : VpnService(), ServiceControl {
 
         unlockStart()
         NotificationManager.cancelNotification()
-        ConnectionTimeTracker.stop()
         TrafficController.stop()
         serviceScope.cancel()
 

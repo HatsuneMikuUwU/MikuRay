@@ -7,7 +7,6 @@ import android.os.IBinder
 import com.miku.ray.AppConfig
 import com.miku.ray.contracts.ServiceControl
 import com.miku.ray.core.CoreServiceManager
-import com.miku.ray.handler.ConnectionTimeTracker
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.SettingsManager
@@ -46,7 +45,6 @@ class CoreRootService : Service(), ServiceControl {
         }
 
         NotificationManager.showNotification(null)
-        ConnectionTimeTracker.start()
         TrafficController.start()
 
         setupJob?.cancel()
