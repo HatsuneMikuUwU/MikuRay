@@ -850,6 +850,12 @@ object MmkvManager {
 
 
 
+    /**
+     * Reads routing rules and repairs missing or duplicate IDs at the storage boundary.
+     * The first occurrence of a valid ID keeps its identity; only invalid/colliding items
+     * receive a new identity. This preserves contents and ordering while making ID-based
+     * edit/delete and RecyclerView keys deterministic.
+     */
     fun decodeRoutingRulesets(): MutableList<RulesetItem>? {
         val ruleset = settingsStorage.decodeString(PREF_ROUTING_RULESET)
         if (ruleset.isNullOrEmpty()) return null
@@ -857,27 +863,45 @@ object MmkvManager {
         val rulesetList = JsonUtil.fromJsonSafe(ruleset, Array<RulesetItem>::class.java)
             ?.toMutableList()
             ?: return mutableListOf()
-
-        // Older exports do not contain IDs. Assign them once and persist the migration so
-        // subsequent edits remain stable even when the list is reordered.
-        var migrated = false
-        rulesetList.forEach { item ->
-            if (item.id.isBlank()) {
-                item.id = Utils.getUuid()
-                migrated = true
+        val repaired = repairRoutingRulesetIds(rulesetList)
+        if (repaired.second) {
+            // Never publish in-memory replacement IDs if persistence failed.
+            if (!settingsStorage.encode(PREF_ROUTING_RULESET, JsonUtil.toJson(repaired.first))) {
+                return null
             }
         }
-        if (migrated) {
-            encodeRoutingRulesets(rulesetList)
-        }
-        return rulesetList
+        return repaired.first
     }
 
     fun encodeRoutingRulesets(rulesetList: MutableList<RulesetItem>?) {
-        if (rulesetList.isNullOrEmpty())
+        if (rulesetList.isNullOrEmpty()) {
             encodeSettings(PREF_ROUTING_RULESET, "")
-        else
-            encodeSettings(PREF_ROUTING_RULESET, JsonUtil.toJson(rulesetList))
+            return
+        }
+        val repaired = repairRoutingRulesetIds(rulesetList)
+        encodeSettings(PREF_ROUTING_RULESET, JsonUtil.toJson(repaired.first))
+    }
+
+    private fun repairRoutingRulesetIds(
+        rulesetList: MutableList<RulesetItem>
+    ): Pair<MutableList<RulesetItem>, Boolean> {
+        val usedIds = HashSet<String>(rulesetList.size)
+        var changed = false
+        rulesetList.forEach { item ->
+            val currentId = item.id.trim()
+            if (currentId.isEmpty() || !usedIds.add(currentId)) {
+                var replacement: String
+                do {
+                    replacement = Utils.getUuid()
+                } while (!usedIds.add(replacement))
+                item.id = replacement
+                changed = true
+            } else if (item.id != currentId) {
+                item.id = currentId
+                changed = true
+            }
+        }
+        return rulesetList to changed
     }
 
 

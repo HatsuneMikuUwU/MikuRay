@@ -124,15 +124,15 @@ object SettingsManager {
     }
 
     private fun resetRoutingRulesetsCommon(rulesetList: MutableList<RulesetItem>) {
-        val rulesetNew: MutableList<RulesetItem> = mutableListOf()
-        MmkvManager.decodeRoutingRulesets()?.forEach { key ->
-            if (key.locked == true) {
-                rulesetNew.add(key)
-            }
+        val lockedRulesets = MmkvManager.decodeRoutingRulesets()
+            ?.filter { it.locked == true }
+            .orEmpty()
+        val importedRulesets = rulesetList.filterNot { imported ->
+            // A locked built-in rule already present locally must not be appended again
+            // when its exported copy is imported. Different rules remain untouched.
+            lockedRulesets.any { locked -> locked.id == imported.id && locked == imported }
         }
-
-        rulesetNew.addAll(rulesetList)
-        MmkvManager.encodeRoutingRulesets(rulesetNew)
+        MmkvManager.encodeRoutingRulesets((lockedRulesets + importedRulesets).toMutableList())
     }
 
     /** Returns a routing ruleset by its stable ID. */
@@ -144,16 +144,22 @@ object SettingsManager {
     /** Saves or inserts a routing ruleset without relying on its current list position. */
     fun saveRoutingRuleset(id: String?, ruleset: RulesetItem?) {
         if (ruleset == null) return
-        if (ruleset.id.isBlank()) {
-            ruleset.id = id?.takeIf { it.isNotBlank() } ?: java.util.UUID.randomUUID().toString()
-        }
 
         val rulesetList = MmkvManager.decodeRoutingRulesets()?.toMutableList() ?: mutableListOf()
-        val targetId = id?.takeIf { it.isNotBlank() } ?: ruleset.id
-        val targetIndex = rulesetList.indexOfFirst { it.id == targetId }
-        if (targetIndex >= 0) {
+        val targetId = id?.takeIf { it.isNotBlank() }
+        if (targetId != null) {
+            val targetIndex = rulesetList.indexOfFirst { it.id == targetId }
+            // An explicit stale edit must be a no-op, never an accidental insert.
+            if (targetIndex < 0) return
+            ruleset.id = targetId
             rulesetList[targetIndex] = ruleset
         } else {
+            val usedIds = rulesetList.mapTo(HashSet()) { it.id }
+            if (ruleset.id.isBlank() || !usedIds.add(ruleset.id)) {
+                do {
+                    ruleset.id = java.util.UUID.randomUUID().toString()
+                } while (!usedIds.add(ruleset.id))
+            }
             rulesetList.add(0, ruleset)
         }
         MmkvManager.encodeRoutingRulesets(rulesetList)
