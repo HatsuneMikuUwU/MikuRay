@@ -58,6 +58,7 @@ import com.miku.ray.extension.toastInfo
 import com.miku.ray.extension.toastSuccess
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MikuRayGroupFileManager
+import com.miku.ray.handler.ConnectionTimeTracker
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
@@ -1205,7 +1206,13 @@ class MainActivity : HelperBaseActivity(),
     private fun startFabTimer() {
         if (!isFabExtended()) return
         if (fabTimerJob?.isActive == true) return
-        if (mainViewModel.fabConnectStartTime == 0L) mainViewModel.fabConnectStartTime = System.currentTimeMillis()
+        // Source of truth is ConnectionTimeTracker, a singleton set/cleared by
+        // CoreServiceManager at the same points the connection actually
+        // starts/stops. It lives as long as the connection service is alive,
+        // so it survives the Activity/ViewModel being destroyed and
+        // recreated (app backgrounded/closed and reopened) instead of
+        // resetting - independent of NotificationManager.
+        if (ConnectionTimeTracker.getConnectStartTime() == 0L) return
         updateFabTimerText()
         binding.fab.extend()
         fabTimerJob = lifecycleScope.launch {
@@ -1219,12 +1226,11 @@ class MainActivity : HelperBaseActivity(),
     private fun stopFabTimer() {
         fabTimerJob?.cancel()
         fabTimerJob = null
-        mainViewModel.fabConnectStartTime = 0L
         binding.fab.shrink()
     }
 
     private fun updateFabTimerText() {
-        val startTime = mainViewModel.fabConnectStartTime
+        val startTime = ConnectionTimeTracker.getConnectStartTime()
         if (startTime == 0L) return
         val elapsed = (System.currentTimeMillis() - startTime) / 1000
         val h = elapsed / 3600
