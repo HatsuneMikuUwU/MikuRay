@@ -16,16 +16,21 @@ class RoutingSettingsViewModel : ViewModel() {
     }
 
     fun update(position: Int, item: RulesetItem) {
-        if (position in rulesets.indices) {
-            rulesets[position] = item
-            SettingsManager.saveRoutingRuleset(position, item)
+        if (position !in rulesets.indices) return
+        val current = rulesets[position]
+        val targetIndex = rulesets.indexOfFirst { it.id == current.id }
+        if (targetIndex >= 0) {
+            rulesets[targetIndex] = item
+            SettingsManager.saveRoutingRuleset(current.id, item)
         }
     }
 
-    fun remove(position: Int) {
-        if (position in rulesets.indices) {
-            rulesets.removeAt(position)
-            SettingsManager.removeRoutingRuleset(position)
+    fun remove(id: String) {
+        if (id.isBlank()) return
+        val targetIndex = rulesets.indexOfFirst { it.id == id }
+        if (targetIndex >= 0) {
+            rulesets.removeAt(targetIndex)
+            SettingsManager.removeRoutingRuleset(id)
         }
     }
 

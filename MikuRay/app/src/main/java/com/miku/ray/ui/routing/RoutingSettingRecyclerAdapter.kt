@@ -35,11 +35,11 @@ class RoutingSettingRecyclerAdapter(
         holder.itemView.setBackgroundColor(Color.TRANSPARENT)
 
         holder.itemRoutingSettingBinding.layoutEdit.setOnClickListener {
-            adapterListener?.onEdit("", position)
+            adapterListener?.onEdit(ruleset.id, holder.bindingAdapterPosition)
         }
 
         holder.itemRoutingSettingBinding.layoutRemove.setOnClickListener {
-            adapterListener?.onRemove("", holder.bindingAdapterPosition)
+            adapterListener?.onRemove(ruleset.id, holder.bindingAdapterPosition)
         }
 
         holder.itemRoutingSettingBinding.chkEnable.setOnCheckedChangeListener { it, isChecked ->

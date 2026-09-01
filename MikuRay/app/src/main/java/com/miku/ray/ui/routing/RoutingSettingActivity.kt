@@ -237,20 +237,21 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
     private inner class ActivityAdapterListener : BaseAdapterListener {
         override fun onEdit(guid: String, position: Int) {
+            if (guid.isBlank()) return
             startActivity(
                 Intent(ownerActivity, RoutingEditActivity::class.java)
-                    .putExtra("position", position)
+                    .putExtra("ruleset_id", guid)
             )
         }
 
         override fun onRemove(guid: String, position: Int) {
-            if (position !in 0 until adapter.itemCount) return
+            if (guid.isBlank() || position !in 0 until adapter.itemCount) return
             showDeleteConfirmDialog(
                 context = ownerActivity,
                 messageRes = R.string.del_routing_dialog_comfirm_message
             ) {
-                val remarks = viewModel.getAll().getOrNull(position)?.remarks.orEmpty()
-                viewModel.remove(position)
+                val remarks = viewModel.getAll().firstOrNull { it.id == guid }?.remarks.orEmpty()
+                viewModel.remove(guid)
                 adapter.notifyItemRemoved(position)
                 adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
                 updateEmptyState()

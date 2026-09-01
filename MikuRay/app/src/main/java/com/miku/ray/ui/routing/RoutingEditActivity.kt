@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class RoutingEditActivity : BaseActivity() {
     private val binding by lazy { ActivityRoutingEditBinding.inflate(layoutInflater) }
-    private val position by lazy { intent.getIntExtra("position", -1) }
+    private val rulesetId by lazy { intent.getStringExtra("ruleset_id") }
 
     private val processPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -48,7 +48,11 @@ class RoutingEditActivity : BaseActivity() {
         setupOutboundTagInput()
         setupProcessPicker()
 
-        val rulesetItem = SettingsManager.getRoutingRuleset(position)
+        val rulesetItem = rulesetId?.let { SettingsManager.getRoutingRuleset(it) }
+        if (!rulesetId.isNullOrBlank() && rulesetItem == null) {
+            finish()
+            return
+        }
         if (rulesetItem != null) {
             bindingServer(rulesetItem)
         } else {
@@ -115,7 +119,7 @@ class RoutingEditActivity : BaseActivity() {
     }
 
     private fun saveServer(): Boolean {
-        val rulesetItem = SettingsManager.getRoutingRuleset(position) ?: RulesetItem()
+        val rulesetItem = rulesetId?.let { SettingsManager.getRoutingRuleset(it) } ?: RulesetItem()
 
         rulesetItem.apply {
             remarks = binding.etRemarks.text?.toString().orEmpty()
@@ -137,7 +141,7 @@ class RoutingEditActivity : BaseActivity() {
             return false
         }
 
-        SettingsManager.saveRoutingRuleset(position, rulesetItem)
+        SettingsManager.saveRoutingRuleset(rulesetId, rulesetItem)
         toastSuccess(R.string.toast_success)
         finish()
         return true
@@ -145,10 +149,10 @@ class RoutingEditActivity : BaseActivity() {
 
 
     private fun deleteServer(): Boolean {
-        if (position >= 0) {
+        if (!rulesetId.isNullOrBlank()) {
             showDeleteConfirmDialog(context = this, messageRes = R.string.del_routing_dialog_comfirm_message) {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    SettingsManager.removeRoutingRuleset(position)
+                    SettingsManager.removeRoutingRuleset(rulesetId)
                     launch(Dispatchers.Main) {
                         toastSuccess(R.string.toast_delete_success)
                         finish()
@@ -163,7 +167,7 @@ class RoutingEditActivity : BaseActivity() {
         menuInflater.inflate(R.menu.action_server, menu)
         val delConfig = menu.findItem(R.id.del_config)
 
-        if (position < 0) {
+        if (rulesetId.isNullOrBlank()) {
             delConfig?.isVisible = false
         }
 

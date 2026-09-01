@@ -853,7 +853,24 @@ object MmkvManager {
     fun decodeRoutingRulesets(): MutableList<RulesetItem>? {
         val ruleset = settingsStorage.decodeString(PREF_ROUTING_RULESET)
         if (ruleset.isNullOrEmpty()) return null
-        return JsonUtil.fromJsonSafe(ruleset, Array<RulesetItem>::class.java)?.toMutableList() ?: mutableListOf()
+
+        val rulesetList = JsonUtil.fromJsonSafe(ruleset, Array<RulesetItem>::class.java)
+            ?.toMutableList()
+            ?: return mutableListOf()
+
+        // Older exports do not contain IDs. Assign them once and persist the migration so
+        // subsequent edits remain stable even when the list is reordered.
+        var migrated = false
+        rulesetList.forEach { item ->
+            if (item.id.isBlank()) {
+                item.id = Utils.getUuid()
+                migrated = true
+            }
+        }
+        if (migrated) {
+            encodeRoutingRulesets(rulesetList)
+        }
+        return rulesetList
     }
 
     fun encodeRoutingRulesets(rulesetList: MutableList<RulesetItem>?) {

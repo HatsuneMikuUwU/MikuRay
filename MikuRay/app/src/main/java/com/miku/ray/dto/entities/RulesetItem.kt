@@ -11,4 +11,6 @@ data class RulesetItem(
     var protocol: List<String>? = null,
     var enabled: Boolean = true,
     var locked: Boolean? = false,
+    /** Stable identifier used for routing edits and deletes. */
+    var id: String = "",
 )
