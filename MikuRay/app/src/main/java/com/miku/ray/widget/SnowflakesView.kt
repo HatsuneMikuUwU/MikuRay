@@ -51,22 +51,12 @@ class SnowflakesView @JvmOverloads constructor(
     private var windTimeMs = 0f
     @Volatile
     private var running = false
+    @Volatile
+    private var animationGeneration = 0L
     private var animationThread: HandlerThread? = null
     private var animationHandler: Handler? = null
+    private var animationRunnable: Runnable? = null
     private val flakesLock = Any()
-    private val animationRunnable = object : Runnable {
-        override fun run() {
-            if (!running) return
-            val now = SystemClock.uptimeMillis()
-            val dt = if (lastFrameTime == 0L) 16L else (now - lastFrameTime).coerceIn(1L, FRAME_TIME_LIMIT_MS)
-            lastFrameTime = now
-            synchronized(flakesLock) {
-                updateFlakes(dt.toFloat())
-            }
-            postInvalidateOnAnimation()
-            animationHandler?.postDelayed(this, FRAME_INTERVAL_MS)
-        }
-    }
     private var lastColor = Color.WHITE
 
     init {
@@ -143,19 +133,51 @@ class SnowflakesView @JvmOverloads constructor(
 
     private fun startAnimation() {
         if (running) return
+
+        val generation = animationGeneration + 1L
+        animationGeneration = generation
         running = true
         lastFrameTime = SystemClock.uptimeMillis()
+
         val thread = HandlerThread("SnowflakesAnimation")
         thread.start()
+        val handler = Handler(thread.looper)
+        val runnable = object : Runnable {
+            override fun run() {
+                // A runnable from a previous attach/detach cycle must never
+                // continue after a new animation worker has been created.
+                if (!running || generation != animationGeneration) return
+
+                val now = SystemClock.uptimeMillis()
+                val dt = if (lastFrameTime == 0L) {
+                    16L
+                } else {
+                    (now - lastFrameTime).coerceIn(1L, FRAME_TIME_LIMIT_MS)
+                }
+                lastFrameTime = now
+                synchronized(flakesLock) {
+                    updateFlakes(dt.toFloat())
+                }
+                postInvalidateOnAnimation()
+
+                if (running && generation == animationGeneration) {
+                    handler.postDelayed(this, FRAME_INTERVAL_MS)
+                }
+            }
+        }
+
         animationThread = thread
-        animationHandler = Handler(thread.looper)
-        animationHandler?.post(animationRunnable)
+        animationHandler = handler
+        animationRunnable = runnable
+        handler.post(runnable)
     }
 
     private fun stopAnimation() {
         running = false
-        animationHandler?.removeCallbacks(animationRunnable)
+        animationGeneration += 1L
+        animationHandler?.removeCallbacksAndMessages(null)
         animationThread?.quitSafely()
+        animationRunnable = null
         animationHandler = null
         animationThread = null
         lastFrameTime = 0L
