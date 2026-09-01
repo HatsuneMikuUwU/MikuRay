@@ -1006,6 +1006,13 @@ class MainActivity : HelperBaseActivity(),
             }
         }
 
+        mainViewModel.serviceRestartAction.observe(this) {
+            stopFabTimer()
+            pendingConnectionTest = true
+            lastTestResultText = ""
+            setTestState(getString(R.string.connection_test_testing))
+        }
+
         mainViewModel.alertAction.observe(this) { (isSuccess, message) ->
             if (isSuccess) {
                 snackbarSuccess(message, title = getString(R.string.title_alerter_success))

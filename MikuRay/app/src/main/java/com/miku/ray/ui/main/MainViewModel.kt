@@ -59,6 +59,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val countryCodeProgressAction by lazy { MutableLiveData<TestProgressInfo?>() }
     val updateIpResultAction by lazy { MutableLiveData<String>() }
     val updateTrafficSpeedAction by lazy { MutableLiveData<String>() }
+    val serviceRestartAction by lazy { MutableLiveData<Unit>() }
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
@@ -589,6 +590,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                 AppConfig.MSG_STATE_RESTART -> {
                     isRestarting = true
+                    serviceRestartAction.value = Unit
                 }
 
                 AppConfig.MSG_STATE_START_SUCCESS -> {
