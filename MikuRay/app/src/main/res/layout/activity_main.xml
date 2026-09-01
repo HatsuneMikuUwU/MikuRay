@@ -412,15 +412,16 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/rmx_media_play_line"
+                    app:icon="@drawable/rmx_media_play_line"
+                    app:iconGravity="end"
                     android:elevation="0dp"
                     android:outlineProvider="none"
                     app:elevation="0dp"
-                    style="?floatingActionButtonStyle" />
+                    style="?attr/extendedFloatingActionButtonStyle" />
             </FrameLayout>
         </RelativeLayout>
     </com.miku.ray.blurview.BlurView>

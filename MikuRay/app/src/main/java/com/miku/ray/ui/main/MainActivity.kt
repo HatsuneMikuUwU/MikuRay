@@ -101,7 +101,9 @@ import com.miku.ray.util.showMikuRayImportPasswordDialog
 import com.miku.ray.util.showSubUpdateDiffDialog
 import com.miku.ray.util.showTotalTrafficDetailDialog
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -126,6 +128,7 @@ class MainActivity : HelperBaseActivity(),
     private var lastIpStateText: String = ""
     private var lastTrafficSpeedText: String = ""
     private var lastTestResultText: String = ""
+    private var fabTimerJob: Job? = null
 
     private val urlTestProgressDialog: TestProgressDialogController by lazy {
         TestProgressDialogController(this, TestProgressDialogController.Mode.URL_TEST) { mainViewModel.cancelRealPingTest() }
@@ -713,6 +716,7 @@ class MainActivity : HelperBaseActivity(),
 
     private fun setupListeners() {
         binding.fab.setOnClickListener { handleFabAction() }
+        binding.fab.shrink()
 
         binding.blurBottomStatus.setOnClickListener { handleLayoutTestClick() }
         
@@ -1188,11 +1192,45 @@ class MainActivity : HelperBaseActivity(),
         binding.tvTestState.text = content
     }
 
+    private fun isFabExtended(): Boolean =
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_FAB_EXTENDED, false)
+
+    private fun startFabTimer() {
+        if (!isFabExtended()) return
+        if (fabTimerJob?.isActive == true) return
+        if (mainViewModel.fabConnectStartTime == 0L) mainViewModel.fabConnectStartTime = System.currentTimeMillis()
+        updateFabTimerText()
+        binding.fab.extend()
+        fabTimerJob = lifecycleScope.launch {
+            while (isActive) {
+                delay(1000L)
+                updateFabTimerText()
+            }
+        }
+    }
+
+    private fun stopFabTimer() {
+        fabTimerJob?.cancel()
+        fabTimerJob = null
+        mainViewModel.fabConnectStartTime = 0L
+        binding.fab.shrink()
+    }
+
+    private fun updateFabTimerText() {
+        val startTime = mainViewModel.fabConnectStartTime
+        if (startTime == 0L) return
+        val elapsed = (System.currentTimeMillis() - startTime) / 1000
+        val h = elapsed / 3600
+        val m = (elapsed % 3600) / 60
+        val s = elapsed % 60
+        binding.fab.text = if (h > 0) "%02d:%02d:%02d".format(h, m, s) else "%02d:%02d".format(m, s)
+    }
+
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
         binding.fab.isEnabled = true
 
         if (isLoading) {
-            binding.fab.setImageResource(RemixR.drawable.rmx_system_check_line)
+            binding.fab.setIconResource(RemixR.drawable.rmx_system_check_line)
             return
         }
 
@@ -1200,14 +1238,16 @@ class MainActivity : HelperBaseActivity(),
         binding.blurBottomStatus.isFocusable = true
 
         if (isRunning) {
-            binding.fab.setImageResource(RemixR.drawable.rmx_media_stop_line)
+            binding.fab.setIconResource(RemixR.drawable.rmx_media_stop_line)
             binding.fab.contentDescription = getString(R.string.action_stop_service)
-            
+            startFabTimer()
+
             setTestState(lastTestResultText.ifEmpty { getString(R.string.connection_connected) })
         } else {
-            binding.fab.setImageResource(RemixR.drawable.rmx_media_play_line)
+            binding.fab.setIconResource(RemixR.drawable.rmx_media_play_line)
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
-            
+            stopFabTimer()
+
             setTestState(getString(R.string.connection_not_connected))
             lastTestResultText = ""
             lastTrafficSpeedText = ""

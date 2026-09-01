@@ -292,6 +292,8 @@
     <string name="summary_pref_show_isp_info">Display the ISP/organization name next to the detected IP</string>
     <string name="title_pref_hide_scroll_buttons">Hide floating scroll buttons</string>
     <string name="summary_pref_hide_scroll_buttons">Hide the scroll-to-top/bottom/selected buttons that float over the server list. When enabled, use \"Go to selected profile\" from the more menu instead.</string>
+    <string name="title_pref_fab_extended">Extended connect button</string>
+    <string name="summary_pref_fab_extended">Show the connection timer on the connect button while the VPN is running</string>
 
     <string name="title_pref_proxy_sharing_enabled">Allow connections from the LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Other devices can connect to proxy by your IP address through local proxy. Only enable in trusted networks to avoid unauthorized connections</string>

@@ -275,6 +275,8 @@
     <string name="summary_pref_show_isp_info">Показывать название провайдера/организации рядом с обнаруженным IP</string>
     <string name="title_pref_hide_scroll_buttons">Скрыть плавающие кнопки прокрутки</string>
     <string name="summary_pref_hide_scroll_buttons">Скрывает плавающие кнопки прокрутки вверх/вниз/к выбранному профилю над списком серверов. Если включено, используйте пункт \"Перейти к выбранному профилю\" в меню \"ещё\"</string>
+    <string name="title_pref_fab_extended">Расширенная кнопка подключения</string>
+    <string name="summary_pref_fab_extended">Показывать таймер соединения на кнопке подключения, пока VPN активен</string>
 
     <string name="title_pref_proxy_sharing_enabled">Разрешить подключения из локальной сети</string>
     <string name="summary_pref_proxy_sharing_enabled">Другие устройства могут подключаться к прокси по вашему IP через локальный прокси. Включайте только в доверенных сетях во избежание несанкционированных подключений</string>

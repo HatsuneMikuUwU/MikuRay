@@ -231,12 +231,14 @@ object BlurBottomStatusController {
         binding.tvTestState.setTextColor(testStateColor)
         binding.fab.apply {
             visibility = View.VISIBLE
+            val fabContentColor = ColorStateList.valueOf(
+                activity.getColorAttr(if (isBlurOn) "colorOnPrimary" else "colorPrimary")
+            )
             backgroundTintList = ColorStateList.valueOf(
                 activity.getColorAttr(if (isBlurOn) "colorPrimary" else "colorOnPrimary")
             )
-            imageTintList = ColorStateList.valueOf(
-                activity.getColorAttr(if (isBlurOn) "colorOnPrimary" else "colorPrimary")
-            )
+            iconTint = fabContentColor
+            setTextColor(fabContentColor)
         }
     }
 }

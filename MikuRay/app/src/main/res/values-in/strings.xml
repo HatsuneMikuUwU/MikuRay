@@ -277,6 +277,8 @@
     <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi</string>
     <string name="title_pref_hide_scroll_buttons">Sembunyiin tombol scroll yang ngambang</string>
     <string name="summary_pref_hide_scroll_buttons">Sembunyiin tombol scroll ke atas/bawah/server terpilih yang ngambang di list server. Kalo dinyalain, pake \"Menuju profile terpilih\" di menu lainnya aja ya.</string>
+    <string name="title_pref_fab_extended">Tombol connect extended</string>
+    <string name="summary_pref_fab_extended">Nampilin timer koneksi di tombol connect pas VPN lagi nyala</string>
 
     <string name="title_pref_proxy_sharing_enabled">Bolehin koneksi dari LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Device lain bisa numpang proxy pake IP HP kamu via proxy lokal. Nyalain pas di jaringan yang kamu percaya aja ya, biar ga ada yang nebeng diam-diam</string>

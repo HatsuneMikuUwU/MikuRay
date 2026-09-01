@@ -44,6 +44,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var serverList = mutableListOf<String>()
     var subscriptionId: String = MmkvManager.decodeSettingsString(AppConfig.CACHE_SUBSCRIPTION_ID, "").orEmpty()
     var keywordFilter = ""
+    var fabConnectStartTime: Long = 0L
     private var activeTestId: String? = null
     private var activeTestCompleted = 0
     private var activeTestTotal = 0

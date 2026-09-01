@@ -49,6 +49,7 @@ object ThemeShareManager {
         AppConfig.PREF_GROUP_ALL_DISPLAY,
         AppConfig.PREF_DOUBLE_COLUMN_DISPLAY,
         AppConfig.PREF_HIDE_SCROLL_BUTTONS,
+        AppConfig.PREF_FAB_EXTENDED,
         AppConfig.PREF_DYNAMIC_COLOR,
         AppConfig.PREF_DYNAMIC_COLOR_BANNER,
         AppConfig.PREF_TRUE_BLACK,
