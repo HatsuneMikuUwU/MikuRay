@@ -79,7 +79,7 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
         view.findViewById<View>(R.id.action_scroll_to_selected)?.visibility =
             if (isScrollButtonsHidden && hasSelectedServer) View.VISIBLE else View.GONE
 
-        val isQuickActionsEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_QUICK_ACTIONS, true)
+        val isQuickActionsEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_QUICK_ACTIONS, false)
         listOf(
             R.id.sub_update,
             R.id.country_code_all,
