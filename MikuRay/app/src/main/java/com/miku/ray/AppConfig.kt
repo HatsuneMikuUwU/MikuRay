@@ -14,9 +14,6 @@ object AppConfig {
 
     const val DEFAULT_SUBSCRIPTION_ID = "__default_subscription__"
 
-    const val PREF_LAST_IP_STATE_TEXT = "pref_last_ip_state_text"
-    const val PREF_LAST_TEST_RESULT_TEXT = "pref_last_test_result_text"
-
     const val PREF_SNIFFING_ENABLED = "pref_sniffing_enabled"
     const val PREF_ROUTE_ONLY_ENABLED = "pref_route_only_enabled"
     const val PREF_PER_APP_PROXY = "pref_per_app_proxy"
