@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.AssetManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -64,9 +66,41 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
 
     fun startListenBroadcast() {
+        isRunning.value = isServiceActuallyRunning()
         val mFilter = IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY)
         ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
         MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+    }
+
+    private fun isServiceActuallyRunning(): Boolean {
+        val app = getApplication<Application>()
+        return try {
+            when {
+                SettingsManager.isRootMode() ->
+                    isRunningServiceClass(app, com.miku.ray.service.CoreRootService::class.java)
+
+                SettingsManager.isVpnMode() -> {
+                    val cm = app.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+                        ?: return false
+                    val network = cm.activeNetwork ?: return false
+                    val capabilities = cm.getNetworkCapabilities(network) ?: return false
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                }
+
+                else -> isRunningServiceClass(app, com.miku.ray.service.CoreProxyOnlyService::class.java)
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun isRunningServiceClass(context: Context, serviceClass: Class<*>): Boolean {
+        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as? android.app.ActivityManager
+            ?: return false
+        return am.getRunningServices(Int.MAX_VALUE).any {
+            it.service.className == serviceClass.name
+        }
     }
 
     fun resyncState() {
