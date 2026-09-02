@@ -590,7 +590,6 @@
     <string name="add_server_manually">手动添加服务器</string>
     <string name="protocol_policy_group">策略组</string>
     <string name="protocol_proxy_chain">代理链</string>
-    <string name="quick_actions_and_testing">快捷操作与测试</string>
     <string name="management">管理</string>
     <string name="action_export">导出</string>
     <string name="action_duplicates">重复项</string>
@@ -919,6 +918,9 @@
     <string name="particles_enable_summary">显示底部面板中的粒子效果</string>
     <string name="snowflakes_enable_title">启用降雪动画</string>
     <string name="snowflakes_enable_summary">在主屏幕显示飘落的雪花</string>
+    <string name="title_category_quick_actions">快捷操作</string>
+    <string name="title_pref_show_quick_actions">显示快捷操作栏</string>
+    <string name="summary_pref_show_quick_actions">在连接状态卡下方显示一行快捷按钮，用于更新订阅、测试国家代码、tcping 以及真实延迟测试</string>
     <string name="snowflakes_speed_title">降雪速度</string>
     <string name="snowflakes_speed_value">速度：%1$s</string>
     <string name="snowflakes_speed_summary_value">动画速度：%1$s</string>

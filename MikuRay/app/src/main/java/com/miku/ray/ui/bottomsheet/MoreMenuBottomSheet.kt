@@ -79,6 +79,16 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
         view.findViewById<View>(R.id.action_scroll_to_selected)?.visibility =
             if (isScrollButtonsHidden && hasSelectedServer) View.VISIBLE else View.GONE
 
+        val isQuickActionsEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_QUICK_ACTIONS, true)
+        listOf(
+            R.id.sub_update,
+            R.id.country_code_all,
+            R.id.tcping_all,
+            R.id.real_ping_all
+        ).forEach { id ->
+            view.findViewById<View>(id)?.visibility = if (isQuickActionsEnabled) View.GONE else View.VISIBLE
+        }
+
         view.findViewById<View>(R.id.card_order_origin)?.setOnClickListener {
             view.findViewById<View>(R.id.action_order_origin)?.performClick()
         }

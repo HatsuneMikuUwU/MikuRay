@@ -205,6 +205,7 @@ object AppConfig {
     const val PREF_ACTION_CHANGE_PROFILE_BANNER = "action_change_profile_banner_image"
     const val PREF_ACTION_DELETE_PROFILE_BANNER = "action_delete_profile_banner_image"
     const val PREF_ENABLE_PARTICLES_SHEET = "pref_enable_particles_sheet"
+    const val PREF_SHOW_QUICK_ACTIONS = "pref_show_quick_actions"
     const val PREF_ENABLE_SNOWFLAKES = "pref_enable_snowflakes"
     const val PREF_SNOWFLAKES_SPEED = "pref_snowflakes_speed"
     const val PREF_SNOWFLAKES_COUNT = "pref_snowflakes_count"

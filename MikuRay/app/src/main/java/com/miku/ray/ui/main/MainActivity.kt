@@ -30,6 +30,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
@@ -194,6 +195,7 @@ class MainActivity : HelperBaseActivity(),
         
         BlurBottomStatusController.applyState(this, binding) { handleLayoutTestClick() }
         updateSnowflakesVisibility()
+        updateQuickActionsVisibility()
         SubscriptionUpdater.sync()
         syncWeatherBackgroundUpdates()
         
@@ -268,6 +270,7 @@ class MainActivity : HelperBaseActivity(),
         refreshSearchBarChip()
         refreshIpStateText()
         updateSnowflakesVisibility()
+        updateQuickActionsVisibility()
         
         if (SettingsChangeManager.consumeRefreshDisplayPrefs()) {
             refreshAllGroupListDisplays()
@@ -296,18 +299,50 @@ class MainActivity : HelperBaseActivity(),
                 bottom = 0
             )
 
+            val quickActionsEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_QUICK_ACTIONS, false)
+
             val bottomStatus = view.findViewById<View>(R.id.blur_bottom_status)
-            val bottomStatusParams = bottomStatus?.layoutParams as? ViewGroup.MarginLayoutParams
-            bottomStatusParams?.let {
-                it.bottomMargin = (16 * resources.displayMetrics.density).toInt() + systemBars.bottom
-                bottomStatus.layoutParams = it
+            val quickActions = view.findViewById<View>(R.id.layout_quick_actions)
+
+            val baseMarginBottom = (16 * resources.displayMetrics.density).toInt() + systemBars.bottom
+            val statusGap = resources.getDimensionPixelSize(R.dimen.padding_spacing_dp8)
+
+            fun applyBottomStatusMargin() {
+                val bottomStatusParams = bottomStatus?.layoutParams as? ViewGroup.MarginLayoutParams
+                bottomStatusParams?.let {
+                    it.bottomMargin = if (quickActionsEnabled && quickActions?.isVisible == true) {
+                        baseMarginBottom + quickActions.height + statusGap
+                    } else {
+                        baseMarginBottom
+                    }
+                    bottomStatus.layoutParams = it
+                }
             }
+
+            val quickActionsParams = quickActions?.layoutParams as? ViewGroup.MarginLayoutParams
+            quickActionsParams?.let {
+                it.bottomMargin = baseMarginBottom
+                quickActions.layoutParams = it
+            }
+
+            if (quickActionsEnabled && quickActions != null) {
+                quickActions.doOnLayout { applyBottomStatusMargin() }
+            }
+            applyBottomStatusMargin()
 
             val headerContent = view.findViewById<View>(R.id.header_content)
             headerContent?.updatePadding(top = systemBars.top)
 
             insets
         }
+    }
+
+    private fun updateQuickActionsVisibility() {
+        binding.layoutQuickActions.visibility = if (
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_QUICK_ACTIONS, false)
+        ) View.VISIBLE else View.GONE
+
+        binding.mainContent.requestApplyInsets()
     }
 
     private fun updateSnowflakesVisibility() {
@@ -735,6 +770,25 @@ class MainActivity : HelperBaseActivity(),
 
         binding.btnAddSub.setOnClickListener {
             requestActivityLauncher.launch(Intent(this, SubEditActivity::class.java))
+        }
+
+        binding.btnQuickSubUpdate.setOnClickListener {
+            importConfigViaSub()
+        }
+
+        binding.btnQuickCountryCode.setOnClickListener {
+            countryCodeProgressDialog.show(mainViewModel.serversCache.count())
+            mainViewModel.testAllCountryCodes()
+        }
+
+        binding.btnQuickTcping.setOnClickListener {
+            urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_ping_all_server)
+            mainViewModel.testAllRealPing(true)
+        }
+
+        binding.btnQuickRealPing.setOnClickListener {
+            urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_real_ping_all_server)
+            mainViewModel.testAllRealPing()
         }
 
         binding.layoutWeatherChip.setOnClickListener {

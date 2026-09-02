@@ -62,6 +62,7 @@ object ThemeShareManager {
         AppConfig.PREF_BLUR_BOTTOM_STATUS,
         AppConfig.PREF_DISABLE_HOME_BANNER,
         AppConfig.PREF_ENABLE_PARTICLES_SHEET,
+        AppConfig.PREF_SHOW_QUICK_ACTIONS,
         AppConfig.PREF_ENABLE_SNOWFLAKES,
         AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED,
         AppConfig.PREF_SOUND_ON_CONNECT,

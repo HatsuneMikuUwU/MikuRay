@@ -618,7 +618,6 @@
     <string name="protocol_wireguard">Wireguard</string>
     <string name="protocol_policy_group">Группа политик</string>
     <string name="protocol_proxy_chain">Цепочка прокси</string>
-    <string name="quick_actions_and_testing">Быстрые действия и тестирование</string>
     <string name="management">Управление</string>
     <string name="action_export">Экспорт</string>
     <string name="action_duplicates">Дубликаты</string>
@@ -940,6 +939,9 @@
     <string name="particles_enable_summary">Показать эффект частиц на нижней панели</string>
     <string name="snowflakes_enable_title">Включить анимацию снегопада</string>
     <string name="snowflakes_enable_summary">Показывать падающие снежинки на главном экране</string>
+    <string name="title_category_quick_actions">Быстрые действия</string>
+    <string name="title_pref_show_quick_actions">Показать панель быстрых действий</string>
+    <string name="summary_pref_show_quick_actions">Отображает ряд кнопок быстрого доступа под карточкой статуса подключения для обновления подписки, проверки кода страны, tcping и тестирования реальной задержки</string>
     <string name="snowflakes_speed_title">Скорость снегопада</string>
     <string name="snowflakes_speed_value">Скорость: %1$s</string>
     <string name="snowflakes_speed_summary_value">Скорость анимации: %1$s</string>

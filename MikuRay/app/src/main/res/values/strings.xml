@@ -640,7 +640,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="protocol_wireguard">Wireguard</string>
     <string name="protocol_policy_group">Policy Group</string>
     <string name="protocol_proxy_chain">Proxy Chain</string>
-    <string name="quick_actions_and_testing">Quick Actions &amp; Testing</string>
     <string name="management">Management</string>
     <string name="action_export">Export</string>
     <string name="action_duplicates">Duplicates</string>
@@ -966,6 +965,9 @@ you need."</string>
     <string name="particles_enable_summary">Show the particles effect in bottomsheet</string>
     <string name="snowflakes_enable_title">Enable snowfall animation</string>
     <string name="snowflakes_enable_summary">Show falling snowflakes on the Home screen</string>
+    <string name="title_category_quick_actions">Quick Actions</string>
+    <string name="title_pref_show_quick_actions">Show quick actions bar</string>
+    <string name="summary_pref_show_quick_actions">Show a row of shortcut buttons below the connection status card for subscription update, country code test, tcping, and real delay test</string>
     <string name="snowflakes_speed_title">Snowfall speed</string>
     <string name="snowflakes_speed_value">Speed: %1$s</string>
     <string name="snowflakes_speed_summary_value">Animation speed: %1$s</string>

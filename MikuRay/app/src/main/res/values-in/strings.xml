@@ -610,7 +610,6 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="status">Status</string>
     <string name="import_configuration">Masukin Konfig Baru</string>
     <string name="add_server_manually">Tambah Server Manual Sendiri</string>
-    <string name="quick_actions_and_testing">Action Cepet &amp; Tes</string>
     <string name="management">Manajemen</string>
     <string name="action_export">Ekspor Keluar</string>
     <string name="action_duplicates">Yang Kembar</string>
@@ -930,6 +929,9 @@ yang kamu butuhin."</string>
     <string name="particles_enable_summary">Nampilin efek partikel di bottomsheet</string>
     <string name="snowflakes_enable_title">Nyalain animasi salju</string>
     <string name="snowflakes_enable_summary">Nampilin efek salju yang turun di layar Home</string>
+    <string name="title_category_quick_actions">Aksi Cepat</string>
+    <string name="title_pref_show_quick_actions">Tampilkan bar aksi cepat</string>
+    <string name="summary_pref_show_quick_actions">Nampilin baris tombol pintasan di bawah kartu status koneksi buat update subscription, test country code, tcping, dan test real delay</string>
     <string name="snowflakes_speed_title">Kecepatan salju</string>
     <string name="snowflakes_speed_value">Kecepatan: %1$s</string>
     <string name="snowflakes_speed_summary_value">Kecepatan animasi: %1$s</string>

@@ -404,6 +404,22 @@
     </com.miku.ray.widget.UwuPreferenceCategory>
 
     <com.miku.ray.widget.UwuPreferenceCategory
+        android:key="pref_category_quick_actions"
+        android:title="@string/title_category_quick_actions"
+        app:sectionIcon="@drawable/rmx_speed_line">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:icon="@drawable/rmx_speed_line"
+            app:layout="@layout/uwu_sin_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch"
+            android:defaultValue="false"
+            android:key="pref_show_quick_actions"
+            android:title="@string/title_pref_show_quick_actions"
+            android:summary="@string/summary_pref_show_quick_actions" />
+
+    </com.miku.ray.widget.UwuPreferenceCategory>
+
+    <com.miku.ray.widget.UwuPreferenceCategory
         android:key="pref_category_home_banner"
         android:title="@string/home_banner_category"
         app:sectionIcon="@drawable/rmx_home_line">

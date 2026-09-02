@@ -259,7 +259,7 @@
                                         android:layout_height="wrap_content"
                                         android:ellipsize="marquee"
                                         android:singleLine="false"
-                                        android:text="@string/quick_actions_and_testing"
+                                        android:text="@string/title_category_quick_actions"
                                         android:textAppearance="?textAppearanceTitleMedium"
                                         android:textColor="?colorOnSurface"
                                         android:textSize="17.0sp" />
@@ -799,7 +799,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/rmx_server_line"
+                                                android:src="@drawable/rmx_wifi_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
@@ -908,7 +908,7 @@
                                                 android:layout_width="25.0dip"
                                                 android:layout_height="25.0dip"
                                                 android:layout_gravity="center"
-                                                android:src="@drawable/rmx_server_line"
+                                                android:src="@drawable/rmx_speed_line"
                                                 android:tint="?colorOnPrimary" />
                                         </FrameLayout>
                                     </LinearLayout>
