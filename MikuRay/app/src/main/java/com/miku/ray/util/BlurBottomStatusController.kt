@@ -1,9 +1,9 @@
 package com.miku.ray.util
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.content.res.ColorStateList
 import android.graphics.drawable.LayerDrawable
 import android.view.MotionEvent
 import android.view.View
@@ -11,9 +11,9 @@ import android.view.ViewOutlineProvider
 import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.miku.ray.AppConfig
+import com.miku.ray.blurview.BlurView
 import com.miku.ray.databinding.ActivityMainBinding
 import com.miku.ray.handler.MmkvManager
-import com.miku.ray.blurview.BlurView
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
@@ -73,7 +73,6 @@ object BlurBottomStatusController {
         alpha, Color.red(color), Color.green(color), Color.blue(color)
     )
 
-
     @SuppressLint("ClickableViewAccessibility")
     private fun applyBounceTouchAnimation(
         view: View,
@@ -93,9 +92,11 @@ object BlurBottomStatusController {
                     touchStartY = event.rawY
                     v.isPressed = true
                     glowDrawable?.alpha = 255
+                    v.animate().cancel()
                     v.animate().scaleX(1.06f).scaleY(1.06f).setDuration(110).start()
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    v.animate().cancel()
                     val deltaX = event.rawX - touchStartX
                     val deltaY = event.rawY - touchStartY
                     val stretchX = 1.06f + (abs(deltaX) / v.width.toFloat() * 0.15f).coerceAtMost(0.09f)
@@ -112,7 +113,9 @@ object BlurBottomStatusController {
                         .setDuration(380)
                         .setInterpolator(OvershootInterpolator(1.8f))
                         .start()
-                    if (event.actionMasked == MotionEvent.ACTION_UP) v.performClick()
+                    if (event.actionMasked == MotionEvent.ACTION_UP) {
+                        v.performClick()
+                    }
                 }
             }
             true
@@ -143,13 +146,15 @@ object BlurBottomStatusController {
             setColor(glassFillColor)
             cornerRadius = radiusPx
         }
+
         val strokeDrawable = StrokeDrawable().apply {
-            setCornerRadius(radiusPx)
-            setStrokeWidthTop(0.5f * density)
-            setStrokeWidthBottom(0.5f * density)
-            setStrokeColorTop(if (isDark) Color.argb(0x28, 255, 255, 255) else Color.WHITE)
-            setStrokeColorBottom(if (isDark) Color.argb(0x14, 255, 255, 255) else Color.WHITE)
+            cornerRadius = radiusPx
+            strokeWidthTop = 1f * density
+            strokeWidthBottom = 1f * density
+            strokeColorTop = if (isDark) Color.argb(0x28, 255, 255, 255) else Color.WHITE
+            strokeColorBottom = if (isDark) Color.argb(0x14, 255, 255, 255) else Color.WHITE
         }
+
         val glowColor = if (isDark) Color.argb(0x30, 255, 255, 255) else Color.argb(0x65, 255, 255, 255)
         val glowDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -159,7 +164,7 @@ object BlurBottomStatusController {
             cornerRadius = radiusPx
             alpha = 0
         }
-        
+
         val combinedForeground = LayerDrawable(arrayOf(strokeDrawable, glowDrawable))
 
         binding.blurBottomStatus.apply {
@@ -227,7 +232,7 @@ object BlurBottomStatusController {
             setTextColor(ipStateColor)
             alpha = if (isBlurOn) 1f else 0.8f
         }
-        
+
         binding.tvTestState.setTextColor(testStateColor)
         binding.fab.apply {
             visibility = View.VISIBLE

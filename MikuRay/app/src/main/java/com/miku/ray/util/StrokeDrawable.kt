@@ -16,114 +16,109 @@ class StrokeDrawable : Drawable() {
         style = Paint.Style.FILL
         color = Color.TRANSPARENT
     }
+
     private val topStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
     }
+
     private val bottomStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
     }
 
-    private var topColor = Color.TRANSPARENT
-    private var bottomColor = Color.TRANSPARENT
-    private var drawableAlpha = 255
-    private var cornerRadius = 0f
-    private var padding = 0
-    /** NagramXF-compatible mode: false draws a circle, true draws a rounded rectangle. */
-    var nonRound = true
-    var radius = 0f
-    private var topStrokeWidth = 1f
-    private var bottomStrokeWidth = 1f
+    private val drawBounds = RectF()
+    private var drawableAlpha: Int = 255
 
-    fun setBackgroundColor(color: Int) {
-        fillPaint.color = color
-        invalidateSelf()
-    }
+    var backgroundColor: Int = Color.TRANSPARENT
+        set(value) {
+            field = value
+            fillPaint.color = value
+            invalidateSelf()
+        }
 
-    fun setCornerRadius(radius: Float) {
-        this.radius = radius.coerceAtLeast(0f)
-        cornerRadius = this.radius
-        invalidateSelf()
-    }
+    var strokeColorTop: Int = Color.TRANSPARENT
+        set(value) {
+            field = value
+            updatePaintColors()
+        }
 
-    fun setPadding(padding: Int) {
-        this.padding = padding.coerceAtLeast(0)
-        invalidateSelf()
-    }
+    var strokeColorBottom: Int = Color.TRANSPARENT
+        set(value) {
+            field = value
+            updatePaintColors()
+        }
 
-    fun setStrokeColorTop(color: Int) {
-        topColor = color
-        updatePaintColors()
-    }
+    var strokeWidthTop: Float = 1f
+        set(value) {
+            field = value.coerceAtLeast(0f)
+            topStrokePaint.strokeWidth = field
+            invalidateSelf()
+        }
 
-    fun setStrokeColorBottom(color: Int) {
-        bottomColor = color
-        updatePaintColors()
-    }
+    var strokeWidthBottom: Float = 1f
+        set(value) {
+            field = value.coerceAtLeast(0f)
+            bottomStrokePaint.strokeWidth = field
+            invalidateSelf()
+        }
 
-    fun setStrokeWidthTop(width: Float) {
-        topStrokeWidth = width.coerceAtLeast(0f)
-        topStrokePaint.strokeWidth = topStrokeWidth
-        invalidateSelf()
-    }
+    var cornerRadius: Float = 0f
+        set(value) {
+            field = value.coerceAtLeast(0f)
+            invalidateSelf()
+        }
 
-    fun setStrokeWidthBottom(width: Float) {
-        bottomStrokeWidth = width.coerceAtLeast(0f)
-        bottomStrokePaint.strokeWidth = bottomStrokeWidth
-        invalidateSelf()
-    }
+    var padding: Int = 0
+        set(value) {
+            field = value.coerceAtLeast(0)
+            invalidateSelf()
+        }
 
-    private fun updatePaintColors() {
-        topStrokePaint.color = withAlpha(topColor, drawableAlpha)
-        bottomStrokePaint.color = withAlpha(bottomColor, drawableAlpha)
-        invalidateSelf()
-    }
-
-    private fun withAlpha(color: Int, alpha: Int): Int = Color.argb(
-        (Color.alpha(color) * alpha / 255f).toInt().coerceIn(0, 255),
-        Color.red(color),
-        Color.green(color),
-        Color.blue(color)
-    )
+    var nonRound: Boolean = true
+        set(value) {
+            field = value
+            invalidateSelf()
+        }
 
     override fun draw(canvas: Canvas) {
-        val bounds = bounds
         if (bounds.isEmpty) return
 
-        val cx = bounds.centerX().toFloat()
-        val cy = bounds.centerY().toFloat()
-        var drawRadius = min(bounds.width(), bounds.height()) / 2f - padding
+        val maxRadius = min(bounds.width(), bounds.height()) / 2f
         val left: Float
         val top: Float
         val right: Float
         val bottom: Float
+        val drawRadius: Float
+
         if (nonRound) {
             left = bounds.left.toFloat()
             top = bounds.top.toFloat()
             right = bounds.right.toFloat()
             bottom = bounds.bottom.toFloat()
-            drawRadius = min(radius.coerceAtLeast(cornerRadius), min(bounds.width(), bounds.height()) / 2f)
+            drawRadius = min(cornerRadius, maxRadius)
         } else {
+            val cx = bounds.centerX().toFloat()
+            val cy = bounds.centerY().toFloat()
+            drawRadius = maxRadius - padding
             left = cx - drawRadius
             top = cy - drawRadius
             right = cx + drawRadius
             bottom = cy + drawRadius
         }
+
         if (Color.alpha(fillPaint.color) > 0) {
-            canvas.drawRoundRect(RectF(left, top, right, bottom), drawRadius, drawRadius, fillPaint)
+            drawBounds.set(left, top, right, bottom)
+            canvas.drawRoundRect(drawBounds, drawRadius, drawRadius, fillPaint)
         }
-        if (Color.alpha(topStrokePaint.color) > 0 && topStrokeWidth > 0f) {
-            drawStroke(canvas, left, top, right, bottom, drawRadius, topStrokeWidth, true, topStrokePaint)
+
+        if (Color.alpha(topStrokePaint.color) > 0 && strokeWidthTop > 0f) {
+            drawStroke(canvas, left, top, right, bottom, drawRadius, strokeWidthTop, isTop = true, paint = topStrokePaint)
         }
-        if (Color.alpha(bottomStrokePaint.color) > 0 && bottomStrokeWidth > 0f) {
-            drawStroke(canvas, left, top, right, bottom, drawRadius, bottomStrokeWidth, false, bottomStrokePaint)
+
+        if (Color.alpha(bottomStrokePaint.color) > 0 && strokeWidthBottom > 0f) {
+            drawStroke(canvas, left, top, right, bottom, drawRadius, strokeWidthBottom, isTop = false, paint = bottomStrokePaint)
         }
     }
 
-    /**
-     * Draws one rounded edge as a clipped expanded rounded rectangle.
-     * This mirrors NagramXF's BlurredBackgroundDrawable.drawStroke implementation
-     * and avoids the uneven corner joins produced by a full-border approximation.
-     */
     private fun drawStroke(
         canvas: Canvas,
         left: Float,
@@ -136,43 +131,39 @@ class StrokeDrawable : Drawable() {
         paint: Paint
     ) {
         val strokeHalf = strokeWidth / 2f
+        val clipTop = if (isTop) top else max(bottom - radius * 2f, top)
+        val clipBottom = if (isTop) min(top + radius * 2f, bottom) else bottom
+        val strokeOffsetY = if (isTop) strokeHalf else -strokeHalf
+
         canvas.save()
-        if (isTop) {
-            if (canvas.clipRect(
-                    left - strokeHalf,
-                    top,
-                    right + strokeHalf,
-                    min(top + radius * 2f, bottom)
-                )) {
-                canvas.drawRoundRect(
-                    left - strokeHalf,
-                    top + strokeHalf,
-                    right + strokeHalf,
-                    bottom + strokeHalf,
-                    radius,
-                    radius,
-                    paint
-                )
-            }
-        } else {
-            if (canvas.clipRect(
-                    left - strokeHalf,
-                    max(bottom - radius * 2f, top),
-                    right + strokeHalf,
-                    bottom
-                )) {
-                canvas.drawRoundRect(
-                    left - strokeHalf,
-                    top - strokeHalf,
-                    right + strokeHalf,
-                    bottom - strokeHalf,
-                    radius,
-                    radius,
-                    paint
-                )
-            }
+        if (canvas.clipRect(left - strokeHalf, clipTop, right + strokeHalf, clipBottom)) {
+            canvas.drawRoundRect(
+                left - strokeHalf,
+                top + strokeOffsetY,
+                right + strokeHalf,
+                bottom + strokeOffsetY,
+                radius,
+                radius,
+                paint
+            )
         }
         canvas.restore()
+    }
+
+    private fun updatePaintColors() {
+        topStrokePaint.color = withAlpha(strokeColorTop, drawableAlpha)
+        bottomStrokePaint.color = withAlpha(strokeColorBottom, drawableAlpha)
+        invalidateSelf()
+    }
+
+    private fun withAlpha(color: Int, alpha: Int): Int {
+        val calculatedAlpha = (Color.alpha(color) * alpha / 255f).toInt().coerceIn(0, 255)
+        return Color.argb(
+            calculatedAlpha,
+            Color.red(color),
+            Color.green(color),
+            Color.blue(color)
+        )
     }
 
     override fun setAlpha(alpha: Int) {
@@ -186,7 +177,7 @@ class StrokeDrawable : Drawable() {
         fillPaint.colorFilter = colorFilter
         invalidateSelf()
     }
-     
+
     @Suppress("DEPRECATION")
     override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 }

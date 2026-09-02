@@ -374,7 +374,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@+id/fab_container"
+                android:layout_toStartOf="@+id/fab"
                 android:layout_alignParentStart="true">
 
                 <com.miku.ray.marquee.text.AutoMarqueeTextView
@@ -404,24 +404,23 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/fab_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true">
-
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
                     app:icon="@drawable/rmx_media_play_line"
+                    android:textAppearance="?textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    app:cornerRadius="16dp"
                     app:iconGravity="end"
                     android:elevation="0dp"
                     android:outlineProvider="none"
                     app:elevation="0dp"
                     style="?attr/extendedFloatingActionButtonStyle" />
-            </FrameLayout>
+                    
         </RelativeLayout>
     </com.miku.ray.blurview.BlurView>
 
