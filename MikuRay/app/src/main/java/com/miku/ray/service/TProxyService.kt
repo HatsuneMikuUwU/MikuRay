@@ -11,7 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -48,6 +47,8 @@ class TProxyService(
         }
     }
 
+    // Keep the scope reusable: Android may invoke start/stop on the same service
+    // instance more than once during a VPN handover or an always-on restart.
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var watchdogJob: Job? = null
     private var started = false
@@ -168,7 +169,6 @@ class TProxyService(
     override fun stopTun2Socks() {
         watchdogJob?.cancel()
         watchdogJob = null
-        serviceScope.cancel()
 
         try {
             LogUtil.i(AppConfig.TAG, "TProxyStopService...")
