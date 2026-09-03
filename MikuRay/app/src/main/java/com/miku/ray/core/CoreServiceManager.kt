@@ -54,6 +54,7 @@ object CoreServiceManager {
     private var browserDialer: IDialerService? = null
     private var networkMonitor: NetworkMonitor? = null
     private val backgroundScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private var receiverRegistered = false
 
     @Volatile
     private var isReloading = false
@@ -101,6 +102,7 @@ object CoreServiceManager {
         } catch (e: Exception) {
             val message = e.message?.takeUnless { it.isBlank() } ?: e.javaClass.simpleName
             LogUtil.e(AppConfig.TAG, "StartCore-Manager: $message", e)
+            cleanupServiceReceiver(service)
             reportStartFailure(service, message)
             NotificationManager.cancelNotification()
             return false
@@ -114,6 +116,7 @@ object CoreServiceManager {
         mFilter.addAction(Intent.ACTION_SCREEN_OFF)
         mFilter.addAction(Intent.ACTION_USER_PRESENT)
         ContextCompat.registerReceiver(service, mMsgReceive, mFilter, Utils.receiverFlags())
+        receiverRegistered = true
 
         currentVpnInterface = vpnInterface
         launchCore(service, vpnInterface)
@@ -216,13 +219,20 @@ object CoreServiceManager {
         }
         NotificationManager.cancelNotification()
 
+        cleanupServiceReceiver(service)
+
+        return true
+    }
+
+    private fun cleanupServiceReceiver(service: Service) {
+        if (!receiverRegistered) return
         try {
             service.unregisterReceiver(mMsgReceive)
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "StartCore-Manager: Failed to unregister receiver", e)
+        } finally {
+            receiverRegistered = false
         }
-
-        return true
     }
 
     private fun startNetworkMonitor(service: Service) {
