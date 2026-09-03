@@ -170,6 +170,8 @@ object CoreConfigContextBuilder {
         try {
             return config.proxyChainProfiles.orEmpty().split(",")
                 .asSequence()
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
                 .mapNotNull { remark -> SettingsManager.getServerViaRemarks(remark) }
                 .filter { it.server.isNotNullEmpty() }
                 .filter { Utils.isPureIpAddress(it.server!!) || Utils.isValidUrl(it.server!!) }
