@@ -20,14 +20,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class CoreRootService : Service(), ServiceControl {
 
     private var isRunning = false
     private var setupJob: Job? = null
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val teardownScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()
@@ -51,7 +52,7 @@ class CoreRootService : Service(), ServiceControl {
         setupJob = serviceScope.launch {
             if (!CoreServiceManager.startCoreLoop(null)) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: Failed to start core loop")
-                stopAllService()
+                stopService()
                 return@launch
             }
 
@@ -66,7 +67,7 @@ class CoreRootService : Service(), ServiceControl {
                 LogUtil.i(AppConfig.TAG, "StartCore-Root: iptables/tun/hev setup complete")
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "StartCore-Root: setup failed", e)
-                stopAllService()
+                stopService()
             }
         }
 
@@ -76,9 +77,12 @@ class CoreRootService : Service(), ServiceControl {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.i(AppConfig.TAG, "StartCore-Root: Service destroyed")
-        if (isRunning || setupJob != null) {
-            stopAllService(isForced = false)
+        runBlocking {
+            setupJob?.cancelAndJoin()
         }
+        setupJob = null
+        RootProxyManager.stopFull(applicationContext)
+        CoreServiceManager.stopCoreLoop()
         CoreServiceManager.clearServiceControl(this)
         serviceScope.cancel()
     }
@@ -113,16 +117,6 @@ class CoreRootService : Service(), ServiceControl {
 
         setupJob?.cancel()
         setupJob = null
-
-        teardownScope.launch {
-            try {
-                RootProxyManager.stopFull(applicationContext)
-            } catch (e: Exception) {
-                LogUtil.e(AppConfig.TAG, "StartCore-Root: teardown error", e)
-            }
-        }
-
-        CoreServiceManager.stopCoreLoop()
 
         if (isForced) {
             stopSelf()

@@ -11,14 +11,8 @@ import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MyContextWrapper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
 class CoreProxyOnlyService : Service(), ServiceControl {
-    private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     override fun onCreate() {
         super.onCreate()
         LogUtil.i(AppConfig.TAG, "StartCore-Proxy: Service created")
@@ -34,9 +28,12 @@ class CoreProxyOnlyService : Service(), ServiceControl {
             return START_STICKY
         }
 
-        serviceScope.launch {
-            CoreServiceManager.startCoreLoop(null)
+        if (!CoreServiceManager.startCoreLoop(null)) {
+            LogUtil.e(AppConfig.TAG, "StartCore-Proxy: Failed to start core loop")
+            stopSelf()
+            return START_NOT_STICKY
         }
+
         return START_STICKY
     }
 
@@ -44,7 +41,6 @@ class CoreProxyOnlyService : Service(), ServiceControl {
         super.onDestroy()
         CoreServiceManager.stopCoreLoop()
         CoreServiceManager.clearServiceControl(this)
-        serviceScope.cancel()
     }
 
     override fun getService(): Service {
