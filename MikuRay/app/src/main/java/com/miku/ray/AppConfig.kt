@@ -178,6 +178,8 @@ object AppConfig {
     const val PREF_CUSTOM_DPI = "pref_custom_dpi"
     const val PREF_APP_FONT_SIZE = "pref_app_font_size"
     const val PREF_SOUND_ON_CONNECT = "pref_sound_on_connect"
+    const val PREF_CUSTOM_CONNECT_SOUND_URI = "pref_custom_connect_sound_uri"
+    const val PREF_CUSTOM_DISCONNECT_SOUND_URI = "pref_custom_disconnect_sound_uri"
     const val PREF_SHOW_SPLASH = "pref_show_splash_screen"
     const val PREF_KEEP_AWAKE = "pref_keep_awake"
     const val PREF_SEARCH_BAR_CHIP = "pref_search_bar_chip"

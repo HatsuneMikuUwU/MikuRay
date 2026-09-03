@@ -5,6 +5,7 @@ import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.Manifest
 import android.content.Intent
+import android.media.MediaPlayer
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
@@ -278,6 +279,9 @@ class UiSettingsActivity : BaseActivity() {
         private val searchBarChip by lazy { findPreference<ListPreference>(AppConfig.PREF_SEARCH_BAR_CHIP) }
         private val selectedBannerStyleEnabled by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED) }
         private val selectedBannerCategory by lazy { findPreference<PreferenceCategory>("pref_category_selected_banner") }
+        private val customConnectSound by lazy { findPreference<Preference>("action_pick_custom_connect_sound") }
+        private val customDisconnectSound by lazy { findPreference<Preference>("action_pick_custom_disconnect_sound") }
+        private val deleteCustomSounds by lazy { findPreference<Preference>("action_delete_custom_sounds") }
 
         private val weatherUnit by lazy { findPreference<ListPreference>(AppConfig.PREF_WEATHER_USE_CELSIUS) }
         private val weatherCustomLocation by lazy { findPreference<EditTextPreference>(AppConfig.PREF_WEATHER_CUSTOM_LOCATION) }
@@ -349,6 +353,16 @@ class UiSettingsActivity : BaseActivity() {
                         requireContext().toastError(getString(R.string.custom_font_invalid))
                     }
                 }
+            }
+
+        private val pickCustomConnectSoundFile =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                if (uri != null) saveCustomSound(uri, AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI, "connect_sound_")
+            }
+
+        private val pickCustomDisconnectSoundFile =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                if (uri != null) saveCustomSound(uri, AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI, "disconnect_sound_")
             }
 
         private val cropHomeBannerImage =
@@ -644,6 +658,7 @@ class UiSettingsActivity : BaseActivity() {
             }
             updateAppFontSummary()
             setupCustomFontPreferences()
+            setupCustomSoundPreferences()
 
             CategoryStyleHelper.applyToFragment(this)
             categoryStyle?.setOnPreferenceChangeListener { pref, newValue ->
@@ -888,6 +903,106 @@ class UiSettingsActivity : BaseActivity() {
             } catch (e: Exception) {
                 null
             }
+        }
+
+        private fun setupCustomSoundPreferences() {
+            updateCustomSoundSummaries()
+            customConnectSound?.setOnPreferenceClickListener {
+                pickCustomConnectSoundFile.launch(arrayOf("*/*"))
+                true
+            }
+            customDisconnectSound?.setOnPreferenceClickListener {
+                pickCustomDisconnectSoundFile.launch(arrayOf("*/*"))
+                true
+            }
+            deleteCustomSounds?.setOnPreferenceClickListener {
+                val hasCustomSound = listOf(
+                    AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
+                    AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
+                ).any { !MmkvManager.decodeSettingsString(it).isNullOrBlank() }
+                if (!hasCustomSound) {
+                    requireContext().toastInfo(getString(R.string.custom_sound_none_to_remove))
+                    return@setOnPreferenceClickListener true
+                }
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.title_pref_delete_custom_sounds)
+                    .setMessage(R.string.custom_sound_delete_confirm)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        lifecycleScope.launch {
+                            deleteCustomSound(AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI)
+                            deleteCustomSound(AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI)
+                            updateCustomSoundSummaries()
+                            requireContext().snackbarSuccess(
+                                getString(R.string.custom_sounds_removed),
+                                title = getString(R.string.title_alerter_success)
+                            )
+                        }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .showBlur()
+                true
+            }
+        }
+
+        private fun updateCustomSoundSummaries() {
+            customConnectSound?.summary = customSoundSummary(AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI)
+            customDisconnectSound?.summary = customSoundSummary(AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI)
+            deleteCustomSounds?.isEnabled = listOf(
+                AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
+                AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
+            ).any { !MmkvManager.decodeSettingsString(it).isNullOrBlank() }
+        }
+
+        private fun customSoundSummary(preferenceKey: String): String {
+            val uriString = MmkvManager.decodeSettingsString(preferenceKey).orEmpty()
+            return if (uriString.isBlank()) {
+                getString(R.string.summary_pref_custom_connect_sound)
+            } else {
+                File(Uri.parse(uriString).path.orEmpty()).name.ifBlank { uriString }
+            }
+        }
+
+        private fun saveCustomSound(sourceUri: Uri, preferenceKey: String, fileNamePrefix: String) {
+            lifecycleScope.launch {
+                val savedUri = withContext(Dispatchers.IO) {
+                    runCatching {
+                        val directory = File(requireContext().filesDir, "sounds").apply { mkdirs() }
+                        val name = queryDisplayName(sourceUri)?.replace(Regex("[^A-Za-z0-9._-]"), "_")
+                            ?.takeIf { it.isNotBlank() } ?: "sound.m4a"
+                        val extension = name.substringAfterLast('.', "m4a").lowercase()
+                        val destination = File(directory, "$fileNamePrefix${System.currentTimeMillis()}.$extension")
+                        requireContext().contentResolver.openInputStream(sourceUri)?.use { input ->
+                            destination.outputStream().use { output -> input.copyTo(output) }
+                        } ?: error("Unable to read audio")
+                        val savedUri = Uri.fromFile(destination)
+                        val mediaPlayer = MediaPlayer()
+                        try {
+                            mediaPlayer.setDataSource(requireContext(), savedUri)
+                            mediaPlayer.prepare()
+                        } catch (error: Exception) {
+                            destination.delete()
+                            throw error
+                        } finally {
+                            mediaPlayer.release()
+                        }
+                        savedUri
+                    }.getOrNull()
+                }
+                if (savedUri == null) {
+                    requireContext().toastError(getString(R.string.custom_sound_invalid))
+                } else {
+                    deleteCustomSound(preferenceKey)
+                    MmkvManager.encodeSettings(preferenceKey, savedUri.toString())
+                    updateCustomSoundSummaries()
+                    requireContext().toastSuccess(getString(R.string.custom_sound_added))
+                }
+            }
+        }
+
+        private suspend fun deleteCustomSound(preferenceKey: String) {
+            val oldUri = MmkvManager.decodeSettingsString(preferenceKey)
+            deleteOldFile(oldUri)
+            MmkvManager.encodeSettings(preferenceKey, "")
         }
 
         private fun setupSelectedBannerPreferences() {

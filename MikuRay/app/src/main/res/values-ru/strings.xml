@@ -773,6 +773,17 @@
     <string name="title_vpn_sound_settings">Звук</string>
     <string name="title_pref_sound_on_connect">Звук подключения</string>
     <string name="summary_pref_sound_on_connect">Воспроизводить звук при подключении или отключении</string>
+    <string name="title_pref_custom_connect_sound">Пользовательский звук подключения</string>
+    <string name="summary_pref_custom_connect_sound">Звук не выбран — нажмите, чтобы выбрать аудиофайл</string>
+    <string name="title_pref_custom_disconnect_sound">Пользовательский звук отключения</string>
+    <string name="summary_pref_custom_disconnect_sound">Звук не выбран — нажмите, чтобы выбрать аудиофайл</string>
+    <string name="title_pref_delete_custom_sounds">Удалить пользовательские звуки</string>
+    <string name="summary_pref_delete_custom_sounds">Удалить оба пользовательских звука подключения</string>
+    <string name="custom_sound_delete_confirm">Удалить пользовательские звуки и восстановить встроенные?</string>
+    <string name="custom_sound_invalid">Не удалось прочитать этот аудиофайл</string>
+    <string name="custom_sound_none_to_remove">Пользовательские звуки подключения не заданы</string>
+    <string name="custom_sound_added">Пользовательский звук успешно добавлен</string>
+    <string name="custom_sounds_removed">Пользовательские звуки подключения успешно удалены</string>
     <string name="ip_unknown">IP: неизвестен</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Стиль шрифта</string>

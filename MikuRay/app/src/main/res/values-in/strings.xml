@@ -764,6 +764,17 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_vpn_sound_settings">Suara</string>
     <string name="title_pref_sound_on_connect">Bunyi Koneksi</string>
     <string name="summary_pref_sound_on_connect">Bunyi pas nyambung atau putus koneksi</string>
+    <string name="title_pref_custom_connect_sound">Bunyi Koneksi Custom</string>
+    <string name="summary_pref_custom_connect_sound">Belum ada bunyi custom — ketuk untuk memilih file audio</string>
+    <string name="title_pref_custom_disconnect_sound">Bunyi Putus Koneksi Custom</string>
+    <string name="summary_pref_custom_disconnect_sound">Belum ada bunyi custom — ketuk untuk memilih file audio</string>
+    <string name="title_pref_delete_custom_sounds">Hapus Bunyi Custom</string>
+    <string name="summary_pref_delete_custom_sounds">Hapus kedua bunyi koneksi custom</string>
+    <string name="custom_sound_delete_confirm">Hapus semua bunyi koneksi custom dan gunakan kembali bunyi bawaan?</string>
+    <string name="custom_sound_invalid">File tersebut tidak dapat dibaca sebagai audio</string>
+    <string name="custom_sound_none_to_remove">Belum ada bunyi koneksi custom</string>
+    <string name="custom_sound_added">Bunyi custom berhasil ditambahkan</string>
+    <string name="custom_sounds_removed">Bunyi koneksi custom berhasil dihapus</string>
     <string name="ip_unknown">IP: Nggak ke-detect</string>
     <string name="title_pref_app_font">Gaya Font</string>
     <string name="title_category_app_font">Font</string>

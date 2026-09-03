@@ -165,6 +165,7 @@ class BackupActivity : HelperBaseActivity() {
         backupBannerImages(backupDir)
 
         backupCustomFont(backupDir)
+        backupCustomSounds(backupDir)
 
         return if (ZipUtil.zipFromFolder(backupDir, outputZipFilePath)) {
             Pair(true, outputZipFilePath)
@@ -205,6 +206,35 @@ class BackupActivity : HelperBaseActivity() {
         }
     }
 
+    private fun backupCustomSounds(backupDir: String) {
+        val soundsDir = java.io.File(backupDir, "sounds").also { it.mkdirs() }
+        val soundKeys = listOf(
+            AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
+            AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
+        )
+        for (key in soundKeys) {
+            val uriString = MmkvManager.decodeSettingsString(key).orEmpty()
+            if (uriString.isBlank()) continue
+            try {
+                val uri = Uri.parse(uriString)
+                val srcFile = if (uri.scheme == "file") {
+                    java.io.File(uri.path.orEmpty())
+                } else {
+                    val tmp = java.io.File(cacheDir, "sound_backup_tmp_${key}")
+                    contentResolver.openInputStream(uri)?.use { input ->
+                        tmp.outputStream().use { input.copyTo(it) }
+                    }
+                    tmp
+                }
+                if (srcFile.exists()) {
+                    srcFile.copyTo(java.io.File(soundsDir, "$key.bin"), overwrite = true)
+                }
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to backup sound for key $key", e)
+            }
+        }
+    }
+
     private fun backupCustomFont(backupDir: String) {
         val srcFile = com.miku.ray.util.CustomFontManager.getFontFile(this) ?: return
         try {
@@ -229,6 +259,7 @@ class BackupActivity : HelperBaseActivity() {
             restoreBannerImages(backupDir.absolutePath)
             SettingsManager.preloadAllBanners(this@BackupActivity)
             restoreCustomFont(backupDir.absolutePath)
+            restoreCustomSounds(backupDir.absolutePath)
 
             val restoredHomeBannerUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_HOME_BANNER_URI)
             if (!restoredHomeBannerUri.isNullOrBlank()) {
@@ -261,6 +292,34 @@ class BackupActivity : HelperBaseActivity() {
             LogUtil.e(AppConfig.TAG, "Restored custom font file was invalid, falling back to default")
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)) {
                 MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_USE_CUSTOM, false)
+            }
+        }
+    }
+
+    private fun restoreCustomSounds(backupDir: String) {
+        val soundsDir = java.io.File(backupDir, "sounds")
+        val soundsOutDir = java.io.File(filesDir, "sounds").apply { mkdirs() }
+        val soundKeys = listOf(
+            AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
+            AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
+        )
+        for (key in soundKeys) {
+            val srcFile = java.io.File(soundsDir, "$key.bin")
+            val oldUri = MmkvManager.decodeSettingsString(key)
+            if (!srcFile.exists()) {
+                if (!oldUri.isNullOrBlank()) {
+                    try { java.io.File(Uri.parse(oldUri).path.orEmpty()).delete() } catch (_: Exception) {}
+                }
+                MmkvManager.encodeSettings(key, "")
+                continue
+            }
+            try {
+                val destFile = java.io.File(soundsOutDir, "${key}_${System.currentTimeMillis()}.bin")
+                srcFile.copyTo(destFile, overwrite = true)
+                MmkvManager.encodeSettings(key, Uri.fromFile(destFile).toString())
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to restore sound for key $key", e)
+                MmkvManager.encodeSettings(key, "")
             }
         }
     }

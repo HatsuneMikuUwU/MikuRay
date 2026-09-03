@@ -445,6 +445,7 @@
         <com.miku.ray.ui.dialog.SnowflakesSettingsDialog
             android:icon="@drawable/rmx_sparkling_line"
             app:layout="@layout/uwu_mid"
+            android:dependency="pref_enable_snowflakes"
             app:key="pref_snowflakes_settings"
             app:title="@string/snowflakes_settings_title" />
 
@@ -614,13 +615,32 @@
 
         <androidx.preference.SwitchPreferenceCompat
             android:icon="@drawable/rmx_volume_up_line"
-            app:layout="@layout/uwu_sin_switch"
+            app:layout="@layout/uwu_top_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch"
             android:defaultValue="true"
             android:key="pref_sound_on_connect"
             android:summary="@string/summary_pref_sound_on_connect"
             android:title="@string/title_pref_sound_on_connect" />
-
+        <Preference
+            android:icon="@drawable/rmx_volume_up_line"
+            app:layout="@layout/uwu_mid"
+            android:dependency="pref_sound_on_connect"
+            android:key="action_pick_custom_connect_sound"
+            android:title="@string/title_pref_custom_connect_sound"
+            android:summary="@string/summary_pref_custom_connect_sound" />
+        <Preference
+            android:icon="@drawable/rmx_volume_up_line"
+            app:layout="@layout/uwu_mid"
+            android:dependency="pref_sound_on_connect"
+            android:key="action_pick_custom_disconnect_sound"
+            android:title="@string/title_pref_custom_disconnect_sound"
+            android:summary="@string/summary_pref_custom_disconnect_sound" />
+        <Preference
+            android:icon="@drawable/rmx_delete_bin_line"
+            app:layout="@layout/uwu_bot"
+            android:key="action_delete_custom_sounds"
+            android:title="@string/title_pref_delete_custom_sounds"
+            android:summary="@string/summary_pref_delete_custom_sounds" />
     </com.miku.ray.widget.UwuPreferenceCategory>
 
     <com.miku.ray.widget.UwuPreferenceCategory

@@ -37,6 +37,11 @@ object ThemeShareManager {
         AssetSpec("themeBanner", AppConfig.PREF_CUSTOM_THEME_BANNER_URI, "theme_banner_")
     )
 
+    private val soundAssets = listOf(
+        AssetSpec("connectSound", AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI, "connect_sound_"),
+        AssetSpec("disconnectSound", AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI, "disconnect_sound_")
+    )
+
     private val booleanKeys = setOf(
         AppConfig.PREF_TRAFFIC_ENABLED,
         AppConfig.PREF_SPEED_ENABLED,
@@ -127,7 +132,9 @@ object ThemeShareManager {
         AppConfig.PREF_WEATHER_CUSTOM_LOCATION,
         AppConfig.PREF_INDICATOR_STYLE,
         AppConfig.PREF_CUSTOM_PROFILE_NAME,
-        AppConfig.PREF_PROFILE_BANNER_SHAPE
+        AppConfig.PREF_PROFILE_BANNER_SHAPE,
+        AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
+        AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
     )
 
     sealed class ImportResult {
@@ -236,7 +243,7 @@ object ThemeShareManager {
 
     @Throws(IOException::class)
     private fun exportAssets(context: Context): JSONArray = JSONArray().apply {
-        bannerAssets.forEach { spec ->
+        (bannerAssets + soundAssets).forEach { spec ->
             assetFromUri(context, spec.id, spec.preferenceKey, spec.filePrefix)?.let(::put)
         }
         CustomFontManager.getFontFile(context)?.takeIf { it.exists() }?.let { file ->
@@ -268,7 +275,7 @@ object ThemeShareManager {
         if (bytes.size > MAX_ASSET_BYTES) return null
         return JSONObject().apply {
             put("id", id)
-            put("fileName", "$filePrefix${System.currentTimeMillis()}.jpg")
+            put("fileName", "$filePrefix${System.currentTimeMillis()}.${if (id.endsWith("Sound")) "bin" else "jpg"}")
             put("base64", Base64.encodeToString(bytes, Base64.NO_WRAP))
         }
     }
@@ -278,7 +285,7 @@ object ThemeShareManager {
         for (index in 0 until assets.length()) {
             val asset = assets.optJSONObject(index) ?: throw IOException("The theme asset at index $index is invalid.")
             val id = asset.optString("id")
-            if (id !in bannerAssets.map(AssetSpec::id) && id != "customFont") continue
+            if (id !in (bannerAssets + soundAssets).map(AssetSpec::id) && id != "customFont") continue
             if (decodeAsset(asset) == null) {
                 throw IOException("The theme asset '$id' is corrupt or exceeds the size limit.")
             }
@@ -301,6 +308,7 @@ object ThemeShareManager {
     private fun importAssets(context: Context, assets: JSONArray): Int {
         clearExistingAssets(context)
         val bannerDirectory = File(context.filesDir, "banners").apply { mkdirs() }
+        val soundDirectory = File(context.filesDir, "sounds").apply { mkdirs() }
         var importedCount = 0
         var importedFont = false
 
@@ -326,12 +334,15 @@ object ThemeShareManager {
                     }
                 }
                 else -> {
-                    val spec = bannerAssets.firstOrNull { it.id == asset.optString("id") } ?: continue
+                    val spec = (bannerAssets + soundAssets).firstOrNull { it.id == asset.optString("id") } ?: continue
                     val oldUri = MmkvManager.decodeSettingsString(spec.preferenceKey)
                     deleteLocalFile(oldUri)
-                    val extension = asset.optString("fileName").substringAfterLast('.', "jpg")
-                        .lowercase().takeIf { it in setOf("jpg", "jpeg", "png", "webp") } ?: "jpg"
-                    val destination = File(bannerDirectory, "${spec.filePrefix}${System.currentTimeMillis()}.$extension")
+                    val isSound = spec in soundAssets
+                    val extension = asset.optString("fileName").substringAfterLast('.', if (isSound) "bin" else "jpg")
+                        .lowercase().takeIf { if (isSound) it.length in 1..8 else it in setOf("jpg", "jpeg", "png", "webp") }
+                        ?: if (isSound) "bin" else "jpg"
+                    val destinationDirectory = if (isSound) soundDirectory else bannerDirectory
+                    val destination = File(destinationDirectory, "${spec.filePrefix}${System.currentTimeMillis()}.$extension")
                     destination.writeBytes(bytes)
                     MmkvManager.encodeSettings(spec.preferenceKey, Uri.fromFile(destination).toString())
                     importedCount++
@@ -347,7 +358,7 @@ object ThemeShareManager {
     }
 
     private fun clearExistingAssets(context: Context) {
-        bannerAssets.forEach { spec ->
+        (bannerAssets + soundAssets).forEach { spec ->
             deleteLocalFile(MmkvManager.decodeSettingsString(spec.preferenceKey))
             MmkvManager.encodeSettings(spec.preferenceKey, "")
         }

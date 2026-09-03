@@ -796,6 +796,17 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
 
     <string name="title_pref_sound_on_connect">Connection Sound</string>
     <string name="summary_pref_sound_on_connect">Play a sound when connected or disconnected</string>
+    <string name="title_pref_custom_connect_sound">Custom Connect Sound</string>
+    <string name="summary_pref_custom_connect_sound">No custom sound selected — tap to choose an audio file</string>
+    <string name="title_pref_custom_disconnect_sound">Custom Disconnect Sound</string>
+    <string name="summary_pref_custom_disconnect_sound">No custom sound selected — tap to choose an audio file</string>
+    <string name="title_pref_delete_custom_sounds">Remove Custom Sounds</string>
+    <string name="summary_pref_delete_custom_sounds">Remove both custom connection sounds</string>
+    <string name="custom_sound_delete_confirm">Remove all custom connection sounds and restore the built-in sounds?</string>
+    <string name="custom_sound_invalid">Couldn\'t read that file as audio</string>
+    <string name="custom_sound_none_to_remove">No custom connection sounds are set</string>
+    <string name="custom_sound_added">Custom sound added successfully</string>
+    <string name="custom_sounds_removed">Custom connection sounds removed successfully</string>
     <string name="ip_unknown">IP: unknown</string>
     <string name="ip_connected">IP: %1$s</string>
     <string name="title_pref_app_font">Font Style</string>

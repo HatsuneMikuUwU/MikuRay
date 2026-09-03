@@ -753,6 +753,17 @@
     <string name="title_vpn_sound_settings">声音</string>
     <string name="title_pref_sound_on_connect">连接提示音</string>
     <string name="summary_pref_sound_on_connect">连接或断开时播放声音</string>
+    <string name="title_pref_custom_connect_sound">自定义连接声音</string>
+    <string name="summary_pref_custom_connect_sound">未选择自定义声音 — 点击以选择音频文件</string>
+    <string name="title_pref_custom_disconnect_sound">自定义断开声音</string>
+    <string name="summary_pref_custom_disconnect_sound">未选择自定义声音 — 点击以选择音频文件</string>
+    <string name="title_pref_delete_custom_sounds">移除自定义声音</string>
+    <string name="summary_pref_delete_custom_sounds">移除两个自定义连接声音</string>
+    <string name="custom_sound_delete_confirm">移除所有自定义连接声音并恢复内置声音？</string>
+    <string name="custom_sound_invalid">无法读取该音频文件</string>
+    <string name="custom_sound_none_to_remove">未设置自定义连接声音</string>
+    <string name="custom_sound_added">自定义声音添加成功</string>
+    <string name="custom_sounds_removed">自定义连接声音移除成功</string>
     <string name="ip_unknown">IP: 未知</string>
     <string name="title_pref_app_font">字体样式</string>
     <string name="title_category_app_font">字体</string>
