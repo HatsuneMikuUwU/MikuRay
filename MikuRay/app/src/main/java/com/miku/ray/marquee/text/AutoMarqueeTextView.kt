@@ -19,6 +19,14 @@ class AutoMarqueeTextView @JvmOverloads constructor(
         isHorizontalFadingEdgeEnabled = false
     }
 
+    override fun isFocused(): Boolean = true
+
+    override fun setText(text: CharSequence?, type: BufferType?) {
+        super.setText(text, type)
+        isSelected = false
+        isSelected = true
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         isSelected = true

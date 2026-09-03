@@ -1258,10 +1258,27 @@ class MainActivity : HelperBaseActivity(),
 
     private fun startFabTimer() {
         if (!isFabExtended()) return
-        // NotificationManager owns and persists the connection start time. Read
-        // that same value so the FAB and notification always show one session timer.
         updateFabTimerText()
+        
+        val density = resources.displayMetrics.density
+        val paddingStartPx = (16 * density).toInt()
+        val paddingTopPx = (12 * density).toInt()
+        val paddingEndPx = (16 * density).toInt()
+        val paddingBottomPx = (12 * density).toInt()
+        val iconPaddingPx = (4 * density).toInt()
+        val minimumWidthPx = (132 * density).toInt()
+        
+        binding.fab.setPaddingRelative(
+                 paddingStartPx,
+                 paddingTopPx,
+                 paddingEndPx,
+                 paddingBottomPx
+        )
+        
+        binding.fab.minimumWidth = minimumWidthPx
+        binding.fab.iconPadding = iconPaddingPx
         binding.fab.extend()
+        
         if (fabTimerJob?.isActive == true) return
         fabTimerJob = lifecycleScope.launch {
             while (isActive) {
@@ -1275,19 +1292,21 @@ class MainActivity : HelperBaseActivity(),
         fabTimerJob?.cancel()
         fabTimerJob = null
         binding.fab.shrink()
+        binding.fab.text = null
     }
 
     private fun updateFabTimerText() {
         val startTime = MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
         if (startTime == 0L) {
-            binding.fab.text = "00:00"
+            binding.fab.text = "00:00:00"
             return
         }
         val elapsed = ((System.currentTimeMillis() - startTime) / 1000).coerceAtLeast(0L)
         val h = elapsed / 3600
         val m = (elapsed % 3600) / 60
         val s = elapsed % 60
-        binding.fab.text = if (h > 0) "%02d:%02d:%02d".format(h, m, s) else "%02d:%02d".format(m, s)
+        
+        binding.fab.text = "%02d:%02d:%02d".format(h, m, s)
     }
 
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
