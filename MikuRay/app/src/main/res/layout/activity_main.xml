@@ -411,6 +411,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     app:icon="@drawable/rmx_media_play_line"
+                    android:fontFeatureSettings="tnum"
                     android:textAppearance="?textAppearanceTitleMedium"
                     android:textStyle="bold"
                     android:textSize="17sp"
