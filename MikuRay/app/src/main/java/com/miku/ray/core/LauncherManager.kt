@@ -82,12 +82,6 @@ object LauncherManager {
 
     fun stopService(context: Context) {
         MessageUtil.sendMsg2Service(context, AppConfig.MSG_STATE_STOP, "")
-        
-        context.stopService(Intent(context, CoreVpnService::class.java))
-        context.stopService(Intent(context, CoreProxyOnlyService::class.java))
-        context.stopService(Intent(context, CoreRootService::class.java))
-        
-        MessageUtil.sendMsg2UI(context, AppConfig.MSG_STATE_STOP_SUCCESS, "")
     }
 
     /** Restarts the active daemon without starting a stopped service. */
