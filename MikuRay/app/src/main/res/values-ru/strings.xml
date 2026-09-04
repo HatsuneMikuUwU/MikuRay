@@ -372,6 +372,7 @@
     <string name="logcat_copy">Копировать</string>
     <string name="logcat_clear">Очистить</string>
     <string name="title_service_restart">Перезапуск службы</string>
+    <string name="title_activity_restart">Перезапуск приложения</string>
     <string name="title_del_all_config">Удалить все конфигурации</string>
     <string name="title_del_duplicate_config">Удалить дублирующиеся конфигурации</string>
     <string name="title_del_invalid_config">Удалить недействительные конфигурации</string>

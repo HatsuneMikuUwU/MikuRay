@@ -865,6 +865,7 @@ class MainActivity : HelperBaseActivity(),
                 mainViewModel.testAllRealPing(true)
             }
             R.id.service_restart -> LauncherManager.restartServiceOrStart(this, ::startV2Ray)
+            R.id.activity_restart -> restartApplication()
             R.id.action_scroll_to_selected -> locateSelectedServer()
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
@@ -1687,6 +1688,18 @@ class MainActivity : HelperBaseActivity(),
                 }
             }
         }
+    }
+
+    /** Fully restarts the app's activity/task, as opposed to [LauncherManager.restartServiceOrStart] which only restarts the core service. */
+    private fun restartApplication() {
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+        if (launchIntent == null) {
+            recreate()
+            return
+        }
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(launchIntent)
+        finishAffinity()
     }
 
     private fun delAllConfig() {

@@ -531,6 +531,115 @@
                             </com.google.android.material.card.MaterialCardView>
 
                             <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/activity_restart"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16.0dip"
+                                android:layout_marginTop="0.0dip"
+                                android:layout_marginEnd="16.0dip"
+                                android:layout_marginBottom="4.0dip"
+                                android:focusable="true"
+                                android:clickable="true"
+                                app:cardBackgroundColor="?colorCard"
+                                app:cardElevation="0.0dip"
+                                app:strokeWidth="0.0dip"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
+                                app:cardPreventCornerOverlap="false"
+                                app:contentPadding="0dp">
+
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:gravity="center_vertical"
+                                    android:clipToPadding="false"
+                                    android:baselineAligned="false"
+                                    android:minHeight="?android:listPreferredItemHeightSmall">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8.0dip"
+                                        android:layout_marginTop="16.0dip"
+                                        android:layout_marginEnd="8.0dip"
+                                        android:layout_marginBottom="16.0dip"
+                                        android:gravity="center">
+
+                                        <FrameLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8.0dip">
+
+                                            <com.miku.ray.widget.DynamicShapeImageView
+                                                app:shapeTarget="icon"
+                                                app:shapeBackgroundColor="?colorPrimary"
+                                                android:layout_width="45.0dip"
+                                                android:layout_height="45.0dip"
+                                                android:scaleType="centerCrop" />
+
+                                            <ImageView
+                                                android:layout_width="25.0dip"
+                                                android:layout_height="25.0dip"
+                                                android:layout_gravity="center"
+                                                android:src="@drawable/rmx_device_restart_line"
+                                                android:tint="?colorOnPrimary" />
+                                        </FrameLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginStart="8.0dip"
+                                        android:layout_marginTop="20.0dip"
+                                        android:layout_marginEnd="16.0dip"
+                                        android:layout_marginBottom="20.0dip"
+                                        android:layout_weight="1.0"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:ellipsize="marquee"
+                                            android:singleLine="false"
+                                            android:text="@string/title_activity_restart"
+                                            android:textAppearance="?textAppearanceTitleMedium"
+                                            android:textColor="?colorOnSurface"
+                                            android:textSize="17.0sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8.0dip"
+                                        android:layout_marginTop="16.0dip"
+                                        android:layout_marginEnd="16.0dip"
+                                        android:layout_marginBottom="16.0dip"
+                                        android:gravity="center">
+
+                                        <FrameLayout
+                                            android:layout_width="28.0dip"
+                                            android:layout_height="28.0dip">
+
+                                            <com.miku.ray.widget.DynamicShapeImageView
+                                                app:shapeTarget="arrow"
+                                                app:shapeBackgroundColor="?colorSurfaceContainerHighest"
+                                                android:layout_width="28.0dip"
+                                                android:layout_height="28.0dip"
+                                                android:scaleType="centerCrop" />
+
+                                            <ImageView
+                                                android:layout_gravity="center"
+                                                android:layout_width="24.0dip"
+                                                android:layout_height="24.0dip"
+                                                android:src="@drawable/rmx_arrows_arrow_right_double_line"
+                                                android:tint="?colorOnSurfaceVariant" />
+                                        </FrameLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/sub_update"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
