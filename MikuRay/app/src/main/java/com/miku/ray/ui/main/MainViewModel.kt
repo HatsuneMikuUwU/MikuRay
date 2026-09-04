@@ -49,6 +49,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var activeTestTotal = 0
     private var isRestarting = false
     private var pendingServerRestartGuid: String? = null
+    @Volatile
+    private var serverCacheLoaded = false
     val serversCache = mutableListOf<ServersCache>()
 
     val isRunning by lazy { MutableLiveData<Boolean>() }
@@ -62,6 +64,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
+
+    init {
+        // Load the persisted snapshot before any fragment can read
+        // serversCache. Previously this only happened after MainActivity had
+        // finished its asynchronous UI setup, so every consumer could see a
+        // transient empty cache during a cold start.
+        reloadServerList(notify = false)
+    }
 
     fun startListenBroadcast() {
         isRunning.value = false
@@ -85,7 +95,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     @Synchronized
-    fun reloadServerList() {
+    fun reloadServerList(notify: Boolean = true) {
         val subId = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
         val order = MmkvManager.decodeSettingsInt("${AppConfig.PREF_SERVER_ORDER}_$subId", 0)
         if (order == 0) {
@@ -103,16 +113,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         updateCache()
-        updateListAction.postValue(-1)
+        serverCacheLoaded = true
+        if (notify) updateListAction.postValue(-1)
+    }
+
+    /**
+     * Makes the persisted server snapshot available before a UI action reads
+     * [serversCache]. The UI must not interpret an uninitialized cache as an
+     * empty server set during a cold start.
+     */
+    fun ensureServerCacheReady() {
+        if (!serverCacheLoaded) reloadServerList()
     }
 
     fun removeServer(guid: String) {
         serverList.remove(guid)
         MmkvManager.removeServer(guid)
-        val index = getPosition(guid)
-        if (index >= 0) {
-            serversCache.removeAt(index)
-        }
+        // Rebuild from the persisted source of truth so filtering, ordering,
+        // pinning, and every fragment receive the same valid snapshot.
+        updateCache()
+        updateListAction.postValue(-1)
         updateGroupBadgeAction.postValue(Unit)
     }
 
@@ -222,8 +242,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         updateListAction.value = -1
 
         viewModelScope.launch(Dispatchers.Default) {
+            // MainActivity can receive a click while its asynchronous group
+            // setup is still populating the cache on a cold start. Reload the
+            // persisted list once before treating the request as empty.
+            if (serversCache.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    reloadServerList()
+                    activeTestTotal = serversCache.size
+                }
+            }
             if (serversCache.isEmpty()) {
                 activeTestId = null
+                // The activity shows the progress dialog before starting the
+                // service. During cold start the list can still be empty, so
+                // there may be no service-side FINISH event to close it.
+                // Always publish the terminal state for this local no-op.
+                withContext(Dispatchers.Main) {
+                    testProgressAction.value = null
+                }
                 return@launch
             }
             MessageUtil.sendMsg2TestService(

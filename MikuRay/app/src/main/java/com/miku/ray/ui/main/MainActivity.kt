@@ -777,16 +777,19 @@ class MainActivity : HelperBaseActivity(),
         }
 
         binding.btnQuickCountryCode.setOnClickListener {
+            mainViewModel.ensureServerCacheReady()
             countryCodeProgressDialog.show(mainViewModel.serversCache.count())
             mainViewModel.testAllCountryCodes()
         }
 
         binding.btnQuickTcping.setOnClickListener {
+            mainViewModel.ensureServerCacheReady()
             urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_ping_all_server)
             mainViewModel.testAllRealPing(true)
         }
 
         binding.btnQuickRealPing.setOnClickListener {
+            mainViewModel.ensureServerCacheReady()
             urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_real_ping_all_server)
             mainViewModel.testAllRealPing()
         }
@@ -853,14 +856,17 @@ class MainActivity : HelperBaseActivity(),
             R.id.export_all -> exportAll()
             R.id.export_group_file -> exportGroupAsFile()
             R.id.real_ping_all -> {
+                mainViewModel.ensureServerCacheReady()
                 urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_real_ping_all_server)
                 mainViewModel.testAllRealPing()
             }
             R.id.country_code_all -> {
+                mainViewModel.ensureServerCacheReady()
                 countryCodeProgressDialog.show(mainViewModel.serversCache.count())
                 mainViewModel.testAllCountryCodes()
             }
             R.id.tcping_all -> {
+                mainViewModel.ensureServerCacheReady()
                 urlTestProgressDialog.show(mainViewModel.serversCache.count(), R.string.title_ping_all_server)
                 mainViewModel.testAllRealPing(true)
             }
