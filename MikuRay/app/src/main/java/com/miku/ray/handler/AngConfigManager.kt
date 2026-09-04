@@ -30,8 +30,10 @@ import com.miku.ray.util.HttpUtil
 import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.QRCodeDecoder
+import com.miku.ray.util.SubscriptionImportChoice
 import com.miku.ray.util.SubscriptionUserinfoParser
 import com.miku.ray.util.Utils
+import kotlinx.coroutines.CancellationException
 import java.net.URI
 
 object AngConfigManager {
@@ -143,25 +145,31 @@ object AngConfigManager {
         }
     }
 
-    fun importBatchConfig(server: String?, subid: String, append: Boolean): Pair<Int, Int> {
+    suspend fun importBatchConfig(
+        server: String?,
+        subid: String,
+        append: Boolean,
+        requestSubscriptionName: (suspend (String?, Set<String>) -> SubscriptionImportChoice?)? = null
+    ): Pair<Int, Int> {
         return try {
-            var count = parseSIP008Config(Utils.decode(server), subid, append)
-            if (count <= 0) {
+            val decodedServer = Utils.decode(server)
+            var count = parseSIP008Config(decodedServer, subid, append)
+            if (count <= 0 && decodedServer != server) {
                 count = parseSIP008Config(server, subid, append)
             }
-            if (count <= 0) {
-                count = parseBatchConfig(Utils.decode(server), subid, append)
+            if (count <= 0 && decodedServer != server) {
+                count = parseBatchConfig(decodedServer, subid, append)
             }
-            if (count <= 0) {
+            if (count <= 0 && decodedServer != server) {
                 count = parseBatchConfig(server, subid, append)
             }
             if (count <= 0) {
                 count = parseCustomConfigServer(server, subid, append)
             }
 
-            var countSub = parseBatchSubscription(server)
-            if (countSub <= 0) {
-                countSub = parseBatchSubscription(Utils.decode(server))
+            var countSub = parseBatchSubscription(server, requestSubscriptionName)
+            if (countSub <= 0 && decodedServer != server) {
+                countSub = parseBatchSubscription(decodedServer, requestSubscriptionName)
             }
             if (countSub > 0) {
                 updateConfigViaSubAll()
@@ -174,7 +182,10 @@ object AngConfigManager {
         }
     }
 
-    private fun parseBatchSubscription(servers: String?): Int {
+    private suspend fun parseBatchSubscription(
+        servers: String?,
+        requestSubscriptionName: (suspend (String?, Set<String>) -> SubscriptionImportChoice?)?
+    ): Int {
         try {
             if (servers == null) {
                 return 0
@@ -185,10 +196,12 @@ object AngConfigManager {
                 .distinct()
                 .forEach { str ->
                     if (Utils.isValidSubUrl(str)) {
-                        count += importUrlAsSubscription(str)
+                        count += importUrlAsSubscription(str, requestSubscriptionName)
                     }
                 }
             return count
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to parse batch subscription", e)
         }
@@ -604,7 +617,10 @@ object AngConfigManager {
         return count
     }
 
-    private fun importUrlAsSubscription(url: String): Int {
+    private suspend fun importUrlAsSubscription(
+        url: String,
+        requestSubscriptionName: (suspend (String?, Set<String>) -> SubscriptionImportChoice?)?
+    ): Int {
         val subscriptions = MmkvManager.decodeSubscriptions()
         subscriptions.forEach {
             if (it.subscription.url == url) {
@@ -612,9 +628,19 @@ object AngConfigManager {
             }
         }
         val uri = URI(Utils.fixIllegalUrl(url))
+        val (remarks, tabIcon) = if (requestSubscriptionName == null) {
+            (uri.fragment ?: "import sub") to null
+        } else {
+            val choice = requestSubscriptionName(uri.fragment, subscriptions.map { it.subscription.remarks }.toSet())
+                ?: return 0
+            val trimmedName = choice.name.trim().takeIf { it.isNotEmpty() } ?: return 0
+            trimmedName to choice.tabIcon
+        }
+        if (MmkvManager.decodeSubscriptions().any { it.subscription.url == url }) return 0
         val subItem = SubscriptionItem()
-        subItem.remarks = uri.fragment ?: "import sub"
+        subItem.remarks = remarks
         subItem.url = url
+        subItem.tabIcon = tabIcon
         MmkvManager.encodeSubscription("", subItem)
         return 1
     }

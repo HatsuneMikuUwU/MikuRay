@@ -476,6 +476,8 @@
     <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">Подписка успешно импортирована</string>
+    <string name="sub_import_name">Имя подписки</string>
+    <string name="sub_import_default_name">импортированная подписка</string>
     <string name="import_subscription_failure">Ошибка импорта подписки</string>
     <string name="title_fragment_settings">Настройки фрагментации</string>
     <string name="title_pref_fragment_packets">Фрагментация пакетов</string>

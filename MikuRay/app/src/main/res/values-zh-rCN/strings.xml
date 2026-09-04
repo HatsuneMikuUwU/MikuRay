@@ -469,6 +469,8 @@
     <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">订阅导入成功</string>
+    <string name="sub_import_name">订阅名称</string>
+    <string name="sub_import_default_name">导入的订阅</string>
     <string name="import_subscription_failure">导入订阅失败</string>
     <string name="menu_item_add_asset">添加</string>
     <string name="menu_item_add_url">添加链接</string>

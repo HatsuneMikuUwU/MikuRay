@@ -95,6 +95,7 @@ import com.miku.ray.util.SearchChipGradientController
 import com.miku.ray.util.TestProgressDialogController
 import com.miku.ray.util.Utils
 import com.miku.ray.util.getColorAttr
+import com.miku.ray.util.requestSubscriptionImportName
 import com.miku.ray.util.showBlur
 import com.miku.ray.util.showDeleteConfirmDialog
 import com.miku.ray.util.showMikuRayExportPasswordDialog
@@ -1449,7 +1450,13 @@ class MainActivity : HelperBaseActivity(),
         showLoading()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val (count, countSub) = AngConfigManager.importBatchConfig(server, mainViewModel.subscriptionId, true)
+                val (count, countSub) = AngConfigManager.importBatchConfig(
+                    server,
+                    mainViewModel.subscriptionId,
+                    true,
+                ) { suggested, existing ->
+                    requestSubscriptionImportName(suggested, existing)
+                }
                 delay(500L)
                 
                 withContext(Dispatchers.Main) {

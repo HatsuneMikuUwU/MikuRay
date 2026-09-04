@@ -478,6 +478,8 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="test_progress_ping_ms">%dms</string>
 
     <string name="import_subscription_success">Asik, Langganan Berhasil Masuk</string>
+    <string name="sub_import_name">Nama langganan</string>
+    <string name="sub_import_default_name">langganan impor</string>
     <string name="import_subscription_failure">Yah, Impor Langganan Gagal</string>
     <string name="title_fragment_settings">Settingan Fragmen</string>
     <string name="title_pref_fragment_packets">Paket Fragmen</string>

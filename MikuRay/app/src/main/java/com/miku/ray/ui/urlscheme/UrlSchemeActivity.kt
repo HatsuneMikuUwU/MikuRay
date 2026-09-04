@@ -13,6 +13,7 @@ import com.miku.ray.extension.snackbarDefault
 import com.miku.ray.extension.snackbarError
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.util.LogUtil
+import com.miku.ray.util.requestSubscriptionImportName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -75,7 +76,13 @@ class UrlSchemeActivity : BaseActivity() {
             }
             LogUtil.i(AppConfig.TAG, decodedUrl)
             lifecycleScope.launch(Dispatchers.IO) {
-                val (count, countSub) = AngConfigManager.importBatchConfig(decodedUrl, "", false)
+                val (count, countSub) = AngConfigManager.importBatchConfig(
+                    decodedUrl,
+                    "",
+                    false
+                ) { suggested, existing ->
+                    requestSubscriptionImportName(suggested, existing)
+                }
                 withContext(Dispatchers.Main) {
                     if (count + countSub > 0) {
                         snackbarDefault(R.string.import_subscription_success, title = getString(R.string.title_alerter_info))

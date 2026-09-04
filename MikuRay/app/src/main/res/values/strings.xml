@@ -498,6 +498,8 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
 
     <string name="import_subscription_success">Subscription imported Successfully</string>
     <string name="import_subscription_failure">Import subscription failed</string>
+    <string name="sub_import_name">Subscription name</string>
+    <string name="sub_import_default_name">import sub</string>
     <string name="title_fragment_settings">Fragment Settings</string>
     <string name="title_pref_fragment_packets">Fragment Packets</string>
     <string name="title_pref_fragment_length">Fragment Length</string>

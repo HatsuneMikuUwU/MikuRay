@@ -19,6 +19,12 @@ class UtilsTest {
     }
 
     @Test
+    fun test_decode_preserves_plain_subscription_url() {
+        val url = "https://example.com/sub?token=abc==#Miku"
+        assertEquals(url, Utils.decode(url))
+    }
+
+    @Test
     fun test_isIpAddress() {
         assertFalse(Utils.isIpAddress("114.113.112.266"))
         assertFalse(Utils.isIpAddress("666.666.666.666"))

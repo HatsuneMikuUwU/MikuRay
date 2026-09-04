@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:theme="@style/AppThemeAlertDialog"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="48.0dip"
+    android:layout_marginBottom="48.0dip"
+    android:overScrollMode="ifContentScrolls"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingTop="?dialogPreferredPadding"
+        android:paddingRight="?dialogPreferredPadding"
+        android:paddingBottom="0.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="?dialogPreferredPadding"
+        android:paddingEnd="?dialogPreferredPadding">
+        <TextView
+            android:textColor="?colorOnSurfaceVariant"
+            android:id="@android:id/message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16.0dip"
+            android:textAppearance="?textAppearanceBodyMedium"
+            android:visibility="gone" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/subscription_import_input_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@android:id/edit"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/subscription_import_tab_icon_layout"
+            app:shapeAppearance="?shapeAppearanceCornerMedium"
+            app:boxStrokeWidth="1.5dip"
+            app:boxStrokeWidthFocused="1.5dip"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="16.0dip"
+            android:hint="@string/sub_setting_tab_icon"
+            app:startIconDrawable="@drawable/filter_all"
+            app:startIconTint="?attr/colorOnSurfaceVariant"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/rmx_arrows_arrow_drop_down_line"
+            app:helperText="@string/sub_setting_tab_icon_hint">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/subscription_import_tab_icon_edit"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:text="@string/sub_tab_icon_none" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</ScrollView>

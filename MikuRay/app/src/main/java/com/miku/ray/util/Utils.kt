@@ -68,7 +68,15 @@ object Utils {
     }
 
     fun decode(text: String?): String {
-        return tryDecodeBase64(text) ?: text?.trimEnd('=')?.let { tryDecodeBase64(it) }.orEmpty()
+        val value = text?.trim().orEmpty()
+        // A normal subscription URL is valid import input, not a Base64 payload.
+        if (value.startsWith("http://", ignoreCase = true)
+            || value.startsWith("https://", ignoreCase = true)
+            || value.contains("://")
+        ) {
+            return value
+        }
+        return tryDecodeBase64(value) ?: tryDecodeBase64(value.trimEnd('=')).orEmpty()
     }
 
     fun tryDecodeBase64(text: String?): String? {
