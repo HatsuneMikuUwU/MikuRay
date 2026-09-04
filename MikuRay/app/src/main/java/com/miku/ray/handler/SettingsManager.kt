@@ -96,7 +96,9 @@ object SettingsManager {
             return null
         }
 
-        return JsonUtil.fromJsonSafe(assets, Array<RulesetItem>::class.java)?.toMutableList()
+        return JsonUtil.fromJsonSafe(assets, Array<RulesetItem>::class.java)
+            ?.toMutableList()
+            ?.also { ensureRoutingRulesetIds(it) }
     }
 
     fun resetRoutingRulesetsFromPresets(context: Context, index: Int) {
@@ -132,7 +134,30 @@ object SettingsManager {
             // when its exported copy is imported. Different rules remain untouched.
             lockedRulesets.any { locked -> locked.id == imported.id && locked == imported }
         }
-        MmkvManager.encodeRoutingRulesets((lockedRulesets + importedRulesets).toMutableList())
+        val mergedRulesets = (lockedRulesets + importedRulesets).toMutableList()
+        ensureRoutingRulesetIds(mergedRulesets)
+        MmkvManager.encodeRoutingRulesets(mergedRulesets)
+    }
+
+    /** Ensures every ruleset has a non-blank, unique ID before entering an ID-keyed flow. */
+    fun ensureRoutingRulesetIds(rulesetList: MutableList<RulesetItem>): Boolean {
+        val usedIds = HashSet<String>(rulesetList.size)
+        var changed = false
+        rulesetList.forEach { ruleset ->
+            val currentId = ruleset.id.trim()
+            if (currentId.isEmpty() || !usedIds.add(currentId)) {
+                var replacement: String
+                do {
+                    replacement = Utils.getUuid()
+                } while (!usedIds.add(replacement))
+                ruleset.id = replacement
+                changed = true
+            } else if (ruleset.id != currentId) {
+                ruleset.id = currentId
+                changed = true
+            }
+        }
+        return changed
     }
 
     /** Returns a routing ruleset by its stable ID. */

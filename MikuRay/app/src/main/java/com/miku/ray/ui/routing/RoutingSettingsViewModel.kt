@@ -11,8 +11,13 @@ class RoutingSettingsViewModel : ViewModel() {
     fun getAll(): List<RulesetItem> = rulesets.toList()
 
     fun reload() {
+        val loaded = MmkvManager.decodeRoutingRulesets() ?: mutableListOf()
+        // Repair legacy/imported IDs in one write before exposing them as RecyclerView keys.
+        if (SettingsManager.ensureRoutingRulesetIds(loaded)) {
+            MmkvManager.encodeRoutingRulesets(loaded)
+        }
         rulesets.clear()
-        rulesets.addAll(MmkvManager.decodeRoutingRulesets() ?: mutableListOf())
+        rulesets.addAll(loaded)
     }
 
     fun update(position: Int, item: RulesetItem) {
@@ -36,8 +41,9 @@ class RoutingSettingsViewModel : ViewModel() {
 
     fun swap(fromPosition: Int, toPosition: Int) {
         if (fromPosition in rulesets.indices && toPosition in rulesets.indices) {
+            val item = rulesets.removeAt(fromPosition)
+            rulesets.add(toPosition, item)
             SettingsManager.swapRoutingRuleset(fromPosition, toPosition)
         }
     }
 }
-
