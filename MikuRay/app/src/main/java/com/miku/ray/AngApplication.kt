@@ -4,9 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Bundle
 import android.os.Build
-import android.os.Process
+import android.os.Bundle
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.miku.ray.AppConfig
@@ -58,28 +57,10 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
         MmkvManager.initialize(this)
         SettingsManager.initApp(this)
 
-        // Probe and subscription-update services intentionally run in disposable
-        // processes. UI lifecycle tracking and WorkManager belong to the main/
-        // background process and can prevent those services from starting cleanly.
-        if (!isDisposableProcess()) {
-            ForegroundActivityTracker.register(this)
-            registerActivityLifecycleCallbacks(this)
-            WorkManager.initialize(this, workManagerConfiguration)
-            SettingsManager.setNightMode()
-        }
-    }
-
-    private fun isDisposableProcess(): Boolean {
-        val processName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            Application.getProcessName()
-        } else {
-            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as? android.app.ActivityManager
-            activityManager?.runningAppProcesses
-                ?.firstOrNull { it.pid == Process.myPid() }
-                ?.processName
-                .orEmpty()
-        }
-        return processName.endsWith(":Probe") || processName.endsWith(":SubscriptionUpdate")
+        ForegroundActivityTracker.register(this)
+        registerActivityLifecycleCallbacks(this)
+        WorkManager.initialize(this, workManagerConfiguration)
+        SettingsManager.setNightMode()
     }
 
     /**
