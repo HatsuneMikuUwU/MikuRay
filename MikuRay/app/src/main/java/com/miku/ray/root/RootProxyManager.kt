@@ -162,7 +162,7 @@ object RootProxyManager {
         val udpAddress = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_UDP_ADDRESS)
         val pipeline = MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_PIPELINE, false)
         val tcpFastOpen = MmkvManager.decodeSettingsBool(AppConfig.PREF_HEV_TUNNEL_TCP_FASTOPEN, true)
-        val logLevel = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL) ?: "warn"
+        val logLevel = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_LOGLEVEL, AppConfig.DEFAULT_HEV_TUNNEL_LOGLEVEL)
         return buildString {
             appendLine("tunnel:")
             appendLine("  name: '$TUN'")
