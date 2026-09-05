@@ -816,7 +816,7 @@ object MmkvManager {
         return if (json.isNullOrBlank()) {
             mutableListOf()
         } else {
-            JsonUtil.fromJsonSafe(json, Array<String>::class.java)?.toMutableList() ?: mutableListOf()
+            JsonUtil.fromJsonSafe(json, Array<String>::class.java)?.distinct()?.toMutableList() ?: mutableListOf()
         }
     }
 
