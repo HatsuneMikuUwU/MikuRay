@@ -15,6 +15,13 @@
             android:summary="@string/summary_pref_is_booted"
             android:title="@string/title_pref_is_booted" />
 
+        <Preference
+            android:icon="@drawable/rmx_flashlight_line"
+            android:key="pref_system_vpn_settings"
+            android:summary="@string/summary_system_vpn_settings"
+            android:title="@string/title_system_vpn_settings"
+            app:layout="@layout/uwu_mid" />
+
         <EditTextPreference
             android:icon="@drawable/rmx_external_link_line"
             app:dialogIcon="@drawable/rmx_external_link_line"

@@ -186,8 +186,11 @@
     <string name="title_vpn_settings">Настройки VPN</string>
     <string name="title_pref_per_app_proxy">Прокси для каждого приложения</string>
     <string name="summary_pref_per_app_proxy">Обычный режим: отмеченные приложения используют прокси, неотмеченные подключаются напрямую; \nРежим обхода: отмеченные подключаются напрямую, неотмеченные используют прокси. \nАвтовыбор приложений — в меню</string>
-    <string name="title_pref_is_booted">Автоподключение при запуске</string>
-    <string name="summary_pref_is_booted">Автоматически подключается к выбранному серверу при запуске (может не сработать)</string>
+    <string name="title_pref_is_booted">Подключаться после загрузки устройства</string>
+    <string name="summary_pref_is_booted">Автоматически подключаться к выбранному серверу после запуска устройства. Android может ограничивать запуск в фоновом режиме.</string>
+    <string name="title_system_vpn_settings">Системные настройки VPN</string>
+    <string name="summary_system_vpn_settings">Откройте настройки VPN Android, чтобы настроить постоянный VPN, если это поддерживается устройством.</string>
+    <string name="toast_system_vpn_settings_unavailable">Системные настройки VPN недоступны.</string>
 
     <string name="subscription_updater_job_tips">Задача будет выполняться в фоновом режиме, информация о прогрессе будет отображаться в уведомлении.</string>
     <string name="summary_pref_update_subscription">Выключите, чтобы пропустить повторную загрузку подписки и только тестировать/сортировать существующие серверы.</string>

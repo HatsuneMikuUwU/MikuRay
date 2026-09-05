@@ -186,8 +186,11 @@
     <string name="title_vpn_settings">Settingan VPN</string>
     <string name="title_pref_per_app_proxy">Proxy per-aplikasi</string>
     <string name="summary_pref_per_app_proxy">Umum: App yang dicentang pake proxy, yang nggak langsung konek asli; \nMode Bypass: App yang dicentang konek asli, yang nggak pake proxy. \nPilihan buat milih otomatis ada di menu yak</string>
-    <string name="title_pref_is_booted">Auto-konek pas HP nyala</string>
-    <string name="summary_pref_is_booted">Langsung nyambungin ke server pas HP baru nyala, tapi kadang bisa gagal sih</string>
+    <string name="title_pref_is_booted">Konek setelah perangkat nyala</string>
+    <string name="summary_pref_is_booted">Nyambung otomatis ke server yang dipilih setelah perangkat nyala. Android mungkin ngebatesin proses mulai di background.</string>
+    <string name="title_system_vpn_settings">Settingan VPN Sistem</string>
+    <string name="summary_system_vpn_settings">Buka settingan VPN Android buat atur Always-on VPN, kalau didukung sama perangkat ini.</string>
+    <string name="toast_system_vpn_settings_unavailable">Settingan VPN sistem nggak tersedia.</string>
 
     <string name="subscription_updater_job_tips">Tugas bakal jalan di background, progressnya bisa dipantau lewat notifikasi.</string>
     <string name="summary_pref_update_subscription">Matiin biar cuma tes/sortir server yang udah ada, tanpa narik ulang konten langganan.</string>

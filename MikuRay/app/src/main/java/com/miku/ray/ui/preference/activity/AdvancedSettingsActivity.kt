@@ -1,9 +1,13 @@
 package com.miku.ray.ui.preference.activity
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.miku.ray.AppConfig
@@ -11,7 +15,9 @@ import com.miku.ray.R
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.helper.MmkvPreferenceDataStore
+import com.miku.ray.util.LogUtil
 import com.miku.ray.util.Utils
+import com.miku.ray.extension.toastError
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.ui.preference.SearchPreferenceHighlighter
 import com.miku.ray.ui.preference.CategoryStyleHelper
@@ -33,6 +39,7 @@ class AdvancedSettingsActivity : BaseActivity() {
 
     class AdvancedSettingsFragment : PreferenceFragmentCompat() {
 
+        private val systemVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_SYSTEM_VPN_SETTINGS) }
         private val mode by lazy { findPreference<ListPreference>(AppConfig.PREF_MODE) }
         private val ipApiUrl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_IP_API_URL) }
         private val realPingConcurrency by lazy { findPreference<EditTextPreference>(AppConfig.PREF_REAL_PING_CONCURRENCY) }
@@ -41,6 +48,10 @@ class AdvancedSettingsActivity : BaseActivity() {
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_advanced_settings)
+            systemVpnSettings?.setOnPreferenceClickListener {
+                openSystemVpnSettings()
+                true
+            }
             initPreferenceSummaries()
             CategoryStyleHelper.applyToFragment(this)
 
@@ -77,6 +88,27 @@ class AdvancedSettingsActivity : BaseActivity() {
                     getString(R.string.title_pref_show_realtime_traffic_ip)
                 )
             }
+        }
+
+        override fun onResume() {
+            super.onResume()
+            systemVpnSettings?.isVisible = Intent(Settings.ACTION_VPN_SETTINGS)
+                .resolveActivity(requireContext().packageManager) != null
+        }
+
+        private fun openSystemVpnSettings() {
+            try {
+                startActivity(Intent(Settings.ACTION_VPN_SETTINGS))
+            } catch (error: ActivityNotFoundException) {
+                reportSystemVpnSettingsFailure(error)
+            } catch (error: SecurityException) {
+                reportSystemVpnSettingsFailure(error)
+            }
+        }
+
+        private fun reportSystemVpnSettingsFailure(error: RuntimeException) {
+            LogUtil.e(AppConfig.TAG, "Cannot open system VPN settings", error)
+            activity?.toastError(R.string.toast_system_vpn_settings_unavailable)
         }
 
         override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
