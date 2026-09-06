@@ -4,6 +4,7 @@ import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.Manifest
 import android.content.Intent
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -1488,7 +1489,7 @@ class UiSettingsActivity : BaseActivity() {
             deleteHomeBannerImageAction?.isEnabled = !isDisableHomeBanner
 
             val savedDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
-            val systemDpi = resources.displayMetrics.densityDpi
+            val systemDpi = Resources.getSystem().displayMetrics.densityDpi
             val currentDpi = if (savedDpi > 0) savedDpi else systemDpi
             val currentPercent = (currentDpi * 100f / systemDpi / 5f).roundToInt() * 5
             customDpi?.summary = "$currentPercent%"
