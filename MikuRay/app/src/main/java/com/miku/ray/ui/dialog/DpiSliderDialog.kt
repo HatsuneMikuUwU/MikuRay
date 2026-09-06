@@ -14,6 +14,7 @@ import com.google.android.material.slider.Slider
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.util.WindowBlurUtils
 import kotlin.math.roundToInt
 
@@ -59,6 +60,7 @@ class DpiSliderDialog @JvmOverloads constructor(
             summary = "$percent%"
 
             activity.recreate()
+            BaseActivity.recreateOthersInBackground(except = activity)
         }
         .setNeutralButton(R.string.reset, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -75,6 +77,7 @@ class DpiSliderDialog @JvmOverloads constructor(
 
             dialog.dismiss()
             activity.recreate()
+            BaseActivity.recreateOthersInBackground(except = activity)
         }
     }
 }

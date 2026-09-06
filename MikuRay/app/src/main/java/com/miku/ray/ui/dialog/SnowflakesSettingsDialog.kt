@@ -1,8 +1,6 @@
 package com.miku.ray.ui.dialog
 
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -21,15 +19,6 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : Preference(context, attrs) {
-
-    private fun Context.findActivity(): Activity? {
-        var ctx = this
-        while (ctx is ContextWrapper) {
-            if (ctx is Activity) return ctx
-            ctx = ctx.baseContext
-        }
-        return null
-    }
 
     private fun format(value: Float): String = String.format(Locale.US, "%.2f", value)
     private fun formatPercent(value: Float): String = "${(value * 100f).toInt()}%"
@@ -58,7 +47,6 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
     }
 
     override fun onClick() {
-        val activity = context.findActivity() ?: return
         val current = values()
         val dialogView = LayoutInflater.from(context)
         .inflate(R.layout.dialog_snowflakes_settings, null)
@@ -107,7 +95,6 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_WIND, windSlider.value)
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_LIFE, lifeSlider.value)
             updateSummary()
-            activity.recreate()
         }
         .setNeutralButton(R.string.reset, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -123,7 +110,6 @@ class SnowflakesSettingsDialog @JvmOverloads constructor(
             MmkvManager.encodeSettings(AppConfig.PREF_SNOWFLAKES_LIFE, AppConfig.SNOWFLAKES_LIFE_DEFAULT)
             updateSummary()
             dialog.dismiss()
-            activity.recreate()
         }
     }
 
