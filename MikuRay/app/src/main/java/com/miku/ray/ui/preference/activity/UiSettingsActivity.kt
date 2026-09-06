@@ -1489,7 +1489,9 @@ class UiSettingsActivity : BaseActivity() {
 
             val savedDpi = MmkvManager.decodeSettingsInt(AppConfig.PREF_CUSTOM_DPI, 0)
             val systemDpi = resources.displayMetrics.densityDpi
-            customDpi?.summary = if (savedDpi > 0) savedDpi.toString() else systemDpi.toString()
+            val currentDpi = if (savedDpi > 0) savedDpi else systemDpi
+            val currentPercent = (currentDpi * 100f / systemDpi / 5f).roundToInt() * 5
+            customDpi?.summary = "$currentPercent%"
 
             val savedFontSize = MmkvManager.decodeSettingsFloat(AppConfig.PREF_APP_FONT_SIZE, AppConfig.FONT_SIZE_DEFAULT)
             fontSizeSlider?.summary = "${(savedFontSize * 100f).roundToInt()}%"
