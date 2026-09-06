@@ -12,9 +12,9 @@
         android:id="@+id/slider_dpi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stepSize="1.0"
-        android:valueFrom="160"
-        android:valueTo="640"
+        android:stepSize="5.0"
+        android:valueFrom="75"
+        android:valueTo="125"
         app:labelBehavior="floating"
         app:tickVisibilityMode="hidden" />
 
