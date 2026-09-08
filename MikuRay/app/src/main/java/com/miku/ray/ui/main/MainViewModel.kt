@@ -24,7 +24,6 @@ import com.miku.ray.dto.RealPingSummary
 import com.miku.ray.dto.TestProgressInfo
 import com.miku.ray.ui.bottomsheet.SortSubBottomSheet
 import com.miku.ray.dto.TestServiceMessage
-import com.miku.ray.extension.delay
 import com.miku.ray.extension.isComplexType
 import com.miku.ray.extension.matchesPattern
 import com.miku.ray.extension.serializable
@@ -58,9 +57,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var pendingServerRestartGuid: String? = null
     private var reloadJob: Job? = null
     private var receiverRegistered = false
-    private var stateSyncJob: Job? = null
-    @Volatile
-    private var stateSyncAcked = false
     @Volatile
     private var serverCacheLoaded = false
     val serversCache = mutableListOf<ServersCache>()
@@ -96,27 +92,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
             receiverRegistered = true
         }
-        resyncState()
+        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     fun resyncState() {
-        stateSyncAcked = false
-        stateSyncJob?.cancel()
-        stateSyncJob = viewModelScope.launch {
-            val retryDelaysMs = longArrayOf(300L, 600L, 1_200L, 2_000L, 3_000L)
-            MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
-            for (delayMs in retryDelaysMs) {
-                delay(delayMs)
-                if (stateSyncAcked) return@launch
-                LogUtil.w(AppConfig.TAG, "MainViewModel: No state reply from service yet, retrying register")
-                MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
-            }
-        }
+
+        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     override fun onCleared() {
         reloadJob?.cancel()
-        stateSyncJob?.cancel()
         if (receiverRegistered) {
             try {
                 getApplication<AngApplication>().unregisterReceiver(mMsgReceiver)
@@ -679,25 +664,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mMsgReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
-            val key = intent?.getIntExtra("key", 0)
-            if (key != null && key in intArrayOf(
-                    AppConfig.MSG_STATE_RUNNING,
-                    AppConfig.MSG_STATE_NOT_RUNNING,
-                    AppConfig.MSG_STATE_START_SUCCESS,
-                    AppConfig.MSG_STATE_START_FAILURE,
-                    AppConfig.MSG_STATE_STOP_SUCCESS,
-                    AppConfig.MSG_STATE_RESTART,
-            )) {
-                stateSyncAcked = true
-                stateSyncJob?.cancel()
-            }
-
-            when (key) {
+            when (intent?.getIntExtra("key", 0)) {
                 AppConfig.MSG_STATE_RUNNING -> {
                     if (!isRestarting) {
-                        if (isRunning.value != true) {
-                            isRunning.value = true
-                        }
+                        isRunning.value = true
 
                         updateListAction.postValue(-1)
                     }
@@ -706,9 +676,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 AppConfig.MSG_STATE_NOT_RUNNING -> {
                     if (!isRestarting) {
                         markConnectionStopped()
-                        if (isRunning.value != false) {
-                            isRunning.value = false
-                        }
+                        isRunning.value = false
                         updateListAction.postValue(-1)
                     }
                 }
