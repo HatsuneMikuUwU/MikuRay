@@ -16,6 +16,7 @@ import com.miku.ray.dto.entities.SubscriptionCache
 import com.miku.ray.dto.entities.SubscriptionItem
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.isNotNullEmpty
+import com.miku.ray.fmt.ClashMetaFmt
 import com.miku.ray.fmt.CustomFmt
 import com.miku.ray.fmt.Hysteria2Fmt
 import com.miku.ray.fmt.ShadowsocksFmt
@@ -154,7 +155,13 @@ object AngConfigManager {
         return try {
             val decodedServer = Utils.decode(server)
 
-            var count = parseSIP008Config(decodedServer, subid, append)
+            var count = parseClashMetaConfig(decodedServer, subid, append)
+            if (count <= 0) {
+                count = parseClashMetaConfig(server, subid, append)
+            }
+            if (count <= 0) {
+                count = parseSIP008Config(decodedServer, subid, append)
+            }
             if (count <= 0) {
                 count = parseSIP008Config(server, subid, append)
             }
@@ -589,7 +596,13 @@ object AngConfigManager {
     }
 
     private fun parseConfigViaSub(server: String?, subid: String, append: Boolean): Int {
-        var count = parseSIP008Config(Utils.decode(server), subid, append)
+        var count = parseClashMetaConfig(Utils.decode(server), subid, append)
+        if (count <= 0) {
+            count = parseClashMetaConfig(server, subid, append)
+        }
+        if (count <= 0) {
+            count = parseSIP008Config(Utils.decode(server), subid, append)
+        }
         if (count <= 0) {
             count = parseSIP008Config(server, subid, append)
         }
@@ -603,6 +616,23 @@ object AngConfigManager {
             count = parseCustomConfigServer(server, subid, append)
         }
         return count
+    }
+
+    private fun parseClashMetaConfig(server: String?, subid: String, append: Boolean): Int {
+        if (server.isNullOrBlank() || !server.contains("proxies:")) return 0
+        return try {
+            val subItem = MmkvManager.decodeSubscription(subid)
+            val configs = ClashMetaFmt.parse(server, subid)
+                .filter { matchesSubscriptionFilters(it, subItem) }
+                .map(::ParsedProfile)
+            if (configs.isNotEmpty()) commitProfiles(configs, subid, append)
+            configs.size
+        } catch (e: ProfileStorageException) {
+            throw e
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to parse ClashMeta YAML subscription", e)
+            0
+        }
     }
 
     private suspend fun importUrlAsSubscription(

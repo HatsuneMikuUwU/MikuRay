@@ -211,6 +211,7 @@ dependencies {
     implementation(libs.mmkv.static)
     implementation(libs.timber)
     implementation(libs.gson)
+    implementation(libs.snakeyaml)
     implementation(libs.okhttp)
 
     // Reactive and Utility Libraries
