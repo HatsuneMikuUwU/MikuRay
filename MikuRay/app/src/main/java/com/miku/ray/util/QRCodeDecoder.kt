@@ -15,7 +15,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import java.util.EnumMap
 
 object QRCodeDecoder {
-    private val hints: Map<DecodeHintType, Any?> = EnumMap<DecodeHintType, Any?>().apply {
+    private val hints: Map<DecodeHintType, Any?> = EnumMap<DecodeHintType, Any?>(DecodeHintType::class.java).apply {
         this[DecodeHintType.TRY_HARDER] = true
         this[DecodeHintType.POSSIBLE_FORMATS] = listOf(BarcodeFormat.QR_CODE)
         this[DecodeHintType.CHARACTER_SET] = Charsets.UTF_8.name()

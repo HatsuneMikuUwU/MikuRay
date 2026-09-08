@@ -55,3 +55,11 @@
 -keepattributes *Annotation*
 -keepattributes Signature
 -keepattributes Exceptions, InnerClasses
+
+# SnakeYAML references java.beans.* (Introspector, PropertyDescriptor, etc.)
+# for optional JavaBean-style introspection. These classes don't exist on
+# Android and the code path is never exercised, so silence R8's missing-class
+# errors instead of trying to keep classes that can't be provided.
+-dontwarn java.beans.**
+-keep class org.yaml.snakeyaml.** { *; }
+-dontwarn org.yaml.snakeyaml.**
