@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.ParcelFileDescriptor
 import com.miku.ray.AppConfig
 import com.miku.ray.contracts.Tun2SocksControl
+import com.miku.ray.extension.delay
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.util.LogUtil
@@ -11,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.io.File

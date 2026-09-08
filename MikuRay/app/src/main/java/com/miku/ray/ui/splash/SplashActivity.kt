@@ -12,10 +12,10 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.miku.ray.AppConfig.PREF_SHOW_SPLASH
 import com.miku.ray.R
+import com.miku.ray.extension.delay
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.util.AppNameHelper
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : BaseActivity() {

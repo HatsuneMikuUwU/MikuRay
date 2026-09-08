@@ -50,6 +50,7 @@ import com.miku.ray.databinding.ItemQrcodeBinding
 import com.miku.ray.dto.entities.MikuRayExportPayload
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.enums.PermissionType
+import com.miku.ray.extension.delay
 import com.miku.ray.extension.snackbarDefault
 import com.miku.ray.extension.snackbarError
 import com.miku.ray.extension.snackbarSuccess
@@ -104,7 +105,6 @@ import com.miku.ray.util.showSubUpdateDiffDialog
 import com.miku.ray.util.showTotalTrafficDetailDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

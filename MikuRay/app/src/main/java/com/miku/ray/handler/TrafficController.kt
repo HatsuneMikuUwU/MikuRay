@@ -4,6 +4,7 @@ import android.app.Service
 import com.miku.ray.AppConfig
 import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.core.CoreServiceManager
+import com.miku.ray.extension.delay
 import com.miku.ray.extension.toSpeedString
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
@@ -11,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
