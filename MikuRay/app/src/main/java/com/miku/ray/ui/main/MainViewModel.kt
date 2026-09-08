@@ -36,6 +36,7 @@ import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +58,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var pendingServerRestartGuid: String? = null
     private var reloadJob: Job? = null
     private var receiverRegistered = false
+    private var stateSyncJob: Job? = null
+    @Volatile
+    private var stateSyncAcked = false
     @Volatile
     private var serverCacheLoaded = false
     val serversCache = mutableListOf<ServersCache>()
@@ -92,16 +96,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
             receiverRegistered = true
         }
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+        resyncState()
     }
 
     fun resyncState() {
-
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+        stateSyncAcked = false
+        stateSyncJob?.cancel()
+        stateSyncJob = viewModelScope.launch {
+            val retryDelaysMs = longArrayOf(300L, 600L, 1_200L, 2_000L, 3_000L)
+            MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+            for (delayMs in retryDelaysMs) {
+                delay(delayMs)
+                if (stateSyncAcked) return@launch
+                LogUtil.w(AppConfig.TAG, "MainViewModel: No state reply from service yet, retrying register")
+                MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+            }
+        }
     }
 
     override fun onCleared() {
         reloadJob?.cancel()
+        stateSyncJob?.cancel()
         if (receiverRegistered) {
             try {
                 getApplication<AngApplication>().unregisterReceiver(mMsgReceiver)
@@ -664,10 +679,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mMsgReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
-            when (intent?.getIntExtra("key", 0)) {
+            val key = intent?.getIntExtra("key", 0)
+            // Any of these mean the :daemon service process is alive and has answered our
+            // MSG_REGISTER_CLIENT (directly or indirectly) - stop the resyncState() retry loop.
+            if (key != null && key in intArrayOf(
+                    AppConfig.MSG_STATE_RUNNING,
+                    AppConfig.MSG_STATE_NOT_RUNNING,
+                    AppConfig.MSG_STATE_START_SUCCESS,
+                    AppConfig.MSG_STATE_START_FAILURE,
+                    AppConfig.MSG_STATE_STOP_SUCCESS,
+                    AppConfig.MSG_STATE_RESTART,
+            )) {
+                stateSyncAcked = true
+                stateSyncJob?.cancel()
+            }
+
+            when (key) {
                 AppConfig.MSG_STATE_RUNNING -> {
                     if (!isRestarting) {
-                        isRunning.value = true
+                        // Only publish a change if the value actually flipped. isRunning is a
+                        // plain MutableLiveData, so calling .value = true repeatedly (e.g. every
+                        // time the client re-registers with the service in onResume) re-notifies
+                        // observers even when nothing changed, which was retriggering the
+                        // "already connected" UI state churn on every resume.
+                        if (isRunning.value != true) {
+                            isRunning.value = true
+                        }
 
                         updateListAction.postValue(-1)
                     }
@@ -676,7 +713,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 AppConfig.MSG_STATE_NOT_RUNNING -> {
                     if (!isRestarting) {
                         markConnectionStopped()
-                        isRunning.value = false
+                        if (isRunning.value != false) {
+                            isRunning.value = false
+                        }
                         updateListAction.postValue(-1)
                     }
                 }
