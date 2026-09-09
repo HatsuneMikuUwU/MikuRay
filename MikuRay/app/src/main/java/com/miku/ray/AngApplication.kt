@@ -16,10 +16,7 @@ import com.miku.ray.handler.SettingsManager
 import com.miku.ray.util.ThemeManager
 import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.AppFontResolver
-import com.miku.ray.util.MikuRayLogTree
-import com.miku.ray.crashreporter.CrashReporter
-import com.miku.ray.crashreporter.CrashReporterConfiguration
-import timber.log.Timber
+import com.miku.ray.util.CrashHandler
 
 class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
     companion object {
@@ -45,15 +42,8 @@ class AngApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
         super.onCreate()
-        CrashReporter.initialize(
-            this,
-            CrashReporterConfiguration()
-            .setMaxNumberOfCrashToBeReport(5)
-            .setCrashReportSubjectForEmail("MikuRay Crash Report")
-            .setExtraInformation("MikuRay ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-        )
+        CrashHandler.install()
 
-        Timber.plant(MikuRayLogTree())
         MmkvManager.initialize(this)
         SettingsManager.initApp(this)
 

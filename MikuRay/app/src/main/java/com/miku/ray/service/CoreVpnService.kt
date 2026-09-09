@@ -9,7 +9,6 @@ import android.net.Network
 import android.net.ProxyInfo
 import android.net.VpnService
 import android.os.Build
-import android.content.ComponentCallbacks2
 import android.os.ParcelFileDescriptor
 import android.os.PowerManager
 import android.os.Process
@@ -25,7 +24,6 @@ import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.TrafficController
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.root.RootLanSharing
-import com.miku.ray.util.InProcessLogBuffer
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.MyContextWrapper
@@ -59,34 +57,6 @@ class CoreVpnService : VpnService(), ServiceControl {
             Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND)
         } catch (e: Exception) {
             LogUtil.w(AppConfig.TAG, "StartCore-VPN: Failed to raise thread priority", e)
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    override fun onTrimMemory(level: Int) {
-        super.onTrimMemory(level)
-        LogUtil.w(AppConfig.TAG, "StartCore-VPN: onTrimMemory level=$level")
-        when {
-            level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
-                LogUtil.w(AppConfig.TAG, "StartCore-VPN: Memory is COMPLETE (critically low), trimming buffers to prevent kill")
-                InProcessLogBuffer.trim()
-                if (isRunning) {
-                    NotificationManager.ensureForeground()
-                }
-            }
-            level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
-                LogUtil.w(AppConfig.TAG, "StartCore-VPN: App in BACKGROUND with low memory, trimming buffers")
-                InProcessLogBuffer.trim()
-            }
-        }
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        LogUtil.w(AppConfig.TAG, "StartCore-VPN: onLowMemory - system is critically low on memory")
-        InProcessLogBuffer.trim()
-        if (isRunning) {
-            NotificationManager.ensureForeground()
         }
     }
 

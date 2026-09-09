@@ -1,25 +1,75 @@
 package com.miku.ray.util
 
+import android.util.Log
 import com.miku.ray.AppConfig
-import timber.log.Timber
+import com.miku.ray.handler.MmkvManager
+import java.util.Locale
 
 object LogUtil {
 
     const val TAG_CORE = "XrayCore"
 
+    private const val DEFAULT_LEVEL = "warning"
+    private const val CACHE_UNSET = Int.MIN_VALUE
+
+    @Volatile
+    private var cachedMinPriority: Int = CACHE_UNSET
+
+    private fun parsePriority(level: String?): Int {
+        return when ((level ?: DEFAULT_LEVEL).lowercase(Locale.US)) {
+            "verbose" -> LogPriority.VERBOSE
+            "debug" -> LogPriority.DEBUG
+            "info" -> LogPriority.INFO
+            "warn", "warning" -> LogPriority.WARN
+            "error" -> LogPriority.ERROR
+            "none", "off" -> Int.MAX_VALUE
+            else -> LogPriority.WARN
+        }
+    }
+
     @Suppress("unused")
-    fun refreshLogLevel() = MikuRayLogTree.refreshLogLevel()
+    fun refreshLogLevel() {
+        cachedMinPriority = parsePriority(MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL, DEFAULT_LEVEL))
+    }
 
-    fun v(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).v(message)
-    fun d(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).d(message)
-    fun i(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).i(message)
-    fun w(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).w(message)
-    fun e(tag: String = AppConfig.TAG, message: String) = Timber.tag(tag).e(message)
+    private fun minPriority(): Int {
+        val cached = cachedMinPriority
+        if (cached != CACHE_UNSET) return cached
 
-    fun d(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).d(throwable, message)
-    fun i(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).i(throwable, message)
-    fun w(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).w(throwable, message)
-    fun e(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = Timber.tag(tag).e(throwable, message)
+        return synchronized(this) {
+            val current = cachedMinPriority
+            if (current != CACHE_UNSET) {
+                current
+            } else {
+                parsePriority(MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL, DEFAULT_LEVEL)).also {
+                    cachedMinPriority = it
+                }
+            }
+        }
+    }
+
+    private fun log(priority: Int, tag: String, message: String, throwable: Throwable? = null) {
+        val fullMessage = if (throwable != null) "$message\n${throwable.stackTraceToString()}" else message
+
+        // Buffered unconditionally (matches the old MikuRayLogTree behavior),
+        // so LogcatActivity always has the full history regardless of PREF_LOGLEVEL.
+        InProcessLogBuffer.append(priority, tag, fullMessage)
+
+        if (priority >= minPriority()) {
+            Log.println(priority, tag, fullMessage)
+        }
+    }
+
+    fun v(tag: String = AppConfig.TAG, message: String) = log(LogPriority.VERBOSE, tag, message)
+    fun d(tag: String = AppConfig.TAG, message: String) = log(LogPriority.DEBUG, tag, message)
+    fun i(tag: String = AppConfig.TAG, message: String) = log(LogPriority.INFO, tag, message)
+    fun w(tag: String = AppConfig.TAG, message: String) = log(LogPriority.WARN, tag, message)
+    fun e(tag: String = AppConfig.TAG, message: String) = log(LogPriority.ERROR, tag, message)
+
+    fun d(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(LogPriority.DEBUG, tag, message, throwable)
+    fun i(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(LogPriority.INFO, tag, message, throwable)
+    fun w(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(LogPriority.WARN, tag, message, throwable)
+    fun e(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(LogPriority.ERROR, tag, message, throwable)
 
     fun core(levelHint: Long, message: String?) {
         if (message.isNullOrEmpty()) return

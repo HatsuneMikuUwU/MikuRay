@@ -2995,11 +2995,6 @@
 
         <activity
             android:exported="false"
-            android:name=".ui.crashlog.CrashLogActivity"
-            android:theme="@style/AppThemeBase" />
-
-        <activity
-            android:exported="false"
             android:name=".ui.server.ServerVmessActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity

@@ -7,7 +7,6 @@ import java.util.LinkedList
 import java.util.Locale
 
 object InProcessLogBuffer {
-    private const val MAX_ENTRIES = 5000
     private val buffer: LinkedList<String> = LinkedList()
     private val fmt = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.US)
 
@@ -16,7 +15,6 @@ object InProcessLogBuffer {
         val level = LogPriority.levelChar(priority)
         val threadName = Thread.currentThread().name
         val line = "${fmt.format(Date())} $level/$tag(${Process.myPid()}/$threadName): $message"
-        if (buffer.size >= MAX_ENTRIES) buffer.removeFirst()
         buffer.addLast(line)
     }
 
@@ -25,11 +23,4 @@ object InProcessLogBuffer {
 
     @Synchronized
     fun clear() = buffer.clear()
-
-    @Synchronized
-    fun trim(keep: Int = 200) {
-        while (buffer.size > keep) {
-            buffer.removeFirst()
-        }
-    }
 }
