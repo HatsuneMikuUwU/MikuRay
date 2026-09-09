@@ -745,7 +745,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         binding.viewPager.apply {
             adapter = groupPagerAdapter
             isUserInputEnabled = true
-            offscreenPageLimit = 10
         }
     }
 
@@ -1133,6 +1132,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
                 groupPagerAdapter.groups.map { it.remarks } == groups.map { it.remarks }
 
                 groupPagerAdapter.update(groups)
+                binding.viewPager.offscreenPageLimit = groups.size.coerceAtLeast(1)
 
                 if (structureUnchanged && binding.tabGroup.tabCount == groups.size) {
                     refreshTabBadges()

@@ -36,6 +36,7 @@ import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,8 +48,10 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.regex.PatternSyntaxException
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val mainRepository = MainRepository(getApplication())
+    private var mainServiceEventJob: Job? = null
     private var serverList = mutableListOf<String>()
-    var subscriptionId: String = MmkvManager.decodeSettingsString(AppConfig.CACHE_SUBSCRIPTION_ID, "").orEmpty()
+    var subscriptionId: String = mainRepository.getSelectedSubscriptionId()
     var keywordFilter = ""
     private var activeTestId: String? = null
     private var activeTestCompleted = 0
@@ -87,21 +90,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startListenBroadcast() {
+        if (mainServiceEventJob == null) {
+            mainServiceEventJob = viewModelScope.launch {
+                mainRepository.mainServiceEvent.collectLatest(::onMainServiceEvent)
+            }
+        }
         if (!receiverRegistered) {
             val mFilter = IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY)
             ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
             receiverRegistered = true
         }
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+        mainRepository.sendMsg2Service(AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     fun resyncState() {
 
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")
+        mainRepository.sendMsg2Service(AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     override fun onCleared() {
         reloadJob?.cancel()
+        mainServiceEventJob?.cancel()
+        mainRepository.close()
         if (receiverRegistered) {
             try {
                 getApplication<AngApplication>().unregisterReceiver(mMsgReceiver)
@@ -276,10 +286,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateConfigViaSubAll(): SubscriptionUpdateResult {
         if (subscriptionId.isEmpty()) {
-            return AngConfigManager.updateConfigViaSubAll()
+            return mainRepository.updateConfigViaSubAll()
         } else {
             val subItem = MmkvManager.decodeSubscription(subscriptionId) ?: return SubscriptionUpdateResult()
-            return AngConfigManager.updateConfigViaSub(SubscriptionCache(subscriptionId, subItem))
+            return mainRepository.updateConfigViaSub(SubscriptionCache(subscriptionId, subItem))
         }
     }
 
@@ -291,11 +301,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             serversCache.map { it.guid }.toList()
         }
 
-        val ret = AngConfigManager.shareNonCustomConfigsToClipboard(
-            getApplication<AngApplication>(),
-            serverListCopy
-        )
-        return ret
+        return mainRepository.shareNonCustomConfigsToClipboard(serverListCopy)
     }
 
     fun testAllRealPing(onlyTcp: Boolean = false) {
@@ -320,8 +326,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 return@launch
             }
-            MessageUtil.sendMsg2TestService(
-                getApplication(),
+            mainRepository.sendMsg2TestService(
                 TestServiceMessage(
                     key = AppConfig.MSG_MEASURE_CONFIG_START,
                     testId = testId,
@@ -334,8 +339,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun testAllCountryCodes() {
-        MessageUtil.sendMsg2CountryCodeTestService(
-            getApplication(),
+        mainRepository.sendMsg2CountryCodeTestService(
             CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
         )
         val guids = serversCache.map { it.guid }.toList()
@@ -344,8 +348,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch(Dispatchers.Default) {
             if (guids.isEmpty()) return@launch
-            MessageUtil.sendMsg2CountryCodeTestService(
-                getApplication(),
+            mainRepository.sendMsg2CountryCodeTestService(
                 CountryCodeTestMessage(
                     key = AppConfig.MSG_COUNTRY_CODE_START,
                     subscriptionId = subscriptionId,
@@ -356,8 +359,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun cancelCountryCodeTest() {
-        MessageUtil.sendMsg2CountryCodeTestService(
-            getApplication(),
+        mainRepository.sendMsg2CountryCodeTestService(
             CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
         )
     }
@@ -375,11 +377,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun testCurrentServerRealPing() {
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_MEASURE_DELAY, "")
+        mainRepository.testCurrentServerRealPing()
     }
 
     fun fetchCurrentIp() {
-        MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_MEASURE_IP, "")
+        mainRepository.sendMsg2Service(AppConfig.MSG_MEASURE_IP, "")
     }
 
     fun subscriptionIdChanged(id: String) {
@@ -660,6 +662,37 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         MmkvManager.clearAllTestDelayResults(MmkvManager.decodeServerList(subscriptionId))
         updateCache()
         updateListAction.postValue(-1)
+    }
+
+    private fun onMainServiceEvent(event: MainServiceEvent) {
+        when (event) {
+            MainServiceEvent.StateRunning,
+            MainServiceEvent.StateStartSuccess -> isRunning.postValue(true)
+            MainServiceEvent.StateNotRunning,
+            MainServiceEvent.StateStopSuccess,
+            MainServiceEvent.StateStartFailure -> isRunning.postValue(false)
+            is MainServiceEvent.MeasureDelayResult -> {
+                updateTestResultAction.postValue(event.result.delayMillis.toString())
+                updateListAction.postValue(getPosition(event.result.guid))
+            }
+            MainServiceEvent.MeasureConfigSuccess -> updateListAction.postValue(-1)
+            is MainServiceEvent.MeasureConfigNotify -> {
+                if (event.progress.isNotEmpty()) {
+                    testProgressAction.postValue(
+                        TestProgressInfo(
+                            guid = "",
+                            delayMillis = -1L,
+                            current = activeTestCompleted,
+                            total = activeTestTotal,
+                        )
+                    )
+                }
+            }
+            is MainServiceEvent.MeasureConfigFinish -> {
+                activeTestId = null
+                testProgressAction.postValue(null)
+            }
+        }
     }
 
     private val mMsgReceiver = object : BroadcastReceiver() {
