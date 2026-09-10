@@ -8,13 +8,17 @@ import androidx.core.content.ContextCompat
 import com.miku.ray.AngApplication
 import com.miku.ray.AppConfig
 import com.miku.ray.dto.CountryCodeTestMessage
+import com.miku.ray.dto.RealPingProgress
 import com.miku.ray.dto.RealPingResult
+import com.miku.ray.dto.RealPingSummary
 import com.miku.ray.dto.SubscriptionUpdateResult
+import com.miku.ray.dto.TestProgressInfo
 import com.miku.ray.dto.TestServiceMessage
 import com.miku.ray.dto.entities.SubscriptionCache
 import com.miku.ray.extension.serializable
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import com.miku.ray.util.Utils
@@ -41,19 +45,62 @@ class MainRepository(
             val event = when (safeIntent.getIntExtra("key", 0)) {
                 AppConfig.MSG_STATE_RUNNING -> MainServiceEvent.StateRunning
                 AppConfig.MSG_STATE_NOT_RUNNING -> MainServiceEvent.StateNotRunning
-                AppConfig.MSG_STATE_START_SUCCESS -> MainServiceEvent.StateStartSuccess
-                AppConfig.MSG_STATE_START_FAILURE -> MainServiceEvent.StateStartFailure
+                AppConfig.MSG_STATE_RESTART -> MainServiceEvent.StateRestart
+
+                AppConfig.MSG_STATE_START_SUCCESS -> MainServiceEvent.StateStartSuccess(
+                    restarted = safeIntent.getBooleanContent(),
+                )
+
+                AppConfig.MSG_STATE_START_FAILURE -> MainServiceEvent.StateStartFailure(
+                    message = safeIntent.getStringExtra("content"),
+                )
+
                 AppConfig.MSG_STATE_STOP_SUCCESS -> MainServiceEvent.StateStopSuccess
-                AppConfig.MSG_MEASURE_DELAY_SUCCESS -> safeIntent
-                    .serializable<RealPingResult>("content")
-                    ?.let(MainServiceEvent::MeasureDelayResult)
-                AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> MainServiceEvent.MeasureConfigSuccess
+
+                AppConfig.MSG_MEASURE_DELAY_SUCCESS -> MainServiceEvent.MeasureDelayResult(
+                    text = safeIntent.getStringExtra("content").orEmpty(),
+                )
+
+                AppConfig.MSG_MEASURE_IP_SUCCESS -> MainServiceEvent.MeasureIpResult(
+                    ip = safeIntent.getStringExtra("content"),
+                )
+
+                AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> {
+                    val content = safeIntent.getStringExtra("content")
+                    val result = content?.parseJson(RealPingResult::class.java)
+                    val rawGuid = if (result == null) {
+                        content?.takeIf { !it.trimStart().startsWith("{") }
+                    } else {
+                        null
+                    }
+                    MainServiceEvent.MeasureConfigResult(result, rawGuid)
+                }
+
                 AppConfig.MSG_MEASURE_CONFIG_NOTIFY -> MainServiceEvent.MeasureConfigNotify(
-                    safeIntent.getStringExtra("content").orEmpty(),
+                    progress = safeIntent.getStringExtra("content")?.parseJson(RealPingProgress::class.java),
                 )
+
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> MainServiceEvent.MeasureConfigFinish(
-                    safeIntent.getStringExtra("content"),
+                    summary = safeIntent.getStringExtra("content")?.parseJson(RealPingSummary::class.java),
                 )
+
+                AppConfig.MSG_COUNTRY_CODE_SUCCESS -> safeIntent.getStringExtra("content")
+                    ?.let(MainServiceEvent::CountryCodeSuccess)
+
+                AppConfig.MSG_COUNTRY_CODE_NOTIFY -> MainServiceEvent.CountryCodeNotify(
+                    info = safeIntent.getStringExtra("content")?.parseJson(TestProgressInfo::class.java),
+                )
+
+                AppConfig.MSG_COUNTRY_CODE_FINISH -> MainServiceEvent.CountryCodeFinish
+
+                AppConfig.MSG_TRAFFIC_UPDATED -> safeIntent.getStringExtra("content")
+                    ?.let(MainServiceEvent::TrafficUpdated)
+
+                AppConfig.MSG_TRAFFIC_SPEED_UPDATED -> safeIntent.getStringExtra("content")
+                    ?.let(MainServiceEvent::TrafficSpeedUpdated)
+
+                AppConfig.MSG_SUB_UPDATE_FINISH -> MainServiceEvent.SubUpdateFinish
+
                 else -> null
             }
             event?.let { _mainServiceEvent.tryEmit(it) }
@@ -105,4 +152,13 @@ class MainRepository(
     override fun testCurrentServerRealPing() {
         sendMsg2Service(AppConfig.MSG_MEASURE_DELAY, "")
     }
+}
+
+private fun Intent.getBooleanContent(): Boolean =
+    serializable<Boolean>("content") == true
+
+private fun <T> String.parseJson(cls: Class<T>): T? {
+    val trimmed = trim()
+    if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return null
+    return JsonUtil.fromJsonSafe(trimmed, cls)
 }

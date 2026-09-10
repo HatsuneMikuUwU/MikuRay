@@ -128,7 +128,6 @@ class MoreMenuBottomSheet : BaseBottomSheetFragment() {
 
         listOf(
             R.id.service_restart,
-            R.id.activity_restart,
             R.id.del_all_config,
             R.id.del_duplicate_config,
             R.id.del_invalid_config,

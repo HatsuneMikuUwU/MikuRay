@@ -156,9 +156,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private val requestVpnPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            startV2Ray()
-        }
+        if (it.resultCode == RESULT_OK) startV2Ray()
     }
 
     private val requestActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -281,7 +279,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             refreshGroupTabTitles()
         }
 
-        mainViewModel.resyncState()
+        mainViewModel.startListenBroadcast()
     }
 
     override fun onContentChanged() {
@@ -870,7 +868,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
                 mainViewModel.testAllRealPing(true)
             }
             R.id.service_restart -> LauncherManager.restartServiceOrStart(this, ::startV2Ray)
-            R.id.activity_restart -> restartApplication()
             R.id.action_scroll_to_selected -> locateSelectedServer()
             R.id.del_all_config -> delAllConfig()
             R.id.del_duplicate_config -> delDuplicateConfig()
@@ -1058,7 +1055,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         }
 
         mainViewModel.isRunning.observe(this) { isRunning ->
-            applyRunningState(isLoading = false, isRunning = isRunning)
+            applyRunningState(isRunning = isRunning)
             if (isRunning == true && pendingConnectionTest) {
                 pendingConnectionTest = false
                 setTestState(getString(R.string.connection_test_testing))
@@ -1211,37 +1208,33 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private fun handleFabAction() {
-        mainViewModel.resyncState()
-        applyRunningState(isLoading = true, isRunning = false)
-
         if (mainViewModel.isRunning.value == true) {
             LauncherManager.stopService(this)
-        } else if (SettingsManager.isVpnMode()) {
-            val intent = VpnService.prepare(this)
-            if (intent == null) {
-                startV2Ray()
-            } else {
-                requestVpnPermission.launch(intent)
-            }
         } else {
-            startV2Ray()
+            requestServiceStart()
         }
+    }
+
+    private fun requestServiceStart() {
+        if (!SettingsManager.isVpnMode()) {
+            startV2Ray()
+            return
+        }
+        val intent = VpnService.prepare(this)
+        if (intent == null) startV2Ray() else requestVpnPermission.launch(intent)
     }
 
     private fun handleLayoutTestClick() {
         if (mainViewModel.isRunning.value == true) {
             setTestState(getString(R.string.connection_test_testing))
             mainViewModel.testCurrentServerRealPing()
-        } else {
-            pendingConnectionTest = true
-            mainViewModel.resyncState()
         }
     }
 
     private fun startV2Ray() {
         if (MmkvManager.getSelectServer().isNullOrEmpty()) {
             snackbarError(getString(R.string.title_file_chooser), title = getString(R.string.title_alerter_error))
-            applyRunningState(isLoading = false, isRunning = false)
+            applyRunningState(isRunning = false)
             return
         }
 
@@ -1312,14 +1305,8 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         binding.fab.text = "%02d:%02d:%02d".format(h, m, s)
     }
 
-    private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
+    private fun applyRunningState(isRunning: Boolean) {
         binding.fab.isEnabled = true
-
-        if (isLoading) {
-            binding.fab.setIconResource(RemixR.drawable.rmx_system_check_line)
-            return
-        }
-
         binding.blurBottomStatus.isClickable = true
         binding.blurBottomStatus.isFocusable = true
 
@@ -1696,17 +1683,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
                 }
             }
         }
-    }
-
-    private fun restartApplication() {
-        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
-        if (launchIntent == null) {
-            recreate()
-            return
-        }
-        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(launchIntent)
-        finishAffinity()
     }
 
     private fun delAllConfig() {
