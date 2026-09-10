@@ -73,6 +73,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
+    val requestStartServiceAction by lazy { MutableLiveData<Unit>() }
+    val requestStopServiceAction by lazy { MutableLiveData<Unit>() }
 
     init {
         reloadServerList(notify = false)
@@ -82,18 +84,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startListenBroadcast() {
-        mainRepository.queryRunningState { running ->
-            if (!isRestarting) {
-                isRunning.value = running
-            }
-        }
+        mainRepository.sendMsg2Service(AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     override fun onCleared() {
         reloadJob?.cancel()
         mainServiceEventJob?.cancel()
         mainRepository.close()
-        LogUtil.i(AppConfig.TAG, "Main ViewModel is cleared")
         super.onCleared()
     }
 
@@ -350,6 +347,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun testCurrentServerRealPing() {
         mainRepository.testCurrentServerRealPing()
+    }
+
+    fun onFabClicked() {
+        if (isRunning.value == true) {
+            requestStopServiceAction.value = Unit
+        } else {
+            requestStartServiceAction.value = Unit
+        }
+    }
+
+    fun onLayoutTestClicked() {
+        if (isRunning.value == true) {
+            val app = getApplication<AngApplication>()
+            updateTestResultAction.value = app.getString(R.string.connection_test_testing)
+            testCurrentServerRealPing()
+        }
     }
 
     fun fetchCurrentIp() {
