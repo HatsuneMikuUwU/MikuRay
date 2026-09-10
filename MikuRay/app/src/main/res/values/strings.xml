@@ -231,6 +231,8 @@
     <string name="title_pref_speed_enabled">Enable speed display</string>
     <string name="summary_pref_speed_enabled">Display current speed in the notification.\nNotification icon would change based on
         usage.</string>
+    <string name="title_pref_hide_direct_traffic_notification">Hide direct traffic</string>
+    <string name="summary_pref_hide_direct_traffic_notification">Hide the direct traffic stats from the notification, only proxy traffic is shown.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Show real-time traffic instead of IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Replace the IP text on the home screen with live upload/download speed, just like the notification.</string>

@@ -25,6 +25,15 @@
 
          <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
+            android:icon="@drawable/rmx_eye_off_line"
+            android:key="pref_hide_direct_traffic_notification"
+            android:summary="@string/summary_pref_hide_direct_traffic_notification"
+            android:title="@string/title_pref_hide_direct_traffic_notification"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
+         <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
             android:icon="@drawable/rmx_global_line"
             android:key="pref_show_realtime_traffic_ip"
             android:summary="@string/summary_pref_show_realtime_traffic_ip"

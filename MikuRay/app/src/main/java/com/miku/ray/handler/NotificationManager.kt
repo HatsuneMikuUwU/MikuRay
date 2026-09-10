@@ -75,20 +75,24 @@ object NotificationManager : TrafficController.Listener {
         val proxyTotal = proxyUplink + proxyDownlink
         val directTotal = directUplink + directDownlink
 
+        val hideDirectTraffic = MmkvManager.decodeSettingsBool(AppConfig.PREF_HIDE_DIRECT_TRAFFIC_NOTIFICATION) == true
+
         val text = StringBuilder()
         appendSpeedString(
             text, AppConfig.TAG_PROXY,
             proxyUplink / sinceLastQueryInSeconds,
             proxyDownlink / sinceLastQueryInSeconds
         )
-        appendSpeedString(
-            text, AppConfig.TAG_DIRECT,
-            directUplink / sinceLastQueryInSeconds,
-            directDownlink / sinceLastQueryInSeconds
-        )
+        if (!hideDirectTraffic) {
+            appendSpeedString(
+                text, AppConfig.TAG_DIRECT,
+                directUplink / sinceLastQueryInSeconds,
+                directDownlink / sinceLastQueryInSeconds
+            )
+        }
         lastSpeedText = text.toString()
         lastProxyTraffic = proxyTotal
-        lastDirectTraffic = directTotal
+        lastDirectTraffic = if (hideDirectTraffic) 0L else directTotal
 
         sessionUplink += proxyUplink + directUplink
         sessionDownlink += proxyDownlink + directDownlink

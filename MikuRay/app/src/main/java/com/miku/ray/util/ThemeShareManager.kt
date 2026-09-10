@@ -41,6 +41,7 @@ object ThemeShareManager {
     private val booleanKeys = setOf(
         AppConfig.PREF_TRAFFIC_ENABLED,
         AppConfig.PREF_SPEED_ENABLED,
+        AppConfig.PREF_HIDE_DIRECT_TRAFFIC_NOTIFICATION,
         AppConfig.PREF_NETWORK_SECURITY_ENABLED,
         AppConfig.PREF_DISABLE_SENSOR_TEXT,
         AppConfig.PREF_SHOW_ISP_INFO,
