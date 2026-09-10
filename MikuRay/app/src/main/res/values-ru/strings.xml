@@ -218,6 +218,8 @@
     <string name="summary_pref_speed_enabled">Показывать текущую скорость в уведомлении.\nЗначок уведомления изменяется в зависимости от использования.</string>
     <string name="title_pref_hide_direct_traffic_notification">Скрыть прямой трафик</string>
     <string name="summary_pref_hide_direct_traffic_notification">Скрыть статистику прямого трафика в уведомлении, будет показан только трафик прокси.</string>
+    <string name="title_pref_show_group_name_notification">Показывать имя группы в уведомлении</string>
+    <string name="summary_pref_show_group_name_notification">Показывать имя группы подписки рядом с названием сервера в уведомлении.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Показывать трафик вместо IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Заменить текст IP на главном экране скоростью загрузки/отдачи в реальном времени, как в уведомлении.</string>
@@ -687,6 +689,7 @@
     <string name="summary_navigate_observatory_settings">Интервал leastPing, интервал leastLoad, HTTP-метод leastLoad, выборка leastLoad, тайм-аут leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Выберите, какие приложения будут использовать прокси</string>
     <string name="title_ui_general">Общие</string>
+    <string name="title_category_notification">Уведомления</string>
     <string name="title_ui_theme">Тема</string>
     <string name="title_ui_appearance">Внешний вид</string>
     <string name="transport_layer_security">Безопасность транспортного уровня</string>

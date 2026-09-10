@@ -145,7 +145,7 @@ object NotificationManager : TrafficController.Listener {
 
         mBuilder = NotificationCompat.Builder(service, channelId)
         .setSmallIcon(R.drawable.ic_stat_name)
-        .setContentTitle(currentConfig?.remarks ?: service.getString(R.string.app_name))
+        .setContentTitle(buildNotificationTitle(service, currentConfig))
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setOngoing(true)
         .setShowWhen(false)
@@ -260,6 +260,20 @@ object NotificationManager : TrafficController.Listener {
         var i = 0
         while (size >= 1024 && i < units.size - 1) { size /= 1024; i++ }
         return String.format(java.util.Locale.getDefault(), "%.2f %s", size, units[i])
+    }
+
+    private fun buildNotificationTitle(service: Service, currentConfig: ProfileItem?): String {
+        val baseTitle = currentConfig?.remarks ?: service.getString(R.string.app_name)
+        val showGroupName = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_GROUP_NAME_NOTIFICATION) == true
+        if (!showGroupName) return baseTitle
+
+        val subscriptionId = currentConfig?.subscriptionId
+        if (subscriptionId.isNullOrEmpty()) return baseTitle
+
+        val groupName = MmkvManager.decodeSubscription(subscriptionId)?.remarks
+        if (groupName.isNullOrEmpty()) return baseTitle
+
+        return "$baseTitle ($groupName)"
     }
 
     private fun getService(): Service? {

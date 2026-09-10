@@ -218,6 +218,8 @@
     <string name="summary_pref_speed_enabled">Biar keliatan speed sekarang di notif.\nIkon notifnya bakal berubah ngikutin pemakaian kamu.</string>
     <string name="title_pref_hide_direct_traffic_notification">Sembunyiin direct traffic</string>
     <string name="summary_pref_hide_direct_traffic_notification">Sembunyiin info traffic direct di notif, yang keliatan cuma traffic proxy aja.</string>
+    <string name="title_pref_show_group_name_notification">Tampilin nama grup di notif</string>
+    <string name="summary_pref_show_group_name_notification">Nampilin nama grup langganan di samping judul server di notif.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Tampilin traffic real-time ganti IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Ganti teks IP di layar utama jadi kecepatan upload/download real-time, kayak di notifikasi.</string>
@@ -678,6 +680,7 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="summary_navigate_observatory_settings">Interval leastPing, interval leastLoad, metode HTTP leastLoad, sampling leastLoad, timeout leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Pilih aplikasi mana aja yang mau pakai proxy</string>
     <string name="title_ui_general">Umum</string>
+    <string name="title_category_notification">Notifikasi</string>
     <string name="title_ui_theme">Tema</string>
     <string name="title_ui_appearance">Tampilan</string>
     <string name="transport_layer_security">Keamanan Transport Layer</string>

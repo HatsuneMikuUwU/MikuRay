@@ -215,6 +215,8 @@
     <string name="summary_pref_speed_enabled">在通知中显示当前速度\n小图标显示流量的路由情况</string>
     <string name="title_pref_hide_direct_traffic_notification">隐藏直连流量</string>
     <string name="summary_pref_hide_direct_traffic_notification">在通知中隐藏直连流量统计,只显示代理流量。</string>
+    <string name="title_pref_show_group_name_notification">在通知中显示分组名称</string>
+    <string name="summary_pref_show_group_name_notification">在通知的服务器标题旁显示订阅分组名称。</string>
 
     <string name="title_pref_show_realtime_traffic_ip">用实时流量替代IP显示</string>
     <string name="summary_pref_show_realtime_traffic_ip">将主页的IP文字替换为实时上传/下载速度，和通知栏一样。</string>
@@ -667,6 +669,7 @@
     <string name="summary_navigate_observatory_settings">leastPing 间隔、leastLoad 间隔、leastLoad HTTP 方法、leastLoad 采样次数、leastLoad 超时</string>
     <string name="summary_navigate_per_app_proxy_settings">选择哪些应用通过代理</string>
     <string name="title_ui_general">通用</string>
+    <string name="title_category_notification">通知</string>
     <string name="title_ui_theme">主题</string>
     <string name="title_ui_appearance">外观</string>
     <string name="transport_layer_security">传输层安全</string>

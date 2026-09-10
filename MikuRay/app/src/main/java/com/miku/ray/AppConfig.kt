@@ -50,6 +50,7 @@ object AppConfig {
     const val SUBSCRIPTION_MIN_INTERVAL_MINUTES = 15L
     const val PREF_SPEED_ENABLED = "pref_speed_enabled"
     const val PREF_HIDE_DIRECT_TRAFFIC_NOTIFICATION = "pref_hide_direct_traffic_notification"
+    const val PREF_SHOW_GROUP_NAME_NOTIFICATION = "pref_show_group_name_notification"
     const val PREF_TRAFFIC_ENABLED = "pref_traffic_enabled"
     const val PREF_NETWORK_SECURITY_ENABLED = "pref_network_security_enabled"
     const val PREF_HIDE_SCROLL_BUTTONS = "pref_hide_scroll_buttons"
