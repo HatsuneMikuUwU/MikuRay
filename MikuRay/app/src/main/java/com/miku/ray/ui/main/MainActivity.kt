@@ -1085,7 +1085,11 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
 
     private fun setBadgeVisibility(badge: TextView, label: TextView, count: Int) {
         if (count > 0) {
-            badge.text = if (count > 99) "99+" else count.toString()
+            val limit = MmkvManager.decodeSettingsString(AppConfig.PREF_TAB_BADGE_LIMIT, "99")
+                ?.toIntOrNull()
+                ?.coerceAtLeast(1)
+                ?: 99
+            badge.text = if (count > limit) "${limit}+" else count.toString()
             badge.visibility = View.VISIBLE
         } else {
             badge.visibility = View.GONE

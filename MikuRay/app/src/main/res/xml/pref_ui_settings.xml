@@ -92,6 +92,17 @@
             android:title="@string/title_pref_group_all_tab_icon"
             app:layout="@layout/uwu_mid" />
 
+        <ListPreference
+            android:defaultValue="99"
+            android:entries="@array/tab_badge_limit_entries"
+            android:entryValues="@array/tab_badge_limit_values"
+            android:icon="@drawable/rmx_system_notification_badge_line"
+            android:key="pref_tab_badge_limit"
+            android:summary="%s"
+            android:title="@string/title_pref_tab_badge_limit"
+            app:dialogIcon="@drawable/rmx_system_notification_badge_line"
+            app:layout="@layout/uwu_mid" />
+
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/rmx_grid_line"

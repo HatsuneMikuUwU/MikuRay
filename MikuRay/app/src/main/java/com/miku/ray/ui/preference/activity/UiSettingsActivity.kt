@@ -276,6 +276,7 @@ class UiSettingsActivity : BaseActivity() {
         private val changeHomeBannerImageAction by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_CHANGE_HOME_BANNER) }
         private val deleteHomeBannerImageAction by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_DELETE_HOME_BANNER) }
         private val groupAllTabIcon by lazy { findPreference<Preference>(AppConfig.PREF_GROUP_ALL_TAB_ICON) }
+        private val tabBadgeLimit by lazy { findPreference<ListPreference>(AppConfig.PREF_TAB_BADGE_LIMIT) }
         private val searchBarChip by lazy { findPreference<ListPreference>(AppConfig.PREF_SEARCH_BAR_CHIP) }
         private val selectedBannerStyleEnabled by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SELECTED_BANNER_STYLE_ENABLED) }
         private val selectedBannerCategory by lazy { findPreference<PreferenceCategory>("pref_category_selected_banner") }
@@ -778,6 +779,17 @@ class UiSettingsActivity : BaseActivity() {
                         updateGroupAllTabIconSummary()
                     }
                 ).show()
+                true
+            }
+
+            tabBadgeLimit?.setOnPreferenceChangeListener { pref, newValue ->
+                (pref as? ListPreference)?.let { lp ->
+                    val index = lp.findIndexOfValue(newValue as? String)
+                    if (index >= 0) {
+                        lp.summary = lp.entries?.getOrNull(index)
+                    }
+                }
+                SettingsChangeManager.makeSetupGroupTab()
                 true
             }
 

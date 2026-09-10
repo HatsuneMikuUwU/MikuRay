@@ -125,6 +125,7 @@ object ThemeShareManager {
         AppConfig.PREF_CUSTOM_APP_NAME,
         AppConfig.PREF_CATEGORY_STYLE,
         AppConfig.PREF_GROUP_ALL_TAB_ICON,
+        AppConfig.PREF_TAB_BADGE_LIMIT,
         AppConfig.PREF_APP_FONT,
         AppConfig.PREF_SEARCH_BAR_CHIP,
         AppConfig.PREF_WEATHER_USE_CELSIUS,
