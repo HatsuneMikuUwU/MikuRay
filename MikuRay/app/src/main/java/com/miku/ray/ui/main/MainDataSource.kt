@@ -14,6 +14,7 @@ interface MainDataSource : AutoCloseable {
     fun updateConfigViaSub(subscriptionCache: SubscriptionCache): SubscriptionUpdateResult
     fun shareNonCustomConfigsToClipboard(guids: List<String>): Int
     fun sendMsg2Service(msgId: Int, content: String)
+    fun queryRunningState(onResult: (isRunning: Boolean) -> Unit)
     fun sendMsg2TestService(msg: TestServiceMessage)
     fun sendMsg2CountryCodeTestService(msg: CountryCodeTestMessage)
     fun testCurrentServerRealPing()

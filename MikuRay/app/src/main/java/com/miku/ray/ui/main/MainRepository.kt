@@ -114,7 +114,6 @@ class MainRepository(
             IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY),
             Utils.receiverFlags(),
         )
-        sendMsg2Service(AppConfig.MSG_REGISTER_CLIENT, "")
     }
 
     override fun close() {
@@ -139,6 +138,12 @@ class MainRepository(
 
     override fun sendMsg2Service(msgId: Int, content: String) {
         MessageUtil.sendMsg2Service(app, msgId, content)
+    }
+
+    override fun queryRunningState(onResult: (isRunning: Boolean) -> Unit) {
+        MessageUtil.sendMsg2ServiceForResult(app, AppConfig.MSG_REGISTER_CLIENT, "") { handled ->
+            onResult(handled)
+        }
     }
 
     override fun sendMsg2TestService(msg: TestServiceMessage) {

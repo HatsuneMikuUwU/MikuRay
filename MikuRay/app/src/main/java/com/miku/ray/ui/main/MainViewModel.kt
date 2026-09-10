@@ -82,7 +82,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startListenBroadcast() {
-        mainRepository.sendMsg2Service(AppConfig.MSG_REGISTER_CLIENT, "")
+        mainRepository.queryRunningState { running ->
+            if (!isRestarting) {
+                isRunning.value = running
+            }
+        }
     }
 
     override fun onCleared() {

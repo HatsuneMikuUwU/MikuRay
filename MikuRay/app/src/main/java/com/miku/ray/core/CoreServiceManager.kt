@@ -440,8 +440,10 @@ object CoreServiceManager {
                 AppConfig.MSG_REGISTER_CLIENT -> {
                     if (isRunning()) {
                         MessageUtil.sendMsg2UI(serviceControl.getService(), AppConfig.MSG_STATE_RUNNING, "")
+                        if (isOrderedBroadcast) resultCode = Activity.RESULT_OK
                     } else {
                         MessageUtil.sendMsg2UI(serviceControl.getService(), AppConfig.MSG_STATE_NOT_RUNNING, "")
+                        if (isOrderedBroadcast) resultCode = Activity.RESULT_CANCELED
                     }
                 }
 

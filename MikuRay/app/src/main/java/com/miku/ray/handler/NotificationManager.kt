@@ -100,19 +100,22 @@ object NotificationManager : TrafficController.Listener {
         ) ?: ""
     }
 
-    fun showNotification(currentConfig: ProfileItem?) {
+    fun showNotification(currentConfig: ProfileItem?, isNewConnection: Boolean = true) {
         val service = getService() ?: return
 
-        MmkvManager.encodeSettings(
-            AppConfig.PREF_VPN_CONNECT_START_TIME,
-            System.currentTimeMillis(),
-        )
-        lastSpeedText = ""
-        lastProxyTraffic = 0L
-        lastDirectTraffic = 0L
-        lastDataUsageText = ""
-        sessionUplink = 0L
-        sessionDownlink = 0L
+        val existingStartTime = MmkvManager.decodeSettingsLong(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
+        if (isNewConnection || existingStartTime == 0L) {
+            MmkvManager.encodeSettings(
+                AppConfig.PREF_VPN_CONNECT_START_TIME,
+                System.currentTimeMillis(),
+            )
+            lastSpeedText = ""
+            lastProxyTraffic = 0L
+            lastDirectTraffic = 0L
+            lastDataUsageText = ""
+            sessionUplink = 0L
+            sessionDownlink = 0L
+        }
 
         val flags = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 
@@ -161,7 +164,7 @@ object NotificationManager : TrafficController.Listener {
     fun ensureForeground() {
         val service = getService() ?: return
         val notification = mBuilder?.build()
-        if (notification == null) showNotification(null) else service.startForeground(NOTIFICATION_ID, notification)
+        if (notification == null) showNotification(null, isNewConnection = false) else service.startForeground(NOTIFICATION_ID, notification)
     }
 
     fun cancelNotification() {
