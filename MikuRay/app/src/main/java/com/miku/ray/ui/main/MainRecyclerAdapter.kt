@@ -283,22 +283,50 @@ FastScrollRecyclerView.SectionedAdapter {
                     }
                 }
             } else {
-                holder.views.layoutShare?.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        adapterListener?.onShare(guid, profile, position, false)
+                val isCompactListActions =
+                    MmkvManager.decodeSettingsBool(AppConfig.PREF_COMPACT_LIST_ACTIONS) == true
+
+                if (isCompactListActions) {
+                    holder.views.layoutShare?.apply {
+                        visibility = View.GONE
+                        setOnClickListener(null)
                     }
-                }
-                holder.views.layoutEdit?.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        adapterListener?.onEdit(guid, position, profile)
+                    holder.views.layoutEdit?.apply {
+                        visibility = View.GONE
+                        setOnClickListener(null)
                     }
-                }
-                holder.views.layoutRemove?.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        adapterListener?.onRemove(guid, position)
+                    holder.views.layoutRemove?.apply {
+                        visibility = View.GONE
+                        setOnClickListener(null)
+                    }
+                    holder.views.layoutMore?.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener { anchor ->
+                            showServerActionsMenu(anchor, guid, profile, position)
+                        }
+                    }
+                } else {
+                    holder.views.layoutMore?.apply {
+                        visibility = View.GONE
+                        setOnClickListener(null)
+                    }
+                    holder.views.layoutShare?.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+                            adapterListener?.onShare(guid, profile, position, false)
+                        }
+                    }
+                    holder.views.layoutEdit?.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+                            adapterListener?.onEdit(guid, position, profile)
+                        }
+                    }
+                    holder.views.layoutRemove?.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+                            adapterListener?.onRemove(guid, position)
+                        }
                     }
                 }
             }
@@ -541,7 +569,7 @@ FastScrollRecyclerView.SectionedAdapter {
         override val tvType get() = b.tvType
         override val layoutSubscription get() = b.layoutSubscription
         override val tvSubscription get() = b.tvSubscription
-        override val layoutMore: View? = null
+        override val layoutMore get() = b.layoutMore
         override val layoutShare get() = b.layoutShare
         override val layoutEdit get() = b.layoutEdit
         override val layoutRemove get() = b.layoutRemove

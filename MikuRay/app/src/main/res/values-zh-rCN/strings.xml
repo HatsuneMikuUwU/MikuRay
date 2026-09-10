@@ -275,6 +275,8 @@
     <string name="summary_pref_show_isp_info">在检测到的 IP 旁显示运营商/组织名称</string>
     <string name="title_pref_hide_scroll_buttons">隐藏悬浮滚动按钮</string>
     <string name="summary_pref_hide_scroll_buttons">隐藏服务器列表上悬浮的滚动到顶部/底部/选中项按钮。开启后，可在 \"更多\" 菜单中使用「前往选中的配置」代替</string>
+    <string name="title_pref_compact_list_actions">将服务器操作收纳到更多菜单</string>
+    <string name="summary_pref_compact_list_actions">在列表模式下隐藏每行服务器的分享/编辑/删除按钮，改为通过一个更多按钮访问，和网格模式一样。</string>
     <string name="title_pref_fab_extended">扩展连接按钮</string>
     <string name="summary_pref_fab_extended">VPN 连接时在连接按钮上显示连接计时</string>
 

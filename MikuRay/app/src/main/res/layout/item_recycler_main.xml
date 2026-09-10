@@ -152,6 +152,16 @@
                                 android:focusable="true"
                                 app:srcCompat="@drawable/ic_delete_empty"
                                 app:tint="?attr/colorError" />
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/layout_more"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/bg_icon_button"
+                                android:contentDescription="@string/searchpreference_more"
+                                android:focusable="true"
+                                android:visibility="gone"
+                                app:srcCompat="@drawable/ic_btn_more_menu_color"
+                                app:tint="@null" />
                         </LinearLayout>
                     </LinearLayout>
 

@@ -282,6 +282,8 @@
     <string name="summary_pref_show_isp_info">Показывать название провайдера/организации рядом с обнаруженным IP</string>
     <string name="title_pref_hide_scroll_buttons">Скрыть плавающие кнопки прокрутки</string>
     <string name="summary_pref_hide_scroll_buttons">Скрывает плавающие кнопки прокрутки вверх/вниз/к выбранному профилю над списком серверов. Если включено, используйте пункт \"Перейти к выбранному профилю\" в меню \"ещё\"</string>
+    <string name="title_pref_compact_list_actions">Свернуть действия сервера в меню \"ещё\"</string>
+    <string name="summary_pref_compact_list_actions">Скрывает кнопки поделиться/изменить/удалить в каждой строке сервера в режиме списка и предоставляет доступ к ним через одну кнопку \"ещё\", как в режиме сетки.</string>
     <string name="title_pref_fab_extended">Расширенная кнопка подключения</string>
     <string name="summary_pref_fab_extended">Показывать таймер соединения на кнопке подключения, пока VPN активен</string>
 

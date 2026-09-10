@@ -112,6 +112,15 @@
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
+            android:icon="@drawable/rmx_system_more_2_line"
+            android:key="pref_compact_list_actions"
+            android:summary="@string/summary_pref_compact_list_actions"
+            android:title="@string/title_pref_compact_list_actions"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
             android:icon="@drawable/rmx_media_play_line"
             android:key="pref_fab_extended"
             android:summary="@string/summary_pref_fab_extended"

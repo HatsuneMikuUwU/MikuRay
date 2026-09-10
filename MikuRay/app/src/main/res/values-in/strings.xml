@@ -284,6 +284,8 @@
     <string name="summary_pref_show_isp_info">Tampilin nama ISP/organisasi di sebelah IP yang kedeteksi</string>
     <string name="title_pref_hide_scroll_buttons">Sembunyiin tombol scroll yang ngambang</string>
     <string name="summary_pref_hide_scroll_buttons">Sembunyiin tombol scroll ke atas/bawah/server terpilih yang ngambang di list server. Kalo dinyalain, pake \"Menuju profile terpilih\" di menu lainnya aja ya.</string>
+    <string name="title_pref_compact_list_actions">Gabungin tombol aksi server ke menu overflow</string>
+    <string name="summary_pref_compact_list_actions">Sembunyiin tombol share/edit/hapus di tiap baris server pas mode list, terus akses lewat satu tombol overflow aja, sama kayak di mode grid.</string>
     <string name="title_pref_fab_extended">Tombol connect extended</string>
     <string name="summary_pref_fab_extended">Nampilin timer koneksi di tombol connect pas VPN lagi nyala</string>
 
