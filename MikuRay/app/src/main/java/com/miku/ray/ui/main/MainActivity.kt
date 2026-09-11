@@ -143,6 +143,9 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     private val TAG_HOME_BANNER_DEFAULT = "DEFAULT_HOME_BANNER"
     private val TAG_HOME_BANNER_HIDDEN = "HIDDEN_HOME_BANNER"
 
+    private val KEY_LAST_IP_STATE = "key_last_ip_state"
+    private val KEY_LAST_TEST_STATE = "key_last_test_state"
+
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab) {
             applyTabSelectedStyle(tab, true, tab.position, binding.tabGroup.tabCount)
@@ -181,6 +184,11 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         setContentView(binding.root)
         showTestBuildInfoIfNeeded()
 
+        savedInstanceState?.let {
+            lastIpStateText = it.getString(KEY_LAST_IP_STATE, lastIpStateText)
+            lastTestResultText = it.getString(KEY_LAST_TEST_STATE, lastTestResultText)
+        }
+
         hideLoading()
         window.statusBarColor = Color.TRANSPARENT
 
@@ -203,6 +211,12 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
         maybeShowTrafficDetailFromIntent(intent)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_LAST_IP_STATE, lastIpStateText)
+        outState.putString(KEY_LAST_TEST_STATE, lastTestResultText)
     }
 
     override fun onNewIntent(intent: Intent) {
