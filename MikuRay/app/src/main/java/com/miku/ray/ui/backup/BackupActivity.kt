@@ -25,6 +25,7 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.handler.WebDavManager
+import com.miku.ray.util.AppNameHelper
 import com.miku.ray.util.BannerColorExtractor
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.ZipUtil
@@ -153,7 +154,7 @@ class BackupActivity : HelperBaseActivity() {
             "yyyy-MM-dd-HH-mm-ss",
             Locale.getDefault()
         ).format(System.currentTimeMillis())
-        val folderName = "${getString(R.string.app_name)}_${dateFormatted}"
+        val folderName = "${AppNameHelper.getDisplayName(this)}_${dateFormatted}"
         val backupDir = this.cacheDir.absolutePath + "/$folderName"
         val outputZipFilePath = "${this.cacheDir.absolutePath}/$folderName.zip"
 
@@ -399,7 +400,7 @@ class BackupActivity : HelperBaseActivity() {
             "yyyy-MM-dd-HH-mm-ss",
             Locale.getDefault()
         ).format(System.currentTimeMillis())
-        val defaultFileName = "${getString(R.string.app_name)}_${dateFormatted}.zip"
+        val defaultFileName = "${AppNameHelper.getDisplayName(this)}_${dateFormatted}.zip"
 
         launchCreateDocument(defaultFileName) { uri ->
             if (uri != null) {

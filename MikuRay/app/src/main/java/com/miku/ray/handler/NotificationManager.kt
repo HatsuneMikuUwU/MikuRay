@@ -18,6 +18,7 @@ import com.miku.ray.core.CoreServiceManager
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.extension.toSpeedString
 import com.miku.ray.ui.main.MainActivity
+import com.miku.ray.util.AppNameHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -263,7 +264,7 @@ object NotificationManager : TrafficController.Listener {
     }
 
     private fun buildNotificationTitle(service: Service, currentConfig: ProfileItem?): String {
-        val baseTitle = currentConfig?.remarks ?: service.getString(R.string.app_name)
+        val baseTitle = currentConfig?.remarks ?: AppNameHelper.getDisplayName(service)
         val showGroupName = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_GROUP_NAME_NOTIFICATION) == true
         if (!showGroupName) return baseTitle
 

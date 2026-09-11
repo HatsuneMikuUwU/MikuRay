@@ -21,6 +21,7 @@ import com.miku.ray.enums.NotificationChannelType
 import com.miku.ray.extension.serializable
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.util.AppNameHelper
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.MessageUtil
@@ -85,7 +86,7 @@ class CoreTestService : Service() {
         NotificationHelper.startForeground(
             this,
             NotificationChannelType.CORE_TEST,
-            getString(R.string.app_name),
+            AppNameHelper.getDisplayName(this),
             getString(if (isTcping) R.string.title_ping_all_server else R.string.title_real_ping_all_server),
             cancelAction,
         )

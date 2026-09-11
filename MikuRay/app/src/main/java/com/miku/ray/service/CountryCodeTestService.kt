@@ -20,6 +20,7 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.handler.SpeedtestManager
 import com.miku.ray.helper.NotificationHelper
+import com.miku.ray.util.AppNameHelper
 import com.miku.ray.util.JsonUtil
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
@@ -96,7 +97,7 @@ class CountryCodeTestService : Service() {
         NotificationHelper.startForeground(
             this,
             NotificationChannelType.CORE_TEST,
-            getString(R.string.app_name),
+            AppNameHelper.getDisplayName(this),
             getString(R.string.title_country_code_all_server),
             cancelAction
         )
