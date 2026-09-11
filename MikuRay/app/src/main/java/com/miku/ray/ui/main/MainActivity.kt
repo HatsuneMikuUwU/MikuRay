@@ -192,7 +192,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         setupViewModel()
         setupBannerHome()
 
-        BlurBottomStatusController.applyState(this, binding) { mainViewModel.onLayoutTestClicked() }
+        BlurBottomStatusController.applyState(this, binding) { handleLayoutTestClick() }
         updateSnowflakesVisibility()
         updateQuickActionsVisibility()
         SubscriptionUpdater.sync()
@@ -747,10 +747,10 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private fun setupListeners() {
-        binding.fab.setOnClickListener { mainViewModel.onFabClicked() }
+        binding.fab.setOnClickListener { handleFabAction() }
         binding.fab.shrink()
 
-        binding.blurBottomStatus.setOnClickListener { mainViewModel.onLayoutTestClicked() }
+        binding.blurBottomStatus.setOnClickListener { handleLayoutTestClick() }
 
         binding.btnHome.setOnClickListener {
             MainMenuBottomSheet().show(supportFragmentManager, MainMenuBottomSheet.TAG)
@@ -1079,14 +1079,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             }
         }
 
-        mainViewModel.requestStartServiceAction.observe(this) {
-            requestServiceStart()
-        }
-
-        mainViewModel.requestStopServiceAction.observe(this) {
-            LauncherManager.stopService(this)
-        }
-
         mainViewModel.startListenBroadcast()
         mainViewModel.initAssets(assets)
     }
@@ -1219,6 +1211,14 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         }
     }
 
+    private fun handleFabAction() {
+        if (mainViewModel.isRunning.value == true) {
+            LauncherManager.stopService(this)
+        } else {
+            requestServiceStart()
+        }
+    }
+
     private fun requestServiceStart() {
         if (!SettingsManager.isVpnMode()) {
             startV2Ray()
@@ -1226,6 +1226,13 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         }
         val intent = VpnService.prepare(this)
         if (intent == null) startV2Ray() else requestVpnPermission.launch(intent)
+    }
+
+    private fun handleLayoutTestClick() {
+        if (mainViewModel.isRunning.value == true) {
+            setTestState(getString(R.string.connection_test_testing))
+            mainViewModel.testCurrentServerRealPing()
+        }
     }
 
     private fun startV2Ray() {
