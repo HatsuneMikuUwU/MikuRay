@@ -33,7 +33,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -192,7 +194,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         setupViewModel()
         setupBannerHome()
 
-        BlurBottomStatusController.applyState(this, binding) { handleLayoutTestClick() }
+        BlurBottomStatusController.applyState(this, binding) { mainViewModel.onLayoutTestClicked() }
         updateSnowflakesVisibility()
         updateQuickActionsVisibility()
         SubscriptionUpdater.sync()
@@ -747,10 +749,10 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private fun setupListeners() {
-        binding.fab.setOnClickListener { handleFabAction() }
+        binding.fab.setOnClickListener { mainViewModel.onFabClicked() }
         binding.fab.shrink()
 
-        binding.blurBottomStatus.setOnClickListener { handleLayoutTestClick() }
+        binding.blurBottomStatus.setOnClickListener { mainViewModel.onLayoutTestClicked() }
 
         binding.btnHome.setOnClickListener {
             MainMenuBottomSheet().show(supportFragmentManager, MainMenuBottomSheet.TAG)
@@ -1070,6 +1072,20 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             setTestState(getString(R.string.connection_test_testing))
         }
 
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.requestServiceStartEvent.collect { requestServiceStart() }
+            }
+        }
+        
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.requestLayoutTestUiEvent.collect {
+                    setTestState(getString(R.string.connection_test_testing))
+                }
+            }
+        }
+
         mainViewModel.alertAction.observe(this) { (isSuccess, message) ->
             if (isSuccess) {
                 snackbarSuccess(message, title = getString(R.string.title_alerter_success))
@@ -1211,14 +1227,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         }
     }
 
-    private fun handleFabAction() {
-        if (mainViewModel.isRunning.value == true) {
-            LauncherManager.stopService(this)
-        } else {
-            requestServiceStart()
-        }
-    }
-
     private fun requestServiceStart() {
         if (!SettingsManager.isVpnMode()) {
             startV2Ray()
@@ -1226,13 +1234,6 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         }
         val intent = VpnService.prepare(this)
         if (intent == null) startV2Ray() else requestVpnPermission.launch(intent)
-    }
-
-    private fun handleLayoutTestClick() {
-        if (mainViewModel.isRunning.value == true) {
-            setTestState(getString(R.string.connection_test_testing))
-            mainViewModel.testCurrentServerRealPing()
-        }
     }
 
     private fun startV2Ray() {

@@ -19,6 +19,7 @@ import com.miku.ray.ui.bottomsheet.SortSubBottomSheet
 import com.miku.ray.dto.TestServiceMessage
 import com.miku.ray.extension.isComplexType
 import com.miku.ray.extension.matchesPattern
+import com.miku.ray.core.LauncherManager
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
@@ -29,8 +30,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Collections
 import java.util.UUID
@@ -73,6 +77,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val alertAction by lazy { MutableLiveData<Pair<Boolean, String>>() }
     val updateGroupBadgeAction by lazy { MutableLiveData<Unit>() }
     val updateGroupOrderAction by lazy { MutableLiveData<Unit>() }
+
+    private val _requestServiceStartEvent = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    val requestServiceStartEvent: SharedFlow<Unit> = _requestServiceStartEvent.asSharedFlow()
+
+    private val _requestLayoutTestUiEvent = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    val requestLayoutTestUiEvent: SharedFlow<Unit> = _requestLayoutTestUiEvent.asSharedFlow()
 
     init {
         reloadServerList(notify = false)
@@ -346,6 +356,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun testCurrentServerRealPing() {
         mainRepository.testCurrentServerRealPing()
+    }
+
+    fun onFabClicked() {
+        if (isRunning.value == true) {
+            LauncherManager.stopService(getApplication())
+        } else {
+            _requestServiceStartEvent.tryEmit(Unit)
+        }
+    }
+
+    fun onLayoutTestClicked() {
+        if (isRunning.value != true) return
+        _requestLayoutTestUiEvent.tryEmit(Unit)
+        testCurrentServerRealPing()
     }
 
     fun fetchCurrentIp() {
