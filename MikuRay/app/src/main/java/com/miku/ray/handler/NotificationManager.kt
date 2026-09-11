@@ -43,8 +43,14 @@ object NotificationManager : TrafficController.Listener {
     @Volatile private var lastProxyTraffic: Long = 0L
     @Volatile private var lastDirectTraffic: Long = 0L
     @Volatile private var lastDataUsageText: String = ""
+    @Volatile private var lastIpText: String = ""
     @Volatile private var sessionUplink: Long = 0L
     @Volatile private var sessionDownlink: Long = 0L
+
+    fun updateIpText(ipText: String) {
+        lastIpText = ipText
+        if (mBuilder != null) updateTimerNotification()
+    }
 
     fun startSpeedNotification() {
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) != true) return
@@ -117,6 +123,7 @@ object NotificationManager : TrafficController.Listener {
             lastProxyTraffic = 0L
             lastDirectTraffic = 0L
             lastDataUsageText = ""
+            lastIpText = ""
             sessionUplink = 0L
             sessionDownlink = 0L
         }
@@ -176,6 +183,7 @@ object NotificationManager : TrafficController.Listener {
         service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
 
         mBuilder = null
+        lastIpText = ""
         MmkvManager.encodeSettings(AppConfig.PREF_VPN_CONNECT_START_TIME, 0L)
         TrafficController.setListener(null)
         timerNotificationJob?.cancel()
@@ -249,6 +257,7 @@ object NotificationManager : TrafficController.Listener {
         val combined = buildString {
             if (lastSpeedText.isNotEmpty()) append(lastSpeedText)
             if (lastDataUsageText.isNotEmpty()) append("$lastDataUsageText\n")
+            if (lastIpText.isNotEmpty()) append(service.getString(R.string.notification_ip, lastIpText) + "\n")
             append(timerLine)
         }
         updateNotification(combined, lastProxyTraffic, lastDirectTraffic)

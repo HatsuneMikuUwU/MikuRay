@@ -24,6 +24,7 @@
     <string name="pull_down_to_refresh">Потяните вниз для обновления!</string>
 
     <string name="notification_action_stop_v2ray">Стоп</string>
+    <string formatted="false" name="notification_ip">ip : %s</string>
     <string name="notification_connect_time">таймер : %s</string>
     <string formatted="false" name="notification_data_usage">всего : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">Не удалось получить разрешение</string>
