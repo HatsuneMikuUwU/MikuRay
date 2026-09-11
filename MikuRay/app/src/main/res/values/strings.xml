@@ -237,7 +237,7 @@
     <string name="title_pref_show_group_name_notification">Show group name in notification</string>
     <string name="summary_pref_show_group_name_notification">Show the subscription group name next to the server title in the notification.</string>
     <string name="title_pref_show_ip_notification">Show IP in notification</string>
-    <string name="summary_pref_show_ip_notification">Show the connected server's IP address in the notification.</string>
+    <string name="summary_pref_show_ip_notification">Show the connected server\'s IP address in the notification.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Show real-time traffic instead of IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Replace the IP text on the home screen with live upload/download speed, just like the notification.</string>
