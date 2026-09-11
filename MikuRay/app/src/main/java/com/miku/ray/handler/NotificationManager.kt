@@ -47,8 +47,16 @@ object NotificationManager : TrafficController.Listener {
     @Volatile private var sessionUplink: Long = 0L
     @Volatile private var sessionDownlink: Long = 0L
 
+    /**
+     * Keeps the notification's IP line in sync with tv_ip_state. Call this
+     * whenever the activity's lastIpStateText changes.
+     */
     fun updateIpText(ipText: String) {
-        lastIpText = ipText
+        lastIpText = if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_IP_NOTIFICATION) == true) {
+            ipText
+        } else {
+            ""
+        }
         if (mBuilder != null) updateTimerNotification()
     }
 

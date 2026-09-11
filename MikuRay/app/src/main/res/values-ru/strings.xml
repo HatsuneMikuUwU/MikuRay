@@ -221,6 +221,8 @@
     <string name="summary_pref_hide_direct_traffic_notification">Скрыть статистику прямого трафика в уведомлении, будет показан только трафик прокси.</string>
     <string name="title_pref_show_group_name_notification">Показывать имя группы в уведомлении</string>
     <string name="summary_pref_show_group_name_notification">Показывать имя группы подписки рядом с названием сервера в уведомлении.</string>
+    <string name="title_pref_show_ip_notification">Показывать IP в уведомлении</string>
+    <string name="summary_pref_show_ip_notification">Показывать IP-адрес подключённого сервера в уведомлении.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Показывать трафик вместо IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Заменить текст IP на главном экране скоростью загрузки/отдачи в реальном времени, как в уведомлении.</string>

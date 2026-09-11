@@ -61,6 +61,7 @@ import com.miku.ray.extension.toastSuccess
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MikuRayGroupFileManager
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.NotificationManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.handler.SubscriptionUpdater
@@ -1047,6 +1048,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
                 getString(R.string.ip_connected, ip)
             }
             refreshIpStateText()
+            NotificationManager.updateIpText(lastIpStateText)
         }
 
         mainViewModel.updateTrafficSpeedAction.observe(this) { speedText ->
@@ -1323,6 +1325,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             lastTrafficSpeedText = ""
             lastIpStateText = getString(R.string.ip_unknown)
             refreshIpStateText()
+            NotificationManager.updateIpText("")
             pendingConnectionTest = false
         }
     }

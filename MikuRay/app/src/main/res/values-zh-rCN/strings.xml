@@ -218,6 +218,8 @@
     <string name="summary_pref_hide_direct_traffic_notification">在通知中隐藏直连流量统计,只显示代理流量。</string>
     <string name="title_pref_show_group_name_notification">在通知中显示分组名称</string>
     <string name="summary_pref_show_group_name_notification">在通知的服务器标题旁显示订阅分组名称。</string>
+    <string name="title_pref_show_ip_notification">在通知中显示IP</string>
+    <string name="summary_pref_show_ip_notification">在通知中显示已连接服务器的IP地址。</string>
 
     <string name="title_pref_show_realtime_traffic_ip">用实时流量替代IP显示</string>
     <string name="summary_pref_show_realtime_traffic_ip">将主页的IP文字替换为实时上传/下载速度，和通知栏一样。</string>
