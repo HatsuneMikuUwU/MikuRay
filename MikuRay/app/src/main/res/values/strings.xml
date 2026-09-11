@@ -26,7 +26,6 @@
     <string name="pull_down_to_refresh">Please pull down to refresh!</string>
 
     <string name="notification_action_stop_v2ray">Stop</string>
-    <string formatted="false" name="notification_ip">ip : %s</string>
     <string name="notification_connect_time">timer : %s</string>
     <string formatted="false" name="notification_data_usage">total : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">Unable to obtain the permission</string>
@@ -236,8 +235,6 @@
     <string name="summary_pref_hide_direct_traffic_notification">Hide the direct traffic stats from the notification, only proxy traffic is shown.</string>
     <string name="title_pref_show_group_name_notification">Show group name in notification</string>
     <string name="summary_pref_show_group_name_notification">Show the subscription group name next to the server title in the notification.</string>
-    <string name="title_pref_show_ip_notification">Show IP in notification</string>
-    <string name="summary_pref_show_ip_notification">Show the connected server\'s IP address in the notification.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Show real-time traffic instead of IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Replace the IP text on the home screen with live upload/download speed, just like the notification.</string>

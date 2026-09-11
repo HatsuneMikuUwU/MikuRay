@@ -182,15 +182,6 @@
             android:key="pref_show_group_name_notification"
             android:summary="@string/summary_pref_show_group_name_notification"
             android:title="@string/title_pref_show_group_name_notification"
-            app:layout="@layout/uwu_mid_switch"
-            app:widgetLayout="@layout/uwu_widget_material_switch" />
-
-         <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:icon="@drawable/rmx_map_pin_line"
-            android:key="pref_show_ip_notification"
-            android:summary="@string/summary_pref_show_ip_notification"
-            android:title="@string/title_pref_show_ip_notification"
             app:layout="@layout/uwu_bot_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch" />
 

@@ -24,7 +24,6 @@
     <string name="pull_down_to_refresh">Tarik ke bawah dong buat refresh!</string>
 
     <string name="notification_action_stop_v2ray">Stop</string>
-    <string formatted="false" name="notification_ip">ip : %s</string>
     <string name="notification_connect_time">waktu : %s</string>
     <string formatted="false" name="notification_data_usage">total : ↑ %s  ↓ %s</string>
     <string name="toast_permission_denied">Duh, ga dapet izin nih</string>
@@ -221,8 +220,6 @@
     <string name="summary_pref_hide_direct_traffic_notification">Sembunyiin info traffic direct di notif, yang keliatan cuma traffic proxy aja.</string>
     <string name="title_pref_show_group_name_notification">Tampilin nama grup di notif</string>
     <string name="summary_pref_show_group_name_notification">Nampilin nama grup langganan di samping judul server di notif.</string>
-    <string name="title_pref_show_ip_notification">Tampilin IP di notif</string>
-    <string name="summary_pref_show_ip_notification">Nampilin alamat IP server yang lagi konek di notif.</string>
 
     <string name="title_pref_show_realtime_traffic_ip">Tampilin traffic real-time ganti IP</string>
     <string name="summary_pref_show_realtime_traffic_ip">Ganti teks IP di layar utama jadi kecepatan upload/download real-time, kayak di notifikasi.</string>
