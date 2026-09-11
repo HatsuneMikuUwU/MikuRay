@@ -7,7 +7,7 @@ import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.util.LogUtil
 
-class MmkvPreferenceDataStore : PreferenceDataStore() {
+class MmkvPreferenceDataStore(private val triggersServiceRestart: Boolean = true) : PreferenceDataStore() {
 
     override fun putString(key: String, value: String?) {
         MmkvManager.encodeSettings(key, value)
@@ -84,7 +84,9 @@ class MmkvPreferenceDataStore : PreferenceDataStore() {
             SettingsChangeManager.makeRefreshDisplayPrefs()
         }
 
-        SettingsChangeManager.makeRestartService()
+        if (triggersServiceRestart) {
+            SettingsChangeManager.makeRestartService()
+        }
         SettingsChangeManager.makeSetupGroupTab()
     }
 }

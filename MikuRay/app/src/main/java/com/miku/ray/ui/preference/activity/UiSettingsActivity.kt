@@ -480,7 +480,7 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
-            preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
+            preferenceManager.preferenceDataStore = MmkvPreferenceDataStore(triggersServiceRestart = false)
             addPreferencesFromResource(R.xml.pref_ui_settings)
             SearchBarChipMode.current()
             initPreferenceSummaries()
