@@ -617,8 +617,7 @@ FastScrollRecyclerView.SectionedAdapter {
     class MainViewHolder(val views: MainItemViews) :
     BaseViewHolder(views.root) {
         override fun onItemSelected() {
-            val context = itemView.context
-            views.layoutCard.setCardBackgroundColor(context.getColorAttr("colorSurfaceVariant"))
+            views.layoutCard.setCardBackgroundColor(Color.TRANSPARENT)
         }
         override fun onItemClear() {
             val context = itemView.context
