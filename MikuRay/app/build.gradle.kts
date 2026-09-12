@@ -15,8 +15,8 @@ aboutLibraries {
     }
 }
 
-val appVersionName = "2.3.1"
-val appVersionCode = 741
+val appVersionName = "2.3.2"
+val appVersionCode = 742
 
 val jakartaTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta"))
 val appBuildDate = jakartaTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
