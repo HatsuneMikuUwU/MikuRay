@@ -75,7 +75,8 @@ ItemTouchHelperAdapter {
     BaseViewHolder(itemRoutingSettingBinding.root), ItemTouchHelperViewHolder {
 
         override fun onItemSelected() {
-            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(Color.TRANSPARENT)
+            val context = itemView.context
+            itemRoutingSettingBinding.layoutCard.setCardBackgroundColor(context.getColorAttr("colorCard"))
         }
 
         override fun onItemClear() {
