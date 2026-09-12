@@ -7,7 +7,7 @@ data class ServerAffiliationInfo(
     var countryCode: String? = null,
 ) {
     fun getTestDelayString(): String {
-        if (testDelayMillis == 0L) {
+        if (testDelayMillis <= 0L) {
             return ""
         }
         return testDelayMillis.toString() + "ms"

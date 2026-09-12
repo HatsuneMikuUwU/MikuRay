@@ -7,6 +7,12 @@ object AppConfig {
 
     const val DIR_ASSETS = "assets"
 
+    // Stored in ServerAffiliationInfo.countryCode when a country-code probe was attempted but
+    // failed, so the UI can show a failure indicator instead of treating it the same as "never
+    // tested" (null). Deliberately not a valid 2-letter ISO code so it never collides with a
+    // real result.
+    const val COUNTRY_CODE_TEST_FAILED = "FAILED"
+
     const val WEBDAV_BACKUP_DIR = "backups"
     const val WEBDAV_BACKUP_FILE_NAME = "backup_ng.zip"
 

@@ -145,7 +145,9 @@ class CountryCodeTestService : Service() {
                                 LogUtil.e(AppConfig.TAG, "Country-code probe failed for $guid", e)
                                 null
                             }
-                            MmkvManager.encodeServerCountryCode(guid, countryCode)
+                            if (!cancelled.get()) {
+                                MmkvManager.encodeServerCountryCode(guid, countryCode ?: AppConfig.COUNTRY_CODE_TEST_FAILED)
+                            }
                             synchronized(progressLock) {
                                 MessageUtil.sendMsg2UI(this@CountryCodeTestService, AppConfig.MSG_COUNTRY_CODE_SUCCESS, guid, requestId)
                                 val current = completed.incrementAndGet()

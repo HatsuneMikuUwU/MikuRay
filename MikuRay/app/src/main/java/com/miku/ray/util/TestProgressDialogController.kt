@@ -156,13 +156,13 @@ class TestProgressDialogController(
             ?.trim()?.uppercase()?.takeIf { it.length == 2 }
             if (code == null) {
                 context.vibrateOnError()
-                RowContent(context.getString(R.string.toast_failure), R.color.colorPingRed)
+                RowContent(context.getString(R.string.connection_test_fail), R.color.colorPingRed)
             } else {
                 val text = listOf(Utils.countryCodeToFlag(code), code)
                 .filterNotNull()
                 .filter { it.isNotBlank() }
                 .joinToString(" ")
-                .ifBlank { context.getString(R.string.toast_failure) }
+                .ifBlank { context.getString(R.string.connection_test_fail) }
                 RowContent(text, R.color.colorPing)
             }
         }
