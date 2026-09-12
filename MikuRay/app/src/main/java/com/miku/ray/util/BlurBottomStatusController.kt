@@ -3,6 +3,7 @@ package com.miku.ray.util
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Outline
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.view.MotionEvent
@@ -32,13 +33,13 @@ object BlurBottomStatusController {
     private const val MAX_BLUR_RADIUS = 25f
 
     private fun toBlurViewRadius(userRadius: Float): Float =
-    userRadius.coerceIn(MIN_BLUR_RADIUS, MAX_BLUR_RADIUS)
+        userRadius.coerceIn(MIN_BLUR_RADIUS, MAX_BLUR_RADIUS)
 
     fun isEnabled(): Boolean =
-    MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
 
     private fun isBlobAnimEnabled(): Boolean =
-    MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_BLOB_ANIM, false)
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_BLOB_ANIM, false)
 
     fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding, onTestClick: () -> Unit) {
         val density = activity.resources.displayMetrics.density
@@ -46,7 +47,12 @@ object BlurBottomStatusController {
 
         binding.blurBottomStatus.apply {
             visibility = View.VISIBLE
-            outlineProvider = ViewOutlineProvider.BACKGROUND
+            
+            outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    outline.setRoundRect(0, 0, view.width, view.height, radiusPx)
+                }
+            }
             clipToOutline = true
         }
 
@@ -74,7 +80,7 @@ object BlurBottomStatusController {
     }
 
     private fun alphaPercentToInt(percent: Float): Int =
-    (percent.coerceIn(0f, 100f) / 100f * 255f).toInt().coerceIn(0, 255)
+        (percent.coerceIn(0f, 100f) / 100f * 255f).toInt().coerceIn(0, 255)
 
     private fun withAlpha(color: Int, alpha: Int): Int = Color.argb(
         alpha, Color.red(color), Color.green(color), Color.blue(color)
@@ -117,9 +123,9 @@ object BlurBottomStatusController {
                     v.isPressed = false
                     glowDrawable?.alpha = 0
                     v.animate().scaleX(1f).scaleY(1f).translationX(0f).translationY(0f)
-                    .setDuration(380)
-                    .setInterpolator(OvershootInterpolator(1.8f))
-                    .start()
+                        .setDuration(380)
+                        .setInterpolator(OvershootInterpolator(1.8f))
+                        .start()
                     if (event.actionMasked == MotionEvent.ACTION_UP) {
                         v.performClick()
                     }
@@ -176,8 +182,8 @@ object BlurBottomStatusController {
 
         binding.blurBottomStatus.apply {
             setupWith(binding.mainContent)
-            .setFrameClearDrawable(activity.window.decorView.background)
-            .setBlurAutoUpdate(true)
+                .setFrameClearDrawable(activity.window.decorView.background)
+                .setBlurAutoUpdate(true)
             background = glassDrawable
             clipToOutline = true
             foreground = combinedForeground
