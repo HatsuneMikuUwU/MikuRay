@@ -1004,6 +1004,8 @@ yang kamu butuhin."</string>
     <string name="summary_pref_enable_blur">Nyalain efek blur di background window</string>
     <string name="title_pref_blur_bottom_status">Blur Card Status Bawah</string>
     <string name="summary_pref_blur_bottom_status">Aktifin efek blur di card status bagian bawah</string>
+    <string name="title_pref_blur_bottom_blob_anim">Animasi Blob Cair</string>
+    <string name="summary_pref_blur_bottom_blob_anim">Tampilin animasi blob cair yang mengambang di blur card status bagian bawah</string>
     <string name="pref_blur_intensity">Kekuatan Blur</string>
     <string name="blur_intensity_radius_label">Radius Blur (2–100)</string>
     <string name="blur_intensity_rounds_label">Pengulangan Blur (1–15)</string>

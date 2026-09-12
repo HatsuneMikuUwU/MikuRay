@@ -1014,6 +1014,8 @@
     <string name="summary_pref_enable_blur">Включить эффект размытия фона в окнах</string>
     <string name="title_pref_blur_bottom_status">Размытие нижней карточки статуса</string>
     <string name="summary_pref_blur_bottom_status">Включить эффект размытия для нижней карточки статуса</string>
+    <string name="title_pref_blur_bottom_blob_anim">Анимация жидких капель</string>
+    <string name="summary_pref_blur_bottom_blob_anim">Показывать плавающую анимацию жидких капель на размытии нижней карточки статуса</string>
     <string name="pref_blur_intensity">Интенсивность размытия</string>
     <string name="blur_intensity_radius_label">Радиус размытия (2–100)</string>
     <string name="blur_intensity_rounds_label">Итерации размытия (1–15)</string>

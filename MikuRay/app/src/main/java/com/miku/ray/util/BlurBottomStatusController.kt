@@ -7,11 +7,14 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.animation.OvershootInterpolator
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.miku.ray.AppConfig
 import com.miku.ray.blurview.BlurView
+import com.miku.ray.widget.BlobView
 import com.miku.ray.databinding.ActivityMainBinding
 import com.miku.ray.handler.MmkvManager
 import java.lang.ref.WeakReference
@@ -21,6 +24,7 @@ object BlurBottomStatusController {
 
     private var blurViewReference: WeakReference<BlurView>? = null
     private var glassDrawableReference: WeakReference<GradientDrawable>? = null
+    private var blobViewReference: WeakReference<BlobView>? = null
     private var glassFillBaseColor: Int = 0
     private var glassFillColor: Int = Color.TRANSPARENT
 
@@ -32,6 +36,9 @@ object BlurBottomStatusController {
 
     fun isEnabled(): Boolean =
     MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_STATUS, false)
+
+    private fun isBlobAnimEnabled(): Boolean =
+    MmkvManager.decodeSettingsBool(AppConfig.PREF_BLUR_BOTTOM_BLOB_ANIM, false)
 
     fun applyState(activity: AppCompatActivity, binding: ActivityMainBinding, onTestClick: () -> Unit) {
         val density = activity.resources.displayMetrics.density
@@ -185,6 +192,7 @@ object BlurBottomStatusController {
         blurViewReference = WeakReference(binding.blurBottomStatus)
         glassDrawableReference = WeakReference(glassDrawable)
 
+        attachBlobAnimation(activity, binding)
         updateChildViews(activity, binding, isBlurOn = true)
     }
 
@@ -196,6 +204,7 @@ object BlurBottomStatusController {
     ) {
         blurViewReference?.clear()
         glassDrawableReference?.clear()
+        detachBlobAnimation()
 
         val solidDrawable = GradientDrawable().apply {
             setColor(activity.getColorAttr("colorPrimary"))
@@ -218,6 +227,36 @@ object BlurBottomStatusController {
         }
 
         updateChildViews(activity, binding, isBlurOn = false)
+    }
+
+    private fun attachBlobAnimation(activity: AppCompatActivity, binding: ActivityMainBinding) {
+        detachBlobAnimation()
+        if (!isBlobAnimEnabled()) return
+
+        val blobColors = intArrayOf(
+            activity.getColorAttr("colorPrimary"),
+            activity.getColorAttr("colorSecondary"),
+            activity.getColorAttr("colorTertiary")
+        )
+
+        val blobView = BlobView(activity)
+        binding.blurBottomStatus.addView(
+            blobView,
+            0,
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        )
+        blobView.start(blobColors)
+
+        blobViewReference = WeakReference(blobView)
+    }
+
+    private fun detachBlobAnimation() {
+        blobViewReference?.get()?.let { view ->
+            view.stop()
+            (view.parent as? ViewGroup)?.removeView(view)
+        }
+        blobViewReference?.clear()
+        blobViewReference = null
     }
 
     private fun updateChildViews(

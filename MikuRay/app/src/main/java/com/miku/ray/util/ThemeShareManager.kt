@@ -64,6 +64,7 @@ object ThemeShareManager {
         AppConfig.PREF_ENABLE_BLUR,
         AppConfig.PREF_USE_SYSTEM_BLUR,
         AppConfig.PREF_BLUR_BOTTOM_STATUS,
+        AppConfig.PREF_BLUR_BOTTOM_BLOB_ANIM,
         AppConfig.PREF_DISABLE_HOME_BANNER,
         AppConfig.PREF_ENABLE_PARTICLES_SHEET,
         AppConfig.PREF_SHOW_QUICK_ACTIONS,

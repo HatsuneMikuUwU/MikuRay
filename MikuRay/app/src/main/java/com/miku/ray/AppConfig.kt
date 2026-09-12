@@ -146,6 +146,7 @@ object AppConfig {
     const val DEFAULT_BLUR_BOTTOM_RADIUS = 2.5f
     const val PREF_BLUR_BOTTOM_ALPHA = "pref_blur_bottom_alpha"
     const val DEFAULT_BLUR_BOTTOM_ALPHA = 25
+    const val PREF_BLUR_BOTTOM_BLOB_ANIM = "pref_blur_bottom_blob_anim"
     const val PREF_ICON_SHAPE = "pref_icon_shape"
     const val PREF_ICON_SHAPE_DEFAULT = "uwu_shape_cookie"
     const val PREF_ARROW_SHAPE = "pref_arrow_shape"

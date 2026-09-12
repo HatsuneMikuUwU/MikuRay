@@ -441,6 +441,16 @@
             app:layout="@layout/uwu_mid_switch"
             app:widgetLayout="@layout/uwu_widget_material_switch" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="pref_blur_bottom_status"
+            android:icon="@drawable/rmx_blur_line"
+            android:key="pref_blur_bottom_blob_anim"
+            android:summary="@string/summary_pref_blur_bottom_blob_anim"
+            android:title="@string/title_pref_blur_bottom_blob_anim"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
         <com.miku.ray.ui.dialog.BlurBottomIntensityDialog
             android:icon="@drawable/rmx_blur_line"
             app:dependency="pref_blur_bottom_status"

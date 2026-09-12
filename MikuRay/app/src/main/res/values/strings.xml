@@ -1042,6 +1042,8 @@ you need."</string>
     <string name="summary_pref_enable_blur">Enable background blur effect on windows</string>
     <string name="title_pref_blur_bottom_status">Blur Status Bottom Card</string>
     <string name="summary_pref_blur_bottom_status">Enable blur effect on the status  bottom card</string>
+    <string name="title_pref_blur_bottom_blob_anim">Liquid Blob Animation</string>
+    <string name="summary_pref_blur_bottom_blob_anim">Show a floating liquid blob animation on the bottom status blur</string>
     <string name="pref_blur_intensity">Blur Intensity</string>
     <string name="blur_intensity_radius_label">Blur Radius (2–100)</string>
     <string name="blur_intensity_rounds_label">Blur Iterations (1–15)</string>
