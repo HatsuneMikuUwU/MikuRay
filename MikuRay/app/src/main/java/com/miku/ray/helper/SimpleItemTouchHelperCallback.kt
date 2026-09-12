@@ -3,7 +3,6 @@ package com.miku.ray.helper
 import android.animation.ValueAnimator
 import android.graphics.Canvas
 import android.view.animation.DecelerateInterpolator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.abs
@@ -21,15 +20,8 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val dragFlags: Int
-        val swipeFlags: Int
-        if (recyclerView.layoutManager is GridLayoutManager) {
-            dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            swipeFlags = if (allowSwipe) ItemTouchHelper.START or ItemTouchHelper.END else 0
-        } else {
-            dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            swipeFlags = if (allowSwipe) ItemTouchHelper.START or ItemTouchHelper.END else 0
-        }
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        val swipeFlags = if (allowSwipe) ItemTouchHelper.START or ItemTouchHelper.END else 0
         return makeMovementFlags(dragFlags, swipeFlags)
     }
 
