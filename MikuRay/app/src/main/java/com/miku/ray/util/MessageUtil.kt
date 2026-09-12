@@ -18,6 +18,8 @@ import java.io.Serializable
 
 object MessageUtil {
 
+    const val EXTRA_REQUEST_ID = "requestId"
+
     fun sendMsg2Service(ctx: Context, what: Int, content: Serializable) {
         sendMsg(ctx, AppConfig.BROADCAST_ACTION_SERVICE, what, content)
     }
@@ -27,6 +29,14 @@ object MessageUtil {
         what: Int,
         content: Serializable,
         onResult: (handled: Boolean) -> Unit,
+    ) = sendMsg2ServiceForResult(ctx, what, content, null, onResult)
+
+    fun sendMsg2ServiceForResult(
+        ctx: Context,
+        what: Int,
+        content: Serializable,
+        requestId: String?,
+        onResult: (handled: Boolean) -> Unit,
     ) {
         val resultReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -35,7 +45,9 @@ object MessageUtil {
         }
         try {
             ctx.sendOrderedBroadcast(
-                messageIntent(AppConfig.BROADCAST_ACTION_SERVICE, what, content),
+                messageIntent(AppConfig.BROADCAST_ACTION_SERVICE, what, content).apply {
+                    requestId?.let { putExtra(EXTRA_REQUEST_ID, it) }
+                },
                 null,
                 resultReceiver,
                 null,
@@ -49,15 +61,16 @@ object MessageUtil {
         }
     }
 
-    fun sendMsg2UI(ctx: Context, what: Int, content: Serializable) {
-        sendMsg(ctx, AppConfig.BROADCAST_ACTION_ACTIVITY, what, content)
+    fun sendMsg2UI(ctx: Context, what: Int, content: Serializable, requestId: String? = null) {
+        sendMsg(ctx, AppConfig.BROADCAST_ACTION_ACTIVITY, what, content, requestId)
     }
 
-    fun sendMsg2TestService(ctx: Context, message: TestServiceMessage) {
+    fun sendMsg2TestService(ctx: Context, message: TestServiceMessage, requestId: String? = null) {
         try {
             val intent = Intent()
             intent.component = ComponentName(ctx, CoreTestService::class.java)
             intent.putExtra("content", message)
+            requestId?.let { intent.putExtra(EXTRA_REQUEST_ID, it) }
             when (message.key) {
                 AppConfig.MSG_MEASURE_CONFIG_START -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -81,13 +94,17 @@ object MessageUtil {
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to send message to test service", e)
+            if (message.key == AppConfig.MSG_MEASURE_CONFIG_START) {
+                sendMsg2UI(ctx, AppConfig.MSG_MEASURE_CONFIG_FINISH, "", requestId)
+            }
         }
     }
 
     fun sendMsg2CountryCodeTestService(ctx: Context, message: CountryCodeTestMessage) {
         try {
             val intent = Intent(ctx, CountryCodeTestService::class.java)
-            .putExtra("content", message)
+                .putExtra("content", message)
+                .putExtra(EXTRA_REQUEST_ID, message.requestId)
             when (message.key) {
                 AppConfig.MSG_COUNTRY_CODE_START -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -131,9 +148,11 @@ object MessageUtil {
         }
     }
 
-    private fun sendMsg(ctx: Context, action: String, what: Int, content: Serializable) {
+    private fun sendMsg(ctx: Context, action: String, what: Int, content: Serializable, requestId: String? = null) {
         try {
-            ctx.sendBroadcast(messageIntent(action, what, content))
+            ctx.sendBroadcast(messageIntent(action, what, content).apply {
+                requestId?.let { putExtra(EXTRA_REQUEST_ID, it) }
+            })
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to send message with action: $action", e)
         }

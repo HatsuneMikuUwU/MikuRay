@@ -29,12 +29,26 @@ import libv2ray.CoreCallbackHandler
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.concurrent.thread
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import java.util.concurrent.atomic.AtomicInteger
 
 class CountryCodeTestService : Service() {
 
     private val cancelled = AtomicBoolean(false)
-    private var worker: Thread? = null
+    private val workerScope = CoroutineScope(Dispatchers.IO)
+    private var worker: Job? = null
+    private val progressLock = Any()
+    @Volatile
+    private var activeRequestId = ""
 
     private val cancelAction by lazy {
         val intent = Intent(this, CountryCodeTestService::class.java).putExtra(
@@ -58,8 +72,10 @@ class CountryCodeTestService : Service() {
 
     override fun onDestroy() {
         cancelled.set(true)
-        worker?.interrupt()
+        worker?.cancel()
         worker = null
+        sendFinish(activeRequestId)
+        activeRequestId = ""
         NotificationHelper.stopForeground(this)
         super.onDestroy()
     }
@@ -73,14 +89,20 @@ class CountryCodeTestService : Service() {
 
         when (message.key) {
             AppConfig.MSG_COUNTRY_CODE_START -> handleStart(message, startId)
-            AppConfig.MSG_COUNTRY_CODE_CANCEL -> handleCancel()
+            AppConfig.MSG_COUNTRY_CODE_CANCEL -> handleCancel(message.requestId)
             else -> stopSelf(startId)
         }
         return START_NOT_STICKY
     }
 
     private fun handleStart(message: CountryCodeTestMessage, startId: Int) {
-        if (worker?.isAlive == true) return
+        if (worker?.isActive == true) {
+            cancelled.set(true)
+            worker?.cancel()
+            sendFinish(activeRequestId)
+            activeRequestId = ""
+        }
+        val requestId = message.requestId
 
         val guids = when {
             message.serverGuids.isNotEmpty() -> message.serverGuids
@@ -88,12 +110,14 @@ class CountryCodeTestService : Service() {
             else -> MmkvManager.decodeAllServerList()
         }
         if (guids.isEmpty()) {
-            sendFinish()
+            sendFinish(requestId)
             stopSelf(startId)
             return
         }
 
         cancelled.set(false)
+        activeRequestId = requestId
+        val targetGuids = guids.toList()
         NotificationHelper.startForeground(
             this,
             NotificationChannelType.CORE_TEST,
@@ -102,29 +126,56 @@ class CountryCodeTestService : Service() {
             cancelAction
         )
 
-        worker = thread(name = "CountryCodeTest", start = true) {
+        worker = workerScope.launch(
+            Dispatchers.IO.limitedParallelism(SettingsManager.getRealPingConcurrency()),
+        ) {
             try {
-                SettingsManager.initAssets(this, assets)
-                CoreNativeManager.initCoreEnv(this)
-                guids.forEachIndexed { index, guid ->
-                    if (cancelled.get() || Thread.currentThread().isInterrupted) return@thread
-
-                    val countryCode = lookupThroughProfile(guid)
-                    MmkvManager.encodeServerCountryCode(guid, countryCode)
-                    MessageUtil.sendMsg2UI(this, AppConfig.MSG_COUNTRY_CODE_SUCCESS, guid)
-
-                    MessageUtil.sendMsg2UI(
-                        this,
-                        AppConfig.MSG_COUNTRY_CODE_NOTIFY,
-                        JsonUtil.toJson(TestProgressInfo(guid, 0L, index + 1, guids.size))
-                    )
+                SettingsManager.initAssets(this@CountryCodeTestService, assets)
+                CoreNativeManager.initCoreEnv(this@CountryCodeTestService)
+                val completed = AtomicInteger(0)
+                supervisorScope {
+                    targetGuids.map { guid ->
+                        async {
+                            currentCoroutineContext().ensureActive()
+                            val countryCode = try {
+                                lookupThroughProfile(guid)
+                            } catch (cancelled: CancellationException) {
+                                throw cancelled
+                            } catch (e: Exception) {
+                                LogUtil.e(AppConfig.TAG, "Country-code probe failed for $guid", e)
+                                null
+                            }
+                            MmkvManager.encodeServerCountryCode(guid, countryCode)
+                            synchronized(progressLock) {
+                                MessageUtil.sendMsg2UI(this@CountryCodeTestService, AppConfig.MSG_COUNTRY_CODE_SUCCESS, guid, requestId)
+                                val current = completed.incrementAndGet()
+                                val progress = TestProgressInfo(guid, 0L, current, targetGuids.size)
+                                NotificationHelper.updateNotification(
+                                    channelType = NotificationChannelType.CORE_TEST,
+                                    context = this@CountryCodeTestService,
+                                    title = getString(R.string.title_country_code_all_server),
+                                    content = getString(
+                                        R.string.connection_runing_task_left,
+                                        "${current} / ${targetGuids.size}",
+                                    ),
+                                )
+                                MessageUtil.sendMsg2UI(
+                                    this@CountryCodeTestService,
+                                    AppConfig.MSG_COUNTRY_CODE_NOTIFY,
+                                    JsonUtil.toJson(progress),
+                                    requestId,
+                                )
+                            }
+                        }
+                    }.awaitAll()
                 }
-            } catch (e: InterruptedException) {
-                Thread.currentThread().interrupt()
+            } catch (_: CancellationException) {
+                throw CancellationException()
             } catch (e: Exception) {
                 LogUtil.e(AppConfig.TAG, "CountryCodeTestService failed", e)
             } finally {
-                sendFinish()
+                sendFinish(requestId)
+                if (activeRequestId == requestId) activeRequestId = ""
                 stopSelf(startId)
             }
         }
@@ -203,17 +254,18 @@ class CountryCodeTestService : Service() {
         }
     }
 
-    private fun handleCancel() {
+    private fun handleCancel(requestId: String) {
         cancelled.set(true)
-        worker?.interrupt()
+        worker?.cancel()
         worker = null
-        sendFinish()
+        sendFinish(requestId.ifEmpty { activeRequestId })
+        activeRequestId = ""
         NotificationHelper.stopForeground(this)
         stopSelf()
     }
 
-    private fun sendFinish() {
-        MessageUtil.sendMsg2UI(this, AppConfig.MSG_COUNTRY_CODE_FINISH, "0")
+    private fun sendFinish(requestId: String) {
+        MessageUtil.sendMsg2UI(this, AppConfig.MSG_COUNTRY_CODE_FINISH, "0", requestId)
     }
 
     private class CountryCallback : CoreCallbackHandler {

@@ -42,6 +42,7 @@ class MainRepository(
     private val serviceReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val safeIntent = intent ?: return
+            val requestId = safeIntent.getStringExtra(MessageUtil.EXTRA_REQUEST_ID).orEmpty()
             val event = when (safeIntent.getIntExtra("key", 0)) {
                 AppConfig.MSG_STATE_RUNNING -> MainServiceEvent.StateRunning
                 AppConfig.MSG_STATE_NOT_RUNNING -> MainServiceEvent.StateNotRunning
@@ -58,11 +59,13 @@ class MainRepository(
                 AppConfig.MSG_STATE_STOP_SUCCESS -> MainServiceEvent.StateStopSuccess
 
                 AppConfig.MSG_MEASURE_DELAY_SUCCESS -> MainServiceEvent.MeasureDelayResult(
-                    text = safeIntent.getStringExtra("content").orEmpty(),
+                    text = safeIntent.getStringExtra("content").orEmpty(), requestId = requestId,
                 )
+                AppConfig.MSG_MEASURE_DELAY_CANCEL -> MainServiceEvent.MeasureDelayCancelled(requestId)
 
                 AppConfig.MSG_MEASURE_IP_SUCCESS -> MainServiceEvent.MeasureIpResult(
                     ip = safeIntent.getStringExtra("content"),
+                    requestId = requestId,
                 )
 
                 AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> {
@@ -82,16 +85,18 @@ class MainRepository(
 
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> MainServiceEvent.MeasureConfigFinish(
                     summary = safeIntent.getStringExtra("content")?.parseJson(RealPingSummary::class.java),
+                    requestId = requestId,
                 )
 
                 AppConfig.MSG_COUNTRY_CODE_SUCCESS -> safeIntent.getStringExtra("content")
-                    ?.let(MainServiceEvent::CountryCodeSuccess)
+                    ?.let { MainServiceEvent.CountryCodeSuccess(it, requestId) }
 
                 AppConfig.MSG_COUNTRY_CODE_NOTIFY -> MainServiceEvent.CountryCodeNotify(
                     info = safeIntent.getStringExtra("content")?.parseJson(TestProgressInfo::class.java),
+                    requestId = requestId,
                 )
 
-                AppConfig.MSG_COUNTRY_CODE_FINISH -> MainServiceEvent.CountryCodeFinish
+                AppConfig.MSG_COUNTRY_CODE_FINISH -> MainServiceEvent.CountryCodeFinish(requestId)
 
                 AppConfig.MSG_TRAFFIC_UPDATED -> safeIntent.getStringExtra("content")
                     ?.let(MainServiceEvent::TrafficUpdated)
@@ -146,16 +151,18 @@ class MainRepository(
         }
     }
 
-    override fun sendMsg2TestService(msg: TestServiceMessage) {
-        MessageUtil.sendMsg2TestService(app, msg)
+    override fun sendMsg2TestService(msg: TestServiceMessage, requestId: String?) {
+        MessageUtil.sendMsg2TestService(app, msg, requestId)
     }
 
     override fun sendMsg2CountryCodeTestService(msg: CountryCodeTestMessage) {
         MessageUtil.sendMsg2CountryCodeTestService(app, msg)
     }
 
-    override fun testCurrentServerRealPing() {
-        sendMsg2Service(AppConfig.MSG_MEASURE_DELAY, "")
+    override fun testCurrentServerRealPing(requestId: String) {
+        MessageUtil.sendMsg2ServiceForResult(app, AppConfig.MSG_MEASURE_DELAY, "", requestId) { handled ->
+            if (!handled) _mainServiceEvent.tryEmit(MainServiceEvent.MeasureDelayCancelled(requestId))
+        }
     }
 }
 

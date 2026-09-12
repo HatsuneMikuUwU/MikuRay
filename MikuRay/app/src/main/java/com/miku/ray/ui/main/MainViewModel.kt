@@ -48,6 +48,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var subscriptionId: String = mainRepository.getSelectedSubscriptionId()
     var keywordFilter = ""
     private var activeTestId: String? = null
+    private var activeCurrentTestId: String? = null
+    private var lastCurrentTestId: String? = null
+    private var activeCountryCodeTestId: String? = null
     private var activeTestCompleted = 0
     private var activeTestTotal = 0
     private var isRestarting = false
@@ -145,6 +148,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     override fun onCleared() {
         reloadJob?.cancel()
+        activeCurrentTestId?.let { mainRepository.sendMsg2Service(AppConfig.MSG_MEASURE_DELAY_CANCEL, it) }
+        activeCountryCodeTestId?.let {
+            mainRepository.sendMsg2CountryCodeTestService(
+                CountryCodeTestMessage(AppConfig.MSG_COUNTRY_CODE_CANCEL, requestId = it),
+            )
+        }
         mainServiceEventJob?.cancel()
         mainRepository.close()
         super.onCleared()
@@ -326,20 +335,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun testAllRealPing(onlyTcp: Boolean = false) {
         val testId = UUID.randomUUID().toString()
+        val targetGuids = serversCache.map { it.guid }.toList()
         activeTestId = testId
         activeTestCompleted = 0
-        activeTestTotal = serversCache.size
-        MmkvManager.clearAllTestDelayResults(serversCache.map { it.guid }.toList())
+        activeTestTotal = targetGuids.size
+        MmkvManager.clearAllTestDelayResults(targetGuids)
         notifyListChanged(-1)
 
         viewModelScope.launch(Dispatchers.Default) {
-            if (serversCache.isEmpty()) {
+            if (targetGuids.isEmpty()) {
                 withContext(Dispatchers.Main) {
                     reloadServerList()
-                    activeTestTotal = serversCache.size
                 }
             }
-            if (serversCache.isEmpty()) {
+            val preparedGuids = if (targetGuids.isEmpty()) {
+                withContext(Dispatchers.Main) { serversCache.map { it.guid }.toList() }
+            } else targetGuids
+            if (preparedGuids.isEmpty()) {
                 activeTestId = null
                 withContext(Dispatchers.Main) {
                     _testProgress.value = null
@@ -351,37 +363,53 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     key = AppConfig.MSG_MEASURE_CONFIG_START,
                     testId = testId,
                     subscriptionId = subscriptionId,
-                    serverGuids = if (keywordFilter.isNotEmpty()) serversCache.map { it.guid } else emptyList(),
+                    serverGuids = if (keywordFilter.isNotEmpty() || targetGuids.isNotEmpty()) preparedGuids else emptyList(),
                     onlyTcp = onlyTcp
-                )
+                ), requestId = testId
             )
         }
     }
 
     fun testAllCountryCodes() {
-        mainRepository.sendMsg2CountryCodeTestService(
-            CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
-        )
-        val guids = serversCache.map { it.guid }.toList()
-        MmkvManager.clearAllCountryCodes(guids)
+        val requestId = UUID.randomUUID().toString()
+        activeCountryCodeTestId?.let {
+            mainRepository.sendMsg2CountryCodeTestService(
+                CountryCodeTestMessage(AppConfig.MSG_COUNTRY_CODE_CANCEL, requestId = it),
+            )
+        }
+        activeCountryCodeTestId = requestId
+        val targetGuids = serversCache.map { it.guid }.toList()
+        MmkvManager.clearAllCountryCodes(targetGuids)
         notifyListChanged(-1)
 
         viewModelScope.launch(Dispatchers.Default) {
-            if (guids.isEmpty()) return@launch
+            if (targetGuids.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    if (activeCountryCodeTestId == requestId) {
+                        activeCountryCodeTestId = null
+                        _countryCodeProgress.value = null
+                    }
+                }
+                return@launch
+            }
             mainRepository.sendMsg2CountryCodeTestService(
                 CountryCodeTestMessage(
                     key = AppConfig.MSG_COUNTRY_CODE_START,
+                    requestId = requestId,
                     subscriptionId = subscriptionId,
-                    serverGuids = if (keywordFilter.isNotEmpty()) guids else emptyList()
+                    serverGuids = targetGuids,
                 )
             )
         }
     }
 
     fun cancelCountryCodeTest() {
+        val requestId = activeCountryCodeTestId
+        activeCountryCodeTestId = null
         mainRepository.sendMsg2CountryCodeTestService(
-            CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL)
+            CountryCodeTestMessage(key = AppConfig.MSG_COUNTRY_CODE_CANCEL, requestId = requestId.orEmpty())
         )
+        _countryCodeProgress.value = null
     }
 
     fun clearCountryCodes() {
@@ -397,7 +425,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun testCurrentServerRealPing() {
-        mainRepository.testCurrentServerRealPing()
+        val requestId = UUID.randomUUID().toString()
+        activeCurrentTestId = requestId
+        lastCurrentTestId = null
+        mainRepository.testCurrentServerRealPing(requestId)
     }
 
     fun onFabClicked() {
@@ -661,6 +692,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun cancelRealPingTest() {
         val testId = activeTestId.orEmpty()
         activeTestId = null
+        val currentId = activeCurrentTestId
+        activeCurrentTestId = null
         _testProgress.value = null
         MessageUtil.sendMsg2TestService(
             getApplication(),
@@ -669,9 +702,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 testId = testId,
             )
         )
+        currentId?.let { requestId ->
+            MessageUtil.sendMsg2ServiceForResult(
+                getApplication(), AppConfig.MSG_MEASURE_DELAY_CANCEL, "", requestId,
+            ) { }
+        }
     }
 
     fun clearTestResults() {
+        activeCurrentTestId?.let { requestId ->
+            MessageUtil.sendMsg2ServiceForResult(
+                getApplication(), AppConfig.MSG_MEASURE_DELAY_CANCEL, "", requestId,
+            ) { }
+        }
         MessageUtil.sendMsg2TestService(
             getApplication(),
             TestServiceMessage(
@@ -747,11 +790,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             is MainServiceEvent.MeasureDelayResult -> {
-                _testResultText.value = event.text
+                if (event.requestId == activeCurrentTestId && isRunning.value) {
+                    lastCurrentTestId = event.requestId
+                    activeCurrentTestId = null
+                    _testResultText.value = event.text
+                }
+            }
+            is MainServiceEvent.MeasureDelayCancelled -> {
+                if (event.requestId == activeCurrentTestId) {
+                    activeCurrentTestId = null
+                }
             }
 
             is MainServiceEvent.MeasureIpResult -> {
-                _ipResultText.value = event.ip.orEmpty()
+                if (event.requestId.isEmpty()
+                    || event.requestId == activeCurrentTestId
+                    || event.requestId == lastCurrentTestId
+                ) {
+                    _ipResultText.value = event.ip.orEmpty()
+                }
             }
 
             is MainServiceEvent.MeasureConfigResult -> {
@@ -759,8 +816,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 if (result != null) {
                     if (acceptsTestEvent(result.testId)) {
                         notifyListChanged(getPosition(result.guid))
-                        activeTestCompleted += 1
-                        activeTestTotal = maxOf(activeTestTotal, activeTestCompleted)
                         _testProgress.value = TestProgressInfo(
                             guid = result.guid,
                             delayMillis = result.delayMillis,
@@ -797,6 +852,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     _testProgress.value = null
                     onTestsFinished(summary.cancelled)
                 } else {
+                    if (event.requestId.isNotEmpty() && event.requestId != activeTestId) return
                     activeTestId = null
                     _testProgress.value = null
                     onTestsFinished()
@@ -804,15 +860,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             is MainServiceEvent.CountryCodeSuccess -> {
-                _updateListItemEvent.tryEmit(getPosition(event.guid))
+                if (event.requestId == activeCountryCodeTestId) {
+                    _updateListItemEvent.tryEmit(getPosition(event.guid))
+                }
             }
 
             is MainServiceEvent.CountryCodeNotify -> {
-                event.info?.let { _countryCodeProgress.value = it }
+                if (event.requestId == activeCountryCodeTestId) {
+                    event.info?.let { _countryCodeProgress.value = it }
+                }
             }
 
-            MainServiceEvent.CountryCodeFinish -> {
-                _countryCodeProgress.value = null
+            is MainServiceEvent.CountryCodeFinish -> {
+                if (event.requestId == activeCountryCodeTestId) {
+                    activeCountryCodeTestId = null
+                    _countryCodeProgress.value = null
+                }
             }
 
             is MainServiceEvent.TrafficUpdated -> {

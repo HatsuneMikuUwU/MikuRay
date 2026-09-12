@@ -13,16 +13,17 @@ sealed class MainServiceEvent {
     data class StateStartFailure(val message: String?) : MainServiceEvent()
     data object StateStopSuccess : MainServiceEvent()
 
-    data class MeasureDelayResult(val text: String) : MainServiceEvent()
-    data class MeasureIpResult(val ip: String?) : MainServiceEvent()
+    data class MeasureDelayResult(val text: String, val requestId: String) : MainServiceEvent()
+    data class MeasureDelayCancelled(val requestId: String) : MainServiceEvent()
+    data class MeasureIpResult(val ip: String?, val requestId: String = "") : MainServiceEvent()
 
     data class MeasureConfigResult(val result: RealPingResult?, val rawGuid: String?) : MainServiceEvent()
     data class MeasureConfigNotify(val progress: RealPingProgress?) : MainServiceEvent()
-    data class MeasureConfigFinish(val summary: RealPingSummary?) : MainServiceEvent()
+    data class MeasureConfigFinish(val summary: RealPingSummary?, val requestId: String = "") : MainServiceEvent()
 
-    data class CountryCodeSuccess(val guid: String) : MainServiceEvent()
-    data class CountryCodeNotify(val info: TestProgressInfo?) : MainServiceEvent()
-    data object CountryCodeFinish : MainServiceEvent()
+    data class CountryCodeSuccess(val guid: String, val requestId: String = "") : MainServiceEvent()
+    data class CountryCodeNotify(val info: TestProgressInfo?, val requestId: String = "") : MainServiceEvent()
+    data class CountryCodeFinish(val requestId: String = "") : MainServiceEvent()
 
     data class TrafficUpdated(val guid: String) : MainServiceEvent()
     data class TrafficSpeedUpdated(val speedText: String) : MainServiceEvent()
