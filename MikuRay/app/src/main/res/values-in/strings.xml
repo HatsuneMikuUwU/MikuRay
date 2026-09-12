@@ -247,7 +247,7 @@
 
     <string name="title_pref_remote_dns">DNS Remote</string>
 
-    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Opsional</string>
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Opsional. Bisa isi beberapa server dipisah koma, mis. 8.8.8.8,1.1.1.1</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
     <string name="title_pref_vpn_dns">DNS VPN</string>
@@ -265,7 +265,7 @@
     <string name="title_pref_domestic_dns">DNS Domestik</string>
 
 
-    <string name="title_pref_domestic_dns_tip">Opsional</string>
+    <string name="title_pref_domestic_dns_tip">Opsional. Bisa isi beberapa server dipisah koma, mis. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
     <string name="title_pref_dns_hosts">Host DNS</string>

@@ -247,7 +247,7 @@
 
     <string name="title_pref_remote_dns">Удалённый DNS</string>
 
-    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, необязательно</string>
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, необязательно. Несколько серверов через запятую, напр. 8.8.8.8,1.1.1.1</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
     <string name="title_pref_vpn_dns">VPN DNS</string>
@@ -263,7 +263,7 @@
 
     <string name="title_pref_domestic_dns">Внутренний DNS</string>
 
-    <string name="title_pref_domestic_dns_tip">Необязательно</string>
+    <string name="title_pref_domestic_dns_tip">Необязательно. Несколько серверов через запятую, напр. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
     <string name="title_pref_dns_hosts">DNS hosts</string>

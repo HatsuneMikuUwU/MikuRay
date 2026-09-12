@@ -262,7 +262,7 @@
 
     <string name="title_pref_remote_dns">Remote DNS</string>
 
-    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Optional</string>
+    <string name="title_pref_remote_dns_tip">udp/tcp/https/quic, Optional. Separate multiple servers with a comma, e.g. 8.8.8.8,1.1.1.1</string>
     <string name="summary_pref_remote_dns">DNS</string>
 
     <string name="title_pref_vpn_dns">VPN DNS</string>
@@ -280,7 +280,7 @@
     <string name="title_pref_domestic_dns">Domestic DNS</string>
 
 
-    <string name="title_pref_domestic_dns_tip">Optional</string>
+    <string name="title_pref_domestic_dns_tip">Optional. Separate multiple servers with a comma, e.g. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
     <string name="title_pref_dns_hosts">DNS hosts</string>

@@ -352,7 +352,7 @@ object SettingsManager {
     fun getDomesticDnsServers(): List<String> {
         val domesticDns =
         MmkvManager.decodeSettingsString(AppConfig.PREF_DOMESTIC_DNS) ?: AppConfig.DNS_DIRECT
-        val ret = domesticDns.split(",").filter { Utils.isPureIpAddress(it) || Utils.isCoreDNSAddress(it) }
+        val ret = domesticDns.split(",").map { it.trim() }.filter { it.isNotEmpty() && (Utils.isPureIpAddress(it) || Utils.isCoreDNSAddress(it)) }
         if (ret.isEmpty()) {
             return listOf(AppConfig.DNS_DIRECT)
         }
@@ -362,7 +362,7 @@ object SettingsManager {
     fun getRemoteDnsServers(): List<String> {
         val remoteDns =
         MmkvManager.decodeSettingsString(AppConfig.PREF_REMOTE_DNS) ?: AppConfig.DNS_PROXY
-        val ret = remoteDns.split(",").filter { Utils.isPureIpAddress(it) || Utils.isCoreDNSAddress(it) }
+        val ret = remoteDns.split(",").map { it.trim() }.filter { it.isNotEmpty() && (Utils.isPureIpAddress(it) || Utils.isCoreDNSAddress(it)) }
         if (ret.isEmpty()) {
             return listOf(AppConfig.DNS_PROXY)
         }
@@ -371,7 +371,7 @@ object SettingsManager {
 
     fun getVpnDnsServers(): List<String> {
         val vpnDns = MmkvManager.decodeSettingsString(AppConfig.PREF_VPN_DNS) ?: AppConfig.DNS_VPN
-        return vpnDns.split(",").filter { Utils.isPureIpAddress(it) }
+        return vpnDns.split(",").map { it.trim() }.filter { it.isNotEmpty() && Utils.isPureIpAddress(it) }
     }
 
     fun getDelayTestUrl(second: Boolean = false): String {
