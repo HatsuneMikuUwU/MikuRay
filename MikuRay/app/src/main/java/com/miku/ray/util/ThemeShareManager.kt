@@ -235,6 +235,14 @@ object ThemeShareManager {
         else -> 0f
     }
 
+    private fun defaultStringValue(key: String): String? = when (key) {
+        AppConfig.PREF_ICON_SHAPE -> AppConfig.PREF_ICON_SHAPE_DEFAULT
+        AppConfig.PREF_ARROW_SHAPE -> AppConfig.PREF_ARROW_SHAPE_DEFAULT
+        AppConfig.PREF_PROFILE_BANNER_SHAPE -> AppConfig.PREF_PROFILE_BANNER_SHAPE_DEFAULT
+        AppConfig.PREF_BANNER_SETTINGS_CHARACTER -> AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT
+        else -> null
+    }
+
     private fun JSONObject.putTyped(key: String, type: String, value: Any) {
         put(key, JSONObject().apply {
                 put("type", type)
@@ -294,14 +302,43 @@ object ThemeShareManager {
     }
 
     private fun importSettings(settings: JSONObject) {
-        settings.keys().forEach { key ->
-            val typedValue = settings.optJSONObject(key) ?: return@forEach
-            when (typedValue.optString("type")) {
-                "boolean" -> if (key in booleanKeys) MmkvManager.encodeSettings(key, typedValue.optBoolean("value"))
-                "int" -> if (key in intKeys) MmkvManager.encodeSettings(key, typedValue.optInt("value"))
-                "float" -> if (key in floatKeys) MmkvManager.encodeSettings(key, typedValue.optDouble("value").toFloat())
-                "string" -> if (key in stringKeys) MmkvManager.encodeSettings(key, typedValue.optString("value"))
+        // For every known setting key, apply the value from the theme file when present;
+        // otherwise fall back to the default value instead of leaving the old value untouched.
+        booleanKeys.forEach { key ->
+            val typedValue = settings.optJSONObject(key)
+            val value = if (typedValue != null && typedValue.optString("type") == "boolean") {
+                typedValue.optBoolean("value")
+            } else {
+                defaultBooleanValue(key)
             }
+            MmkvManager.encodeSettings(key, value)
+        }
+        intKeys.forEach { key ->
+            val typedValue = settings.optJSONObject(key)
+            val value = if (typedValue != null && typedValue.optString("type") == "int") {
+                typedValue.optInt("value")
+            } else {
+                defaultIntValue(key)
+            }
+            MmkvManager.encodeSettings(key, value)
+        }
+        floatKeys.forEach { key ->
+            val typedValue = settings.optJSONObject(key)
+            val value = if (typedValue != null && typedValue.optString("type") == "float") {
+                typedValue.optDouble("value").toFloat()
+            } else {
+                defaultFloatValue(key)
+            }
+            MmkvManager.encodeSettings(key, value)
+        }
+        stringKeys.forEach { key ->
+            val typedValue = settings.optJSONObject(key)
+            val value = if (typedValue != null && typedValue.optString("type") == "string") {
+                typedValue.optString("value")
+            } else {
+                defaultStringValue(key)
+            }
+            MmkvManager.encodeSettings(key, value)
         }
     }
 
