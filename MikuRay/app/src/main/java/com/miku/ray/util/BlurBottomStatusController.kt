@@ -236,7 +236,8 @@ object BlurBottomStatusController {
         val blobColors = intArrayOf(
             activity.getColorAttr("colorPrimary"),
             activity.getColorAttr("colorSecondary"),
-            activity.getColorAttr("colorTertiary")
+            activity.getColorAttr("colorTertiary"),
+            activity.getColorAttr("colorError")
         )
 
         val blobView = BlobView(activity)

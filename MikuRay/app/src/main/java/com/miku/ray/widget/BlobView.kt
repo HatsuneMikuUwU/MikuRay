@@ -17,7 +17,7 @@ class BlobView(context: Context) : View(context) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
 
     private var blobColors: IntArray = intArrayOf(Color.WHITE)
-    private var blobCount = 3
+    private var blobCount = 4
     private var xPos = FloatArray(0)
     private var yPos = FloatArray(0)
     private var radiusFactor = FloatArray(0)
@@ -28,7 +28,7 @@ class BlobView(context: Context) : View(context) {
 
     fun start(
         colors: IntArray,
-        blobCount: Int = 3,
+        blobCount: Int = 4,
         blobSpeed: Float = 0.6f,
         motionDurationMs: Long = 9000L
     ) {
