@@ -63,7 +63,7 @@ object LauncherAliasSwitcher {
         applyAliases(context, currentIconVariant(), nameVariant)
     }
 
-    private fun applyAliases(context: Context, iconVariant: String, nameVariant: String) {
+    internal fun applyAliases(context: Context, iconVariant: String, nameVariant: String) {
         val pm = context.packageManager
         val target = aliasName(iconVariant, nameVariant)
         for (iconKey in ICON_KEYS) {

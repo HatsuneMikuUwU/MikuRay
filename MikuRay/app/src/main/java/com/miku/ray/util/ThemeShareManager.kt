@@ -427,6 +427,14 @@ object ThemeShareManager {
                 CustomFontManager.applyGlobalOverride(context)
             }
         }
+        // Writing PREF_APP_ICON / PREF_CUSTOM_APP_NAME alone doesn't change what's shown on the
+        // launcher -- the actual icon/label come from an activity-alias that must be toggled via
+        // LauncherAliasSwitcher, otherwise the imported icon/name silently has no visible effect.
+        LauncherAliasSwitcher.applyAliases(
+            context,
+            LauncherAliasSwitcher.currentIconVariant(),
+            LauncherAliasSwitcher.currentNameVariant()
+        )
         context.sendBroadcast(android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED))
         context.sendBroadcast(android.content.Intent(AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED))
         SelectedProfileBannerController.broadcastChanged(context)
