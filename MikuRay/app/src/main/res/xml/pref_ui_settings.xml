@@ -93,7 +93,7 @@
             app:layout="@layout/uwu_mid" />
 
         <ListPreference
-            android:defaultValue="99"
+            android:defaultValue="0"
             android:entries="@array/tab_badge_limit_entries"
             android:entryValues="@array/tab_badge_limit_values"
             android:icon="@drawable/rmx_system_notification_badge_line"

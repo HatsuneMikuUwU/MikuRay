@@ -476,12 +476,14 @@
         <item></item>
     </string-array>
 
-    <string-array name="tab_badge_limit_entries" translatable="false">
+    <string-array name="tab_badge_limit_entries">
+        <item>@string/tab_badge_limit_unlimited</item>
         <item>99+</item>
         <item>999+</item>
         <item>9999+</item>
     </string-array>
     <string-array name="tab_badge_limit_values" translatable="false">
+        <item>0</item>
         <item>99</item>
         <item>999</item>
         <item>9999</item>

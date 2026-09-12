@@ -324,6 +324,7 @@
     <string name="summary_pref_group_all_display">Добавить дополнительную вкладку «Все»</string>
     <string name="title_pref_group_all_tab_icon">Иконка вкладки \"Все\"</string>
     <string name="title_pref_tab_badge_limit">Лимит счётчика на вкладках</string>
+    <string name="tab_badge_limit_unlimited">Без ограничений</string>
 
     <string name="title_pref_feedback">Обратная связь</string>
     <string name="summary_pref_feedback">Сообщать об улучшениях или ошибках на GitHub</string>

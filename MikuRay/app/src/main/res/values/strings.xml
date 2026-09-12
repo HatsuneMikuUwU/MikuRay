@@ -341,6 +341,7 @@
     <string name="summary_pref_group_all_display">Add an extra "All Tabs" page</string>
     <string name="title_pref_group_all_tab_icon">\"All\" tab icon</string>
     <string name="title_pref_tab_badge_limit">Tab badge count limit</string>
+    <string name="tab_badge_limit_unlimited">Unlimited</string>
 
     <string name="title_pref_feedback">Feedback</string>
     <string name="summary_pref_feedback">Feedback enhancements or bugs to GitHub</string>

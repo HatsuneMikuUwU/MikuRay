@@ -317,6 +317,7 @@
     <string name="summary_pref_group_all_display">添加一个额外的“所有选项卡”页面</string>
     <string name="title_pref_group_all_tab_icon">\"全部\" 标签图标</string>
     <string name="title_pref_tab_badge_limit">标签页徽章数量上限</string>
+    <string name="tab_badge_limit_unlimited">无限制</string>
 
     <string name="title_pref_feedback">反馈</string>
     <string name="summary_pref_feedback">反馈改进或漏洞至 GitHub</string>
