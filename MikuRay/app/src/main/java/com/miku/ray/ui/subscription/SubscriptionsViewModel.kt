@@ -13,10 +13,17 @@ import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.ui.bottomsheet.SortSubBottomSheet
 import com.miku.ray.util.MessageUtil
+import java.util.Collections
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class SubscriptionsViewModel : ViewModel() {
     private val subscriptions: MutableList<SubscriptionCache> =
-    MmkvManager.decodeSubscriptions().toMutableList()
+        MmkvManager.decodeSubscriptions().toMutableList()
+
+    private val _subscriptionsState = MutableStateFlow<List<SubscriptionCache>>(subscriptions.toList())
+    val subscriptionsState: StateFlow<List<SubscriptionCache>> = _subscriptionsState.asStateFlow()
 
     init {
         applySortOrder()
@@ -29,16 +36,16 @@ class SubscriptionsViewModel : ViewModel() {
     }
 
     fun applySortOrder() {
-
         val origin = MmkvManager.decodeSubscriptions()
         subscriptions.clear()
         subscriptions.addAll(
             SortSubBottomSheet.sorted(
                 origin,
                 addedTime = { it.subscription.addedTime },
-                lastUpdated = { it.subscription.lastUpdated }
-            )
+                lastUpdated = { it.subscription.lastUpdated },
+            ),
         )
+        _subscriptionsState.value = subscriptions.toList()
     }
 
     fun remove(subId: String): Boolean {
@@ -46,6 +53,7 @@ class SubscriptionsViewModel : ViewModel() {
         if (changed) {
             SettingsManager.removeSubscriptionWithDefault(subId)
             SettingsChangeManager.makeSetupGroupTab()
+            _subscriptionsState.value = subscriptions.toList()
         }
         return changed
     }
@@ -55,30 +63,31 @@ class SubscriptionsViewModel : ViewModel() {
         if (idx >= 0) {
             subscriptions[idx] = SubscriptionCache(subId, item)
             MmkvManager.encodeSubscription(subId, item)
+            _subscriptionsState.value = subscriptions.toList()
         }
     }
 
     fun swap(fromPosition: Int, toPosition: Int) {
         if (fromPosition in subscriptions.indices && toPosition in subscriptions.indices) {
-            val item = subscriptions.removeAt(fromPosition)
-            subscriptions.add(toPosition, item)
+            Collections.swap(subscriptions, fromPosition, toPosition)
+            SettingsManager.saveSubscriptionsOrder(subscriptions.map { it.guid })
         }
     }
 
     fun commitOrder() {
-        SettingsManager.saveSubscriptionsOrder(subscriptions.map { it.guid })
+        MmkvManager.encodeSettings(AppConfig.PREF_SUB_SORT_ORDER, SortSubBottomSheet.ORDER_ORIGIN)
         SettingsChangeManager.makeSetupGroupTab()
     }
 
     fun updateSubscriptionsMore() {
         val subIds = MmkvManager.decodeSubscriptions()
-        .filter { it.subscription.enabled && it.subscription.url.isNotEmpty() }
-        .map { it.guid }
+            .filter { it.subscription.enabled && it.subscription.url.isNotEmpty() }
+            .map { it.guid }
         if (subIds.isEmpty()) return
 
         MessageUtil.sendMsg2SubscriptionService(
             AngApplication.application,
-            SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, false, subIds)
+            SubscriptionUpdateMessage(AppConfig.MSG_SUB_UPDATE_START, false, subIds),
         )
     }
 

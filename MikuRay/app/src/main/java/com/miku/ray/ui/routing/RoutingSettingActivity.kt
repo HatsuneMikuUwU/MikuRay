@@ -2,13 +2,14 @@ package com.miku.ray.ui.routing
 
 import com.miku.ray.remixicon.R as RemixR
 import com.miku.ray.ui.base.HelperBaseActivity
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.appcompat.app.AlertDialog
 import com.miku.ray.util.showBlur
 import androidx.lifecycle.lifecycleScope
@@ -55,6 +56,7 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
         adapter = RoutingSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 
+
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -63,6 +65,15 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
         mItemTouchHelper?.attachToRecyclerView(binding.recyclerView)
 
         updateEmptyState()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.rulesets.collect { list ->
+                    adapter.submitData(list)
+                    updateEmptyState()
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -220,11 +231,8 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
         return true
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun refreshData() {
         viewModel.reload()
-        adapter.notifyDataSetChanged()
-        updateEmptyState()
     }
 
     private fun updateEmptyState() {
@@ -250,9 +258,6 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
             ) {
                 val remarks = viewModel.getAll().getOrNull(position)?.remarks.orEmpty()
                 viewModel.remove(position)
-                adapter.notifyItemRemoved(position)
-                adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
-                updateEmptyState()
                 snackbarSuccess(
                     message = getString(R.string.toast_delete_success),
                     title = remarks

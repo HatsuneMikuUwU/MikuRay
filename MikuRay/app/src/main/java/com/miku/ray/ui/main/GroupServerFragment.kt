@@ -112,6 +112,17 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
             updateEmptyState()
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.updateListItemEvent.collect { index ->
+                    if (mainViewModel.subscriptionId != subId) return@collect
+                    adapter.setData(mainViewModel.serversCache, index)
+                    hasLoadedData = true
+                    updateEmptyState()
+                }
+            }
+        }
+
         binding.btnScrollToSelected.setOnClickListener {
             ownerActivity.locateSelectedServer()
             scrollButtonHideHandler.removeCallbacks(hideScrollButtonRunnable)

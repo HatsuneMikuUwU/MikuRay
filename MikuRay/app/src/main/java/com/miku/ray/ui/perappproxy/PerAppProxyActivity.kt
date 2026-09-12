@@ -8,6 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
@@ -51,6 +53,14 @@ class PerAppProxyActivity : BaseActivity() {
         setupToolbar(toolbar, showHomeAsUp = true, title = getString(R.string.per_app_proxy_settings), subtitle = getString(R.string.subtitle_per_app_proxy))
 
         initList()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.blacklist.collect {
+                    adapter?.notifyDataSetChanged()
+                }
+            }
+        }
 
         binding.chipPerAppProxy.apply {
             isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_PER_APP_PROXY, false)

@@ -25,6 +25,9 @@ import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.util.JsonUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
@@ -44,6 +47,9 @@ object WeatherHelper {
 
     @Volatile
     private var isFirstSessionLaunch = true
+
+    private val _chipWeather = MutableStateFlow<WeatherResult?>(null)
+    val chipWeather: StateFlow<WeatherResult?> = _chipWeather.asStateFlow()
 
     data class WeatherResult(
         val emoji: String,
@@ -341,10 +347,17 @@ object WeatherHelper {
 
     private fun saveCache(entry: WeatherCacheEntry) {
         MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_ENTRY, JsonUtil.toJson(entry))
+        _chipWeather.value = entry.toWeatherResult()
     }
 
     fun clearCache() {
         MmkvManager.encodeSettings(AppConfig.PREF_WEATHER_CACHE_ENTRY, "")
+        _chipWeather.value = null
+    }
+
+    /** Push current cache (fresh or stale) into [chipWeather] for UI collectors. */
+    fun publishChipWeatherFromCache() {
+        _chipWeather.value = getCachedWeatherStale()
     }
 
     private val client by lazy {
@@ -436,6 +449,7 @@ object WeatherHelper {
             val cachedFresh = cachedEntry != null &&
             System.currentTimeMillis() - cachedEntry.fetchedAtEpochMs <= AppConfig.WEATHER_CACHE_TTL_MS
             if (cachedFresh && isCacheValidForLocation(location)) {
+                _chipWeather.value = cachedEntry.toWeatherResult()
                 return@withContext cachedEntry
             }
         }

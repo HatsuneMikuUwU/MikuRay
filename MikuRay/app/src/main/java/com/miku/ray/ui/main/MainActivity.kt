@@ -399,7 +399,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         val showRealtimeTraffic = MmkvManager.decodeSettingsBool(AppConfig.PREF_SHOW_REALTIME_TRAFFIC_IP, false)
 
         binding.tvIpState.text = if (showRealtimeTraffic) {
-            if (mainViewModel.isRunning.value == true && lastTrafficSpeedText.isNotEmpty()) {
+            if (mainViewModel.isRunning.value && lastTrafficSpeedText.isNotEmpty()) {
                 lastTrafficSpeedText
             } else {
                 "↑ ${0L.toSpeedString()}  ↓ ${0L.toSpeedString()}"
@@ -512,6 +512,16 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         binding.tvTotalTraffic.isVisible = false
     }
 
+    private fun refreshTrafficChipIfNeeded() {
+        if (SearchBarChipMode.current() in setOf(
+                SearchBarChipMode.TOTAL_TRAFFIC,
+                SearchBarChipMode.DUAL_SWIPE
+        )) {
+            SearchChipGradientController.applyState(this, binding)
+            if (isTotalTrafficChipSelected()) refreshTotalTrafficChip()
+        }
+    }
+
     private fun refreshTotalTrafficChip() {
         val totalTraffic = MmkvManager.getTotalTrafficString()
 
@@ -550,12 +560,10 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             return
         }
 
-        val cached = WeatherHelper.getCachedWeatherStale()
         binding.layoutWeatherChip.isVisible = true
+        WeatherHelper.publishChipWeatherFromCache()
 
-        if (cached != null) {
-            applyWeatherToChip(cached)
-        } else {
+        if (WeatherHelper.chipWeather.value == null) {
             binding.ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
@@ -564,11 +572,9 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
 
         lifecycleScope.launch {
             val weather = WeatherHelper.fetchCurrentWeather(this@MainActivity, force = true)
-            if (weather == null) {
-                if (cached == null && isWeatherChipSelected()) binding.layoutWeatherChip.isVisible = false
-                return@launch
+            if (weather == null && WeatherHelper.chipWeather.value == null && isWeatherChipSelected()) {
+                binding.layoutWeatherChip.isVisible = false
             }
-            applyWeatherToChip(weather)
         }
     }
 
@@ -579,9 +585,9 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         val fresh = WeatherHelper.getCachedWeather()
         val stale = fresh ?: WeatherHelper.getCachedWeatherStale()
 
-        if (stale != null) {
-            applyWeatherToChip(stale)
-        } else {
+        WeatherHelper.publishChipWeatherFromCache()
+
+        if (stale == null) {
             binding.ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
@@ -592,11 +598,9 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
 
         lifecycleScope.launch {
             val weather = WeatherHelper.fetchCurrentWeather(this@MainActivity)
-            if (weather == null) {
-                if (stale == null && isWeatherChipSelected()) binding.layoutWeatherChip.isVisible = false
-                return@launch
+            if (weather == null && WeatherHelper.chipWeather.value == null && isWeatherChipSelected()) {
+                binding.layoutWeatherChip.isVisible = false
             }
-            applyWeatherToChip(weather)
         }
     }
 
@@ -1003,95 +1007,131 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private fun setupViewModel() {
-        mainViewModel.updateListAction.observe(this) {
-            refreshTabBadges()
-            if (SearchBarChipMode.current() in setOf(
-                    SearchBarChipMode.TOTAL_TRAFFIC,
-                    SearchBarChipMode.DUAL_SWIPE
-            )) {
-                SearchChipGradientController.applyState(this, binding)
-                if (isTotalTrafficChipSelected()) refreshTotalTrafficChip()
-            }
-        }
-
-        mainViewModel.updateGroupBadgeAction.observe(this) { refreshTabBadges() }
-
-        mainViewModel.updateGroupOrderAction.observe(this) {
-            mainViewModel.reloadServerList()
-            refreshGroupTabTitles()
-        }
-
-        mainViewModel.updateTestResultAction.observe(this) {
-            lastTestResultText = it.orEmpty()
-            setTestState(it)
-        }
-
-        mainViewModel.testProgressAction.observe(this) { info ->
-            if (info == null) {
-                urlTestProgressDialog.finish()
-            } else {
-                urlTestProgressDialog.update(info)
-            }
-        }
-
-        mainViewModel.countryCodeProgressAction.observe(this) { info ->
-            if (info == null) {
-                countryCodeProgressDialog.finish()
-            } else {
-                countryCodeProgressDialog.update(info)
-            }
-        }
-
-        mainViewModel.updateIpResultAction.observe(this) { ip ->
-            lastIpStateText = if (ip.isNullOrEmpty()) {
-                getString(R.string.ip_unknown)
-            } else {
-                getString(R.string.ip_connected, ip)
-            }
-            refreshIpStateText()
-        }
-
-        mainViewModel.updateTrafficSpeedAction.observe(this) { speedText ->
-            lastTrafficSpeedText = speedText
-            refreshIpStateText()
-        }
-
-        mainViewModel.isRunning.observe(this) { isRunning ->
-            applyRunningState(isRunning = isRunning)
-            if (isRunning == true && pendingConnectionTest) {
-                pendingConnectionTest = false
-                setTestState(getString(R.string.connection_test_testing))
-                mainViewModel.testCurrentServerRealPing()
-            }
-        }
-
-        mainViewModel.serviceRestartAction.observe(this) {
-            stopFabTimer()
-            pendingConnectionTest = true
-            lastTestResultText = ""
-            setTestState(getString(R.string.connection_test_testing))
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.requestServiceStartEvent.collect { requestServiceStart() }
-            }
-        }
         
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.requestLayoutTestUiEvent.collect {
-                    setTestState(getString(R.string.connection_test_testing))
+                launch {
+                    mainViewModel.updateGroupBadgeEvent.collect { refreshTabBadges() }
                 }
-            }
-        }
 
-        mainViewModel.alertAction.observe(this) { (isSuccess, message) ->
-            if (isSuccess) {
-                snackbarSuccess(message, title = getString(R.string.title_alerter_success))
-                mainViewModel.fetchCurrentIp()
-            } else {
-                snackbarError(message, title = getString(R.string.title_alerter_error))
+                launch {
+                    WeatherHelper.chipWeather.collect { weather ->
+                        if (!isWeatherChipSelected()) return@collect
+                        if (weather != null) {
+                            applyWeatherToChip(weather)
+                        }
+                    }
+                }
+
+                launch {
+                    mainViewModel.updateListItemEvent.collect {
+                        refreshTabBadges()
+                        refreshTrafficChipIfNeeded()
+                    }
+                }
+
+                launch {
+                    mainViewModel.updateGroupOrderEvent.collect {
+                        mainViewModel.reloadServerList()
+                        refreshGroupTabTitles()
+                    }
+                }
+
+                launch {
+                    mainViewModel.testResultText.collect { text ->
+                        lastTestResultText = text
+                        setTestState(text)
+                    }
+                }
+
+                launch {
+                    mainViewModel.testProgress.collect { info ->
+                        if (info == null) {
+                            urlTestProgressDialog.finish()
+                        } else {
+                            urlTestProgressDialog.update(info)
+                        }
+                    }
+                }
+
+                launch {
+                    mainViewModel.countryCodeProgress.collect { info ->
+                        if (info == null) {
+                            countryCodeProgressDialog.finish()
+                        } else {
+                            countryCodeProgressDialog.update(info)
+                        }
+                    }
+                }
+
+                launch {
+                    mainViewModel.ipResultText.collect { ip ->
+                        lastIpStateText = if (ip.isEmpty()) {
+                            getString(R.string.ip_unknown)
+                        } else {
+                            getString(R.string.ip_connected, ip)
+                        }
+                        refreshIpStateText()
+                    }
+                }
+
+                launch {
+                    mainViewModel.trafficSpeedText.collect { speedText ->
+                        lastTrafficSpeedText = speedText
+                        refreshIpStateText()
+                        refreshTrafficChipIfNeeded()
+                    }
+                }
+
+                launch {
+                    mainViewModel.isRunning.collect { running ->
+                        applyRunningState(isRunning = running)
+                        if (running && pendingConnectionTest) {
+                            pendingConnectionTest = false
+                            setTestState(getString(R.string.connection_test_testing))
+                            mainViewModel.testCurrentServerRealPing()
+                        }
+                    }
+                }
+
+                launch {
+                    mainViewModel.serviceRestartEvent.collect {
+                        stopFabTimer()
+                        pendingConnectionTest = true
+                        lastTestResultText = ""
+                        setTestState(getString(R.string.connection_test_testing))
+                    }
+                }
+
+                launch {
+                    mainViewModel.requestServiceStartEvent.collect { requestServiceStart() }
+                }
+
+                launch {
+                    mainViewModel.requestLayoutTestUiEvent.collect {
+                        setTestState(getString(R.string.connection_test_testing))
+                    }
+                }
+
+                launch {
+                    mainViewModel.alertEvent.collect { (isSuccess, message) ->
+                        if (isSuccess) {
+                            snackbarSuccess(message, title = getString(R.string.title_alerter_success))
+                            mainViewModel.fetchCurrentIp()
+                            if (mainViewModel.isRunning.value) {
+                                applyRunningState(isRunning = true)
+                                if (pendingConnectionTest) {
+                                    pendingConnectionTest = false
+                                    setTestState(getString(R.string.connection_test_testing))
+                                    mainViewModel.testCurrentServerRealPing()
+                                }
+                            }
+                        } else {
+                            snackbarError(message, title = getString(R.string.title_alerter_error))
+                        }
+                    }
+                }
+
             }
         }
 

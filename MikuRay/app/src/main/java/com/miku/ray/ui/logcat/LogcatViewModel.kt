@@ -2,6 +2,9 @@ package com.miku.ray.ui.logcat
 
 import android.os.Process
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import com.miku.ray.AppConfig
 import com.miku.ray.AppConfig.ANG_PACKAGE
 import com.miku.ray.util.InProcessLogBuffer
@@ -12,13 +15,14 @@ import java.util.concurrent.TimeUnit
 
 class LogcatViewModel : ViewModel() {
     private val logsetsAll: MutableList<String> = mutableListOf()
-    private var filteredLogs: List<String> = emptyList()
+    private val _logs = MutableStateFlow<List<String>>(emptyList())
+    val logs: StateFlow<List<String>> = _logs.asStateFlow()
     private var currentFilter: String = ""
 
     var usedFallback: Boolean = false
     private set
 
-    fun getAll(): List<String> = filteredLogs
+    fun getAll(): List<String> = _logs.value
 
     private val ownTags = setOf(ANG_PACKAGE, LogUtil.TAG_CORE)
 
@@ -105,7 +109,7 @@ class LogcatViewModel : ViewModel() {
         }
         InProcessLogBuffer.clear()
         logsetsAll.clear()
-        filteredLogs = emptyList()
+        _logs.value = emptyList()
     }
 
     fun filter(content: String?) {
@@ -114,7 +118,7 @@ class LogcatViewModel : ViewModel() {
     }
 
     private fun applyFilter() {
-        filteredLogs = if (currentFilter.isEmpty()) {
+        _logs.value = if (currentFilter.isEmpty()) {
             logsetsAll.toList()
         } else {
             logsetsAll.filter { it.contains(currentFilter, ignoreCase = true) }

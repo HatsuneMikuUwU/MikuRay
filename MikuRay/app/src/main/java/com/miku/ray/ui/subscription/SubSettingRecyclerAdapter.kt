@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miku.ray.contracts.BaseAdapterListener
 import com.miku.ray.R
 import com.miku.ray.databinding.ItemRecyclerSubSettingBinding
+import com.miku.ray.dto.entities.SubscriptionCache
 import com.miku.ray.dto.entities.SubscriptionItem
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.helper.ItemTouchHelperAdapter
 import com.miku.ray.helper.ItemTouchHelperViewHolder
 import com.miku.ray.util.Utils
 import java.text.DateFormat
+import java.util.Collections
 import java.util.Date
 
 class SubSettingRecyclerAdapter(
@@ -24,12 +26,23 @@ class SubSettingRecyclerAdapter(
     private val adapterListener: BaseAdapterListener?
 ) : RecyclerView.Adapter<SubSettingRecyclerAdapter.MainViewHolder>(), ItemTouchHelperAdapter {
 
-    override fun getItemCount() = viewModel.getAll().size
+    private var data = viewModel.getAll().toMutableList()
+
+    @Deprecated("Collect viewModel.subscriptionsState instead, so updates from anywhere (drag reorder, edit, remove) are reflected immediately without waiting for onResume.")
+    fun syncFromViewModel() {
+        submitData(viewModel.getAll())
+    }
+
+    fun submitData(newData: List<SubscriptionCache>) {
+        data = newData.toMutableList()
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val subscriptions = viewModel.getAll()
-        val subId = subscriptions[position].guid
-        val subItem = subscriptions[position].subscription
+        val subId = data[position].guid
+        val subItem = data[position].subscription
         holder.itemSubSettingBinding.tvName.text = subItem.remarks
         holder.itemSubSettingBinding.tvUrl.text = subItem.url
         holder.itemSubSettingBinding.chkEnable.isChecked = subItem.enabled
@@ -140,14 +153,15 @@ class SubSettingRecyclerAdapter(
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        if (fromPosition !in data.indices || toPosition !in data.indices) return false
         viewModel.swap(fromPosition, toPosition)
+        Collections.swap(data, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
 
     override fun onItemMoveCompleted() {
         viewModel.commitOrder()
-        adapterListener?.onRefreshData()
     }
 
     override fun onItemDismiss(position: Int) {

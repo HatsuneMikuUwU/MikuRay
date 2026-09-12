@@ -2,7 +2,6 @@ package com.miku.ray.ui.subscription
 
 import com.miku.ray.remixicon.R as RemixR
 import com.miku.ray.ui.base.BaseActivity
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +10,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -69,6 +70,7 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
 
         adapter = SubSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 
+
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -77,11 +79,20 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         mItemTouchHelper?.attachToRecyclerView(binding.recyclerView)
 
         updateEmptyState()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.subscriptionsState.collect { list ->
+                    adapter.submitData(list)
+                    updateEmptyState()
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        refreshData()
+        viewModel.reload()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,11 +116,8 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         else -> super.onOptionsItemSelected(item)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun refreshData() {
         viewModel.reload()
-        adapter.notifyDataSetChanged()
-        updateEmptyState()
     }
 
     private fun updateEmptyState() {
@@ -226,10 +234,8 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         sideSheetContainer?.clipToOutline = true
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onSortSubOptionClicked(order: Int) {
         viewModel.applySortOrder()
-        adapter.notifyDataSetChanged()
         com.miku.ray.handler.SettingsChangeManager.makeSetupGroupTab()
     }
 

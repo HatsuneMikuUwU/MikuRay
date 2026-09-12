@@ -12,6 +12,7 @@ import com.miku.ray.databinding.ItemRecyclerRoutingSettingBinding
 import com.miku.ray.helper.ItemTouchHelperAdapter
 import com.miku.ray.helper.ItemTouchHelperViewHolder
 import com.miku.ray.util.getColorAttr
+import java.util.Collections
 
 class RoutingSettingRecyclerAdapter(
     private val viewModel: RoutingSettingsViewModel,
@@ -19,11 +20,22 @@ class RoutingSettingRecyclerAdapter(
 ) : RecyclerView.Adapter<RoutingSettingRecyclerAdapter.MainViewHolder>(),
 ItemTouchHelperAdapter {
 
-    override fun getItemCount() = viewModel.getAll().size
+    private var data = viewModel.getAll().toMutableList()
+
+    @Deprecated("Collect viewModel.rulesets instead, so remove/update/reload are reflected immediately without a manual notify call that can desync from this adapter's own backing list.")
+    fun syncFromViewModel() {
+        submitData(viewModel.getAll())
+    }
+
+    fun submitData(newData: List<com.miku.ray.dto.entities.RulesetItem>) {
+        data = newData.toMutableList()
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val rulesets = viewModel.getAll()
-        val ruleset = rulesets[position]
+        val ruleset = data[position]
 
         holder.itemRoutingSettingBinding.remarks.text = ruleset.remarks
         holder.itemRoutingSettingBinding.domainIp.text = (ruleset.domain ?: ruleset.ip ?: ruleset.process ?: ruleset.port)?.toString()
@@ -79,13 +91,14 @@ ItemTouchHelperAdapter {
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        if (fromPosition !in data.indices || toPosition !in data.indices) return false
         viewModel.swap(fromPosition, toPosition)
+        Collections.swap(data, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
 
     override fun onItemMoveCompleted() {
-        adapterListener?.onRefreshData()
     }
 
     override fun onItemDismiss(position: Int) {
