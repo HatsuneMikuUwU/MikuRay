@@ -2,6 +2,7 @@ package com.miku.ray.helper
 
 import android.animation.ValueAnimator
 import android.graphics.Canvas
+import android.view.HapticFeedbackConstants
 import android.view.animation.DecelerateInterpolator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -82,6 +83,9 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        if (actionState == ItemTouchHelper.ACTION_STATE_DRAG && viewHolder != null) {
+            viewHolder.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+        }
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is ItemTouchHelperViewHolder) {
             viewHolder.onItemSelected()
         }
