@@ -439,6 +439,20 @@ object MmkvManager {
         guids.forEach { guid -> resetProfileTraffic(guid) }
     }
 
+    fun getGroupTrafficString(subscriptionId: String): String? {
+        val guids = decodeServerList(subscriptionId.ifEmpty { DEFAULT_SUBSCRIPTION_ID })
+        if (guids.isEmpty()) return null
+        var uplinkTotal = 0L
+        var downlinkTotal = 0L
+        guids.forEach { guid ->
+            val aff = decodeServerAffiliationInfo(guid) ?: return@forEach
+            uplinkTotal += aff.uplinkTotal
+            downlinkTotal += aff.downlinkTotal
+        }
+        if (uplinkTotal == 0L && downlinkTotal == 0L) return null
+        return formatTrafficBytes(uplinkTotal + downlinkTotal)
+    }
+
     fun resetAllTraffic() {
         decodeAllServerList().forEach { guid -> resetProfileTraffic(guid) }
         clearDailyTrafficHistory()

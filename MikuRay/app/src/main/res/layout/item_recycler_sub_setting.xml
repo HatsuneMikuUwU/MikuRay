@@ -54,13 +54,6 @@
                     app:thumbIcon="@drawable/mtrl_ic_check" />
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="header_layout" />
-
             <TextView
                 android:id="@+id/tv_url"
                 android:layout_width="0dp"
@@ -72,7 +65,7 @@
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barrier_header" />
+                app:layout_constraintTop_toBottomOf="@id/header_layout" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/tv_server_count"
@@ -90,46 +83,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_url" />
 
-            <TextView
+            <com.google.android.material.chip.Chip
                 android:id="@+id/tv_subscription_usage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/rmx_business_pie_chart_line"
-                android:drawableTint="?attr/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:checkable="false"
+                android:clickable="false"
                 android:ellipsize="end"
-                android:gravity="center_vertical"
+                android:focusable="false"
                 android:maxLines="1"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="?attr/colorOnTertiaryContainer"
+                android:textSize="12sp"
+                app:chipBackgroundColor="?attr/colorTertiaryContainer"
+                app:chipMinTouchTargetSize="0dp"
+                app:layout_constraintStart_toEndOf="@id/tv_server_count"
+                app:layout_constraintTop_toTopOf="@id/tv_server_count" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tv_subscription_expire"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginTop="8dp"
+                android:checkable="false"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="12sp"
+                app:chipBackgroundColor="?attr/colorPrimaryContainer"
+                app:chipMinTouchTargetSize="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_server_count" />
-
-            <TextView
-                android:id="@+id/tv_subscription_expire"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:drawablePadding="10dp"
-                android:drawableStart="@drawable/rmx_business_calendar_line"
-                android:drawableTint="?attr/colorPrimary"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_subscription_usage" />
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="barrier_header,tv_url,tv_server_count,tv_subscription_usage,tv_subscription_expire" />
 
             <TextView
                 android:id="@+id/tv_last_updated"
@@ -155,7 +143,7 @@
                 android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barrier_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_subscription_expire"
                 app:srcCompat="@drawable/ic_delete_empty"
                 app:tint="?attr/colorError" />
 

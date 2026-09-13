@@ -44,17 +44,26 @@ class SubSettingRecyclerAdapter(
         val subId = data[position].guid
         val subItem = data[position].subscription
         holder.itemSubSettingBinding.tvName.text = subItem.remarks
-        holder.itemSubSettingBinding.tvUrl.text = subItem.url
+        holder.itemSubSettingBinding.tvUrl.text = subItem.url.ifEmpty {
+            holder.itemView.context.getString(R.string.sub_setting_no_url)
+        }
         holder.itemSubSettingBinding.chkEnable.isChecked = subItem.enabled
         val serverCount = MmkvManager.decodeServerList(subId).size
         holder.itemSubSettingBinding.tvServerCount.text = holder.itemView.context.resources.getQuantityString(
             R.plurals.sub_setting_server_count, serverCount, serverCount
         )
-        holder.itemSubSettingBinding.tvLastUpdated.text = Utils.formatTimestamp(subItem.lastUpdated)
-        val usageText = formatSubscriptionUsage(holder.itemView.context, subItem)
+        val lastUpdatedText = if (TextUtils.isEmpty(subItem.url)) {
+            Utils.formatTimestamp(subItem.addedTime)
+        } else {
+            Utils.formatTimestamp(subItem.lastUpdated)
+        }
+        holder.itemSubSettingBinding.tvLastUpdated.text = lastUpdatedText
+        val usageText = formatSubscriptionUsage(holder.itemView.context, subId, subItem)
         val expiryText = formatSubscriptionExpiry(holder.itemView.context, subItem)
         holder.itemSubSettingBinding.tvSubscriptionUsage.text = usageText
         holder.itemSubSettingBinding.tvSubscriptionExpire.text = expiryText
+        holder.itemSubSettingBinding.tvLastUpdated.visibility =
+        if (lastUpdatedText.isEmpty()) View.GONE else View.VISIBLE
         holder.itemSubSettingBinding.tvSubscriptionUsage.visibility =
         if (usageText == null) View.GONE else View.VISIBLE
         holder.itemSubSettingBinding.tvSubscriptionExpire.visibility =
@@ -75,22 +84,14 @@ class SubSettingRecyclerAdapter(
             viewModel.update(subId, subItem)
         }
 
+        holder.itemSubSettingBinding.tvUrl.visibility = View.VISIBLE
         if (TextUtils.isEmpty(subItem.url)) {
-            holder.itemSubSettingBinding.tvUrl.visibility = View.GONE
             holder.itemSubSettingBinding.layoutShare.visibility = View.GONE
             holder.itemSubSettingBinding.chkEnable.visibility = View.GONE
-            holder.itemSubSettingBinding.tvLastUpdated.visibility = View.GONE
-            holder.itemSubSettingBinding.tvServerCount.visibility = View.GONE
-            holder.itemSubSettingBinding.tvSubscriptionUsage.visibility = View.GONE
             holder.itemSubSettingBinding.tvSubscriptionExpire.visibility = View.GONE
         } else {
-            holder.itemSubSettingBinding.tvUrl.visibility = View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.visibility = View.VISIBLE
             holder.itemSubSettingBinding.chkEnable.visibility = View.VISIBLE
-            holder.itemSubSettingBinding.tvLastUpdated.visibility = View.VISIBLE
-            holder.itemSubSettingBinding.tvServerCount.visibility = View.VISIBLE
-            holder.itemSubSettingBinding.tvSubscriptionUsage.visibility =
-            if (usageText == null) View.GONE else View.VISIBLE
             holder.itemSubSettingBinding.tvSubscriptionExpire.visibility =
             if (expiryText == null) View.GONE else View.VISIBLE
             holder.itemSubSettingBinding.layoutShare.setOnClickListener {
@@ -99,7 +100,7 @@ class SubSettingRecyclerAdapter(
         }
     }
 
-    private fun formatSubscriptionUsage(context: Context, subscription: SubscriptionItem): String? {
+    private fun formatSubscriptionUsage(context: Context, subId: String, subscription: SubscriptionItem): String? {
         return when {
             subscription.bytesUsed >= 0L && subscription.bytesRemaining >= 0L -> {
                 context.getString(
@@ -114,7 +115,11 @@ class SubSettingRecyclerAdapter(
                     MmkvManager.formatTrafficBytesPublic(subscription.bytesUsed),
                 )
             }
-            else -> null
+            else -> {
+                MmkvManager.getGroupTrafficString(subId)?.let { groupTraffic ->
+                    context.getString(R.string.sub_setting_usage_used, groupTraffic)
+                }
+            }
         }
     }
 
