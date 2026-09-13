@@ -410,6 +410,9 @@ object MmkvManager {
         aff.countryCode = countryCode?.trim()?.uppercase()?.takeIf { it.isNotEmpty() }
         serverAffStorage.encode(guid, JsonUtil.toJson(aff))
     }
+  
+    private fun groupTrafficUpKey(subId: String) = "grp_traffic_up_$subId"
+    private fun groupTrafficDownKey(subId: String) = "grp_traffic_down_$subId"
 
     fun addProfileTraffic(guid: String, uplink: Long, downlink: Long) {
         if (guid.isBlank() || (uplink == 0L && downlink == 0L)) return
@@ -417,6 +420,12 @@ object MmkvManager {
         aff.uplinkTotal += uplink
         aff.downlinkTotal += downlink
         serverAffStorage.encode(guid, JsonUtil.toJson(aff))
+
+        val subId = getSubscriptionId(decodeServerConfig(guid)?.subscriptionId)
+        val upKey = groupTrafficUpKey(subId)
+        val downKey = groupTrafficDownKey(subId)
+        serverAffStorage.encode(upKey, serverAffStorage.decodeLong(upKey, 0L) + uplink)
+        serverAffStorage.encode(downKey, serverAffStorage.decodeLong(downKey, 0L) + downlink)
     }
 
     fun getProfileTrafficString(guid: String): String? {
@@ -435,20 +444,14 @@ object MmkvManager {
     }
 
     fun resetGroupTraffic(subscriptionId: String) {
-        val guids = decodeServerList(subscriptionId.ifEmpty { DEFAULT_SUBSCRIPTION_ID })
+        val guids = decodeServerList(getSubscriptionId(subscriptionId))
         guids.forEach { guid -> resetProfileTraffic(guid) }
     }
 
     fun getGroupTrafficString(subscriptionId: String): String? {
-        val guids = decodeServerList(subscriptionId.ifEmpty { DEFAULT_SUBSCRIPTION_ID })
-        if (guids.isEmpty()) return null
-        var uplinkTotal = 0L
-        var downlinkTotal = 0L
-        guids.forEach { guid ->
-            val aff = decodeServerAffiliationInfo(guid) ?: return@forEach
-            uplinkTotal += aff.uplinkTotal
-            downlinkTotal += aff.downlinkTotal
-        }
+        val subId = getSubscriptionId(subscriptionId)
+        val uplinkTotal = serverAffStorage.decodeLong(groupTrafficUpKey(subId), 0L)
+        val downlinkTotal = serverAffStorage.decodeLong(groupTrafficDownKey(subId), 0L)
         if (uplinkTotal == 0L && downlinkTotal == 0L) return null
         return formatTrafficBytes(uplinkTotal + downlinkTotal)
     }
@@ -755,6 +758,10 @@ object MmkvManager {
         encodeSubsList(subsList)
 
         removeServerViaSubid(subid)
+
+        val subId = getSubscriptionId(subid)
+        serverAffStorage.remove(groupTrafficUpKey(subId))
+        serverAffStorage.remove(groupTrafficDownKey(subId))
     }
 
     fun encodeSubscription(guid: String, subItem: SubscriptionItem) {
