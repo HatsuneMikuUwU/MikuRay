@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.miku.ray.shapeimageview.CookieImageView
+        <com.miku.ray.shapeimageview.Cookie9ImageView
             android:id="@+id/splash_logo"
             android:layout_width="160dp"
             android:layout_height="160dp"

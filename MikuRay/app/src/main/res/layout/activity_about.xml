@@ -906,7 +906,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <com.miku.ray.shapeimageview.CookieImageView
+                        <com.miku.ray.shapeimageview.Cookie9ImageView
                             android:id="@+id/icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"

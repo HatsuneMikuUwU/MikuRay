@@ -245,7 +245,7 @@
         app:sectionIcon="@drawable/rmx_palette_line">
 
         <ListPreference
-            android:defaultValue="uwu_shape_cookie"
+            android:defaultValue="uwu_shape_cookie_9"
             android:entries="@array/icon_shape_entries"
             android:entryValues="@array/icon_shape_values"
             android:icon="@drawable/rmx_shapes_line"
@@ -646,7 +646,7 @@
             app:layout="@layout/uwu_mid" />
 
         <ListPreference
-            android:defaultValue="uwu_shape_cookie"
+            android:defaultValue="uwu_shape_cookie_9"
             android:entries="@array/icon_shape_entries"
             android:entryValues="@array/icon_shape_values"
             android:icon="@drawable/rmx_shapes_line"

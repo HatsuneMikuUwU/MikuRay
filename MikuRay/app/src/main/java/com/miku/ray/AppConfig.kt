@@ -153,9 +153,9 @@ object AppConfig {
     const val DEFAULT_BLUR_BOTTOM_ALPHA = 25
     const val PREF_BLUR_BOTTOM_BLOB_ANIM = "pref_blur_bottom_blob_anim"
     const val PREF_ICON_SHAPE = "pref_icon_shape"
-    const val PREF_ICON_SHAPE_DEFAULT = "uwu_shape_cookie"
+    const val PREF_ICON_SHAPE_DEFAULT = "uwu_shape_cookie_9"
     const val PREF_ARROW_SHAPE = "pref_arrow_shape"
-    const val PREF_ARROW_SHAPE_DEFAULT = "uwu_shape_cookie"
+    const val PREF_ARROW_SHAPE_DEFAULT = "uwu_shape_circle"
 
     const val PREF_APP_ICON = "pref_app_icon"
     const val APP_ICON_DEFAULT = "default"
@@ -220,7 +220,7 @@ object AppConfig {
     const val PREF_CUSTOM_PROFILE_NAME = "custom_profile_name"
     const val PREF_PROFILE_BANNER_URI = "profile_banner_uri"
     const val PREF_PROFILE_BANNER_SHAPE = "profile_banner_shape"
-    const val PREF_PROFILE_BANNER_SHAPE_DEFAULT = "uwu_shape_cookie"
+    const val PREF_PROFILE_BANNER_SHAPE_DEFAULT = "uwu_shape_cookie_9"
     const val PREF_ACTION_CHANGE_PROFILE_BANNER = "action_change_profile_banner_image"
     const val PREF_ACTION_DELETE_PROFILE_BANNER = "action_delete_profile_banner_image"
     const val PREF_ENABLE_PARTICLES_SHEET = "pref_enable_particles_sheet"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface">
-    <com.miku.ray.shapeimageview.CloverImageView
+    <com.miku.ray.shapeimageview.Cookie4ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="-100dp"
