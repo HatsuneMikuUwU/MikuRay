@@ -114,11 +114,13 @@ FastScrollRecyclerView.SectionedAdapter {
 
         val controller = SelectedProfileBannerController(recyclerView.context)
         selectedBannerController = controller
-        controller.registerChangeListener {
-            val selectedGuid = MmkvManager.getSelectServer()
-            val position = data.indexOfFirst { it.guid == selectedGuid }
-            if (position >= 0) {
-                notifyServerItemChanged(position)
+        lifecycleOwner?.let { owner ->
+            controller.registerChangeListener(owner.lifecycleScope) {
+                val selectedGuid = MmkvManager.getSelectServer()
+                val position = data.indexOfFirst { it.guid == selectedGuid }
+                if (position >= 0) {
+                    notifyServerItemChanged(position)
+                }
             }
         }
     }

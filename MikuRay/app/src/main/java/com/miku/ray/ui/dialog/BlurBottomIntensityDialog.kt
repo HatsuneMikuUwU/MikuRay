@@ -11,13 +11,19 @@ import com.google.android.material.slider.Slider
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
-import com.miku.ray.util.BlurBottomStatusController
+import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.util.WindowBlurUtils
 
 class BlurBottomIntensityDialog @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : Preference(context, attrs) {
+
+    private fun save(radius: Float, alpha: Int) {
+        MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, radius)
+        MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, alpha)
+        SettingsChangeManager.notifyUiCustomizationChanged()
+    }
 
     override fun onClick() {
         val originalRadius = MmkvManager.decodeSettingsFloat(
@@ -49,26 +55,22 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
         dialog.show()
 
         sliderRadius.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) BlurBottomStatusController.updateRadius(value)
+            if (fromUser) save(value, sliderAlpha.value.toInt())
         }
         sliderAlpha.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) BlurBottomStatusController.updateAlpha(value)
+            if (fromUser) save(sliderRadius.value, value.toInt())
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val radius = sliderRadius.value
             val alpha = sliderAlpha.value.toInt()
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, radius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, alpha)
+            save(radius, alpha)
             updateSummary(radius, alpha)
             dialog.dismiss()
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, originalRadius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, originalAlpha)
-            BlurBottomStatusController.updateRadius(originalRadius)
-            BlurBottomStatusController.updateAlpha(originalAlpha.toFloat())
+            save(originalRadius, originalAlpha)
             updateSummary(originalRadius, originalAlpha)
             dialog.dismiss()
         }
@@ -79,11 +81,7 @@ class BlurBottomIntensityDialog @JvmOverloads constructor(
 
             sliderRadius.value = defaultRadius.toFloat()
             sliderAlpha.value = defaultAlpha.toFloat()
-            BlurBottomStatusController.updateRadius(defaultRadius.toFloat())
-            BlurBottomStatusController.updateAlpha(defaultAlpha.toFloat())
-
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_RADIUS, defaultRadius)
-            MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_ALPHA, defaultAlpha)
+            save(defaultRadius, defaultAlpha)
             updateSummary(defaultRadius, defaultAlpha)
 
             dialog.dismiss()

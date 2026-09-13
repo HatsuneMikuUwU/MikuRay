@@ -4,7 +4,6 @@ import com.miku.ray.remixicon.R as RemixR
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -180,7 +179,6 @@ class ParticlesSettingsDialog @JvmOverloads constructor(
             sliders.forEach { (param, slider) ->
                 MmkvManager.encodeSettings(param.prefKey, slider.value)
             }
-            activity.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_PARTICLES_CHANGED))
         }
         .setNeutralButton(R.string.reset, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -196,7 +194,6 @@ class ParticlesSettingsDialog @JvmOverloads constructor(
                 labelText(param, param.default)
                 MmkvManager.encodeSettings(param.prefKey, param.default)
             }
-            activity.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_PARTICLES_CHANGED))
 
             dialog.dismiss()
         }

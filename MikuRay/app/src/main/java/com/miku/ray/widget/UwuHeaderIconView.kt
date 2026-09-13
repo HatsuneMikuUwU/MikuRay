@@ -1,20 +1,21 @@
 package com.miku.ray.widget
 
 import com.miku.ray.remixicon.R as RemixR
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.ImageView.ScaleType
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.util.getColorAttr
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class UwuHeaderIconView @JvmOverloads constructor(
     context: Context,
@@ -30,26 +31,26 @@ class UwuHeaderIconView @JvmOverloads constructor(
         ta.recycle()
     }
 
-    private val styleChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            applyStyle()
-        }
-    }
+    private var viewScope: CoroutineScope? = null
+    private var styleChangeJob: Job? = null
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         applyStyle()
-        ContextCompat.registerReceiver(
-            context,
-            styleChangeReceiver,
-            IntentFilter(AppConfig.BROADCAST_ACTION_CATEGORY_STYLE_CHANGED),
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        )
+        val scope = CoroutineScope(Dispatchers.Main.immediate)
+        viewScope = scope
+        styleChangeJob = scope.launch {
+            SettingsChangeManager.uiCustomizationChanged.collect {
+                applyStyle()
+            }
+        }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        try { context.unregisterReceiver(styleChangeReceiver) } catch (_: Exception) {}
+        styleChangeJob?.cancel()
+        styleChangeJob = null
+        viewScope = null
     }
 
     fun applyStyle() {

@@ -55,7 +55,7 @@ class SelectedBannerDimSliderDialog @JvmOverloads constructor(
             val newDim = slider.value.toInt()
             MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_DIM, newDim)
             summary = context.getString(R.string.selected_banner_dim_summary_value, newDim)
-            SelectedProfileBannerController.broadcastChanged(activity)
+            SelectedProfileBannerController.notifyChanged(activity)
         }
         .setNeutralButton(R.string.reset, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -70,7 +70,7 @@ class SelectedBannerDimSliderDialog @JvmOverloads constructor(
 
             MmkvManager.encodeSettings(AppConfig.PREF_SELECTED_BANNER_DIM, default)
             summary = context.getString(R.string.selected_banner_dim_summary_value, default)
-            SelectedProfileBannerController.broadcastChanged(activity)
+            SelectedProfileBannerController.notifyChanged(activity)
 
             dialog.dismiss()
         }

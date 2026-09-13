@@ -1,7 +1,5 @@
 package com.miku.ray.util
 
-import android.content.Context
-import android.content.Intent
 import com.miku.ray.particlesdrawable.ParticlesView
 import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
@@ -56,9 +54,5 @@ object ParticlesController {
         view.setDensity(density_)
         view.setSpeedFactor(speedFactor)
         view.makeFreshFrame()
-    }
-
-    fun broadcastChanged(context: Context) {
-        context.sendBroadcast(Intent(AppConfig.BROADCAST_ACTION_PARTICLES_CHANGED))
     }
 }

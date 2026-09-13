@@ -1,6 +1,9 @@
 package com.miku.ray.handler
 
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
 object SettingsChangeManager {
     private val _restartService = MutableStateFlow(false)
@@ -35,5 +38,19 @@ object SettingsChangeManager {
         val v = _refreshDisplayPrefs.value
         _refreshDisplayPrefs.value = false
         return v
+    }
+
+    private val _uiCustomizationChanged = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    val uiCustomizationChanged: SharedFlow<Unit> = _uiCustomizationChanged
+
+    fun notifyUiCustomizationChanged() {
+        _uiCustomizationChanged.tryEmit(Unit)
+    }
+
+    private val _recreateVersion = MutableStateFlow(0L)
+    val recreateVersion: StateFlow<Long> = _recreateVersion
+
+    fun requestRecreate() {
+        _recreateVersion.value += 1
     }
 }

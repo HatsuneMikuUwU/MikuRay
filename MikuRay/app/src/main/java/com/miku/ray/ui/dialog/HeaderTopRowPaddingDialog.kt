@@ -1,9 +1,7 @@
 package com.miku.ray.ui.dialog
 
 import com.miku.ray.remixicon.R as RemixR
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +11,7 @@ import com.google.android.material.slider.Slider
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.util.WindowBlurUtils
 
 class HeaderTopRowPaddingDialog @JvmOverloads constructor(
@@ -20,18 +19,7 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : Preference(context, attrs) {
 
-    private fun Context.findActivity(): Activity? {
-        var ctx = this
-        while (ctx is ContextWrapper) {
-            if (ctx is Activity) return ctx
-            ctx = ctx.baseContext
-        }
-        return null
-    }
-
     override fun onClick() {
-        val activity = context.findActivity() ?: return
-
         val saved = MmkvManager.decodeSettingsInt(
             AppConfig.PREF_HEADER_TOP_ROW_PADDING,
             AppConfig.HEADER_TOP_ROW_PADDING_DEFAULT
@@ -56,10 +44,7 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
             summary = context.getString(
                 R.string.pref_header_top_row_padding_summary_value, newPadding
             )
-            val intent = android.content.Intent(
-                AppConfig.BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED
-            )
-            activity.sendBroadcast(intent)
+            SettingsChangeManager.notifyUiCustomizationChanged()
         }
         .setNeutralButton(R.string.reset, null)
         .setNegativeButton(android.R.string.cancel, null)
@@ -74,10 +59,7 @@ class HeaderTopRowPaddingDialog @JvmOverloads constructor(
 
             MmkvManager.encodeSettings(AppConfig.PREF_HEADER_TOP_ROW_PADDING, default)
             summary = context.getString(R.string.pref_header_top_row_padding_summary_value, default)
-            val intent = android.content.Intent(
-                AppConfig.BROADCAST_ACTION_HEADER_TOP_ROW_PADDING_CHANGED
-            )
-            activity.sendBroadcast(intent)
+            SettingsChangeManager.notifyUiCustomizationChanged()
 
             dialog.dismiss()
         }

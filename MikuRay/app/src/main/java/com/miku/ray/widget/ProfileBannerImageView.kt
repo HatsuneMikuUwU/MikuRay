@@ -1,13 +1,9 @@
 package com.miku.ray.widget
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -19,6 +15,11 @@ import com.miku.ray.shapeimageview.shader.SvgShader
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ProfileBannerImageView @JvmOverloads constructor(
     context: Context,
@@ -30,16 +31,8 @@ class ProfileBannerImageView @JvmOverloads constructor(
 
     private var currentShapeKey: String = AppConfig.PREF_PROFILE_BANNER_SHAPE_DEFAULT
 
-    private val shapeChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(ctx: Context?, intent: Intent?) {
-            if (intent?.action == AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED) {
-                post {
-                    checkAndUpdateShape()
-                    loadImage()
-                }
-            }
-        }
-    }
+    private var viewScope: CoroutineScope? = null
+    private var shapeChangeJob: Job? = null
 
     override fun createImageViewHelper(): ShaderHelper {
         currentShapeKey = resolveShapeKey()
@@ -56,11 +49,14 @@ class ProfileBannerImageView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode) {
-            val filter = IntentFilter(AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED)
-            ContextCompat.registerReceiver(
-                context, shapeChangeReceiver, filter,
-                ContextCompat.RECEIVER_NOT_EXPORTED
-            )
+            val scope = CoroutineScope(Dispatchers.Main.immediate)
+            viewScope = scope
+            shapeChangeJob = scope.launch {
+                SettingsChangeManager.uiCustomizationChanged.collect {
+                    checkAndUpdateShape()
+                    loadImage()
+                }
+            }
             checkAndUpdateShape()
             loadImage()
         }
@@ -71,7 +67,9 @@ class ProfileBannerImageView @JvmOverloads constructor(
         setImageDrawable(null)
         tag = null
         if (!isInEditMode) {
-            try { context.unregisterReceiver(shapeChangeReceiver) } catch (_: Exception) {}
+            shapeChangeJob?.cancel()
+            shapeChangeJob = null
+            viewScope = null
         }
         super.onDetachedFromWindow()
     }

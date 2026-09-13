@@ -32,6 +32,7 @@ import com.miku.ray.AngApplication
 import com.miku.ray.R
 import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.helper.CustomDividerItemDecoration
 import com.miku.ray.util.DPIController
 import com.miku.ray.util.FontSizeController
@@ -39,27 +40,12 @@ import com.miku.ray.util.CustomFontManager
 import com.miku.ray.util.GoogleSansFlexManager
 import com.miku.ray.util.WindowBlurUtils
 import com.qmdeve.blurview.widget.BlurView
-import com.miku.ray.util.ThemeStateManager
-import java.lang.ref.WeakReference
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 
 abstract class BaseActivity : AppCompatActivity() {
-
-    companion object {
-        private val activeActivities = mutableListOf<WeakReference<BaseActivity>>()
-
-        fun recreateOthersInBackground(except: android.app.Activity? = null) {
-            val iterator = activeActivities.iterator()
-            while (iterator.hasNext()) {
-                val activity = iterator.next().get()
-                if (activity == null) {
-                    iterator.remove()
-                    continue
-                }
-                if (activity === except || activity.isFinishing || activity.isDestroyed) continue
-                activity.refreshIfSettingsChanged()
-            }
-        }
-    }
 
     private var loadingOverlay: FrameLayout? = null
     private var loadingBlurMode: LoadingBlurMode? = null
@@ -67,10 +53,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private enum class LoadingBlurMode { BLUR_VIEW, DIM }
 
-    private lateinit var themeStateManager: ThemeStateManager
-
     private var toolbarSubtitle: CharSequence? = null
     private var collapsingToolbarRef: CollapsingToolbarLayout? = null
+
+    private var lastSeenRecreateVersion = SettingsChangeManager.recreateVersion.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
@@ -79,9 +65,6 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        themeStateManager = ThemeStateManager(this)
-        activeActivities.add(WeakReference(this))
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
@@ -93,12 +76,32 @@ abstract class BaseActivity : AppCompatActivity() {
             },
             true
         )
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                SettingsChangeManager.recreateVersion.collect { version ->
+                    if (version != lastSeenRecreateVersion) {
+                        lastSeenRecreateVersion = version
+                        recreate()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                SettingsChangeManager.uiCustomizationChanged.collect {
+                    if (collapsingToolbarRef != null) {
+                        applyToolbarStyle()
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         com.miku.ray.handler.SettingsManager.refreshAutoNightModeIfNeeded()
-        themeStateManager.checkThemeChangedAndRecreate()
         if (collapsingToolbarRef != null) {
             applyToolbarStyle()
         }
@@ -208,10 +211,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun refreshToolbarStyle() {
         applyToolbarStyle()
-    }
-
-    fun refreshIfSettingsChanged() {
-        themeStateManager.checkThemeChangedAndRecreate()
     }
 
     private fun applyToolbarStyle() {
@@ -433,7 +432,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        activeActivities.removeAll { it.get() == null || it.get() === this }
         dismissSystemLoadingDialog()
         dismissFallbackLoadingOverlay()
         super.onDestroy()

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Base64
 import com.miku.ray.AppConfig
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -435,9 +436,7 @@ object ThemeShareManager {
             LauncherAliasSwitcher.currentIconVariant(),
             LauncherAliasSwitcher.currentNameVariant()
         )
-        context.sendBroadcast(android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED))
-        context.sendBroadcast(android.content.Intent(AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED))
-        SelectedProfileBannerController.broadcastChanged(context)
-        context.sendBroadcast(android.content.Intent(AppConfig.BROADCAST_ACTION_PARTICLES_CHANGED))
+        SettingsChangeManager.notifyUiCustomizationChanged()
+        SelectedProfileBannerController.notifyChanged(context)
     }
 }

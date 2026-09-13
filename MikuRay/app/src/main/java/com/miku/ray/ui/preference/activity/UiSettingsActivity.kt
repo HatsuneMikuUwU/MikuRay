@@ -253,6 +253,7 @@ class UiSettingsActivity : BaseActivity() {
         private val enableBlur by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_ENABLE_BLUR) }
         private val useSystemBlur by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_USE_SYSTEM_BLUR) }
         private val blurBottomStatus by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_BLUR_BOTTOM_STATUS) }
+        private val fabExtended by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_FAB_EXTENDED) }
         private val appLanguage by lazy { findPreference<ListPreference>(AppConfig.PREF_LANGUAGE) }
         private val nightTheme by lazy { findPreference<ListPreference>(AppConfig.PREF_UI_MODE_NIGHT) }
         private val iconShape by lazy { findPreference<ListPreference>(AppConfig.PREF_ICON_SHAPE) }
@@ -349,8 +350,7 @@ class UiSettingsActivity : BaseActivity() {
                     customFontSwitch?.isChecked = true
                     appFont?.isEnabled = false
                     updateCustomFontSummary()
-                    activity?.recreate()
-                    activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                    SettingsChangeManager.requestRecreate()
                 } else {
                     requireContext().toastError(getString(R.string.custom_font_invalid))
                 }
@@ -541,8 +541,7 @@ class UiSettingsActivity : BaseActivity() {
                 dynamicColorBanner?.isEnabled = !enabled && disableHomeBanner?.isChecked == false
                 appTheme?.isEnabled = !enabled
 
-                activity?.recreate()
-                activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                SettingsChangeManager.requestRecreate()
                 true
             }
 
@@ -558,8 +557,7 @@ class UiSettingsActivity : BaseActivity() {
                 dynamicColor?.isEnabled = !enabled
                 appTheme?.isEnabled = !enabled
 
-                activity?.recreate()
-                activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                SettingsChangeManager.requestRecreate()
                 true
             }
 
@@ -569,16 +567,14 @@ class UiSettingsActivity : BaseActivity() {
                 summary = if (!isNightModeActive) getString(R.string.pref_true_black_only_in_night_mode)
                 else getString(R.string.summary_pref_true_black)
                 setOnPreferenceChangeListener { _, _ ->
-                    activity?.recreate()
-                    activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                    SettingsChangeManager.requestRecreate()
                     true
                 }
             }
 
             toolbarCenterSubtitleMode?.setOnPreferenceChangeListener { _, newValue ->
                 MmkvManager.encodeSettings(AppConfig.PREF_TOOLBAR_CENTER_SUBTITLE_MODE, newValue as Boolean)
-                activity?.recreate()
-                activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                SettingsChangeManager.notifyUiCustomizationChanged()
                 true
             }
 
@@ -597,6 +593,13 @@ class UiSettingsActivity : BaseActivity() {
 
             blurBottomStatus?.setOnPreferenceChangeListener { _, newValue ->
                 MmkvManager.encodeSettings(AppConfig.PREF_BLUR_BOTTOM_STATUS, newValue as Boolean)
+                SettingsChangeManager.notifyUiCustomizationChanged()
+                true
+            }
+
+            fabExtended?.setOnPreferenceChangeListener { _, newValue ->
+                MmkvManager.encodeSettings(AppConfig.PREF_FAB_EXTENDED, newValue as Boolean)
+                SettingsChangeManager.notifyUiCustomizationChanged()
                 true
             }
 
@@ -618,11 +621,7 @@ class UiSettingsActivity : BaseActivity() {
                     val idx = lp.findIndexOfValue(valueStr)
                     lp.summary = if (idx >= 0) lp.entries[idx] else valueStr
                 }
-                requireContext().sendBroadcast(
-                    android.content.Intent(AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED).apply {
-                        putExtra(AppConfig.PREF_ICON_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ICON_SHAPE_DEFAULT })
-                    }
-                )
+                SettingsChangeManager.notifyUiCustomizationChanged()
                 true
             }
 
@@ -632,11 +631,7 @@ class UiSettingsActivity : BaseActivity() {
                     val idx = lp.findIndexOfValue(valueStr)
                     lp.summary = if (idx >= 0) lp.entries[idx] else valueStr
                 }
-                requireContext().sendBroadcast(
-                    android.content.Intent(AppConfig.BROADCAST_ACTION_ARROW_SHAPE_CHANGED).apply {
-                        putExtra(AppConfig.PREF_ARROW_SHAPE, valueStr.ifEmpty { AppConfig.PREF_ARROW_SHAPE_DEFAULT })
-                    }
-                )
+                SettingsChangeManager.notifyUiCustomizationChanged()
                 true
             }
 
@@ -661,8 +656,7 @@ class UiSettingsActivity : BaseActivity() {
                 com.miku.ray.ui.bottomsheet.FontPickerBottomSheet(requireContext(), currentValue) { value, label ->
                     MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT, value)
                     appFont?.summary = label
-                    activity?.recreate()
-                    activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                    SettingsChangeManager.requestRecreate()
                 }.show()
                 true
             }
@@ -682,9 +676,7 @@ class UiSettingsActivity : BaseActivity() {
                     CategoryStyleHelper.applyToGroup(styleValue, screen)
                     listView.adapter?.notifyDataSetChanged()
                 }
-                requireContext().sendBroadcast(
-                    android.content.Intent(AppConfig.BROADCAST_ACTION_CATEGORY_STYLE_CHANGED)
-                )
+                SettingsChangeManager.notifyUiCustomizationChanged()
                 true
             }
 
@@ -811,8 +803,7 @@ class UiSettingsActivity : BaseActivity() {
             lifecycleScope.launch {
                 BannerColorExtractor.extractAndSave(requireContext(), uri) { colorChanged ->
                     if (colorChanged && MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
-                        activity?.recreate()
-                        activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                        SettingsChangeManager.requestRecreate()
                     }
                 }
             }
@@ -862,8 +853,7 @@ class UiSettingsActivity : BaseActivity() {
                 } else {
                     MmkvManager.encodeSettings(AppConfig.PREF_APP_FONT_USE_CUSTOM, checked)
                     appFont?.isEnabled = !checked
-                    activity?.recreate()
-                    activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                    SettingsChangeManager.requestRecreate()
                     true
                 }
             }
@@ -888,8 +878,7 @@ class UiSettingsActivity : BaseActivity() {
                     customFontSwitch?.isChecked = false
                     appFont?.isEnabled = true
                     updateCustomFontSummary()
-                    activity?.recreate()
-                    activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                    SettingsChangeManager.requestRecreate()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .showBlur()
@@ -1171,8 +1160,7 @@ class UiSettingsActivity : BaseActivity() {
                             MmkvManager.encodeSettings(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)
                             dynamicColorBanner?.isChecked = false
                             appTheme?.isEnabled = !isDynamicColor
-                            activity?.recreate()
-                            activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                            SettingsChangeManager.requestRecreate()
                         }
                     }
 
@@ -1202,8 +1190,7 @@ class UiSettingsActivity : BaseActivity() {
                             MmkvManager.encodeSettings(AppConfig.PREF_BANNER_COLOR, 0)
 
                             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR_BANNER, false)) {
-                                activity?.recreate()
-                                activity?.let { BaseActivity.recreateOthersInBackground(except = it) }
+                                SettingsChangeManager.requestRecreate()
                             }
                             broadcastHomeBannerChanged()
                             requireContext().snackbarSuccess(getString(R.string.home_banner_delete_summary), title = getString(R.string.title_alerter_success))
@@ -1442,19 +1429,15 @@ class UiSettingsActivity : BaseActivity() {
         }
 
         private fun broadcastProfileChanged() {
-            requireContext().sendBroadcast(
-                android.content.Intent(AppConfig.BROADCAST_ACTION_PROFILE_BANNER_CHANGED)
-            )
+            SettingsChangeManager.notifyUiCustomizationChanged()
         }
 
         private fun broadcastHomeBannerChanged() {
-            requireContext().sendBroadcast(
-                android.content.Intent(AppConfig.BROADCAST_ACTION_HOME_BANNER_CHANGED)
-            )
+            SettingsChangeManager.notifyUiCustomizationChanged()
         }
 
         private fun broadcastSelectedBannerChanged() {
-            com.miku.ray.util.SelectedProfileBannerController.broadcastChanged(requireContext())
+            com.miku.ray.util.SelectedProfileBannerController.notifyChanged(requireContext())
         }
 
         private fun updateCheckUpdateSummary(pendingVariant: String? = null) {

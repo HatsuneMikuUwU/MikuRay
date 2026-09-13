@@ -1,20 +1,21 @@
 package com.miku.ray.widget
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 import com.miku.ray.shapeimageview.ShaderImageView
 import com.miku.ray.shapeimageview.shader.ShaderHelper
 import com.miku.ray.shapeimageview.shader.SvgShader
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
+import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.util.getColorAttr
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class DynamicShapeImageView @JvmOverloads constructor(
     context: Context,
@@ -32,21 +33,12 @@ class DynamicShapeImageView @JvmOverloads constructor(
     private val defaultShapeKey: String
     get() = if (shapeTarget == ShapeTarget.ARROW) AppConfig.PREF_ARROW_SHAPE_DEFAULT else AppConfig.PREF_ICON_SHAPE_DEFAULT
 
-    private val broadcastAction: String
-    get() = if (shapeTarget == ShapeTarget.ARROW) AppConfig.BROADCAST_ACTION_ARROW_SHAPE_CHANGED else AppConfig.BROADCAST_ACTION_ICON_SHAPE_CHANGED
-
     private var currentShapeKey: String? = null
 
     private var customBgColor: Int? = null
 
-    private val shapeChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(ctx: Context?, intent: Intent?) {
-            if (intent?.action == broadcastAction) {
-                val newKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
-                applyShape(newKey)
-            }
-        }
-    }
+    private var viewScope: CoroutineScope? = null
+    private var shapeChangeJob: Job? = null
 
     override fun createImageViewHelper(): ShaderHelper {
         return SvgShader(resolveShapeId())
@@ -106,18 +98,23 @@ class DynamicShapeImageView @JvmOverloads constructor(
             val savedKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
             applyShape(savedKey)
 
-            val filter = IntentFilter(broadcastAction)
-            ContextCompat.registerReceiver(
-                context, shapeChangeReceiver, filter,
-                ContextCompat.RECEIVER_NOT_EXPORTED
-            )
+            val scope = CoroutineScope(Dispatchers.Main.immediate)
+            viewScope = scope
+            shapeChangeJob = scope.launch {
+                SettingsChangeManager.uiCustomizationChanged.collect {
+                    val newKey = MmkvManager.decodeSettingsString(prefKey) ?: defaultShapeKey
+                    applyShape(newKey)
+                }
+            }
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         if (!isInEditMode) {
-            try { context.unregisterReceiver(shapeChangeReceiver) } catch (_: Exception) {}
+            shapeChangeJob?.cancel()
+            shapeChangeJob = null
+            viewScope = null
         }
     }
 

@@ -63,22 +63,6 @@ object BlurBottomStatusController {
         }
     }
 
-    fun updateRadius(radius: Float) {
-        val blurView = blurViewReference?.get() ?: return
-        val blurRadius = toBlurViewRadius(radius)
-        if (blurRadius > MIN_BLUR_RADIUS) {
-            blurView.setBlurRadius(blurRadius)
-        }
-        blurView.setBlurEnabled(blurRadius > MIN_BLUR_RADIUS)
-    }
-
-    fun updateAlpha(alphaPercent: Float) {
-        glassFillColor = withAlpha(glassFillBaseColor, alphaPercentToInt(alphaPercent))
-        glassDrawableReference?.get()?.setColor(glassFillColor)
-        blurViewReference?.get()?.setOverlayColor(glassFillColor)
-        blurViewReference?.get()?.invalidate()
-    }
-
     private fun alphaPercentToInt(percent: Float): Int =
         (percent.coerceIn(0f, 100f) / 100f * 255f).toInt().coerceIn(0, 255)
 
