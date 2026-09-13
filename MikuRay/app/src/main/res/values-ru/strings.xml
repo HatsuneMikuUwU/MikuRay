@@ -198,8 +198,6 @@
     <string name="summary_pref_auto_test_after_update_subscription">Автоматическое тестирование занимает довольно много времени. Если включено, задача будет выполняться в фоновом режиме; если нет — на текущей странице.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Автоудаление недействительных конфигураций после теста</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Результаты теста могут быть неточными; удалённые конфигурации нельзя восстановить.</string>
-    <string name="title_pref_auto_sort_after_test">Автосортировка после теста</string>
-    <string name="summary_pref_auto_sort_after_test">Результаты теста могут быть неточными.</string>
 
     <string name="title_mux_settings">Настройки Mux</string>
     <string name="title_pref_mux_enabled">Включить Mux</string>
@@ -415,7 +413,6 @@
     <string name="title_ping_all_server">Tcping всех конфигураций</string>
     <string name="title_real_ping_all_server">Реальная задержка конфигурации</string>
     <string name="title_user_asset_setting">Файлы ресурсов</string>
-    <string name="title_sort_by_test_results">Сортировка по результатам теста</string>
     <string name="title_filter_config">Фильтр конфигураций</string>
     <string name="filter_config_all">Все</string>
     <string name="title_del_duplicate_config_count">Удалить %d дублирующиеся конфигурации</string>

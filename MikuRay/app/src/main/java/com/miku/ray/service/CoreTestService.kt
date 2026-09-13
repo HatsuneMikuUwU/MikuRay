@@ -219,9 +219,7 @@ class CoreTestService : Service() {
     private fun finishBatch(message: TestServiceMessage, event: RealPingEvent.Finish) {
         val autoRemove = message.subscriptionId.isNotEmpty() &&
         MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)
-        val autoSort = message.subscriptionId.isNotEmpty() &&
-        MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
-        val listBefore = if (autoRemove || autoSort) {
+        val listBefore = if (autoRemove) {
             MmkvManager.decodeServerList(message.subscriptionId)
         } else {
             emptyList()
@@ -229,10 +227,7 @@ class CoreTestService : Service() {
         if (autoRemove) {
             AngConfigManager.removeInvalidServer(message.subscriptionId)
         }
-        if (autoSort) {
-            AngConfigManager.sortByTestResultsForSub(message.subscriptionId)
-        }
-        val listChanged = (autoRemove || autoSort) &&
+        val listChanged = autoRemove &&
         listBefore != MmkvManager.decodeServerList(message.subscriptionId)
 
         sendSummary(

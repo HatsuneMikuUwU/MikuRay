@@ -135,8 +135,6 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_TEST_AFTER_UPDATE_SUBSCRIPTION, false)
         dialogBinding.switchAutoRemoveInvalid.isChecked =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)
-        dialogBinding.switchAutoSort.isChecked =
-        MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
         dialogBinding.switchSendHwid.isChecked =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_SEND_HWID, false)
 
@@ -148,9 +146,6 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         }
         dialogBinding.rowAutoRemoveInvalid.setOnClickListener {
             dialogBinding.switchAutoRemoveInvalid.toggle()
-        }
-        dialogBinding.rowAutoSort.setOnClickListener {
-            dialogBinding.switchAutoSort.toggle()
         }
         dialogBinding.rowSendHwid.setOnClickListener {
             dialogBinding.switchSendHwid.toggle()
@@ -172,10 +167,6 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
             MmkvManager.encodeSettings(
                 AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST,
                 dialogBinding.switchAutoRemoveInvalid.isChecked
-            )
-            MmkvManager.encodeSettings(
-                AppConfig.PREF_AUTO_SORT_AFTER_TEST,
-                dialogBinding.switchAutoSort.isChecked
             )
             MmkvManager.encodeSettings(
                 AppConfig.PREF_SEND_HWID,

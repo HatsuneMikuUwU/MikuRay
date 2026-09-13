@@ -570,33 +570,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return count
     }
 
-    fun sortByTestResults() {
-        if (subscriptionId.isEmpty()) {
-            MmkvManager.decodeSubsList().forEach { guid ->
-                sortByTestResultsForSub(guid)
-            }
-        } else {
-            sortByTestResultsForSub(subscriptionId)
-        }
-    }
-
-    private fun sortByTestResultsForSub(subId: String) {
-        data class ServerDelay(var guid: String, var testDelayMillis: Long)
-
-        val serverDelays = mutableListOf<ServerDelay>()
-        val serverListToSort = MmkvManager.decodeServerList(subId)
-
-        serverListToSort.forEach { key ->
-            val delay = MmkvManager.decodeServerAffiliationInfo(key)?.testDelayMillis ?: 0L
-            serverDelays.add(ServerDelay(key, if (delay <= 0L) 999999 else delay))
-        }
-        serverDelays.sortBy { it.testDelayMillis }
-
-        val sortedServerList = serverDelays.map { it.guid }.toMutableList()
-
-        MmkvManager.encodeServerList(sortedServerList, subId)
-    }
-
     fun initAssets(assets: AssetManager) {
         viewModelScope.launch(Dispatchers.Default) {
             SettingsManager.initAssets(getApplication<AngApplication>(), assets)
@@ -649,21 +622,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             if (cancelled) return@launch
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST)) {
                 removeInvalidServer()
-            }
-
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST)) {
-                if (subscriptionId.isEmpty()) {
-                    MmkvManager.decodeSubsList().forEach { subId ->
-                        MmkvManager.saveOriginServerList(subId)
-                        MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_$subId", 2)
-                    }
-                    MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_${AppConfig.DEFAULT_SUBSCRIPTION_ID}", 2)
-                } else {
-                    MmkvManager.saveOriginServerList(subscriptionId)
-                    val subIdToSave = subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
-                    MmkvManager.encodeSettings("${AppConfig.PREF_SERVER_ORDER}_$subIdToSave", 2)
-                }
-                sortByTestResults()
             }
 
             withContext(Dispatchers.Main) {

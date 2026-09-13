@@ -143,17 +143,6 @@ class SubscriptionUpdateService : Service() {
                 )
                 AngConfigManager.removeInvalidServer(subId)
             }
-            if (testCompleted &&
-                MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)
-            ) {
-                LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: sorting servers for ${subItem.remarks}")
-                showNotification(
-                    context = this,
-                    titleResId = R.string.title_sort_by_test_results,
-                    content = subItem.remarks
-                )
-                AngConfigManager.sortByTestResultsForSub(subId)
-            }
         }
 
         LogUtil.i(AppConfig.TAG, "SubscriptionUpdateService: Finished ${subItem.remarks}")

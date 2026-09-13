@@ -221,69 +221,6 @@
                 app:cardElevation="0dp"
                 app:cardPreventCornerOverlap="false"
                 app:contentPadding="0dp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Middle"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:id="@+id/row_auto_sort"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_pref_auto_sort_after_test"
-                            android:textAppearance="?attr/textAppearanceTitleMedium"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="@string/summary_pref_auto_sort_after_test"
-                            android:textAppearance="?attr/textAppearanceTitleSmall"
-                            android:textColor="?attr/colorOnSurfaceVariant"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch_auto_sort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:clickable="false"
-                        android:focusable="false"
-                        app:thumbIcon="@drawable/mtrl_ic_check" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:clipToPadding="false"
-                app:cardBackgroundColor="?attr/colorCard"
-                app:cardElevation="0dp"
-                app:cardPreventCornerOverlap="false"
-                app:contentPadding="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CardView.Bottom"
                 app:strokeWidth="0dp">
 

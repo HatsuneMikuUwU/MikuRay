@@ -195,8 +195,6 @@
     <string name="summary_pref_auto_test_after_update_subscription">自动测试需要比较长的时间，开启后任务将在后台运行；不开启则在当前页面运行</string>
     <string name="title_pref_auto_remove_invalid_after_test">测试后自动删除无效配置</string>
     <string name="summary_pref_auto_remove_invalid_after_test">测试结果可能不准确；已删除的配置无法恢复。</string>
-    <string name="title_pref_auto_sort_after_test">测试后自动排序</string>
-    <string name="summary_pref_auto_sort_after_test">测试结果可能不准确；</string>
 
     <string name="title_mux_settings">Mux 多路复用 设置</string>
     <string name="title_pref_mux_enabled">启用 Mux 多路复用</string>
@@ -409,7 +407,6 @@
     <string name="title_ping_all_server">Tcping所有配置</string>
     <string name="title_real_ping_all_server">测试配置真连接</string>
     <string name="title_user_asset_setting">资源文件</string>
-    <string name="title_sort_by_test_results">按测试结果排序</string>
     <string name="title_filter_config">过滤配置</string>
     <string name="filter_config_all">所有</string>
     <string name="title_del_duplicate_config_count">删除 %d 个重复配置</string>

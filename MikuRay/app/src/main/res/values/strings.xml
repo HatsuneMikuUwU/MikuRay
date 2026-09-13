@@ -212,8 +212,6 @@
     <string name="summary_pref_auto_test_after_update_subscription">Automated testing takes a long time. If enabled, the task will run in the background; otherwise, it will run on the current page.</string>
     <string name="title_pref_auto_remove_invalid_after_test">Auto delete invalid config after testing</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Test results may not be accurate; deleted config cannot be recovered.</string>
-    <string name="title_pref_auto_sort_after_test">Auto sort after testing</string>
-    <string name="summary_pref_auto_sort_after_test">Test results may not be accurate;</string>
 
     <string name="title_mux_settings">Mux Settings</string>
     <string name="title_pref_mux_enabled">Enable Mux</string>
@@ -437,7 +435,6 @@
     <string name="title_real_ping_all_server">Real delay config</string>
     <string name="title_country_code_all_server">Test country code</string>
     <string name="title_user_asset_setting">Asset files</string>
-    <string name="title_sort_by_test_results">Sorting by test results</string>
     <string name="title_filter_config">Filter config</string>
     <string name="filter_config_all">All</string>
     <string name="title_del_duplicate_config_count">Delete %d duplicate configs</string>
