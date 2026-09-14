@@ -688,6 +688,9 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="transport_layer_security">Keamanan Transport Layer</string>
     <string name="del_config_dialog_comfirm_message">Yakin mau hapus konfigurasi ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
     <string name="del_sub_dialog_comfirm_message">Yakin mau hapus langganan ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
+    <string name="title_sub_group_options">Opsi Grup</string>
+    <string name="sub_group_option_delete">Hapus Grup</string>
+    <string name="sub_group_option_clear_traffic">Bersihin Traffic Grup</string>
     <string name="del_routing_dialog_comfirm_message">Yakin mau hapus settingan routing ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
     <string name="del_file_asset_dialog_comfirm_message">Yakin mau hapus file aset ini? Kalo udah dihapus, datanya bakal hilang permanen dan nggak bisa dibalikin lagi lho.</string>
     <string name="del_button_dialog_comfirm">Hapus</string>

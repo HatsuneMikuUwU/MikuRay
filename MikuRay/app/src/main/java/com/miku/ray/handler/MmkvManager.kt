@@ -453,8 +453,10 @@ object MmkvManager {
     }
 
     fun resetGroupTraffic(subscriptionId: String) {
-        val guids = decodeServerList(getSubscriptionId(subscriptionId))
-        guids.forEach { guid -> resetProfileTraffic(guid) }
+        val subId = getSubscriptionId(subscriptionId)
+        decodeServerList(subId).forEach { guid -> resetProfileTraffic(guid) }
+        serverAffStorage.remove(groupTrafficUpKey(subId))
+        serverAffStorage.remove(groupTrafficDownKey(subId))
     }
 
     fun getGroupTrafficString(subscriptionId: String): String? {

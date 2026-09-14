@@ -697,6 +697,9 @@
     <string name="transport_layer_security">Безопасность транспортного уровня</string>
     <string name="del_config_dialog_comfirm_message">Вы уверены, что хотите удалить это? После удаления конфигурация будет потеряна безвозвратно.</string>
     <string name="del_sub_dialog_comfirm_message">Вы уверены, что хотите удалить эту подписку? После удаления данные будут потеряны безвозвратно.</string>
+    <string name="title_sub_group_options">Параметры группы</string>
+    <string name="sub_group_option_delete">Удалить группу</string>
+    <string name="sub_group_option_clear_traffic">Очистить трафик группы</string>
     <string name="del_routing_dialog_comfirm_message">Вы уверены, что хотите удалить эту настройку маршрутизации? После удаления данные будут потеряны безвозвратно.</string>
     <string name="del_file_asset_dialog_comfirm_message">Вы уверены, что хотите удалить этот файл ресурса? После удаления данные будут потеряны безвозвратно.</string>
     <string name="del_button_dialog_comfirm">Удалить</string>

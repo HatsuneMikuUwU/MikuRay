@@ -48,10 +48,12 @@ import kotlinx.coroutines.withContext
 
 import com.miku.ray.ui.bottomsheet.ShareSubBottomSheet
 import com.miku.ray.ui.bottomsheet.SortSubBottomSheet
+import com.miku.ray.ui.bottomsheet.SubGroupOptionsBottomSheet
 
 class SubSettingActivity : BaseActivity(),
 ShareSubBottomSheet.OnShareSubOptionClickListener,
-SortSubBottomSheet.OnSortSubOptionClickListener {
+SortSubBottomSheet.OnSortSubOptionClickListener,
+SubGroupOptionsBottomSheet.OnSubGroupOptionClickListener {
     private val binding by lazy { ActivitySubSettingBinding.inflate(layoutInflater) }
     private val ownerActivity: SubSettingActivity
     get() = this
@@ -230,6 +232,39 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         com.miku.ray.handler.SettingsChangeManager.makeSetupGroupTab()
     }
 
+    override fun onSubGroupOptionClicked(viewId: Int, subId: String) {
+        val remarks = viewModel.getAll().find { it.guid == subId }?.subscription?.remarks.orEmpty()
+        when (viewId) {
+            R.id.remove_group -> {
+                val action = {
+                    viewModel.remove(subId)
+                    refreshData()
+                    snackbarSuccess(
+                        message = getString(R.string.toast_delete_success),
+                        title = remarks
+                    )
+                }
+                if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
+                    showDeleteConfirmDialog(context = ownerActivity, messageRes = R.string.del_sub_dialog_comfirm_message) {
+                        action()
+                    }
+                } else {
+                    action()
+                }
+            }
+            R.id.clear_group_traffic -> {
+                showDeleteConfirmDialog(
+                    context = ownerActivity,
+                    titleRes = R.string.title_reset_traffic,
+                    messageRes = R.string.confirm_reset_traffic_group,
+                ) {
+                    MmkvManager.resetGroupTraffic(subId)
+                    refreshData()
+                }
+            }
+        }
+    }
+
     override fun onShareSubOptionClicked(optionId: Int, url: String) {
         try {
             when (optionId) {
@@ -269,24 +304,7 @@ SortSubBottomSheet.OnSortSubOptionClickListener {
         }
 
         override fun onRemove(guid: String, position: Int) {
-            val remarks = viewModel.getAll().find { it.guid == guid }?.subscription?.remarks.orEmpty()
-            if (MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE)) {
-                showDeleteConfirmDialog(context = ownerActivity, messageRes = R.string.del_sub_dialog_comfirm_message) {
-                    viewModel.remove(guid)
-                    refreshData()
-                    snackbarSuccess(
-                        message = getString(R.string.toast_delete_success),
-                        title = remarks
-                    )
-                }
-            } else {
-                viewModel.remove(guid)
-                refreshData()
-                snackbarSuccess(
-                    message = getString(R.string.toast_delete_success),
-                    title = remarks
-                )
-            }
+            SubGroupOptionsBottomSheet.newInstance(guid).show(supportFragmentManager, SubGroupOptionsBottomSheet.TAG)
         }
 
         override fun onShare(url: String) {

@@ -677,6 +677,9 @@
     <string name="transport_layer_security">传输层安全</string>
     <string name="del_config_dialog_comfirm_message">确定要删除吗？一旦删除，配置将永久丢失且无法找回。</string>
     <string name="del_sub_dialog_comfirm_message">确定要删除此订阅吗？一旦删除，数据将永久丢失且无法找回。</string>
+    <string name="title_sub_group_options">群组选项</string>
+    <string name="sub_group_option_delete">删除群组</string>
+    <string name="sub_group_option_clear_traffic">清除群组流量</string>
     <string name="del_routing_dialog_comfirm_message">确定要删除此路由设置吗？一旦删除，数据将永久丢失且无法找回。</string>
     <string name="del_file_asset_dialog_comfirm_message">确定要删除此资产文件吗？一旦删除，数据将永久丢失且无法找回。</string>
     <string name="del_button_dialog_comfirm">删除</string>

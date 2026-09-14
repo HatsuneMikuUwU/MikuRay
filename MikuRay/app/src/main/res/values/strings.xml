@@ -719,6 +719,9 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="transport_layer_security">Transport Layer Security</string>
     <string name="del_config_dialog_comfirm_message">Are you sure you want to delete this? Once deleted, the configuration is gone forever and can\'t be recovered.</string>
     <string name="del_sub_dialog_comfirm_message">Are you sure you want to delete this subscription? Once deleted, the data is gone forever and can\'t be recovered.</string>
+    <string name="title_sub_group_options">Group Options</string>
+    <string name="sub_group_option_delete">Delete Group</string>
+    <string name="sub_group_option_clear_traffic">Clear Group Traffic</string>
     <string name="del_routing_dialog_comfirm_message">Are you sure you want to delete this routing setting? Once deleted, the data is gone forever and can\'t be recovered.</string>
     <string name="del_file_asset_dialog_comfirm_message">Are you sure you want to delete this asset file? Once deleted, the data is gone forever and can\'t be recovered.</string>
     <string name="del_button_dialog_comfirm">Delete</string>
