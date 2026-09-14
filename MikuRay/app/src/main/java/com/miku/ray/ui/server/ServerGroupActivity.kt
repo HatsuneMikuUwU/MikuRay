@@ -84,10 +84,17 @@ class ServerGroupActivity : BaseActivity() {
 
     private fun updateFallbackVisibility() {
         val typePos = policyGroupTypes.indexOf(binding.spPolicyGroupType.text.toString()).let { if (it >= 0) it else 0 }
-        val supportsObservatory = BalancerStrategyType.from(typePos.toString()).supportsObservatory
+        val strategyType = BalancerStrategyType.from(typePos.toString())
+        val supportsObservatory = strategyType.supportsObservatory
         binding.layoutPolicyGroupTestOutbounds.visibility = if (supportsObservatory) android.view.View.VISIBLE else android.view.View.GONE
         binding.layoutPolicyGroupFallback.visibility =
         if (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked) android.view.View.VISIBLE else android.view.View.GONE
+
+        val usesObservatory = strategyType.requiresObservatory
+        || (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked)
+        val usesBurstObservatory = strategyType.requiresBurstObservatory
+        binding.layoutPolicyGroupObservatoryPing.visibility = if (usesObservatory) android.view.View.VISIBLE else android.view.View.GONE
+        binding.layoutPolicyGroupObservatoryLoad.visibility = if (usesBurstObservatory) android.view.View.VISIBLE else android.view.View.GONE
     }
 
     private fun bindingServer(config: ProfileItem): Boolean {
@@ -108,6 +115,19 @@ class ServerGroupActivity : BaseActivity() {
         binding.chkPolicyGroupTestOutbounds.isChecked =
         config.policyGroupTestOutbounds != false || !supportsObservatory
         binding.spPolicyGroupFallback.setText(config.policyGroupFallbackTag.orEmpty(), false)
+
+        binding.etPolicyGroupObservatoryLeastPingInterval.text =
+        Utils.getEditable(config.policyGroupObservatoryLeastPingInterval ?: AppConfig.OBSERVATORY_LEAST_PING_INTERVAL)
+        binding.etPolicyGroupObservatoryLeastLoadInterval.text =
+        Utils.getEditable(config.policyGroupObservatoryLeastLoadInterval ?: AppConfig.OBSERVATORY_LEAST_LOAD_INTERVAL)
+        binding.spPolicyGroupObservatoryLeastLoadMethod.setText(
+            config.policyGroupObservatoryLeastLoadMethod ?: AppConfig.OBSERVATORY_LEAST_LOAD_METHOD, false
+        )
+        binding.etPolicyGroupObservatoryLeastLoadSampling.text =
+        Utils.getEditable(config.policyGroupObservatoryLeastLoadSampling ?: AppConfig.OBSERVATORY_LEAST_LOAD_SAMPLING)
+        binding.etPolicyGroupObservatoryLeastLoadTimeout.text =
+        Utils.getEditable(config.policyGroupObservatoryLeastLoadTimeout ?: AppConfig.OBSERVATORY_LEAST_LOAD_TIMEOUT)
+
         updateFallbackVisibility()
 
         return true
@@ -132,6 +152,13 @@ class ServerGroupActivity : BaseActivity() {
 
         binding.chkPolicyGroupTestOutbounds.isChecked = true
         binding.spPolicyGroupFallback.setText("", false)
+
+        binding.etPolicyGroupObservatoryLeastPingInterval.text = Utils.getEditable(AppConfig.OBSERVATORY_LEAST_PING_INTERVAL)
+        binding.etPolicyGroupObservatoryLeastLoadInterval.text = Utils.getEditable(AppConfig.OBSERVATORY_LEAST_LOAD_INTERVAL)
+        binding.spPolicyGroupObservatoryLeastLoadMethod.setText(AppConfig.OBSERVATORY_LEAST_LOAD_METHOD, false)
+        binding.etPolicyGroupObservatoryLeastLoadSampling.text = Utils.getEditable(AppConfig.OBSERVATORY_LEAST_LOAD_SAMPLING)
+        binding.etPolicyGroupObservatoryLeastLoadTimeout.text = Utils.getEditable(AppConfig.OBSERVATORY_LEAST_LOAD_TIMEOUT)
+
         updateFallbackVisibility()
         return true
     }
@@ -145,12 +172,36 @@ class ServerGroupActivity : BaseActivity() {
             return false
         }
 
+        val typePos = policyGroupTypes.indexOf(binding.spPolicyGroupType.text.toString()).let { if (it >= 0) it else 0 }
+        val strategyType = BalancerStrategyType.from(typePos.toString())
+        val usesObservatory = strategyType.requiresObservatory
+        || (strategyType.supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked)
+        val usesBurstObservatory = strategyType.requiresBurstObservatory
+
+        val pingInterval = binding.etPolicyGroupObservatoryLeastPingInterval.text.toString().trim()
+        if (usesObservatory && !AppConfig.OBSERVATORY_DURATION_PATTERN.matches(pingInterval)) {
+            snackbarError(getString(R.string.toast_invalid_observatory_duration), title = getString(R.string.title_alerter_error))
+            return false
+        }
+        val loadInterval = binding.etPolicyGroupObservatoryLeastLoadInterval.text.toString().trim()
+        val loadTimeout = binding.etPolicyGroupObservatoryLeastLoadTimeout.text.toString().trim()
+        if (usesBurstObservatory
+            && (!AppConfig.OBSERVATORY_DURATION_PATTERN.matches(loadInterval) || !AppConfig.OBSERVATORY_DURATION_PATTERN.matches(loadTimeout))
+        ) {
+            snackbarError(getString(R.string.toast_invalid_observatory_duration), title = getString(R.string.title_alerter_error))
+            return false
+        }
+        val loadSampling = binding.etPolicyGroupObservatoryLeastLoadSampling.text.toString().trim()
+        if (usesBurstObservatory && (loadSampling.toIntOrNull()?.let { it > 0 } != true)) {
+            snackbarError(getString(R.string.toast_invalid_observatory_sampling), title = getString(R.string.title_alerter_error))
+            return false
+        }
+
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(EConfigType.POLICYGROUP)
         config.remarks = binding.etRemarks.text.toString().trim()
         config.policyGroupFilter = binding.etPolicyGroupFilter.text.toString().trim()
 
         val selectedTypeStr = binding.spPolicyGroupType.text.toString()
-        val typePos = policyGroupTypes.indexOf(selectedTypeStr).let { if (it >= 0) it else 0 }
         config.policyGroupType = typePos.toString()
 
         val selectedSubStr = binding.spPolicyGroupSubId.text.toString()
@@ -159,6 +210,13 @@ class ServerGroupActivity : BaseActivity() {
 
         config.policyGroupTestOutbounds = binding.chkPolicyGroupTestOutbounds.isChecked
         config.policyGroupFallbackTag = binding.spPolicyGroupFallback.text.toString().trim().takeIf { it.isNotEmpty() }
+
+        config.policyGroupObservatoryLeastPingInterval = pingInterval.takeIf { it.isNotEmpty() }
+        config.policyGroupObservatoryLeastLoadInterval = loadInterval.takeIf { it.isNotEmpty() }
+        config.policyGroupObservatoryLeastLoadMethod =
+        binding.spPolicyGroupObservatoryLeastLoadMethod.text.toString().trim().takeIf { it.isNotEmpty() }
+        config.policyGroupObservatoryLeastLoadSampling = loadSampling.takeIf { it.isNotEmpty() }
+        config.policyGroupObservatoryLeastLoadTimeout = loadTimeout.takeIf { it.isNotEmpty() }
 
         if (config.subscriptionId.isEmpty() && !subscriptionId.isNullOrEmpty()) {
             config.subscriptionId = subscriptionId.orEmpty()

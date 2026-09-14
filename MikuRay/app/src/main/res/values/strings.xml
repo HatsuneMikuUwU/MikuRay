@@ -516,8 +516,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_pref_fragment_interval_tip">min-max</string>
     <string name="title_pref_fragment_maxsplit">Fragment Max Split</string>
     <string name="title_pref_fragment_enabled">Enable Fragment</string>
-
-    <string name="title_observatory_settings">Observatory Settings</string>
     <string name="title_pref_observatory_least_ping_interval">leastPing Interval</string>
     <string name="title_pref_observatory_least_load_interval">leastLoad Interval</string>
     <string name="title_pref_observatory_least_load_method">leastLoad HTTP Method</string>
@@ -538,6 +536,7 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_policy_group_subscription_filter">Remarks regular filter</string>
     <string name="title_policy_group_test_outbounds">Test outbounds</string>
     <string name="title_policy_group_fallback">Fallback outbound</string>
+    <string name="title_policy_group_observatory">Observatory</string>
     <string name="title_policy_group_fallback_tip">Optional</string>
 
     <string name="server_proxy_chain_members">Proxy chain members</string>
@@ -710,7 +709,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="summary_navigate_mux_settings">Mux status, concurrency, XUDP concurrency, QUIC handling, etc.</string>
     <string name="summary_navigate_fragment_settings">Fragment status, length, interval, maxsplit, packets, etc.</string>
     <string name="summary_navigate_advanced_settings">Auto-start, delay/IP API URLs, routing strategy, mode, hide from recent apps, etc.</string>
-    <string name="summary_navigate_observatory_settings">leastPing interval, leastLoad interval, leastLoad HTTP method, leastLoad sampling, leastLoad timeout</string>
     <string name="summary_navigate_per_app_proxy_settings">Choose which apps go through the proxy</string>
     <string name="title_ui_general">General</string>
     <string name="title_category_notification">Notification</string>
@@ -1110,7 +1108,6 @@ you need."</string>
     <string name="subtitle_sub_setting">Manage your subscriptions</string>
     <string name="subtitle_fragment_settings">Configure traffic fragmentation</string>
     <string name="subtitle_core_settings">Configure the proxy core engine</string>
-    <string name="subtitle_observatory_settings">Configure latency probing</string>
     <string name="subtitle_vpn_settings">Configure VPN connection behavior</string>
     <string name="subtitle_advanced_settings">Advanced app configuration</string>
     <string name="subtitle_ui_settings">Customize the app\'s appearance</string>

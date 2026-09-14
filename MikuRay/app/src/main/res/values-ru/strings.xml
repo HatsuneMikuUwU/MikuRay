@@ -495,8 +495,6 @@
     <string name="title_pref_fragment_interval_tip">мин-макс</string>
     <string name="title_pref_fragment_maxsplit">Максимальное число фрагментов</string>
     <string name="title_pref_fragment_enabled">Включить фрагментацию</string>
-
-    <string name="title_observatory_settings">Настройки наблюдения соединений</string>
     <string name="title_pref_observatory_least_ping_interval">Интервал leastPing</string>
     <string name="title_pref_observatory_least_load_interval">Интервал leastLoad</string>
     <string name="title_pref_observatory_least_load_method">HTTP-метод leastLoad</string>
@@ -517,6 +515,7 @@
     <string name="title_policy_group_subscription_filter">Фильтр примечаний (регулярное выражение)</string>
     <string name="title_policy_group_test_outbounds">Проверять исходящие соединения</string>
     <string name="title_policy_group_fallback">Резервное исходящее соединение</string>
+    <string name="title_policy_group_observatory">Наблюдение</string>
     <string name="title_policy_group_fallback_tip">Необязательно</string>
 
     <string name="server_proxy_chain_members">Участники цепочки прокси</string>
@@ -688,7 +687,6 @@
     <string name="summary_navigate_mux_settings">Статус Mux, подключения, подключения XUDP, обработка QUIC и т.д.</string>
     <string name="summary_navigate_fragment_settings">Статус фрагментации, длина, интервал, maxsplit, пакеты и т.д.</string>
     <string name="summary_navigate_advanced_settings">Автозапуск, URL API задержки/IP, стратегия маршрутизации, режим, скрыть из недавних приложений и т.д.</string>
-    <string name="summary_navigate_observatory_settings">Интервал leastPing, интервал leastLoad, HTTP-метод leastLoad, выборка leastLoad, тайм-аут leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Выберите, какие приложения будут использовать прокси</string>
     <string name="title_ui_general">Общие</string>
     <string name="title_category_notification">Уведомления</string>
@@ -1079,7 +1077,6 @@
     <string name="subtitle_sub_setting">Управление вашими подписками</string>
     <string name="subtitle_fragment_settings">Настройка фрагментации трафика</string>
     <string name="subtitle_core_settings">Настройка ядра прокси</string>
-    <string name="subtitle_observatory_settings">Настройка проверки задержки</string>
     <string name="subtitle_vpn_settings">Настройка поведения VPN-подключения</string>
     <string name="subtitle_advanced_settings">Расширенная настройка приложения</string>
     <string name="subtitle_ui_settings">Настройка внешнего вида приложения</string>

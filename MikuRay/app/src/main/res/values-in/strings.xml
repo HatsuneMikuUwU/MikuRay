@@ -497,8 +497,6 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_pref_fragment_interval_tip">min-max</string>
     <string name="title_pref_fragment_maxsplit">Maksimal Split Fragmen</string>
     <string name="title_pref_fragment_enabled">Aktifin Fragmen</string>
-
-    <string name="title_observatory_settings">Settingan Observatory</string>
     <string name="title_pref_observatory_least_ping_interval">Interval leastPing</string>
     <string name="title_pref_observatory_least_load_interval">Interval leastLoad</string>
     <string name="title_pref_observatory_least_load_method">Metode HTTP leastLoad</string>
@@ -519,6 +517,7 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_policy_group_subscription_filter">Filter Reguler Catatan</string>
     <string name="title_policy_group_test_outbounds">Uji outbound</string>
     <string name="title_policy_group_fallback">Outbound cadangan</string>
+    <string name="title_policy_group_observatory">Observatory</string>
     <string name="title_policy_group_fallback_tip">Opsional</string>
 
     <string name="server_proxy_chain_members">Anggota Proxy Chain</string>
@@ -679,7 +678,6 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="summary_navigate_mux_settings">Status mux, konkurensi, konkurensi XUDP, penanganan QUIC, dll.</string>
     <string name="summary_navigate_fragment_settings">Status fragment, panjang, interval, maxsplit, paket, dll.</string>
     <string name="summary_navigate_advanced_settings">Auto-start, URL API delay/IP, strategi routing, mode, sembunyiin dari recent apps, dll.</string>
-    <string name="summary_navigate_observatory_settings">Interval leastPing, interval leastLoad, metode HTTP leastLoad, sampling leastLoad, timeout leastLoad</string>
     <string name="summary_navigate_per_app_proxy_settings">Pilih aplikasi mana aja yang mau pakai proxy</string>
     <string name="title_ui_general">Umum</string>
     <string name="title_category_notification">Notifikasi</string>
@@ -1069,7 +1067,6 @@ yang kamu butuhin."</string>
     <string name="subtitle_sub_setting">Kelola langganan kamu</string>
     <string name="subtitle_fragment_settings">Atur fragmentasi traffic</string>
     <string name="subtitle_core_settings">Atur core engine proxy</string>
-    <string name="subtitle_observatory_settings">Atur pengecekan latency</string>
     <string name="subtitle_vpn_settings">Atur kelakuan koneksi VPN</string>
     <string name="subtitle_advanced_settings">Konfigurasi lanjutan aplikasi</string>
     <string name="subtitle_ui_settings">Kustomisasi tampilan aplikasi</string>

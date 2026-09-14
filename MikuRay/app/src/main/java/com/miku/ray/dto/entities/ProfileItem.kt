@@ -69,6 +69,11 @@ data class ProfileItem(
     var policyGroupFilter: String? = null,
     var policyGroupTestOutbounds: Boolean? = null,
     var policyGroupFallbackTag: String? = null,
+    var policyGroupObservatoryLeastPingInterval: String? = null,
+    var policyGroupObservatoryLeastLoadInterval: String? = null,
+    var policyGroupObservatoryLeastLoadMethod: String? = null,
+    var policyGroupObservatoryLeastLoadSampling: String? = null,
+    var policyGroupObservatoryLeastLoadTimeout: String? = null,
     var proxyChainProfiles: String? = null,
 
     var browserDialerMode: String? = null,

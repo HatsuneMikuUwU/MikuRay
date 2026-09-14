@@ -490,8 +490,6 @@
     <string name="title_pref_fragment_interval_tip">最小 - 最大</string>
     <string name="title_pref_fragment_maxsplit">分片最大分割数</string>
     <string name="title_pref_fragment_enabled">启用分片（Fragment）</string>
-
-    <string name="title_observatory_settings">连接监测设置</string>
     <string name="title_pref_observatory_least_ping_interval">leastPing 间隔</string>
     <string name="title_pref_observatory_least_load_interval">leastLoad 间隔</string>
     <string name="title_pref_observatory_least_load_method">leastLoad HTTP 方法</string>
@@ -512,6 +510,7 @@
     <string name="title_policy_group_subscription_filter">别名正则过滤</string>
     <string name="title_policy_group_test_outbounds">测试出站</string>
     <string name="title_policy_group_fallback">备用出站</string>
+    <string name="title_policy_group_observatory">连接监测</string>
     <string name="title_policy_group_fallback_tip">可选</string>
 
     <string name="title_configuration_backup_restore">备份 &amp; 还原</string>
@@ -668,7 +667,6 @@
     <string name="summary_navigate_mux_settings">Mux 状态、并发、XUDP 并发、QUIC 处理等</string>
     <string name="summary_navigate_fragment_settings">分片状态、长度、间隔、最大分割 (maxsplit)、数据包等</string>
     <string name="summary_navigate_advanced_settings">自动启动、延迟/IP API URL、路由策略、模式、从最近任务中隐藏等</string>
-    <string name="summary_navigate_observatory_settings">leastPing 间隔、leastLoad 间隔、leastLoad HTTP 方法、leastLoad 采样次数、leastLoad 超时</string>
     <string name="summary_navigate_per_app_proxy_settings">选择哪些应用通过代理</string>
     <string name="title_ui_general">通用</string>
     <string name="title_category_notification">通知</string>
@@ -1058,7 +1056,6 @@
     <string name="subtitle_sub_setting">管理你的订阅</string>
     <string name="subtitle_fragment_settings">配置流量分片</string>
     <string name="subtitle_core_settings">配置代理核心引擎</string>
-    <string name="subtitle_observatory_settings">配置延迟探测</string>
     <string name="subtitle_vpn_settings">配置 VPN 连接行为</string>
     <string name="subtitle_advanced_settings">应用高级配置</string>
     <string name="subtitle_ui_settings">自定义应用外观</string>

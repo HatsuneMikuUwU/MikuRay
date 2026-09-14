@@ -388,6 +388,7 @@ object CoreConfigManager {
             selector = listOf(memberTagPrefix),
             balancerTag = balancerTag,
             fallbackTag = fallbackTag,
+            profile = resolvedOutbound.profile,
         )
         val existingBalancers = v2rayConfig.routing.balancers?.toMutableList() ?: mutableListOf()
         if (existingBalancers.none { it.tag == balancerTag }) {
@@ -1002,13 +1003,14 @@ object CoreConfigManager {
         selector: List<String>,
         balancerTag: String = AppConfig.TAG_BALANCER,
         fallbackTag: String? = null,
+        profile: ProfileItem? = null,
     ): BalancerStrategy {
         val probeUrl = SettingsManager.getDelayTestUrl()
-        val leastPingInterval = decodeObservatoryDuration(AppConfig.PREF_OBSERVATORY_LEAST_PING_INTERVAL, AppConfig.OBSERVATORY_LEAST_PING_INTERVAL)
-        val leastLoadInterval = decodeObservatoryDuration(AppConfig.PREF_OBSERVATORY_LEAST_LOAD_INTERVAL, AppConfig.OBSERVATORY_LEAST_LOAD_INTERVAL)
-        val leastLoadMethod = MmkvManager.decodeSettingsString(AppConfig.PREF_OBSERVATORY_LEAST_LOAD_METHOD, AppConfig.OBSERVATORY_LEAST_LOAD_METHOD)
-        val leastLoadSampling = decodeObservatorySampling()
-        val leastLoadTimeout = decodeObservatoryDuration(AppConfig.PREF_OBSERVATORY_LEAST_LOAD_TIMEOUT, AppConfig.OBSERVATORY_LEAST_LOAD_TIMEOUT)
+        val leastPingInterval = decodeObservatoryDuration(profile?.policyGroupObservatoryLeastPingInterval, AppConfig.OBSERVATORY_LEAST_PING_INTERVAL)
+        val leastLoadInterval = decodeObservatoryDuration(profile?.policyGroupObservatoryLeastLoadInterval, AppConfig.OBSERVATORY_LEAST_LOAD_INTERVAL)
+        val leastLoadMethod = profile?.policyGroupObservatoryLeastLoadMethod?.trim()?.takeIf { it.isNotEmpty() } ?: AppConfig.OBSERVATORY_LEAST_LOAD_METHOD
+        val leastLoadSampling = decodeObservatorySampling(profile?.policyGroupObservatoryLeastLoadSampling)
+        val leastLoadTimeout = decodeObservatoryDuration(profile?.policyGroupObservatoryLeastLoadTimeout, AppConfig.OBSERVATORY_LEAST_LOAD_TIMEOUT)
         val balancer = V2rayConfig.RoutingBean.BalancerBean(
             tag = balancerTag,
             selector = selector,
@@ -1038,17 +1040,17 @@ object CoreConfigManager {
         return BalancerStrategy(balancer, observatory, burstObservatory)
     }
 
-    private fun decodeObservatoryDuration(key: String, default: String): String {
-        val value = MmkvManager.decodeSettingsString(key)?.trim()
-        return if (!value.isNullOrEmpty() && AppConfig.OBSERVATORY_DURATION_PATTERN.matches(value)) {
-            value
+    private fun decodeObservatoryDuration(value: String?, default: String): String {
+        val trimmed = value?.trim()
+        return if (!trimmed.isNullOrEmpty() && AppConfig.OBSERVATORY_DURATION_PATTERN.matches(trimmed)) {
+            trimmed
         } else {
             default
         }
     }
 
-    private fun decodeObservatorySampling(): Int {
-        return MmkvManager.decodeSettingsString(AppConfig.PREF_OBSERVATORY_LEAST_LOAD_SAMPLING)
+    private fun decodeObservatorySampling(value: String?): Int {
+        return value
         ?.trim()
         ?.toIntOrNull()
         ?.takeIf { it > 0 }
