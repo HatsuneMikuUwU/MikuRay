@@ -162,6 +162,7 @@ object CoreConfigManager {
         val policyGroupBalancerTags = mutableMapOf<String, String>()
         val balancerStrategies = mutableListOf<BalancerStrategy>()
 
+        PolicyGroupTrafficRegistry.clear()
         configContext.resolvedOutbounds.forEachIndexed { index, spec ->
             buildOutbounds(
                 resolvedOutbound = spec,
@@ -330,17 +331,23 @@ object CoreConfigManager {
         policyGroupBalancerTags: MutableMap<String, String>,
         balancerStrategies: MutableList<BalancerStrategy>,
     ) {
-        val memberPairs = resolvedOutbound.resolvedProfiles.mapNotNull { profile ->
-            convertProfile2Outbound(profile)?.let { ob -> ob to profile }
+        val memberTriples = resolvedOutbound.resolvedProfiles
+        .zip(
+            resolvedOutbound.resolvedGuids.ifEmpty {
+                List(resolvedOutbound.resolvedProfiles.size) { "" }
+            }
+        )
+        .mapNotNull { (profile, guid) ->
+            convertProfile2Outbound(profile)?.let { ob -> Triple(ob, profile, guid) }
         }
-        if (memberPairs.isEmpty()) {
+        if (memberTriples.isEmpty()) {
             LogUtil.w(AppConfig.TAG, "POLICYGROUP resolved outbound '${resolvedOutbound.tag}' has no valid member outbounds, skipping")
             return
         }
 
         val memberTagPrefix = "${AppConfig.TAG_PROXY}-${resolvedOutbound.tag}-"
         val membersToAdd = mutableListOf<V2rayConfig.OutboundBean>()
-        memberPairs.forEachIndexed { index, (outbound, profile) ->
+        memberTriples.forEachIndexed { index, (outbound, profile, guid) ->
             val memberTag = "$memberTagPrefix${index + 1}-${profile.remarks.trim()}"
             if (memberTag in existingTags) {
                 return@forEachIndexed
@@ -348,6 +355,7 @@ object CoreConfigManager {
             outbound.tag = memberTag
             membersToAdd.add(outbound)
             existingTags.add(memberTag)
+            PolicyGroupTrafficRegistry.register(memberTag, guid)
         }
 
         if (membersToAdd.isEmpty()) {

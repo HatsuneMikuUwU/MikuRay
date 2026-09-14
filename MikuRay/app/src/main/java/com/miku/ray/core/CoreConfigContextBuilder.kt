@@ -46,11 +46,16 @@ object CoreConfigContextBuilder {
             return null
         }
 
+        var resolvedGuids: List<String> = emptyList()
         val (resolvedProfiles, resolvedType) = when (profile.configType) {
-            EConfigType.POLICYGROUP -> Pair(
-                resolvePolicyGroupProfiles(profile),
-                CoreResolvedType.POLICYGROUP,
-            )
+            EConfigType.POLICYGROUP -> {
+                val members = resolvePolicyGroupMembers(profile)
+                resolvedGuids = members?.map { it.first }.orEmpty()
+                Pair(
+                    members?.map { it.second } ?: listOf(profile),
+                    CoreResolvedType.POLICYGROUP,
+                )
+            }
 
             EConfigType.PROXYCHAIN -> {
                 val chainProfiles = resolveProxyChainProfiles(profile)
@@ -70,6 +75,7 @@ object CoreConfigContextBuilder {
             profile = profile,
             resolvedProfiles = resolvedProfiles,
             resolvedType = resolvedType,
+            resolvedGuids = resolvedGuids,
         )
     }
 
@@ -118,9 +124,6 @@ object CoreConfigContextBuilder {
 
     internal fun resolvePolicyGroupGuids(config: ProfileItem): List<String> =
     resolvePolicyGroupMembers(config)?.map { it.first }?.distinct().orEmpty()
-
-    private fun resolvePolicyGroupProfiles(config: ProfileItem): List<ProfileItem> =
-    resolvePolicyGroupMembers(config)?.map { it.second } ?: listOf(config)
 
     private fun resolvePolicyGroupMembers(config: ProfileItem): List<Pair<String, ProfileItem>>? {
         try {

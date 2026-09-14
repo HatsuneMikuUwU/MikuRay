@@ -16,6 +16,7 @@ data class CoreConfigContext(
         val profile: ProfileItem,
         val resolvedProfiles: List<ProfileItem>,
         val resolvedType: CoreResolvedType,
+        val resolvedGuids: List<String> = emptyList(),
     )
 
     data class RoutingDomainRule(

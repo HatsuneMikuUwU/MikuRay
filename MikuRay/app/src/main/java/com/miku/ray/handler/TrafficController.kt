@@ -4,6 +4,7 @@ import android.app.Service
 import com.miku.ray.AppConfig
 import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.core.CoreServiceManager
+import com.miku.ray.core.PolicyGroupTrafficRegistry
 import com.miku.ray.extension.delay
 import com.miku.ray.extension.toSpeedString
 import com.miku.ray.util.LogUtil
@@ -69,6 +70,7 @@ object TrafficController {
         var proxyDownlink = 0L
         var directUplink = 0L
         var directDownlink = 0L
+        val memberTraffic = mutableMapOf<String, LongArray>()
 
         runCatching {
             CoreServiceManager.queryAllOutboundTrafficStats().forEach { stat ->
@@ -84,6 +86,13 @@ object TrafficController {
                         when (stat.direction) {
                             AppConfig.UPLINK -> proxyUplink += stat.value
                             AppConfig.DOWNLINK -> proxyDownlink += stat.value
+                        }
+                        PolicyGroupTrafficRegistry.guidForTag(stat.tag)?.let { memberGuid ->
+                            val entry = memberTraffic.getOrPut(memberGuid) { LongArray(2) }
+                            when (stat.direction) {
+                                AppConfig.UPLINK -> entry[0] += stat.value
+                                AppConfig.DOWNLINK -> entry[1] += stat.value
+                            }
                         }
                     }
                 }
@@ -122,6 +131,10 @@ object TrafficController {
         if (MmkvManager.decodeSettingsBool(AppConfig.PREF_TRAFFIC_ENABLED) != true) return
         val guid = MmkvManager.getSelectServer() ?: return
         MmkvManager.addProfileTraffic(guid, proxyUplink, proxyDownlink)
+
+        memberTraffic.forEach { (memberGuid, bytes) ->
+            MmkvManager.addProfileTraffic(memberGuid, bytes[0], bytes[1])
+        }
 
         getService()?.let { svc ->
             MessageUtil.sendMsg2UI(svc, AppConfig.MSG_TRAFFIC_UPDATED, guid)
