@@ -72,7 +72,6 @@ SubGroupOptionsBottomSheet.OnSubGroupOptionClickListener {
 
         adapter = SubSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 
-
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -260,6 +259,7 @@ SubGroupOptionsBottomSheet.OnSubGroupOptionClickListener {
                 ) {
                     MmkvManager.resetGroupTraffic(subId)
                     refreshData()
+                    adapter.notifyDataSetChanged()
                 }
             }
         }
