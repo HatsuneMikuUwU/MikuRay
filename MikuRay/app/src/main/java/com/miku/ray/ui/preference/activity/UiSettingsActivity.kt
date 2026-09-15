@@ -123,7 +123,7 @@ class UiSettingsActivity : BaseActivity() {
             true
         }
         R.id.action_import_ui_theme -> {
-            importUiTheme.launch(arrayOf("*/*"))
+            importUiTheme.launch(arrayOf(ThemeShareManager.MIME_TYPE, "application/octet-stream"))
             true
         }
         else -> super.onOptionsItemSelected(item)

@@ -13,6 +13,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.os.Build
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -65,6 +66,7 @@ import com.miku.ray.handler.SettingsManager
 import com.miku.ray.handler.SubscriptionUpdater
 import com.miku.ray.ui.about.AboutActivity
 import com.miku.ray.ui.backup.BackupActivity
+import com.miku.ray.ui.backup.BackupManager
 import com.miku.ray.ui.base.HelperBaseActivity
 import com.miku.ray.ui.bottomsheet.AddConfigBottomSheet
 import com.miku.ray.ui.bottomsheet.MainMenuBottomSheet
@@ -93,6 +95,7 @@ import com.miku.ray.util.MikuRayFileCrypto
 import com.miku.ray.util.QRCodeDecoder
 import com.miku.ray.util.SearchChipGradientController
 import com.miku.ray.util.TestProgressDialogController
+import com.miku.ray.util.ThemeShareManager
 import com.miku.ray.util.Utils
 import com.miku.ray.util.getColorAttr
 import com.miku.ray.util.requestSubscriptionImportName
@@ -209,12 +212,125 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
         maybeShowTrafficDetailFromIntent(intent)
+        handleIncomingFileIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
         maybeShowTrafficDetailFromIntent(intent)
+        handleIncomingFileIntent(intent)
+    }
+
+    private fun handleIncomingFileIntent(intent: Intent?) {
+        val launchIntent = intent ?: return
+        if (launchIntent.action != Intent.ACTION_VIEW) return
+        val uri = launchIntent.data ?: return
+
+        launchIntent.action = Intent.ACTION_MAIN
+        launchIntent.data = null
+
+        val fileName = queryDisplayName(uri) ?: uri.lastPathSegment.orEmpty()
+        when {
+            fileName.endsWith(BackupManager.FILE_EXTENSION, ignoreCase = true) ->
+                confirmBackupImportFromUri(uri, fileName)
+
+            fileName.endsWith(ThemeShareManager.FILE_EXTENSION, ignoreCase = true) ->
+                confirmThemeImportFromUri(uri, fileName)
+        }
+    }
+
+    private fun queryDisplayName(uri: Uri): String? {
+        return try {
+            when (uri.scheme) {
+                "file" -> uri.lastPathSegment
+                else -> contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+                    val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (nameIndex >= 0 && cursor.moveToFirst()) cursor.getString(nameIndex) else null
+                }
+            }
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to resolve display name for $uri", e)
+            null
+        }
+    }
+
+    private fun confirmBackupImportFromUri(uri: Uri, fileName: String) {
+        MaterialAlertDialogBuilder(this)
+        .setIcon(RemixR.drawable.rmx_device_save_3_line)
+        .setTitle(R.string.backup_import_title)
+        .setMessage(getString(R.string.backup_import_message, fileName))
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(android.R.string.ok) { _, _ ->
+            lifecycleScope.launch {
+                showLoading()
+                val result = withContext(Dispatchers.IO) {
+                    BackupManager.importFrom(this@MainActivity, uri)
+                }
+                hideLoading()
+                when (result) {
+                    is BackupManager.ImportResult.Success -> {
+                        SettingsChangeManager.makeRestartService()
+                        SettingsChangeManager.makeSetupGroupTab()
+                        SettingsChangeManager.makeRefreshDisplayPrefs()
+                        SettingsManager.setNightMode()
+                        snackbarSuccess(
+                            getString(R.string.title_configuration_restore),
+                            title = getString(R.string.title_alerter_success)
+                        )
+                        restartApplication()
+                    }
+                    is BackupManager.ImportResult.Error -> {
+                        snackbarError(
+                            result.message.ifBlank { getString(R.string.title_configuration_restore) },
+                            title = getString(R.string.title_alerter_error)
+                        )
+                    }
+                }
+            }
+        }
+        .showBlur()
+    }
+
+    private fun confirmThemeImportFromUri(uri: Uri, fileName: String) {
+        MaterialAlertDialogBuilder(this)
+        .setIcon(RemixR.drawable.rmx_system_import_line)
+        .setTitle(R.string.ui_theme_import_title)
+        .setMessage(R.string.ui_theme_import_message)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(android.R.string.ok) { _, _ ->
+            lifecycleScope.launch {
+                showLoading()
+                val result = withContext(Dispatchers.IO) {
+                    ThemeShareManager.importFrom(this@MainActivity, uri)
+                }
+                hideLoading()
+                when (result) {
+                    is ThemeShareManager.ImportResult.Success -> {
+                        SettingsChangeManager.makeRestartService()
+                        SettingsChangeManager.makeSetupGroupTab()
+                        SettingsChangeManager.makeRefreshDisplayPrefs()
+                        SettingsManager.setNightMode()
+                        restartApplication()
+                    }
+                    is ThemeShareManager.ImportResult.Error -> {
+                        toastError(getString(R.string.ui_theme_import_failed, result.message))
+                    }
+                }
+            }
+        }
+        .showBlur()
+    }
+
+    private fun restartApplication() {
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+        if (launchIntent == null) {
+            recreate()
+            return
+        }
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(launchIntent)
+        finishAffinity()
     }
 
     private fun maybeShowTrafficDetailFromIntent(intent: Intent?) {

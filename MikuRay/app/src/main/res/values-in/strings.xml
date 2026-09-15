@@ -524,6 +524,8 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_configuration_backup">Backup Konfig</string>
     <string name="title_configuration_restore">Balikin Konfig</string>
     <string name="title_configuration_share">Bagi-bagi Konfig</string>
+    <string name="backup_import_title">Impor file backup</string>
+    <string name="backup_import_message">Impor \"%1$s\"? Ini bakal nimpa settingan, profil, sama data aplikasi yang sekarang lho.</string>
     <string name="title_pin_server">Pin Server</string>
     <string name="action_pin_server">Pin ke atas</string>
     <string name="action_unpin_server">Lepas pin</string>

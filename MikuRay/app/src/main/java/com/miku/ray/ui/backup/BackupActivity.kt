@@ -199,7 +199,7 @@ class BackupActivity : HelperBaseActivity() {
     }
 
     private fun restoreViaLocal() {
-        launchFileChooser("*/*") { uri ->
+        launchFileChooser(BackupManager.MIME_TYPE, arrayOf("application/octet-stream")) { uri ->
             if (uri == null) return@launchFileChooser
             showLoading()
             lifecycleScope.launch(Dispatchers.IO) {

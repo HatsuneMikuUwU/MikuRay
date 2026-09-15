@@ -524,6 +524,8 @@
     <string name="title_configuration_backup">Резервная копия конфигурации</string>
     <string name="title_configuration_restore">Восстановить конфигурацию</string>
     <string name="title_configuration_share">Поделиться конфигурацией</string>
+    <string name="backup_import_title">Импорт файла резервной копии</string>
+    <string name="backup_import_message">Импортировать «%1$s»? Это перезапишет текущие настройки, профили и данные приложения.</string>
     <string name="title_pin_server">Закрепить сервер</string>
     <string name="action_pin_server">Закрепить вверху</string>
     <string name="action_unpin_server">Открепить</string>

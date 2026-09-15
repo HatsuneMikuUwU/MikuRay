@@ -543,6 +543,8 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_configuration_backup">Backup config</string>
     <string name="title_configuration_restore">Restore config</string>
     <string name="title_configuration_share">Share config</string>
+    <string name="backup_import_title">Import backup file</string>
+    <string name="backup_import_message">Import \"%1$s\"? This will overwrite your current settings, profiles, and app data.</string>
     <string name="title_pin_server">Pin Server</string>
     <string name="action_pin_server">Pin to top</string>
     <string name="action_unpin_server">Unpin</string>

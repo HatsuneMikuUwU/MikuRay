@@ -28,9 +28,10 @@ abstract class HelperBaseActivity : BaseActivity() {
 
     protected fun launchFileChooser(
         mimeType: String = "*/*",
+        extraMimeTypes: Array<String>? = null,
         onResult: (Uri?) -> Unit
     ) {
-        fileChooser.launch(mimeType, onResult)
+        fileChooser.launch(mimeType, extraMimeTypes, onResult)
     }
 
     protected fun launchCreateDocument(

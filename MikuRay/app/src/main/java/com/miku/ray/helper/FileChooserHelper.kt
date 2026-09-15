@@ -37,12 +37,18 @@ class FileChooserHelper(private val activity: AppCompatActivity) {
 
     fun launch(
         mimeType: String = "*/*",
+        extraMimeTypes: Array<String>? = null,
         onResult: (Uri?) -> Unit
     ) {
         fileChooserCallback = onResult
 
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = mimeType
+            if (extraMimeTypes.isNullOrEmpty()) {
+                type = mimeType
+            } else {
+                type = "*/*"
+                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(mimeType) + extraMimeTypes)
+            }
             addCategory(Intent.CATEGORY_OPENABLE)
         }
 

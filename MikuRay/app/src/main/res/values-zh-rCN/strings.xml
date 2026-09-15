@@ -512,6 +512,8 @@
     <string name="title_configuration_backup">备份配置</string>
     <string name="title_configuration_restore">还原配置</string>
     <string name="title_configuration_share">分享配置</string>
+    <string name="backup_import_title">导入备份文件</string>
+    <string name="backup_import_message">要导入“%1$s”吗？这将覆盖当前的设置、配置文件和应用数据。</string>
     <string name="title_pin_server">置顶服务器</string>
     <string name="action_pin_server">置顶</string>
     <string name="action_unpin_server">取消置顶</string>
