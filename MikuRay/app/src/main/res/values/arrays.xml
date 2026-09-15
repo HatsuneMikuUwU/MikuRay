@@ -7,6 +7,7 @@
         <item>none</item>
         <item>zero</item>
     </string-array>
+    
     <string-array name="ss_securitys" translatable="false">
         <item>aes-256-gcm</item>
         <item>aes-128-gcm</item>
@@ -55,6 +56,7 @@
         <item />
         <item>tls</item>
     </string-array>
+    
     <string-array name="streamsecurityxs" translatable="false">
         <item />
         <item>tls</item>
@@ -503,17 +505,20 @@
         <item>@string/pref_search_bar_chip_total_traffic</item>
         <item>@string/pref_search_bar_chip_dual_swipe</item>
     </string-array>
+    
     <string-array name="search_bar_chip_values" translatable="false">
         <item>disabled</item>
         <item>weather</item>
         <item>total_traffic</item>
         <item>dual_swipe</item>
     </string-array>
+    
     <string-array name="weather_unit_entries">
         <item>Celsius (°C)</item>
         <item>Fahrenheit (°F)</item>
         <item>Auto</item>
     </string-array>
+    
     <string-array name="weather_unit_values" translatable="false">
         <item>true</item>
         <item>false</item>
@@ -526,6 +531,7 @@
         <item>999+</item>
         <item>9999+</item>
     </string-array>
+    
     <string-array name="tab_badge_limit_values" translatable="false">
         <item>0</item>
         <item>99</item>
@@ -538,11 +544,13 @@
         <item>@string/mux_xudp_quic_allow</item>
         <item>@string/mux_xudp_quic_skip</item>
     </string-array>
+    
     <string-array name="share_method">
         <item>@string/share_qrcode</item>
         <item>@string/share_export_clipboard</item>
         <item>@string/share_export_full_clipboard</item>
     </string-array>
+    
     <string-array name="share_method_more">
         <item>@string/share_qrcode</item>
         <item>@string/share_export_clipboard</item>
@@ -550,25 +558,30 @@
         <item>@string/share_edit</item>
         <item>@string/share_delete</item>
     </string-array>
+    
     <string-array name="share_sub_method">
         <item>@string/share_qrcode</item>
         <item>@string/share_export_clipboard</item>
     </string-array>
+    
     <string-array name="mode_entries">
         <item>@string/mode_entry_vpn</item>
         <item>@string/mode_entry_proxy_only</item>
     </string-array>
+    
     <string-array name="browser_dialer_mode">
         <item>@string/browser_dialer_mode_disable</item>
         <item>@string/browser_dialer_mode_okhttp</item>
         <item>@string/browser_dialer_mode_webview</item>
     </string-array>
+    
     <string-array name="ui_mode_night">
         <item>@string/ui_mode_night_follow_system</item>
         <item>@string/ui_mode_night_light</item>
         <item>@string/ui_mode_night_dark</item>
         <item>@string/ui_mode_night_auto</item>
     </string-array>
+    
     <string-array name="preset_rulesets">
         <item>@string/preset_ruleset_china_whitelist</item>
         <item>@string/preset_ruleset_china_blacklist</item>
@@ -576,48 +589,60 @@
         <item>@string/preset_ruleset_iran_whitelist</item>
         <item>@string/preset_ruleset_russia_whitelist</item>
     </string-array>
+    
     <string-array name="vpn_bypass_lan">
         <item>@string/vpn_bypass_lan_follow_config</item>
         <item>@string/vpn_bypass_lan_bypass</item>
         <item>@string/vpn_bypass_lan_not_bypass</item>
     </string-array>
+    
     <string-array name="outbound_domain_resolve_method">
         <item>@string/outbound_resolve_do_not_resolve</item>
         <item>@string/outbound_resolve_add_dns_hosts</item>
         <item>@string/outbound_resolve_replace_domain</item>
     </string-array>
+    
     <string-array name="policy_group_type">
         <item>@string/policy_group_least_ping</item>
         <item>@string/policy_group_least_load</item>
         <item>@string/policy_group_random</item>
         <item>@string/policy_group_round_robin</item>
     </string-array>
+    
     <string-array name="config_backup_options">
         <item>@string/config_backup_local</item>
         <item>@string/config_backup_webdav</item>
     </string-array>
+    
     <string-array name="mux_enabled_entries" translatable="false">
         <item>@string/label_disable</item>
         <item>@string/label_enable</item>
     </string-array>
+    
     <string-array name="mux_enabled_values" translatable="false">
         <item>false</item>
         <item>true</item>
+    </string-array>
+    
     <string-array name="bool_dropdown_entries">
         <item>@string/label_enable</item>
         <item>@string/label_disable</item>
     </string-array>
+    
     <string-array name="bool_dropdown_values" translatable="false">
         <item>true</item>
         <item>false</item>
     </string-array>
+    
     <string-array name="streamsecuritys_entries">
         <item>@string/label_disable</item>
         <item>TLS</item>
     </string-array>
+    
     <string-array name="streamsecurityxs_entries">
         <item>@string/label_disable</item>
         <item>TLS</item>
         <item>REALITY</item>
     </string-array>
+    
 </resources>
