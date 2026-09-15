@@ -473,8 +473,6 @@ object SettingsManager {
         ensureDefaultValue(AppConfig.PREF_HEV_TUNNEL_RW_TIMEOUT, AppConfig.HEVTUN_RW_TIMEOUT)
         ensureDefaultValue(AppConfig.PREF_HEV_TUNNEL_ICMP, "off")
         ensureDefaultValue(AppConfig.PREF_HEV_TUNNEL_UDP_MODE, "udp")
-        ensureDefaultValue(AppConfig.PREF_MUX_CONCURRENCY, "8")
-        ensureDefaultValue(AppConfig.PREF_MUX_XUDP_CONCURRENCY, AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY)
         ensureDefaultValue(AppConfig.PREF_FRAGMENT_LENGTH, "50-100")
         ensureDefaultValue(AppConfig.PREF_FRAGMENT_INTERVAL, "10-20")
         ensureDefaultValue(AppConfig.PREF_FRAGMENT_MAXSPLIT, "10")

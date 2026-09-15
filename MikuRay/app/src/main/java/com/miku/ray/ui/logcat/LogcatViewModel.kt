@@ -28,11 +28,14 @@ class LogcatViewModel : ViewModel() {
 
     fun loadLogcat() {
         val bufferLines = InProcessLogBuffer.getAll()
+        val myPid = Process.myPid().toString()
 
         val systemLines = (tryLogcatProcessBuilder() ?: tryLogcatPidOnly())
         ?.filter { line ->
-            val tag = LogEntry.parse(line).tag
-            tag.isEmpty() || tag !in ownTags
+            val entry = LogEntry.parse(line)
+            val tag = entry.tag
+            val pid = entry.meta.substringBefore('/').trim()
+            tag.isEmpty() || tag !in ownTags || pid != myPid
         }
         .orEmpty()
 

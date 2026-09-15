@@ -17,6 +17,7 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.ui.server.fields.AddressPortFields
+import com.miku.ray.ui.server.fields.MuxFields
 import com.miku.ray.util.Utils
 import com.miku.ray.util.showDeleteConfirmDialog
 
@@ -35,6 +36,7 @@ class ServerSocksActivity : BaseActivity() {
     private val subscriptionId by lazy { intent.getStringExtra("subscriptionId") }
 
     private lateinit var addressPortFields: AddressPortFields
+    private lateinit var muxFields: MuxFields
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +48,10 @@ class ServerSocksActivity : BaseActivity() {
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
         addressPortFields = AddressPortFields(binding.root)
+        muxFields = MuxFields(binding.root)
 
         setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
+        muxFields.setOnEnabledChanged { enabled -> muxFields.updateForEnabled(enabled) }
 
         if (config != null) {
             bindingServer(config)
@@ -60,12 +64,14 @@ class ServerSocksActivity : BaseActivity() {
         addressPortFields.bind(config)
         binding.etId.text = Utils.getEditable(config.password.orEmpty())
         binding.etSecurity.text = Utils.getEditable(config.username.orEmpty())
+        muxFields.bind(config)
         return true
     }
 
     private fun clearServer(): Boolean {
         addressPortFields.clear()
         binding.etId.text = null
+        muxFields.clear()
         return true
     }
 
@@ -85,6 +91,7 @@ class ServerSocksActivity : BaseActivity() {
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(createConfigType)
 
         saveCommon(config)
+        muxFields.save(config)
 
         config.description = AngConfigManager.generateDescription(config)
 

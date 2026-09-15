@@ -199,13 +199,12 @@
     <string name="title_pref_auto_remove_invalid_after_test">Автоудаление недействительных конфигураций после теста</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Результаты теста могут быть неточными; удалённые конфигурации нельзя восстановить.</string>
 
-    <string name="title_mux_settings">Настройки Mux</string>
-    <string name="title_pref_mux_enabled">Включить Mux</string>
-    <string name="summary_pref_mux_enabled">Быстрее, но может вызвать нестабильное соединение\nНастройте обработку TCP, UDP и QUIC ниже</string>
-    <string name="title_pref_mux_concurency">TCP-соединения</string>
-    <string name="title_pref_mux_xudp_concurency">XUDP-соединения</string>
-    <string name="title_pref_mux_concurency_tip">диапазон от -1 до 1024</string>
-    <string name="title_pref_mux_xudp_quic">Обработка QUIC в mux-туннеле</string>
+    <string name="server_lab_mux">Mux</string>
+    <string name="server_lab_mux_enabled">Включить Mux</string>
+    <string name="server_lab_mux_concurrency">TCP-соединения</string>
+    <string name="server_lab_mux_xudp_concurrency">XUDP-соединения</string>
+    <string name="server_lab_mux_concurrency_tip">диапазон от -1 до 1024</string>
+    <string name="server_lab_mux_xudp_quic">Обработка QUIC в mux-туннеле</string>
     <string-array name="mux_xudp_quic_entries">
         <item>отклонить</item>
         <item>разрешить</item>
@@ -684,7 +683,6 @@
     <string name="summary_navigate_ui_settings">Общий интерфейс, темы, внешний вид, плашки поиска, размытие, баннеры, звук и т.д.</string>
     <string name="summary_navigate_vpn_settings">IPv6, бодрствование (keep awake), DNS, HTTP-прокси, обход LAN, интерфейс, MTU, Hev TUN, таймеры TCP/WS, прокси для приложений, Root-режим и т.д.</string>
     <string name="summary_navigate_core_settings">Сниффинг, только маршрутизация, локальный прокси/общий доступ, SOCKS, DNS, уровень логов, разрешение доменов, Geo-файлы и т.д.</string>
-    <string name="summary_navigate_mux_settings">Статус Mux, подключения, подключения XUDP, обработка QUIC и т.д.</string>
     <string name="summary_navigate_fragment_settings">Статус фрагментации, длина, интервал, maxsplit, пакеты и т.д.</string>
     <string name="summary_navigate_advanced_settings">Автозапуск, URL API задержки/IP, стратегия маршрутизации, режим, скрыть из недавних приложений и т.д.</string>
     <string name="summary_navigate_per_app_proxy_settings">Выберите, какие приложения будут использовать прокси</string>
@@ -1080,7 +1078,6 @@
     <string name="subtitle_vpn_settings">Настройка поведения VPN-подключения</string>
     <string name="subtitle_advanced_settings">Расширенная настройка приложения</string>
     <string name="subtitle_ui_settings">Настройка внешнего вида приложения</string>
-    <string name="subtitle_mux_settings">Настройка мультиплексирования соединений</string>
     <string name="subtitle_settings">Настройки и конфигурация приложения</string>
 
     <string name="action_export_ui_theme">Экспорт темы</string>

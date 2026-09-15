@@ -21,6 +21,7 @@ import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.ui.server.fields.AddressPortFields
+import com.miku.ray.ui.server.fields.MuxFields
 import com.miku.ray.ui.server.fields.TlsFields
 import com.miku.ray.ui.server.fields.TransportFields
 import com.miku.ray.util.JsonUtil
@@ -49,6 +50,7 @@ class ServerVlessActivity : BaseActivity() {
     private lateinit var addressPortFields: AddressPortFields
     private lateinit var transportFields: TransportFields
     private lateinit var tlsFields: TlsFields
+    private lateinit var muxFields: MuxFields
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,12 +64,14 @@ class ServerVlessActivity : BaseActivity() {
         addressPortFields = AddressPortFields(binding.root)
         transportFields = TransportFields(binding.root)
         tlsFields = TlsFields(binding.root)
+        muxFields = MuxFields(binding.root)
 
         setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
         transportFields.setOnNetworkChanged { network -> transportFields.updateForNetwork(network, config) }
         tlsFields.setOnSecurityChanged { security -> tlsFields.updateForSecurity(security) }
         tlsFields.setOnFetchCertClick { fetchPinnedCA256ForCurrentConfig() }
+        muxFields.setOnEnabledChanged { enabled -> muxFields.updateForEnabled(enabled) }
 
         if (config != null) {
             bindingServer(config)
@@ -86,6 +90,7 @@ class ServerVlessActivity : BaseActivity() {
 
         tlsFields.bind(config)
         transportFields.bind(config)
+        muxFields.bind(config)
         return true
     }
 
@@ -96,6 +101,7 @@ class ServerVlessActivity : BaseActivity() {
 
         transportFields.clear()
         tlsFields.clear()
+        muxFields.clear()
         return true
     }
 
@@ -130,6 +136,7 @@ class ServerVlessActivity : BaseActivity() {
         saveCommon(config)
         transportFields.save(config)
         tlsFields.save(config)
+        muxFields.save(config)
 
         config.description = AngConfigManager.generateDescription(config)
 

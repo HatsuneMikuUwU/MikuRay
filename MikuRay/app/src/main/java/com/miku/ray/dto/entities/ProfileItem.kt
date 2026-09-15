@@ -80,6 +80,11 @@ data class ProfileItem(
 
     var customProtocol: String? = null,
 
+    var muxEnabled: Boolean? = null,
+    var muxConcurrency: String? = null,
+    var muxXudpConcurrency: String? = null,
+    var muxXudpQuic: String? = null,
+
 ) {
     companion object {
         fun create(configType: EConfigType): ProfileItem {
@@ -136,6 +141,11 @@ data class ProfileItem(
             && this.portHoppingInterval == obj.portHoppingInterval
             && this.pinnedCA256 == obj.pinnedCA256
             && this.proxyChainProfiles == obj.proxyChainProfiles
+
+            && this.muxEnabled == obj.muxEnabled
+            && this.muxConcurrency == obj.muxConcurrency
+            && this.muxXudpConcurrency == obj.muxXudpConcurrency
+            && this.muxXudpQuic == obj.muxXudpQuic
         )
     }
 }

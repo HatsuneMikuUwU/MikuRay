@@ -56,13 +56,6 @@
         app:layout="@layout/uwu_mid" />
 
     <Preference
-        android:icon="@drawable/rmx_development_git_merge_line"
-        android:key="pref_navigate_mux_settings"
-        android:summary="@string/summary_navigate_mux_settings"
-        android:title="@string/title_mux_settings"
-        app:layout="@layout/uwu_mid" />
-
-    <Preference
         android:icon="@drawable/rmx_design_scissors_cut_line"
         android:key="pref_navigate_fragment_settings"
         android:summary="@string/summary_navigate_fragment_settings"

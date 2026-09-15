@@ -31,20 +31,24 @@ object CoreOutboundBuilder {
         }
 
         outbound ?: return null
-        val ret = updateOutboundWithGlobalSettings(outbound)
+        val ret = updateOutboundWithMuxSettings(outbound, profileItem)
         if (!ret) return null
         return outbound
     }
 
-    private fun updateOutboundWithGlobalSettings(outbound: OutboundBean): Boolean {
+    /**
+     * Mux is now a per-profile setting (see [ProfileItem.muxEnabled] and friends) instead of a
+     * single global switch, so every profile can decide for itself whether to multiplex its
+     * connections. It is supported for any protocol whose outbound is stream/TCP based; it is
+     * only forced off for transports that don't work with Xray's mux implementation (WireGuard,
+     * Hysteria/Hysteria2, which multiplex over QUIC themselves) or for the XHTTP transport, which
+     * already multiplexes on its own.
+     */
+    private fun updateOutboundWithMuxSettings(outbound: OutboundBean, profileItem: ProfileItem): Boolean {
         try {
-            var muxEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_MUX_ENABLED, false)
+            var muxEnabled = profileItem.muxEnabled ?: false
             val protocol = outbound.protocol
-            if (protocol.equals(EConfigType.SHADOWSOCKS.name, true)
-                || protocol.equals(EConfigType.SOCKS.name, true)
-                || protocol.equals(EConfigType.HTTP.name, true)
-                || protocol.equals(EConfigType.TROJAN.name, true)
-                || protocol.equals(EConfigType.WIREGUARD.name, true)
+            if (protocol.equals(EConfigType.WIREGUARD.name, true)
                 || protocol.equals(EConfigType.HYSTERIA2.name, true)
                 || protocol.equals(EConfigType.HYSTERIA.name, true)
             ) {
@@ -55,9 +59,10 @@ object CoreOutboundBuilder {
 
             if (muxEnabled) {
                 outbound.mux?.enabled = true
-                outbound.mux?.concurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_CONCURRENCY, "8").orEmpty().toInt()
-                outbound.mux?.xudpConcurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_CONCURRENCY, AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY).orEmpty().toInt()
-                outbound.mux?.xudpProxyUDP443 = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_QUIC, "reject")
+                outbound.mux?.concurrency = (profileItem.muxConcurrency ?: "8").toIntOrNull() ?: 8
+                outbound.mux?.xudpConcurrency = (profileItem.muxXudpConcurrency ?: AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY).toIntOrNull()
+                    ?: AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY.toInt()
+                outbound.mux?.xudpProxyUDP443 = profileItem.muxXudpQuic ?: "reject"
                 if (protocol.equals(EConfigType.VLESS.name, true) && outbound.settings?.flow?.isNotEmpty() == true) {
                     outbound.mux?.concurrency = -1
                 }
@@ -67,7 +72,7 @@ object CoreOutboundBuilder {
             }
 
         } catch (e: Exception) {
-            LogUtil.e(AppConfig.TAG, "Failed to update outbound with global settings", e)
+            LogUtil.e(AppConfig.TAG, "Failed to update outbound with mux settings", e)
             return false
         }
         return true

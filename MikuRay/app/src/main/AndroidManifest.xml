@@ -3047,9 +3047,6 @@
             android:name=".ui.preference.activity.CoreSettingsActivity" />
         <activity
             android:exported="false"
-            android:name=".ui.preference.activity.MuxSettingsActivity" />
-        <activity
-            android:exported="false"
             android:name=".ui.preference.activity.FragmentSettingsActivity" />
         <activity
             android:exported="false"

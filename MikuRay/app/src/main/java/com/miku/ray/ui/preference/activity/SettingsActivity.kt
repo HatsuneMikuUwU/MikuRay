@@ -106,7 +106,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             index(R.xml.pref_ui_settings).addBreadcrumb(R.string.title_ui_settings)
             index(R.xml.pref_vpn_settings).addBreadcrumb(R.string.title_vpn_settings)
             index(R.xml.pref_core_settings).addBreadcrumb(R.string.title_core_settings)
-            index(R.xml.pref_mux_settings).addBreadcrumb(R.string.title_mux_settings)
             index(R.xml.pref_fragment_settings).addBreadcrumb(R.string.title_fragment_settings)
             index(R.xml.pref_advanced_settings).addBreadcrumb(R.string.title_advanced)
         }
@@ -388,7 +387,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             R.xml.pref_ui_settings       -> UiSettingsActivity::class.java
             R.xml.pref_vpn_settings      -> VpnSettingsActivity::class.java
             R.xml.pref_core_settings     -> CoreSettingsActivity::class.java
-            R.xml.pref_mux_settings      -> MuxSettingsActivity::class.java
             R.xml.pref_fragment_settings -> FragmentSettingsActivity::class.java
             R.xml.pref_advanced_settings -> AdvancedSettingsActivity::class.java
             else                         -> null
@@ -422,7 +420,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         private val navigateUiSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
         private val navigateVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_VPN_SETTINGS) }
         private val navigateCoreSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_CORE_SETTINGS) }
-        private val navigateMuxSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_MUX_SETTINGS) }
         private val navigateFragmentSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_FRAGMENT_SETTINGS) }
         private val navigateAdvancedSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_ADVANCED_SETTINGS) }
 
@@ -456,11 +453,6 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
             navigateCoreSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), CoreSettingsActivity::class.java))
-                true
-            }
-
-            navigateMuxSettings?.setOnPreferenceClickListener {
-                startActivity(android.content.Intent(requireContext(), MuxSettingsActivity::class.java))
                 true
             }
 

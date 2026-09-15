@@ -213,17 +213,20 @@
     <string name="title_pref_auto_remove_invalid_after_test">Auto delete invalid config after testing</string>
     <string name="summary_pref_auto_remove_invalid_after_test">Test results may not be accurate; deleted config cannot be recovered.</string>
 
-    <string name="title_mux_settings">Mux Settings</string>
-    <string name="title_pref_mux_enabled">Enable Mux</string>
-    <string name="summary_pref_mux_enabled">Faster, but it may cause unstable connectivity\nCustomize how to handle TCP, UDP and QUIC below</string>
-    <string name="title_pref_mux_concurency">TCP connections</string>
-    <string name="title_pref_mux_xudp_concurency">XUDP connectiond</string>
-    <string name="title_pref_mux_concurency_tip">range -1 to 1024</string>
-    <string name="title_pref_mux_xudp_quic">Handling of QUIC in mux tunnel</string>
+    <string name="server_lab_mux">Mux</string>
+    <string name="server_lab_mux_enabled">Enable Mux</string>
+    <string name="server_lab_mux_concurrency">TCP connections</string>
+    <string name="server_lab_mux_xudp_concurrency">XUDP connections</string>
+    <string name="server_lab_mux_concurrency_tip">range -1 to 1024</string>
+    <string name="server_lab_mux_xudp_quic">Handling of QUIC in mux tunnel</string>
     <string-array name="mux_xudp_quic_entries">
         <item>reject</item>
         <item>allow</item>
         <item>skip</item>
+    </string-array>
+    <string-array name="mux_enabled_entries" translatable="false">
+        <item>false</item>
+        <item>true</item>
     </string-array>
 
     <string name="title_pref_speed_enabled">Enable speed display</string>
@@ -706,7 +709,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="summary_navigate_ui_settings">General UI, themes, appearance, search chips, blur, banners, sound, etc.</string>
     <string name="summary_navigate_vpn_settings">IPv6, keep awake, DNS, HTTP proxy, bypass LAN, interface, MTU, Hev TUN, TCP/WS timers, per-app proxy, Root mode, etc.</string>
     <string name="summary_navigate_core_settings">Sniffing, route only, local proxy/sharing, SOCKS, DNS, log level, domain resolve, geo files, etc.</string>
-    <string name="summary_navigate_mux_settings">Mux status, concurrency, XUDP concurrency, QUIC handling, etc.</string>
     <string name="summary_navigate_fragment_settings">Fragment status, length, interval, maxsplit, packets, etc.</string>
     <string name="summary_navigate_advanced_settings">Auto-start, delay/IP API URLs, routing strategy, mode, hide from recent apps, etc.</string>
     <string name="summary_navigate_per_app_proxy_settings">Choose which apps go through the proxy</string>
@@ -1111,7 +1113,6 @@ you need."</string>
     <string name="subtitle_vpn_settings">Configure VPN connection behavior</string>
     <string name="subtitle_advanced_settings">Advanced app configuration</string>
     <string name="subtitle_ui_settings">Customize the app\'s appearance</string>
-    <string name="subtitle_mux_settings">Configure connection multiplexing</string>
         <string name="subtitle_settings">App preferences and configuration</string>
     <string name="action_export_ui_theme">Export theme</string>
     <string name="ui_theme_export_name_title">Name your theme</string>
