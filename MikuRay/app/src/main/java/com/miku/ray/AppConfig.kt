@@ -253,6 +253,8 @@ object AppConfig {
     const val PREF_CUSTOM_THEME_BANNER_URI = "custom_theme_banner_uri"
     const val PREF_BANNER_SETTINGS_CHARACTER = "pref_banner_settings_character"
     const val PREF_BANNER_SETTINGS_CHARACTER_DEFAULT = "uwu_banner_miku_v2"
+    const val PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI = "custom_banner_settings_character_uri"
+    const val PREF_ACTION_DELETE_BANNER_SETTINGS_CHARACTER = "action_delete_banner_settings_character"
 
     const val PREF_BANNER_CHARACTER_WIDTH = "pref_banner_character_width"
     const val BANNER_CHARACTER_WIDTH_DEFAULT = 220f

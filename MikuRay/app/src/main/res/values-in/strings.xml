@@ -779,6 +779,12 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
 
      <string name="title_banner_settings_character">Karakter banner settingan</string>
      <string name="summary_banner_settings_character">Pilih ilustrasi Hatsune Miku yang tampil di banner settingan</string>
+     <string name="banner_settings_character_custom">Gambar custom</string>
+     <string name="title_banner_settings_character_custom">Gambar karakter banner custom</string>
+     <string name="summary_banner_settings_character_custom">Pilih gambar dari perangkatmu</string>
+     <string name="summary_banner_settings_character_custom_selected">Pilih gambar custom</string>
+     <string name="title_banner_settings_character_delete">Hapus gambar karakter banner custom</string>
+     <string name="summary_banner_settings_character_delete">Hapus gambar custom dan gunakan karakter bawaan</string>
      <string name="title_banner_character_layout">Ukuran &amp; posisi karakter banner</string>
      <string name="summary_banner_character_layout">Atur lebar, tinggi, dan margin ilustrasi banner</string>
      <string name="banner_character_slider_width_label">Lebar</string>

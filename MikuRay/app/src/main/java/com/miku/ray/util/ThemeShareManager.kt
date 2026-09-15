@@ -31,7 +31,8 @@ object ThemeShareManager {
         AssetSpec("sheetBanner", AppConfig.PREF_CUSTOM_SHEET_BANNER_URI, "sheet_banner_"),
         AssetSpec("selectedBanner", AppConfig.PREF_SELECTED_BANNER_URI, "selected_banner_"),
         AssetSpec("profileBanner", AppConfig.PREF_PROFILE_BANNER_URI, "profile_banner_"),
-        AssetSpec("themeBanner", AppConfig.PREF_CUSTOM_THEME_BANNER_URI, "theme_banner_")
+        AssetSpec("themeBanner", AppConfig.PREF_CUSTOM_THEME_BANNER_URI, "theme_banner_"),
+        AssetSpec("settingsCharacter", AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI, "settings_character_")
     )
 
     private val soundAssets = listOf(
@@ -136,7 +137,8 @@ object ThemeShareManager {
         AppConfig.PREF_CUSTOM_PROFILE_NAME,
         AppConfig.PREF_PROFILE_BANNER_SHAPE,
         AppConfig.PREF_CUSTOM_CONNECT_SOUND_URI,
-        AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI
+        AppConfig.PREF_CUSTOM_DISCONNECT_SOUND_URI,
+        AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI
     )
 
     sealed class ImportResult {

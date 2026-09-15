@@ -19,6 +19,22 @@
         app:isPreferenceVisible="false"
         app:layout="@layout/uwu_top" />
 
+    <Preference
+        android:icon="@drawable/rmx_media_gallery_line"
+        android:key="pref_custom_banner_settings_character"
+        android:summary="@string/summary_banner_settings_character_custom"
+        android:title="@string/title_banner_settings_character_custom"
+        app:isPreferenceVisible="false"
+        app:layout="@layout/uwu_mid" />
+
+    <Preference
+        android:icon="@drawable/rmx_delete_bin_line"
+        android:key="action_delete_banner_settings_character"
+        android:summary="@string/summary_banner_settings_character_delete"
+        android:title="@string/title_banner_settings_character_delete"
+        app:isPreferenceVisible="false"
+        app:layout="@layout/uwu_mid" />
+
     <com.miku.ray.ui.dialog.BannerCharacterLayoutDialog
         android:icon="@drawable/rmx_arrows_expand_diagonal_line"
         android:key="pref_banner_character_layout"

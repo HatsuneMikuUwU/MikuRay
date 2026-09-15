@@ -245,6 +245,7 @@ object BackupManager {
             AppConfig.PREF_PROFILE_BANNER_URI,
             AppConfig.PREF_SELECTED_BANNER_URI,
             AppConfig.PREF_CUSTOM_THEME_BANNER_URI,
+            AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI,
         )
         val bannersDir = File(backupDir, "banners").also { it.mkdirs() }
         for (key in bannerKeys) {
@@ -316,6 +317,7 @@ object BackupManager {
             AppConfig.PREF_PROFILE_BANNER_URI,
             AppConfig.PREF_SELECTED_BANNER_URI,
             AppConfig.PREF_CUSTOM_THEME_BANNER_URI,
+            AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI,
         )
         val bannersDir = File(backupDir, "banners")
         if (!bannersDir.exists()) return

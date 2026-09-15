@@ -791,6 +791,12 @@
 
     <string name="title_banner_settings_character">Персонаж баннера настроек</string>
     <string name="summary_banner_settings_character">Выберите иллюстрацию Hatsune Miku для баннера настроек</string>
+    <string name="banner_settings_character_custom">Пользовательское изображение</string>
+    <string name="title_banner_settings_character_custom">Пользовательское изображение персонажа баннера</string>
+    <string name="summary_banner_settings_character_custom">Выберите изображение с устройства</string>
+    <string name="summary_banner_settings_character_custom_selected">Выбрать пользовательское изображение</string>
+    <string name="title_banner_settings_character_delete">Удалить пользовательское изображение персонажа баннера</string>
+    <string name="summary_banner_settings_character_delete">Удалить выбранное изображение и использовать персонажа по умолчанию</string>
     <string name="title_banner_character_layout">Размер и позиция персонажа баннера</string>
     <string name="summary_banner_character_layout">Настройте ширину, высоту и отступы иллюстрации баннера</string>
     <string name="banner_character_slider_width_label">Ширина</string>

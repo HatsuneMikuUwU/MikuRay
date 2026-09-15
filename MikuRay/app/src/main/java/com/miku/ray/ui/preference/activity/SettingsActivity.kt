@@ -2,6 +2,7 @@ package com.miku.ray.ui.preference.activity
 
 import com.miku.ray.remixicon.R as RemixR
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.Menu
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
@@ -26,12 +28,15 @@ import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceFragment
 import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResult
 import com.miku.ray.ui.preference.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miku.ray.AppConfig
 import com.miku.ray.util.SearchBarChipMode
 import com.miku.ray.R
 import com.miku.ray.enums.PermissionType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.extension.toastSuccess
+import com.miku.ray.extension.toastError
+import com.miku.ray.extension.snackbarSuccess
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsManager
 import com.miku.ray.helper.MmkvPreferenceDataStore
@@ -43,7 +48,11 @@ import com.miku.ray.util.SearchChipGradientController
 import com.miku.ray.ui.weather.WeatherHelper
 import com.miku.ray.util.showDeleteConfirmDialog
 import com.miku.ray.util.showTotalTrafficDetailDialog
+import com.miku.ray.util.showBlur
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 import kotlin.math.abs
 
 class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
@@ -416,6 +425,8 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
 
         private val bannerSettingsCard by lazy { findPreference<BannerSettingsPreference>("pref_banner_settings_card") }
         private val bannerSettingsCharacter by lazy { findPreference<ListPreference>(AppConfig.PREF_BANNER_SETTINGS_CHARACTER) }
+        private val customBannerSettingsCharacter by lazy { findPreference<Preference>("pref_custom_banner_settings_character") }
+        private val deleteCustomBannerSettingsCharacter by lazy { findPreference<Preference>(AppConfig.PREF_ACTION_DELETE_BANNER_SETTINGS_CHARACTER) }
         private val bannerCharacterLayout by lazy { findPreference<BannerCharacterLayoutDialog>("pref_banner_character_layout") }
         private val navigateUiSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_UI_SETTINGS) }
         private val navigateVpnSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_VPN_SETTINGS) }
@@ -423,20 +434,102 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
         private val navigateFragmentSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_FRAGMENT_SETTINGS) }
         private val navigateAdvancedSettings by lazy { findPreference<Preference>(AppConfig.PREF_NAVIGATE_ADVANCED_SETTINGS) }
 
+        private val pickCustomBannerSettingsCharacter =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri == null) return@registerForActivityResult
+                lifecycleScope.launch {
+                    val savedUri = withContext(Dispatchers.IO) { saveCustomBannerCharacter(uri) }
+                    if (savedUri != null) {
+                        MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI, savedUri)
+                        customBannerSettingsCharacter?.summary = getString(R.string.summary_banner_settings_character_custom_selected)
+                        deleteCustomBannerSettingsCharacter?.isVisible = true
+                        requireContext().toastSuccess(getString(R.string.summary_banner_settings_character_custom_selected))
+                        bannerSettingsCard?.refreshBanner()
+                    } else {
+                        requireContext().toastError(getString(R.string.toast_asset_copy_failed))
+                    }
+                }
+            }
+
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
             addPreferencesFromResource(R.xml.pref_settings)
 
             bannerSettingsCharacter?.setOnPreferenceChangeListener { _, newValue ->
-
-                MmkvManager.encodeSettings(AppConfig.PREF_BANNER_SETTINGS_CHARACTER, newValue as? String)
+                val value = newValue as? String ?: return@setOnPreferenceChangeListener false
+                MmkvManager.encodeSettings(AppConfig.PREF_BANNER_SETTINGS_CHARACTER, value)
+                val isCustom = value == com.miku.ray.ui.preference.BannerSettingsPreference.CUSTOM_VALUE
+                customBannerSettingsCharacter?.isVisible = isCustom
+                deleteCustomBannerSettingsCharacter?.isVisible = isCustom && !MmkvManager.decodeSettingsString(
+                    AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI
+                ).isNullOrBlank()
                 bannerSettingsCard?.refreshBanner()
+                true
+            }
+
+            val currentCharacter = MmkvManager.decodeSettingsString(
+                AppConfig.PREF_BANNER_SETTINGS_CHARACTER,
+                AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT
+            )
+            val isCustom = currentCharacter == com.miku.ray.ui.preference.BannerSettingsPreference.CUSTOM_VALUE
+            val hasCustomImage = !MmkvManager.decodeSettingsString(
+                AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI
+            ).isNullOrBlank()
+            val isBannerCharacterOptionsVisible = bannerSettingsCharacter?.isVisible == true
+            customBannerSettingsCharacter?.isVisible = isBannerCharacterOptionsVisible && isCustom
+            deleteCustomBannerSettingsCharacter?.isVisible = isBannerCharacterOptionsVisible && isCustom && hasCustomImage
+            if (hasCustomImage) {
+                customBannerSettingsCharacter?.summary = getString(R.string.summary_banner_settings_character_custom_selected)
+            }
+            customBannerSettingsCharacter?.setOnPreferenceClickListener {
+                pickCustomBannerSettingsCharacter.launch(
+                    androidx.activity.result.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+                true
+            }
+
+            deleteCustomBannerSettingsCharacter?.setOnPreferenceClickListener {
+                val savedUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI)
+                if (!savedUri.isNullOrBlank()) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.title_banner_settings_character_delete)
+                        .setIcon(RemixR.drawable.rmx_delete_bin_line)
+                        .setMessage(R.string.summary_banner_settings_character_delete)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            lifecycleScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val parsed = Uri.parse(savedUri)
+                                    if (parsed.scheme == "file") File(parsed.path.orEmpty()).delete()
+                                }
+                                MmkvManager.encodeSettings(AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI, "")
+                                deleteCustomBannerSettingsCharacter?.isVisible = false
+                                customBannerSettingsCharacter?.summary = getString(R.string.summary_banner_settings_character_custom)
+                                bannerSettingsCard?.refreshBanner()
+                                requireContext().snackbarSuccess(
+                                    getString(R.string.summary_banner_settings_character_delete),
+                                    title = getString(R.string.title_alerter_success)
+                                )
+                            }
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .showBlur()
+                }
                 true
             }
 
             bannerSettingsCard?.setOnPreferenceClickListener {
                 val expand = bannerSettingsCharacter?.isVisible != true
                 bannerSettingsCharacter?.isVisible = expand
+                val selectedCharacter = MmkvManager.decodeSettingsString(
+                    AppConfig.PREF_BANNER_SETTINGS_CHARACTER,
+                    AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT
+                )
+                val customSelected = selectedCharacter == com.miku.ray.ui.preference.BannerSettingsPreference.CUSTOM_VALUE
+                val customImageAvailable = !MmkvManager.decodeSettingsString(
+                    AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI
+                ).isNullOrBlank()
+                customBannerSettingsCharacter?.isVisible = expand && customSelected
+                deleteCustomBannerSettingsCharacter?.isVisible = expand && customSelected && customImageAvailable
                 bannerCharacterLayout?.isVisible = expand
                 true
             }
@@ -464,6 +557,24 @@ class SettingsActivity : HelperBaseActivity(), SearchPreferenceResultListener {
             navigateAdvancedSettings?.setOnPreferenceClickListener {
                 startActivity(android.content.Intent(requireContext(), AdvancedSettingsActivity::class.java))
                 true
+            }
+        }
+
+        private fun saveCustomBannerCharacter(uri: Uri): String? {
+            return try {
+                val directory = File(requireContext().filesDir, "banners").apply { mkdirs() }
+                val oldUri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI)
+                oldUri?.let { old ->
+                    val oldParsed = Uri.parse(old)
+                    if (oldParsed.scheme == "file") File(oldParsed.path.orEmpty()).delete()
+                }
+                val destination = File(directory, "settings_character_${System.currentTimeMillis()}.image")
+                requireContext().contentResolver.openInputStream(uri)?.use { input ->
+                    destination.outputStream().use { output -> input.copyTo(output) }
+                } ?: return null
+                Uri.fromFile(destination).toString()
+            } catch (_: Exception) {
+                null
             }
         }
     }

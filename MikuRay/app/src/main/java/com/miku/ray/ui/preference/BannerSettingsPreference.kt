@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
+import com.bumptech.glide.Glide
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.handler.MmkvManager
@@ -28,7 +29,23 @@ class BannerSettingsPreference @JvmOverloads constructor(
         holder.setIsRecyclable(false)
 
         val imageView = holder.findViewById(R.id.iv_banner_settings_character) as? ImageView
-        imageView?.setImageResource(resolveDrawableRes())
+        imageView?.let { view ->
+            val value = MmkvManager.decodeSettingsString(
+                AppConfig.PREF_BANNER_SETTINGS_CHARACTER,
+                AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT
+            )
+            if (value == CUSTOM_VALUE) {
+                val uri = MmkvManager.decodeSettingsString(AppConfig.PREF_CUSTOM_BANNER_SETTINGS_CHARACTER_URI)
+                Glide.with(view)
+                    .load(uri?.takeIf { it.isNotBlank() })
+                    .placeholder(drawableFor(AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT))
+                    .error(drawableFor(AppConfig.PREF_BANNER_SETTINGS_CHARACTER_DEFAULT))
+                    .into(view)
+            } else {
+                Glide.with(view).clear(view)
+                view.setImageResource(resolveDrawableRes())
+            }
+        }
         imageView?.let { applyLayoutParams(it) }
     }
 
@@ -77,6 +94,8 @@ class BannerSettingsPreference @JvmOverloads constructor(
     }
 
     companion object {
+        const val CUSTOM_VALUE = "custom"
+
         fun drawableFor(value: String?): Int = when (value) {
             "uwu_banner_miku_v2" -> R.drawable.uwu_banner_miku_v2
             "uwu_banner_miku_v2_chinese" -> R.drawable.uwu_banner_miku_v2_chinese

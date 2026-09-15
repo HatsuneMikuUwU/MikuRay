@@ -811,6 +811,12 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
 
     <string name="title_banner_settings_character">Settings banner character</string>
     <string name="summary_banner_settings_character">Choose which Hatsune Miku artwork appears on the settings banner</string>
+    <string name="banner_settings_character_custom">Custom image</string>
+    <string name="title_banner_settings_character_custom">Custom banner character image</string>
+    <string name="summary_banner_settings_character_custom">Choose an image from your device</string>
+    <string name="summary_banner_settings_character_custom_selected">Choose custom image</string>
+    <string name="title_banner_settings_character_delete">Remove custom banner character image</string>
+    <string name="summary_banner_settings_character_delete">Remove the selected custom image and use the default character</string>
     <string name="title_banner_character_layout">Banner character size &amp; position</string>
     <string name="summary_banner_character_layout">Fine-tune the width, height, and margins of the banner artwork</string>
     <string name="banner_character_slider_width_label">Width</string>
