@@ -600,6 +600,9 @@
         <item>@string/label_disable</item>
         <item>@string/label_enable</item>
     </string-array>
+    <string-array name="mux_enabled_values" translatable="false">
+        <item>false</item>
+        <item>true</item>
     <string-array name="bool_dropdown_entries">
         <item>@string/label_enable</item>
         <item>@string/label_disable</item>
