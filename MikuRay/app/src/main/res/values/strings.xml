@@ -219,32 +219,6 @@
     <string name="server_lab_mux_xudp_concurrency">XUDP connections</string>
     <string name="server_lab_mux_concurrency_tip">range -1 to 1024</string>
     <string name="server_lab_mux_xudp_quic">Handling of QUIC in mux tunnel</string>
-    <string-array name="mux_xudp_quic_entries">
-        <item>reject</item>
-        <item>allow</item>
-        <item>skip</item>
-    </string-array>
-    <string-array name="mux_enabled_entries" translatable="false">
-        <item>@string/label_disable</item>
-        <item>@string/label_enable</item>
-    </string-array>
-    <string-array name="bool_dropdown_entries">
-        <item>@string/label_enable</item>
-        <item>@string/label_disable</item>
-    </string-array>
-    <string-array name="bool_dropdown_values" translatable="false">
-        <item>true</item>
-        <item>false</item>
-    </string-array>
-    <string-array name="streamsecuritys_entries">
-        <item>@string/label_disable</item>
-        <item>TLS</item>
-    </string-array>
-    <string-array name="streamsecurityxs_entries">
-        <item>@string/label_disable</item>
-        <item>TLS</item>
-        <item>REALITY</item>
-    </string-array>
 
     <string name="title_pref_speed_enabled">Enable speed display</string>
     <string name="summary_pref_speed_enabled">Display current speed in the notification.\nNotification icon would change based on
@@ -294,9 +268,7 @@
 
     <string name="title_pref_vpn_mtu_tip">Default 1500</string>
 
-
     <string name="title_pref_domestic_dns">Domestic DNS</string>
-
 
     <string name="title_pref_domestic_dns_tip">Optional. Separate multiple servers with a comma, e.g. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
@@ -587,76 +559,6 @@ Package Name — only supported when using Xray TUN, routeOnly enabled, and Andr
     <string name="title_webdav_user">Username</string>
     <string name="title_webdav_pass">Password</string>
     <string name="title_webdav_remote_path">Remote directory (optional)</string>
-
-    <string-array name="share_method">
-        <item>QRcode</item>
-        <item>Export to clipboard</item>
-        <item>Export full config to clipboard</item>
-    </string-array>
-
-    <string-array name="share_method_more">
-        <item>QRcode</item>
-        <item>Export to clipboard</item>
-        <item>Export full config to clipboard</item>
-        <item>Edit</item>
-        <item>Delete</item>
-    </string-array>
-
-    <string-array name="share_sub_method">
-        <item>QRcode</item>
-        <item>Export to clipboard</item>
-    </string-array>
-
-    <string-array name="mode_entries">
-        <item>VPN</item>
-        <item>Proxy only</item>
-    </string-array>
-
-    <string-array name="browser_dialer_mode">
-        <item>Disable</item>
-        <item>OkHttp</item>
-        <item>WebView</item>
-    </string-array>
-
-    <string-array name="ui_mode_night">
-        <item>Follow system</item>
-        <item>Light</item>
-        <item>Dark</item>
-        <item>Auto (day/night)</item>
-    </string-array>
-
-    <string-array name="preset_rulesets">
-        <item>China Whitelist</item>
-        <item>China Blacklist</item>
-        <item>Global</item>
-        <item>Iran Whitelist</item>
-        <item>Russia Whitelist</item>
-    </string-array>
-
-    <string-array name="vpn_bypass_lan">
-        <item>Follow config</item>
-        <item>Bypass</item>
-        <item>Not Bypass</item>
-    </string-array>
-
-    <string-array name="outbound_domain_resolve_method">
-        <item>Do not resolve</item>
-        <item>Resolve and add to DNS Hosts</item>
-        <item>Resolve and replace domain</item>
-    </string-array>
-
-    <string-array name="policy_group_type">
-        <item>Least Ping</item>
-        <item>Least Load</item>
-        <item>Random</item>
-        <item>Round Robin</item>
-    </string-array>
-
-    <string-array name="config_backup_options">
-        <item>Local</item>
-        <item>WebDAV</item>
-    </string-array>
-
 
     <string name="status">Status</string>
     <string name="import_configuration">Import Configuration</string>
@@ -1148,4 +1050,39 @@ you need."</string>
     <string name="ui_theme_import_failed">Unable to import the theme: %1$s</string>
     <string name="title_pref_use_system_blur">Use system blur</string>
     <string name="summary_pref_use_system_blur">Use native Android window blur when available</string>
+
+    <!-- Strings for arrays.xml entries -->
+    <string name="mux_xudp_quic_reject">reject</string>
+    <string name="mux_xudp_quic_allow">allow</string>
+    <string name="mux_xudp_quic_skip">skip</string>
+    <string name="share_export_clipboard">Export to clipboard</string>
+    <string name="share_export_full_clipboard">Export full config to clipboard</string>
+    <string name="share_edit">Edit</string>
+    <string name="share_delete">Delete</string>
+    <string name="mode_entry_vpn">VPN</string>
+    <string name="mode_entry_proxy_only">Proxy only</string>
+    <string name="browser_dialer_mode_disable">Disable</string>
+    <string name="browser_dialer_mode_okhttp">OkHttp</string>
+    <string name="browser_dialer_mode_webview">WebView</string>
+    <string name="ui_mode_night_follow_system">Follow system</string>
+    <string name="ui_mode_night_light">Light</string>
+    <string name="ui_mode_night_dark">Dark</string>
+    <string name="ui_mode_night_auto">Auto (day/night)</string>
+    <string name="preset_ruleset_china_whitelist">China Whitelist</string>
+    <string name="preset_ruleset_china_blacklist">China Blacklist</string>
+    <string name="preset_ruleset_global">Global</string>
+    <string name="preset_ruleset_iran_whitelist">Iran Whitelist</string>
+    <string name="preset_ruleset_russia_whitelist">Russia Whitelist</string>
+    <string name="vpn_bypass_lan_follow_config">Follow config</string>
+    <string name="vpn_bypass_lan_bypass">Bypass</string>
+    <string name="vpn_bypass_lan_not_bypass">Not Bypass</string>
+    <string name="outbound_resolve_do_not_resolve">Do not resolve</string>
+    <string name="outbound_resolve_add_dns_hosts">Resolve and add to DNS Hosts</string>
+    <string name="outbound_resolve_replace_domain">Resolve and replace domain</string>
+    <string name="policy_group_least_ping">Least Ping</string>
+    <string name="policy_group_least_load">Least Load</string>
+    <string name="policy_group_random">Random</string>
+    <string name="policy_group_round_robin">Round Robin</string>
+    <string name="config_backup_local">Local</string>
+    <string name="config_backup_webdav">WebDAV</string>
 </resources>

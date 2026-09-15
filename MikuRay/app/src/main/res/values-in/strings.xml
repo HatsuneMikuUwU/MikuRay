@@ -205,11 +205,6 @@
     <string name="server_lab_mux_xudp_concurrency">Koneksi XUDP</string>
     <string name="server_lab_mux_concurrency_tip">dari -1 sampe 1024</string>
     <string name="server_lab_mux_xudp_quic">Gimana nanganin QUIC di tunnel mux</string>
-    <string-array name="mux_xudp_quic_entries">
-        <item>tolak</item>
-        <item>bolehin</item>
-        <item>skip aja</item>
-    </string-array>
 
     <string name="title_pref_speed_enabled">Tampilin kecepatan</string>
     <string name="summary_pref_speed_enabled">Biar keliatan speed sekarang di notif.\nIkon notifnya bakal berubah ngikutin pemakaian kamu.</string>
@@ -258,9 +253,7 @@
 
     <string name="title_pref_vpn_mtu_tip">Bawaan 1500</string>
 
-
     <string name="title_pref_domestic_dns">DNS Domestik</string>
-
 
     <string name="title_pref_domestic_dns_tip">Opsional. Bisa isi beberapa server dipisah koma, mis. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
@@ -547,75 +540,6 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
     <string name="title_webdav_user">Username</string>
     <string name="title_webdav_pass">Password</string>
     <string name="title_webdav_remote_path">Folder remote (opsional)</string>
-
-    <string-array name="share_method">
-        <item>QR Code</item>
-        <item>Salin ke Clipboard</item>
-        <item>Salin semua isi konfig ke Clipboard</item>
-    </string-array>
-
-    <string-array name="share_method_more">
-        <item>QR Code</item>
-        <item>Salin ke Clipboard</item>
-        <item>Salin semua isi konfig ke Clipboard</item>
-        <item>Edit aja</item>
-        <item>Hapus</item>
-    </string-array>
-
-    <string-array name="share_sub_method">
-        <item>QR Code</item>
-        <item>Salin ke Clipboard</item>
-    </string-array>
-
-    <string-array name="mode_entries">
-        <item>VPN</item>
-        <item>Cuma Proxy</item>
-    </string-array>
-
-    <string-array name="browser_dialer_mode">
-        <item>Matiin</item>
-        <item>OkHttp</item>
-        <item>WebView</item>
-    </string-array>
-
-    <string-array name="ui_mode_night">
-        <item>Ikutin Sistem HP</item>
-        <item>Terang</item>
-        <item>Gelap</item>
-        <item>Otomatis (Siang/Malam)</item>
-    </string-array>
-
-    <string-array name="preset_rulesets">
-        <item>Whitelist China</item>
-        <item>Blacklist China</item>
-        <item>Global Aja</item>
-        <item>Whitelist Iran</item>
-        <item>Whitelist Rusia</item>
-    </string-array>
-
-    <string-array name="vpn_bypass_lan">
-        <item>Ikutin Konfig</item>
-        <item>Bypass</item>
-        <item>Ga dibypass</item>
-    </string-array>
-
-    <string-array name="outbound_domain_resolve_method">
-        <item>Gausah di-resolve</item>
-        <item>Resolve terus tambahin ke DNS Hosts</item>
-        <item>Resolve terus gantiin domainnya</item>
-    </string-array>
-
-    <string-array name="policy_group_type">
-        <item>Ping Paling Kecil</item>
-        <item>Beban Paling Dikit</item>
-        <item>Random Aja</item>
-        <item>Round Robin</item>
-    </string-array>
-
-    <string-array name="config_backup_options">
-        <item>Lokal</item>
-        <item>WebDAV</item>
-    </string-array>
 
     <string name="status">Status</string>
     <string name="import_configuration">Masukin Konfig Baru</string>
@@ -1087,4 +1011,39 @@ yang kamu butuhin."</string>
     <string name="ui_theme_import_failed">Yah, temanya gagal diimpor: %1$s</string>
     <string name="title_pref_use_system_blur">Pake blur sistem</string>
     <string name="summary_pref_use_system_blur">Pake blur jendela bawaan Android kalo ada</string>
+
+    <!-- Strings for arrays.xml entries -->
+    <string name="mux_xudp_quic_reject">tolak</string>
+    <string name="mux_xudp_quic_allow">bolehin</string>
+    <string name="mux_xudp_quic_skip">skip aja</string>
+    <string name="share_export_clipboard">Salin ke Clipboard</string>
+    <string name="share_export_full_clipboard">Salin semua isi konfig ke Clipboard</string>
+    <string name="share_edit">Edit aja</string>
+    <string name="share_delete">Hapus</string>
+    <string name="mode_entry_vpn">VPN</string>
+    <string name="mode_entry_proxy_only">Cuma Proxy</string>
+    <string name="browser_dialer_mode_disable">Matiin</string>
+    <string name="browser_dialer_mode_okhttp">OkHttp</string>
+    <string name="browser_dialer_mode_webview">WebView</string>
+    <string name="ui_mode_night_follow_system">Ikutin Sistem HP</string>
+    <string name="ui_mode_night_light">Terang</string>
+    <string name="ui_mode_night_dark">Gelap</string>
+    <string name="ui_mode_night_auto">Otomatis (Siang/Malam)</string>
+    <string name="preset_ruleset_china_whitelist">Whitelist China</string>
+    <string name="preset_ruleset_china_blacklist">Blacklist China</string>
+    <string name="preset_ruleset_global">Global Aja</string>
+    <string name="preset_ruleset_iran_whitelist">Whitelist Iran</string>
+    <string name="preset_ruleset_russia_whitelist">Whitelist Rusia</string>
+    <string name="vpn_bypass_lan_follow_config">Ikutin Konfig</string>
+    <string name="vpn_bypass_lan_bypass">Bypass</string>
+    <string name="vpn_bypass_lan_not_bypass">Ga dibypass</string>
+    <string name="outbound_resolve_do_not_resolve">Gausah di-resolve</string>
+    <string name="outbound_resolve_add_dns_hosts">Resolve terus tambahin ke DNS Hosts</string>
+    <string name="outbound_resolve_replace_domain">Resolve terus gantiin domainnya</string>
+    <string name="policy_group_least_ping">Ping Paling Kecil</string>
+    <string name="policy_group_least_load">Beban Paling Dikit</string>
+    <string name="policy_group_random">Random Aja</string>
+    <string name="policy_group_round_robin">Round Robin</string>
+    <string name="config_backup_local">Lokal</string>
+    <string name="config_backup_webdav">WebDAV</string>
 </resources>

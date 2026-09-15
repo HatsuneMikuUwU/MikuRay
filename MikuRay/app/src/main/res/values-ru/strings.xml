@@ -205,11 +205,6 @@
     <string name="server_lab_mux_xudp_concurrency">XUDP-соединения</string>
     <string name="server_lab_mux_concurrency_tip">диапазон от -1 до 1024</string>
     <string name="server_lab_mux_xudp_quic">Обработка QUIC в mux-туннеле</string>
-    <string-array name="mux_xudp_quic_entries">
-        <item>отклонить</item>
-        <item>разрешить</item>
-        <item>пропустить</item>
-    </string-array>
 
     <string name="title_pref_speed_enabled">Включить отображение скорости</string>
     <string name="summary_pref_speed_enabled">Показывать текущую скорость в уведомлении.\nЗначок уведомления изменяется в зависимости от использования.</string>
@@ -545,75 +540,6 @@
     <string name="title_webdav_user">Имя пользователя</string>
     <string name="title_webdav_pass">Пароль</string>
     <string name="title_webdav_remote_path">Удалённый каталог (необязательно)</string>
-
-    <string-array name="share_method">
-        <item>QR-код</item>
-        <item>Экспортировать в буфер обмена</item>
-        <item>Экспортировать полную конфигурацию в буфер обмена</item>
-    </string-array>
-
-    <string-array name="share_method_more">
-        <item>QR-код</item>
-        <item>Экспортировать в буфер обмена</item>
-        <item>Экспортировать полную конфигурацию в буфер обмена</item>
-        <item>Редактировать</item>
-        <item>Удалить</item>
-    </string-array>
-
-    <string-array name="share_sub_method">
-        <item>QR-код</item>
-        <item>Экспортировать в буфер обмена</item>
-    </string-array>
-
-    <string-array name="mode_entries">
-        <item>VPN</item>
-        <item>Только прокси</item>
-    </string-array>
-
-    <string-array name="browser_dialer_mode">
-        <item>Отключить</item>
-        <item>OkHttp</item>
-        <item>WebView</item>
-    </string-array>
-
-    <string-array name="ui_mode_night">
-        <item>По умолчанию системы</item>
-        <item>Светлая</item>
-        <item>Тёмная</item>
-        <item>Авто (день/ночь)</item>
-    </string-array>
-
-    <string-array name="preset_rulesets">
-        <item>Белый список Китая</item>
-        <item>Чёрный список Китая</item>
-        <item>Глобальный</item>
-        <item>Белый список Ирана</item>
-        <item>Белый список России</item>
-    </string-array>
-
-    <string-array name="vpn_bypass_lan">
-        <item>По конфигурации</item>
-        <item>Обход</item>
-        <item>Без обхода</item>
-    </string-array>
-
-    <string-array name="outbound_domain_resolve_method">
-        <item>Не разрешать</item>
-        <item>Разрешить и добавить в DNS Hosts</item>
-        <item>Разрешить и заменить домен</item>
-    </string-array>
-
-    <string-array name="policy_group_type">
-        <item>Минимальный пинг</item>
-        <item>Минимальная нагрузка</item>
-        <item>Случайный</item>
-        <item>Round Robin</item>
-    </string-array>
-
-    <string-array name="config_backup_options">
-        <item>Локальное</item>
-        <item>WebDAV</item>
-    </string-array>
 
     <string name="status">Статус</string>
     <string name="import_configuration">Импортировать конфигурацию</string>
@@ -1097,4 +1023,39 @@
     <string name="ui_theme_import_failed">Не удалось импортировать тему: %1$s</string>
     <string name="title_pref_use_system_blur">Использовать системное размытие</string>
     <string name="summary_pref_use_system_blur">Использовать нативное размытие окон Android, если оно доступно</string>
+
+    <!-- Strings for arrays.xml entries -->
+    <string name="mux_xudp_quic_reject">отклонить</string>
+    <string name="mux_xudp_quic_allow">разрешить</string>
+    <string name="mux_xudp_quic_skip">пропустить</string>
+    <string name="share_export_clipboard">Экспортировать в буфер обмена</string>
+    <string name="share_export_full_clipboard">Экспортировать полную конфигурацию в буфер обмена</string>
+    <string name="share_edit">Редактировать</string>
+    <string name="share_delete">Удалить</string>
+    <string name="mode_entry_vpn">VPN</string>
+    <string name="mode_entry_proxy_only">Только прокси</string>
+    <string name="browser_dialer_mode_disable">Отключить</string>
+    <string name="browser_dialer_mode_okhttp">OkHttp</string>
+    <string name="browser_dialer_mode_webview">WebView</string>
+    <string name="ui_mode_night_follow_system">По умолчанию системы</string>
+    <string name="ui_mode_night_light">Светлая</string>
+    <string name="ui_mode_night_dark">Тёмная</string>
+    <string name="ui_mode_night_auto">Авто (день/ночь)</string>
+    <string name="preset_ruleset_china_whitelist">Белый список Китая</string>
+    <string name="preset_ruleset_china_blacklist">Чёрный список Китая</string>
+    <string name="preset_ruleset_global">Глобальный</string>
+    <string name="preset_ruleset_iran_whitelist">Белый список Ирана</string>
+    <string name="preset_ruleset_russia_whitelist">Белый список России</string>
+    <string name="vpn_bypass_lan_follow_config">По конфигурации</string>
+    <string name="vpn_bypass_lan_bypass">Обход</string>
+    <string name="vpn_bypass_lan_not_bypass">Без обхода</string>
+    <string name="outbound_resolve_do_not_resolve">Не разрешать</string>
+    <string name="outbound_resolve_add_dns_hosts">Разрешить и добавить в DNS Hosts</string>
+    <string name="outbound_resolve_replace_domain">Разрешить и заменить домен</string>
+    <string name="policy_group_least_ping">Минимальный пинг</string>
+    <string name="policy_group_least_load">Минимальная нагрузка</string>
+    <string name="policy_group_random">Случайный</string>
+    <string name="policy_group_round_robin">Round Robin</string>
+    <string name="config_backup_local">Локальное</string>
+    <string name="config_backup_webdav">WebDAV</string>
 </resources>

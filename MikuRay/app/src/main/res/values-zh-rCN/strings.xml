@@ -202,11 +202,6 @@
     <string name="server_lab_mux_xudp_concurrency">XUDP 复用子链接数</string>
     <string name="server_lab_mux_concurrency_tip">可填 -1 至 1024</string>
     <string name="server_lab_mux_xudp_quic">QUIC 流量处理方式</string>
-    <string-array name="mux_xudp_quic_entries">
-        <item>不代理</item>
-        <item>多路复用</item>
-        <item>原生</item>
-    </string-array>
 
     <string name="title_pref_speed_enabled">启用速度显示</string>
     <string name="summary_pref_speed_enabled">在通知中显示当前速度\n小图标显示流量的路由情况</string>
@@ -533,68 +528,6 @@
     <string name="title_webdav_user">用户名</string>
     <string name="title_webdav_pass">密码</string>
     <string name="title_webdav_remote_path">远程文件夹名（可选）</string>
-
-    <string-array name="share_method">
-        <item>二维码</item>
-        <item>导出至剪贴板</item>
-        <item>导出完整配置至剪贴板</item>
-    </string-array>
-
-    <string-array name="share_method_more">
-        <item>二维码</item>
-        <item>导出至剪贴板</item>
-        <item>导出完整配置至剪贴板</item>
-        <item>编辑</item>
-        <item>删除</item>
-    </string-array>
-
-    <string-array name="share_sub_method">
-        <item>二维码</item>
-        <item>导出至剪贴板</item>
-    </string-array>
-
-    <string-array name="mode_entries">
-        <item>VPN</item>
-        <item>仅代理</item>
-    </string-array>
-
-    <string-array name="ui_mode_night">
-        <item>跟随系统</item>
-        <item>浅色</item>
-        <item>深色</item>
-        <item>自动（白天/夜间）</item>
-    </string-array>
-
-    <string-array name="preset_rulesets">
-        <item>绕过大陆 (Whitelist)</item>
-        <item>黑名单 (Blacklist)</item>
-        <item>全局 (Global)</item>
-        <item>伊朗 (Iran)</item>
-        <item>俄罗斯白名单 (Russia Whitelist)</item>
-    </string-array>
-
-    <string-array name="vpn_bypass_lan">
-        <item>跟随配置</item>
-        <item>绕过</item>
-        <item>不绕过</item>
-    </string-array>
-
-    <string-array name="outbound_domain_resolve_method">
-        <item>不解析</item>
-        <item>解析后添加至 DNS Hosts</item>
-        <item>解析后替换原域名</item>
-    </string-array>
-    <string-array name="policy_group_type">
-        <item>最低延迟</item>
-        <item>最稳定</item>
-        <item>随机选择</item>
-        <item>轮询</item>
-    </string-array>
-
-    <string-array name="config_backup_options">
-        <item>本地</item>
-        <item>WebDAV</item>
-    </string-array>
 
     <string name="import_configuration">导入配置</string>
     <string name="add_server_manually">手动添加服务器</string>
@@ -1076,4 +1009,36 @@
     <string name="ui_theme_import_failed">无法导入主题：%1$s</string>
     <string name="title_pref_use_system_blur">使用系统模糊</string>
     <string name="summary_pref_use_system_blur">可用时使用原生 Android 窗口模糊</string>
+
+    <!-- Strings for arrays.xml entries -->
+    <string name="mux_xudp_quic_reject">不代理</string>
+    <string name="mux_xudp_quic_allow">多路复用</string>
+    <string name="mux_xudp_quic_skip">原生</string>
+    <string name="share_export_clipboard">导出至剪贴板</string>
+    <string name="share_export_full_clipboard">导出完整配置至剪贴板</string>
+    <string name="share_edit">编辑</string>
+    <string name="share_delete">删除</string>
+    <string name="mode_entry_vpn">VPN</string>
+    <string name="mode_entry_proxy_only">仅代理</string>
+    <string name="ui_mode_night_follow_system">跟随系统</string>
+    <string name="ui_mode_night_light">浅色</string>
+    <string name="ui_mode_night_dark">深色</string>
+    <string name="ui_mode_night_auto">自动（白天/夜间）</string>
+    <string name="preset_ruleset_china_whitelist">绕过大陆 (Whitelist)</string>
+    <string name="preset_ruleset_china_blacklist">黑名单 (Blacklist)</string>
+    <string name="preset_ruleset_global">全局 (Global)</string>
+    <string name="preset_ruleset_iran_whitelist">伊朗 (Iran)</string>
+    <string name="preset_ruleset_russia_whitelist">俄罗斯白名单 (Russia Whitelist)</string>
+    <string name="vpn_bypass_lan_follow_config">跟随配置</string>
+    <string name="vpn_bypass_lan_bypass">绕过</string>
+    <string name="vpn_bypass_lan_not_bypass">不绕过</string>
+    <string name="outbound_resolve_do_not_resolve">不解析</string>
+    <string name="outbound_resolve_add_dns_hosts">解析后添加至 DNS Hosts</string>
+    <string name="outbound_resolve_replace_domain">解析后替换原域名</string>
+    <string name="policy_group_least_ping">最低延迟</string>
+    <string name="policy_group_least_load">最稳定</string>
+    <string name="policy_group_random">随机选择</string>
+    <string name="policy_group_round_robin">轮询</string>
+    <string name="config_backup_local">本地</string>
+    <string name="config_backup_webdav">WebDAV</string>
 </resources>
