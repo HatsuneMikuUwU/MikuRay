@@ -567,11 +567,14 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         binding.layoutWeatherChip.isVisible = true
         WeatherHelper.publishChipWeatherFromCache()
 
-        if (WeatherHelper.chipWeather.value == null) {
+        val cachedNow = WeatherHelper.chipWeather.value
+        if (cachedNow == null) {
             binding.ivWeatherIcon.setImageResource(RemixR.drawable.rmx_cloud_line)
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
             binding.tvWeatherTemp.isVisible = true
+        } else {
+            applyWeatherToChip(cachedNow)
         }
 
         lifecycleScope.launch {
@@ -596,6 +599,8 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             binding.ivWeatherIcon.isVisible = true
             binding.tvWeatherTemp.text = getString(R.string.weather_loading)
             binding.tvWeatherTemp.isVisible = true
+        } else {
+            applyWeatherToChip(stale)
         }
 
         if (fresh != null) return
