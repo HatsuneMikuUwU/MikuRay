@@ -528,7 +528,7 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
 
     <string name="title_configuration_backup_restore">Backup &amp; Restore</string>
     <string name="title_configuration_backup">Backup Konfig</string>
-    <string name="title_configuration_restore">Balikin Konfig (Restore)</string>
+    <string name="title_configuration_restore">Balikin Konfig</string>
     <string name="title_configuration_share">Bagi-bagi Konfig</string>
     <string name="title_pin_server">Pin Server</string>
     <string name="action_pin_server">Pin ke atas</string>
@@ -608,11 +608,11 @@ Nama Paket — cuma bisa kalo kamu pake Xray TUN, routeOnly aktif, dan Android 1
         <item>Ping Paling Kecil</item>
         <item>Beban Paling Dikit</item>
         <item>Random Aja</item>
-        <item>Gantian (Round Robin)</item>
+        <item>Round Robin</item>
     </string-array>
 
     <string-array name="config_backup_options">
-        <item>Simpen di HP</item>
+        <item>Lokal</item>
         <item>WebDAV</item>
     </string-array>
 

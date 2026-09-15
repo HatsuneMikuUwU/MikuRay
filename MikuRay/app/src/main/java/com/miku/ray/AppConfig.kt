@@ -14,7 +14,7 @@ object AppConfig {
     const val COUNTRY_CODE_TEST_FAILED = "FAILED"
 
     const val WEBDAV_BACKUP_DIR = "backups"
-    const val WEBDAV_BACKUP_FILE_NAME = "backup_ng.zip"
+    const val WEBDAV_BACKUP_FILE_NAME = "backup_ng.mikubackup"
 
     const val ANG_CONFIG = "ang_config"
 
