@@ -203,28 +203,30 @@
                         android:textColor="?attr/colorOnSurface" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_policy_group_test_outbounds"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/title_policy_group_test_outbounds"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
+                    android:layout_marginTop="@dimen/padding_spacing_dp16"
+                    android:hint="@string/title_policy_group_test_outbounds"
+                    android:visibility="gone"
+                    app:boxStrokeWidth="1.5dp"
+                    app:boxStrokeWidthFocused="1.5dp"
+                    app:endIconDrawable="@drawable/ic_dropdown_selector"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconTint="?attr/colorOnSurfaceVariant"
+                    app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                    app:startIconDrawable="@drawable/rmx_health_medical_pulse_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/chk_policy_group_test_outbounds"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:thumbIcon="@drawable/mtrl_ic_check" />
-                </LinearLayout>
+                        android:inputType="none"
+                        android:textColor="?attr/colorOnSurface"
+                        app:simpleItems="@array/bool_dropdown_entries" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_policy_group_fallback"

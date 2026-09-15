@@ -46,6 +46,19 @@ class SubEditActivity : BaseActivity() {
 
     private val tabIcons: List<String> = TabIconPickerAdapter.DEFAULT_ICONS
 
+    private val boolEntries: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_entries) }
+    private val boolValues: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_values) }
+
+    private fun boolEntryFor(value: Boolean): String {
+        val idx = boolValues.indexOf(value.toString())
+        return boolEntries.getOrElse(if (idx >= 0) idx else 1) { value.toString() }
+    }
+
+    private fun boolValueFrom(text: String?): Boolean {
+        val idx = Utils.arrayFind(boolEntries, text.orEmpty())
+        return boolValues.getOrElse(if (idx >= 0) idx else 1) { "false" } == "true"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -144,10 +157,10 @@ class SubEditActivity : BaseActivity() {
         binding.etFilter.setText(Utils.getEditable(subItem.filter))
         binding.etNetworkFilter.setText(Utils.getEditable(subItem.networkFilter))
         binding.etProtocolFilter.setText(Utils.getEditable(subItem.protocolFilter))
-        binding.chkEnable.isChecked = subItem.enabled
-        binding.autoUpdateCheck.isChecked = subItem.autoUpdate
+        binding.chkEnable.setText(boolEntryFor(subItem.enabled), false)
+        binding.autoUpdateCheck.setText(boolEntryFor(subItem.autoUpdate), false)
         binding.etUpdateInterval.setText(Utils.getEditable(subItem.updateInterval.toString()))
-        binding.allowInsecureUrl.isChecked = subItem.allowInsecureUrl
+        binding.allowInsecureUrl.setText(boolEntryFor(subItem.allowInsecureUrl), false)
         binding.etPreProfile.setText(subItem.prevProfile, false)
         binding.etNextProfile.setText(subItem.nextProfile, false)
         applyIconSelection(subItem.tabIcon)
@@ -162,10 +175,10 @@ class SubEditActivity : BaseActivity() {
         binding.etFilter.text = null
         binding.etNetworkFilter.text = null
         binding.etProtocolFilter.text = null
-        binding.chkEnable.isChecked = true
-        binding.autoUpdateCheck.isChecked = false
+        binding.chkEnable.setText(boolEntryFor(true), false)
+        binding.autoUpdateCheck.setText(boolEntryFor(false), false)
         binding.etUpdateInterval.text = null
-        binding.allowInsecureUrl.isChecked = false
+        binding.allowInsecureUrl.setText(boolEntryFor(false), false)
         binding.etPreProfile.text = null
         binding.etNextProfile.text = null
         applyIconSelection(null)
@@ -188,7 +201,7 @@ class SubEditActivity : BaseActivity() {
         input: AutoCompleteTextView,
         suggestions: List<String>
     ) {
-        val noneOption = ""
+        val noneOption = getString(R.string.label_disable)
         val items = listOf(noneOption) + suggestions
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         input.setAdapter(adapter)
@@ -209,8 +222,8 @@ class SubEditActivity : BaseActivity() {
         subItem.filter = binding.etFilter.text?.toString().orEmpty()
         subItem.networkFilter = binding.etNetworkFilter.text?.toString().orEmpty()
         subItem.protocolFilter = binding.etProtocolFilter.text?.toString().orEmpty()
-        subItem.enabled = binding.chkEnable.isChecked
-        subItem.autoUpdate = binding.autoUpdateCheck.isChecked
+        subItem.enabled = boolValueFrom(binding.chkEnable.text?.toString())
+        subItem.autoUpdate = boolValueFrom(binding.autoUpdateCheck.text?.toString())
 
         val intervalInput = binding.etUpdateInterval.text?.toString()?.trim().orEmpty()
         val intervalMinutes = intervalInput.toLongOrNull()
@@ -235,7 +248,7 @@ class SubEditActivity : BaseActivity() {
 
         subItem.prevProfile = binding.etPreProfile.text?.toString().orEmpty()
         subItem.nextProfile = binding.etNextProfile.text?.toString().orEmpty()
-        subItem.allowInsecureUrl = binding.allowInsecureUrl.isChecked
+        subItem.allowInsecureUrl = boolValueFrom(binding.allowInsecureUrl.text?.toString())
         subItem.tabIcon = selectedIconDrawable
 
         if (TextUtils.isEmpty(subItem.remarks)) {

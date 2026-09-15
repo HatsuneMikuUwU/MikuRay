@@ -51,6 +51,19 @@ class ServerGroupActivity : BaseActivity() {
         )).filter { it != AppConfig.TAG_PROXY }
     }
 
+    private val boolEntries: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_entries) }
+    private val boolValues: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_values) }
+
+    private fun boolEntryFor(value: Boolean): String {
+        val idx = boolValues.indexOf(value.toString())
+        return boolEntries.getOrElse(if (idx >= 0) idx else 1) { value.toString() }
+    }
+
+    private fun boolValueFrom(text: String?): Boolean {
+        val idx = Utils.arrayFind(boolEntries, text.orEmpty())
+        return boolValues.getOrElse(if (idx >= 0) idx else 1) { "false" } == "true"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,7 +80,7 @@ class ServerGroupActivity : BaseActivity() {
         populateFallbackSuggestions()
 
         binding.spPolicyGroupType.setOnItemClickListener { _, _, _, _ -> updateFallbackVisibility() }
-        binding.chkPolicyGroupTestOutbounds.setOnCheckedChangeListener { _, _ -> updateFallbackVisibility() }
+        binding.chkPolicyGroupTestOutbounds.setOnItemClickListener { _, _, _, _ -> updateFallbackVisibility() }
 
         if (config != null) {
             bindingServer(config)
@@ -88,10 +101,10 @@ class ServerGroupActivity : BaseActivity() {
         val supportsObservatory = strategyType.supportsObservatory
         binding.layoutPolicyGroupTestOutbounds.visibility = if (supportsObservatory) android.view.View.VISIBLE else android.view.View.GONE
         binding.layoutPolicyGroupFallback.visibility =
-        if (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked) android.view.View.VISIBLE else android.view.View.GONE
+        if (supportsObservatory && boolValueFrom(binding.chkPolicyGroupTestOutbounds.text.toString())) android.view.View.VISIBLE else android.view.View.GONE
 
         val usesObservatory = strategyType.requiresObservatory
-        || (supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked)
+        || (supportsObservatory && boolValueFrom(binding.chkPolicyGroupTestOutbounds.text.toString()))
         val usesBurstObservatory = strategyType.requiresBurstObservatory
         binding.layoutPolicyGroupObservatoryPing.visibility = if (usesObservatory) android.view.View.VISIBLE else android.view.View.GONE
         binding.layoutPolicyGroupObservatoryLoad.visibility = if (usesBurstObservatory) android.view.View.VISIBLE else android.view.View.GONE
@@ -112,8 +125,9 @@ class ServerGroupActivity : BaseActivity() {
         }
 
         val supportsObservatory = BalancerStrategyType.from(config.policyGroupType).supportsObservatory
-        binding.chkPolicyGroupTestOutbounds.isChecked =
-        config.policyGroupTestOutbounds != false || !supportsObservatory
+        binding.chkPolicyGroupTestOutbounds.setText(
+            boolEntryFor(config.policyGroupTestOutbounds != false || !supportsObservatory), false
+        )
         binding.spPolicyGroupFallback.setText(config.policyGroupFallbackTag.orEmpty(), false)
 
         binding.etPolicyGroupObservatoryLeastPingInterval.text =
@@ -150,7 +164,7 @@ class ServerGroupActivity : BaseActivity() {
             binding.spPolicyGroupSubId.setText(displayList[0], false)
         }
 
-        binding.chkPolicyGroupTestOutbounds.isChecked = true
+        binding.chkPolicyGroupTestOutbounds.setText(boolEntryFor(true), false)
         binding.spPolicyGroupFallback.setText("", false)
 
         binding.etPolicyGroupObservatoryLeastPingInterval.text = Utils.getEditable(AppConfig.OBSERVATORY_LEAST_PING_INTERVAL)
@@ -175,7 +189,7 @@ class ServerGroupActivity : BaseActivity() {
         val typePos = policyGroupTypes.indexOf(binding.spPolicyGroupType.text.toString()).let { if (it >= 0) it else 0 }
         val strategyType = BalancerStrategyType.from(typePos.toString())
         val usesObservatory = strategyType.requiresObservatory
-        || (strategyType.supportsObservatory && binding.chkPolicyGroupTestOutbounds.isChecked)
+        || (strategyType.supportsObservatory && boolValueFrom(binding.chkPolicyGroupTestOutbounds.text.toString()))
         val usesBurstObservatory = strategyType.requiresBurstObservatory
 
         val pingInterval = binding.etPolicyGroupObservatoryLeastPingInterval.text.toString().trim()
@@ -208,7 +222,7 @@ class ServerGroupActivity : BaseActivity() {
         val selPos = displayList.indexOf(selectedSubStr)
         config.policyGroupSubscriptionId = if (selPos >= 0 && selPos < subIds.size) subIds[selPos] else null
 
-        config.policyGroupTestOutbounds = binding.chkPolicyGroupTestOutbounds.isChecked
+        config.policyGroupTestOutbounds = boolValueFrom(binding.chkPolicyGroupTestOutbounds.text?.toString())
         config.policyGroupFallbackTag = binding.spPolicyGroupFallback.text.toString().trim().takeIf { it.isNotEmpty() }
 
         config.policyGroupObservatoryLeastPingInterval = pingInterval.takeIf { it.isNotEmpty() }

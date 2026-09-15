@@ -451,7 +451,8 @@
     <string name="routing_settings_import_rulesets_from_clipboard">Импортировать набор правил из буфера обмена</string>
     <string name="routing_settings_import_rulesets_from_qrcode">Импортировать набор правил из QR-кода</string>
     <string name="routing_settings_export_rulesets_to_clipboard">Экспортировать набор правил в буфер обмена</string>
-    <string name="routing_settings_locked">Заблокировано — сохранять это правило при импорте пресетов</string>
+    <string name="routing_settings_locked">Заблокировано</string>
+    <string name="routing_settings_locked_tip">Заблокировано, сохранять это правило при импорте пресетов</string>
     <string name="routing_settings_domain">домен</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">процесс</string>
@@ -1005,6 +1006,8 @@
 
     <string name="title_alerter_info">Информация</string>
     <string name="title_alerter_success">Успешно</string>
+    <string name="label_enable">Включить</string>
+    <string name="label_disable">Выключить</string>
     <string name="title_alerter_error">Ошибка</string>
 
     <string name="title_pref_enable_blur">Включить размытие</string>

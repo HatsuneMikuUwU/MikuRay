@@ -30,7 +30,7 @@
             android:inputType="none"
             android:nextFocusDown="@+id/et_sni"
             android:textColor="?attr/colorOnSurface"
-            app:simpleItems="@array/streamsecuritys" />
+            app:simpleItems="@array/streamsecuritys_entries" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

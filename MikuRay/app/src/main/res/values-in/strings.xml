@@ -453,7 +453,8 @@
     <string name="routing_settings_import_rulesets_from_clipboard">Impor ruleset dari clipboard</string>
     <string name="routing_settings_import_rulesets_from_qrcode">Impor ruleset dari QR Code</string>
     <string name="routing_settings_export_rulesets_to_clipboard">Salin ruleset ke clipboard</string>
-    <string name="routing_settings_locked">Kunci ah, biar aturan ini tetep ada pas kamu ngimpor preset</string>
+    <string name="routing_settings_locked">Kunci</string>
+    <string name="routing_settings_locked_tip">Kunci ah, biar aturan ini tetep ada pas kamu ngimpor preset</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">proses</string>
@@ -995,6 +996,8 @@ yang kamu butuhin."</string>
 
     <string name="title_alerter_info">Info</string>
     <string name="title_alerter_success">Mantap Berhasil</string>
+    <string name="label_enable">Aktifin</string>
+    <string name="label_disable">Matiin</string>
     <string name="title_alerter_error">Yah Gagal</string>
 
     <string name="title_pref_enable_blur">Aktifin Blur</string>

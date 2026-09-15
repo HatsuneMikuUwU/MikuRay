@@ -22,6 +22,17 @@ class MuxFields(view: View) {
     private val xudpQuicEntries: Array<out String> = view.resources.getStringArray(R.array.mux_xudp_quic_entries)
     private val xudpQuicValues: Array<out String> = view.resources.getStringArray(R.array.mux_xudp_quic_value)
     private val muxEnabledEntries: Array<out String> = view.resources.getStringArray(R.array.mux_enabled_entries)
+    private val muxEnabledValues: Array<out String> = view.resources.getStringArray(R.array.mux_enabled_values)
+
+    private fun muxEntryFor(enabled: Boolean): String {
+        val idx = muxEnabledValues.indexOf(enabled.toString())
+        return muxEnabledEntries.getOrElse(if (idx >= 0) idx else 0) { enabled.toString() }
+    }
+
+    private fun muxValueFrom(text: String?): Boolean {
+        val idx = Utils.arrayFind(muxEnabledEntries, text.orEmpty())
+        return muxEnabledValues.getOrElse(if (idx >= 0) idx else 0) { "false" } == "true"
+    }
 
     private val spMuxEnabled: MaterialAutoCompleteTextView? = view.findViewById(R.id.sp_mux_enabled)
     private val etMuxConcurrency: TextInputEditText? = view.findViewById(R.id.et_mux_concurrency)
@@ -33,7 +44,7 @@ class MuxFields(view: View) {
     private val containerMuxXudpQuic: View? = view.findViewById(R.id.lay_mux_xudp_quic)
 
     fun setOnEnabledChanged(onChanged: (enabled: Boolean) -> Unit) {
-        spMuxEnabled?.setOnItemClickListener { _, _, position, _ -> onChanged(muxEnabledEntries.getOrElse(position) { "false" } == "true") }
+        spMuxEnabled?.setOnItemClickListener { _, _, position, _ -> onChanged(muxEnabledValues.getOrElse(position) { "false" } == "true") }
     }
 
     fun updateForEnabled(enabled: Boolean) {
@@ -43,7 +54,7 @@ class MuxFields(view: View) {
 
     fun bind(config: ProfileItem) {
         val enabled = config.muxEnabled ?: false
-        spMuxEnabled?.setText(if (enabled) "true" else "false", false)
+        spMuxEnabled?.setText(muxEntryFor(enabled), false)
         updateForEnabled(enabled)
 
         etMuxConcurrency?.text = Utils.getEditable(config.muxConcurrency ?: "8")
@@ -54,7 +65,7 @@ class MuxFields(view: View) {
     }
 
     fun clear() {
-        spMuxEnabled?.setText("false", false)
+        spMuxEnabled?.setText(muxEntryFor(false), false)
         updateForEnabled(false)
         etMuxConcurrency?.text = Utils.getEditable("8")
         etMuxXudpConcurrency?.text = Utils.getEditable(AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY)
@@ -62,7 +73,7 @@ class MuxFields(view: View) {
     }
 
     fun save(config: ProfileItem) {
-        config.muxEnabled = spMuxEnabled?.text.toString() == "true"
+        config.muxEnabled = muxValueFrom(spMuxEnabled?.text?.toString())
         config.muxConcurrency = etMuxConcurrency?.text?.toString()?.trim().let { if (it.isNullOrEmpty()) "8" else it }
         config.muxXudpConcurrency = etMuxXudpConcurrency?.text?.toString()?.trim()
             .let { if (it.isNullOrEmpty()) AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY else it }

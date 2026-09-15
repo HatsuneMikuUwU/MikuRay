@@ -14,6 +14,7 @@ import com.miku.ray.util.Utils
 class TlsFields(view: View) {
 
     private val streamSecuritys: Array<out String> = view.resources.getStringArray(R.array.streamsecurityxs)
+    private val streamSecurityEntries: Array<out String> = view.resources.getStringArray(R.array.streamsecurityxs_entries)
     private val allowinsecures: Array<out String> = view.resources.getStringArray(R.array.allowinsecures)
     private val uTlsItems: Array<out String> = view.resources.getStringArray(R.array.streamsecurity_utls)
     private val alpns: Array<out String> = view.resources.getStringArray(R.array.streamsecurity_alpn)
@@ -44,7 +45,12 @@ class TlsFields(view: View) {
     private val containerVerifyPeerCertByName: View? = view.findViewById(R.id.lay_verify_peer_cert_by_name)
     private val containerPinnedCa256: View? = view.findViewById(R.id.lay_pinned_ca256)
 
-    val selectedSecurityText: String get() = spStreamSecurity?.text?.toString().orEmpty()
+    val selectedSecurityText: String
+        get() {
+            val displayText = spStreamSecurity?.text?.toString().orEmpty()
+            val idx = Utils.arrayFind(streamSecurityEntries, displayText)
+            return streamSecuritys.getOrElse(if (idx >= 0) idx else 0) { "" }
+        }
     val pinnedCa256Text: String? get() = etPinnedCa256?.text?.toString()
 
     fun setPinnedCa256Text(value: String) {
@@ -57,7 +63,9 @@ class TlsFields(view: View) {
 
     fun setOnSecurityChanged(onChanged: (security: String) -> Unit) {
         spStreamSecurity?.setOnItemClickListener { parent, _, position, _ ->
-            onChanged(parent.getItemAtPosition(position).toString())
+            val displayText = parent.getItemAtPosition(position).toString()
+            val idx = Utils.arrayFind(streamSecurityEntries, displayText)
+            onChanged(streamSecuritys.getOrElse(if (idx >= 0) idx else 0) { "" })
         }
     }
 
@@ -133,12 +141,12 @@ class TlsFields(view: View) {
     fun bind(config: ProfileItem) {
         val streamSecurity = Utils.arrayFind(streamSecuritys, config.security.orEmpty())
         if (streamSecurity < 0) {
-            spStreamSecurity?.setText("", false)
+            spStreamSecurity?.setText(streamSecurityEntries.getOrElse(0) { "" }, false)
             updateForSecurity("")
             return
         }
 
-        spStreamSecurity?.setText(streamSecuritys[streamSecurity], false)
+        spStreamSecurity?.setText(streamSecurityEntries.getOrElse(streamSecurity) { streamSecuritys[streamSecurity] }, false)
         updateForSecurity(streamSecuritys[streamSecurity])
 
         etSni?.text = Utils.getEditable(config.sni)
@@ -167,7 +175,7 @@ class TlsFields(view: View) {
 
     fun clear() {
         if (streamSecuritys.isNotEmpty()) {
-            spStreamSecurity?.setText(streamSecuritys[0], false)
+            spStreamSecurity?.setText(streamSecurityEntries.getOrElse(0) { streamSecuritys[0] }, false)
             updateForSecurity(streamSecuritys[0])
         }
         if (allowinsecures.isNotEmpty()) {

@@ -225,8 +225,25 @@
         <item>skip</item>
     </string-array>
     <string-array name="mux_enabled_entries" translatable="false">
-        <item>false</item>
+        <item>@string/label_disable</item>
+        <item>@string/label_enable</item>
+    </string-array>
+    <string-array name="bool_dropdown_entries">
+        <item>@string/label_enable</item>
+        <item>@string/label_disable</item>
+    </string-array>
+    <string-array name="bool_dropdown_values" translatable="false">
         <item>true</item>
+        <item>false</item>
+    </string-array>
+    <string-array name="streamsecuritys_entries">
+        <item>@string/label_disable</item>
+        <item>TLS</item>
+    </string-array>
+    <string-array name="streamsecurityxs_entries">
+        <item>@string/label_disable</item>
+        <item>TLS</item>
+        <item>REALITY</item>
     </string-array>
 
     <string name="title_pref_speed_enabled">Enable speed display</string>
@@ -476,7 +493,8 @@
     <string name="routing_settings_import_rulesets_from_clipboard">Import ruleset from clipboard</string>
     <string name="routing_settings_import_rulesets_from_qrcode">Import ruleset from QRcode</string>
     <string name="routing_settings_export_rulesets_to_clipboard">Export ruleset to clipboard</string>
-    <string name="routing_settings_locked">Locked, keep this rule when import presets</string>
+    <string name="routing_settings_locked">Locked</string>
+    <string name="routing_settings_locked_tip">Locked, keep this rule when import presets</string>
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">process</string>
@@ -1037,6 +1055,8 @@ you need."</string>
 
     <string name="title_alerter_info">Info</string>
     <string name="title_alerter_success">Success</string>
+    <string name="label_enable">Enable</string>
+    <string name="label_disable">Disable</string>
     <string name="title_alerter_error">Error</string>
 
     <string name="title_pref_enable_blur">Enable Blur</string>

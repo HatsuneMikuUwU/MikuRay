@@ -257,33 +257,29 @@
                         android:textColor="?attr/colorOnSurface" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.divider.MaterialDivider
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="@dimen/padding_spacing_dp16" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/routing_settings_locked"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
+                    android:layout_marginTop="@dimen/padding_spacing_dp16"
+                    android:hint="@string/routing_settings_locked"
+                    app:boxStrokeWidth="1.5dp"
+                    app:boxStrokeWidthFocused="1.5dp"
+                    app:helperText="@string/routing_settings_locked_tip"
+                    app:endIconDrawable="@drawable/ic_dropdown_selector"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconTint="?attr/colorOnSurfaceVariant"
+                    app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                    app:startIconDrawable="@drawable/rmx_system_lock_2_line"
+                    app:startIconTint="?attr/colorOnSurfaceVariant">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/chk_locked"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:thumbIcon="@drawable/mtrl_ic_check" />
-                </LinearLayout>
+                        android:inputType="none"
+                        android:textColor="?attr/colorOnSurface"
+                        app:simpleItems="@array/bool_dropdown_entries" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -28,6 +28,19 @@ class RoutingEditActivity : BaseActivity() {
     private val binding by lazy { ActivityRoutingEditBinding.inflate(layoutInflater) }
     private val position by lazy { intent.getIntExtra("position", -1) }
 
+    private val boolEntries: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_entries) }
+    private val boolValues: Array<out String> by lazy { resources.getStringArray(R.array.bool_dropdown_values) }
+
+    private fun boolEntryFor(value: Boolean): String {
+        val idx = boolValues.indexOf(value.toString())
+        return boolEntries.getOrElse(if (idx >= 0) idx else 1) { value.toString() }
+    }
+
+    private fun boolValueFrom(text: String?): Boolean {
+        val idx = Utils.arrayFind(boolEntries, text.orEmpty())
+        return boolValues.getOrElse(if (idx >= 0) idx else 1) { "false" } == "true"
+    }
+
     private val processPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedPackages = AppPickerActivity.getSelectedPackages(result.data)
@@ -96,7 +109,7 @@ class RoutingEditActivity : BaseActivity() {
 
     private fun bindingServer(rulesetItem: RulesetItem): Boolean {
         binding.etRemarks.setText(Utils.getEditable(rulesetItem.remarks))
-        binding.chkLocked.isChecked = rulesetItem.locked == true
+        binding.chkLocked.setText(boolEntryFor(rulesetItem.locked == true), false)
         binding.etDomain.setText(Utils.getEditable(rulesetItem.domain?.joinToString(",")))
         binding.etIp.setText(Utils.getEditable(rulesetItem.ip?.joinToString(",")))
         binding.etProcess.setText(Utils.getEditable(rulesetItem.process?.joinToString(",")))
@@ -109,6 +122,7 @@ class RoutingEditActivity : BaseActivity() {
 
     private fun clearServer(): Boolean {
         binding.etRemarks.text = null
+        binding.chkLocked.setText(boolEntryFor(false), false)
         binding.spOutboundTag.setText(BUILTIN_OUTBOUND_TAGS.first(), false)
         return true
     }
@@ -118,7 +132,7 @@ class RoutingEditActivity : BaseActivity() {
 
         rulesetItem.apply {
             remarks = binding.etRemarks.text?.toString().orEmpty()
-            locked = binding.chkLocked.isChecked
+            locked = boolValueFrom(binding.chkLocked.text?.toString())
             domain = binding.etDomain.text?.toString()?.nullIfBlank()?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
             ip = binding.etIp.text?.toString()?.nullIfBlank()?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
             process = binding.etProcess.text?.toString()?.nullIfBlank()?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
