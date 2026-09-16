@@ -38,12 +38,14 @@ object ShadowsocksFmt : FmtBase() {
 
         if (!uri.rawQuery.isNullOrEmpty()) {
             val queryParam = getQueryParam(uri)
+            getItemFormQuery(config, queryParam)
+
             if (queryParam["plugin"]?.contains("obfs=http") == true) {
                 val queryPairs = HashMap<String, String>()
                 for (pair in queryParam["plugin"]?.split(";") ?: listOf()) {
-                    val idx = pair.split("=")
-                    if (idx.count() == 2) {
-                        queryPairs.put(idx.first(), idx.last())
+                    val idx = pair.split("=", limit = 2)
+                    if (idx.size == 2) {
+                        queryPairs[idx.first()] = idx.last()
                     }
                 }
                 config.network = NetworkType.TCP.type
