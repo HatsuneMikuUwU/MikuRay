@@ -187,18 +187,18 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:lines="1"
-                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textAppearance="?attr/textAppearanceLabelSmall"
                             android:textColor="@color/colorPing"
-                            android:textSize="14sp" />
+                            android:textSize="11sp" />
                         <TextView
                             android:id="@+id/tv_country_code"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:lines="1"
-                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textAppearance="?attr/textAppearanceLabelSmall"
                             android:textColor="?attr/colorOnSurfaceVariant"
-                            android:textSize="14sp"
+                            android:textSize="11sp"
                             android:visibility="gone" />
                     </LinearLayout>
 

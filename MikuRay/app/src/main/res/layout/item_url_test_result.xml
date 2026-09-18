@@ -64,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPing"
+                android:textSize="11sp"
                 tools:text="128ms" />
 
         </LinearLayout>
