@@ -201,6 +201,14 @@ object MmkvManager {
         return allServers
     }
 
+    fun countServers(subscriptionId: String): Int {
+        return decodeServerList(subscriptionId).distinct().count { profileFullStorage.containsKey(it) }
+    }
+
+    fun countAllServers(): Int {
+        return decodeAllServerList().distinct().count { profileFullStorage.containsKey(it) }
+    }
+
     fun decodeServerConfig(guid: String): ProfileItem? {
         if (guid.isBlank()) {
             return null

@@ -48,7 +48,7 @@ class SubSettingRecyclerAdapter(
             holder.itemView.context.getString(R.string.sub_setting_no_url)
         }
         holder.itemSubSettingBinding.chkEnable.isChecked = subItem.enabled
-        val serverCount = MmkvManager.decodeServerList(subId).size
+        val serverCount = MmkvManager.countServers(subId)
         holder.itemSubSettingBinding.tvServerCount.text = holder.itemView.context.resources.getQuantityString(
             R.plurals.sub_setting_server_count, serverCount, serverCount
         )

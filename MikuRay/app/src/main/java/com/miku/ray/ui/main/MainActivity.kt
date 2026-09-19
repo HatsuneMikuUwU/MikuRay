@@ -136,6 +136,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     private var lastTrafficSpeedText: String = ""
     private var lastTestResultText: String = ""
     private var fabTimerJob: Job? = null
+    private var badgeRefreshJob: Job? = null
 
     private val urlTestProgressDialog: TestProgressDialogController by lazy {
         TestProgressDialogController(this, TestProgressDialogController.Mode.URL_TEST) { mainViewModel.cancelRealPingTest() }
@@ -413,6 +414,8 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         if (SettingsChangeManager.consumeSetupGroupTab()) {
             refreshGroupTabTitles()
         }
+
+        refreshTabBadges()
 
         mainViewModel.startListenBroadcast()
     }
@@ -1368,19 +1371,29 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
     }
 
     private fun refreshTabBadges() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        badgeRefreshJob?.cancel()
+        badgeRefreshJob = lifecycleScope.launch(Dispatchers.IO) {
             val groups = mainViewModel.getSubscriptions(this@MainActivity)
             withContext(Dispatchers.Main) {
                 if (isFinishing || isDestroyed) return@withContext
 
-                for (i in groups.indices) {
+                val counts = groups.associate { it.id to it.serverCount }
+                var structureMismatch = binding.tabGroup.tabCount != groups.size
+
+                for (i in 0 until binding.tabGroup.tabCount) {
                     val tab = binding.tabGroup.getTabAt(i) ?: continue
+                    val groupId = tab.tag as? String
+                    val count = groupId?.let { counts[it] }
+                    if (count == null) {
+                        structureMismatch = true
+                        continue
+                    }
                     val tabBadge = tab.customView?.findViewById<TextView>(R.id.tab_badge) ?: continue
                     val tabLabel = tab.customView?.findViewById<TextView>(R.id.tab_label) ?: continue
-
-                    val count = groups.getOrNull(i)?.serverCount ?: 0
                     setBadgeVisibility(tabBadge, tabLabel, count)
                 }
+
+                if (structureMismatch) setupGroupTab()
             }
         }
     }

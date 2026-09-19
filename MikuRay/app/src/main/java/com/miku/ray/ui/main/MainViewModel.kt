@@ -27,6 +27,7 @@ import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -92,7 +93,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _updateListItemEvent = MutableSharedFlow<Int>(extraBufferCapacity = 64)
     val updateListItemEvent: SharedFlow<Int> = _updateListItemEvent.asSharedFlow()
 
-    private val _updateGroupBadgeEvent = MutableSharedFlow<Unit>(extraBufferCapacity = 8)
+    private val _updateGroupBadgeEvent = MutableSharedFlow<Unit>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val updateGroupBadgeEvent: SharedFlow<Unit> = _updateGroupBadgeEvent.asSharedFlow()
 
     private val _updateGroupOrderEvent = MutableSharedFlow<Unit>(extraBufferCapacity = 8)
@@ -485,7 +489,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 GroupMapItem(
                     id = "",
                     remarks = context.getString(R.string.filter_config_all),
-                    serverCount = MmkvManager.decodeAllServerList().size,
+                    serverCount = MmkvManager.countAllServers(),
                     icon = MmkvManager.decodeSettingsString(AppConfig.PREF_GROUP_ALL_TAB_ICON),
                 )
             )
@@ -495,7 +499,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 GroupMapItem(
                     id = sub.guid,
                     remarks = sub.subscription.remarks,
-                    serverCount = MmkvManager.decodeServerList(sub.guid).size,
+                    serverCount = MmkvManager.countServers(sub.guid),
                     icon = sub.subscription.tabIcon,
                 )
             )
