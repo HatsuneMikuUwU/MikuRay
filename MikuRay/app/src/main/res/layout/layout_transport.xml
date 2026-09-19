@@ -183,7 +183,7 @@
             android:gravity="top"
             android:inputType="textMultiLine"
             android:maxLines="10"
-            android:minLines="4"
+            android:minLines="1"
             android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
