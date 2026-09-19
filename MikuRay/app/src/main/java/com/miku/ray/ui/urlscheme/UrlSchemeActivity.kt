@@ -5,18 +5,11 @@ import com.miku.ray.ui.main.MainActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.miku.ray.AppConfig
 import com.miku.ray.R
 import com.miku.ray.databinding.ActivityLogcatBinding
-import com.miku.ray.extension.snackbarDefault
 import com.miku.ray.extension.snackbarError
-import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.util.LogUtil
-import com.miku.ray.util.requestSubscriptionImportName
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.net.URLDecoder
 
 class UrlSchemeActivity : BaseActivity() {
@@ -26,26 +19,25 @@ class UrlSchemeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val mainIntent = Intent(this, MainActivity::class.java)
         try {
             intent.apply {
                 if (action == Intent.ACTION_SEND) {
                     if ("text/plain" == type) {
-                        intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
-                            parseUri(it, null)
+                        getStringExtra(Intent.EXTRA_TEXT)?.let {
+                            resolveImportConfig(it, null)?.let { config ->
+                                mainIntent.putExtra(MainActivity.EXTRA_IMPORT_CONFIG, config)
+                            }
                         }
                     }
                 } else if (action == Intent.ACTION_VIEW) {
                     when (data?.host) {
-                        "install-config" -> {
+                        "install-config", "install-sub" -> {
                             val uri: Uri? = intent.data
                             val shareUrl = uri?.getQueryParameter("url").orEmpty()
-                            parseUri(shareUrl, uri?.fragment)
-                        }
-
-                        "install-sub" -> {
-                            val uri: Uri? = intent.data
-                            val shareUrl = uri?.getQueryParameter("url").orEmpty()
-                            parseUri(shareUrl, uri?.fragment)
+                            resolveImportConfig(shareUrl, uri?.fragment)?.let { config ->
+                                mainIntent.putExtra(MainActivity.EXTRA_IMPORT_CONFIG, config)
+                            }
                         }
 
                         else -> {
@@ -54,43 +46,28 @@ class UrlSchemeActivity : BaseActivity() {
                     }
                 }
             }
-
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Error processing URL scheme", e)
         }
+
+        // MainActivity owns the actual import so it survives this activity finishing right after.
+        startActivity(mainIntent)
+        finish()
     }
 
-    private fun parseUri(uriString: String?, fragment: String?) {
+    /** Decodes the shared/deep-linked URL and reattaches its remarks fragment if missing. */
+    private fun resolveImportConfig(uriString: String?, fragment: String?): String? {
         if (uriString.isNullOrEmpty()) {
-            return
+            return null
         }
         LogUtil.i(AppConfig.TAG, uriString)
 
         var decodedUrl = URLDecoder.decode(uriString, "UTF-8")
-        val uri = Uri.parse(decodedUrl)
-        if (uri != null) {
-            if (uri.fragment.isNullOrEmpty() && !fragment.isNullOrEmpty()) {
-                decodedUrl += "#${fragment}"
-            }
-            LogUtil.i(AppConfig.TAG, decodedUrl)
-            lifecycleScope.launch(Dispatchers.IO) {
-                val (count, countSub) = AngConfigManager.importBatchConfig(
-                    decodedUrl,
-                    "",
-                    false
-                ) { suggested, existing ->
-                    requestSubscriptionImportName(suggested, existing)
-                }
-                withContext(Dispatchers.Main) {
-                    if (count + countSub > 0) {
-                        snackbarDefault(R.string.import_subscription_success, title = getString(R.string.title_alerter_info))
-                    } else {
-                        snackbarDefault(R.string.import_subscription_failure, title = getString(R.string.title_alerter_info))
-                    }
-                }
-            }
+        val uri = Uri.parse(decodedUrl) ?: return null
+        if (uri.fragment.isNullOrEmpty() && !fragment.isNullOrEmpty()) {
+            decodedUrl += "#${fragment}"
         }
+        LogUtil.i(AppConfig.TAG, decodedUrl)
+        return decodedUrl
     }
 }

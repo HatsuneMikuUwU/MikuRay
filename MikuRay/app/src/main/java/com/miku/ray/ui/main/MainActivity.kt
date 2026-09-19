@@ -119,6 +119,10 @@ AddConfigBottomSheet.OnAddConfigClickListener,
 MoreMenuBottomSheet.OnMoreOptionClickListener,
 ShareConfigBottomSheet.OnShareOptionClickListener {
 
+    companion object {
+        const val EXTRA_IMPORT_CONFIG = "import_config"
+    }
+
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     val mainViewModel: MainViewModel by viewModels()
 
@@ -213,6 +217,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
         maybeShowTrafficDetailFromIntent(intent)
         handleIncomingFileIntent(intent)
+        handleIncomingImportConfigIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -220,6 +225,14 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
         setIntent(intent)
         maybeShowTrafficDetailFromIntent(intent)
         handleIncomingFileIntent(intent)
+        handleIncomingImportConfigIntent(intent)
+    }
+
+    private fun handleIncomingImportConfigIntent(intent: Intent?) {
+        val configText = intent?.getStringExtra(EXTRA_IMPORT_CONFIG) ?: return
+        // MainActivity owns the import across recreation; consume each delivery once.
+        intent.removeExtra(EXTRA_IMPORT_CONFIG)
+        importBatchConfig(configText)
     }
 
     private fun handleIncomingFileIntent(intent: Intent?) {

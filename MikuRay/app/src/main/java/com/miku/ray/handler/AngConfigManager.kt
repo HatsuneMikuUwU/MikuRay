@@ -175,15 +175,12 @@ object AngConfigManager {
                 count = parseCustomConfigServer(server, subid, append)
             }
 
-            var countSub = parseBatchSubscription(server, requestSubscriptionName)
-            if (countSub <= 0) {
-                countSub = parseBatchSubscription(decodedServer, requestSubscriptionName)
-            }
-            if (countSub > 0) {
-                updateConfigViaSubAll()
-            }
+            val newSubs = parseBatchSubscription(server, requestSubscriptionName)
+            .ifEmpty { parseBatchSubscription(decodedServer, requestSubscriptionName) }
+            // Refresh only the subscriptions created by this import, not every existing one.
+            newSubs.forEach { updateConfigViaSub(it) }
 
-            count to countSub
+            count to newSubs.size
         } catch (e: ProfileStorageException) {
             LogUtil.e(AppConfig.TAG, "Failed to store imported profiles", e)
             0 to 0
@@ -193,27 +190,27 @@ object AngConfigManager {
     private suspend fun parseBatchSubscription(
         servers: String?,
         requestSubscriptionName: (suspend (String?, Set<String>) -> SubscriptionImportChoice?)?
-    ): Int {
+    ): List<SubscriptionCache> {
         try {
             if (servers == null) {
-                return 0
+                return emptyList()
             }
 
-            var count = 0
+            val imported = mutableListOf<SubscriptionCache>()
             servers.lines()
             .distinct()
             .forEach { str ->
                 if (Utils.isValidSubUrl(str)) {
-                    count += importUrlAsSubscription(str, requestSubscriptionName)
+                    importUrlAsSubscription(str, requestSubscriptionName)?.let { imported.add(it) }
                 }
             }
-            return count
+            return imported
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to parse batch subscription", e)
         }
-        return 0
+        return emptyList()
     }
 
     private fun parseSIP008Config(content: String?, subid: String, append: Boolean): Int {
@@ -622,11 +619,11 @@ object AngConfigManager {
     private suspend fun importUrlAsSubscription(
         url: String,
         requestSubscriptionName: (suspend (String?, Set<String>) -> SubscriptionImportChoice?)?
-    ): Int {
+    ): SubscriptionCache? {
         val subscriptions = MmkvManager.decodeSubscriptions()
         subscriptions.forEach {
             if (it.subscription.url == url) {
-                return 0
+                return null
             }
         }
         val uri = URI(Utils.fixIllegalUrl(url))
@@ -634,17 +631,18 @@ object AngConfigManager {
             (uri.fragment ?: "import sub") to null
         } else {
             val choice = requestSubscriptionName(uri.fragment, subscriptions.map { it.subscription.remarks }.toSet())
-            ?: return 0
-            val trimmedName = choice.name.trim().takeIf { it.isNotEmpty() } ?: return 0
+            ?: return null
+            val trimmedName = choice.name.trim().takeIf { it.isNotEmpty() } ?: return null
             trimmedName to choice.tabIcon
         }
-        if (MmkvManager.decodeSubscriptions().any { it.subscription.url == url }) return 0
+        if (MmkvManager.decodeSubscriptions().any { it.subscription.url == url }) return null
         val subItem = SubscriptionItem()
         subItem.remarks = remarks
         subItem.url = url
         subItem.tabIcon = tabIcon
-        MmkvManager.encodeSubscription("", subItem)
-        return 1
+        val guid = Utils.getUuid()
+        MmkvManager.encodeSubscription(guid, subItem)
+        return SubscriptionCache(guid, subItem)
     }
 
     fun generateDescription(profile: ProfileItem): String {
