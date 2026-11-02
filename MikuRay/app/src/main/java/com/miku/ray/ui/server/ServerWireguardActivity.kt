@@ -8,6 +8,7 @@ import android.view.View
 import com.miku.ray.AppConfig
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_MTU
+import com.miku.ray.AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
 import com.miku.ray.R
 import com.miku.ray.databinding.ActivityServerWireguardBinding
 import com.miku.ray.dto.entities.ProfileItem
@@ -50,6 +51,7 @@ class ServerWireguardActivity : BaseActivity() {
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
         addressPortFields = AddressPortFields(binding.root)
+        binding.tilRemoteDns.helperText = getString(R.string.server_lab_remote_dns_hint, WIREGUARD_LOCAL_REMOTE_DNS)
 
         setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
@@ -70,6 +72,7 @@ class ServerWireguardActivity : BaseActivity() {
         binding.etReserved1.text = Utils.getEditable(config.reserved ?: "0,0,0")
         binding.etLocalAddress.text = Utils.getEditable(config.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4)
         binding.etLocalMtu.text = Utils.getEditable(config.mtu?.toString() ?: WIREGUARD_LOCAL_MTU)
+        binding.etRemoteDns.text = Utils.getEditable(config.remoteDNS ?: WIREGUARD_LOCAL_REMOTE_DNS)
         binding.etFm.text = Utils.getEditable(config.finalMask)
         return true
     }
@@ -81,6 +84,7 @@ class ServerWireguardActivity : BaseActivity() {
         binding.etReserved1.text = Utils.getEditable("0,0,0")
         binding.etLocalAddress.text = Utils.getEditable(WIREGUARD_LOCAL_ADDRESS_V4)
         binding.etLocalMtu.text = Utils.getEditable(WIREGUARD_LOCAL_MTU)
+        binding.etRemoteDns.text = Utils.getEditable(WIREGUARD_LOCAL_REMOTE_DNS)
         binding.etFm.text = null
         return true
     }
@@ -127,6 +131,7 @@ class ServerWireguardActivity : BaseActivity() {
         config.reserved = binding.etReserved1.text.toString().trim()
         config.localAddress = binding.etLocalAddress.text.toString().trim()
         config.mtu = Utils.parseInt(binding.etLocalMtu.text.toString())
+        config.remoteDNS = binding.etRemoteDns.text.toString().trim()
         config.finalMask = binding.etFm.text?.toString()?.trim()?.nullIfBlank()
     }
 

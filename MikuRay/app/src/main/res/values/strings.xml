@@ -111,6 +111,8 @@
     <string name="server_lab_local_address_tip">Optional IPv4/IPv6, separated by commas</string>
     <string name="server_lab_local_mtu">Mtu</string>
     <string name="server_lab_local_mtu_tip">Optional, default 1420</string>
+    <string name="server_lab_remote_dns">remoteDNS (optional, comma-separated IPv4/IPv6)</string>
+    <string name="server_lab_remote_dns_hint">If empty, defaults to %1$s. IPv6 addresses are used only when IPv6 is enabled.</string>
     <string name="server_lab_kcp_mtu">mKCP MTU</string>
     <string name="server_lab_kcp_mtu_tip">Optional, core default 1350</string>
     <string name="server_lab_kcp_tti">mKCP TTI</string>

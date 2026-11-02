@@ -109,6 +109,8 @@
     <string name="server_lab_local_address_tip">Opsional IPv4/IPv6, dipisah pake koma</string>
     <string name="server_lab_local_mtu">MTU</string>
     <string name="server_lab_local_mtu_tip">Opsional, bawaan 1420</string>
+    <string name="server_lab_remote_dns">remoteDNS (opsional, IPv4/IPv6 dipisah koma)</string>
+    <string name="server_lab_remote_dns_hint">Kalau kosong, bawaan %1$s. Alamat IPv6 hanya dipakai kalau IPv6 aktif.</string>
     <string name="server_lab_kcp_mtu">MTU mKCP</string>
     <string name="server_lab_kcp_mtu_tip">Opsional, core bawaan 1350</string>
     <string name="server_lab_kcp_tti">TTI mKCP</string>
