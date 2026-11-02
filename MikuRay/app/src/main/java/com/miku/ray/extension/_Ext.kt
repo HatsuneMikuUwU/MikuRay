@@ -16,7 +16,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -46,6 +48,8 @@ import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.net.URI
 import java.util.Locale
+import kotlin.math.abs
+import kotlin.math.max
 import kotlin.time.Duration.Companion.milliseconds
 
 val Context.v2RayApplication: AngApplication?
@@ -258,6 +262,92 @@ private fun showSnackbar(
             .setInterpolator(AccelerateInterpolator())
             .withEndAction { snackbar.dismiss() }
             .start()
+        }
+
+        fun flingDismiss(targetX: Float, targetY: Float) {
+            if (!snackbarLayout.isAttachedToWindow) {
+                snackbar.dismiss()
+                return
+            }
+            snackbarLayout.animate()
+                .translationX(targetX)
+                .translationY(targetY)
+                .alpha(0f)
+                .setDuration(200L)
+                .setInterpolator(AccelerateInterpolator())
+                .withEndAction { snackbar.dismiss() }
+                .start()
+        }
+
+        // The snackbar is hosted in android.R.id.content (not a CoordinatorLayout), so Material's
+        // built-in swipe-to-dismiss never applies. Handle it by hand: swipe left/right/up or tap.
+        val touchSlop = ViewConfiguration.get(activity).scaledTouchSlop
+        var downX = 0f
+        var downY = 0f
+        var dragging = false
+        snackbarLayout.setOnTouchListener { view, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    downX = event.rawX
+                    downY = event.rawY
+                    dragging = false
+                    view.animate().cancel()
+                    true
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    val dx = event.rawX - downX
+                    val dy = (event.rawY - downY).coerceAtMost(0f)
+                    if (!dragging && (abs(dx) > touchSlop || -dy > touchSlop)) {
+                        dragging = true
+                        view.parent?.requestDisallowInterceptTouchEvent(true)
+                    }
+                    if (dragging) {
+                        view.translationX = dx
+                        view.translationY = dy
+                        val progress = max(
+                            abs(dx) / view.width.coerceAtLeast(1),
+                            -dy / view.height.coerceAtLeast(1),
+                        )
+                        view.alpha = (1f - progress * 0.7f).coerceIn(0.2f, 1f)
+                    }
+                    true
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    val dx = view.translationX
+                    val dy = view.translationY
+                    when {
+                        !dragging -> {
+                            view.performClick()
+                            flingDismiss(0f, -view.height.toFloat())
+                        }
+
+                        abs(dx) > view.width / 3f -> {
+                            flingDismiss(if (dx > 0f) view.width.toFloat() else -view.width.toFloat(), 0f)
+                        }
+
+                        -dy > view.height / 2f -> flingDismiss(0f, -view.height.toFloat() * 2f)
+
+                        else -> view.animate()
+                            .translationX(0f)
+                            .translationY(0f)
+                            .alpha(1f)
+                            .setDuration(150L)
+                            .start()
+                    }
+                    dragging = false
+                    true
+                }
+
+                MotionEvent.ACTION_CANCEL -> {
+                    dragging = false
+                    view.animate().translationX(0f).translationY(0f).alpha(1f).setDuration(150L).start()
+                    true
+                }
+
+                else -> false
+            }
         }
 
         val autoDismissDelayMs = when (duration) {

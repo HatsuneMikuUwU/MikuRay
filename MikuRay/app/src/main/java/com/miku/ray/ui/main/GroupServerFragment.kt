@@ -399,6 +399,10 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         val toPosition = mainViewModel.getPosition(guid)
         adapter.setSelectServer(fromPosition, toPosition)
 
+        // Not connected: selecting a node is enough, the next start picks it up. Broadcasting a
+        // restart here can race with the user's own start tap and double-start the core.
+        if (!mainViewModel.isServerRestartPending(guid)) return
+
         LauncherManager.restartService(ownerActivity) { handled ->
             mainViewModel.onServerRestartRequestResult(guid, handled)
         }

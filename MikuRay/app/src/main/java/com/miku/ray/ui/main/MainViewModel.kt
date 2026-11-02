@@ -27,6 +27,7 @@ import com.miku.ray.util.LogUtil
 import com.miku.ray.util.MessageUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -56,6 +57,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var activeTestTotal = 0
     private var isRestarting = false
     private var pendingServerRestartGuid: String? = null
+    private var restartWatchdogJob: Job? = null
     private var reloadJob: Job? = null
     @Volatile
     private var serverCacheLoaded = false
@@ -151,6 +153,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     override fun onCleared() {
+        restartWatchdogJob?.cancel()
         reloadJob?.cancel()
         activeCurrentTestId?.let { mainRepository.sendMsg2Service(AppConfig.MSG_MEASURE_DELAY_CANCEL, it) }
         activeCountryCodeTestId?.let {
@@ -594,16 +597,45 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (guid == MmkvManager.getSelectServer() || pendingServerRestartGuid != null) return false
 
         MmkvManager.setSelectServer(guid)
+        if (!isRunning.value) {
+            // Nothing is running, so there is nothing to restart. Flagging a restart here
+            // would make onMainServiceEvent() drop the next Running/NotRunning events and
+            // leave the FAB stuck on "play" after the user taps start.
+            return true
+        }
         pendingServerRestartGuid = guid
         isRestarting = true
+        armRestartWatchdog()
         return true
+    }
+
+    fun isServerRestartPending(guid: String): Boolean = pendingServerRestartGuid == guid
+
+    private fun clearRestartState() {
+        restartWatchdogJob?.cancel()
+        restartWatchdogJob = null
+        pendingServerRestartGuid = null
+        isRestarting = false
+    }
+
+    /**
+     * Safety net: if a restart never reports back (start success/failure/stop), do not keep
+     * swallowing service state events forever. Drop the flag and re-sync with the real state.
+     */
+    private fun armRestartWatchdog() {
+        restartWatchdogJob?.cancel()
+        restartWatchdogJob = viewModelScope.launch {
+            delay(RESTART_WATCHDOG_MS)
+            if (!isRestarting) return@launch
+            clearRestartState()
+            mainRepository.queryRunningState { running -> setRunning(running) }
+        }
     }
 
     fun onServerRestartRequestResult(guid: String, handled: Boolean) {
         if (handled || pendingServerRestartGuid != guid) return
 
-        pendingServerRestartGuid = null
-        isRestarting = false
+        clearRestartState()
         setRunning(false, refreshList = false)
     }
 
@@ -705,7 +737,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun onMainServiceEvent(event: MainServiceEvent) {
         when (event) {
             MainServiceEvent.StateRunning -> {
-                if (!isRestarting) setRunning(true)
+                // "Running" is always authoritative; a stale isRestarting flag must never hide it.
+                setRunning(true)
             }
 
             MainServiceEvent.StateNotRunning -> {
@@ -715,13 +748,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             MainServiceEvent.StateRestart -> {
                 markConnectionStopped()
                 isRestarting = true
+                armRestartWatchdog()
                 _serviceRestartEvent.tryEmit(Unit)
             }
 
             is MainServiceEvent.StateStartSuccess -> {
                 val app = getApplication<AngApplication>()
-                pendingServerRestartGuid = null
-                isRestarting = false
+                clearRestartState()
                 _alertEvent.tryEmit(
                     true to app.getString(
                         if (event.restarted) R.string.toast_services_restart_success
@@ -739,15 +772,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     app.getString(R.string.toast_services_failure)
                 }
 
-                pendingServerRestartGuid = null
-                isRestarting = false
+                clearRestartState()
                 _alertEvent.tryEmit(false to msg)
                 setRunning(false)
             }
 
             MainServiceEvent.StateStopSuccess -> {
-                pendingServerRestartGuid = null
-                isRestarting = false
+                clearRestartState()
                 setRunning(false)
             }
 
@@ -856,4 +887,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun acceptsTestEvent(testId: String): Boolean =
         testId.isEmpty() || testId == activeTestId
+
+    private companion object {
+        const val RESTART_WATCHDOG_MS = 20_000L
+    }
 }
