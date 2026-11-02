@@ -393,19 +393,15 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
     private fun setSelectServer(guid: String) {
         val selected = MmkvManager.getSelectServer()
-        if (!mainViewModel.beginServerRestart(guid)) return
+        if (!mainViewModel.selectServer(guid)) return
 
         val fromPosition = mainViewModel.getPosition(selected.orEmpty())
         val toPosition = mainViewModel.getPosition(guid)
         adapter.setSelectServer(fromPosition, toPosition)
 
-        // Not connected: selecting a node is enough, the next start picks it up. Broadcasting a
-        // restart here can race with the user's own start tap and double-start the core.
-        if (!mainViewModel.isServerRestartPending(guid)) return
-
-        LauncherManager.restartService(ownerActivity) { handled ->
-            mainViewModel.onServerRestartRequestResult(guid, handled)
-        }
+        // Same as upstream v2rayNG: the daemon only reacts when it is running, otherwise the
+        // next start simply uses the newly selected server.
+        LauncherManager.restartService(ownerActivity)
     }
 
     private inner class ActivityAdapterListener : MainAdapterListener {
