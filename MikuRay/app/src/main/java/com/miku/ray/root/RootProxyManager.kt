@@ -134,6 +134,7 @@ object RootProxyManager {
             appendLine("ip rule add fwmark $MARK table $TABLE priority $PRIORITY")
             if (captureDeviceTraffic) {
                 append(buildMangleMarking("iptables", appUid, perAppEnabled, bypassApps, selectedUids))
+                append(buildDnsDnat("iptables"))
             }
             if (lanShare) {
                 append(buildLanShareSetup(captureDeviceTraffic, ipv6))
@@ -145,6 +146,7 @@ object RootProxyManager {
                     appendLine("ip -6 route replace default dev $TUN table $TABLE 2>/dev/null || true")
                     appendLine("ip -6 rule add fwmark $MARK table $TABLE priority $PRIORITY 2>/dev/null || true")
                     append(buildMangleMarking("ip6tables", appUid, perAppEnabled, bypassApps, selectedUids))
+                    append(buildDnsDnat("ip6tables"))
                 } else {
                     append(buildV6Blackhole(appUid, perAppEnabled, bypassApps, selectedUids))
                 }
@@ -317,6 +319,26 @@ object RootProxyManager {
         }
     }
 
+    /** Redirect local DNS requests aimed at LAN/private resolvers to a public resolver. */
+    private fun buildDnsDnat(cmd: String): String {
+        val ipv6 = cmd == "ip6tables"
+        val dns = SettingsManager.getRemoteDnsServers()
+            .firstOrNull { Utils.isPureIpAddress(it) && it.contains(":") == ipv6 }
+            ?: if (ipv6) AppConfig.ROOT_LAN_DNS_V6 else AppConfig.ROOT_LAN_DNS
+        val dnsChain = AppConfig.ROOT_DNS_OUT_CHAIN
+        val lanCidrs = if (ipv6) bypassCidrsV6 else bypassCidrs
+        return buildString {
+            appendLine("$cmd -t nat -N $dnsChain 2>/dev/null || true")
+            appendLine("$cmd -t nat -F $dnsChain")
+            lanCidrs.forEach {
+                appendLine("$cmd -t nat -A $dnsChain -d $it -p udp --dport 53 -j DNAT --to $dns")
+                appendLine("$cmd -t nat -A $dnsChain -d $it -p tcp --dport 53 -j DNAT --to $dns")
+            }
+            appendLine("$cmd -t nat -D OUTPUT -j $dnsChain 2>/dev/null || true")
+            appendLine("$cmd -t nat -A OUTPUT -j $dnsChain")
+        }
+    }
+
     private fun writeHevConfig(file: File, config: String): Boolean {
         val atomicFile = AtomicFile(file)
         val output = try {
@@ -362,6 +384,11 @@ object RootProxyManager {
             appendLine("iptables -t nat -D PREROUTING -j ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
             appendLine("iptables -t nat -F ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
             appendLine("iptables -t nat -X ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
+            for (cmd in listOf("iptables", "ip6tables")) {
+                appendLine("$cmd -t nat -D OUTPUT -j ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
+                appendLine("$cmd -t nat -F ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
+                appendLine("$cmd -t nat -X ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
+            }
             appendLine("ip6tables -D FORWARD -j ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")
             appendLine("ip6tables -F ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")
             appendLine("ip6tables -X ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")

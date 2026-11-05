@@ -480,10 +480,12 @@ object AppConfig {
     const val ROOT_TUN2SOCKS_BIN = "libhevsockstun.so"
     const val ROOT_FWD_CHAIN = "CORE_FWD"
     const val ROOT_DNS_CHAIN = "CORE_DNS"
+    const val ROOT_DNS_OUT_CHAIN = "CORE_DNS_OUT"
     const val ROOT_V6_CHAIN = "CORE6_FILTER"
     const val ROOT_V6_FWD_CHAIN = "CORE6_FWD"
     const val ROOT_V6_PRE_CHAIN = "CORE6_PRE"
     const val ROOT_LAN_DNS = "1.1.1.1"
+    const val ROOT_LAN_DNS_V6 = "2606:4700:4700::1111"
     const val ROOT_OOM_SCORE = "-1000"
 
     const val HEVTUN_RW_TIMEOUT = "300,60"
