@@ -322,10 +322,10 @@ object RootProxyManager {
     /** Redirect local DNS requests aimed at LAN/private resolvers to a public resolver. */
     private fun buildDnsDnat(cmd: String): String {
         val ipv6 = cmd == "ip6tables"
-        val dns = SettingsManager.getRemoteDnsServers()
-            .firstOrNull { Utils.isPureIpAddress(it) && it.contains(":") == ipv6 }
-            ?: if (ipv6) AppConfig.ROOT_LAN_DNS_V6 else AppConfig.ROOT_LAN_DNS
         val dnsChain = AppConfig.ROOT_DNS_OUT_CHAIN
+        val dns = SettingsManager.getRemoteDnsServers()
+            .firstOrNull { Utils.isPureIpAddress(it) && !it.contains(":") }
+            ?: AppConfig.ROOT_LAN_DNS
         val lanCidrs = if (ipv6) bypassCidrsV6 else bypassCidrs
         return buildString {
             appendLine("$cmd -t nat -N $dnsChain 2>/dev/null || true")
@@ -384,11 +384,10 @@ object RootProxyManager {
             appendLine("iptables -t nat -D PREROUTING -j ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
             appendLine("iptables -t nat -F ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
             appendLine("iptables -t nat -X ${AppConfig.ROOT_DNS_CHAIN} 2>/dev/null || true")
-            for (cmd in listOf("iptables", "ip6tables")) {
-                appendLine("$cmd -t nat -D OUTPUT -j ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
-                appendLine("$cmd -t nat -F ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
-                appendLine("$cmd -t nat -X ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
-            }
+            // device DNS DNAT chain (root mode)
+            appendLine("iptables -t nat -D OUTPUT -j ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
+            appendLine("iptables -t nat -F ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
+            appendLine("iptables -t nat -X ${AppConfig.ROOT_DNS_OUT_CHAIN} 2>/dev/null || true")
             appendLine("ip6tables -D FORWARD -j ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")
             appendLine("ip6tables -F ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")
             appendLine("ip6tables -X ${AppConfig.ROOT_V6_FWD_CHAIN} 2>/dev/null || true")

@@ -485,7 +485,6 @@ object AppConfig {
     const val ROOT_V6_FWD_CHAIN = "CORE6_FWD"
     const val ROOT_V6_PRE_CHAIN = "CORE6_PRE"
     const val ROOT_LAN_DNS = "1.1.1.1"
-    const val ROOT_LAN_DNS_V6 = "2606:4700:4700::1111"
     const val ROOT_OOM_SCORE = "-1000"
 
     const val HEVTUN_RW_TIMEOUT = "300,60"
