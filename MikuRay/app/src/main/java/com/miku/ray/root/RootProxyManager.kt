@@ -100,7 +100,7 @@ object RootProxyManager {
         val ipv6 = MmkvManager.decodeSettingsBool(AppConfig.PREF_IPV6_ENABLED)
         val lanShare = forceLanShare || MmkvManager.decodeSettingsBool(AppConfig.PREF_ROOT_LAN_SHARING)
         val corePid = Process.myPid()
-        val config = buildHevConfig(socksUsername, socksPassword, port, ipv6)
+        val config = buildHevConfig(socksUsername, socksPassword, port, ipv6, SettingsManager.getVpnMtu(), lanShare)
         if (!writeHevConfig(cfgFile, config)) return null
         val cfgPath = cfgFile.absolutePath
 
@@ -154,7 +154,23 @@ object RootProxyManager {
         }
     }
 
-    private fun buildHevConfig(socksUsername: String?, socksPassword: String?, socksPort: Int, ipv6: Boolean): String {
+    internal fun buildHevOffload(ipv6: Boolean, lanSharing: Boolean): String {
+        if (!lanSharing) return ""
+        return buildString {
+            appendLine("  offload:")
+            appendLine("    jumbo: false")
+            if (ipv6) appendLine("    tso: false")
+        }
+    }
+
+    private fun buildHevConfig(
+        socksUsername: String?,
+        socksPassword: String?,
+        socksPort: Int,
+        ipv6: Boolean,
+        mtu: Int,
+        lanSharing: Boolean,
+    ): String {
         val v4 = AppConfig.ROOT_TUN_ADDR_V4.substringBefore("/")
         val v6 = AppConfig.ROOT_TUN_ADDR_V6.substringBefore("/")
         val icmpMode = MmkvManager.decodeSettingsString(AppConfig.PREF_HEV_TUNNEL_ICMP) ?: "off"
@@ -166,8 +182,9 @@ object RootProxyManager {
         return buildString {
             appendLine("tunnel:")
             appendLine("  name: '$TUN'")
-            appendLine("  mtu: ${SettingsManager.getVpnMtu()}")
+            appendLine("  mtu: $mtu")
             appendLine("  multi-queue: true")
+            append(buildHevOffload(ipv6, lanSharing))
             appendLine("  ipv4: '$v4'")
             if (ipv6) appendLine("  ipv6: '$v6'")
             appendLine("  icmp: '$icmpMode'")
