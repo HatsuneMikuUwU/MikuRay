@@ -107,6 +107,7 @@
     <string name="server_lab_reserved_tip">Opsional, dipisah pake koma</string>
     <string name="server_lab_local_address">Alamat lokal</string>
     <string name="server_lab_local_address_tip">Opsional IPv4/IPv6, dipisah pake koma</string>
+    <string name="server_lab_local_address_hint">Kalau kosong, bawaan %1$s. Alamat IPv6 hanya dipakai kalau IPv6 aktif.</string>
     <string name="server_lab_local_mtu">MTU</string>
     <string name="server_lab_local_mtu_tip">Opsional, bawaan 1420</string>
     <string name="server_lab_remote_dns">remoteDNS (opsional, IPv4/IPv6 dipisah koma)</string>

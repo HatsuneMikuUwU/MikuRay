@@ -201,6 +201,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_local_address"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,7 +209,6 @@
                     android:hint="@string/server_lab_local_address"
                     app:boxStrokeWidth="1.5dp"
                     app:boxStrokeWidthFocused="1.5dp"
-                    app:helperText="@string/server_lab_local_address_tip"
                     app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
                     app:startIconDrawable="@drawable/rmx_device_router_line"
                     app:startIconTint="?attr/colorOnSurfaceVariant">

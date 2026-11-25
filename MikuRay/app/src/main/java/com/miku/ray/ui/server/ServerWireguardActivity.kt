@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import com.miku.ray.AppConfig
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
+import com.miku.ray.AppConfig.WIREGUARD_LOCAL_ADDRESS_V6
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_MTU
 import com.miku.ray.AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
 import com.miku.ray.R
@@ -51,6 +52,10 @@ class ServerWireguardActivity : BaseActivity() {
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
         addressPortFields = AddressPortFields(binding.root)
+        binding.tilLocalAddress.helperText = getString(
+            R.string.server_lab_local_address_hint,
+            "$WIREGUARD_LOCAL_ADDRESS_V4,$WIREGUARD_LOCAL_ADDRESS_V6"
+        )
         binding.tilRemoteDns.helperText = getString(R.string.server_lab_remote_dns_hint, WIREGUARD_LOCAL_REMOTE_DNS)
 
         setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
@@ -70,9 +75,9 @@ class ServerWireguardActivity : BaseActivity() {
         binding.etPresharedKey.visibility = View.VISIBLE
         binding.etPresharedKey.text = Utils.getEditable(config.preSharedKey.orEmpty())
         binding.etReserved1.text = Utils.getEditable(config.reserved ?: "0,0,0")
-        binding.etLocalAddress.text = Utils.getEditable(config.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4)
+        binding.etLocalAddress.text = Utils.getEditable(config.localAddress ?: "")
         binding.etLocalMtu.text = Utils.getEditable(config.mtu?.toString() ?: WIREGUARD_LOCAL_MTU)
-        binding.etRemoteDns.text = Utils.getEditable(config.remoteDNS ?: WIREGUARD_LOCAL_REMOTE_DNS)
+        binding.etRemoteDns.text = Utils.getEditable(config.remoteDNS ?: "")
         binding.etFm.text = Utils.getEditable(config.finalMask)
         return true
     }
@@ -82,9 +87,9 @@ class ServerWireguardActivity : BaseActivity() {
         binding.etId.text = null
         binding.etPublicKey.text = null
         binding.etReserved1.text = Utils.getEditable("0,0,0")
-        binding.etLocalAddress.text = Utils.getEditable(WIREGUARD_LOCAL_ADDRESS_V4)
+        binding.etLocalAddress.text = null
         binding.etLocalMtu.text = Utils.getEditable(WIREGUARD_LOCAL_MTU)
-        binding.etRemoteDns.text = Utils.getEditable(WIREGUARD_LOCAL_REMOTE_DNS)
+        binding.etRemoteDns.text = null
         binding.etFm.text = null
         return true
     }
