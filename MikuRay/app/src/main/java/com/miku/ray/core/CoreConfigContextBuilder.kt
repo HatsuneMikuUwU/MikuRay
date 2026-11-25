@@ -163,13 +163,20 @@ object CoreConfigContextBuilder {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun resolveProxyChainEntries(entry: ProfileEntry): List<ProfileEntry> {
-        if (entry.profile.proxyChainProfiles.isNullOrBlank()) {
+        val chainRemarks = entry.profile.proxyChainProfileList
+            ?.takeIf { it.isNotEmpty() }
+            ?: entry.profile.proxyChainProfiles
+                ?.split(",")
+                ?.map { it.trim() }
+                ?.filter { it.isNotEmpty() }
+        if (chainRemarks.isNullOrEmpty()) {
             return listOf(entry)
         }
 
         try {
-            return entry.profile.proxyChainProfiles.orEmpty().split(",")
+            return chainRemarks
             .asSequence()
             .map { it.trim() }
             .filter { it.isNotEmpty() }

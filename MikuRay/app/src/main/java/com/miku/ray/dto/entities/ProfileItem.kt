@@ -80,7 +80,9 @@ data class ProfileItem(
     var policyGroupObservatoryLeastLoadMethod: String? = null,
     var policyGroupObservatoryLeastLoadSampling: String? = null,
     var policyGroupObservatoryLeastLoadTimeout: String? = null,
+    @Deprecated("Use proxyChainProfileList")
     var proxyChainProfiles: String? = null,
+    var proxyChainProfileList: List<String>? = null,
 
     var browserDialerMode: String? = null,
 
@@ -157,7 +159,7 @@ data class ProfileItem(
             && this.portHopping == obj.portHopping
             && this.portHoppingInterval == obj.portHoppingInterval
             && this.pinnedCA256 == obj.pinnedCA256
-            && this.proxyChainProfiles == obj.proxyChainProfiles
+            && this.proxyChainProfileList == obj.proxyChainProfileList
 
             && this.muxEnabled == obj.muxEnabled
             && this.muxConcurrency == obj.muxConcurrency

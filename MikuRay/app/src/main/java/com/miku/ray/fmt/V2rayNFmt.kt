@@ -41,7 +41,7 @@ object V2rayNFmt : FmtBase() {
                                 ) { Regex.escape(it) }
                             }
                             EConfigType.PROXYCHAIN -> {
-                                proxyChainProfiles = childRemarks.joinToString(",")
+                                proxyChainProfileList = childRemarks
                             }
                             else -> Unit
                         }

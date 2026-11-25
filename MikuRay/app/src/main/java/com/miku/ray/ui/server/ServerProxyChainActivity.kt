@@ -84,9 +84,14 @@ class ServerProxyChainActivity : BaseActivity() {
         ItemTouchHelper(SimpleItemTouchHelperCallback(memberAdapter)).attachToRecyclerView(binding.recyclerProxyChainMembers)
     }
 
+    @Suppress("DEPRECATION")
     private fun bindingServer(config: ProfileItem): Boolean {
         binding.etRemarks.text = Utils.getEditable(config.remarks)
-        val rows = parseChainMembers(config.proxyChainProfiles)
+        val rows = config.proxyChainProfileList
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.takeIf { it.isNotEmpty() }
+            ?: parseChainMembers(config.proxyChainProfiles)
         memberAdapter.replaceAll(rows)
         if (rows.isEmpty()) {
             memberAdapter.addRow()
@@ -130,7 +135,9 @@ class ServerProxyChainActivity : BaseActivity() {
 
         val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(EConfigType.PROXYCHAIN)
         config.remarks = binding.etRemarks.text.toString().trim()
-        config.proxyChainProfiles = chainMembers.joinToString(",")
+        @Suppress("DEPRECATION")
+        config.proxyChainProfiles = null
+        config.proxyChainProfileList = chainMembers
         config.description = chainMembers.joinToString(" -> ")
 
         if (config.subscriptionId.isEmpty() && !subscriptionId.isNullOrEmpty()) {
