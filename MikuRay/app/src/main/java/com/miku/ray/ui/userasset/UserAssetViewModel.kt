@@ -130,13 +130,25 @@ class UserAssetViewModel : ViewModel() {
                     targetTemp
                 )
             ) {
-                targetTemp.renameTo(target)
+                if (!replaceAssetFile(targetTemp, target)) {
+                    LogUtil.e(AppConfig.TAG, "Failed to replace geo file: ${item.remarks}")
+                    return false
+                }
                 return true
             }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to download geo file: ${item.remarks}", e)
         }
+        targetTemp.delete()
         return false
+    }
+
+    internal fun replaceAssetFile(temp: File, target: File): Boolean {
+        if (!temp.renameTo(target)) {
+            temp.delete()
+            return false
+        }
+        return true
     }
 
     data class GeoDownloadResult(
