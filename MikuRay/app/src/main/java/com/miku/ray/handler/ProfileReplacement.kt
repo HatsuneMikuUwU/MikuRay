@@ -1,6 +1,7 @@
 package com.miku.ray.handler
 
 import com.miku.ray.dto.entities.ProfileItem
+import com.miku.ray.extension.isGroupType
 
 internal object ProfileReplacement {
 
@@ -52,6 +53,28 @@ internal object ProfileReplacement {
         return replacedServers.filterTo(linkedSetOf()) { guid ->
             guid !in protectedServers && guid !in replacementServers
         }
+    }
+
+    /**
+     * Finds the replaced group profiles that stay in the replaced group index.
+     *
+     * Groups are kept so that groups created by hand survive a subscription update. A group
+     * that the batch imports again (same type and remarks) is dropped: share links such as
+     * v2rayn:// create it with a new GUID on every update, so keeping it would add a copy.
+     */
+    fun findKeptGroups(
+        replacedProfiles: Map<String, ProfileItem?>,
+        profiles: Collection<ProfileItem>,
+    ): List<String> {
+        val importedGroups = profiles
+            .filter { it.configType.isGroupType() }
+            .mapTo(hashSetOf()) { it.configType to it.remarks }
+
+        return replacedProfiles.filter { (_, profile) ->
+            profile != null &&
+                profile.configType.isGroupType() &&
+                (profile.configType to profile.remarks) !in importedGroups
+        }.keys.toList()
     }
 
     private fun isSameText(left: String?, right: String?): Boolean {

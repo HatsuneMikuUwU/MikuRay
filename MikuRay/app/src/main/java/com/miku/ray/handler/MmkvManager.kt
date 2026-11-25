@@ -292,10 +292,19 @@ object MmkvManager {
                 replacedServers.filter { pinnedServers.contains(it) }
             }
 
+            val keptGroups = if (append) {
+                emptyList()
+            } else {
+                ProfileReplacement.findKeptGroups(
+                    replacedProfiles = replacedServers.associateWith(::decodeServerConfig),
+                    profiles = profiles.values,
+                )
+            }
+
             val serverList = if (append) {
                 decodeServerList(subscriptionId)
             } else {
-                mutableListOf()
+                keptGroups.toMutableList()
             }
             val indexedServers = serverList.toHashSet()
             profiles.keys.forEach { guid ->
@@ -320,7 +329,9 @@ object MmkvManager {
 
             if (replacedServers.isEmpty()) return@withProfileIndexLock
 
-            val protectedServers = setOfNotNull(replacementSelection ?: previousSelection) + pinnedReplacedServers
+            val protectedServers = setOfNotNull(replacementSelection ?: previousSelection) +
+                pinnedReplacedServers +
+                keptGroups
             val removablePayloads = ProfileReplacement.findRemovablePayloads(
                 replacedServers = replacedServers,
                 replacementServers = profiles.keys,
