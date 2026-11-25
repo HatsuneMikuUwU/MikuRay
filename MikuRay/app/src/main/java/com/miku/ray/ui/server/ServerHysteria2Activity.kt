@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.miku.ray.AppConfig
 import com.miku.ray.R
@@ -11,6 +12,7 @@ import com.miku.ray.databinding.ActivityServerHysteria2Binding
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
+import com.miku.ray.extension.nullIfBlank
 import com.miku.ray.extension.snackbarError
 import com.miku.ray.extension.snackbarSuccess
 import com.miku.ray.extension.toastSuccess
@@ -29,6 +31,7 @@ import kotlinx.coroutines.withContext
 
 class ServerHysteria2Activity : BaseActivity() {
     private val binding by lazy { ActivityServerHysteria2Binding.inflate(layoutInflater) }
+    private val obfsTypes by lazy { resources.getStringArray(R.array.hysteria2_obfs_types) }
 
     private val editGuid by lazy { intent.getStringExtra("guid").orEmpty() }
     private val isRunning by lazy {
@@ -58,6 +61,11 @@ class ServerHysteria2Activity : BaseActivity() {
 
         setupToolbar(binding.toolbar, showHomeAsUp = true, title = (config?.configType ?: createConfigType).toString(), subtitle = getString(R.string.subtitle_server_config))
 
+        binding.spObfsType.setOnItemClickListener { parent, _, position, _ ->
+            val selected = parent.getItemAtPosition(position)?.toString()?.lowercase().orEmpty()
+            onObfsTypeChanged(selected)
+        }
+
         tlsFields.setOnSecurityChanged { security -> tlsFields.updateForSecurity(security) }
         tlsFields.setOnFetchCertClick { fetchPinnedCA256ForCurrentConfig() }
 
@@ -68,11 +76,45 @@ class ServerHysteria2Activity : BaseActivity() {
         }
     }
 
+    private fun onObfsTypeChanged(obfsType: String) {
+        if (obfsType == "none" || obfsType.isBlank()) {
+            binding.etObfsPassword.text = null
+            binding.etMinPacketSize.text = null
+            binding.etMaxPacketSize.text = null
+        } else if (obfsType == "salamander") {
+            binding.etMinPacketSize.text = null
+            binding.etMaxPacketSize.text = null
+        }
+        updateObfsVisibility(obfsType)
+    }
+
+    private fun updateObfsVisibility(obfsType: String) {
+        val showPassword = obfsType == "salamander" || obfsType == "gecko"
+        val showPacketSize = obfsType == "gecko"
+
+        binding.layObfsPassword.visibility = if (showPassword) View.VISIBLE else View.GONE
+        binding.layMinPacketSize.visibility = if (showPacketSize) View.VISIBLE else View.GONE
+        binding.layMaxPacketSize.visibility = if (showPacketSize) View.VISIBLE else View.GONE
+    }
+
+    private fun resolveSelectedObfs(config: ProfileItem): String = when {
+        config.isGeckoObfs() -> "gecko"
+        config.obfs.equals("salamander", ignoreCase = true) -> "salamander"
+        !config.obfsPassword.isNullOrBlank() && !config.obfs.equals("none", ignoreCase = true) -> "salamander"
+        else -> "none"
+    }
+
     private fun bindingServer(config: ProfileItem): Boolean {
         addressPortFields.bind(config)
         binding.etId.text = Utils.getEditable(config.password.orEmpty())
 
+        val selectedObfs = resolveSelectedObfs(config)
+        binding.spObfsType.setText(selectedObfs, false)
         binding.etObfsPassword.text = Utils.getEditable(config.obfsPassword)
+        binding.etMinPacketSize.text = Utils.getEditable(config.minPacketSize)
+        binding.etMaxPacketSize.text = Utils.getEditable(config.maxPacketSize)
+        updateObfsVisibility(selectedObfs)
+
         binding.etPortHop.text = Utils.getEditable(config.portHopping)
         binding.etPortHopInterval.text = Utils.getEditable(config.portHoppingInterval)
         binding.etBandwidthDown.text = Utils.getEditable(config.bandwidthDown)
@@ -85,6 +127,13 @@ class ServerHysteria2Activity : BaseActivity() {
     private fun clearServer(): Boolean {
         addressPortFields.clear()
         binding.etId.text = null
+
+        val defaultObfs = obfsTypes.firstOrNull() ?: "none"
+        binding.spObfsType.setText(defaultObfs, false)
+        binding.etObfsPassword.text = null
+        binding.etMinPacketSize.text = null
+        binding.etMaxPacketSize.text = null
+        updateObfsVisibility(defaultObfs)
 
         tlsFields.clear()
         return true
@@ -124,7 +173,27 @@ class ServerHysteria2Activity : BaseActivity() {
         addressPortFields.save(config)
         config.password = binding.etId.text.toString().trim()
 
-        config.obfsPassword = binding.etObfsPassword.text?.toString()
+        val selectedObfs = binding.spObfsType.text?.toString()?.trim()?.lowercase().orEmpty()
+        when (selectedObfs) {
+            "gecko" -> {
+                config.obfs = "gecko"
+                config.obfsPassword = binding.etObfsPassword.text?.toString()?.nullIfBlank()
+                config.minPacketSize = binding.etMinPacketSize.text?.toString()?.trim()?.nullIfBlank()
+                config.maxPacketSize = binding.etMaxPacketSize.text?.toString()?.trim()?.nullIfBlank()
+            }
+            "salamander" -> {
+                config.obfs = "salamander"
+                config.obfsPassword = binding.etObfsPassword.text?.toString()?.nullIfBlank()
+                config.minPacketSize = null
+                config.maxPacketSize = null
+            }
+            else -> {
+                config.obfs = null
+                config.obfsPassword = null
+                config.minPacketSize = null
+                config.maxPacketSize = null
+            }
+        }
         config.portHopping = binding.etPortHop.text?.toString()
         config.portHoppingInterval = binding.etPortHopInterval.text?.toString()?.trim()
         config.bandwidthDown = binding.etBandwidthDown.text?.toString()

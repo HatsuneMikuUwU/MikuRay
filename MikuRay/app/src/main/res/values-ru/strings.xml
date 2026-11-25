@@ -134,7 +134,10 @@
     <string name="toast_malformed_josn">Конфигурация повреждена</string>
     <string name="server_lab_request_host6">Хост (SNI) (необязательно)</string>
     <string name="toast_action_not_allowed">Действие не разрешено</string>
+    <string name="server_obfs_type">Тип обфускации</string>
     <string name="server_obfs_password">Пароль обфускации</string>
+    <string name="server_lab_min_packet_size">Мин. размер пакета (необязательно, по умолчанию 512)</string>
+    <string name="server_lab_max_packet_size">Макс. размер пакета (необязательно, по умолчанию 1200)</string>
     <string name="server_lab_port_hop">Port Hopping</string>
     <string name="server_lab_port_hop_tip">Переопределит порт</string>
     <string name="server_lab_port_hop_interval">Интервал Port Hopping</string>

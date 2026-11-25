@@ -142,6 +142,31 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_obfs_type"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_spacing_dp16"
+                        android:hint="@string/server_obfs_type"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="1.5dp"
+                        app:endIconDrawable="@drawable/ic_dropdown_selector"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="?attr/colorOnSurfaceVariant"
+                        app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                        app:startIconDrawable="@drawable/rmx_system_filter_2_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/sp_obfs_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="?attr/colorOnSurface"
+                            app:simpleItems="@array/hysteria2_obfs_types" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_obfs_password"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -157,6 +182,48 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
+                            android:textColor="?attr/colorOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_min_packet_size"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_spacing_dp16"
+                        android:hint="@string/server_lab_min_packet_size"
+                        android:visibility="gone"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="1.5dp"
+                        app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                        app:startIconDrawable="@drawable/rmx_design_ruler_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_min_packet_size"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="?attr/colorOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_max_packet_size"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_spacing_dp16"
+                        android:hint="@string/server_lab_max_packet_size"
+                        android:visibility="gone"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="1.5dp"
+                        app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                        app:startIconDrawable="@drawable/rmx_arrows_expand_width_line"
+                        app:startIconTint="?attr/colorOnSurfaceVariant">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_max_packet_size"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
                             android:textColor="?attr/colorOnSurface" />
                     </com.google.android.material.textfield.TextInputLayout>
 

@@ -646,5 +646,11 @@
         <item>TLS</item>
         <item>REALITY</item>
     </string-array>
+
+    <string-array name="hysteria2_obfs_types" translatable="false">
+        <item>none</item>
+        <item>salamander</item>
+        <item>gecko</item>
+    </string-array>
     
 </resources>

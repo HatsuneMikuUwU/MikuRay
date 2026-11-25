@@ -134,7 +134,10 @@
     <string name="toast_malformed_josn">Format konfignya berantakan</string>
     <string name="server_lab_request_host6">Host (SNI) (Opsional)</string>
     <string name="toast_action_not_allowed">Eh, ga boleh ngelakuin ini</string>
+    <string name="server_obfs_type">Tipe Obfs</string>
     <string name="server_obfs_password">Password Obfs</string>
+    <string name="server_lab_min_packet_size">Ukuran paket minimal (opsional, default 512)</string>
+    <string name="server_lab_max_packet_size">Ukuran paket maksimal (opsional, default 1200)</string>
     <string name="server_lab_port_hop">Port Hopping</string>
     <string name="server_lab_port_hop_tip">Bakal nimpa port aslinya</string>
     <string name="server_lab_port_hop_interval">Interval Port Hopping</string>
