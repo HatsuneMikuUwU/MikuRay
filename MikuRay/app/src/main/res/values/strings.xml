@@ -55,6 +55,13 @@
     <string name="menu_item_import_config_manually_trojan">Add [Trojan]</string>
     <string name="menu_item_import_config_manually_wireguard">Add [Wireguard]</string>
     <string name="menu_item_import_config_manually_hysteria2">Add [Hysteria2]</string>
+    <string name="menu_item_import_config_manually_masque">Add [MASQUE]</string>
+    <string name="protocol_masque">MASQUE</string>
+    <string name="server_lab_request_host_masque">MASQUE host</string>
+    <string name="server_lab_path_masque">MASQUE path</string>
+    <string name="server_lab_masque_warp_settings">WARP</string>
+    <string name="server_lab_masque_warp_private_key">WARP PrivateKey</string>
+    <string name="server_lab_masque_warp_public_key">WARP PublicKey</string>
     <string name="del_config_comfirm">Confirm delete ?</string>
     <string name="del_invalid_config_comfirm">Please test before deleting! Confirm delete ?</string>
     <string name="server_lab_remarks">remarks</string>

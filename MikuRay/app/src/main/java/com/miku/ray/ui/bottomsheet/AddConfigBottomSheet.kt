@@ -58,7 +58,8 @@ class AddConfigBottomSheet : BaseBottomSheetFragment() {
             R.id.import_manually_http,
             R.id.import_manually_trojan,
             R.id.import_manually_wireguard,
-            R.id.import_manually_hysteria2
+            R.id.import_manually_hysteria2,
+            R.id.import_manually_masque
         )
 
         actionIds.forEach { id ->

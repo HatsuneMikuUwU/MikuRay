@@ -53,6 +53,12 @@
     <string name="menu_item_import_config_manually_trojan">Добавить [Trojan]</string>
     <string name="menu_item_import_config_manually_wireguard">Добавить [Wireguard]</string>
     <string name="menu_item_import_config_manually_hysteria2">Добавить [Hysteria2]</string>
+    <string name="menu_item_import_config_manually_masque">Добавить [MASQUE]</string>
+    <string name="server_lab_request_host_masque">Узел MASQUE</string>
+    <string name="server_lab_path_masque">Путь MASQUE</string>
+    <string name="server_lab_masque_warp_settings">WARP</string>
+    <string name="server_lab_masque_warp_private_key">Закрытый ключ WARP</string>
+    <string name="server_lab_masque_warp_public_key">Открытый ключ WARP</string>
     <string name="del_config_comfirm">Подтвердить удаление?</string>
     <string name="del_invalid_config_comfirm">Пожалуйста, протестируйте перед удалением! Подтвердить удаление?</string>
     <string name="server_lab_remarks">примечания</string>

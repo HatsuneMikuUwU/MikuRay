@@ -10,7 +10,8 @@ enum class NetworkType(val type: String) {
     H2("h2"),
 
     GRPC("grpc"),
-    HYSTERIA("hysteria");
+    HYSTERIA("hysteria"),
+    MASQUE("masque");
 
     companion object {
         fun fromString(type: String?) = entries.find { it.type == type } ?: TCP

@@ -52,6 +52,12 @@
     <string name="menu_item_import_config_manually_trojan">添加 [Trojan]</string>
     <string name="menu_item_import_config_manually_wireguard">添加 [Wireguard]</string>
     <string name="menu_item_import_config_manually_hysteria2">添加 [Hysteria2]</string>
+    <string name="menu_item_import_config_manually_masque">添加 [MASQUE]</string>
+    <string name="server_lab_request_host_masque">MASQUE host</string>
+    <string name="server_lab_path_masque">MASQUE path</string>
+    <string name="server_lab_masque_warp_settings">WARP</string>
+    <string name="server_lab_masque_warp_private_key">WARP PrivateKey</string>
+    <string name="server_lab_masque_warp_public_key">WARP PublicKey</string>
     <string name="menu_item_import_config_proxy_chain">添加 [链式代理]</string>
     <string name="del_config_comfirm">确认删除？</string>
     <string name="del_invalid_config_comfirm">删除前请先测试！确认删除？</string>

@@ -25,6 +25,7 @@ data class ProfileItem(
     var headerType: String? = null,
     var host: String? = null,
     var path: String? = null,
+    var headers: String? = null,
     var seed: String? = null,
     var kcpMtu: Int? = null,
     var kcpTti: Int? = null,
@@ -125,6 +126,7 @@ data class ProfileItem(
             && this.headerType == obj.headerType
             && this.host == obj.host
             && this.path == obj.path
+            && this.headers == obj.headers
             && this.seed == obj.seed
             && this.kcpMtu == obj.kcpMtu
             && this.kcpTti == obj.kcpTti

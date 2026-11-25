@@ -29,6 +29,7 @@ import com.miku.ray.enums.EConfigType
 import com.miku.ray.ui.server.ServerCustomConfigActivity
 import com.miku.ray.ui.server.ServerGroupActivity
 import com.miku.ray.ui.server.ServerHysteria2Activity
+import com.miku.ray.ui.server.ServerMasqueActivity
 import com.miku.ray.ui.server.ServerProxyChainActivity
 import com.miku.ray.ui.server.ServerShadowsocksActivity
 import com.miku.ray.ui.server.ServerSocksActivity
@@ -333,6 +334,10 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
 
             EConfigType.HYSTERIA2 -> {
                 ownerActivity.startActivity(intent.setClass(ownerActivity, ServerHysteria2Activity::class.java))
+            }
+
+            EConfigType.MASQUE -> {
+                ownerActivity.startActivity(intent.setClass(ownerActivity, ServerMasqueActivity::class.java))
             }
 
             else -> {

@@ -3047,6 +3047,10 @@
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:exported="false"
+            android:name=".ui.server.ServerMasqueActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity
+            android:exported="false"
             android:name=".ui.server.ServerCustomConfigActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity

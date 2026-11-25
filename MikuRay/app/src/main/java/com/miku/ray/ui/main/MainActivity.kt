@@ -78,6 +78,7 @@ import com.miku.ray.ui.routing.RoutingSettingActivity
 import com.miku.ray.ui.scanner.QrCaptureActivity
 import com.miku.ray.ui.server.ServerGroupActivity
 import com.miku.ray.ui.server.ServerHysteria2Activity
+import com.miku.ray.ui.server.ServerMasqueActivity
 import com.miku.ray.ui.server.ServerProxyChainActivity
 import com.miku.ray.ui.server.ServerShadowsocksActivity
 import com.miku.ray.ui.server.ServerSocksActivity
@@ -973,6 +974,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
             R.id.import_manually_trojan -> importManually(EConfigType.TROJAN.value)
             R.id.import_manually_wireguard -> importManually(EConfigType.WIREGUARD.value)
             R.id.import_manually_hysteria2 -> importManually(EConfigType.HYSTERIA2.value)
+            R.id.import_manually_masque -> importManually(EConfigType.MASQUE.value)
         }
     }
 
@@ -1527,6 +1529,7 @@ ShareConfigBottomSheet.OnShareOptionClickListener {
                 EConfigType.SOCKS, EConfigType.HTTP -> ServerSocksActivity::class.java
                 EConfigType.WIREGUARD -> ServerWireguardActivity::class.java
                 EConfigType.HYSTERIA2 -> ServerHysteria2Activity::class.java
+                EConfigType.MASQUE -> ServerMasqueActivity::class.java
                 else -> ServerVmessActivity::class.java
             }
 

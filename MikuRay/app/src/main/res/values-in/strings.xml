@@ -53,6 +53,12 @@
     <string name="menu_item_import_config_manually_trojan">Tambah [Trojan]</string>
     <string name="menu_item_import_config_manually_wireguard">Tambah [Wireguard]</string>
     <string name="menu_item_import_config_manually_hysteria2">Tambah [Hysteria2]</string>
+    <string name="menu_item_import_config_manually_masque">Tambah [MASQUE]</string>
+    <string name="server_lab_request_host_masque">Host MASQUE</string>
+    <string name="server_lab_path_masque">Path MASQUE</string>
+    <string name="server_lab_masque_warp_settings">WARP</string>
+    <string name="server_lab_masque_warp_private_key">PrivateKey WARP</string>
+    <string name="server_lab_masque_warp_public_key">PublicKey WARP</string>
     <string name="del_config_comfirm">Yakin mau dihapus nih?</string>
     <string name="del_invalid_config_comfirm">Dites dulu napa sebelum dihapus! Yakin mau ngehapus?</string>
     <string name="server_lab_remarks">Nama</string>

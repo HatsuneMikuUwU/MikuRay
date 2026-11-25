@@ -652,5 +652,10 @@
         <item>salamander</item>
         <item>gecko</item>
     </string-array>
+
+    <string-array name="masque_alpn" translatable="false">
+        <item>h3</item>
+        <item>h2</item>
+    </string-array>
     
 </resources>

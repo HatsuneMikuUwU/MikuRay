@@ -20,6 +20,7 @@ import com.miku.ray.fmt.ClashMetaFmt
 import com.miku.ray.fmt.CustomFmt
 import com.miku.ray.fmt.CustomOutboundFmt
 import com.miku.ray.fmt.Hysteria2Fmt
+import com.miku.ray.fmt.MasqueFmt
 import com.miku.ray.fmt.ShadowsocksFmt
 import com.miku.ray.fmt.SIP008Fmt
 import com.miku.ray.fmt.SocksFmt
@@ -56,6 +57,7 @@ object AngConfigManager {
             EConfigType.VLESS.protocolScheme to VlessFmt::parse,
             EConfigType.WIREGUARD.protocolScheme to WireguardFmt::parse,
             EConfigType.HYSTERIA2.protocolScheme to Hysteria2Fmt::parse,
+            EConfigType.MASQUE.protocolScheme to MasqueFmt::parse,
             AppConfig.HY2 to Hysteria2Fmt::parse
         )
     }
@@ -139,6 +141,7 @@ object AngConfigManager {
                 EConfigType.TROJAN -> TrojanFmt.toUri(config)
                 EConfigType.WIREGUARD -> WireguardFmt.toUri(config)
                 EConfigType.HYSTERIA2 -> Hysteria2Fmt.toUri(config)
+                EConfigType.MASQUE -> MasqueFmt.toUri(config)
                 else -> {}
             }
         } catch (e: Exception) {
