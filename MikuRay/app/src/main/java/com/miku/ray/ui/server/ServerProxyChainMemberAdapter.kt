@@ -1,7 +1,6 @@
 package com.miku.ray.ui.server
 
 import android.graphics.Color
-import android.widget.ArrayAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import com.miku.ray.contracts.BaseAdapterListener
 import com.miku.ray.databinding.ItemRecyclerProxyChainMemberBinding
 import com.miku.ray.helper.ItemTouchHelperAdapter
 import com.miku.ray.helper.ItemTouchHelperViewHolder
+import com.miku.ray.util.ContainsFilterArrayAdapter
 import java.util.Collections
 
 class ServerProxyChainMemberAdapter(
@@ -34,7 +34,7 @@ class ServerProxyChainMemberAdapter(
         val value = members[position]
         holder.binding.tvMemberIndex.text = (position + 1).toString()
 
-        val dropdownAdapter = ArrayAdapter(
+        val dropdownAdapter = ContainsFilterArrayAdapter(
             holder.itemView.context,
             android.R.layout.simple_dropdown_item_1line,
             suggestions
@@ -65,8 +65,12 @@ class ServerProxyChainMemberAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            holder.binding.spMemberRemark.requestFocus()
-            holder.binding.spMemberRemark.showDropDown()
+            val memberField = holder.binding.spMemberRemark
+            memberField.requestFocus()
+            // Re-apply the filter for the current text first, so a stale filtered list is never shown
+            dropdownAdapter.filter.filter(memberField.text?.toString().orEmpty()) {
+                if (dropdownAdapter.count > 0) memberField.showDropDown()
+            }
         }
 
         holder.binding.layoutRemove.setOnClickListener {
