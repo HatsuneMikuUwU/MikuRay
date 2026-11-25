@@ -457,7 +457,7 @@ FastScrollRecyclerView.SectionedAdapter {
             return wrapped
         }
 
-        val isComplex = profile.configType.isComplexType() && profile.configType != EConfigType.CUSTOM
+        val isComplex = profile.configType.isComplexType() && profile.configType != EConfigType.CUSTOM && profile.configType != EConfigType.CUSTOM_OUTBOUND
         val isPolicyGroup = profile.configType == EConfigType.POLICYGROUP
         val network = profile.network?.takeIf { it.isNotBlank() }
 

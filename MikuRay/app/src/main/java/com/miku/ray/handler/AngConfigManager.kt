@@ -18,6 +18,7 @@ import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.isNotNullEmpty
 import com.miku.ray.fmt.ClashMetaFmt
 import com.miku.ray.fmt.CustomFmt
+import com.miku.ray.fmt.CustomOutboundFmt
 import com.miku.ray.fmt.Hysteria2Fmt
 import com.miku.ray.fmt.ShadowsocksFmt
 import com.miku.ray.fmt.SIP008Fmt
@@ -344,6 +345,26 @@ object AngConfigManager {
                 LogUtil.e(AppConfig.TAG, "Failed to parse custom config server as single config", e)
             }
             return 0
+        } else if (!server.contains("outbounds") && server.contains("protocol")) {
+            try {
+                val (config, rawOutbound) = CustomOutboundFmt.parse(server)
+                if (!matchesSubscriptionFilters(config, subItem)) {
+                    return 0
+                }
+                config.subscriptionId = subid
+                config.description = generateDescription(config)
+                commitProfiles(
+                    configs = listOf(ParsedProfile(config, rawOutbound)),
+                    subid = subid,
+                    append = append,
+                )
+                return 1
+            } catch (e: ProfileStorageException) {
+                throw e
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to parse custom outbound", e)
+            }
+            return 0
         } else if (server.startsWith("[Interface]") && server.contains("[Peer]")) {
             try {
                 val config = WireguardFmt.parseWireguardConfFile(server)
@@ -392,7 +413,7 @@ object AngConfigManager {
             .toSet()
             if (allowedProtocols.isNotEmpty()) {
 
-                val configProtocol = if (config.configType == EConfigType.CUSTOM) {
+                val configProtocol = if (config.configType == EConfigType.CUSTOM || config.configType == EConfigType.CUSTOM_OUTBOUND) {
                     config.customProtocol.orEmpty().lowercase()
                 } else {
                     config.configType.protocolScheme.removeSuffix("://").lowercase()

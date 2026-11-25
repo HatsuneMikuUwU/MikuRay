@@ -16,6 +16,7 @@ import com.miku.ray.AppConfig.GEOIP_PRIVATE
 import com.miku.ray.AppConfig.GEOSITE_PRIVATE
 import com.miku.ray.AppConfig.TAG_DIRECT
 import com.miku.ray.AppConfig.VPN
+import com.miku.ray.dto.entities.ProfileEntry
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.dto.entities.RulesetItem
 import com.miku.ray.dto.entities.SubscriptionItem
@@ -241,14 +242,14 @@ object SettingsManager {
         MmkvManager.encodeSubsList(subsList)
     }
 
-    fun getServerViaRemarks(remarks: String?): ProfileItem? {
+    fun getProfileEntryViaRemarks(remarks: String?): ProfileEntry? {
         if (remarks.isNullOrEmpty()) {
             return null
         }
         val serverList = decodeAllServerList()
         return serverList
-        .mapNotNull { guid -> decodeServerConfig(guid) }
-        .firstOrNull { it.remarks == remarks }
+        .mapNotNull { guid -> decodeServerConfig(guid)?.let { ProfileEntry(guid, it) } }
+        .firstOrNull { it.profile.remarks == remarks }
     }
 
     fun getProfileRemarks(excludeConfigTypes: Set<EConfigType> = setOf(EConfigType.CUSTOM)): List<String> {

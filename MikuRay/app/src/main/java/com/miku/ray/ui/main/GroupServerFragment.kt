@@ -295,7 +295,7 @@ class GroupServerFragment : BaseFragment<FragmentGroupServerBinding>() {
         .putExtra("createConfigType", profile.configType.value)
         .putExtra("subscriptionId", subId)
         when (profile.configType) {
-            EConfigType.CUSTOM -> {
+            EConfigType.CUSTOM, EConfigType.CUSTOM_OUTBOUND -> {
                 ownerActivity.startActivity(intent.setClass(ownerActivity, ServerCustomConfigActivity::class.java))
             }
 

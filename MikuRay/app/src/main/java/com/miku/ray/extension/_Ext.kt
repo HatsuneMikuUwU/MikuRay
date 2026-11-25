@@ -446,7 +446,7 @@ fun EConfigType.isGroupType(): Boolean {
 }
 
 fun EConfigType.isComplexType(): Boolean {
-    return this == EConfigType.CUSTOM || this == EConfigType.POLICYGROUP || this == EConfigType.PROXYCHAIN
+    return this == EConfigType.CUSTOM_OUTBOUND || this == EConfigType.CUSTOM || this == EConfigType.POLICYGROUP || this == EConfigType.PROXYCHAIN
 }
 
 suspend fun delay(millis: Int) {

@@ -44,7 +44,7 @@ object MikuRayGroupFileManager {
 
     private fun buildExportedProfile(guid: String): MikuRayExportedProfile? {
         val profile = MmkvManager.decodeServerConfig(guid) ?: return null
-        val raw = if (profile.configType == EConfigType.CUSTOM) MmkvManager.decodeServerRaw(guid) else null
+        val raw = if (profile.configType == EConfigType.CUSTOM || profile.configType == EConfigType.CUSTOM_OUTBOUND) MmkvManager.decodeServerRaw(guid) else null
         return MikuRayExportedProfile(profile = profile, raw = raw)
     }
 
@@ -83,7 +83,7 @@ object MikuRayGroupFileManager {
         payload.profiles.forEach { exported ->
             val profile = exported.profile.copy(subscriptionId = subId)
             val newGuid = MmkvManager.encodeServerConfig("", profile)
-            if (profile.configType == EConfigType.CUSTOM && !exported.raw.isNullOrBlank()) {
+            if ((profile.configType == EConfigType.CUSTOM || profile.configType == EConfigType.CUSTOM_OUTBOUND) && !exported.raw.isNullOrBlank()) {
                 MmkvManager.encodeServerRaw(newGuid, exported.raw)
             }
             count++

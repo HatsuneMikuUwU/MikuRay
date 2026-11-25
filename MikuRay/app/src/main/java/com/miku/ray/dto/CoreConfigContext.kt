@@ -1,7 +1,7 @@
 package com.miku.ray.dto
 
 import android.content.Context
-import com.miku.ray.dto.entities.ProfileItem
+import com.miku.ray.dto.entities.ProfileEntry
 import com.miku.ray.enums.CoreResolvedType
 
 data class CoreConfigContext(
@@ -13,10 +13,9 @@ data class CoreConfigContext(
 ) {
     data class ResolvedOutbound(
         val tag: String,
-        val profile: ProfileItem,
-        val resolvedProfiles: List<ProfileItem>,
+        val entry: ProfileEntry,
+        val resolvedEntries: List<ProfileEntry>,
         val resolvedType: CoreResolvedType,
-        val resolvedGuids: List<String> = emptyList(),
     )
 
     data class RoutingDomainRule(

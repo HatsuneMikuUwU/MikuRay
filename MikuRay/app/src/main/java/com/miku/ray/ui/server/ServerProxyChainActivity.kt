@@ -120,8 +120,8 @@ class ServerProxyChainActivity : BaseActivity() {
         }
 
         val invalidMembers = chainMembers.filter { member ->
-            val profile = SettingsManager.getServerViaRemarks(member)
-            profile == null || profile.configType.isComplexType()
+            val entry = SettingsManager.getProfileEntryViaRemarks(member)
+            entry == null || entry.profile.configType.isComplexType()
         }
         if (invalidMembers.isNotEmpty()) {
             snackbarDefault(getString(R.string.server_proxy_chain_members_invalid, invalidMembers.joinToString(", ")), title = getString(R.string.title_alerter_info))

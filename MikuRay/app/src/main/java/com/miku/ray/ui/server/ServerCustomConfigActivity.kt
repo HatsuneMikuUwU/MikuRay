@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import com.miku.ray.util.showDeleteConfirmDialog
 import com.blacksquircle.ui.editorkit.utils.EditorTheme
 import com.blacksquircle.ui.language.json.JsonLanguage
 import com.google.android.material.appbar.MaterialToolbar
@@ -16,15 +15,16 @@ import com.miku.ray.enums.EConfigType
 import com.miku.ray.extension.applyEdgeToEdgeListInsets
 import com.miku.ray.extension.snackbarDefault
 import com.miku.ray.extension.snackbarError
-import com.miku.ray.extension.snackbarSuccess
 import com.miku.ray.extension.toastSuccess
 import com.miku.ray.fmt.CustomFmt
+import com.miku.ray.fmt.CustomOutboundFmt
 import com.miku.ray.handler.AngConfigManager
 import com.miku.ray.handler.MmkvManager
 import com.miku.ray.handler.SettingsChangeManager
 import com.miku.ray.ui.base.BaseActivity
 import com.miku.ray.util.LogUtil
 import com.miku.ray.util.Utils
+import com.miku.ray.util.showDeleteConfirmDialog
 
 class ServerCustomConfigActivity : BaseActivity() {
     private val binding by lazy { ActivityServerCustomConfigBinding.inflate(layoutInflater) }
@@ -35,6 +35,7 @@ class ServerCustomConfigActivity : BaseActivity() {
         && editGuid.isNotEmpty()
         && editGuid == MmkvManager.getSelectServer()
     }
+    private var configType = EConfigType.CUSTOM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +44,21 @@ class ServerCustomConfigActivity : BaseActivity() {
 
         binding.serverScrollContent.applyEdgeToEdgeListInsets()
 
+        val config = MmkvManager.decodeServerConfig(editGuid)
+        config?.let {
+            configType = it.configType
+        } ?: run {
+            val createType = intent.getIntExtra("createConfigType", EConfigType.CUSTOM.value)
+            configType = EConfigType.fromInt(createType) ?: EConfigType.CUSTOM
+        }
+
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setupToolbar(toolbar, showHomeAsUp = true, title = EConfigType.CUSTOM.toString(), subtitle = getString(R.string.subtitle_server_config))
+        setupToolbar(toolbar, showHomeAsUp = true, title = configType.toString(), subtitle = getString(R.string.subtitle_server_config))
 
         if (!Utils.getDarkModeStatus(this)) {
             binding.editor.colorScheme = EditorTheme.INTELLIJ_LIGHT
         }
         binding.editor.language = JsonLanguage()
-        val config = MmkvManager.decodeServerConfig(editGuid)
         if (config != null) {
             bindingServer(config)
         } else {
@@ -81,26 +89,32 @@ class ServerCustomConfigActivity : BaseActivity() {
             return false
         }
 
-        val profileItem = try {
-            CustomFmt.parse(binding.editor.text.toString())
+        val content = binding.editor.text.toString()
+        val (profileItem, contentToSave) = try {
+            if (configType == EConfigType.CUSTOM_OUTBOUND) {
+                CustomOutboundFmt.parse(content)
+            } else {
+                Pair(CustomFmt.parse(content), content)
+            }
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to parse custom configuration", e)
-            snackbarDefault("${getString(R.string.toast_malformed_josn)} ${e.cause?.message}", title = getString(R.string.title_alerter_info))
+            snackbarDefault("${getString(R.string.toast_malformed_josn)} ${e.cause?.message ?: e.message.orEmpty()}", title = getString(R.string.title_alerter_info))
             return false
         }
 
-        val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(EConfigType.CUSTOM)
+        val config = MmkvManager.decodeServerConfig(editGuid) ?: ProfileItem.create(configType)
         binding.etRemarks.text.let {
-            config.remarks = if (it.isNullOrEmpty()) profileItem.remarks.orEmpty() else it.toString()
+            config.remarks = if (it.isNullOrEmpty()) profileItem.remarks else it.toString()
         }
         config.server = profileItem.server
         config.serverPort = profileItem.serverPort
+        config.customProtocol = profileItem.customProtocol
         config.network = profileItem.network
         config.security = profileItem.security
         config.description = AngConfigManager.generateDescription(config)
 
         MmkvManager.encodeServerConfig(editGuid, config)
-        MmkvManager.encodeServerRaw(editGuid, binding.editor.text.toString())
+        MmkvManager.encodeServerRaw(editGuid, contentToSave)
         toastSuccess(R.string.toast_success)
         finish()
         return true

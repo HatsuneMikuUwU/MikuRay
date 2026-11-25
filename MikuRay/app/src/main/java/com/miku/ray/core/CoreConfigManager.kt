@@ -8,6 +8,7 @@ import com.miku.ray.AppConfig
 import com.miku.ray.dto.ConfigResult
 import com.miku.ray.dto.CoreConfigContext
 import com.miku.ray.dto.V2rayConfig
+import com.miku.ray.dto.entities.ProfileEntry
 import com.miku.ray.dto.entities.ProfileItem
 import com.miku.ray.dto.entities.RulesetItem
 import com.miku.ray.enums.BalancerStrategyType
@@ -151,7 +152,7 @@ object CoreConfigManager {
 
         val v2rayConfig = initV2rayConfig(configContext)
         v2rayConfig.log.loglevel = MmkvManager.decodeSettingsString(AppConfig.PREF_LOGLEVEL) ?: "warning"
-        v2rayConfig.remarks = primaryResolvedOutbound.profile.remarks
+        v2rayConfig.remarks = primaryResolvedOutbound.entry.profile.remarks
 
         configureInbounds(v2rayConfig)
 
@@ -251,11 +252,11 @@ object CoreConfigManager {
         existingTags: MutableSet<String>,
         v2rayConfig: V2rayConfig,
     ) {
-        val profile = resolvedOutbound.resolvedProfiles.firstOrNull() ?: run {
-            LogUtil.w(AppConfig.TAG, "NORMAL resolved outbound '${resolvedOutbound.tag}' has empty resolvedProfiles, skipping")
+        val entry = resolvedOutbound.resolvedEntries.firstOrNull() ?: run {
+            LogUtil.w(AppConfig.TAG, "NORMAL resolved outbound '${resolvedOutbound.tag}' has empty resolvedEntries, skipping")
             return
         }
-        val outbound = convertProfile2Outbound(profile) ?: run {
+        val outbound = convertProfile2Outbound(entry) ?: run {
             LogUtil.w(AppConfig.TAG, "Could not convert NORMAL resolved outbound '${resolvedOutbound.tag}' profile to outbound, skipping")
             return
         }
@@ -274,7 +275,7 @@ object CoreConfigManager {
         existingTags: MutableSet<String>,
         v2rayConfig: V2rayConfig,
     ) {
-        val chainOutbounds = resolvedOutbound.resolvedProfiles
+        val chainOutbounds = resolvedOutbound.resolvedEntries
         .mapNotNull { convertProfile2Outbound(it) }
         .toMutableList()
         if (chainOutbounds.isEmpty()) {
@@ -331,14 +332,9 @@ object CoreConfigManager {
         policyGroupBalancerTags: MutableMap<String, String>,
         balancerStrategies: MutableList<BalancerStrategy>,
     ) {
-        val memberTriples = resolvedOutbound.resolvedProfiles
-        .zip(
-            resolvedOutbound.resolvedGuids.ifEmpty {
-                List(resolvedOutbound.resolvedProfiles.size) { "" }
-            }
-        )
-        .mapNotNull { (profile, guid) ->
-            convertProfile2Outbound(profile)?.let { ob -> Triple(ob, profile, guid) }
+        val memberTriples = resolvedOutbound.resolvedEntries
+        .mapNotNull { entry ->
+            convertProfile2Outbound(entry)?.let { ob -> Triple(ob, entry.profile, entry.guid) }
         }
         if (memberTriples.isEmpty()) {
             LogUtil.w(AppConfig.TAG, "POLICYGROUP resolved outbound '${resolvedOutbound.tag}' has no valid member outbounds, skipping")
@@ -377,14 +373,14 @@ object CoreConfigManager {
         } else {
             "${AppConfig.TAG_BALANCER_PRE}-${resolvedOutbound.tag}"
         }
-        val strategyType = BalancerStrategyType.from(resolvedOutbound.profile.policyGroupType)
-        val fallbackTag = resolvePolicyGroupFallbackTag(strategyType, resolvedOutbound.profile, membersToAdd.first().tag)
+        val strategyType = BalancerStrategyType.from(resolvedOutbound.entry.profile.policyGroupType)
+        val fallbackTag = resolvePolicyGroupFallbackTag(strategyType, resolvedOutbound.entry.profile, membersToAdd.first().tag)
         val strategy = buildBalancerStrategy(
             strategyType = strategyType,
             selector = listOf(memberTagPrefix),
             balancerTag = balancerTag,
             fallbackTag = fallbackTag,
-            profile = resolvedOutbound.profile,
+            profile = resolvedOutbound.entry.profile,
         )
         val existingBalancers = v2rayConfig.routing.balancers?.toMutableList() ?: mutableListOf()
         if (existingBalancers.none { it.tag == balancerTag }) {
@@ -916,8 +912,14 @@ object CoreConfigManager {
         }
     }
 
-    private fun convertProfile2Outbound(profileItem: ProfileItem): V2rayConfig.OutboundBean? {
-        return CoreOutboundBuilder.convert(profileItem)
+    private fun convertProfile2Outbound(entry: ProfileEntry): V2rayConfig.OutboundBean? {
+        if (entry.profile.configType == EConfigType.CUSTOM_OUTBOUND) {
+            MmkvManager.decodeServerRaw(entry.guid)?.let {
+                return JsonUtil.fromJsonSafe(it, V2rayConfig.OutboundBean::class.java)
+            }
+            return null
+        }
+        return CoreOutboundBuilder.convert(entry.profile)
     }
 
     private fun applyObservability(v2rayConfig: V2rayConfig, strategies: List<BalancerStrategy>) {
