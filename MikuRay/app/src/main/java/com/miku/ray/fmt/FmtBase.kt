@@ -27,8 +27,13 @@ open class FmtBase {
     }
 
     fun getQueryParam(uri: URI): Map<String, String> {
-        return uri.rawQuery.split("&")
-        .associate { it.split("=").let { (k, v) -> k to Utils.decodeURIComponent(v) } }
+        val rawQuery = uri.rawQuery
+        if (rawQuery.isNullOrEmpty()) return emptyMap()
+        // Split each pair on the first '=' only: RFC 3986 allows '=' inside a query value
+        // (e.g. path=/ws?ed=2048 or base64 padding). Pairs without '=' carry no value; skip them.
+        return rawQuery.split("&")
+            .filter { it.contains("=") }
+            .associate { it.split("=", limit = 2).let { (k, v) -> k to Utils.decodeURIComponent(v) } }
     }
 
     fun getItemFormQuery(config: ProfileItem, queryParam: Map<String, String>) {
