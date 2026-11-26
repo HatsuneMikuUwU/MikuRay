@@ -270,6 +270,15 @@
     <string name="title_pref_domestic_dns_tip">Opsional. Bisa isi beberapa server dipisah koma, mis. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
+    <string name="title_pref_dns_validate_region">Validasi Wilayah DNS</string>
+    <string name="summary_pref_dns_validate_region">Periksa wilayah hasil DNS lokal dan gunakan DNS remote jika tidak cocok.</string>
+
+    <string name="title_dns_parallel_query">Kueri Paralel DNS</string>
+    <string name="summary_dns_parallel_query">Kirim kueri ke beberapa server DNS secara bersamaan dan pakai respons tercepat.</string>
+
+    <string name="title_dns_serve_stale">DNS Serve Stale</string>
+    <string name="summary_dns_serve_stale">Kurangi waktu tunggu DNS dengan tetap memakai cache kedaluwarsa sembari mengambil hasil terbaru.</string>
+
     <string name="title_pref_dns_hosts">Host DNS</string>
 
     <string name="title_pref_dns_hosts_tip">Format: domain:alamat,…</string>

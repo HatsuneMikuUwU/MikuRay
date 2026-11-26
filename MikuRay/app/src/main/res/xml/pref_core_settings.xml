@@ -108,6 +108,33 @@
             app:dialogIcon="@drawable/rmx_server_line"
             app:layout="@layout/uwu_mid" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/rmx_speed_line"
+            android:key="pref_dns_parallel_query"
+            android:summary="@string/summary_dns_parallel_query"
+            android:title="@string/title_dns_parallel_query"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/rmx_history_line"
+            android:key="pref_dns_serve_stale"
+            android:summary="@string/summary_dns_serve_stale"
+            android:title="@string/title_dns_serve_stale"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/rmx_global_line"
+            android:key="pref_dns_validate_region"
+            android:summary="@string/summary_pref_dns_validate_region"
+            android:title="@string/title_pref_dns_validate_region"
+            app:layout="@layout/uwu_mid_switch"
+            app:widgetLayout="@layout/uwu_widget_material_switch" />
+
         <EditTextPreference
             android:dialogMessage="@string/title_pref_dns_hosts_tip"
             android:icon="@drawable/rmx_server_line"

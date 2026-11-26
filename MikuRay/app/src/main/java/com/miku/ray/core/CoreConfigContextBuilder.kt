@@ -33,10 +33,12 @@ object CoreConfigContextBuilder {
         val resolvedOutbounds = listOf(primaryResolvedOutbound) + routingResolvedOutbounds
         val fallbackResolvedOutbounds = resolveFallbackOutbounds(resolvedOutbounds)
         val routingDomainRules = collectRoutingDomainRulesForDns()
+        val routingRegion = calculateRoutingRegionForDns()
 
         return CoreConfigContext(
             context = context,
             guid = guid,
+            routingRegion = routingRegion,
             resolvedOutbounds = resolvedOutbounds + fallbackResolvedOutbounds,
             routingDomainRules = routingDomainRules,
         )
@@ -233,6 +235,31 @@ object CoreConfigContextBuilder {
         }
 
         return result
+    }
+
+    private fun calculateRoutingRegionForDns(): String? {
+        val rulesetItems = MmkvManager.decodeRoutingRulesets() ?: return null
+        if (rulesetItems.size < 2) {
+            return null
+        }
+
+        val lastTwo = rulesetItems.takeLast(2)
+        val secondLastValue = lastTwo[0].ip
+            ?.singleOrNull()
+            ?.takeIf { it.startsWith("geoip:") }
+            ?.substringAfter("geoip:")
+            ?.takeIf { it.isNotBlank() }
+        val lastValue = lastTwo[1].domain
+            ?.singleOrNull()
+            ?.takeIf { it.startsWith("geosite:") }
+            ?.substringAfter("geosite:")
+            ?.takeIf { it.isNotBlank() }
+
+        return if (secondLastValue != null && secondLastValue == lastValue) {
+            secondLastValue
+        } else {
+            null
+        }
     }
 
     private fun resolveFallbackOutbounds(resolvedOutbounds: List<CoreConfigContext.ResolvedOutbound>): List<CoreConfigContext.ResolvedOutbound> {

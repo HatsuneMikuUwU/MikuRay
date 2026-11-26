@@ -270,6 +270,15 @@
     <string name="title_pref_domestic_dns_tip">Необязательно. Несколько серверов через запятую, напр. 223.5.5.5,119.29.29.29</string>
     <string name="summary_pref_domestic_dns">DNS</string>
 
+    <string name="title_pref_dns_validate_region">Проверка региона</string>
+    <string name="summary_pref_dns_validate_region">Проверять регион ответов локального DNS и переключаться на удалённый DNS при несовпадении.</string>
+
+    <string name="title_dns_parallel_query">Параллельные DNS-запросы</string>
+    <string name="summary_dns_parallel_query">Опрашивать несколько DNS-серверов параллельно и использовать самый быстрый ответ.</string>
+
+    <string name="title_dns_serve_stale">Использовать устаревший кэш DNS</string>
+    <string name="summary_dns_serve_stale">Снижает задержки DNS: устаревшие записи используются, пока запрашиваются актуальные.</string>
+
     <string name="title_pref_dns_hosts">DNS hosts</string>
 
     <string name="title_pref_dns_hosts_tip">Формат: домен:адрес,…</string>
