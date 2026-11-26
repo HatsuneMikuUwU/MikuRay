@@ -599,8 +599,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             return null
         }
 
-        val config = MmkvManager.decodeServerConfig(selectedGuid)
-        return config?.subscriptionId
+        val config = MmkvManager.decodeServerConfig(selectedGuid) ?: return null
+        // A blank ID in an imported profile means Default; a blank UI group ID means All.
+        return config.subscriptionId.ifEmpty { AppConfig.DEFAULT_SUBSCRIPTION_ID }
     }
 
     fun onTestsFinished(cancelled: Boolean = false) {
