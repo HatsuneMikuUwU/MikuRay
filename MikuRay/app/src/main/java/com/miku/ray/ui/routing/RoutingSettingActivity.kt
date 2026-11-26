@@ -35,7 +35,6 @@ import com.miku.ray.util.showDeleteConfirmDialog
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRoutingMenuOptionClickListener {
     private val binding by lazy { ActivityRoutingSettingBinding.inflate(layoutInflater) }
@@ -56,7 +55,6 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
         adapter = RoutingSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 
-
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -68,9 +66,16 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.rulesets.collect { list ->
-                    adapter.submitData(list)
-                    updateEmptyState()
+                launch {
+                    viewModel.rulesets.collect { list ->
+                        adapter.submitData(list)
+                        updateEmptyState()
+                    }
+                }
+                launch {
+                    viewModel.isLoading.collect { loading ->
+                        if (loading) showLoading() else hideLoading()
+                    }
                 }
             }
         }
@@ -153,21 +158,17 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
                 )
                 return@setPositiveButton
             }
-            lifecycleScope.launch(Dispatchers.IO) {
-                val result = SettingsManager.resetRoutingRulesets(clipboard)
-                withContext(Dispatchers.Main) {
-                    if (result) {
-                        refreshData()
-                        snackbarSuccess(
-                            getString(R.string.routing_settings_import_rulesets_from_clipboard),
-                            title = getString(R.string.title_alerter_success)
-                        )
-                    } else {
-                        snackbarError(
-                            getString(R.string.routing_settings_import_rulesets_from_clipboard),
-                            title = getString(R.string.title_alerter_error)
-                        )
-                    }
+            viewModel.importRulesets(clipboard) { result ->
+                if (result) {
+                    snackbarSuccess(
+                        getString(R.string.routing_settings_import_rulesets_from_clipboard),
+                        title = getString(R.string.title_alerter_success)
+                    )
+                } else {
+                    snackbarError(
+                        getString(R.string.routing_settings_import_rulesets_from_clipboard),
+                        title = getString(R.string.title_alerter_error)
+                    )
                 }
             }
         }
@@ -207,21 +208,17 @@ class RoutingSettingActivity : HelperBaseActivity(), RoutingMenuBottomSheet.OnRo
         .setIcon(RemixR.drawable.rmx_error_warning_line)
         .setMessage(R.string.routing_settings_import_rulesets_tip)
         .setPositiveButton(android.R.string.ok) { _, _ ->
-            lifecycleScope.launch(Dispatchers.IO) {
-                val result = SettingsManager.resetRoutingRulesets(qrcode)
-                withContext(Dispatchers.Main) {
-                    if (result) {
-                        refreshData()
-                        snackbarSuccess(
-                            getString(R.string.routing_settings_import_rulesets_from_qrcode),
-                            title = getString(R.string.title_alerter_success)
-                        )
-                    } else {
-                        snackbarError(
-                            getString(R.string.routing_settings_import_rulesets_from_qrcode),
-                            title = getString(R.string.title_alerter_error)
-                        )
-                    }
+            viewModel.importRulesets(qrcode) { result ->
+                if (result) {
+                    snackbarSuccess(
+                        getString(R.string.routing_settings_import_rulesets_from_qrcode),
+                        title = getString(R.string.title_alerter_success)
+                    )
+                } else {
+                    snackbarError(
+                        getString(R.string.routing_settings_import_rulesets_from_qrcode),
+                        title = getString(R.string.title_alerter_error)
+                    )
                 }
             }
         }
