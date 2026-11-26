@@ -54,6 +54,7 @@ object V2rayNFmt : FmtBase() {
                     }
                     EConfigType.PROXYCHAIN -> {
                         profile.proxyChainProfileList = remarks
+                        profile.description = remarks.joinToString(" -> ")
                     }
                     else -> Unit
                 }
