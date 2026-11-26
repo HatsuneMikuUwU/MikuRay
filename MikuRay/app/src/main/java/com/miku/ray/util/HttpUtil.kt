@@ -6,6 +6,8 @@ import com.miku.ray.BuildConfig
 import com.miku.ray.dto.UrlContentRequest
 import com.miku.ray.dto.UrlContentResponse
 import okhttp3.Credentials
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -108,6 +110,10 @@ object HttpUtil {
         var redirects = 0
         val maxRedirects = 3
 
+        // Store origin
+        val originalUrl = requireNotNull(request.url).toHttpUrl()
+        val headersMap = JsonUtil.parseHeadersToMap(request.requestHeaders)
+
         while (redirects++ < maxRedirects) {
             if (currentUrl == null) continue
             val client = buildOkHttpClient(request.timeout, request.httpPort, request.proxyUsername, request.proxyPassword, followRedirects = false)
@@ -122,23 +128,26 @@ object HttpUtil {
             .header("User-agent", finalUserAgent)
             .header("Connection", "close")
 
-            if (!request.hwid.isNullOrBlank()) {
-                requestBuilder.header("X-HWID", request.hwid)
-            }
+            val targetUrl = currentUrl.toHttpUrl()
+            val sameOrigin =
+                targetUrl.scheme == originalUrl.scheme &&
+                    targetUrl.host == originalUrl.host &&
+                    targetUrl.port == originalUrl.port
 
-            applyEmbeddedBasicAuthHeader(currentUrl, requestBuilder)
-
-            val headersMap = JsonUtil.parseHeadersToMap(request.requestHeaders)
-            for ((key, value) in headersMap) {
-                LogUtil.d(AppConfig.TAG, "Adding custom header: $key = $value")
-                try {
-                    requestBuilder.header(key, value)
-                } catch (_: IllegalArgumentException) {
+            if (sameOrigin) {
+                if (!request.hwid.isNullOrBlank()) {
+                    requestBuilder.header("X-HWID", request.hwid)
                 }
-            }
 
-            if (request.httpPort != 0 && !request.proxyUsername.isNullOrBlank() && !request.proxyPassword.isNullOrBlank()) {
-                requestBuilder.header("Proxy-Authorization", Credentials.basic(request.proxyUsername, request.proxyPassword))
+                applyEmbeddedBasicAuthHeader(currentUrl, requestBuilder)
+
+                for ((key, value) in headersMap) {
+                    LogUtil.d(AppConfig.TAG, "Adding custom header: $key")
+                    try {
+                        requestBuilder.header(key, value)
+                    } catch (_: IllegalArgumentException) {
+                    }
+                }
             }
 
             client.newCall(requestBuilder.build()).execute().use { response ->
@@ -148,10 +157,15 @@ object HttpUtil {
                         if (location.isNullOrEmpty()) {
                             throw IOException("Redirect location not found")
                         }
-                        currentUrl = resolveLocation(currentUrl, location)
-                        if (currentUrl.isNullOrEmpty()) {
-                            throw IOException("Failed to resolve redirect location")
+                        val nextUrl = resolveLocation(currentUrl, location)
+                            ?.toHttpUrlOrNull()
+                            ?: throw IOException("Failed to resolve redirect location")
+
+                        if (targetUrl.isHttps && !nextUrl.isHttps) {
+                            throw IOException("HTTPS to HTTP redirect is not allowed")
                         }
+
+                        currentUrl = nextUrl.toString()
                         continue
                     }
 
