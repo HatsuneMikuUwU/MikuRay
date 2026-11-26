@@ -133,7 +133,7 @@ object RootProxyManager {
             appendLine("ip route replace default dev $TUN table $TABLE")
             appendLine("ip rule add fwmark $MARK table $TABLE priority $PRIORITY")
             if (captureDeviceTraffic) {
-                append(buildMangleMarking("iptables", appUid, perAppEnabled, bypassApps, selectedUids))
+                append(buildMangleMarking("iptables", appUid, perAppEnabled, bypassApps, selectedUids, lanShare))
                 append(buildDnsDnat("iptables"))
             }
             if (lanShare) {
@@ -145,7 +145,7 @@ object RootProxyManager {
                     appendLine("ip -6 addr add ${AppConfig.ROOT_TUN_ADDR_V6} dev $TUN 2>/dev/null || true")
                     appendLine("ip -6 route replace default dev $TUN table $TABLE 2>/dev/null || true")
                     appendLine("ip -6 rule add fwmark $MARK table $TABLE priority $PRIORITY 2>/dev/null || true")
-                    append(buildMangleMarking("ip6tables", appUid, perAppEnabled, bypassApps, selectedUids))
+                    append(buildMangleMarking("ip6tables", appUid, perAppEnabled, bypassApps, selectedUids, lanShare))
                     append(buildDnsDnat("ip6tables"))
                 } else {
                     append(buildV6Blackhole(appUid, perAppEnabled, bypassApps, selectedUids))
@@ -210,12 +210,13 @@ object RootProxyManager {
         }
     }
 
-    private fun buildMangleMarking(
+    internal fun buildMangleMarking(
         cmd: String,
         appUid: Int,
         perAppEnabled: Boolean,
         bypassApps: Boolean,
         selectedUids: List<String>,
+        lanShare: Boolean,
     ): String {
         val allowMode = perAppEnabled && !bypassApps
         val bypassSelected = perAppEnabled && bypassApps && selectedUids.isNotEmpty()
@@ -227,6 +228,9 @@ object RootProxyManager {
             if (bypassSelected) {
                 selectedUids.forEach { appendLine("$cmd -t mangle -A $CHAIN -m owner --uid-owner $it -j RETURN") }
             }
+            // Hotspot clients' DNS is forwarded by netd under AID_DNS_TETHER. Without LAN sharing
+            // their traffic goes direct, so a FakeDNS answer from the core would black-hole it.
+            if (!lanShare) appendLine("$cmd -t mangle -A $CHAIN -m owner --uid-owner ${AppConfig.ROOT_DNS_TETHER_UID} -j RETURN")
             appendLine("$cmd -t mangle -A $CHAIN -p udp --dport 53 -j MARK --set-xmark $MARK")
             appendLine("$cmd -t mangle -A $CHAIN -p tcp --dport 53 -j MARK --set-xmark $MARK")
             val cidrs = if (cmd == "ip6tables") bypassCidrsV6 else bypassCidrs
