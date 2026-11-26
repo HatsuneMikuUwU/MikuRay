@@ -10,44 +10,57 @@ import com.miku.ray.util.LogUtil
 import com.miku.ray.util.Utils
 
 object V2rayNFmt : FmtBase() {
+    /**
+     * Parses v2rayN inner share lines the way v2rayN InnerFmt.Resolve does: an entry whose
+     * ConfigType this app cannot represent is skipped on its own, entries without IndexId are all
+     * kept, and a group whose listed members were all skipped is dropped.
+     */
     fun parse(lines: List<String>, subId: String): List<ProfileItem> {
-        val items = lines.mapNotNull(::parseShareItem)
-        val itemsById = linkedMapOf<String, V2rayNShareItem>()
-        items.forEach { item ->
-            item.IndexId?.trim()?.takeIf { it.isNotEmpty() }?.let { id ->
-                itemsById.putIfAbsent(id, item)
+        val idMap = linkedMapOf<String, V2rayNShareItem>()
+        val entries = mutableListOf<Pair<V2rayNShareItem, ProfileItem>>()
+
+        lines.mapNotNull(::parseShareItem).forEach { item ->
+            val profile = item.toProfileItem() ?: return@forEach
+            // IndexId is optional and only links group members, so it must not merge entries without one.
+            val indexId = item.IndexId?.trim().orEmpty()
+            if (indexId.isEmpty() || idMap.putIfAbsent(indexId, item) == null) {
+                entries.add(item to profile)
             }
         }
 
-        return items.map { item ->
-            item.toProfileItem().apply {
-                if (item.ProtoExtraObj?.SubChildItems == "self") {
-                    policyGroupSubscriptionId = subId
-                }
+        return entries.mapNotNull { (item, profile) ->
+            val proto = item.ProtoExtraObj
+            val isSelfSub = proto?.SubChildItems == "self"
+            profile.policyGroupSubscriptionId = if (isSelfSub) subId else null
 
-                val childIds = item.ProtoExtraObj?.ChildItems?.takeIf { it.isNotNullEmpty() }
-                if (childIds != null) {
-                    val childRemarks = childIds.split(",")
-                    .mapNotNull { childId -> itemsById[childId.trim()]?.Remarks }
-                    .filter { it.isNotNullEmpty() }
+            val childIds = proto?.ChildItems
+                ?.takeIf { it.isNotNullEmpty() }
+                ?.split(",")
+                ?.map { it.trim() }
+                ?.filter { it.isNotEmpty() }
+                .orEmpty()
+            val remarks = childIds
+                .mapNotNull { idMap[it]?.Remarks }
+                .filter { it.isNotNullEmpty() }
 
-                    if (childRemarks.isNotEmpty()) {
-                        when (configType) {
-                            EConfigType.POLICYGROUP -> {
-                                policyGroupFilter = childRemarks.joinToString(
-                                    separator = "|",
-                                    prefix = "^(",
-                                    postfix = ")$",
-                                ) { Regex.escape(it) }
-                            }
-                            EConfigType.PROXYCHAIN -> {
-                                proxyChainProfileList = childRemarks
-                            }
-                            else -> Unit
-                        }
+            if (remarks.isNotEmpty()) {
+                when (profile.configType) {
+                    EConfigType.POLICYGROUP -> {
+                        profile.policyGroupFilter = remarks.joinToString(
+                            separator = "|",
+                            prefix = "^(",
+                            postfix = ")$",
+                        ) { Regex.escape(it) }
                     }
+                    EConfigType.PROXYCHAIN -> {
+                        profile.proxyChainProfileList = remarks
+                    }
+                    else -> Unit
                 }
             }
+
+            // Every listed member was skipped, so the group would have nothing to route through.
+            if (childIds.isNotEmpty() && remarks.isEmpty() && !isSelfSub) null else profile
         }
     }
 
